@@ -1,0 +1,18 @@
+<resources>
+
+    <string name="app_name">Gnukhata</string>
+    <string name="hello_world">Welcome to GNUKhata!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">GNUKhata</string>
+    <string name="createOrgButton">Create New Organisation</string>
+    <string name="selectOrgButton">Select Existing Organisation</string>
+    <string name="orgName">Enter Organisation Name</string>
+    <string name="orgType">Organisation Type</string>
+    <string name="orgType_prompt">Select Organisation Type</string>
+    <string-array name="orgType_arrays">
+        <item>Profit Making</item>
+        <item>NGO</item>
+    </string-array>
+    
+
+</resources>
