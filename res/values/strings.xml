@@ -9,9 +9,23 @@
     <string name="orgName">Enter Organisation Name</string>
     <string name="orgType">Organisation Type</string>
     <string name="orgType_prompt">Select Organisation Type</string>
+    
     <string-array name="orgType_arrays">
         <item>Profit Making</item>
         <item>NGO</item>
+    </string-array>
+    
+    <string-array name="org_details">
+        <item>Address</item>
+        <item>Country</item>
+        <item>State</item>
+        <item>City</item>
+        <item>Postal Code</item>
+        <item>Telephone Number</item>
+        <item>Fax Number</item>
+        <item>Email ID</item>
+        <item>Website</item>
+        <item>Permanent Account Number</item>
     </string-array>
     
 

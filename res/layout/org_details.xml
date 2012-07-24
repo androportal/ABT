@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content"         
+ android:layout_centerHorizontal="true">
+ 
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+	<TableLayout 
+        		android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:background="@drawable/dark_gray_background"
+    			android:padding="40dp">
+		
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Address"
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp" />
+		<EditText 
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:hint="Tap to enter address" />
+		</TableRow>
+		
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Country"
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp" />
+		<EditText 
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:hint="Tap to enter Country" />
+		</TableRow>
+		
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="State"
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp" />
+		<EditText 
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:hint="Tap to enter State" />
+		</TableRow>
+		
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="City"
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp" />
+		<EditText 
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:hint="Tap to enter City" />
+		</TableRow>
+				
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Postal Code"
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp" />
+		<EditText 
+		    	android:layout_width="0dip"
+				android:layout_weight="2"
+				android:hint="Tap to enter Postal Code" />
+		</TableRow>
+		
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Phone Number"
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp" />
+		<EditText 
+		    	android:layout_width="0dip"
+				android:layout_weight="2"
+				android:hint="Tap to enter Phone Number" />
+		</TableRow>
+		
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="E-mail ID"
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp" />
+		<EditText 
+		    	android:layout_width="0dip"
+				android:layout_weight="2"
+				android:hint="Tap to enter E-mail ID"/>
+		</TableRow>
+		
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Website"
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp" />
+		<EditText 
+		    	android:layout_width="0dip"
+				android:layout_weight="2"
+				android:hint="Tap to enter Website"/>
+		</TableRow>
+		
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="PAN"
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp" />
+		<EditText 
+		    	android:layout_width="0dip"
+				android:layout_weight="2"
+				android:hint="Tap to enter Parmanent Account Number"/>
+		</TableRow>
+</TableLayout>
+</ScrollView>
+				
+		<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_alignParentBottom="true" >
+
+        <Button
+            android:id="@+id/btnOrgDetailSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="Save"
+            android:textSize="20dp"
+		   android:layout_alignParentBottom="true"/>
+		
+        <Button
+            android:id="@+id/btnSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="Skip"
+            android:textSize="20dp"
+		   android:layout_alignParentBottom="true"/>
+    </LinearLayout>
+</RelativeLayout> 

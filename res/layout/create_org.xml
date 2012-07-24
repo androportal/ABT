@@ -60,7 +60,7 @@
         android:weightSum="100" >
 
         <TextView
-            android:id="@+id/tvDate"
+            android:id="@+id/tvFromDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="40"
@@ -93,7 +93,7 @@
         android:weightSum="100" >
 
         <Button
-            android:id="@+id/btnChangeDate"
+            android:id="@+id/btnChangeFromDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="40"
@@ -118,7 +118,7 @@
     </View>
 
     <Button
-        android:id="@+id/bNext"
+        android:id="@+id/btnNext"
         android:layout_width="112dp"
         android:layout_height="46dp"
         android:layout_gravity="center"

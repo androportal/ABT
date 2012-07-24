@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content"         
+ android:layout_centerHorizontal="true">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:background="@drawable/dark_gray_background"
+		android:orientation="vertical"
+		android:padding="40dp" >
+	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		    		android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center">
+
+		<TableRow>
+		    <CheckBox
+		        android:id="@+id/cbProject"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="0.3" 
+		        android:layout_marginRight="30dp"/>
+		    
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_weight="1.7"
+		        android:text="Projectwise Accounting"
+		        android:textColor="#FFFFFF"
+		        android:textSize="20dp" />
+		</TableRow>
+
+		<EditText
+		    android:id="@+id/etProject"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:hint="Tap to enter"
+		    android:visibility="invisible" >
+		    <requestFocus />
+		</EditText>
+		
+			<TableRow>
+
+				<CheckBox
+				    android:id="@+id/cbAccCode"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="0.3" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_weight="1.7"
+					android:text="Manual Account Codes"
+					android:textColor="#FFFFFF"
+					android:textSize="20dp" />
+
+			</TableRow>
+	</TableLayout>
+			<Button
+		    android:id="@+id/btnSavePref"
+		    android:layout_width="112dp"
+		    android:layout_height="46dp"
+		    android:layout_gravity="center"
+		    android:text="Save" />
+</LinearLayout>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_alignParentBottom="true" >
+
+        <Button
+            android:id="@+id/btnOrgDetailSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="Create Account"
+            android:textSize="20dp"
+		   android:layout_alignParentBottom="true"/>
+		
+        <Button
+            android:id="@+id/btnSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="Quit"
+            android:textSize="20dp"
+		   android:layout_alignParentBottom="true"/>
+</LinearLayout>
+</RelativeLayout> 

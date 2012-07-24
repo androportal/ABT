@@ -24,6 +24,14 @@
             android:label="Create New Organisation"
             android:name=".createOrg" >
         </activity>
+        <activity
+            android:label="Organisation Details"
+            android:name=".orgDetails" >
+        </activity>
+        <activity
+            android:label="Preferences"
+            android:name=".preferences" >
+        </activity>
     </application>
 
 </manifest>
