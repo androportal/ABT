@@ -14,6 +14,78 @@
 				android:background="@drawable/dark_gray_background"
     			android:padding="40dp">
 		
+	    <TableRow>
+		<TextView 
+		    	android:id="@+id/tvRegNum"
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Registration No."
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp"
+        		android:visibility="invisible" />
+		<EditText 
+		    android:id="@+id/etRegNum"
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:hint="Tap to enter Registration Number"
+			android:visibility="invisible"/>
+		</TableRow>
+	    
+	    <TableRow>
+		<TextView 
+		    	android:id="@+id/tvRegDate"
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Registration Date"
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp" 
+        		android:visibility="invisible"/>
+		<Button 
+		    android:id="@+id/btnRegDate"
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:gravity="left"
+			android:text=""
+			android:textSize="20dp"
+			android:visibility="invisible" />
+		</TableRow>
+	    
+	    <TableRow>
+		<TextView 
+		    	android:id="@+id/tvFcraNum"
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="FCRA Registration No."
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp"
+        		android:visibility="invisible" />
+		<EditText 
+		    android:id="@+id/etFcraNum"
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:hint="Tap to enter FCRA Registration Number"
+			android:visibility="invisible"/>
+		</TableRow>
+	    
+	    <TableRow>
+		<TextView 
+		    	android:id="@+id/tvFcraDate"
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="FCRA Registration Date"
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp" 
+        		android:visibility="invisible"/>
+		<Button 
+		    android:id="@+id/btnFcraDate"
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:gravity="left"
+			android:text=""
+			android:textSize="20dp"
+			android:visibility="invisible" />
+		</TableRow>
+	    
 		<TableRow>
 		<TextView 
 		    	android:layout_width="0dip"
@@ -24,7 +96,8 @@
 		<EditText 
 		    android:layout_width="0dip"
 			android:layout_weight="2"
-			android:hint="Tap to enter address" />
+			android:hint="Tap to enter address"
+			android:inputType="textPostalAddress" />
 		</TableRow>
 		
 		<TableRow>
@@ -76,20 +149,22 @@
 		<EditText 
 		    	android:layout_width="0dip"
 				android:layout_weight="2"
-				android:hint="Tap to enter Postal Code" />
+				android:hint="Tap to enter Postal Code"
+				android:inputType="phone" />
 		</TableRow>
 		
 		<TableRow>
 		<TextView 
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
-				android:text="Phone Number"
+				android:text="Phone No."
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" />
 		<EditText 
 		    	android:layout_width="0dip"
 				android:layout_weight="2"
-				android:hint="Tap to enter Phone Number" />
+				android:hint="Tap to enter Phone Number" 
+				android:inputType="phone"/>
 		</TableRow>
 		
 		<TableRow>
@@ -102,7 +177,8 @@
 		<EditText 
 		    	android:layout_width="0dip"
 				android:layout_weight="2"
-				android:hint="Tap to enter E-mail ID"/>
+				android:hint="Tap to enter E-mail ID"
+				android:inputType="textEmailAddress"/>
 		</TableRow>
 		
 		<TableRow>
@@ -115,7 +191,42 @@
 		<EditText 
 		    	android:layout_width="0dip"
 				android:layout_weight="2"
-				android:hint="Tap to enter Website"/>
+				android:hint="Tap to enter Website"
+				android:inputType="textEmailAddress"/>
+		</TableRow>
+		
+		<TableRow>
+		<TextView 
+		    	android:id="@+id/tvMVATnum"
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="MVAT No."
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp"
+        		android:visibility="invisible" />
+		<EditText 
+		    android:id="@+id/etMVATnum"
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:hint="Tap to enter MVAT Number"
+			android:visibility="invisible"/>
+		</TableRow>
+		
+		<TableRow>
+		<TextView 
+		    	android:id="@+id/tvServiceTaxnum"
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Service Tax No."
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp"
+        		android:visibility="invisible" />
+		<EditText 
+		    android:id="@+id/etServiceTaxnum"
+		    android:layout_width="0dip"
+			android:layout_weight="2"
+			android:hint="Tap to enter Service Tax Number"
+			android:visibility="invisible"/>
 		</TableRow>
 		
 		<TableRow>
@@ -138,7 +249,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="100"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/blackbutton" >
 
         <Button
             android:id="@+id/btnOrgDetailSave"
@@ -147,7 +259,8 @@
             android:layout_weight="50"
             android:text="Save"
             android:textSize="20dp"
-		   android:layout_alignParentBottom="true"/>
+		   	android:layout_alignParentBottom="true"
+		  	android:layout_gravity="center_vertical" />
 		
         <Button
             android:id="@+id/btnSkip"
@@ -156,6 +269,7 @@
             android:layout_weight="50"
             android:text="Skip"
             android:textSize="20dp"
-		   android:layout_alignParentBottom="true"/>
+		   	android:layout_alignParentBottom="true"
+		  	android:layout_gravity="center_vertical"/>
     </LinearLayout>
 </RelativeLayout> 

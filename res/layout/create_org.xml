@@ -96,7 +96,7 @@
             android:id="@+id/btnChangeFromDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="40"
+            android:layout_weight="38.16"
             android:text="Set From Date" />
 		<View
 		android:layout_width="0dp"

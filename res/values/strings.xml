@@ -8,25 +8,33 @@
     <string name="selectOrgButton">Select Existing Organisation</string>
     <string name="orgName">Enter Organisation Name</string>
     <string name="orgType">Organisation Type</string>
-    <string name="orgType_prompt">Select Organisation Type</string>
     
+    <string name="orgType_prompt">Select Organisation Type</string>
     <string-array name="orgType_arrays">
         <item>Profit Making</item>
         <item>NGO</item>
     </string-array>
     
-    <string-array name="org_details">
-        <item>Address</item>
-        <item>Country</item>
-        <item>State</item>
-        <item>City</item>
-        <item>Postal Code</item>
-        <item>Telephone Number</item>
-        <item>Fax Number</item>
-        <item>Email ID</item>
-        <item>Website</item>
-        <item>Permanent Account Number</item>
+    <string name="grpName_prompt">Select Group name</string>
+    <string-array name="groupNameArray">
+        <item>Corpus</item>
+        <item>Current Asset</item>
+        <item>Current Liability</item>
+        <item>Direct Expense</item>
+        <item>Direct Income</item>
+        <item>Fixed Assets</item>
+        <item>Indirect Income</item>
+        <item>Indirect Expense</item>
+        <item>Investment</item>
+        <item>Loans(Asset)</item>
+        <item>Loans(Liability)</item>
+        <item>Miscellaneous Expenses(Asset)</item>
+        <item>Reserves</item>
     </string-array>
     
+    <string name="subGrpName_prompt">Select Group name</string>
+    <string-array name="subGroupNameArray">
+        <item>to do</item>
+    </string-array>
 
 </resources>

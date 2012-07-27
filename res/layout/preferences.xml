@@ -69,23 +69,22 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="100"
         android:layout_alignParentBottom="true" >
 
         <Button
-            android:id="@+id/btnOrgDetailSave"
+            android:id="@+id/btnCreateAcc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="50"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="0.73"
             android:text="Create Account"
-            android:textSize="20dp"
-		   android:layout_alignParentBottom="true"/>
+            android:textSize="20dp" />
 		
         <Button
-            android:id="@+id/btnSkip"
+            android:id="@+id/btnQuit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="50"
+            android:layout_weight="1"
             android:text="Quit"
             android:textSize="20dp"
 		   android:layout_alignParentBottom="true"/>

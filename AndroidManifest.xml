@@ -32,6 +32,10 @@
             android:label="Preferences"
             android:name=".preferences" >
         </activity>
+        <activity
+            android:label="Create Account"
+            android:name=".createAccount" >
+        </activity>
     </application>
 
 </manifest>
