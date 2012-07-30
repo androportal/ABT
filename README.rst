@@ -2,7 +2,7 @@
 GNUKhata on Aakash tablet
 ====
 
-Porting of <http://gnukhata.org/> on **Aakash** tablet, a ``low cost
+Porting of `GNUkhata <http://gnukhata.org/>`_ on **Aakash** tablet, a ``low cost
 access device``. GNUKhata is a Free Accounting Software which can be
 deployed by both profit making and non-profit making organisations.
 
