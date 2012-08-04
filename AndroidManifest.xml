@@ -7,6 +7,8 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    
     <application
         android:icon="@drawable/logo"
         android:label="@string/app_name"
@@ -36,6 +38,11 @@
             android:label="Create Account"
             android:name=".createAccount" >
         </activity>
+        <activity
+            android:label="Menu"
+            android:name=".menu" >
+        </activity>
     </application>
+    
 
 </manifest>

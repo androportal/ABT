@@ -1,8 +1,6 @@
 package com.example.gkaakash;
 
 import java.util.Calendar;
-import android.database.sqlite.SQLiteDatabase;
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -17,7 +15,7 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
  
-@SuppressLint("ParserError")
+
 public class createOrg extends MainActivity implements OnItemSelectedListener {
 	//Declaring variables
 	TextView tvDisplayFromDate, tvDisplayToDate;

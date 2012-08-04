@@ -10,7 +10,7 @@ android:layout_height="fill_parent">
 
 	<TableLayout 
         		android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
+				android:layout_height="wrap_content"
 				android:padding="40dp">
 		
 		<TableRow>
@@ -104,7 +104,8 @@ android:layout_height="fill_parent">
 		<EditText 
 		    android:layout_width="0dip"
 			android:layout_weight="1.3"
-			android:hint="Tap to enter Total Debit Opening Balance" />
+			android:editable="false"
+			android:text="0.00" />
 		</TableRow>
 		
 		<TableRow>
@@ -118,7 +119,8 @@ android:layout_height="fill_parent">
 		<EditText 
 		    android:layout_width="0dip"
 			android:layout_weight="1.3"
-			android:hint="Tap to enter Total Credit Opening Balance" />
+			android:editable="false"
+			android:text="0.00" />
 		</TableRow>
 		
 		<TableRow>
@@ -132,7 +134,9 @@ android:layout_height="fill_parent">
 		<EditText 
 		    android:layout_width="0dip"
 			android:layout_weight="1.3"
-			android:hint="Tap to enter Difference in Opening Balances" />
+			android:editable="false" 
+			android:text="0.00" />
+			
 		</TableRow>
 		
     </TableLayout>
@@ -142,7 +146,8 @@ android:layout_height="fill_parent">
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true" 
+        android:background="@drawable/blackbutton">
 
         <Button
             android:id="@+id/btnCreateAccSave"
@@ -151,7 +156,8 @@ android:layout_height="fill_parent">
             android:layout_alignParentBottom="true"
             android:layout_weight="0.96"
             android:text="Save"
-            android:textSize="20dp" />
+            android:textSize="20dp" 
+            android:layout_gravity="center_vertical"/>
 		
         <Button
             android:id="@+id/btnCreateAccFinish"
@@ -160,7 +166,8 @@ android:layout_height="fill_parent">
             android:layout_alignParentBottom="true"
             android:layout_weight="0.90"
             android:text="Finish"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:layout_gravity="center_vertical" />
 
 </LinearLayout>
 </RelativeLayout>
