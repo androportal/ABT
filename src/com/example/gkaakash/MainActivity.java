@@ -12,7 +12,6 @@ import android.content.Intent;
 public class MainActivity extends Activity {
 	//Add a class property to hold a reference to the button
 	Button create_org;
-	
 	//
     @Override
     public void onCreate(Bundle savedInstanceState) {

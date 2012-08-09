@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
  android:layout_width="fill_parent" 
  android:layout_height="fill_parent"
+ android:orientation="vertical"
+ android:weightSum="100"
  android:background="@drawable/dark_gray_background">
  
-<ScrollView
-android:layout_width="fill_parent"
-android:layout_height="fill_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="80">
 
 	<TableLayout 
         		android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:padding="40dp">
+				android:layout_height="wrap_content">
 		
 		<TableRow>
 		    <TextView 
@@ -146,6 +148,7 @@ android:layout_height="fill_parent">
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_weight="20"
         android:layout_alignParentBottom="true" 
         android:background="@drawable/blackbutton">
 
@@ -170,4 +173,4 @@ android:layout_height="fill_parent">
             android:layout_gravity="center_vertical" />
 
 </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

@@ -47,7 +47,6 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 		tvDisplayToDate = (TextView) findViewById(R.id.tvToDate);
 		
 		//for creating calendar object and linking with its 'getInstance' method, for getting a default instance of this class for general use
-		
 		year = c.get(Calendar.YEAR);
 		month = c.get(Calendar.MONTH);
 		day = c.get(Calendar.DAY_OF_MONTH);
@@ -80,18 +79,13 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 			public void onClick(View v) {
 				//for showing a date picker dialog that allows the user to select a date (from date or financial yr start)
 				showDialog(FROM_DATE_DIALOG_ID);
- 
 			}
- 
 		});
-		btnChangeToDate.setOnClickListener(new OnClickListener() {
-			 
+		btnChangeToDate.setOnClickListener(new OnClickListener() {	 
 			public void onClick(View v) {
 				////for showing a date picker dialog that allows the user to select a date (to date or financial yr to)
 				showDialog(TO_DATE_DIALOG_ID);
- 
 			}
- 
 		});
 	}
 	
@@ -123,14 +117,12 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 			// set selected date into textview
 			tvDisplayFromDate.setText(new StringBuilder().append(day).append("-").append(month + 1)
 					   .append("-").append(year)
-			   .append(" "));
-			
+			   .append(" "));	
 		}
 	};
 	
 	private DatePickerDialog.OnDateSetListener todatePickerListener
     = new DatePickerDialog.OnDateSetListener() {
-
 		// when dialog box is closed, below method will be called.
 		public void onDateSet(DatePicker view, int selectedYear,
 			int selectedMonth, int selectedDay) {
@@ -156,7 +148,6 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// Ignore this method!!!
-		
 	}
 	
 	private void addListeneronNextButton() {

@@ -42,6 +42,27 @@
             android:label="Menu"
             android:name=".menu" >
         </activity>
+        <activity
+            android:label="Edit Preferences"
+            android:name=".editPreferences" >
+        </activity>
+        <activity
+            android:label="Report Types"
+            android:name=".Report" >
+        </activity>
+        <activity
+            android:label="Ledger Report"
+            android:name=".reportType" >
+        </activity>
+         <activity
+            android:label="Contra"
+            android:name=".Voucher" >
+        </activity>
+        <activity
+            android:label="Contra"
+            android:name=".voucherType" >
+        </activity>
+        
     </application>
     
 

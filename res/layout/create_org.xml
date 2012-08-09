@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="fill_parent" 
+ android:layout_height="fill_parent"
+ android:orientation="vertical"
+ android:weightSum="100"
+ android:background="@drawable/dark_gray_background">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/dark_gray_background"
-    android:orientation="vertical"
-    android:padding="40dp" >
+    android:layout_weight="80">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/tvOrgName"
@@ -96,7 +105,7 @@
             android:id="@+id/btnChangeFromDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="38.16"
+            android:layout_weight="40"
             android:text="Set From Date" />
 		<View
 		android:layout_width="0dp"
@@ -110,18 +119,23 @@
             android:layout_weight="40"
             android:text="Set To Date" />
     </LinearLayout>
+</LinearLayout>
+</ScrollView>
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="20" >
-    </View>
+<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="20"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/blackbutton" >
 
-    <Button
-        android:id="@+id/btnNext"
-        android:layout_width="112dp"
-        android:layout_height="46dp"
-        android:layout_gravity="center"
-        android:text="Next" />
-
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:text="Next"
+            android:textSize="20dp" />
+    </LinearLayout>
 </LinearLayout>
