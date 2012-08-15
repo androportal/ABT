@@ -37,4 +37,14 @@
         <item>to do</item>
     </string-array>
 
+    <style name="CustomTheme" parent="android:Theme">
+        <item name="android:windowTitleSize">30dip</item>
+    </style>
+    
+    <string name="Search_prompt">Select Organisation Type</string>
+    <string-array name="SearchBy_arrays">
+        <item>A</item>
+        <item>B</item>
+    </string-array>
+  
 </resources>

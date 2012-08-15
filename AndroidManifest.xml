@@ -46,21 +46,21 @@
             android:label="Edit Preferences"
             android:name=".editPreferences" >
         </activity>
-        <activity
+        <activity android:theme="@style/CustomTheme"
             android:label="Report Types"
             android:name=".Report" >
         </activity>
         <activity
-            android:label="Ledger Report"
-            android:name=".reportType" >
+            android:label="Menu >> Report"
+            android:name=".reportMenu" >
         </activity>
-         <activity
-            android:label="Contra"
+         <activity android:theme="@style/CustomTheme"
+            android:label="Voucher Types"
             android:name=".Voucher" >
         </activity>
         <activity
-            android:label="Contra"
-            android:name=".voucherType" >
+            android:label="Menu >> Transaction"
+            android:name=".voucherMenu" >
         </activity>
         
     </application>

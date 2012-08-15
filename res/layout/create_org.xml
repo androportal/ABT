@@ -51,17 +51,54 @@
         android:layout_height="wrap_content"
         android:entries="@array/orgType_arrays"
         android:prompt="@string/orgType_prompt" />
-
+    
     <TextView
         android:id="@+id/tvFnclYear"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:layout_weight="30"
         android:gravity="center"
         android:text="Financial Year"
         android:textColor="#FFFFFF"
         android:textSize="20dp"
         android:textStyle="bold" />
+    
+      <LinearLayout
+          android:layout_width="fill_parent"
+          android:layout_height="43dp"
+          android:orientation="horizontal"
+          android:weightSum="100" >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="40"
+            android:background="@android:color/darker_gray"
+            android:gravity="center"
+            android:text="From Date"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000" />
+		
+        <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="20" >
+    	</View>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="40"
+            android:background="@android:color/darker_gray"
+            android:gravity="center"
+            android:text="  To Date  "
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000" />
+
+    </LinearLayout>
+    
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -97,28 +134,19 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="100" >
+        android:layout_height="75dp"
+        android:gravity="center_horizontal" >
 
         <Button
             android:id="@+id/btnChangeFromDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="40"
-            android:text="Set From Date" />
-		<View
-		android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="20" >
-    	</View>
-        <Button
-            android:id="@+id/btnChangeToDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="40"
-            android:text="Set To Date" />
+            android:text="   Change Date   "
+            android:textColor="#000000"
+        	android:textSize="20dp"
+        	 android:layout_gravity="center_vertical" />
     </LinearLayout>
+
 </LinearLayout>
 </ScrollView>
 

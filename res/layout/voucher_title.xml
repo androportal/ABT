@@ -2,25 +2,51 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" 
+        android:weightSum="100"
+        android:baselineAligned="false">
 
+        <LinearLayout 
+             android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="90"
+            android:gravity="left">
         <TextView
-            android:id="@+id/tvVoucherTitle"
+              android:id="@+id/tvVoucherTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contra" 
-            android:gravity="left"/>
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.13"
+            android:text="TextView"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"/>
+		</LinearLayout>
 
-        <Button
-            android:id="@+id/btnChangeVoucher"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginRight="5dp"
-            android:gravity="right"
-            android:text="Change Voucher Type"
-            android:textColor="#000000"
-            android:textSize="@dimen/padding_small"
-            android:textStyle="bold" />
+		<LinearLayout
+		   android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:gravity="right" >
 
+			<Button
+			    android:id="@+id/btnChangeVoucher"
+			    android:layout_width="wrap_content"
+			    android:layout_height="fill_parent"
+			    android:layout_weight="0.13"
+			    android:background="@drawable/buttontitle"
+			    android:text=" View Other Transactions"
+			    android:textAppearance="?android:attr/textAppearanceMedium"
+			    android:textColor="#FFFFFF" />
+			
+			<Button
+			   android:id="@+id/btnhome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/index"
+                android:textColor="#FFFFFF" />
+
+		</LinearLayout>
     </LinearLayout>
  

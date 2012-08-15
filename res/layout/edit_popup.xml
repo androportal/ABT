@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+   <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical" >
+    
+		<TableRow>
+    <TextView
+        android:id="@+id/tvAccName"
+        android:layout_width="217dp"
+        android:layout_height="wrap_content"
+        android:text="Select Account Name"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+         />
+    
+      <Spinner
+        android:id="@+id/sAccName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/SearchBy_arrays" 
+         />
+ </TableRow>
+
+		<TableRow>
+
+		    <TextView
+		        android:id="@+id/tvAccCode"
+		        android:layout_width="217dp"
+		        android:layout_height="wrap_content"
+		        android:text="Select Account Code"
+		        android:textColor="#FFFFFF"
+		        android:textSize="20dp" />
+
+		    <EditText
+		        android:id="@+id/etAccCode"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		       
+		        android:hint="Maximum 50 Characters " >
+
+		        <requestFocus />
+		    </EditText>
+		</TableRow>
+
+  </TableLayout>
+		  <Button
+		android:id="@+id/okdialogbutton"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="OK"
+		android:gravity="center"
+		/>
+
+		 
+</LinearLayout>

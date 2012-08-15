@@ -1,13 +1,15 @@
 package com.example.gkaakash;
 
 import java.util.Calendar;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
@@ -25,7 +27,10 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 	static final int TO_DATE_DIALOG_ID = 1;
 	Spinner orgType;
 	String orgTypeFlag;
+	AlertDialog dialog;
 	final Calendar c = Calendar.getInstance();
+	final Context context = this;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,8 +59,8 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 		// set current date into "from date" textview
 		tvDisplayFromDate.setText(new StringBuilder()
 			// Month is 0 based, just add 1
-			.append(day).append("-").append(month + 1).append("-")
-			.append(year).append(" "));
+			.append(year).append("-").append(month).append("-")
+			.append(day).append(" "));
 		
 		//Add one year to current date time
 		c.add(Calendar.YEAR,1);
@@ -66,77 +71,52 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 		toYear = c.get(Calendar.YEAR);
 		tvDisplayToDate.setText(new StringBuilder()
 		// Month is 0 based, just add 1
-		.append(toDay).append("-").append(toMonth + 1).append("-")
-		.append(toYear).append(" "));
+		.append(toYear).append("-").append(toMonth).append("-")
+		.append(toDay).append(" "));
 	}
 
 	private void addListeneronDateButton() {
 		btnChangeFromDate = (Button) findViewById(R.id.btnChangeFromDate);
-		btnChangeToDate = (Button) findViewById(R.id.btnChangeToDate);
-		
 		btnChangeFromDate.setOnClickListener(new OnClickListener() {
- 
-			public void onClick(View v) {
-				//for showing a date picker dialog that allows the user to select a date (from date or financial yr start)
-				showDialog(FROM_DATE_DIALOG_ID);
-			}
-		});
-		btnChangeToDate.setOnClickListener(new OnClickListener() {	 
-			public void onClick(View v) {
-				////for showing a date picker dialog that allows the user to select a date (to date or financial yr to)
-				showDialog(TO_DATE_DIALOG_ID);
-			}
-		});
-	}
-	
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-		case FROM_DATE_DIALOG_ID:
-			// set 'from date' date picker as current date
-			   return new DatePickerDialog(this, fromdatePickerListener, 
-	                         year, month,day);
-		case TO_DATE_DIALOG_ID:
-			//add one year to current date in 'to date' date picker
-			   return new DatePickerDialog(this, todatePickerListener, 
-	                         toYear, toMonth,toDay);
-		}
-		return null;
-	}
- 
-	private DatePickerDialog.OnDateSetListener fromdatePickerListener 
-                = new DatePickerDialog.OnDateSetListener() {
- 
-		// when dialog box is closed, below method will be called.
-		public void onDateSet(DatePicker view, int selectedYear,
-				int selectedMonth, int selectedDay) {
-			year = selectedYear;
-			month = selectedMonth;
-			day = selectedDay;
- 
-			// set selected date into textview
-			tvDisplayFromDate.setText(new StringBuilder().append(day).append("-").append(month + 1)
-					   .append("-").append(year)
-			   .append(" "));	
-		}
-	};
-	
-	private DatePickerDialog.OnDateSetListener todatePickerListener
-    = new DatePickerDialog.OnDateSetListener() {
-		// when dialog box is closed, below method will be called.
-		public void onDateSet(DatePicker view, int selectedYear,
-			int selectedMonth, int selectedDay) {
-		year = selectedYear;
-		month = selectedMonth;
-		day = selectedDay;
-		
-		// set selected date into textview
-		tvDisplayToDate.setText(new StringBuilder().append(day).append("-").append(month + 1)
-				   .append("-").append(year)
-		   .append(" "));
-		}
-	};
 
+			@Override
+			public void onClick(View arg0) {
+				//Preparing views
+				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+				View layout = inflater.inflate(R.layout.datepiker, (ViewGroup) findViewById(R.id.layout_root));
+				//Building Datepicker dialog
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setView(layout);
+	            builder.setTitle("Set Date");
+	            builder.setPositiveButton("Set",new  DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					 final   DatePicker dp = (DatePicker) dialog.findViewById(R.id.datePicker1);
+					 
+					 int y = dp.getYear();
+					 int m = dp.getMonth();
+					 int d =  dp.getDayOfMonth();
+					 String strDateTime = y + "-" + (m + 1) + "-" + d;
+					 
+					 //setting selected date into calender's object
+					 c.set(y, m, d);
+					 //subtracting one day
+					 c.add(Calendar.DAY_OF_MONTH, -1);
+					 
+					 int mYear = c.get(Calendar.YEAR);
+					 int mMonth = c.get(Calendar.MONTH);
+					 int mDay = c.get(Calendar.DAY_OF_MONTH);
+					 tvDisplayFromDate.setText(strDateTime);
+					 tvDisplayToDate.setText(new StringBuilder()
+					 .append((mYear + 1)).append("-").append((mMonth)+ 1).append("-").append((mDay)));
+				}
+				});
+                dialog=builder.create();
+        		dialog.show();
+			}	
+		});
+	}
+	
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View v, int position,
 			   long id){

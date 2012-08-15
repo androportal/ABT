@@ -3,28 +3,59 @@ package com.example.gkaakash;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
  
 
 public class orgDetails extends Activity {
 	//Declaring variables 
-	Button btnorgDetailSave, btnRegDate, btnFcraDate;
+	Button btnorgDetailSave, btnRegDate, btnFcraDate,btnSkip;
 	int year, month, day;
 	static final int REG_DATE_DIALOG_ID = 0;
 	static final int FCRA_DATE_DIALOG_ID = 1;
 	String getSelectedOrgType;
 	TextView tvRegNum, tvRegDate, tvFcraNum, tvFcraDate, tvMVATnum, tvServiceTaxnum;
 	EditText etRegNum, etFcraNum, etMVATnum, etServiceTaxnum;
+	
+	private int group1Id = 1;
+	int Edit = Menu.FIRST;
+	int Delete = Menu.FIRST +1;
+	int Finish = Menu.FIRST +2;
+	AlertDialog dialog;
+	final Context context = this;
+	//adding options to the options menu
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    menu.add(group1Id, Edit, Edit, "Edit");
+    menu.add(group1Id, Delete, Delete, "Delete");
+    menu.add(group1Id, Finish, Finish, "Finish");
+    return super.onCreateOptionsMenu(menu); 
+    }
+	
+	//code for the actions to be performed on clicking options menu goes here ...
+	 @Override
+	 public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	    case 1:
+	    Toast msg = Toast.makeText(orgDetails.this, "Menu 1", Toast.LENGTH_LONG);
+	    msg.show();
+	    return true;
+	    }
+	    return super.onOptionsItemSelected(item);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +63,7 @@ public class orgDetails extends Activity {
 		//Calling org_details.xml
 		setContentView(R.layout.org_details);
 		btnorgDetailSave = (Button) findViewById(R.id.btnOrgDetailSave);
+		btnSkip = (Button) findViewById(R.id.btnSkip);
 		tvRegNum = (TextView) findViewById(R.id.tvRegNum);
 		etRegNum = (EditText) findViewById(R.id.etRegNum);
 		tvRegDate = (TextView) findViewById(R.id.tvRegDate);
@@ -106,7 +138,7 @@ public class orgDetails extends Activity {
 	private void addListenerOnButton() {
 		final Context context = this;
 		//Create a class implementing “OnClickListener” and set it as the on click listener for the button
-		btnorgDetailSave.setOnClickListener(new OnClickListener() {
+		btnSkip.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(android.view.View v) {
