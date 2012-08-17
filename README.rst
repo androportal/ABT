@@ -77,19 +77,19 @@ After cloning the require branch, start eclipse
 Screenshots
 ------------
 
-.. figure:: https://docs.google.com/open?id=0B-PZvjWWRSpQSE5pUGIyRHJnY3c
+.. figure:: http://s12.postimage.org/ykeytd53x/mainpage.png
    :align: center
    :alt: main page of gkAakash
    
    `Main Page`
 
-.. figure:: https://docs.google.com/open?id=0B-PZvjWWRSpQQkhSSF9LQTczOXM
+.. figure:: http://s17.postimage.org/6l0x4tawf/mainmenu.png
    :align: center
    :alt: main menu of gkAakash
 
    `Main menu`
 
-.. figure:: https://docs.google.com/open?id=0B-PZvjWWRSpQRVJTN1hJX3pvLWc
+.. figure:: http://s12.postimage.org/s1qpu6ial/org_Details.png
    :align: center
    :alt: Organization details page
    
