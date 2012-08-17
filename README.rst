@@ -1,5 +1,5 @@
 =========================
-GNUKhata on Aakash tablet
+GNUkhata on Aakash tablet
 =========================
 
 Porting of `GNUkhata <http://gnukhata.org/>`_ on `Aakash
@@ -42,13 +42,13 @@ of GNUkhata.
 User's can clone this repo by typing
 ::
 
-   git clone -b froyo https://github.com/nutannivate/gkAakash.git
+   git clone -b froyo https://github.com/androportal/gkAakash.git
 
 
 if you want to clone code for Android(4.0.3, API-15), type
 ::
 
-   git clone -b ics https://github.com/nutannivate/gkAakash.git
+   git clone -b ics https://github.com/androportal/gkAakash.git
 
 
 Importing gkAakash as an `eclipse <http://www.eclipse.org/>`_ project
@@ -74,6 +74,28 @@ After cloning the require branch, start eclipse
   button and select the cloned repository
 
 
+Screenshots
+------------
+
+.. figure:: https://docs.google.com/open?id=0B-PZvjWWRSpQSE5pUGIyRHJnY3c
+   :align: center
+   :alt: main page of gkAakash
+   
+   `Main Page`
+
+.. figure:: https://docs.google.com/open?id=0B-PZvjWWRSpQQkhSSF9LQTczOXM
+   :align: center
+   :alt: main menu of gkAakash
+
+   `Main menu`
+
+.. figure:: https://docs.google.com/open?id=0B-PZvjWWRSpQRVJTN1hJX3pvLWc
+   :align: center
+   :alt: Organization details page
+   
+   `Organization details`
+
+
 Documentation
 -------------
 
@@ -82,7 +104,7 @@ can be found at
 
 ::
 
-   git clone -b docs https://github.com/nutannivate/gkAakash.git
+   git clone -b docs https://github.com/androportal/gkAakash.git
 
 please read the ``README.rst`` on how to generate html docs
 
