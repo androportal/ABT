@@ -51,6 +51,20 @@ if you want to clone code for Android(4.0.3, API-15), type
    git clone -b ics https://github.com/androportal/gkAakash.git
 
 
+The default branch is **froyo**, which can be cloned by typing
+::
+
+   git clone https://github.com/androportal/gkAakash.git
+
+
+if you want to checkout all branches then type,
+::
+
+   git checkout -b froyo remotes/origin/froyo
+   git checkout -b ics remotes/origin/ics
+   git checkout -b docs remotes/origin/docs
+   
+
 Importing gkAakash as an `eclipse <http://www.eclipse.org/>`_ project
 ---------------------------------------------------------------------
 `Note`: we have used Eclipse version 3.7.2(Indigo)
@@ -74,28 +88,6 @@ After cloning the require branch, start eclipse
   button and select the cloned repository
 
 
-Screenshots
-------------
-
-.. figure:: http://s12.postimage.org/ykeytd53x/mainpage.png
-   :align: center
-   :alt: main page of gkAakash
-   
-   `Main Page`
-
-.. figure:: http://s17.postimage.org/6l0x4tawf/mainmenu.png
-   :align: center
-   :alt: main menu of gkAakash
-
-   `Main menu`
-
-.. figure:: http://s12.postimage.org/s1qpu6ial/org_Details.png
-   :align: center
-   :alt: Organization details page
-   
-   `Organization details`
-
-
 Documentation
 -------------
 
@@ -113,5 +105,5 @@ License
 -------
 
 GNU `GPLv3 <http://www.gnu.org/licenses/gpl-3.0.txt>`_ 
-
+Copyright (c) IIT Bombay, 2012.
 
