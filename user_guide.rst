@@ -6,4 +6,4 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-**more content will be added here soon**
+**more content will be added here**

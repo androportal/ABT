@@ -13,7 +13,7 @@ clone the repo using
 
 ::
 
-   git clone -b docs https://github.com/nutannivate/gkAakash.git
+   git clone -b docs https://github.com/androportal/gkAakash.git
 
 
 to generate all html in one go, type:
