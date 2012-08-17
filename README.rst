@@ -2,7 +2,7 @@
 Documentation for **gkAakash**
 ==============================
 
-This `branch` contains user's manual and reference for ``gkAakash ``
+This `branch` contains user's manual and reference for ``gkAakash``
 in `sphinx <http://sphinx.pocoo.org/>`_
 
 
