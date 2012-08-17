@@ -1,19 +1,39 @@
-====
-GNUKhata on Aakash tablet
-====
+==============================
+Documentation for **gkAakash**
+==============================
 
-Porting of `GNUkhata <http://gnukhata.org/>`_ on **Aakash** tablet, a ``low cost
-access device``. GNUKhata is a Free Accounting Software which can be
-deployed by both profit making and non-profit making organisations.
+This `branch` contains user's manual and reference for ``gkAakash ``
+in `sphinx <http://sphinx.pocoo.org/>`_
+
 
 How to use
-====
+----------
 
-This repo contains an Android(2.2, API-8) code 	for the User Interface
-of GNUKhata, user's can clone this repo in the ``Eclipse`` workspace
-and import it as a project. 
+clone the repo using 
+
+::
+
+   git clone -b docs https://github.com/nutannivate/gkAakash.git
 
 
+to generate all html in one go, type:
 
+::
+
+   make html
+
+to remove or clean all html pages type:
+
+::
+   
+   make clean
+
+
+Browse docs
+-----------
+
+After running ``make``, a temporary directory ``_build/html/`` is
+created in each parent directory. Locate the file ``index.html`` to
+browse documentation in html format.
 
 
