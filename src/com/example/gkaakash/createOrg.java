@@ -43,7 +43,7 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 		//creating interface to pass on the activity to next page
 		addListeneronNextButton();
 		orgType = (Spinner) findViewById(R.id.sOrgType);
-		//Attach a listener to the Organisation Type Spinner
+		//Attach a listener to the Organization Type Spinner
 		orgType.setOnItemSelectedListener((OnItemSelectedListener) this);
 	}
 
@@ -56,7 +56,7 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 		month = c.get(Calendar.MONTH);
 		day = c.get(Calendar.DAY_OF_MONTH);
  
-		// set current date into "from date" textview
+		// set current date into "from date" textView
 		tvDisplayFromDate.setText(new StringBuilder()
 			// Month is 0 based, just add 1
 			.append(year).append("-").append(month).append("-")
@@ -84,7 +84,7 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 				//Preparing views
 				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 				View layout = inflater.inflate(R.layout.datepiker, (ViewGroup) findViewById(R.id.layout_root));
-				//Building Datepicker dialog
+				//Building DatepPcker dialog
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				builder.setView(layout);
 	            builder.setTitle("Set Date");

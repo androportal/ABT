@@ -41,7 +41,7 @@ public class voucherMenu extends ListActivity {
 				if(position == 0)
 				{
 					String vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Voucher.class);
+					Intent intent = new Intent(context, transaction_tab.class);
 					intent.putExtra("flag", vouchertypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -49,7 +49,7 @@ public class voucherMenu extends ListActivity {
 				if(position == 1)
 				{
 					String vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Voucher.class);
+					Intent intent = new Intent(context, transaction_tab.class);
 					intent.putExtra("flag", vouchertypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -57,7 +57,7 @@ public class voucherMenu extends ListActivity {
 				if(position == 2)
 				{
 					String vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Voucher.class);
+					Intent intent = new Intent(context, transaction_tab.class);
 					intent.putExtra("flag", vouchertypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -65,7 +65,7 @@ public class voucherMenu extends ListActivity {
 				if(position == 3)
 				{
 					String vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Voucher.class);
+					Intent intent = new Intent(context, transaction_tab.class);
 					intent.putExtra("flag", vouchertypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -73,7 +73,7 @@ public class voucherMenu extends ListActivity {
 				if(position == 4)
 				{
 					String vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Voucher.class);
+					Intent intent = new Intent(context, transaction_tab.class);
 					intent.putExtra("flag", vouchertypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -81,7 +81,7 @@ public class voucherMenu extends ListActivity {
 				if(position == 5)
 				{
 					String vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Voucher.class);
+					Intent intent = new Intent(context, transaction_tab.class);
 					intent.putExtra("flag", vouchertypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -89,7 +89,7 @@ public class voucherMenu extends ListActivity {
 				if(position == 6)
 				{
 					String vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Voucher.class);
+					Intent intent = new Intent(context, transaction_tab.class);
 					intent.putExtra("flag", vouchertypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -97,7 +97,7 @@ public class voucherMenu extends ListActivity {
 				if(position == 7)
 				{
 					String vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Voucher.class);
+					Intent intent = new Intent(context, transaction_tab.class);
 					intent.putExtra("flag", vouchertypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -105,7 +105,7 @@ public class voucherMenu extends ListActivity {
 				if(position == 8)
 				{
 					String vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Voucher.class);
+					Intent intent = new Intent(context, transaction_tab.class);
 					intent.putExtra("flag", vouchertypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -113,7 +113,7 @@ public class voucherMenu extends ListActivity {
 				if(position == 9)
 				{
 					String vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Voucher.class);
+					Intent intent = new Intent(context, transaction_tab.class);
 					intent.putExtra("flag", vouchertypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);

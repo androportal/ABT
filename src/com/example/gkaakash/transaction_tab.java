@@ -1,29 +1,34 @@
 package com.example.gkaakash;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.TabActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-public class Voucher extends Activity  {
+public class transaction_tab extends TabActivity{
+	
+	TextView tab1 = null;
+	TextView tab2 = null;
 	AlertDialog dialog;
 	final Context context = this;
 	
-	  @Override
-	    public void onCreate(Bundle savedInstanceState) {
-	    	super.onCreate(savedInstanceState);
-	    	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-	        //Calling voucher.xml 
-	        setContentView(R.layout.voucher);
-	        //customising title bar
+	  public void onCreate(Bundle savedInstanceState) {
+	        super.onCreate(savedInstanceState);
+	        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+	        setContentView(R.layout.tab);
+	        
+	      //customizing title bar
 	        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.voucher_title);
 	        final TextView label = (TextView) findViewById(R.id.tvVoucherTitle);
 	        String vouchertypeflag = getIntent().getExtras().getString("flag");
@@ -42,7 +47,7 @@ public class Voucher extends Activity  {
 	        });
 	        final Button changeVoucher = (Button) findViewById(R.id.btnChangeVoucher);
 	        changeVoucher.setOnClickListener(new OnClickListener() {
-
+  
 				@Override
 				public void onClick(View arg0) {
 					final CharSequence[] items = {"Contra","Journal","Payment","Receipt","Credit Note","Debit Note","Sales","Sales Return","Purchase","Purchase Return" };
@@ -119,5 +124,55 @@ public class Voucher extends Activity  {
 				dialog.getWindow().setAttributes(lp);
 				}
 			});
-		}
-	}
+	       
+	        final TabHost tabHost = getTabHost();
+	        //creating TabSpec for create voucher
+	        TabSpec createspec = tabHost.newTabSpec("tab1");
+	        tab1 = new TextView(this);
+	        //setting properties in textView
+	        tab1.setGravity(android.view.Gravity.CENTER);
+	        tab1.setTextSize(18.0f);
+	        tab1.setHeight(50);
+	        tab1.setTextColor(Color.WHITE);
+	        tab1.setText("Create Voucher");
+	        createspec.setIndicator(tab1);//assigning TextView to tab Indicator
+	        tab1.setBackgroundColor(Color.parseColor("#60AFFE"));
+	        Intent create = new Intent(this, createVoucher.class);
+	        
+	        createspec.setContent(create);
+	        tabHost.addTab(createspec);  // Adding create tab
+	        
+	        //creating TabSpec for edit voucher
+	        TabSpec editspec = tabHost.newTabSpec("tab2");
+	        tab2 = new TextView(this);
+	        //setting properties in textView
+	        tab2.setGravity(android.view.Gravity.CENTER);
+	        tab2.setTextSize(18.0f);
+	        tab2.setHeight(50);
+	        tab2.setTextColor(Color.WHITE);
+	        tab2.setText("Edit Voucher");
+	        editspec.setIndicator(tab2);//assigning TextView to tab Indicator
+	        Intent edit = new Intent(this, editVoucher.class);
+	        edit.putExtra("flag",vouchertypeflag);
+	        editspec.setContent(edit);
+	        tabHost.addTab(editspec); // Adding edit tab
+	        tabHost.setCurrentTab(0);//setting tab1 on load
+	       
+	        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener(){
+	        	  @Override
+	        	  public void onTabChanged(String tabId) {
+	        		  setTabColor(tabHost);//setting the bellow method
+	        	  }
+	        	  
+				private void setTabColor(TabHost tabHost) {
+					
+					    for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
+					    {
+					        tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#26466D")); //unselected
+					    }
+					    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#60AFFE")); // selected
+					}
+	        });   
+	       
+	 }
+}

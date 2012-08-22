@@ -129,10 +129,7 @@ public class createAccount extends Activity implements OnItemSelectedListener {
           				
           				
           				((Dialog) dialog).getWindow().setAttributes(lp);
-            				
-                      	 
-							
-                }break;
+             }break;
 		            }
 		        }});
 		        //building a complete dialog
@@ -143,14 +140,8 @@ public class createAccount extends Activity implements OnItemSelectedListener {
 
 				lp.copyFrom(dialog.getWindow().getAttributes());
 				lp.width = 310;
-				
-				
 				dialog.getWindow().setAttributes(lp);
-				
-				
-				
-			
-		    	 
+			 
 		    return true;
 		    }
 		    return super.onOptionsItemSelected(item);

@@ -46,22 +46,44 @@
             android:label="Edit Preferences"
             android:name=".editPreferences" >
         </activity>
-        <activity android:theme="@style/CustomTheme"
+        <activity 
+            android:theme="@style/CustomTheme"
             android:label="Report Types"
-            android:name=".Report" >
+            android:name=".report" >
         </activity>
         <activity
             android:label="Menu >> Report"
             android:name=".reportMenu" >
         </activity>
-         <activity android:theme="@style/CustomTheme"
+         <activity 
+             android:theme="@style/mytheme1"
             android:label="Voucher Types"
-            android:name=".Voucher" >
+            android:name=".editVoucher">
         </activity>
         <activity
             android:label="Menu >> Transaction"
             android:name=".voucherMenu" >
         </activity>
+         <activity
+            android:theme="@style/mytheme1"
+            android:label=""
+            android:name=".edit_account" >
+            
+        </activity>
+         <activity
+      		 android:label="Account"
+            android:name=".account_tab" >
+       </activity>
+       <activity
+            android:theme="@style/CustomTheme"
+      		 android:label="Transaction"
+            android:name=".transaction_tab" >
+       </activity>
+        <activity
+            
+      		 android:label="Transaction"
+            android:name=".createVoucher" >
+       </activity>
         
     </application>
     

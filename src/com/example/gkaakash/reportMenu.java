@@ -38,7 +38,7 @@ public class reportMenu extends ListActivity{
 				if(position == 0)
 				{
 					String reporttypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Report.class);
+					Intent intent = new Intent(context, report.class);
 					intent.putExtra("flag", reporttypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -46,7 +46,7 @@ public class reportMenu extends ListActivity{
 				if(position == 1)
 				{
 					String reporttypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Report.class);
+					Intent intent = new Intent(context, report.class);
 					intent.putExtra("flag", reporttypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -54,7 +54,7 @@ public class reportMenu extends ListActivity{
 				if(position == 2)
 				{
 					String reporttypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Report.class);
+					Intent intent = new Intent(context, report.class);
 					intent.putExtra("flag", reporttypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -62,7 +62,7 @@ public class reportMenu extends ListActivity{
 				if(position == 3)
 				{
 					String reporttypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Report.class);
+					Intent intent = new Intent(context, report.class);
 					intent.putExtra("flag", reporttypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -70,7 +70,7 @@ public class reportMenu extends ListActivity{
 				if(position == 4)
 				{
 					String reporttypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Report.class);
+					Intent intent = new Intent(context, report.class);
 					intent.putExtra("flag", reporttypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -78,7 +78,7 @@ public class reportMenu extends ListActivity{
 				if(position == 5)
 				{
 					String reporttypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, Report.class);
+					Intent intent = new Intent(context, report.class);
 					intent.putExtra("flag", reporttypeflag);
 					// To pass on the value to the next page
 					startActivity(intent);

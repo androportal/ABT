@@ -41,10 +41,20 @@
         <item name="android:windowTitleSize">30dip</item>
     </style>
     
-    <string name="Search_prompt">Select Organisation Type</string>
+    <style name="TabText">
+    <item name="android:textColor">@color/tab_text_change</item>
+</style>
+    
+     <string name="Search_prompt">Select Organisation Type</string>
     <string-array name="SearchBy_arrays">
         <item>A</item>
         <item>B</item>
+    </string-array>
+    
+    <string name="accountName_prompt">Select Organisation Type</string>
+    <string-array name="accountName_arrays">
+        <item>Indian Bank</item>
+        <item>Sate Bank of India</item>
     </string-array>
   
 </resources>

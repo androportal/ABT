@@ -78,7 +78,7 @@ public class menu extends ListActivity{
 				//for "create account"
 				if(position == 0)
 				{
-					Intent intent = new Intent(context, createAccount.class);
+					Intent intent = new Intent(context, account_tab.class);
 					//getting the account code flag value from previous page(preferences.xml)
 					accCodeCheckFlag = getIntent().getExtras().getString("flag");
 					//now, passing this flag to the requested page through intent
