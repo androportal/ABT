@@ -1,6 +1,6 @@
  <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent" >
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" 
@@ -25,6 +25,48 @@
             android:entries="@array/BalanceSheet_arrays"
             android:prompt="@string/BalanceSheet_prompt" />
         
+        
+           <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:orientation="horizontal"
+         android:id="@+id/layout_root" >
+        
+         
+         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:orientation="vertical"
+         android:id="@+id/layout_root"
+         android:layout_gravity="left"
+          android:layout_weight="50" >
+        
+         <TextView
+            android:id="@+id/tvsetFromdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Set From Date"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+
+         <DatePicker
+             android:id="@+id/dpsetFromdate"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center" />
+
+        </LinearLayout>
+        
+        
+         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:orientation="vertical"
+         android:id="@+id/layout_root"
+         android:layout_weight="50" >
+         
+        
         <TextView
             android:id="@+id/tvsetT0date"
             android:layout_width="wrap_content"
@@ -39,6 +81,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
+        </LinearLayout>
+        
+         </LinearLayout>
 
         <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		    		android:layout_width="wrap_content"
