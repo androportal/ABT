@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -45,138 +46,97 @@ public class reportMenu extends ListActivity{
 				//for "Ledger"
 				if(position == 0)
 				{
-					
-					
-					/*String reporttypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, report.class);
-					intent.putExtra("flag", reporttypeflag);
-					// To pass on the value to the next page
-					startActivity(intent);*/
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.ledger, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					
-					
-					builder.setTitle("");
+					builder.setTitle("Ledger");
 					builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
 							
 						}
-						
 					});
 					
 					builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
-
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-							
-						}
 						
+						}	
 					});
 					dialog=builder.create();
-	        		dialog.show();
+					dialog.show();
+					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+					//customizing the width and location of the dialog on screen 
+					lp.copyFrom(dialog.getWindow().getAttributes());
+					lp.width = 700;
+					dialog.getWindow().setAttributes(lp);
 					
 				}
 				if(position == 1)
 				{
-					/*String reporttypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, report.class);
-					intent.putExtra("flag", reporttypeflag);
-					// To pass on the value to the next page
-					startActivity(intent);*/
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.trial_balance, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					builder.setTitle("");
-					
+					builder.setTitle("Trial Balance");	
 					builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
-
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
 							
 						}
 						
 					});
-					
 					builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
-
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
 							
 						}
-						
 					});
 					dialog=builder.create();
 	        		dialog.show();
 				}
 				if(position == 2)
 				{
-					/*String reporttypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, report.class);
-					intent.putExtra("flag", reporttypeflag);
-					// To pass on the value to the next page
-					startActivity(intent);*/
-					
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.project_statement, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					builder.setTitle("");
-					
-				
+					builder.setTitle("Project Statement");
 					builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
 							
 						}
-						
 					});
 					
 					builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
-
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
 							
 						}
-						
 					});
 					dialog=builder.create();
 	        		dialog.show();
 				}
 				if(position == 3)
 				{
-					/*String reporttypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, report.class);
-					intent.putExtra("flag", reporttypeflag);
-					// To pass on the value to the next page
-					startActivity(intent);*/
-					
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-					View layout = inflater.inflate(R.layout.report_dialog, (ViewGroup) findViewById(R.id.layout_root));
+					View layout = inflater.inflate(R.layout.cash_flow, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					
+					builder.setTitle("Cash Flow");
 					
 					 builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
 							
 						}
 						 
@@ -184,35 +144,30 @@ public class reportMenu extends ListActivity{
 					 builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								// TODO Auto-generated method stub
 								
 							}
 							 
 						 });
-					dialog=builder.create();
-	        		dialog.show();
+					 dialog=builder.create();
+						dialog.show();
+						WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+						//customizing the width and location of the dialog on screen 
+						lp.copyFrom(dialog.getWindow().getAttributes());
+						lp.width = 600;
+						dialog.getWindow().setAttributes(lp);
 				}
 				if(position == 4)
 				{
-					/*String reporttypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, report.class);
-					intent.putExtra("flag", reporttypeflag);
-					// To pass on the value to the next page
-					startActivity(intent);*/
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.balance_sheet, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					
-					
-					
+					builder.setTitle("Balance Sheet");
 					builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
-
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-							
+						
 						}
 						
 					});
@@ -222,7 +177,6 @@ public class reportMenu extends ListActivity{
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub
-							
 						}
 						
 					});
@@ -231,25 +185,15 @@ public class reportMenu extends ListActivity{
 				}
 				if(position == 5)
 				{
-					/*String reporttypeflag  = parent.getItemAtPosition(position).toString();
-					Intent intent = new Intent(context, report.class);
-					intent.putExtra("flag", reporttypeflag);
-					// To pass on the value to the next page
-					startActivity(intent);*/
-					
-					
-					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-					View layout = inflater.inflate(R.layout.report_dialog, (ViewGroup) findViewById(R.id.layout_root));
+				    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+					View layout = inflater.inflate(R.layout.income_expenditure, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					
-					
-					 builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
-
+					builder.setTitle("Profit and Loss Account");
+					builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
 							
 						}
 						 
@@ -257,7 +201,6 @@ public class reportMenu extends ListActivity{
 					 builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								// TODO Auto-generated method stub
 								
 							}
 							 
@@ -265,8 +208,6 @@ public class reportMenu extends ListActivity{
 					dialog=builder.create();
 	        		dialog.show();
 				}
-				
-				
 			} 
 		});
 	}
