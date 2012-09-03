@@ -56,5 +56,18 @@
         <item>Indian Bank</item>
         <item>Sate Bank of India</item>
     </string-array>
-  
-</resources>
+    
+   <string name="BalanceSheet_prompt">Select Organisation Type</string>
+    <string-array name="BalanceSheet_arrays">
+        <item>Conventional Balance Sheet</item>
+        <item>Sources and Application of Funds</item>
+    </string-array>
+    
+    <string name="TrialBalance_prompt">Select Organisation Type</string>
+    <string-array name="TrialBalance_arrays">
+        <item>Net Trial Balance</item>
+        <item>Gross Trial Balance</item>
+        <item>Extended Trial Balance</item>
+    </string-array>
+    
+    </resources>

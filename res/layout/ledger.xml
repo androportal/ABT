@@ -1,0 +1,83 @@
+ <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:orientation="vertical"
+         android:id="@+id/layout_root" >
+         
+
+         <TextView
+            android:id="@+id/tvAccName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Account Name"
+            android:textColor="#FFFFFF" 
+            android:textSize="20dp"/>
+
+        <Spinner
+            android:id="@+id/sAccountName"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:entries="@array/BalanceSheet_arrays"
+            android:prompt="@string/BalanceSheet_prompt" />
+        
+        <TextView
+            android:id="@+id/tvsetT0date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Set To-Date"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+
+        <DatePicker
+            android:id="@+id/dpsetT0date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		    		android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center">
+
+		<TableRow>
+		    <CheckBox
+		        android:id="@+id/cbNarration"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="0.3" 
+		        android:layout_marginRight="30dp"/>
+		    
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_weight="1.7"
+		        android:text="View Ledger With Narration"
+		        android:textColor="#FFFFFF"
+		        android:textSize="20dp" />
+		</TableRow>
+		</TableLayout>
+        
+        <TextView
+            android:id="@+id/tvProject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Project"
+            android:textColor="#FFFFFF" 
+            android:textSize="20dp"/>
+
+        <Spinner
+            android:id="@+id/sProject"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:entries="@array/BalanceSheet_arrays"
+            android:prompt="@string/BalanceSheet_prompt" />
+
+    </LinearLayout>
+    </ScrollView>
