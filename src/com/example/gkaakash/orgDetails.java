@@ -2,6 +2,8 @@ package com.example.gkaakash;
 
 import java.util.Calendar;
 
+import com.gkaakash.controller.Startup;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -36,6 +38,9 @@ public class orgDetails extends Activity {
 	int Finish = Menu.FIRST +2;
 	AlertDialog dialog;
 	final Context context = this;
+	
+	Integer client_id =Startup.getClient_id();
+	
 	//adding options to the options menu
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -108,6 +113,7 @@ public class orgDetails extends Activity {
 			tvServiceTaxnum.setVisibility(TextView.VISIBLE);
 			etServiceTaxnum.setVisibility(EditText.VISIBLE);
 		}
+		
 		//Declaring new method for setting current date into "Registration Date"
 		setCurrentDateOnButton();
 		addListenerOnButton();

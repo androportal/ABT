@@ -1,5 +1,7 @@
 package com.example.gkaakash;
 
+import org.xmlrpc.android.XMLRPCClient;
+import com.gkaakash.controller.Startup;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,11 +14,16 @@ import android.content.Intent;
 public class MainActivity extends Activity {
 	//Add a class property to hold a reference to the button
 	Button create_org;
-	//
+	private XMLRPCClient client;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-        //Calling activity_main.xml which is first page of GNUKhata
+    	
+    	Startup startup =new Startup();
+    	Object[] orgNameList = startup.getOrgnisationName();//call getOrganisationNames method 
+    	//Calling activity_main.xml which is first page of GNUKhata
+    	System.out.println(orgNameList);
         setContentView(R.layout.activity_main);
         //Request a reference to the button from the activity by calling “findViewById” and assign the retrieved button to an instance variable
         create_org = (Button) findViewById(R.id.bcreateOrg);

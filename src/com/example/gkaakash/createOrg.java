@@ -1,6 +1,13 @@
 package com.example.gkaakash;
 
 import java.util.Calendar;
+
+import org.xmlrpc.android.XMLRPCException;
+
+import com.gkaakash.controller.Startup;
+import com.gkaakash.coreconnection.CoreConnection;
+
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
  
@@ -26,11 +34,14 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 	static final int FROM_DATE_DIALOG_ID = 0;
 	static final int TO_DATE_DIALOG_ID = 1;
 	Spinner orgType;
-	String orgTypeFlag;
+	private String organisationName,orgTypeFlag,selectedOrgType,fromdate,todate;
 	AlertDialog dialog;
 	final Calendar c = Calendar.getInstance();
 	final Context context = this;
-	
+	private EditText orgName;
+	private Startup startup;
+	Object[] deployparams;
+	Integer client_id ;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -116,32 +127,47 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 			}	
 		});
 	}
-	
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View v, int position,
 			   long id){
 		//Retrieving the selected org type from the Spinner and assigning it to a variable 
-		String selectedOrgType = parent.getItemAtPosition(position).toString();
+		selectedOrgType = parent.getItemAtPosition(position).toString();
 		orgTypeFlag = selectedOrgType;
+		System.out.println(selectedOrgType);
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// Ignore this method!!!
 	}
-	
+
 	private void addListeneronNextButton() {
 		final Context context = this;
 		//Request a reference to the button from the activity by calling “findViewById” and assign the retrieved button to an instance variable
 		btnNext = (Button) findViewById(R.id.btnNext);
+		orgType = (Spinner) findViewById(R.id.sOrgType);
+		tvDisplayFromDate = (TextView) findViewById(R.id.tvFromDate);
+		tvDisplayToDate = (TextView) findViewById(R.id.tvToDate);
+		orgName = (EditText) findViewById(R.id.etOrgName);
 		//Create a class implementing “OnClickListener” and set it as the on click listener for the button "Next"
 		btnNext.setOnClickListener(new OnClickListener() {
  
+			
+			
+			
 			@Override
 			public void onClick(View arg0) {
+				organisationName = orgName.getText().toString();
+				fromdate = tvDisplayFromDate.getText().toString();
+				
+				todate = tvDisplayToDate.getText().toString();
+				// list of input parameters type of Object 
+				deployparams = new Object[]{organisationName,fromdate,todate,selectedOrgType}; // parameters pass to core_engine xml_rpc functions
+				//call method deploy from startup.java 
+				client_id = Startup.deploy(deployparams);
 				//To pass on the activity to the next page
 			    Intent intent = new Intent(context, orgDetails.class);
-			  //To pass on the value to the next page
+			    //To pass on the value to the next page
 			    intent.putExtra("flag",orgTypeFlag);
 			    startActivity(intent);   
 			}

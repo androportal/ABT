@@ -1,5 +1,10 @@
 package com.example.gkaakash;
 
+import java.util.Vector;
+
+import com.gkaakash.controller.Group;
+import com.gkaakash.controller.Startup;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -19,15 +24,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class createAccount extends Activity implements OnItemSelectedListener {
+public class createAccount<group> extends Activity implements OnItemSelectedListener {
 	// Declaring variables
 	String accCodeCheckFlag;
 	TextView tvaccCode, tvDbOpBal, tvOpBal,tvAccName,tvAccCode;
 	EditText etaccCode, etDtOpBal, etOpBal,etAccCode;
 	Spinner sgrpName,sSearchBy,sAccName;
 	Button btnCreateAccSave,btnCreateAccFinish,btnokdialog;
-	
-
+	Integer client_id =Startup.getClient_id();
 		private int group1Id = 1;
 		int Edit = Menu.FIRST;
 		int Delete = Menu.FIRST +1;
@@ -35,6 +39,7 @@ public class createAccount extends Activity implements OnItemSelectedListener {
 		AlertDialog dialog;
 		final Context context = this;
 		Dialog screenDialog;
+		private Group group;
 		static final int ID_SCREENDIALOG = 1;
 		
 		 
@@ -151,8 +156,30 @@ public class createAccount extends Activity implements OnItemSelectedListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//create the object of Group class
+		group = new Group();
+		//call the getAllGroups method to get all groups
+		Object[] groupnames = (Object[]) group.getAllGroups(client_id);
+		for(Object gs : groupnames)
+		{	
+			Object[] g = (Object[]) gs;
+				System.out.println(g[0]); //groupcode
+				System.out.println(g[1]); //groupname
+				System.out.println(g[2]); //description
+		}	
+		Startup startup = new Startup();
+		Object[] state = (Object[]) startup.getStates();
+		
+		for(Object st : state)
+		{	
+			Object[] s = (Object[]) st;
+				System.out.println(s[0]); //groupcode
+				
+		}	
+		
 		// Calling create_account.xml
 		setContentView(R.layout.create_account);
+		
 		// Request a reference to the button from the activity by calling
 		// “findViewById” and assign the retrieved button to an instance
 		// variable
@@ -172,6 +199,7 @@ public class createAccount extends Activity implements OnItemSelectedListener {
 			etaccCode.setVisibility(EditText.VISIBLE);
 			tvaccCode.setVisibility(TextView.VISIBLE);
 		}
+		
 		sgrpName = (Spinner) findViewById(R.id.sGroupNames);
 		// Attach a listener to the group name Spinner
 		sgrpName.setOnItemSelectedListener((OnItemSelectedListener) this);
