@@ -10,6 +10,7 @@ public class Startup {
 	CoreConnection conn;
 	private Object[] cities;
 	private Object[] states;
+	private Object[] financialyear;
 	
 	/***
 	 * default constructor
@@ -34,6 +35,22 @@ public class Startup {
 			e.printStackTrace();
 		}
 		return orgnames;
+	}
+	/***
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public Object[] getFinancialYear(Object params) {
+		
+		try {
+			financialyear = (Object[]) CoreConnection.getClient().call("getFinancialYear",params);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return financialyear;
 	}
 	/***
 	 * deploy method will call xmlrpc_Deploy from rpc_main.py
@@ -89,7 +106,7 @@ public class Startup {
 	 * method getStateNames will call getStateNames method from core_engine data.py
 	 * @return list of states
 	 */
-	public Object getStates()
+	public Object[] getStates()
 	{
 		try {
 			states =(Object[]) CoreConnection.getClient().call("data.getStateNames");

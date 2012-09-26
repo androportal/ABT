@@ -22,8 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Enter Organisation Name"
         android:textColor="#FFFFFF"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/etOrgName"
@@ -42,8 +41,7 @@
         android:layout_height="wrap_content"
         android:text="Select Organisation Type"
         android:textColor="#FFFFFF"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textSize="20dp" />
 
     <Spinner
         android:id="@+id/sOrgType"
@@ -60,8 +58,7 @@
         android:gravity="center"
         android:text="Financial Year"
         android:textColor="#FFFFFF"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textSize="20dp" />
     
       <LinearLayout
           android:layout_width="fill_parent"
@@ -71,13 +68,13 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_gravity="center_vertical"
-            android:layout_weight="40"
+            android:layout_weight="39.48"
             android:background="@android:color/darker_gray"
             android:gravity="center"
             android:text="From Date"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="20dp"
             android:textColor="#000000" />
 		
         <View
@@ -88,13 +85,13 @@
         
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="40"
             android:background="@android:color/darker_gray"
             android:gravity="center"
             android:text="  To Date  "
-            android:textAppearance="?android:attr/textAppearanceLarge"
+           	android:textSize="20dp"
             android:textColor="#000000" />
 
     </LinearLayout>
@@ -112,7 +109,7 @@
             android:layout_weight="40"
             android:gravity="center"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="20dp"
             android:textColor="#FFFFFF" />
 		
         <View
@@ -128,7 +125,7 @@
             android:layout_weight="40"
             android:gravity="center"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceLarge"
+           	android:textSize="20dp"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 

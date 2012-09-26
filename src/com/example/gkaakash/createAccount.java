@@ -31,7 +31,7 @@ public class createAccount<group> extends Activity implements OnItemSelectedList
 	EditText etaccCode, etDtOpBal, etOpBal,etAccCode;
 	Spinner sgrpName,sSearchBy,sAccName;
 	Button btnCreateAccSave,btnCreateAccFinish,btnokdialog;
-	Integer client_id =Startup.getClient_id();
+	Integer client_id;
 		private int group1Id = 1;
 		int Edit = Menu.FIRST;
 		int Delete = Menu.FIRST +1;
@@ -156,30 +156,23 @@ public class createAccount<group> extends Activity implements OnItemSelectedList
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//create the object of Group class
-		group = new Group();
-		//call the getAllGroups method to get all groups
-		Object[] groupnames = (Object[]) group.getAllGroups(client_id);
-		for(Object gs : groupnames)
-		{	
-			Object[] g = (Object[]) gs;
-				System.out.println(g[0]); //groupcode
-				System.out.println(g[1]); //groupname
-				System.out.println(g[2]); //description
-		}	
-		Startup startup = new Startup();
-		Object[] state = (Object[]) startup.getStates();
-		
-		for(Object st : state)
-		{	
-			Object[] s = (Object[]) st;
-				System.out.println(s[0]); //groupcode
-				
-		}	
 		
 		// Calling create_account.xml
 		setContentView(R.layout.create_account);
-		
+		/*client_id =Startup.getClient_id();
+		//create the object of Group class
+				/*group = new Group();
+				//call the getAllGroups method to get all groups
+				Object[] groupnames = (Object[]) group.getAllGroups(client_id);
+				System.out.println(groupnames +" present");
+				for(Object gs : groupnames)
+				{	
+					Object[] g = (Object[]) gs;
+						System.out.println(g[0]); //groupcode
+						System.out.println(g[1]); //groupname
+						System.out.println(g[2]); //description
+				}	
+				*/
 		// Request a reference to the button from the activity by calling
 		// “findViewById” and assign the retrieved button to an instance
 		// variable
@@ -219,10 +212,6 @@ public class createAccount<group> extends Activity implements OnItemSelectedList
 				Intent intent = new Intent(context, menu.class);
 				intent.putExtra("flag", accCodeCheckFlag);
 				// To pass on the value to the next page
-				
-				
-				
-				
 				startActivity(intent);
 			}
 

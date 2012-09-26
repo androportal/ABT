@@ -108,10 +108,11 @@
 				android:text="Country"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" />
-		<EditText 
-		    android:layout_width="0dip"
-			android:layout_weight="2"
-			android:hint="Tap to enter Country" />
+		<Spinner
+                android:id="@+id/sGetStates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.35" />
 		</TableRow>
 		
 		<TableRow>
@@ -121,10 +122,11 @@
 				android:text="State"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" />
-		<EditText 
-		    android:layout_width="0dip"
-			android:layout_weight="2"
-			android:hint="Tap to enter State" />
+		<Spinner
+                android:id="@+id/sGetCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.35" />
 		</TableRow>
 		
 		<TableRow>

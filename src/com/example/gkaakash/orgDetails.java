@@ -1,5 +1,6 @@
 package com.example.gkaakash;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.gkaakash.controller.Startup;
@@ -8,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,20 +17,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
  
 
-public class orgDetails extends Activity {
+public class orgDetails extends Activity implements OnItemSelectedListener{
 	//Declaring variables 
 	Button btnorgDetailSave, btnRegDate, btnFcraDate,btnSkip;
 	int year, month, day;
 	static final int REG_DATE_DIALOG_ID = 0;
 	static final int FCRA_DATE_DIALOG_ID = 1;
-	String getSelectedOrgType;
+	String getSelectedOrgType,getToDate,getOrgName, getFromDate;
 	TextView tvRegNum, tvRegDate, tvFcraNum, tvFcraDate, tvMVATnum, tvServiceTaxnum;
 	EditText etRegNum, etFcraNum, etMVATnum, etServiceTaxnum;
 	
@@ -39,7 +45,14 @@ public class orgDetails extends Activity {
 	AlertDialog dialog;
 	final Context context = this;
 	
-	Integer client_id =Startup.getClient_id();
+	
+	Spinner getcountry ;
+	Spinner getcity;
+	private Startup startup;
+	private Integer client_id;
+	private Object[] deployparams;
+	protected ProgressDialog progressBar;
+
 	
 	//adding options to the options menu
 	@Override
@@ -67,7 +80,10 @@ public class orgDetails extends Activity {
 		super.onCreate(savedInstanceState);
 		//Calling org_details.xml
 		setContentView(R.layout.org_details);
+		startup = new Startup();
 		btnorgDetailSave = (Button) findViewById(R.id.btnOrgDetailSave);
+		getcountry = (Spinner) findViewById(R.id.sGetStates);
+		getcity = (Spinner) findViewById(R.id.sGetCity);
 		btnSkip = (Button) findViewById(R.id.btnSkip);
 		tvRegNum = (TextView) findViewById(R.id.tvRegNum);
 		etRegNum = (EditText) findViewById(R.id.etRegNum);
@@ -82,7 +98,7 @@ public class orgDetails extends Activity {
 		tvServiceTaxnum = (TextView) findViewById(R.id.tvServiceTaxnum);
 		etServiceTaxnum = (EditText) findViewById(R.id.etServiceTaxnum);
 		//Retrieving the organisation type flag value from the previous page(create organisation page)
-		getSelectedOrgType = getIntent().getExtras().getString("flag");
+		getSelectedOrgType = getIntent().getExtras().getString("orgtypeflag");
 		if("NGO".equals(getSelectedOrgType))
 		{
 			tvRegNum.setVisibility(TextView.VISIBLE);
@@ -117,6 +133,8 @@ public class orgDetails extends Activity {
 		//Declaring new method for setting current date into "Registration Date"
 		setCurrentDateOnButton();
 		addListenerOnButton();
+		getCountry();
+		getcountry.setOnItemSelectedListener((OnItemSelectedListener) this);
 	}
 
 
@@ -143,16 +161,59 @@ public class orgDetails extends Activity {
 	//Attach a listener to the click event for the button
 	private void addListenerOnButton() {
 		final Context context = this;
+		//Retrieving the organisation type flag value from the previous page(create organisation page)
+		getOrgName = getIntent().getExtras().getString("orgnameflag");
+		getFromDate = getIntent().getExtras().getString("fdateflag");
+		getToDate = getIntent().getExtras().getString("tdateflag");
 		//Create a class implementing “OnClickListener” and set it as the on click listener for the button
 		btnSkip.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(android.view.View v) {
-				//To pass on the activity to the next page
+				//progress bar moving image to show wait state
+				progressBar = new ProgressDialog(context);
+                progressBar.setCancelable(false);
+                progressBar.setMessage("Please Wait, Saving Organisation Details ...");
+                progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressBar.setProgress(0);
+                progressBar.setMax(1000);
+                progressBar.show();
+				
+                //To pass on the activity to the next page   
 				Intent intent = new Intent(context, preferences.class);
-                startActivity(intent);   
+                startActivity(intent); 
+                
+				//list of input parameters type of Object 
+				deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
+				//call method deploy from startup.java 
+				client_id = Startup.deploy(deployparams);
+				
+                 
 			}
 		});
+		btnorgDetailSave.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//progress bar moving image to show wait state
+				progressBar = new ProgressDialog(context);
+                progressBar.setCancelable(false);
+                progressBar.setMessage("Please Wait, Saving Organisation Details ...");
+                progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressBar.setProgress(0);
+                progressBar.setMax(1000);
+                progressBar.show();
+
+				//To pass on the activity to the next page
+				Intent intent = new Intent(context, preferences.class);
+                startActivity(intent);  
+                
+				//list of input parameters type of Object 
+				deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
+				//call method deploy from startup.java 
+				client_id = Startup.deploy(deployparams);
+				 
+			}
+		});
+		
 		
 		btnRegDate.setOnClickListener(new OnClickListener() {
 			
@@ -219,5 +280,67 @@ public class orgDetails extends Activity {
 			.append(year).append(" "));
 		}
 	};
+	
+	private Object[] stateparmas;
+	
+	public void getCountry() {
+		Object[] countryList =  startup.getStates();//call getOrganisationNames method 
+    	
+    	ArrayList< String>list = new ArrayList<String>();
+    	//System.out.println("state:"+countryList);
+    	for(Object st : countryList)
+    	{
+    		System.out.println("inside Country");
+    		Object[] s = (Object[]) st;
+    		list.add((String) s[0]);
+    	}
+    	System.out.println(list);
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+    			android.R.layout.simple_spinner_item, list);
+    	
+    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    	//set adaptor with orglist in spinner
+    	getcountry.setAdapter(dataAdapter);
+		
+	}
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View v, int position,
+			   long id) {
+		//Retrieving the selected org type from the Spinner and assigning it to a variable 
+				String selectedStateName = parent.getItemAtPosition(position).toString();
+				//existingOrg = selectedOrgName;
+				//System.out.println("selected org"+selectedOrgName);
+				if(selectedStateName!=null){
+					stateparmas = new Object[]{selectedStateName};
+					//System.out.println(orgparmas);
+			    	Object[] CityList = startup.getCities(stateparmas);//call getOrganisationNames method 
+			    	//System.out.println("befor loop "+financialyearList);
+			    	
+			    	//System.out.println(financialyearList.toString());
+			    	ArrayList< String>list1 = new ArrayList<String>();
+			    	
+			    	for(Object st : CityList)
+			    	{
+			    		System.out.println("inside city");
+			    		//Object[] s = (Object[]) st;
+			    			list1.add((String) st);
+			    	}
+			    	
+			    	ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this,
+			    			android.R.layout.simple_spinner_item, list1);
+			    	
+			    	dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			    	getcity.setAdapter(dataAdapter1);
+		    	}
+		
+	}
+
+	
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
  
 }

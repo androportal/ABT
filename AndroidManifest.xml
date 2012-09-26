@@ -84,7 +84,11 @@
       		 android:label="Transaction"
             android:name=".createVoucher" >
        </activity>
-        
+        <activity
+            
+      		 android:label="Select Organisation"
+            android:name=".selectOrg" >
+       </activity> 
     </application>
     
 

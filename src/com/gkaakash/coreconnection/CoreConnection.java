@@ -2,6 +2,8 @@ package com.gkaakash.coreconnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.xmlrpc.android.XMLRPCClient;
+
+import android.os.StrictMode;
 public class CoreConnection {
 	
 	private static URL url= null;
@@ -18,10 +20,12 @@ public class CoreConnection {
 	public static XMLRPCClient Connection(){
 		
 		try {
-			url = new URL("http://10.0.2.2:7081");
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+			url = new URL("http://127.0.0.1:7081");
 			client = new XMLRPCClient(url);
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return client;

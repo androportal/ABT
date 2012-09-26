@@ -133,7 +133,7 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 		//Retrieving the selected org type from the Spinner and assigning it to a variable 
 		selectedOrgType = parent.getItemAtPosition(position).toString();
 		orgTypeFlag = selectedOrgType;
-		System.out.println(selectedOrgType);
+		
 	}
 
 	@Override
@@ -159,16 +159,18 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 			public void onClick(View arg0) {
 				organisationName = orgName.getText().toString();
 				fromdate = tvDisplayFromDate.getText().toString();
-				
 				todate = tvDisplayToDate.getText().toString();
-				// list of input parameters type of Object 
-				deployparams = new Object[]{organisationName,fromdate,todate,selectedOrgType}; // parameters pass to core_engine xml_rpc functions
-				//call method deploy from startup.java 
-				client_id = Startup.deploy(deployparams);
+				System.out.println("orgname :"+organisationName);
+				System.out.println("fromdate :"+fromdate+"todate:"+todate);
+				System.out.println("orgtype:"+orgTypeFlag);
 				//To pass on the activity to the next page
 			    Intent intent = new Intent(context, orgDetails.class);
 			    //To pass on the value to the next page
-			    intent.putExtra("flag",orgTypeFlag);
+			    intent.putExtra("orgtypeflag",orgTypeFlag);
+			    intent.putExtra("orgnameflag", organisationName);
+			    intent.putExtra("fdateflag", fromdate);
+			    intent.putExtra("tdateflag", todate);
+			   
 			    startActivity(intent);   
 			}
  

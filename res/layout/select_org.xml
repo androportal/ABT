@@ -1,0 +1,88 @@
+
+    
+       <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+           android:layout_width="fill_parent"
+           android:layout_height="fill_parent"
+           android:background="@drawable/dark_gray_background"
+           android:orientation="vertical"
+           android:padding="20dp" >
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical" >
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="81dp" >
+
+                   <TableLayout 
+        		android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
+		
+		         <TableRow
+		             android:layout_width="wrap_content"
+		             android:layout_height="wrap_content" >
+
+                   <TextView
+                       android:id="@+id/textView1"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="0.28"
+                       android:text="Organisation Name"
+                       android:textColor="#FFFFFF"
+                       android:textSize="20dp" />
+
+                   <Spinner
+                       android:id="@+id/sGetOrgNames"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1" />
+
+                   </TableRow>
+                   </TableLayout>
+               </LinearLayout>
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content" >
+
+ 			<TableRow
+ 			    android:layout_width="fill_parent"
+ 			    android:layout_height="wrap_content" >
+
+               <TextView
+                   android:id="@+id/textView2"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="31"
+                   android:text="Financial Year         "
+                   android:textColor="#FFFFFF"
+                   android:textSize="20dp" />
+
+               <Spinner
+                   android:id="@+id/sGetFinancialYear"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="69" />
+                </TableRow>
+           </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.24"
+                android:gravity="center" >
+           
+           <Button
+               android:id="@+id/bProceed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="   Proceed   "
+            android:textColor="#000000"
+        	android:textSize="20dp"
+        	 android:layout_gravity="center_vertical"/>
+
+</LinearLayout>
+       </LinearLayout>
