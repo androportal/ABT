@@ -1,16 +1,8 @@
 package com.example.gkaakash;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-
-import org.xmlrpc.android.XMLRPCClient;
-
 import com.gkaakash.controller.Startup;
-
-
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,93 +15,50 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-public class selectOrg extends Activity implements OnItemSelectedListener {
+public class selectOrg extends Activity{
 	Object[] orgNameList;
-	
 	Spinner getOrgNames;
 	private Spinner getFinancialyear;
-	
-	private Object[] orgparmas;
-	///private String selectedOrgName;
-	private String existingOrg;
 	private Startup startup;
 	private Button bProceed;
-	//private String OrgNameList;
-	private String orgNameListflag;
 	Object[] financialyearList;
+	final Context context = this;
+
+	
 	public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.select_org);
-    	startup =new Startup();
+    	startup = new Startup();
     	getOrgNames = (Spinner) findViewById(R.id.sGetOrgNames);
     	getFinancialyear = (Spinner) findViewById(R.id.sGetFinancialYear);
     	bProceed = (Button) findViewById(R.id.bProceed);
-    	System.out.println("welcome");
-    	orgNameList = startup.getOrgnisationName();//call getOrganisationNames method 
-    	//System.out.println("o"+orgNameList);
-    	//orgNameList = getIntent().getExtras().getStringArrayList(orgNameListflag);
+    	getExistingOrgNames();
+    	addListenerOnButton();
+    	addListenerOnItem();
+    }// End of onCreate
+	
+	// getExistingOrgNames()
+	void getExistingOrgNames(){
+			
+		//call getOrganisationNames method 
+    	orgNameList = startup.getOrgnisationName();
+    	System.out.println(orgNameList);
     	List<String> list = new ArrayList<String>();
-    	System.out.println("orgNameList:"+orgNameList);
+    	
     	for(Object st : orgNameList)
     		list.add((String) st);
-				
-				
-  
-    	//System.out.println("list2 :"+list);
-    	//set list into adaptor
+		
+    	// creating array adaptor to take list of existing organisation name
     	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
     			android.R.layout.simple_spinner_item, list);
-    	
+    	//set resource layout of spinner to that adaptor
     	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    	//set adaptor with orglist in spinner
+	    //set adaptor with orglist in spinner
     	getOrgNames.setAdapter(dataAdapter);
-    	getOrgNames.setOnItemSelectedListener((OnItemSelectedListener) this);
     	
-    	
-    	addListenerOnButton();
-    	
-    	
-    	
-    		
-	}
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View v, int position,
-			   long id) {
-		//Retrieving the selected org type from the Spinner and assigning it to a variable 
-				String selectedOrgName = parent.getItemAtPosition(position).toString();
-				////existingOrg = selectedOrgName;
-				
-				System.out.println("selected org"+selectedOrgName);
-				if(selectedOrgName!=null){
-				
-					
-					//call getFinancialYear method from startup.java 
-			    	//it will give you financialYear list according to orgname
-			    	financialyearList = startup.getFinancialYear(selectedOrgName);
-			   
-			    	List< String>list2 = new ArrayList<String>();
-			    	
-			    	for(Object fy : financialyearList)
-			    	{
-			    		System.out.println("inside financial list");
-			    		Object[] y = (Object[]) fy;
-			    		list2.add(y[0]+" to "+y[1]);
-			    	}
-			    	System.out.println("befor loop "+list2);
-			    	
-			    	ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this,
-			    			android.R.layout.simple_spinner_item, list2);
-			    	
-			    	dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			    	getFinancialyear.setAdapter(dataAdapter1);
-		    	}
+	}// End of getExistingOrgNames()
 		
-	}
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	//Attach a listener to the click event for the button
 	private void addListenerOnButton(){
 		final Context context = this;
@@ -128,4 +77,43 @@ public class selectOrg extends Activity implements OnItemSelectedListener {
 		});
 	}
 	
-}
+	void addListenerOnItem(){
+		//Attach a listener to the states Type Spinner to get dynamic list of cities
+		getOrgNames.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
+				//Retrieving the selected org type from the Spinner and assigning it to a variable 
+				String selectedOrgName = parent.getItemAtPosition(position).toString();
+				
+				if(selectedOrgName!=null){
+					
+					//call getFinancialYear method from startup.java 
+			    	//it will give you financialYear list according to orgname
+			    	financialyearList = startup.getFinancialYear(selectedOrgName);
+			    	
+			    	List<String> financialyearlist = new ArrayList<String>();
+			    	
+			    	for(Object fy : financialyearList)
+			    	{
+			    		Object[] y = (Object[]) fy;
+			    		// concatination From and To date 
+			    		financialyearlist.add(y[0]+" to "+y[1]);
+			    	}
+			    	
+			    	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
+			    			android.R.layout.simple_spinner_item, financialyearlist);
+			    	
+			    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			    	
+			    	getFinancialyear.setAdapter(dataAdapter);
+				    	}// End of if condition
+				} // End of onItemSelected()
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});// End of getOrgNames.setOnItemSelectedListener
+	} // end of addListenerOnItem()
+}// End of Class 

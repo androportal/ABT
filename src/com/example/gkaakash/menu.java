@@ -27,8 +27,8 @@ public class menu extends ListActivity{
 	final Context context = this;
 	
 	//adding list items to the newly created menu list
-	String[] menuOptions = new String[] { "Create Account", "Transaction", "Reports",
-			"Set Preferences", "Administration", "Help" };
+	String[] menuOptions = new String[] { "Create account", "Transaction", "Reports",
+			"Set preferences", "Administration", "Help" };
 
 	//adding options to the options menu
 	@Override
@@ -106,11 +106,11 @@ public class menu extends ListActivity{
 				//for "preferences", adding popup menu ...
 				if(position == 3)
 				{
-					final CharSequence[] items = { "Edit Organisation Details", "Add New Project" };
+					final CharSequence[] items = { "Edit organisation details", "Add new project" };
 					//creating a dialog box for popup
 			        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 			        //setting title
-			        builder.setTitle("Select Preference");
+			        builder.setTitle("Select preference");
 			        //adding items
 			        builder.setItems(items, new DialogInterface.OnClickListener() {
 			        public void onClick(DialogInterface dialog, int pos) {

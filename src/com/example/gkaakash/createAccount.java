@@ -1,5 +1,7 @@
 package com.example.gkaakash;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import com.gkaakash.controller.Group;
@@ -19,6 +21,7 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -31,7 +34,7 @@ public class createAccount<group> extends Activity implements OnItemSelectedList
 	EditText etaccCode, etDtOpBal, etOpBal,etAccCode;
 	Spinner sgrpName,sSearchBy,sAccName;
 	Button btnCreateAccSave,btnCreateAccFinish,btnokdialog;
-	Integer client_id;
+	static Integer client_id;
 		private int group1Id = 1;
 		int Edit = Menu.FIRST;
 		int Delete = Menu.FIRST +1;
@@ -40,6 +43,7 @@ public class createAccount<group> extends Activity implements OnItemSelectedList
 		final Context context = this;
 		Dialog screenDialog;
 		private Group group;
+		private Startup startup;
 		static final int ID_SCREENDIALOG = 1;
 		
 		 
@@ -57,7 +61,7 @@ public class createAccount<group> extends Activity implements OnItemSelectedList
 		 public boolean onOptionsItemSelected(MenuItem item) {
 		    switch (item.getItemId()) {
 		    case 1:
-		    	final CharSequence[] items = {  "Account Name","Account Code" };
+		    	final CharSequence[] items = {  "Account name","Account code" };
 				//creating a dialog box for popup
 		        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		        //setting title
@@ -159,23 +163,23 @@ public class createAccount<group> extends Activity implements OnItemSelectedList
 		
 		// Calling create_account.xml
 		setContentView(R.layout.create_account);
-		/*client_id =Startup.getClient_id();
-		//create the object of Group class
-				/*group = new Group();
-				//call the getAllGroups method to get all groups
-				Object[] groupnames = (Object[]) group.getAllGroups(client_id);
-				System.out.println(groupnames +" present");
-				for(Object gs : groupnames)
-				{	
-					Object[] g = (Object[]) gs;
-						System.out.println(g[0]); //groupcode
-						System.out.println(g[1]); //groupname
-						System.out.println(g[2]); //description
-				}	
-				*/
+		// create the object of Group class
+		group = new Group();
+		// create the object of Group class
+		startup = new Startup();
+		System.out.println("groups :"+group);
+		// get Client_id return by Deploy method
+		client_id = startup.getClient_id();
+		//Object[] params = new Object[]{"eee","2012-8-27 ","2013-8-26 "};
+		
+		/***client_id = startup.login(params);
+		Object[] params = new Object[]{"Current Asset"};
+		System.out.println("params :"+params);
+		Object[] subgroupnames = (Object[])group.getSubGroupByName(params,client_id);
+		System.out.println(subgroupnames +" present");*/
+
 		// Request a reference to the button from the activity by calling
-		// “findViewById” and assign the retrieved button to an instance
-		// variable
+		// “findViewById” and assign the retrieved button to an instance variable
 		tvaccCode = (TextView) findViewById(R.id.tvAccCode);
 		etaccCode = (EditText) findViewById(R.id.etAccCode);
 		// Retrieving the account code flag value from the previous
@@ -197,8 +201,33 @@ public class createAccount<group> extends Activity implements OnItemSelectedList
 		// Attach a listener to the group name Spinner
 		sgrpName.setOnItemSelectedListener((OnItemSelectedListener) this);
 		addListeneronButton();
+		getExistingGroupNames();
 	}
-
+	// getExistingGroupNames()()
+	void getExistingGroupNames(){
+			
+		//call the getAllGroups method to get all groups
+		Object[] groupnames = (Object[]) group.getAllGroups(client_id);
+		List<String> groupnamelist = new ArrayList<String>();
+    	List<Integer> groupcodelist = new ArrayList<Integer>();
+    	
+		for(Object gs : groupnames)
+		{	
+			Object[] g = (Object[]) gs;
+			groupcodelist.add((Integer) g[0]); //groupcode
+			groupnamelist.add((String) g[1]); //groupname
+			//groupdesc.add(g[2]); //description
+		}	
+    	// creating array adaptor to take list of existing group name
+    	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+    			android.R.layout.simple_spinner_item, groupnamelist);
+    	//set resource layout of spinner to that adaptor
+    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    //set adaptor with groupname list in spinner
+    	sgrpName.setAdapter(dataAdapter);
+    	
+	}// End getExistingGroupNames()
+	
 	private void addListeneronButton() {
 		// TODO Auto-generated method stub
 		btnCreateAccSave = (Button) findViewById(R.id.btnCreateAccSave);
@@ -234,7 +263,7 @@ public class createAccount<group> extends Activity implements OnItemSelectedList
 				| "Miscellaneous Expenses(Asset)".equals(selectedGrpName)) {
 			etOpBal.setVisibility(EditText.VISIBLE);
 			tvOpBal.setVisibility(TextView.VISIBLE);
-			tvOpBal.setText("Debit Opening Balance");
+			tvOpBal.setText("Debit opening balance");
 
 		} else if ("Direct Income".equals(selectedGrpName)
 				| "Direct Expense".equals(selectedGrpName)
@@ -245,7 +274,7 @@ public class createAccount<group> extends Activity implements OnItemSelectedList
 		} else {
 			etOpBal.setVisibility(EditText.VISIBLE);
 			tvOpBal.setVisibility(TextView.VISIBLE);
-			tvOpBal.setText("Credit Opening Balance");
+			tvOpBal.setText("Credit opening balance");
 		}
 	}
 

@@ -20,7 +20,7 @@
         android:id="@+id/tvOrgName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Enter Organisation Name"
+        android:text="Enter organisation name"
         android:textColor="#FFFFFF"
         android:textSize="20dp" />
 
@@ -29,7 +29,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Maximum 50 Characters " >
+        android:hint="Maximum 50 characters " >
 
         <requestFocus android:layout_width="wrap_content" />
 
@@ -39,7 +39,7 @@
         android:id="@+id/tvOrgType"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Select Organisation Type"
+        android:text="Select organisation type"
         android:textColor="#FFFFFF"
         android:textSize="20dp" />
 
@@ -56,7 +56,7 @@
         android:layout_height="60dp"
         android:layout_weight="30"
         android:gravity="center"
-        android:text="Financial Year"
+        android:text="Financial year"
         android:textColor="#FFFFFF"
         android:textSize="20dp" />
     
@@ -73,7 +73,7 @@
             android:layout_weight="39.48"
             android:background="@android:color/darker_gray"
             android:gravity="center"
-            android:text="From Date"
+            android:text="from date"
             android:textSize="20dp"
             android:textColor="#000000" />
 		
@@ -90,7 +90,7 @@
             android:layout_weight="40"
             android:background="@android:color/darker_gray"
             android:gravity="center"
-            android:text="  To Date  "
+            android:text="  to date  "
            	android:textSize="20dp"
             android:textColor="#000000" />
 
@@ -138,7 +138,7 @@
             android:id="@+id/btnChangeFromDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="   Change Date   "
+            android:text="   change date   "
             android:textColor="#000000"
         	android:textSize="20dp"
         	 android:layout_gravity="center_vertical" />
@@ -160,7 +160,7 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:text="Next"
+            android:text="next"
             android:textSize="20dp" />
     </LinearLayout>
 </LinearLayout>

@@ -1,13 +1,6 @@
 package com.example.gkaakash;
 
 import java.util.Calendar;
-
-import org.xmlrpc.android.XMLRPCException;
-
-import com.gkaakash.controller.Startup;
-import com.gkaakash.coreconnection.CoreConnection;
-
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,7 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
  
 
-public class createOrg extends MainActivity implements OnItemSelectedListener {
+public class createOrg extends MainActivity {
 	//Declaring variables
 	TextView tvDisplayFromDate, tvDisplayToDate;
 	Button btnChangeFromDate, btnChangeToDate, btnNext;
@@ -39,7 +32,6 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 	final Calendar c = Calendar.getInstance();
 	final Context context = this;
 	private EditText orgName;
-	private Startup startup;
 	Object[] deployparams;
 	Integer client_id ;
 	@Override
@@ -54,8 +46,8 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 		//creating interface to pass on the activity to next page
 		addListeneronNextButton();
 		orgType = (Spinner) findViewById(R.id.sOrgType);
-		//Attach a listener to the Organization Type Spinner
-		orgType.setOnItemSelectedListener((OnItemSelectedListener) this);
+		//creating interface to listen activity on Item 
+		addListenerOnItem();
 	}
 
 	private void setCurrentDateOnView() {
@@ -127,23 +119,29 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 			}	
 		});
 	}
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View v, int position,
-			   long id){
-		//Retrieving the selected org type from the Spinner and assigning it to a variable 
-		selectedOrgType = parent.getItemAtPosition(position).toString();
-		orgTypeFlag = selectedOrgType;
-		
-	}
+	// method to take ItemSelectedListner interface as a argument  
+	void addListenerOnItem(){
+		//Attach a listener to the Organisation Type Spinner
+		orgType.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View v, int position,long id){
+				//Retrieving the selected org type from the Spinner and assigning it to a variable 
+				selectedOrgType = parent.getItemAtPosition(position).toString();
+				orgTypeFlag = selectedOrgType;
+				
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				
+				}
 
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// Ignore this method!!!
-	}
-
+		});// End of orgType.setOnItemSelectedListener
+	
+	}// End of addListenerOnItem()
 	private void addListeneronNextButton() {
 		final Context context = this;
-		//Request a reference to the button from the activity by calling “findViewById” and assign the retrieved button to an instance variable
+		//Request a reference to the button from the activity by calling “findViewById” 
+		//and assign the retrieved button to an instance variable
 		btnNext = (Button) findViewById(R.id.btnNext);
 		orgType = (Spinner) findViewById(R.id.sOrgType);
 		tvDisplayFromDate = (TextView) findViewById(R.id.tvFromDate);
@@ -152,17 +150,11 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 		//Create a class implementing “OnClickListener” and set it as the on click listener for the button "Next"
 		btnNext.setOnClickListener(new OnClickListener() {
  
-			
-			
-			
 			@Override
 			public void onClick(View arg0) {
 				organisationName = orgName.getText().toString();
 				fromdate = tvDisplayFromDate.getText().toString();
 				todate = tvDisplayToDate.getText().toString();
-				System.out.println("orgname :"+organisationName);
-				System.out.println("fromdate :"+fromdate+"todate:"+todate);
-				System.out.println("orgtype:"+orgTypeFlag);
 				//To pass on the activity to the next page
 			    Intent intent = new Intent(context, orgDetails.class);
 			    //To pass on the value to the next page
@@ -170,11 +162,11 @@ public class createOrg extends MainActivity implements OnItemSelectedListener {
 			    intent.putExtra("orgnameflag", organisationName);
 			    intent.putExtra("fdateflag", fromdate);
 			    intent.putExtra("tdateflag", todate);
-			   
 			    startActivity(intent);   
 			}
  
-		});
+		}); //End of btnNext.setOnClickListener
  
-	}
-}
+	}// End of addListeneronNextButton()
+
+}// End of Class

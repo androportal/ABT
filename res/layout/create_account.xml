@@ -19,7 +19,7 @@
 		    <TextView 
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
-				android:text="Group Name"
+				android:text="Group name"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp"
         		android:layout_gravity="center_vertical"/>
@@ -27,38 +27,37 @@
 		    android:id="@+id/sGroupNames"
 		    android:layout_width="0dip"
 			android:layout_weight="1.3"
-			android:entries="@array/groupNameArray"
-        	android:prompt="@string/grpName_prompt" />
+			/>
 		</TableRow>
 		
 		<TableRow>
 		    <TextView 
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
-				android:text="Subgroup Name"
+				android:text="Subgroup name"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp"
         		android:layout_gravity="center_vertical"/>
 		<Spinner 
 		    android:id="@+id/sSubGrpNames"
 		    android:layout_width="0dip"
+		    android:entries="@array/subGroupNameArray"
 			android:layout_weight="1.3"
-			android:entries="@array/subGroupNameArray"
-        	android:prompt="@string/subGrpName_prompt" />
+			/>
 		</TableRow>
 		
 		<TableRow>
 		    <TextView 
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
-				android:text="Account Name"
+				android:text="Account name"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp"
         		android:layout_gravity="center_vertical"/>
 		<EditText 
 		    android:layout_width="0dip"
 			android:layout_weight="1.3"
-			android:hint="Tap to enter Account Name" />
+			android:hint="Tap to enter account name" />
 		</TableRow>
 		
 		<TableRow>
@@ -66,7 +65,7 @@
 		        android:id="@+id/tvAccCode"
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
-				android:text="Account Code"
+				android:text="Account code"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp"
         		android:layout_gravity="center_vertical"
@@ -75,7 +74,7 @@
 		    android:id="@+id/etAccCode"
 		    android:layout_width="0dip"
 			android:layout_weight="1.3"
-			android:hint="Tap to enter Account Code"
+			android:hint="Tap to enter account code"
 			android:visibility="invisible" />
 		</TableRow>
 		
@@ -84,7 +83,7 @@
 		        android:id="@+id/tvOpBal"
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
-				android:text="Opening Balance"
+				android:text="Opening balance"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp"
         		android:layout_gravity="center_vertical"/>
@@ -92,14 +91,14 @@
 		    android:id="@+id/etOpBal"
 		    android:layout_width="0dip"
 			android:layout_weight="1.3"
-			android:hint="Tap to enter Opening Balance"/>
+			android:hint="Tap to enter opening balance"/>
 		</TableRow>
 		
 		<TableRow>
 		    <TextView 
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
-				android:text="Total Debit Opening Balance"
+				android:text="Total debit opening balance"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp"
         		android:layout_gravity="center_vertical"/>
@@ -114,7 +113,7 @@
 		    <TextView 
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
-				android:text="Total Credit Opening Balance"
+				android:text="Total credit opening balance"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp"
         		android:layout_gravity="center_vertical"/>
@@ -129,7 +128,7 @@
 		    <TextView 
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
-				android:text="Difference in Opening Balances"
+				android:text="Difference in opening balances"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp"
         		android:layout_gravity="center_vertical"/>
@@ -158,7 +157,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_weight="0.96"
-            android:text="Save"
+            android:text="save"
             android:textSize="20dp" 
             android:layout_gravity="center_vertical"/>
 		
@@ -168,7 +167,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_weight="0.90"
-            android:text="Finish"
+            android:text="finish"
             android:textSize="20dp"
             android:layout_gravity="center_vertical" />
 

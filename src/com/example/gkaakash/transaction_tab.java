@@ -50,11 +50,11 @@ public class transaction_tab extends TabActivity{
   
 				@Override
 				public void onClick(View arg0) {
-					final CharSequence[] items = {"Contra","Journal","Payment","Receipt","Credit Note","Debit Note","Sales","Sales Return","Purchase","Purchase Return" };
+					final CharSequence[] items = {"Contra","Journal","Payment","Receipt","Credit note","Debit note","Sales","Sales return","Purchase","Purchase return" };
 					//creating a dialog box for popup
 			        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 			        //setting title
-			        builder.setTitle("Transaction Types");
+			        builder.setTitle("Transaction types");
 			        //adding items
 			        builder.setItems(items, new DialogInterface.OnClickListener() {
 			        public void onClick(DialogInterface dialog, int pos) {
@@ -83,12 +83,12 @@ public class transaction_tab extends TabActivity{
 			                case 4:
                             {
                           	  
-                          	  label.setText("Menu >> Transaction >> Credit Note ");
+                          	  label.setText("Menu >> Transaction >> Credit note ");
                     }break;
 			                case 5:
                             {
                           	  
-                          	  label.setText("Menu >> Transaction >> Debit Note ");
+                          	  label.setText("Menu >> Transaction >> Debit note ");
                     }break;
 			                case 6:
                             {
@@ -98,7 +98,7 @@ public class transaction_tab extends TabActivity{
 			                case 7:
                             {
                           	  
-                          	  label.setText("Menu >> Transaction >> Sales Return ");
+                          	  label.setText("Menu >> Transaction >> Sales return ");
                     }break;
 			                case 8:
                             {
@@ -108,7 +108,7 @@ public class transaction_tab extends TabActivity{
 			                case 9:
                             {
                           	 
-                          	  label.setText("Menu >> Transaction >> Purchase Return ");
+                          	  label.setText("Menu >> Transaction >> Purchasee return ");
                     }break;
 			        }
 			    }});

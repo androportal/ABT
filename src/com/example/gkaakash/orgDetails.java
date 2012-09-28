@@ -2,6 +2,7 @@ package com.example.gkaakash;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import com.gkaakash.controller.Startup;
 
@@ -28,7 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
  
 
-public class orgDetails extends Activity implements OnItemSelectedListener{
+public class orgDetails extends Activity{
 	//Declaring variables 
 	Button btnorgDetailSave, btnRegDate, btnFcraDate,btnSkip;
 	int year, month, day;
@@ -37,7 +38,8 @@ public class orgDetails extends Activity implements OnItemSelectedListener{
 	String getSelectedOrgType,getToDate,getOrgName, getFromDate;
 	TextView tvRegNum, tvRegDate, tvFcraNum, tvFcraDate, tvMVATnum, tvServiceTaxnum;
 	EditText etRegNum, etFcraNum, etMVATnum, etServiceTaxnum;
-	
+	String selectedStateName;
+	String selectedCityName;
 	private int group1Id = 1;
 	int Edit = Menu.FIRST;
 	int Delete = Menu.FIRST +1;
@@ -46,12 +48,12 @@ public class orgDetails extends Activity implements OnItemSelectedListener{
 	final Context context = this;
 	
 	
-	Spinner getcountry ;
-	Spinner getcity;
-	private Startup startup;
+	Spinner getstate, getcity;
 	private Integer client_id;
+	private Startup startup;
 	private Object[] deployparams;
 	protected ProgressDialog progressBar;
+	private EditText eGetAddr;
 
 	
 	//adding options to the options menu
@@ -78,11 +80,12 @@ public class orgDetails extends Activity implements OnItemSelectedListener{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//Calling org_details.xml
+		// Calling org_details.xml
 		setContentView(R.layout.org_details);
+		// creating instance of startup to get the connection
 		startup = new Startup();
 		btnorgDetailSave = (Button) findViewById(R.id.btnOrgDetailSave);
-		getcountry = (Spinner) findViewById(R.id.sGetStates);
+		getstate = (Spinner) findViewById(R.id.sGetStates);
 		getcity = (Spinner) findViewById(R.id.sGetCity);
 		btnSkip = (Button) findViewById(R.id.btnSkip);
 		tvRegNum = (TextView) findViewById(R.id.tvRegNum);
@@ -95,9 +98,10 @@ public class orgDetails extends Activity implements OnItemSelectedListener{
 		btnFcraDate = (Button) findViewById(R.id.btnFcraDate);
 		tvMVATnum = (TextView) findViewById(R.id.tvMVATnum);
 		etMVATnum = (EditText) findViewById(R.id.etMVATnum);
+		eGetAddr =(EditText) findViewById(R.id.eGetAddr);
 		tvServiceTaxnum = (TextView) findViewById(R.id.tvServiceTaxnum);
 		etServiceTaxnum = (EditText) findViewById(R.id.etServiceTaxnum);
-		//Retrieving the organisation type flag value from the previous page(create organisation page)
+		// Retrieving the organisation type flag value from the previous page(create organisation page)
 		getSelectedOrgType = getIntent().getExtras().getString("orgtypeflag");
 		if("NGO".equals(getSelectedOrgType))
 		{
@@ -130,11 +134,15 @@ public class orgDetails extends Activity implements OnItemSelectedListener{
 			etServiceTaxnum.setVisibility(EditText.VISIBLE);
 		}
 		
-		//Declaring new method for setting current date into "Registration Date"
+		// Declaring new method for setting current date into "Registration Date"
 		setCurrentDateOnButton();
+		// creating new method do event on button 
 		addListenerOnButton();
-		getCountry();
-		getcountry.setOnItemSelectedListener((OnItemSelectedListener) this);
+		// Method to get list Of States
+		getStates();
+		//creating interface to listen activity on Item 
+		addListenerOnItem();
+		
 	}
 
 
@@ -167,6 +175,8 @@ public class orgDetails extends Activity implements OnItemSelectedListener{
 		getToDate = getIntent().getExtras().getString("tdateflag");
 		//Create a class implementing “OnClickListener” and set it as the on click listener for the button
 		btnSkip.setOnClickListener(new OnClickListener() {
+			
+
 			@Override
 			public void onClick(android.view.View v) {
 				//progress bar moving image to show wait state
@@ -185,12 +195,14 @@ public class orgDetails extends Activity implements OnItemSelectedListener{
 				//list of input parameters type of Object 
 				deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
 				//call method deploy from startup.java 
-				client_id = Startup.deploy(deployparams);
+				client_id = startup.deploy(deployparams);
 				
                  
 			}
 		});
 		btnorgDetailSave.setOnClickListener(new OnClickListener() {
+			private String OrgAddress;
+
 			@Override
 			public void onClick(View v) {
 				//progress bar moving image to show wait state
@@ -209,8 +221,27 @@ public class orgDetails extends Activity implements OnItemSelectedListener{
 				//list of input parameters type of Object 
 				deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
 				//call method deploy from startup.java 
-				client_id = Startup.deploy(deployparams);
-				 
+				client_id = startup.deploy(deployparams);
+				//get all the parameters to save organisation details
+				//gtSelectedOrgType
+				//getOrgName;
+				//OrgAddress =eGetAddr.getText().toString();
+				//cityname=getcity.getText().toString();
+				//postal
+				//statename
+				 //countryname
+				//telno
+				//faxno
+				//ebsite
+				//email
+				//pan
+				//stax_no ...blank for ngo
+				//mvat_no ...blank for ngo
+				//regno ....blank for profi
+				//regdate ...blank for profi
+				//fcra_no ..blank for profi
+				//fcrc_date  ..blank for profi
+				
 			}
 		});
 		
@@ -280,67 +311,75 @@ public class orgDetails extends Activity implements OnItemSelectedListener{
 			.append(year).append(" "));
 		}
 	};
+	// Method getStates
+	void getStates(){
+			// call the getStates method to get all States
+			Object[] StateList =  startup.getStates();
+	    	List<String> statelist = new ArrayList<String>();
+	    	// for loop to iterate list of state name and add to list
+	    	for(Object st : StateList)
+	    	{
+	    		Object[] s = (Object[]) st;
+	    		statelist.add((String) s[0]);
+	    	}
+	    	// creating array adaptor to take list of state
+			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+	    			android.R.layout.simple_spinner_item, statelist);
+			//set resource layout of spinner to that adaptor
+	    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    	//set adaptor contain states list to spinner 
+	    	getstate.setAdapter(dataAdapter);
+		}// End of getStates()
 	
-	private Object[] stateparmas;
-	
-	public void getCountry() {
-		Object[] countryList =  startup.getStates();//call getOrganisationNames method 
-    	
-    	ArrayList< String>list = new ArrayList<String>();
-    	//System.out.println("state:"+countryList);
-    	for(Object st : countryList)
-    	{
-    		System.out.println("inside Country");
-    		Object[] s = (Object[]) st;
-    		list.add((String) s[0]);
-    	}
-    	System.out.println(list);
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-    			android.R.layout.simple_spinner_item, list);
-    	
-    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    	//set adaptor with orglist in spinner
-    	getcountry.setAdapter(dataAdapter);
-		
-	}
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View v, int position,
-			   long id) {
-		//Retrieving the selected org type from the Spinner and assigning it to a variable 
-				String selectedStateName = parent.getItemAtPosition(position).toString();
-				//existingOrg = selectedOrgName;
-				//System.out.println("selected org"+selectedOrgName);
-				if(selectedStateName!=null){
-					stateparmas = new Object[]{selectedStateName};
-					//System.out.println(orgparmas);
-			    	Object[] CityList = startup.getCities(stateparmas);//call getOrganisationNames method 
-			    	//System.out.println("befor loop "+financialyearList);
-			    	
-			    	//System.out.println(financialyearList.toString());
-			    	ArrayList< String>list1 = new ArrayList<String>();
-			    	
-			    	for(Object st : CityList)
-			    	{
-			    		System.out.println("inside city");
-			    		//Object[] s = (Object[]) st;
-			    			list1.add((String) st);
-			    	}
-			    	
-			    	ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this,
-			    			android.R.layout.simple_spinner_item, list1);
-			    	
-			    	dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			    	getcity.setAdapter(dataAdapter1);
-		    	}
-		
-	}
+	void addListenerOnItem(){
+		//Attach a listener to the states Type Spinner to get dynamic list of cities
+		getstate.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
+						//Retrieving the selected state from the Spinner and assigning it to a variable 
+						selectedStateName = parent.getItemAtPosition(position).toString();
+						Object[] stateparmas;
+						// checks for the selected value of item is not null
+						if(selectedStateName!=null){
+							// array of selected state name of type Object
+							stateparmas = new Object[]{selectedStateName};
+							// call the getCities method to get all related cities of given selected state name 
+					    	Object[] CityList = startup.getCities(stateparmas);
+					    	List<String> citylist = new ArrayList<String>();
+					    	// for loop to iterate list of city name and add to list
+					    	for(Object st : CityList)
+					    		citylist.add((String) st);
+					    	
+					    	// creating array adaptor to take list of city 
+					    	ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(context,
+					    			android.R.layout.simple_spinner_item, citylist);
+					    	// set resource layout of spinner to that adaptor
+					    	dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+					    	// set Adaptor contain cities list to spinner 
+					    	getcity.setAdapter(dataAdapter1);
+				    	}// End of if condition
+				} // End of onItemSelected()
 
-	
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	
- 
-}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});// End of getstate.setOnItemSelectedListener
+		getcity.setOnItemSelectedListener(new OnItemSelectedListener(){
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
+				//Retrieving the selected state from the Spinner and assigning it to a variable 
+				selectedCityName = parent.getItemAtPosition(position).toString();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+	} // end of addListenerOnItem()
+} // End of Class

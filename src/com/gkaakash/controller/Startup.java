@@ -4,21 +4,21 @@ import org.xmlrpc.android.XMLRPCException;
 import com.gkaakash.coreconnection.CoreConnection;
 
 public class Startup {
-	static Integer client_id = null;
+	private static Integer client_id;
 	static Object[] result = null;
-	Object[] orgnames = null;
-	CoreConnection conn;
+	private static Object[] setorg_result;
+	Object[] orgnames;
 	private Object[] cities;
 	private Object[] states;
 	private Object[] financialyear;
-	
+	private CoreConnection conn;
 	/***
 	 * default constructor
 	 * do connection with core_engine 
 	 */
 	public Startup() {
 		conn = new CoreConnection();
-		CoreConnection.Connection();
+		
 	} // default constructor
 	
 	/***
@@ -26,12 +26,11 @@ public class Startup {
 	 * @return orgnames which is the list of organisation names in gnukhata.xml
 	 */
 	public Object[] getOrgnisationName() {
-		
-		
 		try {
-			orgnames = (Object[]) CoreConnection.getClient().call("getOrganisationNames");
+			orgnames = (Object[])conn.getClient().call("getOrganisationNames");
+			System.out.println("organisationName :"+orgnames);
 		} catch (XMLRPCException e) {
-			
+			System.out.println("cant call");
 			e.printStackTrace();
 		}
 		return orgnames;
@@ -44,7 +43,7 @@ public class Startup {
 	public Object[] getFinancialYear(Object params) {
 		
 		try {
-			financialyear = (Object[]) CoreConnection.getClient().call("getFinancialYear",params);
+			financialyear = (Object[])conn.getClient().call("getFinancialYear",params);
 			
 		} catch (XMLRPCException e) {
 			
@@ -57,17 +56,23 @@ public class Startup {
 	 * @param params list containing organisation name,from date,to-date,organisation type 
 	 * @return result which will be the list contain boolean true, client_id
 	 */
-	public static Integer deploy(Object[] params)
+	public Integer deploy(Object[] params)
 	{
 		
 		try {
-			result = (Object[]) CoreConnection.getClient().call("Deploy",params);
+			result = (Object[])conn.getClient().call("Deploy",params);
 			client_id=(Integer) result[1];
+			/*if (params[0]=="NGO")
+			{   
+				setorg_result = (Object[]) CoreConnection.getClient().call("organisation.setOrganisation",params);
+			}
+			else{
+				setorg_result = (Object[]) CoreConnection.getClient().call("organisation.setOrganisation",params);
+			}*/
 		} catch (XMLRPCException e) {
 			
 			e.printStackTrace();
 		}
-		
 		return client_id;
 	}
 	/***
@@ -75,10 +80,12 @@ public class Startup {
 	 * @param params list containing organisation name,from date,to-date
 	 * @return client_id type of integer
 	 */
-	public static Integer login(Object[] params)
+	public Integer login(Object[] params)
 	{
 	try {
-			client_id = (Integer) CoreConnection.getClient().call("getConnection",params);
+			System.out.println(params[0]+""+params[1]);
+			client_id = (Integer)conn.getClient().call("getConnection",params);
+			System.out.println(client_id);
 		} catch (XMLRPCException e) {
 			
 			e.printStackTrace();
@@ -94,7 +101,7 @@ public class Startup {
 	 */
 	public Object[] getCities (Object[] params) {
 		try {
-			cities = (Object[]) CoreConnection.getClient().call("data.getCityNames",params);
+			cities = (Object[])conn.getClient().call("data.getCityNames",params);
 		} catch (XMLRPCException e) {
 			
 			e.printStackTrace();
@@ -109,7 +116,7 @@ public class Startup {
 	public Object[] getStates()
 	{
 		try {
-			states =(Object[]) CoreConnection.getClient().call("data.getStateNames");
+			states =(Object[])conn.getClient().call("data.getStateNames");
 		} catch (XMLRPCException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -2,63 +2,62 @@ package com.gkaakash.coreconnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.xmlrpc.android.XMLRPCClient;
-
 import android.os.StrictMode;
 public class CoreConnection {
 	
-	private static URL url= null;
-	private static XMLRPCClient client = null;
-	
-	public CoreConnection()  {} //default constructor
-	
+	private URL url;
+	private XMLRPCClient client;
 	/***
-	 * connection method static so it will be same for all instances of class 
+	 * default constructor 
+	 * connect to server
 	 * create xml_rpc client 
-	 * @return XMLRPCClient client object 
-	 */
-	
-	public static XMLRPCClient Connection(){
-		
+	*/
+	public CoreConnection()  {
 		try {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 			StrictMode.setThreadPolicy(policy);
-			url = new URL("http://127.0.0.1:7081");
+			// put "http://127.0.0.1:7081" on tablet
+			url = new URL("http://10.0.2.2:7081");
 			client = new XMLRPCClient(url);
 		} catch (MalformedURLException e) {
 			
 			e.printStackTrace();
 		}
-		return client;
+	} //default constructor
 	
-	}
 	/***
 	 * getter for url , It's a private member
 	 * @return url
 	 */
-	public static URL getUrl() {
+	public URL getUrl() {
 		return url;
-	}
-	/***
-	 * setter method , can set url
-	 * @param url
-	 */
-	public static void setUrl(URL url) {
-		CoreConnection.url = url;
 	}
 	/***
 	 * getter for XMLRPCClient
 	 * @return client object
 	 */
-	public static XMLRPCClient getClient() {
+	
+	public XMLRPCClient getClient() {
 		return client;
 	}
 	/***
-	 * setter for Client 
+	 * setter for XMLRPCClient 
 	 * @param client
 	 */
-	public static void setClient(XMLRPCClient client) {
-		CoreConnection.client = client;
+	public void setClient(XMLRPCClient client) {
+		this.client = client;
 	}
+	/***
+	 * setter method , can set url
+	 * @param url
+	 */
+
+	
+	public void setUrl(URL url) {
+		this.url = url;
+	}
+	
+	
 	
 }
 
