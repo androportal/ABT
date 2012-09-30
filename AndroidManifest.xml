@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:label="Create New Organisation"
+            android:label="Create new organisation"
             android:name=".createOrg" >
         </activity>
         <activity
-            android:label="Organisation Details"
+            android:label="Organisation details"
             android:name=".orgDetails" >
         </activity>
         <activity
@@ -35,7 +35,7 @@
             android:name=".preferences" >
         </activity>
         <activity
-            android:label="Create Account"
+            android:label="Create account"
             android:name=".createAccount" >
         </activity>
         <activity
@@ -43,26 +43,52 @@
             android:name=".menu" >
         </activity>
         <activity
-            android:label="Edit Preferences"
+            android:label="Edit preferences"
             android:name=".editPreferences" >
         </activity>
-        <activity
-            android:label="Report Types"
-            android:name=".Report" >
+        <activity 
+            android:theme="@style/CustomTheme"
+            android:label="Report types"
+            android:name=".report" >
         </activity>
         <activity
-            android:label="Ledger Report"
-            android:name=".reportType" >
+            android:label="Menu >> Report"
+            android:name=".reportMenu" >
+        </activity>
+         <activity 
+             android:theme="@style/mytheme1"
+            android:label="Voucher Types"
+            android:name=".editVoucher">
+        </activity>
+        <activity
+            android:label="Menu >> Transaction"
+            android:name=".voucherMenu" >
         </activity>
          <activity
-            android:label="Contra"
-            android:name=".Voucher" >
+            android:theme="@style/mytheme1"
+            android:label=""
+            android:name=".edit_account" >
+            
         </activity>
+         <activity
+      		 android:label="Account"
+            android:name=".account_tab" >
+       </activity>
+       <activity
+            android:theme="@style/CustomTheme"
+      		 android:label="Transaction"
+            android:name=".transaction_tab" >
+       </activity>
         <activity
-            android:label="Contra"
-            android:name=".voucherType" >
-        </activity>
-        
+            
+      		 android:label="Transaction"
+            android:name=".createVoucher" >
+       </activity>
+        <activity
+            
+      		 android:label="Select Organisation"
+            android:name=".selectOrg" >
+       </activity> 
     </application>
     
 

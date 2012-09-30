@@ -79,4 +79,10 @@ public class preferences extends Activity {
 			}
 		});
 	}
+	public void onBackPressed(){
+		//To pass on the activity to the next page
+		Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent); 
+	}
+	
 }

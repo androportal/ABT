@@ -1,0 +1,40 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:orientation="vertical"
+         android:id="@+id/layout_root" >
+
+        <TextView
+            android:id="@+id/tvsetT0date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Set To-Date"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+
+        <DatePicker
+            android:id="@+id/dpsetT0date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/tvtrialBalanceType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Trial Balance Type"
+            android:textColor="#FFFFFF" 
+            android:textSize="20dp"/>
+
+        <Spinner
+            android:id="@+id/strialBalanceType"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:entries="@array/TrialBalance_arrays"
+            android:prompt="@string/TrialBalance_prompt" />
+
+    </LinearLayout>
