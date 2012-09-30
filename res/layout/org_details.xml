@@ -20,7 +20,7 @@
 		    	android:id="@+id/tvRegNum"
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
-				android:text="Registration No."
+				android:text="Registration no."
 				android:textColor="#FFFFFF"
         		android:textSize="20dp"
         		android:visibility="invisible" />
@@ -28,7 +28,7 @@
 		    android:id="@+id/etRegNum"
 		    android:layout_width="0dip"
 			android:layout_weight="2"
-			android:hint="Tap to enter Registration Number"
+			android:hint="Tap to enter registration number"
 			android:visibility="invisible"/>
 		</TableRow>
 	    
@@ -37,7 +37,7 @@
 		    	android:id="@+id/tvRegDate"
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
-				android:text="Registration Date"
+				android:text="Registration date"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" 
         		android:visibility="invisible"/>
@@ -56,7 +56,7 @@
 		    	android:id="@+id/tvFcraNum"
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
-				android:text="FCRA Registration No."
+				android:text="FCRA registration no."
 				android:textColor="#FFFFFF"
         		android:textSize="20dp"
         		android:visibility="invisible" />
@@ -64,7 +64,7 @@
 		    android:id="@+id/etFcraNum"
 		    android:layout_width="0dip"
 			android:layout_weight="2"
-			android:hint="Tap to enter FCRA Registration Number"
+			android:hint="Tap to enter FCRA registration number"
 			android:visibility="invisible"/>
 		</TableRow>
 	    
@@ -73,7 +73,7 @@
 		    	android:id="@+id/tvFcraDate"
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
-				android:text="FCRA Registration Date"
+				android:text="FCRA registration date"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" 
         		android:visibility="invisible"/>
@@ -95,12 +95,12 @@
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" />
 		<EditText 
+		    android:id="@+id/eGetAddr"
 		    android:layout_width="0dip"
 			android:layout_weight="2"
 			android:hint="Tap to enter address"
 			android:inputType="textPostalAddress" />
 		</TableRow>
-		
 		<TableRow>
 		<TextView 
 		    	android:layout_width="0dip"
@@ -108,12 +108,14 @@
 				android:text="Country"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" />
-		<EditText 
-		    android:layout_width="0dip"
-			android:layout_weight="2"
-			android:hint="Tap to enter Country" />
-		</TableRow>
+		<Spinner
+                android:id="@+id/sGetCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/country_prompt"
+                android:layout_weight="1.35" />
 		
+		</TableRow>
 		<TableRow>
 		<TextView 
 		    	android:layout_width="0dip"
@@ -121,10 +123,11 @@
 				android:text="State"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" />
-		<EditText 
-		    android:layout_width="0dip"
-			android:layout_weight="2"
-			android:hint="Tap to enter State" />
+		<Spinner
+                android:id="@+id/sGetStates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.35" />
 		</TableRow>
 		
 		<TableRow>
@@ -134,12 +137,12 @@
 				android:text="City"
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" />
-		<EditText 
-		    android:layout_width="0dip"
-			android:layout_weight="2"
-			android:hint="Tap to enter City" />
-		</TableRow>
-				
+		<Spinner
+                android:id="@+id/sGetCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.35" />
+		</TableRow>		
 		<TableRow>
 		<TextView 
 		    	android:layout_width="0dip"
@@ -148,9 +151,10 @@
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" />
 		<EditText 
+		    	android:id="@+id/sGetPostal"
 		    	android:layout_width="0dip"
 				android:layout_weight="2"
-				android:hint="Tap to enter Postal Code"
+				android:hint="Tap to enter postal code"
 				android:inputType="phone" />
 		</TableRow>
 		
@@ -162,9 +166,10 @@
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" />
 		<EditText 
+		    	android:id="@+id/eGetPhone"
 		    	android:layout_width="0dip"
 				android:layout_weight="2"
-				android:hint="Tap to enter Phone Number" 
+				android:hint="Tap to enter phone number" 
 				android:inputType="phone"/>
 		</TableRow>
 		
@@ -176,9 +181,10 @@
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" />
 		<EditText 
+		    	android:id="@+id/eGetEmailid"
 		    	android:layout_width="0dip"
 				android:layout_weight="2"
-				android:hint="Tap to enter E-mail ID"
+				android:hint="Tap to enter e-mail iD"
 				android:inputType="textEmailAddress"/>
 		</TableRow>
 		
@@ -192,7 +198,7 @@
 		<EditText 
 		    	android:layout_width="0dip"
 				android:layout_weight="2"
-				android:hint="Tap to enter Website"
+				android:hint="Tap to enter website"
 				android:inputType="textEmailAddress"/>
 		</TableRow>
 		
@@ -209,7 +215,7 @@
 		    android:id="@+id/etMVATnum"
 		    android:layout_width="0dip"
 			android:layout_weight="2"
-			android:hint="Tap to enter MVAT Number"
+			android:hint="Tap to enter MVAT number"
 			android:visibility="invisible"/>
 		</TableRow>
 		
@@ -226,7 +232,7 @@
 		    android:id="@+id/etServiceTaxnum"
 		    android:layout_width="0dip"
 			android:layout_weight="2"
-			android:hint="Tap to enter Service Tax Number"
+			android:hint="Tap to enter service tax number"
 			android:visibility="invisible"/>
 		</TableRow>
 		
@@ -240,7 +246,7 @@
 		<EditText 
 		    	android:layout_width="0dip"
 				android:layout_weight="2"
-				android:hint="Tap to enter Parmanent Account Number"/>
+				android:hint="Tap to enter parmanent account number"/>
 		</TableRow>
 </TableLayout>
 </ScrollView>
@@ -260,7 +266,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="50"
-            android:text="Save"
+            android:text="save"
             android:textSize="20dp" />
 		
         <Button
@@ -269,7 +275,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="50"
-            android:text="Skip"
+            android:text="skip"
             android:textSize="20dp" />
 
     </LinearLayout>

@@ -27,8 +27,8 @@ public class menu extends ListActivity{
 	final Context context = this;
 	
 	//adding list items to the newly created menu list
-	String[] menuOptions = new String[] { "Create Account", "Transaction", "Reports",
-			"Set Preferences", "Administration", "Help" };
+	String[] menuOptions = new String[] { "Create account", "Transaction", "Reports",
+			"Set preferences", "Administration", "Help" };
 
 	//adding options to the options menu
 	@Override
@@ -51,6 +51,12 @@ public class menu extends ListActivity{
 	    return super.onOptionsItemSelected(item);
 	}
 	 
+	 @Override
+	 public void onBackPressed() {
+		 Intent intent = new Intent(context, MainActivity.class);
+		    startActivity(intent); 
+	 }
+	 
 	//on load...
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,7 +78,7 @@ public class menu extends ListActivity{
 				//for "create account"
 				if(position == 0)
 				{
-					Intent intent = new Intent(context, createAccount.class);
+					Intent intent = new Intent(context, account_tab.class);
 					//getting the account code flag value from previous page(preferences.xml)
 					accCodeCheckFlag = getIntent().getExtras().getString("flag");
 					//now, passing this flag to the requested page through intent
@@ -84,7 +90,7 @@ public class menu extends ListActivity{
 				//for "transaction"
 				if(position == 1)
 				{
-					Intent intent = new Intent(context, voucherType.class);
+					Intent intent = new Intent(context, voucherMenu.class);
 					// To pass on the value to the next page
 					startActivity(intent);
 				}
@@ -92,7 +98,7 @@ public class menu extends ListActivity{
 				//for "reports"
 				if(position == 2)
 				{
-					Intent intent = new Intent(context, reportType.class);
+					Intent intent = new Intent(context, reportMenu.class);
 					// To pass on the value to the next page
 					startActivity(intent);					 
 				}
@@ -100,33 +106,32 @@ public class menu extends ListActivity{
 				//for "preferences", adding popup menu ...
 				if(position == 3)
 				{
-				final CharSequence[] items = { "Edit Organisation Details", "Add New Project" };
-				//creating a dialog box for popup
-		        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		        //setting title
-		        builder.setTitle("Select Preference");
-		        //adding items
-		        builder.setItems(items, new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int pos) {
-		        	//code for the actions to be performed on clicking popup item goes here ...
-		            switch (pos) {
-		                case 0:
-		                              {
-		                            	  Toast.makeText(context,"Clicked on:"+items[pos],Toast.LENGTH_SHORT).show();
-
-		                      }break;
-		            case 1:
-		                              {
-		                            	  Toast.makeText(context,"Clicked on:"+items[pos],Toast.LENGTH_SHORT).show();
-
-		                      }break;
-		        }
-		    }});
-		        //building a complete dialog
-				dialog=builder.create();
-				dialog.show();
-				}
-			} 
+					final CharSequence[] items = { "Edit organisation details", "Add new project" };
+					//creating a dialog box for popup
+			        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			        //setting title
+			        builder.setTitle("Select preference");
+			        //adding items
+			        builder.setItems(items, new DialogInterface.OnClickListener() {
+			        public void onClick(DialogInterface dialog, int pos) {
+			        	//code for the actions to be performed on clicking popup item goes here ...
+			            switch (pos) {
+			                case 0:
+			                              {
+			                            	  Toast.makeText(context,"Clicked on:"+items[pos],Toast.LENGTH_SHORT).show();
+			                      }break;
+			                case 1:
+			                              {
+			                            	  Toast.makeText(context,"Clicked on:"+items[pos],Toast.LENGTH_SHORT).show();
+			                      }break;
+			            }
+			        }
+			        });
+			        //building a complete dialog
+					dialog=builder.create();
+					dialog.show();
+					}
+				} 
 		});
 	 
 	}

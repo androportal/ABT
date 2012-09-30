@@ -1,5 +1,12 @@
 <resources>
 
     <style name="AppTheme" parent="android:Theme.Light" />
-
+    
+	<drawable name="text_tab_selected">#26466D</drawable>
+	<drawable name="text_tab_unselected">#60AFFE</drawable>
+     
+	<style name="mytheme1" parent="@android:style/Theme.NoTitleBar">
+       <item name="android:textColor">#FFFFFF</item>
+    </style>
+	
 </resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:background="@drawable/dark_gray_background" >
+
+<TextView
+    android:id="@+id/tvDebit"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Debit"
+    android:textColor="#000000"
+    android:background="@android:color/darker_gray" />
+
+<ListView
+android:id="@+id/voucher_list1"
+android:layout_width="match_parent"
+android:layout_height="match_parent" >
+</ListView>
+
+<TextView
+    android:id="@+id/tvCredit"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Credit"
+    android:textColor="#000000"
+    android:background="@android:color/darker_gray" />
+
+<ListView
+android:id="@+id/voucher_list2"
+android:layout_width="match_parent"
+android:layout_height="match_parent" >
+</ListView>
+
+<TextView
+    android:id="@+id/tvVoucherDetails"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Other Details"
+    android:textColor="#000000"
+    android:background="@android:color/darker_gray" />
+
+<ListView
+android:id="@+id/voucher_list"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+</ListView>
+
+</LinearLayout>
