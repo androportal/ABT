@@ -33,8 +33,8 @@ level needs.
   4. Bank Reconciliation
 
 
-gkAkashCore - a backend to gkAkash
-----------------------------------
+gkAakashCore - a backend to gkAakash
+------------------------------------
 
 `gkAakashCore <https://github.com/androportal/gkAakashCore>`_ provides
 a backend to **gkAakash**. On Aakash tablet, it runs in a ``chroot``
