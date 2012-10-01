@@ -5,11 +5,11 @@ GNUkhata on Aakash tablet
 Porting of `GNUkhata <http://gnukhata.org/>`_ on `Aakash
 <http://www.iitb.ac.in/AK/Aakash.htm>`_ tablet, a ``low cost access
 device`` is an effort to make GNUkhata, a web-app work on a portable
-android device. **gkAakash** provides accountants to carry on there
-work while on the go. They no need to carry a laptop or a live
-internet connection to work on GNUkhata. This is a complete Android
-application requires **no** internet connection and work natively on
-Aakash.
+android device. **gkAakash** provides students and accountants to
+carry on there work while on the go. They don't have to carry a laptop
+or need to have a live internet connection to work on GNUkhata. This
+is a complete Android application and requires **no** internet
+connection and work natively on Aakash.
 
 
 About GNUKhata
@@ -33,28 +33,32 @@ level needs.
   4. Bank Reconciliation
 
 
-Usage
------
+gkAkashCore - a backend to gkAkash
+----------------------------------
 
-This `branch` contains an Android(2.2, API-8) code for the User Interface
+`gkAakashCore <https://github.com/androportal/gkAakashCore>`_ provides
+a backend to **gkAakash**. On Aakash tablet, it runs in a ``chroot``
+environment(your device need to be rooted for this!). More information
+can be found `here
+<https://github.com/androportal/gkAakashCore/blob/master/README.rst>`_
+
+
+Usage 
+------
+
+This `branch` contains an Android(4.0.3, API-15) code for the User Interface
 of GNUkhata. 
 
 User's can clone this repo by typing
 ::
 
-   git clone -b froyo https://github.com/androportal/gkAakash.git
-
-
-if you want to clone code for Android(4.0.3, API-15), type
-::
-
    git clone -b ics https://github.com/androportal/gkAakash.git
 
 
-The default branch is **froyo**, which can be cloned by typing
+if you want to clone code for Android(2.2, API-8), type
 ::
 
-   git clone https://github.com/androportal/gkAakash.git
+   git clone -b froyo https://github.com/androportal/gkAakash.git
 
 
 if you want to checkout all branches then type,
@@ -105,5 +109,6 @@ License
 -------
 
 GNU `GPLv3 <http://www.gnu.org/licenses/gpl-3.0.txt>`_ 
+
 Copyright (c) IIT Bombay, 2012.
 
