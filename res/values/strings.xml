@@ -30,8 +30,8 @@
     
      <string name="Search_prompt">Select organisation type</string>
     <string-array name="SearchBy_arrays">
-        <item>A</item>
-        <item>B</item>
+        <item>Dr</item>
+        <item>Cr</item>
     </string-array>
     
     <string name="accountName_prompt">Select organisation type</string>
@@ -51,6 +51,23 @@
         <item>Net Trial Balance</item>
         <item>Gross Trial Balance</item>
         <item>Extended Trial Balance</item>
+    </string-array>
+    
+    <string name="grpName_prompt">Select group name</string>
+    <string-array name="groupNameArray">
+        <item>Corpus</item>
+        <item>Current Asset</item>
+        <item>Current Liability</item>
+        <item>Direct Expense</item>
+        <item>Direct Income</item>
+        <item>Fixed Assets</item>
+        <item>Indirect Income</item>
+        <item>Indirect Expense</item>
+        <item>Investment</item>
+        <item>Loans(Asset)</item>
+        <item>Loans(Liability)</item>
+        <item>Miscellaneous Expenses(Asset)</item>
+        <item>Reserves</item>
     </string-array>
     
     </resources>

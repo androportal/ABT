@@ -1,50 +1,276 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:orientation="vertical"
-android:background="@drawable/dark_gray_background" >
-
-<TextView
-    android:id="@+id/tvDebit"
+ android:layout_width="fill_parent" 
+ android:layout_height="fill_parent"
+ android:orientation="vertical"
+ android:weightSum="100"
+ android:background="@drawable/dark_gray_background">
+ 
+    <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="400dp"
+           android:layout_height="3dp"
+           android:paddingLeft="20dp"
+           android:paddingRight="20dp"
+           android:background="#60AFFE"/>
+   
+    <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="match_parent"
+           android:layout_height="3dp"
+           android:paddingLeft="20dp"
+           android:paddingRight="20dp"
+           android:background="#60AFFE"/>
+    
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Debit"
-    android:textColor="#000000"
-    android:background="@android:color/darker_gray" />
+    android:layout_height="fill_parent"
+    android:layout_weight="80"
+    android:background="@drawable/dark_gray_background" >
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:orientation="vertical"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingTop="5dp" >
+ 
+		<TableLayout
+		    xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical"
+		    android:paddingLeft="20dp"
+		    android:paddingRight="20dp"
+		    android:stretchColumns="7" >
 
-<ListView
-android:id="@+id/voucher_list1"
-android:layout_width="match_parent"
-android:layout_height="match_parent" >
-</ListView>
+		    <TableRow
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content" >
 
-<TextView
-    android:id="@+id/tvCredit"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Credit"
-    android:textColor="#000000"
-    android:background="@android:color/darker_gray" />
+		         <TextView
+		        android:id="@+id/Acc_type"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="Account Type "
+		        android:textSize="14dp" />
+		           	
+		   	<Spinner
+		   	    android:id="@+id/scr_dr"
+		   	    android:layout_width="wrap_content"
+		   	    android:layout_height="wrap_content"
+		   	    android:entries="@array/SearchBy_arrays"
+		   	    android:prompt="@string/Search_prompt" />
+				        
+		    <TextView
+		        android:id="@+id/accountName"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="        Account Name"
+		        android:textSize="14dp" />
 
-<ListView
-android:id="@+id/voucher_list2"
-android:layout_width="match_parent"
-android:layout_height="match_parent" >
-</ListView>
+		    <Spinner
+		        android:id="@+id/spinner1"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:entries="@array/groupNameArray"
+		        android:prompt="@string/grpName_prompt" />
+    
+		    <TextView
+		        android:id="@+id/amount"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="        Amount"
+		        android:textSize="14dp" />
+    
+			    <EditText
+			        android:id="@+id/etDrCrAmount"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:inputType="numberDecimal"
+			        android:text="0.00" >
 
-<TextView
-    android:id="@+id/tvVoucherDetails"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Other Details"
-    android:textColor="#000000"
-    android:background="@android:color/darker_gray" />
+	          <requestFocus />
+			   </EditText>
+    
+				<Button
+				    android:id="@+id/add"
+				    android:layout_weight="0.2"
+				    android:text=" + " />
+   
+		    </TableRow>
+		</TableLayout>
+		
+		<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/Vouchertable"
+		    android:orientation="vertical"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent" 
+    		android:stretchColumns="7" 
+    		android:paddingLeft="20dp"
+    		android:paddingRight="20dp"
+    		android:paddingBottom="5dp"
+    		/>
+		
+		<LinearLayout 
+	    android:orientation="horizontal"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingLeft="20dp"
+	    android:paddingRight="20dp"
+	    android:weightSum="100" 
+	    android:background="@android:color/darker_gray">
+		
+		<TextView
+		    android:id="@+id/tvTotalDebit"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Total debit:0.00"
+		    android:textColor="#000000"
+		    android:layout_weight="35"
+		    android:gravity="center"
+		    android:textSize="14dp"/>
+		
+		<TextView
+		    android:id="@+id/tvTotalCredit"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Total credit:0.00"
+		    android:textColor="#000000"
+		    android:layout_weight="35"
+		    android:gravity="center"
+		    android:textSize="14dp"/>
+		
+		<TextView
+		    android:id="@+id/tvDiff"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Total difference:0.00"
+		    android:textColor="#000000"
+		    android:layout_weight="30"
+		    android:gravity="center"
+		    android:textSize="14dp"/>
+		
+		</LinearLayout>
 
-<ListView
-android:id="@+id/voucher_list"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
-</ListView>
+	<ListView
+	android:id="@+id/voucher_list"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+	</ListView>
+	
+	<LinearLayout 
+	    android:orientation="horizontal"
+	    android:layout_width="match_parent"
+	    android:layout_height="0.01dp"
+	    android:paddingLeft="20dp"
+	    android:paddingRight="20dp"
+	    android:background="@android:color/darker_gray"/>
+	
+	<ListView
+	android:id="@+id/voucher_list4"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+	</ListView>
+	
+	<LinearLayout 
+	    android:orientation="horizontal"
+	    android:layout_width="match_parent"
+	    android:layout_height="0.01dp"
+	    android:paddingLeft="20dp"
+	    android:paddingRight="20dp"
+	    android:background="@android:color/darker_gray"/>
+	
+	<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:paddingTop="3dp"
+        android:paddingRight="20dp"
+        android:gravity="left">
+	<TextView
+		    android:id="@+id/tvVoucherNumber"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Voucher number"
+		    android:layout_weight="70"
+		    android:textSize="14dp"
+		    android:paddingLeft="20dp"/>
+	
+	<EditText
+			        android:id="@+id/etVoucherNumber"
+			        android:layout_width="300dp"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="30"
+			        android:hint="Tap to enter voucher number" 
+			        android:paddingTop="2dp"/>
+	</LinearLayout>
+	
+	<LinearLayout 
+	    android:orientation="horizontal"
+	    android:layout_width="match_parent"
+	    android:layout_height="0.01dp"
+	    android:paddingLeft="20dp"
+	    android:paddingRight="20dp"
+	    android:background="@android:color/darker_gray"/>
+	
+	<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:paddingTop="3dp"
+        android:paddingRight="20dp"
+        android:gravity="left">
+	<TextView
+		    android:id="@+id/tvVoucherNarration"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Voucher narration"
+		    android:layout_weight="70"
+		    android:textSize="14dp"
+		    android:paddingLeft="20dp"/>
+	
+	<EditText
+			        android:id="@+id/etVoucherNarration"
+			        android:layout_width="305dp"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="30"
+			        android:hint="Tap to enter voucher narration" 
+			        android:inputType=""
+			        android:paddingTop="2dp"/>
+	</LinearLayout>
+	
+	</LinearLayout>
+</ScrollView>
 
+
+<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="20"
+        android:weightSum="100"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/blackbutton" >
+
+        <Button
+            android:id="@+id/btnResetVoucher"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="50"
+            android:text="Save"
+            android:textSize="20dp" />
+		
+        <Button
+            android:id="@+id/btnSaveVoucher"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="50"
+            android:text="Skip"
+            android:textSize="20dp" />
+
+    </LinearLayout>
 </LinearLayout>

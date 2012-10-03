@@ -136,7 +136,7 @@ public class transaction_tab extends TabActivity{
 	        tab1.setTextColor(Color.WHITE);
 	        tab1.setText("Create Voucher");
 	        createspec.setIndicator(tab1);//assigning TextView to tab Indicator
-	        tab1.setBackgroundColor(Color.parseColor("#60AFFE"));
+	        
 	        Intent create = new Intent(this, createVoucher.class);
 	        
 	        createspec.setContent(create);
@@ -158,21 +158,7 @@ public class transaction_tab extends TabActivity{
 	        tabHost.addTab(editspec); // Adding edit tab
 	        tabHost.setCurrentTab(0);//setting tab1 on load
 	       
-	        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener(){
-	        	  @Override
-	        	  public void onTabChanged(String tabId) {
-	        		  setTabColor(tabHost);//setting the bellow method
-	        	  }
-	        	  
-				private void setTabColor(TabHost tabHost) {
-					
-					    for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
-					    {
-					        tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#26466D")); //unselected
-					    }
-					    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#60AFFE")); // selected
-					}
-	        });   
+	        
 	       
 	 }
 }

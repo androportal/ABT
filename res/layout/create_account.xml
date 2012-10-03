@@ -6,6 +6,22 @@
  android:weightSum="100"
  android:background="@drawable/dark_gray_background">
  
+    <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="400dp"
+           android:layout_height="3dp"
+           android:paddingLeft="20dp"
+           android:paddingRight="20dp"
+           android:background="#60AFFE"/>
+   
+    <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="match_parent"
+           android:layout_height="3dp"
+           android:paddingLeft="20dp"
+           android:paddingRight="20dp"
+           android:background="#60AFFE"/>
+    
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"

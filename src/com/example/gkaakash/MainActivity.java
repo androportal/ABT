@@ -7,7 +7,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 
@@ -71,4 +73,28 @@ public class MainActivity extends Activity {
 				}// end of onClick
 		});// end of select_org.setOnClickListener
 	}// end of addListenerOnButton() method
+		
+		
+		public void onBackPressed() {
+			 AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		        builder.setMessage("Are you sure you want to exit?")
+		                .setCancelable(false)
+		                .setPositiveButton("Yes",
+		                        new DialogInterface.OnClickListener() {
+		                            public void onClick(DialogInterface dialog, int id) {
+		                            	 Intent intent = new Intent(Intent.ACTION_MAIN);
+		                        		 intent.addCategory(Intent.CATEGORY_HOME);
+		                        		 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		                        		 startActivity(intent);
+		                        		 
+		                            }
+		                        })
+		                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int id) {
+		                        dialog.cancel();
+		                    }
+		                });
+		        AlertDialog alert = builder.create();
+		        alert.show();
+		 }
 }
