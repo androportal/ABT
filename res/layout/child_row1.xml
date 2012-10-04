@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="50dp"
+android:orientation="horizontal" 
+android:paddingLeft="20dp"
+android:paddingRight="20dp"
+android:weightSum="100">
+ 
+<TextView
+android:id="@+id/tvRowTitle1"
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content"
+android:layout_gravity="center_vertical"
+android:gravity="left"
+android:layout_weight="90" />
+
+
+<TextView
+android:id="@+id/tvSubItem1"
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:gravity="right"
+android:layout_gravity="center_vertical"
+android:layout_weight="10"  />
+
+</LinearLayout>

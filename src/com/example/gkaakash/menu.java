@@ -53,9 +53,10 @@ public class menu extends ListActivity{
 	 
 	 @Override
 	 public void onBackPressed() {
-		 Intent intent = new Intent(context, MainActivity.class);
-		    startActivity(intent); 
-	 }
+		 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+		 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		 startActivity(intent); 
+		}
 	 
 	//on load...
 	public void onCreate(Bundle savedInstanceState) {

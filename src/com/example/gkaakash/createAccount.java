@@ -347,7 +347,7 @@ public class createAccount<group> extends Activity{
 			public void onClick(View arg0) {
 				
 				// To pass on the activity to the next page
-				Intent intent = new Intent(context, menu.class);
+				Intent intent = new Intent(context, login.class);
 				intent.putExtra("flag", accCodeCheckFlag);
 				// To pass on the value to the next page
 				startActivity(intent);

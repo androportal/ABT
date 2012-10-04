@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
  
 
 public class createOrg extends MainActivity {
@@ -155,18 +156,32 @@ public class createOrg extends MainActivity {
 				organisationName = orgName.getText().toString();
 				fromdate = tvDisplayFromDate.getText().toString();
 				todate = tvDisplayToDate.getText().toString();
+				
+				
+				if("".equals(organisationName)){
+					Toast.makeText(context, "please enter the organisation name", Toast.LENGTH_SHORT).show();
+				}
+				else{
+					
 				//To pass on the activity to the next page
-			    Intent intent = new Intent(context, orgDetails.class);
-			    //To pass on the value to the next page
-			    intent.putExtra("orgtypeflag",orgTypeFlag);
-			    intent.putExtra("orgnameflag", organisationName);
-			    intent.putExtra("fdateflag", fromdate);
-			    intent.putExtra("tdateflag", todate);
-			    startActivity(intent);   
+					Intent intent = new Intent(context, orgDetails.class);
+				    //To pass on the value to the next page
+				    intent.putExtra("orgtypeflag",orgTypeFlag);
+				    intent.putExtra("orgnameflag", organisationName);
+				    intent.putExtra("fdateflag", fromdate);
+				    intent.putExtra("tdateflag", todate);
+				    startActivity(intent); 
+				}
 			}
  
 		}); //End of btnNext.setOnClickListener
  
 	}// End of addListeneronNextButton()
+	
+	public void onBackPressed() {
+		 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+		 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		 startActivity(intent);
+	}
 
 }// End of Class
