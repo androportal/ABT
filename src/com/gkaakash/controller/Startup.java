@@ -28,9 +28,9 @@ public class Startup {
 	public Object[] getOrgnisationName() {
 		try {
 			orgnames = (Object[])conn.getClient().call("getOrganisationNames");
-			System.out.println("organisationName :"+orgnames);
+			
 		} catch (XMLRPCException e) {
-			System.out.println("cant call");
+			
 			e.printStackTrace();
 		}
 		return orgnames;

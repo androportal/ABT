@@ -1,9 +1,6 @@
 package com.gkaakash.controller;
 
-import java.util.Vector;
-
 import org.xmlrpc.android.XMLRPCException;
-
 import com.gkaakash.coreconnection.CoreConnection;
 
 public class Group {
@@ -11,7 +8,11 @@ public class Group {
 	private CoreConnection conn;
 	private Object[] groups;
 	private Object[] subgroups;
-	private Object[] subgroupname;
+	private Integer subgroupname;
+	//private Object[] grpparams;
+	//private Object[] setaccount;
+	//private Object[] setsubgroup;
+	//private Object[] accparams;
 	
 	/***
 	 * Default constructor
@@ -41,13 +42,14 @@ public class Group {
 	 * call getSubGroupsByGroup method from core_engine groups.py 
 	 * @param params list contain groupname
 	 * @param client_id
-	 * @return subgroupname list
+	 * @return list of subgroupname
 	 */
-	public Object[] getSubGroupsByGroup(Object[] params,Object client_id) {
+	
+	public Object[] getSubGroupsByGroupName(Object[] params,Object client_id) {
 		
 		try {
 			
-			subgroups = (Object[])conn.getClient().call("groups.getSubGroupsByGroup",params,client_id);
+			subgroups = (Object[]) conn.getClient().call("groups.getSubGroupsByGroupName",params,client_id);
 			
 		} catch (XMLRPCException e) {
 			
@@ -59,13 +61,13 @@ public class Group {
 	 * call getSubGroupByName method from core_engine groups.py 
 	 * @param params list contain subgroupname
 	 * @param client_id
-	 * @return subgroupname
+	 * @return 1 if subgroupname already present else return 0
 	 */
-	public Object[] getSubGroupByName(Object[] params,Object client_id) {
+	public Integer subgroupExists(Object[] params,Object client_id) {
 		
 		try {
 			
-			subgroupname = (Object[])conn.getClient().call("groups.getSubGroupByName",params,client_id);
+			subgroupname = (Integer)conn.getClient().call("groups.subgroupExists",params,client_id);
 			
 		} catch (XMLRPCException e) {
 			
