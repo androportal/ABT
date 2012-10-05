@@ -83,9 +83,9 @@ public class Startup {
 	public Integer login(Object[] params)
 	{
 	try {
-			System.out.println(params[0]+""+params[1]);
+			//System.out.println(params[0]+""+params[1]);
 			client_id = (Integer)conn.getClient().call("getConnection",params);
-			System.out.println(client_id);
+			//System.out.println(client_id);
 		} catch (XMLRPCException e) {
 			
 			e.printStackTrace();

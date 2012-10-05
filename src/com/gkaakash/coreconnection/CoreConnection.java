@@ -16,8 +16,8 @@ public class CoreConnection {
 		try {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 			StrictMode.setThreadPolicy(policy);
-			// put "http://127.0.0.1:7081" on tablet
-			url = new URL("http://10.0.2.2:7081");
+			//url = new URL("http://127.0.0.1:7081"); //uncomment on tablet
+			url = new URL("http://10.0.2.2:7081"); // uncomment for emulator  
 			client = new XMLRPCClient(url);
 		} catch (MalformedURLException e) {
 			

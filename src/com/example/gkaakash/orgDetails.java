@@ -54,6 +54,7 @@ public class orgDetails extends Activity{
 	private Object[] deployparams;
 	protected ProgressDialog progressBar;
 	private EditText eGetAddr;
+	private EditText etGetAddr;
 
 	
 	//adding options to the options menu
@@ -98,7 +99,7 @@ public class orgDetails extends Activity{
 		btnFcraDate = (Button) findViewById(R.id.btnFcraDate);
 		tvMVATnum = (TextView) findViewById(R.id.tvMVATnum);
 		etMVATnum = (EditText) findViewById(R.id.etMVATnum);
-		eGetAddr =(EditText) findViewById(R.id.eGetAddr);
+		etGetAddr =(EditText) findViewById(R.id.etGetAddr);
 		tvServiceTaxnum = (TextView) findViewById(R.id.tvServiceTaxnum);
 		etServiceTaxnum = (EditText) findViewById(R.id.etServiceTaxnum);
 		// Retrieving the organisation type flag value from the previous page(create organisation page)
@@ -223,9 +224,20 @@ public class orgDetails extends Activity{
 				//call method deploy from startup.java 
 				client_id = startup.deploy(deployparams);
 				//get all the parameters to save organisation details
-				//gtSelectedOrgType
-				//getOrgName;
-				//OrgAddress =eGetAddr.getText().toString();
+				//orgtype = getIntent().getExtras().getString("orgtypeflag");
+			    
+				//getorgname = getIntent().getExtras().getString("orgnameflag");
+				/*etRegNum.getText().toString();
+				
+				 
+				
+				
+				
+				
+				etServiceTaxnum.getText().toString();*/
+				
+				
+				//OrgAddress =etGetAddr.getText().toString();
 				//cityname=getcity.getText().toString();
 				//postal
 				//statename
@@ -236,11 +248,15 @@ public class orgDetails extends Activity{
 				//email
 				//pan
 				//stax_no ...blank for ngo
-				//mvat_no ...blank for ngo
+				//getMVATno = etMVATnum.getText().toString();
 				//regno ....blank for profi
 				//regdate ...blank for profi
-				//fcra_no ..blank for profi
+				//getFcrano = etFcraNum.getText().toString();
 				//fcrc_date  ..blank for profi
+				
+				
+		
+				
 				
 			}
 		});

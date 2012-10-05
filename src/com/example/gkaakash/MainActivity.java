@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
 					// check existing organisation name list is null
 					if(orgNameList == null || orgNameList.length == 0)
 					{
-						Toast.makeText(context,"Organisation Not Exist",Toast.LENGTH_LONG).show();
+						Toast.makeText(context,"Organisation Not Exist",Toast.LENGTH_SHORT).show();
 					}
 					else
 					{

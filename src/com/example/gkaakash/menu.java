@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -71,6 +72,8 @@ public class menu extends ListActivity{
 		listView.setBackgroundColor(Color.BLACK);
 		listView.setCacheColorHint(Color.TRANSPARENT);
 		
+		
+        
 		//when menu list items are clicked, code for respective actions goes here ...
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -79,6 +82,7 @@ public class menu extends ListActivity{
 				//for "create account"
 				if(position == 0)
 				{
+					
 					Intent intent = new Intent(context, account_tab.class);
 					//getting the account code flag value from previous page(preferences.xml)
 					accCodeCheckFlag = getIntent().getExtras().getString("flag");

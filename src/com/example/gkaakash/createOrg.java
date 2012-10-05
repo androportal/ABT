@@ -47,6 +47,8 @@ public class createOrg extends MainActivity {
 		//creating interface to pass on the activity to next page
 		addListeneronNextButton();
 		orgType = (Spinner) findViewById(R.id.sOrgType);
+		String org  = (String) orgType.getSelectedItem();
+		System.out.println("org"+org);
 		//creating interface to listen activity on Item 
 		addListenerOnItem();
 	}
@@ -153,6 +155,7 @@ public class createOrg extends MainActivity {
  
 			@Override
 			public void onClick(View arg0) {
+				
 				organisationName = orgName.getText().toString();
 				fromdate = tvDisplayFromDate.getText().toString();
 				todate = tvDisplayToDate.getText().toString();

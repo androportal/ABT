@@ -7,20 +7,24 @@
  android:background="@drawable/dark_gray_background">
  
     <LinearLayout
+           android:id="@+id/createacc_tab1"
            android:orientation="horizontal"
            android:layout_width="400dp"
            android:layout_height="3dp"
            android:paddingLeft="20dp"
            android:paddingRight="20dp"
-           android:background="#60AFFE"/>
+           android:background="#60AFFE"
+           android:visibility="invisible"/>
    
     <LinearLayout
+        	android:id="@+id/createacc_tab2"
            android:orientation="horizontal"
            android:layout_width="match_parent"
            android:layout_height="3dp"
            android:paddingLeft="20dp"
            android:paddingRight="20dp"
-           android:background="#60AFFE"/>
+           android:background="#60AFFE"
+           android:visibility="invisible"/>
     
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
@@ -61,7 +65,7 @@
 			android:layout_weight="1.3"
 			/>
 		</TableRow>
-		<TableRow>
+		 <TableRow>
 		    <TextView 
 		        android:id="@+id/tvSubGrp"
 		    	android:layout_width="0dip"
@@ -76,9 +80,9 @@
 			android:layout_weight="1.3"
 			android:hint="Tap to enter newsubgroup name"/>
 		</TableRow>
+ 
 		<TableRow>
 		    <TextView 
-		        android:id="@+id/tvAccName"
 		    	android:layout_width="0dip"
 				android:layout_weight="1"
 				android:text="Account name"
@@ -123,7 +127,7 @@
 		    android:id="@+id/etOpBal"
 		    android:layout_width="0dip"
 			android:layout_weight="1.3"
-			android:hint="Tap to enter opening balance"/>
+			android:text="0.00"/>
 		</TableRow>
 		
 		<TableRow>

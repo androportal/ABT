@@ -95,7 +95,7 @@
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" />
 		<EditText 
-		    android:id="@+id/eGetAddr"
+		    android:id="@+id/etGetAddr"
 		    android:layout_width="0dip"
 			android:layout_weight="2"
 			android:hint="Tap to enter address"
@@ -196,6 +196,7 @@
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" />
 		<EditText 
+		        android:id="@+id/etGetWebSite"
 		    	android:layout_width="0dip"
 				android:layout_weight="2"
 				android:hint="Tap to enter website"
@@ -244,6 +245,7 @@
 				android:textColor="#FFFFFF"
         		android:textSize="20dp" />
 		<EditText 
+		    	android:id="@+id/etPanNo"
 		    	android:layout_width="0dip"
 				android:layout_weight="2"
 				android:hint="Tap to enter parmanent account number"/>

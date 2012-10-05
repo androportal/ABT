@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import com.gkaakash.controller.Account;
 import com.gkaakash.controller.Group;
 import com.gkaakash.controller.Startup;
 
@@ -26,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class createAccount<group> extends Activity{
 	// Declaring variables
@@ -53,6 +55,7 @@ public class createAccount<group> extends Activity{
 		protected String accountname;
 		protected String accountcode;
 		protected String openingbalance;
+		private Account account;
 		static final int ID_SCREENDIALOG = 1;
 		
 		 
@@ -173,6 +176,7 @@ public class createAccount<group> extends Activity{
 		setContentView(R.layout.create_account);
 		// create the object of Group class
 		group = new Group();
+		account = new Account();
 		// create the object of Group class
 		startup = new Startup();
 		System.out.println("groups :"+group);
@@ -321,6 +325,7 @@ public class createAccount<group> extends Activity{
 				{
 					tvSubGrp.setVisibility(EditText.VISIBLE);
 					etSubGrp.setVisibility(TextView.VISIBLE);
+					//etSubGrp.setFocusable(true);
 				}// End of if condition
 				else{
 					tvSubGrp.setVisibility(EditText.GONE);
@@ -345,9 +350,9 @@ public class createAccount<group> extends Activity{
 
 			@Override
 			public void onClick(View arg0) {
-				
+				System.out.println("accCodeCheckFlag "+accCodeCheckFlag);
 				// To pass on the activity to the next page
-				Intent intent = new Intent(context, login.class);
+				Intent intent = new Intent(context, menu.class);
 				intent.putExtra("flag", accCodeCheckFlag);
 				// To pass on the value to the next page
 				startActivity(intent);
@@ -364,18 +369,28 @@ public class createAccount<group> extends Activity{
 				newsubgrpname = etSubGrp.getText().toString();
 				accountname = etAccName.getText().toString();
 				accountcode = etaccCode.getText().toString();
-				openingbalance=etOpBal.getText().toString();
-				Object[] params = new Object[]{accCodeCheckFlag,selGrpName,selSubGrpName,newsubgrpname,accountname,accountcode,openingbalance}; 
-				//call the getAllGroups method to get all groups
-				//Object[] setaccount = (Object[]) group.setAccount(params,client_id);
-				// To pass on the activity to the next page
-				Intent intent = new Intent(context, createAccount.class);
-				intent.putExtra("flag", accCodeCheckFlag);
-				// To pass on the value to the next page
-				startActivity(intent);
+				openingbalance= etOpBal.getText().toString();
+				etOpBal.setText("0.00");
+				if("".equals(accountname)|"".equals(openingbalance))
+				{
+					
+					Toast.makeText(context,"TextFields cannot be blank",Toast.LENGTH_SHORT).show();
+					
+				}
+				else
+				{
+					Object[] params = new Object[]{accCodeCheckFlag,selGrpName,selSubGrpName,newsubgrpname,accountname,accountcode,openingbalance}; 
+					//call the getAllGroups method to get all groups
+					String setaccount = (String) account.setAccount(params,client_id);
+					// To pass on the activity to the next page
+					Intent intent = new Intent(context, createAccount.class);
+					intent.putExtra("flag", accCodeCheckFlag);
+					// To pass on the value to the next page
+					startActivity(intent);
+				}
 			}
 
 		});
 	}
-
+	
 }
