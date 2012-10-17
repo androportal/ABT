@@ -28,13 +28,13 @@ public class createOrg extends MainActivity {
 	static final int FROM_DATE_DIALOG_ID = 0;
 	static final int TO_DATE_DIALOG_ID = 1;
 	Spinner orgType;
-	private String organisationName,orgTypeFlag,selectedOrgType,fromdate,todate;
+	String org;
+	static String organisationName,orgTypeFlag,selectedOrgType,fromdate,todate;
 	AlertDialog dialog;
 	final Calendar c = Calendar.getInstance();
 	final Context context = this;
 	private EditText orgName;
 	Object[] deployparams;
-	Integer client_id ;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,8 +47,7 @@ public class createOrg extends MainActivity {
 		//creating interface to pass on the activity to next page
 		addListeneronNextButton();
 		orgType = (Spinner) findViewById(R.id.sOrgType);
-		String org  = (String) orgType.getSelectedItem();
-		System.out.println("org"+org);
+		org  = (String) orgType.getSelectedItem();
 		//creating interface to listen activity on Item 
 		addListenerOnItem();
 	}
@@ -165,14 +164,8 @@ public class createOrg extends MainActivity {
 					Toast.makeText(context, "please enter the organisation name", Toast.LENGTH_SHORT).show();
 				}
 				else{
-					
-				//To pass on the activity to the next page
+					//To pass on the activity to the next page
 					Intent intent = new Intent(context, orgDetails.class);
-				    //To pass on the value to the next page
-				    intent.putExtra("orgtypeflag",orgTypeFlag);
-				    intent.putExtra("orgnameflag", organisationName);
-				    intent.putExtra("fdateflag", fromdate);
-				    intent.putExtra("tdateflag", todate);
 				    startActivity(intent); 
 				}
 			}

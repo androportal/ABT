@@ -172,7 +172,20 @@
 				android:hint="Tap to enter phone number" 
 				android:inputType="phone"/>
 		</TableRow>
-		
+		<TableRow>
+		<TextView 
+		    	android:layout_width="0dip"
+				android:layout_weight="1"
+				android:text="Fax No."
+				android:textColor="#FFFFFF"
+        		android:textSize="20dp" />
+		<EditText 
+		    	android:id="@+id/eGetFax"
+		    	android:layout_width="0dip"
+				android:layout_weight="2"
+				android:hint="Tap to enter fax number" 
+				android:inputType="phone"/>
+		</TableRow>
 		<TableRow>
 		<TextView 
 		    	android:layout_width="0dip"

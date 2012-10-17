@@ -13,6 +13,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -170,7 +171,7 @@ public class createVoucher extends Activity {
     	year = c.get(Calendar.YEAR);
 		month = c.get(Calendar.MONTH);
 		day = c.get(Calendar.DAY_OF_MONTH);
-		String[] title = new String[]{"Voucher Date"};
+		String[] title = new String[]{"Voucher date"};
 		String[] subItem = new String[]{day+"-"+month+"-"+year};
 		
 		
@@ -263,6 +264,8 @@ public class createVoucher extends Activity {
     	
     	TextView tvac = new TextView(newRow.getContext());
       	tvac.setText( "Account Type " );
+      	tvac.setTextSize(16); //*****
+      	tvac.setTextColor(Color.WHITE);
       	
     	Spinner sp1 = new Spinner( newRow.getContext() );
     	dr_cr.add("Cr");
@@ -273,25 +276,29 @@ public class createVoucher extends Activity {
         
     	TextView tv = new TextView(newRow.getContext());
     	tv.setText("        Account Name");
+    	tv.setTextSize(16); //for emulator 14
+    	tv.setTextColor(Color.WHITE);
     	
     	Spinner actionButton = new Spinner( newRow.getContext() );
     	ArrayAdapter<String> da = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,list1);
     	da.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         actionButton.setAdapter(da);
-        actionButton.setMinimumWidth(283);
+        actionButton.setMinimumWidth(259); //for emulator keep 283
         
         TextView tv1 = new TextView(newRow.getContext());
     	tv1.setText( "        Amount" );
+    	tv1.setTextSize(16); //****
+    	tv1.setTextColor(Color.WHITE);
     	
     	//tv1.setWidth(100);
     	EditText et = new EditText(newRow.getContext());
     	et.setText( "0.00" );
-    	et.setWidth(80);
+    	et.setWidth(100); //for emulator 80
     	et.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
     	
     	//actionButton.setText( "Action: " + ++rowsSoFar );
     	Button removeSelfButton = new Button( newRow.getContext() );
-    	removeSelfButton.setText( "  -  " );
+    	removeSelfButton.setText( "   -   " ); //for tablet ***** add  space
     	
     	//removeSelfButton.setBackgroundResource(R.drawable.button_plus_green);
     	//removeSelfButton.setBackgroundColor(color)

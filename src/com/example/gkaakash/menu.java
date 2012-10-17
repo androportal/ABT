@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 public class menu extends ListActivity{
 	//adding a class property to hold a reference to the controls
-	String accCodeCheckFlag, voucherTypeFlag;
+	String  voucherTypeFlag;
 	private int group1Id = 1;
 	int Edit = Menu.FIRST;
 	int Delete = Menu.FIRST +1;
@@ -76,6 +76,8 @@ public class menu extends ListActivity{
         
 		//when menu list items are clicked, code for respective actions goes here ...
 		listView.setOnItemClickListener(new OnItemClickListener() {
+			
+
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				
@@ -84,10 +86,6 @@ public class menu extends ListActivity{
 				{
 					
 					Intent intent = new Intent(context, account_tab.class);
-					//getting the account code flag value from previous page(preferences.xml)
-					accCodeCheckFlag = getIntent().getExtras().getString("flag");
-					//now, passing this flag to the requested page through intent
-					intent.putExtra("flag", accCodeCheckFlag);
 					// To pass on the value to the next page
 					startActivity(intent);
 				}

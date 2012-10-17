@@ -30,7 +30,6 @@ public class MainActivity extends Activity {
     	startup = new Startup();
     	// call the getOrganisationName method from startup
     	orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
-    	System.out.println(orgNameList);
     	//Request a reference to the button from the activity by calling “findViewById” 
     	//and assign the retrieved button to an instance variable
         create_org = (Button) findViewById(R.id.bcreateOrg);

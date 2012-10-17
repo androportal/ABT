@@ -15,8 +15,8 @@ public class Organisation {
 		conn = new CoreConnection();
 	}
 	/***
-	 * 
-	 * @param client_id
+	 * setOrganisation method will call xmlrpc_setOrganisation from rpc_organisation.py
+	 * @param ,client_id
 	 * @return
 	 */
 	public boolean setOrganisation(Object[] params,Object client_id) {

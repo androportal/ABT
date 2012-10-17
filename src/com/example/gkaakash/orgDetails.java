@@ -46,15 +46,21 @@ public class orgDetails extends Activity{
 	int Finish = Menu.FIRST +2;
 	AlertDialog dialog;
 	final Context context = this;
-	
+	private String orgaddress;
 	
 	Spinner getstate, getcity;
-	private Integer client_id;
+	static Integer client_id;
 	private Startup startup;
 	private Object[] deployparams;
 	protected ProgressDialog progressBar;
-	private EditText eGetAddr;
 	private EditText etGetAddr;
+	private EditText sGetPostal;
+	private EditText eGetPhone;
+	private EditText eGetEmailid;
+	private EditText etPanNo;
+	private EditText etGetWebSite;
+	private EditText eGetFax;
+	private Spinner scountry;
 
 	
 	//adding options to the options menu
@@ -102,8 +108,17 @@ public class orgDetails extends Activity{
 		etGetAddr =(EditText) findViewById(R.id.etGetAddr);
 		tvServiceTaxnum = (TextView) findViewById(R.id.tvServiceTaxnum);
 		etServiceTaxnum = (EditText) findViewById(R.id.etServiceTaxnum);
+		sGetPostal=(EditText) findViewById(R.id.sGetPostal);
+		eGetFax=(EditText) findViewById(R.id.eGetFax);
+		eGetPhone=(EditText) findViewById(R.id.eGetPhone);
+    	scountry=(Spinner)findViewById(R.id.sGetCountry);
+		eGetEmailid	=(EditText) findViewById(R.id.eGetEmailid);
+		etPanNo	=(EditText) findViewById(R.id.etPanNo);
+
+		etGetWebSite=(EditText) findViewById(R.id.etGetWebSite);
+    	
 		// Retrieving the organisation type flag value from the previous page(create organisation page)
-		getSelectedOrgType = getIntent().getExtras().getString("orgtypeflag");
+		getSelectedOrgType = createOrg.orgTypeFlag;
 		if("NGO".equals(getSelectedOrgType))
 		{
 			tvRegNum.setVisibility(TextView.VISIBLE);
@@ -170,10 +185,10 @@ public class orgDetails extends Activity{
 	//Attach a listener to the click event for the button
 	private void addListenerOnButton() {
 		final Context context = this;
-		//Retrieving the organisation type flag value from the previous page(create organisation page)
-		getOrgName = getIntent().getExtras().getString("orgnameflag");
-		getFromDate = getIntent().getExtras().getString("fdateflag");
-		getToDate = getIntent().getExtras().getString("tdateflag");
+		// get flag values which is static
+		getOrgName=createOrg.organisationName;
+		getFromDate=createOrg.fromdate;
+		getToDate=createOrg.todate;
 		//Create a class implementing “OnClickListener” and set it as the on click listener for the button
 		btnSkip.setOnClickListener(new OnClickListener() {
 			
@@ -188,22 +203,19 @@ public class orgDetails extends Activity{
                 progressBar.setProgress(0);
                 progressBar.setMax(1000);
                 progressBar.show();
-				
-                //To pass on the activity to the next page   
-				Intent intent = new Intent(context, preferences.class);
-                startActivity(intent); 
-                
 				//list of input parameters type of Object 
 				deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
 				//call method deploy from startup.java 
 				client_id = startup.deploy(deployparams);
-				
+				 //To pass on the activity to the next page   
+				Intent intent = new Intent(context, preferences.class);
+                startActivity(intent); 
+                
                  
 			}
 		});
 		btnorgDetailSave.setOnClickListener(new OnClickListener() {
-			private String OrgAddress;
-
+		
 			@Override
 			public void onClick(View v) {
 				//progress bar moving image to show wait state
@@ -214,50 +226,16 @@ public class orgDetails extends Activity{
                 progressBar.setProgress(0);
                 progressBar.setMax(1000);
                 progressBar.show();
-
+                //list of input parameters type of Object 
+				deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
+				//call method deploy from startup.java 
+				client_id = startup.deploy(deployparams);
 				//To pass on the activity to the next page
 				Intent intent = new Intent(context, preferences.class);
                 startActivity(intent);  
                 
-				//list of input parameters type of Object 
-				deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
-				//call method deploy from startup.java 
-				client_id = startup.deploy(deployparams);
 				//get all the parameters to save organisation details
-				//orgtype = getIntent().getExtras().getString("orgtypeflag");
-			    
-				//getorgname = getIntent().getExtras().getString("orgnameflag");
-				/*etRegNum.getText().toString();
-				
-				 
-				
-				
-				
-				
-				etServiceTaxnum.getText().toString();*/
-				
-				
-				//OrgAddress =etGetAddr.getText().toString();
-				//cityname=getcity.getText().toString();
-				//postal
-				//statename
-				 //countryname
-				//telno
-				//faxno
-				//ebsite
-				//email
-				//pan
-				//stax_no ...blank for ngo
-				//getMVATno = etMVATnum.getText().toString();
-				//regno ....blank for profi
-				//regdate ...blank for profi
-				//getFcrano = etFcraNum.getText().toString();
-				//fcrc_date  ..blank for profi
-				
-				
-		
-				
-				
+                
 			}
 		});
 		

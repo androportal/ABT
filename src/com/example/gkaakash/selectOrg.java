@@ -23,14 +23,24 @@ public class selectOrg extends Activity{
 	private Button bProceed;
 	Object[] financialyearList;
 	final Context context = this;
+	//static String existingOrgFlag;
+	protected static Integer client_id;
+	protected static String selectedOrgName;
+	protected static Object fromDate;
+	protected static Object toDate;
 
 	
 	public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.select_org);
+    	// set flag to true , if we are in existing organisation
+    	//existingOrgFlag="true";
+    	// call startup to get client connection 
     	startup = new Startup();
     	getOrgNames = (Spinner) findViewById(R.id.sGetOrgNames);
     	getFinancialyear = (Spinner) findViewById(R.id.sGetFinancialYear);
+    	getOrgNames.setMinimumWidth(100);
+    	getFinancialyear.setMinimumWidth(250);
     	bProceed = (Button) findViewById(R.id.bProceed);
     	getExistingOrgNames();
     	addListenerOnButton();
@@ -64,14 +74,17 @@ public class selectOrg extends Activity{
 		final Context context = this;
 		bProceed.setOnClickListener(new OnClickListener() {
 			
+			private Object[] deployparams;
+
 			@Override
 			public void onClick(android.view.View v) {
 				//parameters pass to core_engine xml_rpc functions
-				//call method deploy from startup.java 
-				//client_id = Startup.login(deployparams);
+				deployparams=new Object[]{selectedOrgName,fromDate,toDate};
+				//call method login from startup.java 
+				client_id = startup.login(deployparams);
+				System.out.println("login "+ client_id);
 				//To pass on the activity to the next page  
 				Intent intent = new Intent(context,menu.class);
-				intent.putExtra("flag","true");
                 startActivity(intent); 
 			}
 		});
@@ -83,7 +96,7 @@ public class selectOrg extends Activity{
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
 				//Retrieving the selected org type from the Spinner and assigning it to a variable 
-				String selectedOrgName = parent.getItemAtPosition(position).toString();
+				selectedOrgName = parent.getItemAtPosition(position).toString();
 				
 				if(selectedOrgName!=null){
 					
@@ -98,6 +111,8 @@ public class selectOrg extends Activity{
 			    		Object[] y = (Object[]) fy;
 			    		// concatination From and To date 
 			    		financialyearlist.add(y[0]+" to "+y[1]);
+			    		fromDate=y[0];
+			    		toDate=y[1];
 			    	}
 			    	
 			    	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,

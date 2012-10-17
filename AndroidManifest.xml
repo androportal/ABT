@@ -93,7 +93,7 @@
          <activity
             
       		 android:label="login"
-            android:name="login" >
+            android:name=".login" >
        </activity> 
     </application>
     

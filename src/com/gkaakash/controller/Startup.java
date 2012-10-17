@@ -6,7 +6,6 @@ import com.gkaakash.coreconnection.CoreConnection;
 public class Startup {
 	private static Integer client_id;
 	static Object[] result = null;
-	private static Object[] setorg_result;
 	Object[] orgnames;
 	private Object[] cities;
 	private Object[] states;

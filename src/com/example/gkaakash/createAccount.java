@@ -6,6 +6,8 @@ import java.util.Vector;
 
 import com.gkaakash.controller.Account;
 import com.gkaakash.controller.Group;
+import com.gkaakash.controller.Organisation;
+import com.gkaakash.controller.Preferences;
 import com.gkaakash.controller.Startup;
 
 import android.app.Activity;
@@ -31,7 +33,7 @@ import android.widget.Toast;
 
 public class createAccount<group> extends Activity{
 	// Declaring variables
-	String accCodeCheckFlag;
+	static String accCodeCheckFlag;
 	TextView tvaccCode, tvDbOpBal, tvOpBal,tvAccName,tvAccCode;
 	EditText etaccCode, etDtOpBal, etOpBal,etAccCode;
 	Spinner sgrpName,sSearchBy,sAccName;
@@ -45,7 +47,6 @@ public class createAccount<group> extends Activity{
 		final Context context = this;
 		Dialog screenDialog;
 		private Group group;
-		private Startup startup;
 		private Spinner ssubGrpName;
 		private TextView tvSubGrp;
 		private EditText etSubGrp;
@@ -56,6 +57,14 @@ public class createAccount<group> extends Activity{
 		protected String accountcode;
 		protected String openingbalance;
 		private Account account;
+		private EditText etDrBal;
+		private EditText etCrBal;
+		private EditText etDiffbal;
+		private Object drbal;
+		private Object crbal;
+		private Object diffbal;
+		private Preferences preferencObj;
+		static String finishflag;
 		static final int ID_SCREENDIALOG = 1;
 		
 		 
@@ -73,7 +82,7 @@ public class createAccount<group> extends Activity{
 		 public boolean onOptionsItemSelected(MenuItem item) {
 		    switch (item.getItemId()) {
 		    case 1:
-		    	final CharSequence[] items = {  "Account name","Account code" };
+		    	final CharSequence[] items = {"Account name","Account code" };
 				//creating a dialog box for popup
 		        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		        //setting title
@@ -171,19 +180,16 @@ public class createAccount<group> extends Activity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		// Calling create_account.xml
 		setContentView(R.layout.create_account);
 		// create the object of Group class
+		System.out.println("welcome");
 		group = new Group();
 		account = new Account();
-		// create the object of Group class
-		startup = new Startup();
-		System.out.println("groups :"+group);
-		// get Client_id return by Deploy method
-		client_id = startup.getClient_id();
-		//Object[] params = new Object[]{"eee","2012-8-27 ","2013-8-26 "};
-		
+		preferencObj= new Preferences();
+		// getting client id 
+		client_id = Startup.getClient_id();
+		System.out.println("client_id :"+client_id);
 		// Request a reference to the button from the activity by calling
 		// “findViewById” and assign the retrieved button to an instance variable
 		tvaccCode = (TextView) findViewById(R.id.tvAccCode);
@@ -191,17 +197,11 @@ public class createAccount<group> extends Activity{
 		tvSubGrp = (TextView) findViewById(R.id.tvSubGrp);
 		etSubGrp = (EditText) findViewById(R.id.etSubGrp);
 		etAccName= (EditText) findViewById(R.id.etAccName);
-		// Setting visibility on load
-		//tvSubGrp.setVisibility(EditText.GONE);
-		//etSubGrp.setVisibility(TextView.GONE);
-		// Retrieving the account code flag value from the previous
-		// page(preferences page)
-		accCodeCheckFlag = getIntent().getExtras().getString("flag");
-		// Setting visibility on load
-		etaccCode.setVisibility(EditText.VISIBLE);
-		tvaccCode.setVisibility(TextView.VISIBLE);
+		// call getPrefernece to get set preference related to account code flag   
+		accCodeCheckFlag = preferencObj.getPreferences(new Object[]{"2"},client_id);
+		System.out.println("accCodeCheckFlag :"+accCodeCheckFlag);
 		// Setting visibility depending upon account code flag value
-		if (accCodeCheckFlag == null) {
+		if (accCodeCheckFlag.equals("automatic")) {
 			etaccCode.setVisibility(EditText.GONE);
 			tvaccCode.setVisibility(TextView.GONE);
 		} else {
@@ -212,19 +212,37 @@ public class createAccount<group> extends Activity{
 		sgrpName = (Spinner) findViewById(R.id.sGroupNames);
 		ssubGrpName = (Spinner) findViewById(R.id.sSubGrpNames);
 		
+		etDrBal = (EditText) findViewById(R.id.etDrBal);
+		etCrBal = (EditText) findViewById(R.id.etCrBal);
+		etDiffbal = (EditText) findViewById(R.id.etDiffBal);
+		
+		getTotalBalances();
+		
 		addListeneronButton();
 		getExistingGroupNames();
 		//creating interface to listen activity on Item 
 		addListenerOnItem();
 	}
+	private void getTotalBalances() {
+		// TODO Auto-generated method stub
+		drbal = account.getDrOpeningBalance(client_id);
+		crbal = account.getCrOpeningBalance(client_id);
+		diffbal =  account.getDiffInBalance(client_id);
+		System.out.println(drbal+""+crbal+""+diffbal);
+		// setting text values in respective Edit Text fields
+		etDrBal.setText(drbal.toString());
+		etCrBal.setText(crbal.toString());
+		etDiffbal.setText(String.format("%.2f",diffbal ));
+	}
+
 	// getExistingGroupNames()()
 	void getExistingGroupNames(){
 			
 		//call the getAllGroups method to get all groups
 		Object[] groupnames = (Object[]) group.getAllGroups(client_id);
-		// create new arraylist of type String to add gropunames
+		// create new array list of type String to add gropunames
 		List<String> groupnamelist = new ArrayList<String>();
-		// create new arraylist of type Integer to add gropcode
+		// create new array list of type Integer to add gropcode
     	List<Integer> groupcodelist = new ArrayList<Integer>();
     	
 		for(Object gs : groupnames)
@@ -244,9 +262,9 @@ public class createAccount<group> extends Activity{
     	
 	}// End getExistingGroupNames()
 	
-	
+	// method addListnerOnItem() will implement OnItemSelectedListner
 	void addListenerOnItem(){
-		//Attach a listener to the states Type Spinner to get dynamic list of subgroupname
+		//Attach a listener to the states Type Spinner to get dynamic list of subgroup name
 		sgrpName.setOnItemSelectedListener(new OnItemSelectedListener() {
 			
 
@@ -283,13 +301,13 @@ public class createAccount<group> extends Activity{
 			
 				// checks for the selected value of item is not null
 				if(selGrpName!=null){
-					// create new arraylist of type String to add subgroupnames
+					// create new array list of type String to add subgroup names
 					List<String> subgroupnamelist = new ArrayList<String>();
-					// input params contains groupname
+					// input params contains group name
 					Object[] params = new Object[]{selGrpName};
 					// call com.gkaakash.controller.Group.getSubGroupsByGroupName pass params
 					Object[] subgroupnames = (Object[])group.getSubGroupsByGroupName(params,client_id);
-					// loop through subgroupnames list 
+					// loop through subgroup names list 
 					for(Object sbgrp : subgroupnames)
 			    	
 			    		subgroupnamelist.add((String)sbgrp);
@@ -311,11 +329,9 @@ public class createAccount<group> extends Activity{
 			}
 		});// End of sgrpName.setOnItemSelectedListener
 		
-		//Attach a listener to the states Type Spinner to show or hide Subgroupname text filed
+		//Attach a listener to the states Type Spinner to show or hide subgroup name text filed
 		ssubGrpName.setOnItemSelectedListener(new OnItemSelectedListener() {
 			
-			
-
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
 				// get the current value of subgroup spinner
@@ -345,20 +361,23 @@ public class createAccount<group> extends Activity{
 		// TODO Auto-generated method stub
 		btnCreateAccSave = (Button) findViewById(R.id.btnCreateAccSave);
 		btnCreateAccFinish = (Button) findViewById(R.id.btnCreateAccFinish);
-		final Context context = this;
+	
 		btnCreateAccFinish.setOnClickListener(new OnClickListener() {
+
+			
 
 			@Override
 			public void onClick(View arg0) {
 				System.out.println("accCodeCheckFlag "+accCodeCheckFlag);
 				// To pass on the activity to the next page
-				Intent intent = new Intent(context, menu.class);
-				intent.putExtra("flag", accCodeCheckFlag);
-				// To pass on the value to the next page
-				startActivity(intent);
+				
+					Intent intent = new Intent(context, menu.class);
+					startActivity(intent);
+			
 			}
 
 		});
+		// setListner on Save Button
 		btnCreateAccSave.setOnClickListener(new OnClickListener() {
 
 			private String newsubgrpname;
@@ -366,31 +385,42 @@ public class createAccount<group> extends Activity{
 			@Override
 			public void onClick(View arg0) {
 				
+				// get text values from respective Edit Text 
 				newsubgrpname = etSubGrp.getText().toString();
 				accountname = etAccName.getText().toString();
 				accountcode = etaccCode.getText().toString();
 				openingbalance= etOpBal.getText().toString();
-				etOpBal.setText("0.00");
+				
+				// check for blank fields
 				if("".equals(accountname)|"".equals(openingbalance))
 				{
-					
+					etOpBal.setText("0.00");
 					Toast.makeText(context,"TextFields cannot be blank",Toast.LENGTH_SHORT).show();
 					
-				}
+				}// close if
 				else
-				{
+				{	
+					System.out.println("accCodeCheckFlag "+accCodeCheckFlag);
 					Object[] params = new Object[]{accCodeCheckFlag,selGrpName,selSubGrpName,newsubgrpname,accountname,accountcode,openingbalance}; 
-					//call the getAllGroups method to get all groups
-					String setaccount = (String) account.setAccount(params,client_id);
-					// To pass on the activity to the next page
-					Intent intent = new Intent(context, createAccount.class);
-					intent.putExtra("flag", accCodeCheckFlag);
-					// To pass on the value to the next page
-					startActivity(intent);
-				}
+					// call the setAccount method and pass the above parameters
+					account.setAccount(params,client_id);
+					
+					getTotalBalances();
+					getExistingGroupNames();
+					//creating interface to listen activity on Item 
+					addListenerOnItem();
+					
+					Toast.makeText(context,"Account "+accountname+" saved successfully!",Toast.LENGTH_SHORT).show();
+					
+					etSubGrp.setText("");
+					etAccName.setText("");
+					etaccCode.setText("");
+					etOpBal.setText("0.00");
+					
+				}// close else
 			}
 
-		});
+		}); // close setOnClickListener
 	}
 	
 }
