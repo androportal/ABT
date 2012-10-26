@@ -2,25 +2,19 @@ package com.example.gkaakash;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-
 import com.gkaakash.controller.Account;
 import com.gkaakash.controller.Group;
-import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Preferences;
 import com.gkaakash.controller.Startup;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -39,144 +33,33 @@ public class createAccount<group> extends Activity{
 	Spinner sgrpName,sSearchBy,sAccName;
 	Button btnCreateAccSave,btnCreateAccFinish,btnokdialog;
 	static Integer client_id;
-		private int group1Id = 1;
-		int Edit = Menu.FIRST;
-		int Delete = Menu.FIRST +1;
-		int Finish = Menu.FIRST +2;
-		AlertDialog dialog;
-		final Context context = this;
-		Dialog screenDialog;
-		private Group group;
-		private Spinner ssubGrpName;
-		private TextView tvSubGrp;
-		private EditText etSubGrp;
-		protected String selGrpName;
-		protected String selSubGrpName;
-		private EditText etAccName;
-		protected String accountname;
-		protected String accountcode;
-		protected String openingbalance;
-		private Account account;
-		private EditText etDrBal;
-		private EditText etCrBal;
-		private EditText etDiffbal;
-		private Object drbal;
-		private Object crbal;
-		private Object diffbal;
-		private Preferences preferencObj;
-		static String finishflag;
-		static final int ID_SCREENDIALOG = 1;
+	AlertDialog dialog;
+	final Context context = this;
+	Dialog screenDialog;
+	private Group group;
+	private Spinner ssubGrpName;
+	private TextView tvSubGrp;
+	private EditText etSubGrp;
+	protected String selGrpName;
+	protected String selSubGrpName;
+	private EditText etAccName;
+	protected String accountname;
+	protected String accountcode;
+	protected String openingbalance;
+	private Account account;
+	private EditText etDrBal;
+	private EditText etCrBal;
+	private EditText etDiffbal;
+	private Object drbal;
+	private Object crbal;
+	private Object diffbal;
+	private Preferences preferencObj;
+	static String finishflag;
+	static final int ID_SCREENDIALOG = 1;
+	private static String groupChar;
+	private String account_code;
 		
-		 
-		//adding options to the options menu
-		@Override
-	    public boolean onCreateOptionsMenu(Menu menu) {
-	    menu.add(group1Id, Edit, Edit, "Edit");
-	    menu.add(group1Id, Delete, Delete, "Delete");
-	    menu.add(group1Id, Finish, Finish, "Finish");
-	    return super.onCreateOptionsMenu(menu); 
-	    }
 		
-		//code for the actions to be performed on clicking options menu goes here ...
-		 @Override
-		 public boolean onOptionsItemSelected(MenuItem item) {
-		    switch (item.getItemId()) {
-		    case 1:
-		    	final CharSequence[] items = {"Account name","Account code" };
-				//creating a dialog box for popup
-		        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		        //setting title
-		        builder.setTitle("Search Account By");
-		       
-		        //adding items
-		        builder.setItems(items, new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int pos) {
-		        	//code for the actions to be performed on clicking popup item goes here ...
-		            switch (pos) {
-		                case 0:
-		                              {
-		                            	  final CharSequence[] items = {  "ABC","PQR","LMN" };
-		                  				//creating a dialog box for popup
-		                  		        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		                  		        //setting title
-		                  		        builder.setTitle("Account Name");
-		                  		       
-		                  		        //adding items
-		                  		        builder.setItems(items, new DialogInterface.OnClickListener() {
-		                  		        public void onClick(DialogInterface dialog, int pos) {
-		                  		        	//code for the actions to be performed on clicking popup item goes here ...
-		                  		            switch (pos) {
-		                  		                case 0:
-		                  		                              {
-		                  		                            	 
-		                  		                            	 
-		                  										
-		                  		                      }break;
-		                  		            }
-		                  		        }});
-		                  		        //building a complete dialog
-		                  				dialog=builder.create();
-		                  				((Dialog) dialog).show();
-		                  				WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-
-		                				lp.copyFrom(((Dialog) dialog).getWindow().getAttributes());
-		                				lp.width = 310;
-		                				
-		                				
-		                				((Dialog) dialog).getWindow().setAttributes(lp);
-		                  				
-		                            	 
-										
-		                      }break;
-		                case 1:
-                        {
-                      	  final CharSequence[] items = {  "ACC01","ACC02","ACC03" };
-            				//creating a dialog box for popup
-            		        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            		        //setting title
-            		        builder.setTitle("Account Code");
-            		       
-            		        //adding items
-            		        builder.setItems(items, new DialogInterface.OnClickListener() {
-            		        public void onClick(DialogInterface dialog, int pos) {
-            		        	//code for the actions to be performed on clicking popup item goes here ...
-            		            switch (pos) {
-            		                case 0:
-            		                              {
-            		                            	 
-            		                            	 
-            										
-            		                      }break;
-            		            }
-            		        }});
-            		        //building a complete dialog
-            				dialog=builder.create();
-            				((Dialog) dialog).show();
-            				WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-
-          				lp.copyFrom(((Dialog) dialog).getWindow().getAttributes());
-          				lp.width = 310;
-          				
-          				
-          				((Dialog) dialog).getWindow().setAttributes(lp);
-             }break;
-		            }
-		        }});
-		        //building a complete dialog
-				dialog=builder.create();
-				dialog.show();
-				
-				WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-				lp.copyFrom(dialog.getWindow().getAttributes());
-				lp.width = 310;
-				dialog.getWindow().setAttributes(lp);
-			 
-		    return true;
-		    }
-		    return super.onOptionsItemSelected(item);
-		}
-		
-		 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -222,6 +105,7 @@ public class createAccount<group> extends Activity{
 		getExistingGroupNames();
 		//creating interface to listen activity on Item 
 		addListenerOnItem();
+		addEditTextListner();
 	}
 	private void getTotalBalances() {
 		// TODO Auto-generated method stub
@@ -298,6 +182,64 @@ public class createAccount<group> extends Activity{
 					tvOpBal.setText("Credit opening balance");
 				}
 				
+				if (selGrpName.equals("Capital"))
+				{
+					groupChar = "CP";
+							//etaccCode.setText();
+					
+				}else if (selGrpName.equals("Corpus"))
+				{
+					groupChar = "CR";
+				
+				}else if (selGrpName.equals("Current Asset"))
+				{
+					groupChar = "CA";
+				
+				}else if (selGrpName.equals("Current Liability"))
+				{
+					groupChar = "CL";
+			
+				}else if (selGrpName.equals("Direct Income"))
+				{
+					groupChar = "DI";
+			
+				}else if (selGrpName.equals("Direct Expense"))
+				{
+					groupChar = "DE";
+		
+				}else if (selGrpName.equals("Fixed Assets"))
+				{
+					groupChar = "FA";
+				
+				}else if (selGrpName.equals("Indirect Income"))
+				{
+					groupChar = "II";
+			
+				}else if (selGrpName.equals("Indirect Expense"))
+				{
+					groupChar = "IE";
+
+				}else if (selGrpName.equals("Investment"))
+				{
+					groupChar = "IV";
+
+				}else if (selGrpName.equals("Loans(Asset)"))
+				{
+					groupChar = "LA";
+
+				}else if (selGrpName.equals("Reserves"))
+				{
+					groupChar = "RS" ;
+
+				}else if (selGrpName.equals("Miscellaneous Expenses(Asset)"))
+				{
+					groupChar = "ME";
+
+				}else
+				{
+					groupChar = "LL";
+
+				}
 			
 				// checks for the selected value of item is not null
 				if(selGrpName!=null){
@@ -392,35 +334,167 @@ public class createAccount<group> extends Activity{
 				openingbalance= etOpBal.getText().toString();
 				
 				// check for blank fields
-				if("".equals(accountname)|"".equals(openingbalance))
+				if("Create New Sub-Group".equals(selSubGrpName)&&newsubgrpname.length()<1||("manually".equals(accCodeCheckFlag)&& accountcode.length()<1))
 				{
-					etOpBal.setText("0.00");
-					Toast.makeText(context,"TextFields cannot be blank",Toast.LENGTH_SHORT).show();
-					
-				}// close if
+				Toast.makeText(context,"Please fill field",Toast.LENGTH_SHORT).show();
+				}else if ((accountname.length()<1)||(openingbalance.length()<1))
+				{
+				etOpBal.setText("0.00");
+				Toast.makeText(context,"TextFields cannot be blank",Toast.LENGTH_SHORT).show();
+				}
 				else
 				{	
-					System.out.println("accCodeCheckFlag "+accCodeCheckFlag);
-					Object[] params = new Object[]{accCodeCheckFlag,selGrpName,selSubGrpName,newsubgrpname,accountname,accountcode,openingbalance}; 
-					// call the setAccount method and pass the above parameters
-					account.setAccount(params,client_id);
-					
-					getTotalBalances();
-					getExistingGroupNames();
-					//creating interface to listen activity on Item 
-					addListenerOnItem();
-					
-					Toast.makeText(context,"Account "+accountname+" saved successfully!",Toast.LENGTH_SHORT).show();
-					
-					etSubGrp.setText("");
-					etAccName.setText("");
-					etaccCode.setText("");
-					etOpBal.setText("0.00");
-					
+				System.out.println("accCodeCheckFlag "+accCodeCheckFlag);
+				Object[] params = new Object[]{accCodeCheckFlag,selGrpName,selSubGrpName,newsubgrpname,accountname,accountcode,openingbalance}; 
+				// call the setAccount method and pass the above parameters
+				account.setAccount(params,client_id);
+				getTotalBalances();
+				getExistingGroupNames();
+				//creating interface to listen activity on Item 
+				addListenerOnItem();
+				Toast.makeText(context,"Account "+accountname+" saved successfully!",Toast.LENGTH_SHORT).show();
+				etSubGrp.setText("");
+				etAccName.setText("");
+				etaccCode.setText("");
+				etOpBal.setText("0.00");
 				}// close else
 			}
 
 		}); // close setOnClickListener
 	}
+	
+	
+	private void addEditTextListner()
+	{
+	etAccName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		
+	      String accountname;
+		@Override
+	      public void onFocusChange(View v, boolean hasFocus) {
+			accountname = etAccName.getText().toString();
+	        
+	        if(hasFocus)
+	        {
+	        	etaccCode.setText("");
+	        }
+	        else{
+	        	
+	        	if(accountname.length()>=1)
+	        	{
+		        	accountcode = account.checkAccountName(new Object[]{accountname,accCodeCheckFlag,groupChar},client_id);
+		        	if (accountcode.equals("exist"))
+		        	{
+		        		Toast.makeText(context,accountname+" already exist",Toast.LENGTH_LONG).show();
+		        		etAccName.setText("");
+		        		
+		        		
+		        	}
+		        	else{
+		        		etaccCode.setText(accountcode);
+		        		}
+	        	}
+	        	/*else
+	        	{
+	        		Toast.makeText(context," Please enter accountname",Toast.LENGTH_LONG).show();
+	        		etAccName.setText("");
+	        	}*/
+	        }
+	      }
+	    });// close addEditTextListner()
+	
+	// It will check for account exist 
+	etAccName.addTextChangedListener(new TextWatcher() {
+
+     @Override
+		public void afterTextChanged(Editable s) {
+			// TODO Auto-generated method stub
+			String accountname = etAccName.getText().toString();
+			if(accountname.length()>=1)
+			{
+				accountcode = account.checkAccountName(new Object[]{accountname,accCodeCheckFlag,groupChar},
+					client_id);
+				if (accountcode.equals("exist"))
+				{
+					Toast.makeText(context,accountname+" already exist",Toast.LENGTH_LONG).show();
+					etAccName.setText("");
+				}
+			}else{
+				
+			}
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			// TODO Auto-generated method stub
+			//Toast.makeText(context," befor text change "+s,
+		            //Toast.LENGTH_LONG).show();
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			// TODO Auto-generated method stub
+			//Toast.makeText(context," on text change "+s,
+		            //Toast.LENGTH_LONG).show();
+		} 
+
+	});// close addTextChangedListener
+	// It will check for new subgroup name exist 
+	etSubGrp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		
+		String sub_grp_name;
+		private String subgroup_exist;
+		@Override
+	      public void onFocusChange(View v, boolean hasFocus) {
+				// TODO Auto-generated method stub
+				sub_grp_name = etSubGrp.getText().toString();
+				 if(hasFocus)
+			        {
+					 	etSubGrp.setText("");
+			        }
+			        else{
+						if(sub_grp_name.length()>=1)
+						{
+							subgroup_exist = group.subgroupExists(new Object[]{sub_grp_name},client_id);
+							if (subgroup_exist.equals("1"))
+							{
+								Toast.makeText(context,sub_grp_name+" already exist",Toast.LENGTH_LONG).show();
+								etSubGrp.setText("");
+							}
+						}
+			     }
+			}
+
+		});// close setOnFocusChangeListener
+	
+	// It will check for accountcode exist 
+	etaccCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			
+			
+			private String accountcode_exist;
+			@Override
+		      public void onFocusChange(View v, boolean hasFocus) {
+					// TODO Auto-generated method stub
+					account_code = etaccCode.getText().toString();
+					 if(hasFocus)
+				        {
+						 
+				        }
+				        else{
+							if(account_code.length()>=1)
+							{
+								accountcode_exist = account.checkAccountCode(new Object[]{account_code},client_id);
+								if (accountcode_exist.equals("1"))
+								{
+									Toast.makeText(context,account_code+" already exist",Toast.LENGTH_LONG).show();
+									etaccCode.setText(accountcode);
+								}
+							}
+				     }
+				}
+
+			});// close setOnFocusChangeListener
+	} // close addEditTextListner()
 	
 }

@@ -18,12 +18,12 @@
             android:textSize="20dp"/>
 
         <Spinner
-            android:id="@+id/sAccountName"
+            android:id="@+id/sAccountNameinLedger"
             android:layout_width="254dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:entries="@array/BalanceSheet_arrays"
-            android:prompt="@string/BalanceSheet_prompt" />
+            android:entries="@array/getaccNamesinLedger"
+            android:prompt="@string/getaccNamesinLedger" />
         
         
            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -51,7 +51,7 @@
             android:textSize="20dp" />
 
          <DatePicker
-             android:id="@+id/dpsetFromdate"
+             android:id="@+id/dpsetLedgerFromdate"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_gravity="center" />
@@ -77,7 +77,7 @@
             android:textSize="20dp" />
 
         <DatePicker
-            android:id="@+id/dpsetT0date"
+            android:id="@+id/dpsetLedgerT0date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
@@ -117,12 +117,11 @@
             android:textSize="20dp"/>
 
         <Spinner
-            android:id="@+id/sProject"
+            android:id="@+id/sLedgerProject"
             android:layout_width="254dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:entries="@array/BalanceSheet_arrays"
-            android:prompt="@string/BalanceSheet_prompt" />
+            android:prompt="@string/projectName_prompt" />
 
     </LinearLayout>
     </ScrollView>

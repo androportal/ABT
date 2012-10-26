@@ -92,8 +92,18 @@
        
          <activity
             
-      		 android:label="login"
+      		 android:label="Login"
             android:name=".login" >
+       </activity> 
+       
+         <activity
+      		 android:label="Ledger"
+            android:name=".ledger" >
+       </activity> 
+       
+         <activity
+      		 android:label="Trial Balance"
+            android:name=".trialBalance" >
        </activity> 
     </application>
     

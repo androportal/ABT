@@ -33,7 +33,9 @@
 
 	<TableLayout 
         		android:layout_width="fill_parent"
-				android:layout_height="wrap_content">
+				android:layout_height="wrap_content"
+				android:paddingLeft="10dp"
+ 				android:paddingRight="10dp">
 		
 		<TableRow>
 		    <TextView 
@@ -47,6 +49,7 @@
 		    android:id="@+id/sGroupNames"
 		    android:layout_width="0dip"
 			android:layout_weight="1.3"
+		    android:prompt="@string/grpName_prompt"
 			/>
 		</TableRow>
 		
@@ -61,7 +64,7 @@
 		<Spinner 
 		    android:id="@+id/sSubGrpNames"
 		    android:layout_width="0dip"
-		    android:entries="@array/subGroupNameArray"
+		     android:prompt="@string/subgrpName_prompt"
 			android:layout_weight="1.3"
 			/>
 		</TableRow>

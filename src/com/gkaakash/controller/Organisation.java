@@ -8,6 +8,8 @@ public class Organisation {
 	
 	private CoreConnection conn;
 	private boolean organisation;
+	private Object[] projects;
+	Object[] Params;
 	/***
 	 * 
 	 */
@@ -22,19 +24,47 @@ public class Organisation {
 	public boolean setOrganisation(Object[] params,Object client_id) {
 		
 		try {
-			if (params[0]=="NGO")
+			
+			if(params[0].equals("NGO"))
 			{
-				organisation = (Boolean)conn.getClient().call("organisation.setOrganisation",params,client_id);
+				System.out.println("rg date:"+params[17]);
+			  Params=new Object[]{params[0],params[1],params[2],
+						params[3],params[4],params[5],params[6],params[7],
+						params[8],params[9],params[10],params[11],"","",
+						params[14],params[15],params[16],params[17]};
+				organisation = (Boolean)conn.getClient().call("organisation.setOrganisation",Params,client_id);
 			}
 			else
 			{
-				organisation = (Boolean)conn.getClient().call("organisation.setOrganisation",params,client_id);
+			  Params=new Object[]{params[0],params[1],params[2],
+							params[3],params[4],params[5],params[6],params[7],
+							params[8],params[9],params[10],params[11],params[12],
+							params[13],"","","",""};
+				organisation = (Boolean)conn.getClient().call("organisation.setOrganisation",Params,client_id);
 			}
 		} catch (XMLRPCException e) {
 			
 			e.printStackTrace();
 		}
 		return organisation;
+	}
+	
+	/***
+	 * call getAllGroups method from core_engine groups.py 
+	 * @param params client id
+	 * @return list contain gropucode , groupname , description
+	 */
+	public Object getAllProjects(Object client_id) {
+		
+		try {
+			System.out.println("wr are in projects");
+			projects = (Object[])conn.getClient().call("organisation.getAllProjects",client_id);
+			System.out.println("wr are in projects..."+projects);
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return projects;
 	}
   
 }

@@ -8,7 +8,7 @@ public class Group {
 	private CoreConnection conn;
 	private Object[] groups;
 	private Object[] subgroups;
-	private Integer subgroupname;
+	private String subgroupname;
 	//private Object[] grpparams;
 	//private Object[] setaccount;
 	//private Object[] setsubgroup;
@@ -57,17 +57,18 @@ public class Group {
 		}
 		return subgroups;
 	}
+	
 	/***
-	 * call getSubGroupByName method from core_engine groups.py 
+	 * call subgroupExists method from core_engine groups.py 
 	 * @param params list contain subgroupname
 	 * @param client_id
 	 * @return 1 if subgroupname already present else return 0
 	 */
-	public Integer subgroupExists(Object[] params,Object client_id) {
+	public String subgroupExists(Object[] params,Object client_id) {
 		
 		try {
 			
-			subgroupname = (Integer)conn.getClient().call("groups.subgroupExists",params,client_id);
+			subgroupname = (String)conn.getClient().call("groups.subgroupExists",params,client_id);
 			
 		} catch (XMLRPCException e) {
 			

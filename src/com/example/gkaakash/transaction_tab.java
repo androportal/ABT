@@ -31,7 +31,9 @@ public class transaction_tab extends TabActivity{
 	      //customizing title bar
 	        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.voucher_title);
 	        final TextView label = (TextView) findViewById(R.id.tvVoucherTitle);
-	        String vouchertypeflag = getIntent().getExtras().getString("flag");
+	        System.out.println("vtypeflag is :....");
+	        String vouchertypeflag = voucherMenu.vouchertypeflag;
+	        System.out.println("vtypeflag is :"+vouchertypeflag);
 	        label.setText("Menu >> Transaction >>" + vouchertypeflag);
 	        final Button home = (Button) findViewById(R.id.btnhome);
 	        home.setOnClickListener(new OnClickListener() {
@@ -138,7 +140,7 @@ public class transaction_tab extends TabActivity{
 	        createspec.setIndicator(tab1);//assigning TextView to tab Indicator
 	        
 	        Intent create = new Intent(this, createVoucher.class);
-	        
+	        create.putExtra("flag", vouchertypeflag);
 	        createspec.setContent(create);
 	        tabHost.addTab(createspec);  // Adding create tab
 	        

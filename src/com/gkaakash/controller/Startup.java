@@ -11,6 +11,8 @@ public class Startup {
 	private Object[] states;
 	private Object[] financialyear;
 	private CoreConnection conn;
+	private static String  financialFromDate,financialToDate;
+	
 	/***
 	 * default constructor
 	 * do connection with core_engine 
@@ -35,9 +37,9 @@ public class Startup {
 		return orgnames;
 	}
 	/***
-	 * 
-	 * @param params
-	 * @return
+	 * this method will call  xmlrpc_getFinancialYear from rpc_main.py
+	 * @param params [organisation name ]
+	 * @return list of financialyear for respective organisation
 	 */
 	public Object[] getFinancialYear(Object params) {
 		
@@ -59,8 +61,11 @@ public class Startup {
 	{
 		
 		try {
+			
 			result = (Object[])conn.getClient().call("Deploy",params);
 			client_id=(Integer) result[1];
+			financialFromDate= (String) params[1];
+			financialToDate = (String) params[2];
 			/*if (params[0]=="NGO")
 			{   
 				setorg_result = (Object[]) CoreConnection.getClient().call("organisation.setOrganisation",params);
@@ -138,5 +143,26 @@ public class Startup {
 	public static void setClient_id(Integer client_id) {
 		Startup.client_id = client_id;
 	}
+
+	
+	/***
+	 * getter and setter for financialFromDate and financialToDate
+	 */
+	public static String getFinancialToDate() {
+		return financialToDate;
+	}
+
+	public static void setFinancialToDate(String financialToDate) {
+		Startup.financialToDate = financialToDate;
+	}
+
+	public static String getfinancialFromDate() {
+		return financialFromDate;
+	}
+
+	public static void setfinancialFromDate(String financialFromDate) {
+		Startup.financialFromDate = financialFromDate;
+	}
+
 	
 }

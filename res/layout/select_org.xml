@@ -28,16 +28,17 @@
                        android:id="@+id/textView1"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:layout_weight="0.28"
+                       android:layout_weight="0.5"
                        android:text="Organisation Name"
                        android:textColor="#FFFFFF"
                        android:textSize="20dp" />
 
                    <Spinner
                        android:id="@+id/sGetOrgNames"
-                       android:layout_width="wrap_content"
+                       android:layout_width="0dip"
                        android:layout_height="wrap_content"
-                       android:layout_weight="1" />
+                       android:layout_weight="2.5"
+                       android:prompt="@string/orgName_prompt" />
 
                    </TableRow>
                    </TableLayout>
@@ -56,16 +57,17 @@
                    android:id="@+id/textView2"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_weight="31"
+                   android:layout_weight="0.5"
                    android:text="Financial Year         "
                    android:textColor="#FFFFFF"
                    android:textSize="20dp" />
 
                <Spinner
                    android:id="@+id/sGetFinancialYear"
-                   android:layout_width="wrap_content"
+                   android:layout_width="0dip"
                    android:layout_height="wrap_content"
-                   android:layout_weight="69" />
+                   android:layout_weight="2.5" 
+                   android:prompt="@string/financialyear_prompt"/>
                 </TableRow>
            </LinearLayout>
 

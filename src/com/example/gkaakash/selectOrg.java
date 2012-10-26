@@ -26,8 +26,8 @@ public class selectOrg extends Activity{
 	//static String existingOrgFlag;
 	protected static Integer client_id;
 	protected static String selectedOrgName;
-	protected static Object fromDate;
-	protected static Object toDate;
+	protected static String fromDate;
+	protected static String  toDate;
 
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -93,6 +93,7 @@ public class selectOrg extends Activity{
 	void addListenerOnItem(){
 		//Attach a listener to the states Type Spinner to get dynamic list of cities
 		getOrgNames.setOnItemSelectedListener(new OnItemSelectedListener() {
+
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
 				//Retrieving the selected org type from the Spinner and assigning it to a variable 
@@ -111,10 +112,12 @@ public class selectOrg extends Activity{
 			    		Object[] y = (Object[]) fy;
 			    		// concatination From and To date 
 			    		financialyearlist.add(y[0]+" to "+y[1]);
-			    		fromDate=y[0];
-			    		toDate=y[1];
+			    		fromDate=y[0].toString();
+			    		toDate=y[1].toString();
 			    	}
-			    	
+			    	//String fromDate = Startup.setOrgansationname((String)fromDate);
+			    	Startup.setfinancialFromDate(fromDate);
+			    	Startup.setFinancialToDate(toDate);
 			    	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
 			    			android.R.layout.simple_spinner_item, financialyearlist);
 			    	

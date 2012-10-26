@@ -3,7 +3,7 @@ package com.example.gkaakash;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
+import com.gkaakash.controller.*;
 import com.gkaakash.controller.Startup;
 
 import android.app.Activity;
@@ -35,7 +35,7 @@ public class orgDetails extends Activity{
 	int year, month, day;
 	static final int REG_DATE_DIALOG_ID = 0;
 	static final int FCRA_DATE_DIALOG_ID = 1;
-	String getSelectedOrgType,getToDate,getOrgName, getFromDate;
+	String getSelectedOrgType,getToDate,getOrgName, getFromDate, selectedCounrty;
 	TextView tvRegNum, tvRegDate, tvFcraNum, tvFcraDate, tvMVATnum, tvServiceTaxnum;
 	EditText etRegNum, etFcraNum, etMVATnum, etServiceTaxnum;
 	String selectedStateName;
@@ -47,7 +47,6 @@ public class orgDetails extends Activity{
 	AlertDialog dialog;
 	final Context context = this;
 	private String orgaddress;
-	
 	Spinner getstate, getcity;
 	static Integer client_id;
 	private Startup startup;
@@ -61,6 +60,11 @@ public class orgDetails extends Activity{
 	private EditText etGetWebSite;
 	private EditText eGetFax;
 	private Spinner scountry;
+	protected Object[] orgparams;
+	private String getAddr, getPin,eGetTelNo,eGetFaxNO,etGetWeb,eGetEmail,
+	etPan,etMVATno,etServiceTaxno,etRegNo,RegDate,FcraDate,etFcraNo;
+	private Organisation org;
+	private boolean setOrgDetails;
 
 	
 	//adding options to the options menu
@@ -91,6 +95,7 @@ public class orgDetails extends Activity{
 		setContentView(R.layout.org_details);
 		// creating instance of startup to get the connection
 		startup = new Startup();
+		org = new Organisation();
 		btnorgDetailSave = (Button) findViewById(R.id.btnOrgDetailSave);
 		getstate = (Spinner) findViewById(R.id.sGetStates);
 		getcity = (Spinner) findViewById(R.id.sGetCity);
@@ -112,11 +117,10 @@ public class orgDetails extends Activity{
 		eGetFax=(EditText) findViewById(R.id.eGetFax);
 		eGetPhone=(EditText) findViewById(R.id.eGetPhone);
     	scountry=(Spinner)findViewById(R.id.sGetCountry);
-		eGetEmailid	=(EditText) findViewById(R.id.eGetEmailid);
+		eGetEmailid=(EditText) findViewById(R.id.eGetEmailid);
 		etPanNo	=(EditText) findViewById(R.id.etPanNo);
 
 		etGetWebSite=(EditText) findViewById(R.id.etGetWebSite);
-    	
 		// Retrieving the organisation type flag value from the previous page(create organisation page)
 		getSelectedOrgType = createOrg.orgTypeFlag;
 		if("NGO".equals(getSelectedOrgType))
@@ -187,7 +191,10 @@ public class orgDetails extends Activity{
 		final Context context = this;
 		// get flag values which is static
 		getOrgName=createOrg.organisationName;
+		//getOrgName =Startup.getOrgansationname();
+		System.out.println("orgname :"+getOrgName);
 		getFromDate=createOrg.fromdate;
+		
 		getToDate=createOrg.todate;
 		//Create a class implementing “OnClickListener” and set it as the on click listener for the button
 		btnSkip.setOnClickListener(new OnClickListener() {
@@ -218,6 +225,25 @@ public class orgDetails extends Activity{
 		
 			@Override
 			public void onClick(View v) {
+				getOrgName = createOrg.organisationName;
+				getFromDate = createOrg.fromdate;
+				getToDate = createOrg.todate;
+				getAddr = etGetAddr.getText().toString();
+			
+				getPin = sGetPostal.getText().toString();
+				eGetTelNo = eGetPhone.getText().toString();
+				eGetFaxNO = eGetFax.getText().toString();
+				etGetWeb = etGetWebSite.getText().toString();
+				eGetEmail = eGetEmailid.getText().toString();
+				etPan = etPanNo.getText().toString();
+				etMVATno = etMVATnum.getText().toString();
+				etServiceTaxno = etServiceTaxnum.getText().toString();
+				etRegNo = etRegNum.getText().toString();
+				RegDate = btnRegDate.getText().toString();
+				etFcraNo = etFcraNum.getText().toString();
+				
+				FcraDate = btnFcraDate.getText().toString();
+				
 				//progress bar moving image to show wait state
 				progressBar = new ProgressDialog(context);
                 progressBar.setCancelable(false);
@@ -226,18 +252,32 @@ public class orgDetails extends Activity{
                 progressBar.setProgress(0);
                 progressBar.setMax(1000);
                 progressBar.show();
-                //list of input parameters type of Object 
+              //list of input parameters type of Object 
 				deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
 				//call method deploy from startup.java 
 				client_id = startup.deploy(deployparams);
+				
+			     orgparams = new Object[]{getSelectedOrgType,getOrgName,
+                						getAddr,selectedCityName,getPin, 
+                						selectedStateName,selectedCounrty, 
+                						eGetTelNo,eGetFaxNO,etGetWeb,eGetEmail,
+                						etPan,etMVATno,etServiceTaxno,etRegNo,
+                						RegDate,etFcraNo,FcraDate }; 
+                System.out.println("all parameters :"+orgparams);
+                
+                setOrgDetails = org.setOrganisation(orgparams,client_id);
+                System.out.println(setOrgDetails);
+                if (setOrgDetails==true)
+                	Toast.makeText(context,"Organisation "+getOrgName+" details saved successfully",Toast.LENGTH_LONG).show();
 				//To pass on the activity to the next page
 				Intent intent = new Intent(context, preferences.class);
                 startActivity(intent);  
                 
 				//get all the parameters to save organisation details
                 
+                
 			}
-		});
+		}); 
 		
 		
 		btnRegDate.setOnClickListener(new OnClickListener() {
@@ -366,6 +406,22 @@ public class orgDetails extends Activity{
 			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
 				//Retrieving the selected state from the Spinner and assigning it to a variable 
 				selectedCityName = parent.getItemAtPosition(position).toString();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		scountry.setOnItemSelectedListener(new OnItemSelectedListener(){
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
+				//Retrieving the selected state from the Spinner and assigning it to a variable 
+				selectedCounrty = parent.getItemAtPosition(position).toString();
 			}
 
 			@Override

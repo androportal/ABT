@@ -16,7 +16,13 @@ public class Account {
 	private String total_drbal;
 	private String total_crbal;
 	private Double diff_bal;
-
+	private Object[] allAccountNames;
+	private String accountExists;
+	private Object code_suggestion_chars;
+	private String character;
+	private String suggested_code;
+	private String accChar;
+	private String accountCodeExists;
 
 	/***
 	 * Default constructor
@@ -36,7 +42,7 @@ public class Account {
 		
 		try {
 			
-			if(params[0] == "manually")
+			if("manually".equals(params[0]))
 			{
 			 	accparams = new Object[]{params[1],params[2],params[3],params[4],params[0],params[6],params[6],params[5]};
 			}	
@@ -113,4 +119,68 @@ public class Account {
 		return  diff_bal;
 		
 	}
+	
+	/***
+	 * call getAllAccountNames method from core_engine account.py 
+	 * @param params client id
+	 */
+	public Object getAllAccountNames(Object client_id) {
+		
+		try {
+			allAccountNames = (Object[])conn.getClient().call("account.getAllAccountNames",client_id);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return allAccountNames;
+	}
+	
+	
+	/***
+	 * 
+	 * @param params [account name , accountCodeFlag , groupnameChar]
+	 * @param client_id
+	 * @return
+	 */
+	public String checkAccountName(Object[] params,Object client_id) {
+		try {
+			
+			accountExists =(String) conn.getClient().call("account.accountExists",new Object[]{params[0]},client_id);
+			System.out.println("accountExists :"+accountExists);
+			if(accountExists.equals("1"))
+			{
+				return "exist";
+			}
+			else if(params[1].equals("manually"))
+			{
+				accChar = params[0].toString().substring(0, 1);
+				code_suggestion_chars= (params[2].toString()).concat(accChar);
+				System.out.println("code_suggestion_chars:"+code_suggestion_chars);
+				suggested_code = (String) conn.getClient().call("account.getSuggestedCode",
+						new Object[]{code_suggestion_chars},client_id);
+				System.out.println("suggested_code :"+suggested_code);
+				return suggested_code;
+			}
+			} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return accountExists;
+		}
+	
+	public String checkAccountCode(Object[] params,Object client_id) {
+		try {
+			
+			accountCodeExists =(String) conn.getClient().call("account.accountCodeExists",new Object[]{params[0]},client_id);
+			System.out.println("accountExists :"+accountExists);
+			
+			
+			} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return accountCodeExists;
+		}
+	
 }

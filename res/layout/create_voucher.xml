@@ -55,7 +55,7 @@
 		        android:textColor="#FFFFFF"/>
 		           	
 		   	<Spinner
-		   	    android:id="@+id/scr_dr"
+		   	    android:id="@+id/sDrCr"
 		   	    android:layout_width="wrap_content"
 		   	    android:layout_height="wrap_content"
 		   	    android:entries="@array/SearchBy_arrays"
@@ -70,11 +70,11 @@
 		        android:textColor="#FFFFFF" />
 
 		    <Spinner
-		        android:id="@+id/spinner1"
-		        android:layout_width="wrap_content"
+		        android:id="@+id/getAccountByRule"
+		        android:layout_width="259px"
 		        android:layout_height="wrap_content"
-		        android:entries="@array/groupNameArray"
-		        android:prompt="@string/grpName_prompt" />
+		        android:entries="@array/accountName_arrays"
+		        android:prompt="@string/accountName_prompt" />
     
 		    <TextView
 		        android:id="@+id/amount"
@@ -117,42 +117,13 @@
 		<LinearLayout 
 	    android:orientation="horizontal"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_height="1dp"
 	    android:paddingLeft="20dp"
 	    android:paddingRight="20dp"
 	    android:weightSum="100" 
 	    android:background="@android:color/darker_gray">
 		
-		<TextView
-		    android:id="@+id/tvTotalDebit"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:text="Total debit:0.00"
-		    android:textColor="#000000"
-		    android:layout_weight="35"
-		    android:gravity="center"
-		    android:textSize="14dp"
-		    />
 		
-		<TextView
-		    android:id="@+id/tvTotalCredit"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:text="Total credit:0.00"
-		    android:textColor="#000000"
-		    android:layout_weight="35"
-		    android:gravity="center"
-		    android:textSize="14dp"/>
-		
-		<TextView
-		    android:id="@+id/tvDiff"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:text="Total difference:0.00"
-		    android:textColor="#000000"
-		    android:layout_weight="30"
-		    android:gravity="center"
-		    android:textSize="14dp"/>
 		
 		</LinearLayout>
 
@@ -193,21 +164,21 @@
         android:paddingRight="20dp"
         android:gravity="left">
 	<TextView
-		    android:id="@+id/tvVoucherNumber"
+		    android:id="@+id/tvRefNumber"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:text="Voucher number"
+		    android:text="Voucher reference number"
 		    android:layout_weight="70"
 		    android:textSize="14dp"
 		    android:paddingLeft="20dp"
 		    android:textColor="#FFFFFF"/>
 	
 	<EditText
-			        android:id="@+id/etVoucherNumber"
-			        android:layout_width="300dp"
+			        android:id="@+id/etRefNumber"
+			        android:layout_width="305dp"
 			        android:layout_height="wrap_content"
 			        android:layout_weight="30"
-			        android:hint="Tap to enter voucher number" 
+			        android:hint="Tap to enter reference number" 
 			        android:paddingTop="2dp"/>
 	</LinearLayout>
 	
@@ -239,7 +210,7 @@
 	
 	<EditText
 			        android:id="@+id/etVoucherNarration"
-			        android:layout_width="305dp"
+			        android:layout_width="283dp"
 			        android:layout_height="wrap_content"
 			        android:layout_weight="30"
 			        android:hint="Tap to enter voucher narration" 
@@ -261,7 +232,7 @@
         android:background="@drawable/blackbutton" >
 
         <Button
-            android:id="@+id/btnResetVoucher"
+            android:id="@+id/btnSaveVoucher"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -270,12 +241,12 @@
             android:textSize="20dp" />
 		
         <Button
-            android:id="@+id/btnSaveVoucher"
+            android:id="@+id/btnResetVoucher"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="50"
-            android:text="Skip"
+            android:text="Reset"
             android:textSize="20dp" />
 
     </LinearLayout>

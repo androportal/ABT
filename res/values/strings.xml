@@ -14,11 +14,12 @@
         <item>Profit Making</item>
         <item>NGO</item>
     </string-array>
+    
+    <string name="country">Select country</string>
     <string-array name="country_prompt"><item>India</item></string-array>
-    <string name="subGrpName_prompt">Select group name</string>
-    <string-array name="subGroupNameArray">
-        <item>to do</item>
-    </string-array>
+    
+    <string name="state">Select state</string>
+    <string name="city">Select city</string>
 
     <style name="CustomTheme" parent="android:Theme">
         <item name="android:windowTitleSize">30dip</item>
@@ -28,46 +29,39 @@
     <item name="android:textColor">@color/tab_text_change</item>
 </style>
     
-     <string name="Search_prompt">Select organisation type</string>
+     <string name="Search_prompt">Select account type</string>
     <string-array name="SearchBy_arrays">
         <item>Dr</item>
         <item>Cr</item>
     </string-array>
     
-    <string name="accountName_prompt">Select organisation type</string>
+    <string name="accountName_prompt">Select account name</string>
     <string-array name="accountName_arrays">
-        <item>Indian Bank</item>
-        <item>Sate Bank of India</item>
     </string-array>
     
-   <string name="BalanceSheet_prompt">Select organisation type</string>
+   <string name="BalanceSheet_prompt">Select balancesheet type</string>
     <string-array name="BalanceSheet_arrays">
         <item>Conventional Balance Sheet</item>
         <item>Sources and Application of Funds</item>
     </string-array>
     
-    <string name="TrialBalance_prompt">Select organisation type</string>
+    <string name="getaccNamesinLedger">Select account name</string>
+    <string-array name="getaccNamesinLedger">
+        <item>Conventional Balance Sheet</item>
+        <item>Sources and Application of Funds</item>
+    </string-array>
+    
+    <string name="TrialBalance_prompt">Select trial balance type</string>
     <string-array name="TrialBalance_arrays">
         <item>Net Trial Balance</item>
         <item>Gross Trial Balance</item>
         <item>Extended Trial Balance</item>
     </string-array>
     
-    <string name="grpName_prompt">Select group name</string>
-    <string-array name="groupNameArray">
-        <item>Corpus</item>
-        <item>Current Asset</item>
-        <item>Current Liability</item>
-        <item>Direct Expense</item>
-        <item>Direct Income</item>
-        <item>Fixed Assets</item>
-        <item>Indirect Income</item>
-        <item>Indirect Expense</item>
-        <item>Investment</item>
-        <item>Loans(Asset)</item>
-        <item>Loans(Liability)</item>
-        <item>Miscellaneous Expenses(Asset)</item>
-        <item>Reserves</item>
-    </string-array>
+    <string name="grpName_prompt">Select group name</string>    
+    <string name="subgrpName_prompt">Select subgroup name</string>
+    <string name="orgName_prompt">Select organisation name</string>
+    <string name="financialyear_prompt">Select financial year</string>
+    <string name="projectName_prompt">Select project name</string>
     
     </resources>

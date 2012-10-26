@@ -15,7 +15,7 @@
             android:textSize="20dp" />
 
         <DatePicker
-            android:id="@+id/dpsetT0date"
+            android:id="@+id/dpTrialsetT0date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
