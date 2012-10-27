@@ -71,9 +71,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_horizontal|right"
+                android:paddingRight="40dp"
                 android:paddingTop="72dp"
-                android:text="by, IIT Bombay"
+                android:text="IIT Bombay"
                 android:textColor="#FFFFFF" />
 
         </LinearLayout>
