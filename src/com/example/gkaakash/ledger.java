@@ -28,7 +28,7 @@ public class ledger extends Activity{
     static Integer client_id;
     private Report report;
     ArrayList<String> ledgerResultList;
-	private ArrayList accountlist;
+    private ArrayList accountlist;
    
      
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class ledger extends Activity{
        client_id= Startup.getClient_id();
       
        try {
-    	   String financialFromDate =Startup.getfinancialFromDate();
+           String financialFromDate =Startup.getfinancialFromDate();
            String financialToDate=Startup.getFinancialToDate();
            String accountName = reportMenu.selectedAccount;
            String projectName = reportMenu.selectedProject;
@@ -66,46 +66,77 @@ public class ledger extends Activity{
                 ledgerResultList = new ArrayList<String>();
                 for(int i=0;i<(t.length-1);i++)
                 {
-                	if (i==1)
-                	{
-                		Object[] acc = new Object[]{t[i]};
-                		ArrayList accledgerGrid = new ArrayList();
-                		
-                		for(Object a : acc) 
+                    if (i==1)
+                    {
+                        Object[] acc = new Object[]{t[i]};
+                        ArrayList accledgerGrid = new ArrayList();
+                        ArrayList dateGrid = new ArrayList();
+                        ArrayList refGrid = new ArrayList();
+                        ArrayList debitGrid = new ArrayList();
+                        ArrayList creditGrid = new ArrayList();
+                        ArrayList narrationGrid = new ArrayList();
+                        for(Object a : acc) 
                         {
-                			Object[] abc= (Object[]) a;
-                			int yy = abc.length;
-                				// accledgerGrid.add(abc[]);
-                				// System.out.println(accledgerGrid);
-                	         if(abc.length == 1){
-                	        	 accledgerGrid.add(abc[0]);
-                	        	 //ledgerResultList.add(accledgerGrid.toString());
-                	         }
-                	         else if(abc.length > 1){
-                         		String allaccnames = "";
-                	        	 for(int j=0;j<yy;j++){
-                	        		 if(j==yy-1)
-                	        		 {
-                	        			 allaccnames = allaccnames+abc[j].toString() ;
-                	        		 }
-                	        		 else
-                	        		 {
-                	        			 allaccnames = allaccnames+abc[j].toString()+"\n";
-                	        		 }
-                	        		
-                	        		 //accledgerGrid.add(abc[j].toString());
-                	        	 }
-                	        	 accledgerGrid.add(allaccnames);
-                	         }
-                			 
+                            Object[] abc= (Object[]) a;
+                            int yy = abc.length;
+                                // accledgerGrid.add(abc[]);
+                                // System.out.println(accledgerGrid);
+                             if(abc.length == 1){
+                                 dateGrid.add((String) t[0].toString());
+                                 accledgerGrid.add(abc[0]);
+                                 refGrid.add((String) t[2].toString());
+                                 debitGrid.add((String) t[3].toString());
+                                 creditGrid.add((String) t[4].toString());
+                                 narrationGrid.add((String) t[5].toString());
+                                 //ledgerResultList.add(accledgerGrid.toString());
+                             }
+                             else if(abc.length > 1){
+                                 String allaccnames = "";
+                                 String date = (String) t[0].toString();
+                                 String ref = (String) t[2].toString();
+                                 String debit = (String) t[3].toString();
+                                 String credit = (String) t[4].toString();
+                                 String narr = (String) t[5].toString();
+                                 for(int j=0;j<yy;j++){
+                                     if(j==yy-1)
+                                     {
+                                         allaccnames = allaccnames+abc[j].toString() ;
+                                     }
+                                     else
+                                     {
+                                         allaccnames = allaccnames+abc[j].toString()+"\n";
+                                         date = date+"\n";
+                                         ref = ref+"\n";
+                                         debit = debit+"\n";
+                                         credit = credit+"\n";
+                                         narr = narr+"\n";
+                                     }
+                                    
+                                     //accledgerGrid.add(abc[j].toString());
+                                 }
+                                 accledgerGrid.add(allaccnames);
+                                 dateGrid.add(date);
+                                 refGrid.add(ref);
+                                 debitGrid.add(debit);
+                                 creditGrid.add(credit);
+                                 narrationGrid.add(narr);
+                             }
+                             
                         }
-                		ledgerResultList.add(accledgerGrid.toString());
-                	}
-                	else
-                	{
-                		ledgerResultList.add((String) t[i].toString());
-                	}
-                	
+                        ledgerResultList.add(dateGrid.toString());
+                        ledgerResultList.add(accledgerGrid.toString());
+                        ledgerResultList.add(refGrid.toString());
+                        ledgerResultList.add(debitGrid.toString());
+                        ledgerResultList.add(creditGrid.toString());
+                        ledgerResultList.add(narrationGrid.toString());
+                    }
+                    /*
+                    else
+                    {
+                        ledgerResultList.add((String) t[i].toString());
+                    }
+                    */
+                    
                 }
                 
                 ledgerGrid.add(ledgerResultList);
@@ -114,19 +145,19 @@ public class ledger extends Activity{
             ledgertable = (TableLayout)findViewById(R.id.maintable);
             addTable();
        } catch (Exception e) {
-    	   AlertDialog.Builder builder = new AlertDialog.Builder(ledger.this);
+           AlertDialog.Builder builder = new AlertDialog.Builder(ledger.this);
            builder.setMessage("Please try again")
                    .setCancelable(false)
                    .setPositiveButton("Ok",
                            new DialogInterface.OnClickListener() {
                                public void onClick(DialogInterface dialog, int id) {
-                               	
+                                   
                                }
                            });
                    
            AlertDialog alert = builder.create();
            alert.show();
-    	   
+           
        }
        
        
@@ -144,26 +175,21 @@ public class ledger extends Activity{
             tr = new TableRow(this);
            
             for(int j=0;j<columnValue.size();j++){
-            	if(j == 1 ){
-            		String[] accname = new String[]{columnValue.get(1).toString()}; 
-            		for(String a : accname){
-            		
-            			String particular =  a.substring(1,(a.length()-1));
-            			/** Creating a TextView to add to the row **/ 
-            			addRow(particular);
-            			
-            		}
-            		
-            	}
-            	else{
-            		/** Creating a TextView to add to the row **/ 
-            		addRow(columnValue.get(j).toString());
-            	}
-            	
-            	
-            	label.setBackgroundColor(Color.BLACK);
+                
+                    String[] accname = new String[]{columnValue.get(j).toString()}; 
+                    for(String a : accname){
+                    
+                        String particular =  a.substring(1,(a.length()-1));
+                        /** Creating a TextView to add to the row **/ 
+                        addRow(particular);
+                        
+                    }
+                    
+                
+                
+                label.setBackgroundColor(Color.BLACK);
                 if(j == 3 || j == 4){
-                	label.setGravity(Gravity.RIGHT);
+                    label.setGravity(Gravity.RIGHT);
                 }
                 else{
                     label.setGravity(Gravity.CENTER);
@@ -199,7 +225,7 @@ public class ledger extends Activity{
     }
    
     void addRow(String param){
-    	label = new TextView(this);
+        label = new TextView(this);
         label.setText(param);
         label.setTextColor(Color.WHITE);
         //label.setBackgroundColor(Color.);

@@ -610,7 +610,7 @@ public class createVoucher extends Activity {
 						
 						DrCr.setSelection(0); 
 						account.setSelection(0);
-						firstRowamount.setText("0.00");
+						firstRowamount.setText("0.00         ");
 						
 						list.removeAllViews();
 						setFirstAndSecondRow();
@@ -938,12 +938,19 @@ public class createVoucher extends Activity {
     	//tv1.setWidth(100);
     	et = new EditText(newRow.getContext());
     	et.setText( "0.00" );
-    	et.setWidth(100); //for emulator 80
+    	et.setWidth(92); //for emulator 80
     	et.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+    	
+    	
+    	TextView tv2 = new TextView(newRow.getContext());
+     	tv2.setText(R.string.Rs);
+     	tv2.setTextColor(Color.WHITE);
+     	tv2.setTextSize(18);
+     	
     	
     	//actionButton.setText( "Action: " + ++rowsSoFar );
     	Button removeSelfButton = new Button( newRow.getContext() );
-    	removeSelfButton.setText( "   -   " ); //for tablet ***** add  space
+    	removeSelfButton.setText( "  -  " ); //for tablet ***** add  space
     	
     	// pass on all the information necessary for deletion
     	removeSelfButton.setOnClickListener( new RowRemover( list, newRow ));
@@ -953,6 +960,7 @@ public class createVoucher extends Activity {
     	newRow.addView( actionButton );
     	newRow.addView(tv1);
     	newRow.addView(et);
+    	newRow.addView(tv2);
     	newRow.addView( removeSelfButton );
     	list.addView(newRow);
     	
