@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -281,6 +282,8 @@ public class SearchVoucher extends Activity  {
                  * set center aligned gravity for amount and for others set center gravity
                  */
                 if(j==6){
+                	final SpannableString rsSymbol = new SpannableString(SearchVoucher.this.getText(R.string.Rs)); 
+                    label.setText(rsSymbol+" "+columnValue.get(j).toString());
                     label.setGravity(Gravity.RIGHT);
                 }
                 else{

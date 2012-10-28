@@ -190,7 +190,7 @@ public class createOrg extends MainActivity {
 				organisationName = orgName.getText().toString();
 				fromdate = tvDisplayFromDate.getText().toString();
 				todate = tvDisplayToDate.getText().toString();
-				
+				try{
 				// call the getOrganisationName method from startup
 		    	orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
 				
@@ -232,8 +232,23 @@ public class createOrg extends MainActivity {
 					Intent intent = new Intent(context, orgDetails.class);
 				    startActivity(intent); 
 				}
+			}catch(Exception e)
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Please check server connection")
+                        .setCancelable(false)
+                        .setPositiveButton("Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                    	Intent intent = new Intent(context, MainActivity.class);
+                    				    startActivity(intent); 
+                                    }
+                                });
+                       
+                AlertDialog alert = builder.create();
+                alert.show();    
 			}
- 
+			}
 		}); //End of btnNext.setOnClickListener
  
 	}// End of addListeneronNextButton()

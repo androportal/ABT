@@ -9,6 +9,7 @@ import android.app.ActionBar.LayoutParams;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.DatePicker;
@@ -104,12 +105,17 @@ public class trialBalance extends Activity{
                  */
                 if(j==3 || j==4){
                     label.setGravity(Gravity.RIGHT);
+                    //For adding rupee symbol
+                    if(columnValue.get(j).length() > 0){
+                    
+                        final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs)); 
+                        label.setText(rsSymbol+" "+columnValue.get(j).toString());
+                    }
                 }
                 else{
                     label.setGravity(Gravity.CENTER);
                 }
             }
-           
             // Add the TableRow to the TableLayout
             trialBaltable.addView(tr, new TableLayout.LayoutParams(
                     LayoutParams.FILL_PARENT,
@@ -122,7 +128,9 @@ public class trialBalance extends Activity{
         ArrayList<String> lastrow=trialBalGrid.get(trialBalGrid.size()-1);
         Float result=Float.parseFloat(lastrow.get(4))-Float.parseFloat(lastrow.get(3));
         TextView difference = (TextView) findViewById(R.id.tvdifference);
-        difference.setText("Diference :"+(String.format("%.2f", Math.abs(result))));
+        
+        final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs));
+        difference.setText("Diference : "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
     }
 
     /*

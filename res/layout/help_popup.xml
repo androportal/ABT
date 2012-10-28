@@ -4,57 +4,297 @@
         
     <LinearLayout
         android:layout_width="fill_parent"
+
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:id="@+id/layout_root" >
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
             android:singleLine="false"
             android:textColor="#FFFFFF" 
-            android:textSize="16dp"/>
+            android:textSize="16dp"
+            android:text="@string/help_para1"/>
         
         <ImageView
            android:focusable="false"
-           android:layout_width="300dp"
-           android:layout_height="180dp"
-           android:layout_gravity="center"/>
+           android:layout_width="320dp"
+           android:layout_height="190dp"
+           android:layout_gravity="center"
+           android:background="@drawable/home_page"/>
         
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
             android:singleLine="false"
             android:textColor="#FFFFFF"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:text="@string/help_para2" />
         
         <ImageView
            android:focusable="false"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_gravity="center"/>
+           android:layout_width="320dp"
+           android:layout_height="190dp"
+           android:layout_gravity="center"
+           android:background="@drawable/create_org"/>
         
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
             android:singleLine="false"
             android:textColor="#FFFFFF"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:text="@string/help_para3" />
 
         <ImageView
            android:focusable="false"
-           android:layout_width="500dp"
-           android:layout_height="50dp"
-           android:layout_gravity="center"/>
+           android:layout_width="320dp"
+           android:layout_height="190dp"
+           android:layout_gravity="center"
+           android:background="@drawable/select_org"/>
+        
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:singleLine="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:text="@string/help_para4" />
+        
+        <ImageView
+           android:focusable="false"
+           android:layout_width="320dp"
+           android:layout_height="190dp"
+           android:layout_gravity="center"
+           android:background="@drawable/org_details"/>
+        
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:singleLine="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:text="@string/help_para5" />
+        
+        <ImageView
+           android:focusable="false"
+           android:layout_width="320dp"
+           android:layout_height="190dp"
+           android:layout_gravity="center"
+           android:background="@drawable/pref"/>
+        
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:singleLine="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:text="@string/help_para6" />
+        
+        <ImageView
+           android:focusable="false"
+           android:layout_width="320dp"
+           android:layout_height="190dp"
+           android:layout_gravity="center"
+           android:background="@drawable/create_account"/>
+        
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:singleLine="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:text="@string/help_para7" />
+        
+        <ImageView
+           android:focusable="false"
+           android:layout_width="320dp"
+           android:layout_height="190dp"
+           android:layout_gravity="center"
+           android:background="@drawable/master_menu"/>
+        
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:singleLine="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:text="@string/help_para8" />
+        
+        <ImageView
+           android:focusable="false"
+           android:layout_width="320dp"
+           android:layout_height="190dp"
+           android:layout_gravity="center"
+           android:background="@drawable/create_vouvher"/>
+        
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:singleLine="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:text="Figure [a]" />
+        
+       
+        <ImageView
+           android:focusable="false"
+
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:background="@drawable/home"/>
+        
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:singleLine="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:text="Figure [b]" />
+        
+         <ImageView
+           android:focusable="false"
+           android:layout_width="320dp"
+           android:layout_height="190dp"
+           android:layout_gravity="center"
+           android:background="@drawable/serach_voucher"/>
+        
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:singleLine="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:text="Figure [c]" />
+        
+        <ImageView
+           android:focusable="false"
+
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:background="@drawable/ic_action_search"/>
+        
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:singleLine="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:text="Figure [d]" />
+        
+        
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:singleLine="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:text="@string/help_para9" />
+        
+        <ImageView
+           android:focusable="false"
+           android:layout_width="320dp"
+           android:layout_height="190dp"
+           android:layout_gravity="center"
+           android:background="@drawable/ledger"/>
+        
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:singleLine="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:text="Figure [e]" />
+        
+        <ImageView
+           android:focusable="false"
+           android:layout_width="320dp"
+           android:layout_height="190dp"
+           android:layout_gravity="center"
+           android:background="@drawable/trial_balance"/>
+        
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:singleLine="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:text="Figure [f]" />
         
         <CheckBox
             android:id="@+id/cbHelp"

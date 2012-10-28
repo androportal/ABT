@@ -17,7 +17,7 @@
            android:visibility="invisible"/>
    
     <LinearLayout
-        	android:id="@+id/createacc_tab2"
+            android:id="@+id/createacc_tab2"
            android:orientation="horizontal"
            android:layout_width="match_parent"
            android:layout_height="3dp"
@@ -31,164 +31,201 @@
     android:layout_height="fill_parent"
     android:layout_weight="80">
 
-	<TableLayout 
-        		android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:paddingLeft="10dp"
- 				android:paddingRight="10dp">
-		
-		<TableRow>
-		    <TextView 
-		    	android:layout_width="0dip"
-				android:layout_weight="1"
-				android:text="Group name"
-				android:textColor="#FFFFFF"
-        		android:textSize="20dp"
-        		android:layout_gravity="center_vertical"/>
-		<Spinner 
-		    android:id="@+id/sGroupNames"
-		    android:layout_width="0dip"
-			android:layout_weight="1.3"
-		    android:prompt="@string/grpName_prompt"
-			/>
-		</TableRow>
-		
-		<TableRow>
-		    <TextView 
-		    	android:layout_width="0dip"
-				android:layout_weight="1"
-				android:text="Subgroup name"
-				android:textColor="#FFFFFF"
-        		android:textSize="20dp"
-        		android:layout_gravity="center_vertical"/>
-		<Spinner 
-		    android:id="@+id/sSubGrpNames"
-		    android:layout_width="0dip"
-		     android:prompt="@string/subgrpName_prompt"
-			android:layout_weight="1.3"
-			/>
-		</TableRow>
-		 <TableRow>
-		    <TextView 
-		        android:id="@+id/tvSubGrp"
-		    	android:layout_width="0dip"
-				android:layout_weight="1"
-				android:text="Enter new subgroupname"
-				android:textColor="#FFFFFF"
-        		android:textSize="20dp"
-        		android:layout_gravity="center_vertical"/>
-		<EditText 
-		    android:id="@+id/etSubGrp"
-		    android:layout_width="0dip"
-			android:layout_weight="1.3"
-			android:hint="Tap to enter newsubgroup name"
-			android:inputType="textCapWords"/>
-		</TableRow>
+    <TableLayout 
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                 android:paddingRight="10dp">
+        
+        <TableRow>
+            <TextView 
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:text="Group name"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:layout_gravity="center_vertical"/>
+        <Spinner 
+            android:id="@+id/sGroupNames"
+            android:layout_width="0dip"
+            android:layout_weight="1.3"
+            android:prompt="@string/grpName_prompt"
+            />
+        </TableRow>
+        
+        <TableRow>
+            <TextView 
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:text="Subgroup name"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:layout_gravity="center_vertical"/>
+        <Spinner 
+            android:id="@+id/sSubGrpNames"
+            android:layout_width="0dip"
+             android:prompt="@string/subgrpName_prompt"
+            android:layout_weight="1.3"
+            />
+        </TableRow>
+         <TableRow>
+            <TextView 
+                android:id="@+id/tvSubGrp"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:text="Enter new subgroupname"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:layout_gravity="center_vertical"/>
+        <EditText 
+            android:id="@+id/etSubGrp"
+            android:layout_width="0dip"
+            android:layout_weight="1.3"
+            android:hint="Tap to enter newsubgroup name"
+            android:inputType="textCapWords"/>
+        </TableRow>
  
-		<TableRow>
-		    <TextView 
-		    	android:layout_width="0dip"
-				android:layout_weight="1"
-				android:text="Account name"
-				android:textColor="#FFFFFF"
-        		android:textSize="20dp"
-        		android:layout_gravity="center_vertical"/>
-		<EditText 
-		    android:id="@+id/etAccName"
-		    android:layout_width="0dip"
-			android:layout_weight="1.3"
-			android:hint="Tap to enter account name"
-			android:inputType="textCapWords" />
-		</TableRow>
-		
-		<TableRow>
-		    <TextView 
-		        android:id="@+id/tvAccCode"
-		    	android:layout_width="0dip"
-				android:layout_weight="1"
-				android:text="Account code"
-				android:textColor="#FFFFFF"
-        		android:textSize="20dp"
-        		android:layout_gravity="center_vertical"
-        		android:visibility="invisible"/>
-		<EditText 
-		    android:id="@+id/etAccCode"
-		    android:layout_width="0dip"
-			android:layout_weight="1.3"
-			android:hint="Tap to enter account code"
-			android:visibility="invisible" />
-		</TableRow>
-		
-		<TableRow>
-		    <TextView 
-		        android:id="@+id/tvOpBal"
-		    	android:layout_width="0dip"
-				android:layout_weight="1"
-				android:text="Opening balance"
-				android:textColor="#FFFFFF"
-        		android:textSize="20dp"
-        		android:layout_gravity="center_vertical"/>
-		<EditText 
-		    android:id="@+id/etOpBal"
-		    android:layout_width="0dip"
-			android:layout_weight="1.3"
-			android:text="0.00"
-			android:inputType="phone"/>
-		</TableRow>
-		
-		<TableRow>
-		    <TextView 
-		    	android:layout_width="0dip"
-				android:layout_weight="1"
-				android:text="Total debit opening balance"
-				android:textColor="#FFFFFF"
-        		android:textSize="20dp"
-        		android:layout_gravity="center_vertical"/>
-		<EditText 
-		    android:id="@+id/etDrBal"
-		    android:layout_width="0dip"
-			android:layout_weight="1.3"
-			android:editable="false"
-			android:text="0.00" />
-		</TableRow>
-		
-		<TableRow>
-		    <TextView 
-		    	android:layout_width="0dip"
-				android:layout_weight="1"
-				android:text="Total credit opening balance"
-				android:textColor="#FFFFFF"
-        		android:textSize="20dp"
-        		android:layout_gravity="center_vertical"/>
-		<EditText
-		    android:id="@+id/etCrBal" 
-		    android:layout_width="0dip"
-			android:layout_weight="1.3"
-			android:editable="false"
-			android:text="0.00" />
-		</TableRow>
-		
-		<TableRow>
-		    <TextView 
-		    	android:layout_width="0dip"
-				android:layout_weight="1"
-				android:text="Difference in opening balances"
-				android:textColor="#FFFFFF"
-        		android:textSize="20dp"
-        		android:layout_gravity="center_vertical"/>
-		<EditText 
-		    android:id="@+id/etDiffBal"
-		    android:layout_width="0dip"
-			android:layout_weight="1.3"
-			android:editable="false" 
-			android:text="0.00" />
-			
-		</TableRow>
-		
+        <TableRow>
+            <TextView 
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:text="Account name"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:layout_gravity="center_vertical"/>
+        <EditText 
+            android:id="@+id/etAccName"
+            android:layout_width="0dip"
+            android:layout_weight="1.3"
+            android:hint="Tap to enter account name"
+            android:inputType="textCapWords" />
+        </TableRow>
+        
+        <TableRow>
+            <TextView 
+                android:id="@+id/tvAccCode"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:text="Account code"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:layout_gravity="center_vertical"
+                android:visibility="invisible"/>
+        <EditText 
+            android:id="@+id/etAccCode"
+            android:layout_width="0dip"
+            android:layout_weight="1.3"
+            android:hint="Tap to enter account code"
+            android:visibility="invisible" />
+        </TableRow>
+        
+        <TableRow>
+            <TextView 
+                android:id="@+id/tvOpBal"
+                android:layout_width="0dip"
+                android:layout_weight="0.95"
+                android:text="Opening balance"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:layout_gravity="center_vertical"/>
+            
+         <TextView 
+                android:id="@+id/tvOpBalRupeeSymbol"
+                android:layout_width="0dip"
+                android:layout_weight="0.05"
+                android:text="\u20B9"
+                android:textColor="#FFFFFF"
+                android:textSize="22dp"
+                android:layout_gravity="center_vertical"/>
+            
+        <EditText 
+            android:id="@+id/etOpBal"
+            android:layout_width="0dip"
+            android:layout_weight="1.3"
+            android:text="0.00"
+            android:inputType="phone"/>
+        </TableRow>
+        
+        <TableRow>
+            <TextView 
+                android:layout_width="0dip"
+                android:layout_weight="0.95"
+                android:text="Total debit opening balance"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:layout_gravity="center_vertical"/>
+            
+         <TextView 
+                android:layout_width="0dip"
+                android:layout_weight="0.05"
+                android:text="\u20B9"
+                android:textColor="#FFFFFF"
+                android:textSize="22dp"
+                android:layout_gravity="center_vertical"/>
+            
+        <EditText 
+            android:id="@+id/etDrBal"
+            android:layout_width="0dip"
+            android:layout_weight="1.3"
+            android:editable="false"
+            android:text="0.00" />
+        </TableRow>
+        
+        <TableRow>
+            <TextView 
+                android:layout_width="0dip"
+                android:layout_weight="0.95"
+                android:text="Total credit opening balance"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:layout_gravity="center_vertical"/>
+            
+          <TextView 
+                android:layout_width="0dip"
+                android:layout_weight="0.05"
+                android:text="\u20B9"
+                android:textColor="#FFFFFF"
+                android:textSize="22dp"
+                android:layout_gravity="center_vertical"/>  
+          
+        <EditText
+            android:id="@+id/etCrBal" 
+            android:layout_width="0dip"
+            android:layout_weight="1.3"
+            android:editable="false"
+            android:text="0.00" />
+        </TableRow>
+        
+        <TableRow>
+            <TextView 
+                android:layout_width="0dip"
+                android:layout_weight="0.95"
+                android:text="Difference in opening balances"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:layout_gravity="center_vertical"/>
+            
+         <TextView 
+                android:layout_width="0dip"
+                android:layout_weight="0.05"
+                android:text="\u20B9"
+                android:textColor="#FFFFFF"
+                android:textSize="22dp"
+                android:layout_gravity="center_vertical"/>
+            
+        <EditText 
+            android:id="@+id/etDiffBal"
+            android:layout_width="0dip"
+            android:layout_weight="1.3"
+            android:editable="false" 
+            android:text="0.00" />
+            
+        </TableRow>
+        
     </TableLayout>
 </ScrollView>
 
-	<LinearLayout
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -205,7 +242,7 @@
             android:text="save"
             android:textSize="20dp" 
             android:layout_gravity="center_vertical"/>
-		
+        
         <Button
             android:id="@+id/btnCreateAccFinish"
             android:layout_width="wrap_content"

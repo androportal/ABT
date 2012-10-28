@@ -199,7 +199,7 @@ public class createVoucher extends Activity {
 		for(int i=0;i<(tableRowCount);i++){
 			View row = list.getChildAt(i);
 			//dr cr spinner
-			Spinner s = (Spinner)((ViewGroup) row).getChildAt(1);
+			Spinner s = (Spinner)((ViewGroup) row).getChildAt(0);
 			String drcr = s.getSelectedItem().toString();
 			
 			//amount edittext
@@ -526,11 +526,11 @@ public class createVoucher extends Activity {
 						View row = list.getChildAt(i);
 						
 						//drcr flag
-						Spinner rowDrCr = (Spinner)((ViewGroup) row).getChildAt(1);
+						Spinner rowDrCr = (Spinner)((ViewGroup) row).getChildAt(0);
 						String drcrFlag = rowDrCr.getSelectedItem().toString();
 						
 						//account name
-						Spinner rowAccountName = (Spinner)((ViewGroup) row).getChildAt(3);
+						Spinner rowAccountName = (Spinner)((ViewGroup) row).getChildAt(2);
 						String accountName = rowAccountName.getSelectedItem().toString();
 						accNames.add(accountName);
 						
@@ -736,7 +736,6 @@ public class createVoucher extends Activity {
 					final CharSequence[] allProjectNames = projectnamelist.toArray(new String[0]);
 					System.out.println(allProjectNames);
 					
-					
 					//creating a dialog box for popup
 			        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 			        //setting title
@@ -911,11 +910,6 @@ public class createVoucher extends Activity {
     	newRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
     	//newRow.addView(child, width, height)
     	
-    	TextView tvac = new TextView(newRow.getContext());
-      	tvac.setText( "Account Type " );
-      	tvac.setTextSize(14); //*****
-      	tvac.setTextColor(Color.WHITE);
-      	
       	sp1 = new Spinner( newRow.getContext() );
         
         
@@ -935,35 +929,38 @@ public class createVoucher extends Activity {
     	tv1.setTextSize(14); //****
     	tv1.setTextColor(Color.WHITE);
     	
-    	//tv1.setWidth(100);
-    	et = new EditText(newRow.getContext());
-    	et.setText( "0.00" );
-    	et.setWidth(92); //for emulator 80
-    	et.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-    	
-    	
     	TextView tv2 = new TextView(newRow.getContext());
      	tv2.setText(R.string.Rs);
      	tv2.setTextColor(Color.WHITE);
-     	tv2.setTextSize(18);
+     	tv2.setTextSize(19);
+     	tv2.setPadding(10, 0, 5, 0);
      	
+    	
+    	//tv1.setWidth(100);
+    	et = new EditText(newRow.getContext());
+    	et.setText( "0.00" );
+    	et.setWidth(159); //for emulator 80
+    	et.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+    	
+    	
+    	
     	
     	//actionButton.setText( "Action: " + ++rowsSoFar );
     	Button removeSelfButton = new Button( newRow.getContext() );
-    	removeSelfButton.setText( "  -  " ); //for tablet ***** add  space
+    	removeSelfButton.setText( "   -    " ); //for tablet ***** add  space
     	
     	// pass on all the information necessary for deletion
     	removeSelfButton.setOnClickListener( new RowRemover( list, newRow ));
-    	newRow.addView(tvac);
+    	
     	newRow.addView(sp1);
     	newRow.addView(tv);
     	newRow.addView( actionButton );
     	newRow.addView(tv1);
-    	newRow.addView(et);
     	newRow.addView(tv2);
+    	newRow.addView(et);
     	newRow.addView( removeSelfButton );
     	list.addView(newRow);
-    	
+    	OnAmountFocusChangeListener();
     }
     
    

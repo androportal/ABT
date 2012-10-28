@@ -70,8 +70,7 @@
               android:id="@+id/layout_root"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:paddingRight="10dp"
-              android:orientation="horizontal" >
+              android:paddingRight="10dp" >
              
                <TextView
               android:id="@+id/tvdifference"
@@ -83,17 +82,7 @@
               android:gravity="center|right"
               android:textColor="#FFFFFF"
               android:textSize="15dp" />
-               
-               <TextView
-              android:id="@+id/rs"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="left"
-              android:text="@string/Rs"
-              android:textColor="#FFFFFF"
-              android:paddingLeft="10dp"
-              android:textSize="17dp"/>
-              
+             
           </LinearLayout>
              
         

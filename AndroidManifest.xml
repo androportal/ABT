@@ -56,7 +56,7 @@
             android:name=".reportMenu" >
         </activity>
          <activity 
-             android:theme="@style/mytheme1"
+             android:theme="@style/CustomTheme"
             android:label="Voucher Types"
             android:name=".SearchVoucher">
         </activity>

@@ -71,19 +71,75 @@
         <item>Narration</item>
     </string-array>
     
+    <string name="help_para1">
+        \n<b>1.GNUKhata welcome page:</b>
+        \nUser can create new organization or select an existing one.
+   </string> 
+   
+    <string name="help_para2">
+        \n<b>2.Create new organization:</b>
+        \nWhen the user clicks on <b>Create new organization</b> button on the main page, 
+        it will call create new organization page.
+   </string>
+   
+    <string name="help_para3">
+        \n<b>3.Select organization:</b>
+        \nClick on <b>Select existing organization</b> button, this will show select organization page.    
+   </string>
+   
+    <string name="help_para4">
+        \n<b>4.Fill organization details:</b>
+        \nAfter the user fills organization details, click on <b>Save</b> button. 
+        If the user do not want to fill the information, he can simply click <b>skip</b> button.
+   </string>
+   
+    <string name="help_para5">
+        \n<b>5.Preferences:</b>
+        \nUser can add new projects and check the account code using the <b>check-box</b> if manual account code has to be provided.
+   </string>
+   
+    <string name="help_para6">
+        \n<b>6.Create account:</b>
+        \nUser can create an account under respective group name and subgroup name with an
+        opening balance. This will automatically update the total debit opening balance, total credit opening
+        balance and difference between them.
+   </string>
+   
+    <string name="help_para7">
+        \n<b>7.Master menu:</b>
+        \nThis is the master menu of GNUKhata. Here, user can create/search account, enter/search
+        transaction, view reports(ledger and trial balance) and add more projects.
+   </string>
+   
+    <string name="help_para8">
+        \n<b>8.Enter transaction:</b>
+        \nThis page provide the user to enter(see figure [a]) and search(see figure [c]) transactions. <b>home</b> button
+        will take the user to master menu page(see figure [b]). <b>search</b> botton will help to search transaction by 
+        voucher code, date and narration(see figure [d]).
+   </string>
+   
+    <string name="help_para9">
+        \n<b>9.Reports Menu:</b>
+        \nThis page provides list of all report types. After the user clicks on report
+        type he will get an alert dialog which will allow him to enter necessary details to view
+        the report. I are done with ledger(see figure [e]) and trial balance(see figure [f]).
+   </string>
+
+    
+    
     <string name="about_para">
-	    \n<b>GNUKhata</b> is a Free Accounting Software provides 
-	    students and accountants to carry on there work while on the go.
-	    Designed and developed at IIT Bombay. 
+        \n<b>GNUKhata</b> is a Free Accounting Software provides 
+        students and accountants to carry on there work while on the go.
+        Designed and developed at IIT Bombay. 
         \n
         \nVersion: <b>0.9</b> (beta)
         \n
         \nRepository: <b>https://github.com/androportal/gkaakash</b> 
         \n
         \nLicense:
-		GNU GPL, version-3, 29 June 2007
-		\nhttp://www.gnu.org/licenses/gpl-3.0.txt
-		\nCopyright © 2012, IIT Bombay 
+        GNU GPL, version-3, 29 June 2007
+        \nhttp://www.gnu.org/licenses/gpl-3.0.txt
+        \nCopyright © 2012, IIT Bombay 
    </string>
     
     

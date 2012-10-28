@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -185,10 +186,18 @@ public class ledger extends Activity{
                         
                     }
                     
-                
-                
                 label.setBackgroundColor(Color.BLACK);
                 if(j == 3 || j == 4){
+                    String[] amount = new String[]{columnValue.get(j).toString()}; 
+                    //For adding rupee symbol
+                    for(String a : accname){
+                        String drOrcramount =  a.substring(1,(a.length()-1));
+                        String dr_cr_amount = drOrcramount.trim();
+                        if(dr_cr_amount.length() > 0){
+                            final SpannableString rsSymbol = new SpannableString(ledger.this.getText(R.string.Rs)); 
+                            label.setText(rsSymbol+" "+drOrcramount); 
+                        }
+                    }
                     label.setGravity(Gravity.RIGHT);
                 }
                 else{
