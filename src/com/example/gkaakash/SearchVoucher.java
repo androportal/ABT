@@ -68,11 +68,28 @@ public class SearchVoucher extends Activity  {
 		      
 		    tvVFromdate.setText("Financial from date: " +financialFromDate);
 		    tvVTodate.setText("Financial to date: " +financialToDate);
+			try {
+				 setOnSearchButtonClick();
+			        
+			     Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
+			      getallvouchers(params);
+			} catch (Exception e) {
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(SearchVoucher.this);
+		           builder.setMessage("Please try again")
+		                   .setCancelable(false)
+		                   .setPositiveButton("Ok",
+		                           new DialogInterface.OnClickListener() {
+		                               public void onClick(DialogInterface dialog, int id) {
+		                                   
+		                               }
+		                           });
+		                   
+		           AlertDialog alert = builder.create();
+		           alert.show();
+			}
 			
-	        setOnSearchButtonClick();
-	        
-	        Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
-	        getallvouchers(params);
+	       
 	        
 		}
 
@@ -168,7 +185,7 @@ public class SearchVoucher extends Activity  {
 					   	if(pos == 0){
 					   		String searchByVoucherCode = etVoucherCode.getText().toString();
 					   		if(searchByVoucherCode.length() < 1){
-					   			String message = "Please enter voucher code";
+					   			String message = "Please enter voucher reference number";
 				        		toastValidationMessage(message);
 					   		}
 					   		else{

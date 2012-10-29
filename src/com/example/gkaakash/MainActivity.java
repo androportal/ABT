@@ -187,6 +187,7 @@ public class MainActivity extends Activity {
         
         public void onClick(View arg0) {
             // check existing organisation name list is null
+        	try{
             // call the getOrganisationName method from startup
             orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
             if(orgNameList.length<1)
@@ -209,6 +210,21 @@ public class MainActivity extends Activity {
                 Intent intent = new Intent(context, selectOrg.class);
                 startActivity(intent);  
             }
+        	}catch(Exception e)
+        	{
+        		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Please check server connection")
+                        .setCancelable(false)
+                        .setPositiveButton("Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                       //do nothing
+                                    }
+                                });
+                       
+                AlertDialog alert = builder.create();
+                alert.show();    
+        	}
         }// end of onClick
         });// end of select_org.setOnClickListener
 }// end of addListenerOnButton() method

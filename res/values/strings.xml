@@ -66,7 +66,7 @@
     
     <string name="searchVoucherBy">Search voucher by</string>
     <string-array name="searchVoucherBy">
-        <item>Voucher Code</item>
+        <item>Voucher reference number</item>
         <item>Date</item>
         <item>Narration</item>
     </string-array>
@@ -115,7 +115,7 @@
         \n<b>8.Enter transaction:</b>
         \nThis page provide the user to enter(see figure [a]) and search(see figure [c]) transactions. <b>home</b> button
         will take the user to master menu page(see figure [b]). <b>search</b> botton will help to search transaction by 
-        voucher code, date and narration(see figure [d]).
+        voucher reference number, date and narration(see figure [d]).
    </string>
    
     <string name="help_para9">
