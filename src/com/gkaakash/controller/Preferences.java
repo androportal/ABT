@@ -6,6 +6,8 @@ package com.gkaakash.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.xmlrpc.android.XMLRPCException;
+
 import com.gkaakash.coreconnection.CoreConnection;
 
 /**
@@ -20,7 +22,7 @@ public class Preferences {
     private Object[] refNoParams;
     private Boolean setProject;
     private String getPreference;
-   
+    private boolean setproject;
 
    
     /***
@@ -82,20 +84,25 @@ public class Preferences {
         return getPreference;
        
     }
-    /*
-    public Boolean setProjects(Object[] params,Object client_id)
-    {
-        try {
-            System.out.println(params);
-            System.out.println(client_id);
-            setProjects= (Boolean)conn.getClient().call("organisation.setProjects",params,client_id);
-            System.out.println("getPreference"+getPreference);
-            } catch (Exception e) {
-                System.out.println("cant call");
-             e.printStackTrace();
-        }
-        return setProjects;
-       
-    }*/
+    
+    public boolean setProjects(ArrayList<String> params, Object client_id) {
+		
+		try {
+			System.out.println("we are params buddy"+params);
+			if(params.size()>=1)
+            {
+	           for(String pname : params)
+	           {
+	        	   System.out.println(pname);
+	        	   setproject = (Boolean)conn.getClient().call("organisation.setProjects",new Object[]{pname},client_id);
+	              
+	           }
+            }
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return setproject;
+	}
    
 }

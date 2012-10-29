@@ -52,7 +52,7 @@ public class ledger extends Activity{
            tvfinancialFromDate.setText("Financial from date: " +financialFromDate);
            tvfinancialToDate.setText("Financial to date: " +financialToDate);
           
-           System.out.println(accountName+""+projectName+""+fromDate+""+financialFromDate+""+toDate);
+           
           
         Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,projectName};
         ledgerResult = (Object[]) report.getLedger(params,client_id);

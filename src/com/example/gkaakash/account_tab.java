@@ -55,7 +55,7 @@ public class account_tab extends TabActivity{
 	        tab2.setTextSize(18.0f);
 	        tab2.setHeight(50);
 	        tab2.setTextColor(Color.WHITE);
-	        tab2.setText("Edit Account");
+	        tab2.setText("Search Account");
 	        editspec.setIndicator(tab2);//assigning TextView to tab Indicator
 	        Intent edit = new Intent(this, edit_account.class);
 	        editspec.setContent(edit);

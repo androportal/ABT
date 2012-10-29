@@ -25,7 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class createAccount<group> extends Activity{
+public class createAccount<group> extends Activity{ 
 	// Declaring variables
 	static String accCodeCheckFlag;
 	TextView tvaccCode, tvDbOpBal, tvOpBal,tvAccName,tvAccCode;

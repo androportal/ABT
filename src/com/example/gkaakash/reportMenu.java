@@ -215,7 +215,7 @@ public class reportMenu extends ListActivity{
 										startActivity(intent);
 						        	}
 						        	else{
-						        		Toast.makeText(context, "Please enter proper dates!", Toast.LENGTH_SHORT).show();
+						        		Toast.makeText(context, "Please enter proper date!", Toast.LENGTH_SHORT).show();
 						        	}
 								} catch (Exception e) {
 									// TODO: handle exception

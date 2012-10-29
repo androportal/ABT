@@ -330,7 +330,6 @@ public class createVoucher extends Activity {
 	
 	
 	private void getAccountsByRule(Object[] DrCrFlag) {
-		// TODO Auto-generated method stub
 		if("Contra".equals(vouchertypeflag)){
 			voucherAccounts = (Object[]) transaction.getContraAccounts(client_id);
 		}

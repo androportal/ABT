@@ -64,4 +64,11 @@
     <string name="financialyear_prompt">Select financial year</string>
     <string name="projectName_prompt">Select project name</string>
     
+    <string name="searchVoucherBy">Search voucher by</string>
+    <string-array name="searchVoucherBy">
+        <item>Voucher Code</item>
+        <item>Date</item>
+        <item>Narration</item>
+    </string-array>
+    
     </resources>

@@ -1,0 +1,103 @@
+ <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:orientation="vertical"
+        android:id="@+id/layout_root" >
+    
+        <Spinner
+            android:id="@+id/sSearchVoucherBy"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:entries="@array/searchVoucherBy"
+            android:prompt="@string/searchVoucherBy" />
+
+        <EditText
+            android:id="@+id/searchByVCode"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tap to enter voucher code"
+            android:layout_gravity="center"
+            android:visibility="invisible" >
+            <requestFocus />
+        </EditText>
+        
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        	android:layout_width="fill_parent"
+        	android:layout_height="fill_parent" 
+        	android:orientation="horizontal"
+         	android:id="@+id/timeInterval" 
+         	android:visibility="invisible"
+         	android:baselineAligned="false">
+        
+         
+         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        	android:layout_width="fill_parent"
+        	android:layout_height="fill_parent" 
+        	android:orientation="vertical"
+         	android:layout_gravity="left"
+          	android:layout_weight="50" >
+        
+         <TextView
+            android:id="@+id/tvsetFromdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="From-date"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+
+         <DatePicker
+             android:id="@+id/dpSearchVoucherFromdate"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center" />
+
+        </LinearLayout>
+        
+        
+         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        	android:layout_width="fill_parent"
+        	android:layout_height="fill_parent" 
+        	android:orientation="vertical"
+         	android:layout_weight="50" >
+         
+        
+        <TextView
+            android:id="@+id/tvsetT0date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="To-date"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+
+        <DatePicker
+            android:id="@+id/dpSearchVoucherTodate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+        </LinearLayout>
+        
+         </LinearLayout>
+        
+        <EditText
+            android:id="@+id/searchByNarration"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tap to enter narration"
+            android:layout_gravity="center"
+            android:visibility="invisible" >
+            <requestFocus />
+        </EditText>
+        
+        
+           
+
+    </LinearLayout>
+    </ScrollView>

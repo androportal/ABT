@@ -73,17 +73,15 @@ public class preferences extends Activity {
         refNoflag=preference.getPreferences(new Object[]{"1"},client_id);
         addListenerOnButton();
         addListenerOnChkIos();
-       
-       
-          Button addButton = (Button) findViewById( R.id.addProj );
-            // Every time the "+" button is clicked,
-            // add a new row to the table.
-            addButton.setOnClickListener( new OnClickListener() {
-                public void onClick(View view) {
+        Button addButton = (Button) findViewById( R.id.addProj );
+        // Every time the "+" button is clicked,
+        // add a new row to the table.
+        addButton.setOnClickListener( new OnClickListener() {
+        public void onClick(View view) {
                     addButton(); }
                 });
            
-            projectTable = (TableLayout) findViewById( R.id.projtable );
+        projectTable = (TableLayout) findViewById( R.id.projtable );
     }
 
     private void addListenerOnChkIos() {
@@ -94,16 +92,18 @@ public class preferences extends Activity {
             @Override
             public void onClick(View v) {
                 //for setting the visibility of EditText:'etProject' depending upon the condition
-                if (((CheckBox) v).isChecked()) {
-                    etProject.setVisibility(EditText.VISIBLE);
-                    btnaddproj.setVisibility(EditText.VISIBLE);
-                    refNoflag = "optional";
-                }
-                else {
-                    etProject.setVisibility(EditText.GONE);
-                    btnaddproj.setVisibility(EditText.GONE);
-                    refNoflag = "mandatory";
-                }
+            	   if (((CheckBox) v).isChecked()) {
+                       etProject.setVisibility(EditText.VISIBLE);
+                       btnaddproj.setVisibility(EditText.VISIBLE);
+                       btnSavePref.setVisibility(Button.VISIBLE);
+                       refNoflag = "optional";
+                   }
+                   else {
+                       etProject.setVisibility(EditText.GONE);
+                       btnaddproj.setVisibility(EditText.GONE);
+                       btnSavePref.setVisibility(Button.GONE);
+                       refNoflag = "mandatory";
+                   }
             }
             });
        
@@ -114,13 +114,16 @@ public class preferences extends Activity {
             @Override
             public void onClick(View v) {
                 //Setting the account code flag value
-                if (((CheckBox) v).isChecked()) {
-                   
-                    accCodeflag = "manually";
-                }
-                else {
-                    accCodeflag = "automatic";
-                }
+            	 if (((CheckBox) v).isChecked()) {
+                     
+                     accCodeflag = "manually";
+                     Object[] params = new Object[]{"1",refNoflag,"2",accCodeflag};
+                     //Object[] params1 = new Object[]{finalProjlist};
+                     setpref = preference.setPreferences(params, finalProjlist, client_id);
+                 }
+                 else {
+                     accCodeflag = "automatic";
+                 }
             }
             });
     }

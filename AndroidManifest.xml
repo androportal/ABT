@@ -58,7 +58,7 @@
          <activity 
              android:theme="@style/mytheme1"
             android:label="Voucher Types"
-            android:name=".editVoucher">
+            android:name=".SearchVoucher">
         </activity>
         <activity
             android:label="Menu >> Transaction"

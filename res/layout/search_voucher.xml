@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    android:id="@+id/LinearLayout01"
+    android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/dark_gray_background">
+
+    <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="400dp"
+           android:layout_height="3dp"
+           android:layout_gravity="right"
+           android:paddingLeft="20dp"
+           android:paddingRight="20dp"
+           android:background="#60AFFE"/>
+   
+    <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="match_parent"
+           android:layout_height="3dp"
+           android:paddingLeft="20dp"
+           android:paddingRight="20dp"
+           android:background="#60AFFE"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp">
+
+        <TextView
+            android:id="@+id/tvVFromdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:textColor="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/btnSearchVoucher"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_action_search"/>
+
+        <TextView
+            android:id="@+id/tvVTodate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+    
+    
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/layout_root"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp" >
+            
+              <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+                <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:stretchColumns=",1,2,3,4"
+            android:id="@+id/maintable"
+            android:background="#696565" >
+               </TableLayout>
+                
+            </ScrollView>
+         </LinearLayout>
+
+</LinearLayout>
+
+

@@ -1,20 +1,40 @@
 package com.example.gkaakash;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.gkaakash.controller.Organisation;
+import com.gkaakash.controller.Preferences;
+import com.gkaakash.controller.Startup;
+
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.Toast;
 
 public class menu extends ListActivity{
@@ -26,7 +46,21 @@ public class menu extends ListActivity{
 	int Finish = Menu.FIRST +2;
 	AlertDialog dialog;
 	final Context context = this;
-	
+	Button add;
+	private TableLayout projectTable;
+	int rowsSoFar=0;
+	int count;
+	static int idCount;
+	EditText etProject,etdynamic;
+	private Integer client_id;
+	private Preferences preferences;
+	private Organisation organisation;
+	ArrayList<String> finalProjlist;
+	protected String projectname;
+    protected ArrayList<String>[] projectnamelist;
+    boolean projectExistsFlag = false;
+	private boolean setProject;
+    
 	//adding list items to the newly created menu list
 	String[] menuOptions = new String[] { "Create account", "Transaction", "Reports",
 			"Set preferences", "Administration", "Help" };
@@ -62,7 +96,9 @@ public class menu extends ListActivity{
 	//on load...
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		preferences = new Preferences();
+		organisation = new Organisation();
+	    client_id= Startup.getClient_id();
 		//calling menu.xml and adding menu list into the page
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.menu,menuOptions));
  
@@ -76,15 +112,9 @@ public class menu extends ListActivity{
         
 		//when menu list items are clicked, code for respective actions goes here ...
 		listView.setOnItemClickListener(new OnItemClickListener() {
-			
-
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				
-				//for "create account"
+			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 				if(position == 0)
 				{
-					
 					Intent intent = new Intent(context, account_tab.class);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -116,7 +146,7 @@ public class menu extends ListActivity{
 			        builder.setTitle("Select preference");
 			        //adding items
 			        builder.setItems(items, new DialogInterface.OnClickListener() {
-			        public void onClick(DialogInterface dialog, int pos) {
+			        public void onClick(DialogInterface arg0, int pos) {
 			        	//code for the actions to be performed on clicking popup item goes here ...
 			            switch (pos) {
 			                case 0:
@@ -125,17 +155,219 @@ public class menu extends ListActivity{
 			                      }break;
 			                case 1:
 			                              {
-			                            	  Toast.makeText(context,"Clicked on:"+items[pos],Toast.LENGTH_SHORT).show();
-			                      }break;
-			            }
-			        }
+			                            	  LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+			                            	  View layout = inflater.inflate(R.layout.add_project, (ViewGroup) findViewById(R.id.layout_root));
+			                            	  AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			                            	  builder.setView(layout);
+			                            	  builder.setTitle("Add Projects");
+			                            	  etProject = (EditText)layout.findViewById(R.id.etProjectname);
+			                            	  projectTable = (TableLayout)layout.findViewById( R.id.projecttable );
+			                            	  add=(Button) layout.findViewById(R.id.addProject);
+			                            	  add.setOnClickListener(new OnClickListener() {
+												
+												@Override
+												public void onClick(View v) {
+													// TODO Auto-generated method stub
+													addButton();
+												}
+
+												
+											});
+			                            	  
+			                            	  
+			                            	  builder.setPositiveButton("Add",new  DialogInterface.OnClickListener(){
+	
+			                            		  public void onClick(DialogInterface arg0, int which) {
+			                                          EditText projectName;
+			                                          String proj_name;
+			                                          View v1 = null;
+			                                          List<String> secondProjlist=new ArrayList<String>();
+			                                          projectname = etProject.getText().toString();
+			                                          System.out.println("projectname:"+projectname);
+			                                         
+			                                          System.out.println(idCount);
+			                                          for(int i = 1; i <= idCount ; i++){  
+			                                               v1 = dialog.findViewById(i);
+			                                              if(v1 != null){
+			                                            	  System.out
+																	.println("we are in not null");
+			                                                  projectName = (EditText)dialog.findViewById(i);
+			                                                  proj_name= projectName.getText().toString();
+			                                                  if(!"".equals(proj_name)){
+			                                                      secondProjlist.add(proj_name);
+			                                                  }
+			                                              }
+			                                          }
+			                                          
+			                                          finalProjlist = new ArrayList<String>();
+			                                          if(!"".equals(projectname)){
+			                                              finalProjlist.add(projectname);
+			                                          }
+			                                         
+			                                          finalProjlist.addAll(secondProjlist);
+			                                          System.out.println("final project list");
+			                                          System.out
+															.println("seconlist is:"+secondProjlist);
+			                                          System.out.println(finalProjlist);
+			                                          
+			                                        //call the getAllProjects method to get all projects
+			                      					Object[] projectnames = (Object[]) organisation.getAllProjects(client_id);
+			                      					// create new array list of type String to add gropunames
+			                      					List<String> projectnamelist = new ArrayList<String>();
+			                      					projectnamelist.add("No Project");
+			                      					for(Object pn : projectnames)
+			                      					{	
+			                      						Object[] p = (Object[]) pn;
+			                      						projectnamelist.add((String) p[1]); //p[0] is project code & p[1] is projectname
+			                      					}	
+			                      					System.out.println("second project list");
+			                      					System.out.println(projectnamelist);
+			                      					
+			                      					String ac;
+			                      					boolean  flag = false;
+			                      					String nameExists = "";
+			                      					
+			                      					for (int i = 0; i < finalProjlist.size(); i++) {
+			                      						ac = finalProjlist.get(i);
+			                      						for (int j = 0; j < finalProjlist.size(); j++)
+			                      						{
+			                      							if (i!=j)
+			                      							{
+			                      								System.out.println("next element"+finalProjlist.get(j));
+			                      								if(ac.equals(finalProjlist.get(j)))
+			                      								{
+			                      									System.out.println("equal");
+			                      									flag = true;
+			                      									break;
+			                      								}
+			                      							}
+			                      							else
+			                      							{
+			                      								flag = false;
+			                      								System.out.println("not equal");
+			                      							}
+			                      						}
+			                      					}
+			                      					
+			                      					if(flag == true){
+			                      						Toast.makeText(context, "Project names can not be same", Toast.LENGTH_SHORT).show();
+			                      					}
+			                      					else{
+			                  	    					for(int i=0;i<finalProjlist.size();i++){
+			                  	    						for(int j=0;j<projectnamelist.size();j++){
+			                  	    							if((finalProjlist.get(i).toString()).equals(projectnamelist.get(j).toString())){
+			                  	    								projectExistsFlag = true;
+			                  	    								nameExists = finalProjlist.get(i).toString();
+			                  	    								break;
+			                  	    							}
+			                  	    							else{
+			                  	    								projectExistsFlag = false;
+			                  	    							}
+			                  	    						}
+			                  	    						if(projectExistsFlag == true){
+			                      								break;
+			                      							}
+			                  	    					}
+			                  	    					
+			                  	    					 if(etProject.length()<1){
+			                  	                             Toast.makeText(context, "Please enter project name", Toast.LENGTH_SHORT).show();
+			                  	                         }
+			                  	                         else if(projectExistsFlag == true){
+			                  	                         	Toast.makeText(context, "Project "+nameExists+" already exists", Toast.LENGTH_SHORT).show();
+			                  	                         }
+			                  	                         else
+			                  	                          {
+			                  	                        	 System.out.println("we are goinng to meet backend"+finalProjlist);
+			                  	                        	setProject = preferences.setProjects(finalProjlist,client_id);
+			                  	                        	 //To pass on the activity to the next page
+			                  	                        	 Toast.makeText(context, "Preferences have been saved successfully!    ", Toast.LENGTH_SHORT).show();
+			                  	                             etProject.setText("");
+			                  	                             projectTable.removeAllViews();
+			                  	                           }
+			                      					}
+			                                         
+
+			                                      }
+				              						
+				              						 
+				              					 });
+			                            	  
+			                            	  builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
+			                            		  @Override
+			                            		  public void onClick(DialogInterface dialog, int which) {
+			                            			  
+			                            		  }
+			                            		  });
+			                            	  dialog=builder.create();
+			                            	  ((Dialog) dialog).show();
+			                              }break;
+			            		}	
+			        	}	
 			        });
 			        //building a complete dialog
 					dialog=builder.create();
-					dialog.show();
+					dialog.show(); 
 					}
 				} 
 		});
 	 
 	}
+	
+	 /***
+     * Gets all the information necessary to delete itself from the constructor.
+     * Deletes itself when the button is pressed.
+     */
+    private static class RowRemover implements OnClickListener {
+        public TableLayout list;
+        public TableRow rowToBeRemoved;
+       
+        /***
+         * @param list    The list that the button belongs to
+         * @param row    The row that the button belongs to
+         */
+        public RowRemover( TableLayout list, TableRow row ) {
+            this.list = list;
+            this.rowToBeRemoved = row;
+        }
+       
+        public void onClick( View view ) {
+            list.removeView( rowToBeRemoved );
+           
+        }
+    }
+    
+    public void addButton() {
+        //projectTable.setVisibility(TableLayout.VISIBLE);
+        TableRow newRow = new TableRow( projectTable.getContext() );
+        newRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
+        //newRow.addView(child, width, height)
+       
+        EditText etdynamic = new EditText(newRow.getContext());
+        etdynamic.setText( "" );
+        etdynamic.setHint("Tap to enter                              ");
+        etdynamic.setWidth(200); //for emulator 215
+        etdynamic.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etdynamic.setId(++rowsSoFar);
+       
+       
+        idCount ++;
+         
+        //actionButton.setText( "Action: " + ++rowsSoFar );
+        Button removeSelfButton = new Button( newRow.getContext() );
+        removeSelfButton.setText( "  -  " ); //for tablet ***** add  space
+       
+        //removeSelfButton.setBackgroundResource(R.drawable.button_plus_green);
+        //removeSelfButton.setBackgroundColor(color)
+        // pass on all the information necessary for deletion
+        removeSelfButton.setOnClickListener( new RowRemover( projectTable, newRow ));
+       
+        newRow.addView(etdynamic);
+       
+       
+        newRow.addView( removeSelfButton );
+        projectTable.addView(newRow);
+       
+    }
+   
+    
 }

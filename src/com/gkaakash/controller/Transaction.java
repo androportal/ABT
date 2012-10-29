@@ -21,6 +21,7 @@ public class Transaction {
 	private Object[] purchaseAccounts;
 	private Object[] salesReturnAccounts;
 	private Object[] purchaseReturnAccounts;
+	private Object[] searchedVouchers;
 	
 	/***
 	 * Default constructor
@@ -191,7 +192,7 @@ public Object getSalesReturnAccounts(Object[] params,Object client_id) {
 	return salesReturnAccounts;
 }
 
-
+  
 /*
  * get list of all purchase return accounts
  */
@@ -205,6 +206,18 @@ public Object getPurchaseReturnAccounts(Object[] params,Object client_id) {
 		e.printStackTrace();
 	}
 	return purchaseReturnAccounts;
+}
+
+public Object searchVoucher(Object[] params,Object client_id) {
+	
+	try {
+		searchedVouchers = (Object[])conn.getClient().call("transaction.searchVoucher",params,client_id);
+		
+	} catch (XMLRPCException e) {
+		
+		e.printStackTrace();
+	}
+	return searchedVouchers;
 }
 
 

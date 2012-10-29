@@ -11,6 +11,7 @@ public class Startup {
 	private Object[] states;
 	private Object[] financialyear;
 	private CoreConnection conn;
+	private Boolean deleteOrg;
 	private static String  financialFromDate,financialToDate;
 	
 	/***
@@ -36,6 +37,22 @@ public class Startup {
 		}
 		return orgnames;
 	}
+	
+	/***
+	 * deleteOrganisation method will call xmlrpc_deleteOrganisation from rpc_main.py
+	 * @return True if organisation get delete from gnukhata.xml else False
+	 */
+	public Boolean deleteOrgnisationName(Object[] params) {
+		try {
+			deleteOrg = (Boolean)conn.getClient().call("deleteOrganisation",params);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return deleteOrg;
+	}
+	
 	/***
 	 * this method will call  xmlrpc_getFinancialYear from rpc_main.py
 	 * @param params [organisation name ]

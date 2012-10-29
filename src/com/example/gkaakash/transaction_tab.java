@@ -152,9 +152,9 @@ public class transaction_tab extends TabActivity{
 	        tab2.setTextSize(18.0f);
 	        tab2.setHeight(50);
 	        tab2.setTextColor(Color.WHITE);
-	        tab2.setText("Edit Voucher");
+	        tab2.setText("Search Voucher");
 	        editspec.setIndicator(tab2);//assigning TextView to tab Indicator
-	        Intent edit = new Intent(this, editVoucher.class);
+	        Intent edit = new Intent(this, SearchVoucher.class);
 	        edit.putExtra("flag",vouchertypeflag);
 	        editspec.setContent(edit);
 	        tabHost.addTab(editspec); // Adding edit tab

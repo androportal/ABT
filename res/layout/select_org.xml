@@ -1,6 +1,4 @@
-
-    
-       <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
            android:layout_width="fill_parent"
            android:layout_height="fill_parent"
            android:background="@drawable/dark_gray_background"
@@ -16,13 +14,13 @@
                    android:layout_width="match_parent"
                    android:layout_height="81dp" >
 
-                   <TableLayout 
-        		android:layout_width="fill_parent"
-				android:layout_height="wrap_content">
-		
-		         <TableRow
-		             android:layout_width="wrap_content"
-		             android:layout_height="wrap_content" >
+                   <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+       
+                 <TableRow
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content" >
 
                    <TextView
                        android:id="@+id/textView1"
@@ -49,9 +47,9 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content" >
 
- 			<TableRow
- 			    android:layout_width="fill_parent"
- 			    android:layout_height="wrap_content" >
+             <TableRow
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content" >
 
                <TextView
                    android:id="@+id/textView2"
@@ -66,7 +64,7 @@
                    android:id="@+id/sGetFinancialYear"
                    android:layout_width="0dip"
                    android:layout_height="wrap_content"
-                   android:layout_weight="2.5" 
+                   android:layout_weight="2.5"
                    android:prompt="@string/financialyear_prompt"/>
                 </TableRow>
            </LinearLayout>
@@ -76,15 +74,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.24"
                 android:gravity="center" >
-           
+          
            <Button
                android:id="@+id/bProceed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="   Proceed   "
             android:textColor="#000000"
-        	android:textSize="20dp"
-        	 android:layout_gravity="center_vertical"/>
+            android:textSize="20dp"
+             android:layout_gravity="center_vertical"/>
 
 </LinearLayout>
        </LinearLayout>
