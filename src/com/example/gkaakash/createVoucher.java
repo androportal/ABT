@@ -40,7 +40,6 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
  
@@ -87,8 +86,11 @@ public class createVoucher extends Activity {
 	int tableRowCount;
 	Float drcrAmountFirstRow;
 	String drcramount;
+	Float drcrAmount;
 	boolean addRowFlag = true;
 	Float amountdrcr;
+	EditText etRefNumber;
+	EditText etnarration;
 	
     @Override 
     public void onCreate(Bundle savedInstanceState) {
@@ -138,19 +140,24 @@ public class createVoucher extends Activity {
 				public void onClick(View view) { 
 					testAmountTally();
 					if(totalDr == totalCr){
-						Toast.makeText(context, "Debit and Credit amount is tally", Toast.LENGTH_SHORT).show();
+						String message = "Debit and Credit amount is tally";
+						toastValidationMessage(message);
 					}
-					else if (totalCr <=0 || totalDr <=0 || drcrAmountFirstRow <= 0 ) {
-                        Toast.makeText(context, "No rows can be added,Pleaase fill the existing rows ", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(context, "row no :", Toast.LENGTH_SHORT).show();
-                    }
+					else if (drcrAmountFirstRow <= 0 || drcrAmount <= 0) {
+						String message = "No row can be added,Please fill the existing row";
+						toastValidationMessage(message);
+				        }
 					else{
 						for(int i=0;i<(tableRowCount);i++){
                             View row = list.getChildAt(i);
                            
                             //amount edittext
                             EditText e = (EditText)((ViewGroup) row).getChildAt(5);
-                            drcramount = e.getText().toString().trim();
+                            drcramount = e.getText().toString();
+                            if(drcramount.length()<1)
+                            {
+                                drcramount="0.00";
+                            }
                             amountdrcr = Float.parseFloat(drcramount);
                             
                             System.out.println("amount :"+amountdrcr);
@@ -193,17 +200,15 @@ public class createVoucher extends Activity {
 							
 						}
 						else{
-							Toast.makeText(context, "No rows can be added,Pleaase fill the existing rows ", Toast.LENGTH_SHORT).show();
-						}
+							String message = "No row can be added,Please fill the existing row";
+							toastValidationMessage(message);
+					        }
 						
 					}
 				}
 
 				
-			});     
-	        
-	        
-	        
+			});  
 	        //add all onclick events in this method
 	        OnClickListener();
 	        
@@ -224,6 +229,10 @@ public class createVoucher extends Activity {
 		
 		firstRowamount = (EditText) findViewById(R.id.etDrCrAmount);
 		String drcramountFirstRow = firstRowamount.getText().toString();
+		if(drcramountFirstRow.length()<1)
+        {
+			drcramountFirstRow="0.00";
+        }
 		drcrAmountFirstRow = Float.parseFloat(drcramountFirstRow);
 		
 		if("Dr".equals(Dr_Cr)){
@@ -246,6 +255,12 @@ public class createVoucher extends Activity {
 			//amount edittext
 			EditText e = (EditText)((ViewGroup) row).getChildAt(5);
 			drcramount = e.getText().toString();
+			drcrAmount = Float.parseFloat(drcramount);
+			
+			if(drcramount.length()<1)
+            {
+                drcramount="0.00";
+            }
 			float drcrAmount = Float.parseFloat(drcramount);
 			
 			if("Dr".equals(drcr)){
@@ -391,12 +406,13 @@ public class createVoucher extends Activity {
 		@Override
 		public void onClick(View v) {
 			testAmountTally();
-			EditText etRefNumber = (EditText)findViewById(R.id.etRefNumber);
+			etRefNumber = (EditText)findViewById(R.id.etRefNumber);
 			String refNumber = etRefNumber.getText().toString();
 			
 			if(totalDr == totalCr && !"".equals(refNumber)){
 				if(totalDr == 0){
-					Toast.makeText(context, "Please enter amount!", Toast.LENGTH_SHORT).show();
+					String message = "Please enter amount";
+					toastValidationMessage(message);
 				}
 				else{
 					//main list
@@ -477,26 +493,29 @@ public class createVoucher extends Activity {
 					}
 					if(flag == false)
 					{
+						//clear Dr/Cr from dropdown
+						dr_cr.clear();
 						//other voucher details...
-						EditText etnarration = (EditText)findViewById(R.id.etVoucherNarration);
+						etnarration = (EditText)findViewById(R.id.etVoucherNarration);
 						String narration = etnarration.getText().toString();
 						
 						if("".equals(narration)){
 							narration = ""; //need to find solution for null
 						}
-						System.out.println(narration);
-						System.out.println("hi");
 						
-						
-						System.out.println(vDate);
-						System.out.println(vproject);
 						
 						Object[] params_master = new Object[]{refNumber,vDate,vouchertypeflag,vproject,narration};
 						setVoucher = (Integer) transaction.setTransaction(params_master,paramsMaster,client_id);
 						
-						Toast.makeText(context, "Transaction added successfully!", Toast.LENGTH_SHORT).show();
-						System.out.println("voucherset");
+						AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		                builder.setMessage("Transaction added successfully");
+		                AlertDialog alert = builder.create();
+		                alert.setCancelable(true);
+		                alert.setCanceledOnTouchOutside(true);
+		                alert.show();
 						
+						
+						//reset all fields
 						etRefNumber.setText("");
 						etnarration.setText("");
 						
@@ -507,26 +526,78 @@ public class createVoucher extends Activity {
 						account.setSelection(0);
 						firstRowamount.setText("0.00");
 						
-						actionButton.setSelection(0);
-						sp1.setSelection(1);
-						et.setText("0.00");
+						list.removeAllViews();
+						setSecondRow();
 						
-						
+						 
 					}
 					else{
-						Toast.makeText(context, "Account name can not be repeated, please select another name!", Toast.LENGTH_SHORT).show();
-					}
+						String message = "Account name can not be repeated, please select another account name";
+						toastValidationMessage(message);
+						}
 				}
 				
 			}
 			else if(totalDr != totalCr){
-				Toast.makeText(context, "Debit and Credit amount is not tally", Toast.LENGTH_SHORT).show();
+				String message = "Debit and Credit amount is not tally";
+				toastValidationMessage(message);
 			}
 			else if("".equals(refNumber)){
-				Toast.makeText(context, "Please enter voucher reference number", Toast.LENGTH_SHORT).show();
+				String message = "Please enter voucher reference number";
+				toastValidationMessage(message);
 			}
 		}
 		}); 
+    	
+    	/*
+    	 * reset all fields
+    	 */
+    	Button btnResetVoucher = (Button) findViewById( R.id.btnResetVoucher );
+    	btnResetVoucher.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		        builder.setMessage("Are you sure, you want reset all fields? ")
+		                .setCancelable(false)
+		                .setPositiveButton("Yes",
+		                        new DialogInterface.OnClickListener() {
+		                            public void onClick(DialogInterface dialog, int id) {
+		                            	etRefNumber = (EditText)findViewById(R.id.etRefNumber);
+		                				etRefNumber.setText("");
+		                				etnarration = (EditText)findViewById(R.id.etVoucherNarration);
+		                				etnarration.setText("");
+		                				
+		                				TextView tvproject = (TextView)projetct_name.findViewById(R.id.tvSubItem1);
+		                				tvproject.setText("No Project");
+		                				
+		                				DrCr = (Spinner) findViewById(R.id.sDrCr);
+		                				DrCr.setSelection(0); 
+		                				
+		                				account = (Spinner) findViewById(R.id.getAccountByRule);
+		                				account.setSelection(0);
+		                				
+		                				firstRowamount = (EditText) findViewById(R.id.etDrCrAmount);
+		                				firstRowamount.setText("0.00");
+		                				
+		                				list.removeAllViews();
+		                				setSecondRow();
+		                				
+		                            }
+		                        })
+		                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int id) {
+		                        dialog.cancel();
+		                    }
+		                });
+		        AlertDialog alert = builder.create();
+		        alert.show();
+						
+				
+				
+			}
+		});
 	}
 
 	private void setProject() {
@@ -631,8 +702,6 @@ public class createVoucher extends Activity {
 		voucher_date.setAdapter(dateAdapter);
 		
 		vDate = mFormat.format(Double.valueOf(day))+"-"+mFormat.format(Double.valueOf(month))+"-"+year;
-		System.out.println("date are...");
-		System.out.println(day+"-"+month+"-"+year);
 		voucher_date.setOnItemClickListener(new OnItemClickListener() {
 
 			
@@ -706,7 +775,8 @@ public class createVoucher extends Activity {
         				+year;
         	}
         	else{
-        		Toast.makeText(context, "please enter proper voucher date!", Toast.LENGTH_SHORT).show();
+        		String message = "Please enter proper voucher date";
+				toastValidationMessage(message);
         	}
         	
 		} catch (Exception e) {
@@ -737,7 +807,6 @@ public class createVoucher extends Activity {
     		int tableRowCount = list.getChildCount();
             System.out.println("total Child " +tableRowCount);
             if (tableRowCount == 1){
-                //Toast.makeText(context, "There should be atleast two rows ", Toast.LENGTH_SHORT).show();
             }else{
                 list.removeView( rowToBeRemoved );
             }
@@ -751,7 +820,7 @@ public class createVoucher extends Activity {
     	
     	TextView tvac = new TextView(newRow.getContext());
       	tvac.setText( "Account Type " );
-      	tvac.setTextSize(16); //*****
+      	tvac.setTextSize(14); //*****
       	tvac.setTextColor(Color.WHITE);
       	
       	sp1 = new Spinner( newRow.getContext() );
@@ -759,7 +828,7 @@ public class createVoucher extends Activity {
         
     	TextView tv = new TextView(newRow.getContext());
     	tv.setText("        Account Name");
-    	tv.setTextSize(16); //for emulator 14
+    	tv.setTextSize(14); //for emulator 14
     	tv.setTextColor(Color.WHITE);
     	
     	actionButton = new Spinner( newRow.getContext() );
@@ -770,7 +839,7 @@ public class createVoucher extends Activity {
         
         TextView tv1 = new TextView(newRow.getContext());
     	tv1.setText( "        Amount" );
-    	tv1.setTextSize(16); //****
+    	tv1.setTextSize(14); //****
     	tv1.setTextColor(Color.WHITE);
     	
     	//tv1.setWidth(100);
@@ -798,4 +867,21 @@ public class createVoucher extends Activity {
     	list.addView(newRow);
     	
     }
+    
+    
+    public void toastValidationMessage(String message) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            	
+                            }
+                        });
+                
+        AlertDialog alert = builder.create();
+        alert.show();
+		
+	} 
 }

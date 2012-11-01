@@ -63,7 +63,7 @@ public class menu extends ListActivity{
     
 	//adding list items to the newly created menu list
 	String[] menuOptions = new String[] { "Create account", "Transaction", "Reports",
-			"Set preferences", "Administration", "Help" };
+			"Add projects", "Administration", "Help" };
 
 	//adding options to the options menu
 	@Override
@@ -115,6 +115,7 @@ public class menu extends ListActivity{
 			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 				if(position == 0)
 				{
+					MainActivity.tabFlag = true;
 					Intent intent = new Intent(context, account_tab.class);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -139,174 +140,153 @@ public class menu extends ListActivity{
 				//for "preferences", adding popup menu ...
 				if(position == 3)
 				{
-					final CharSequence[] items = { "Edit organisation details", "Add new project" };
-					//creating a dialog box for popup
-			        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			        //setting title
-			        builder.setTitle("Select preference");
-			        //adding items
-			        builder.setItems(items, new DialogInterface.OnClickListener() {
-			        public void onClick(DialogInterface arg0, int pos) {
-			        	//code for the actions to be performed on clicking popup item goes here ...
-			            switch (pos) {
-			                case 0:
-			                              {
-			                            	  Toast.makeText(context,"Clicked on:"+items[pos],Toast.LENGTH_SHORT).show();
-			                      }break;
-			                case 1:
-			                              {
-			                            	  LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-			                            	  View layout = inflater.inflate(R.layout.add_project, (ViewGroup) findViewById(R.id.layout_root));
-			                            	  AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			                            	  builder.setView(layout);
-			                            	  builder.setTitle("Add Projects");
-			                            	  etProject = (EditText)layout.findViewById(R.id.etProjectname);
-			                            	  projectTable = (TableLayout)layout.findViewById( R.id.projecttable );
-			                            	  add=(Button) layout.findViewById(R.id.addProject);
-			                            	  add.setOnClickListener(new OnClickListener() {
-												
-												@Override
-												public void onClick(View v) {
-													// TODO Auto-generated method stub
-													addButton();
-												}
+					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+              	  View layout = inflater.inflate(R.layout.add_project, (ViewGroup) findViewById(R.id.layout_root));
+              	  AlertDialog.Builder builder = new AlertDialog.Builder(context);
+              	  builder.setView(layout);
+              	  builder.setTitle("Add Projects");
+              	  etProject = (EditText)layout.findViewById(R.id.etProjectname);
+              	  projectTable = (TableLayout)layout.findViewById( R.id.projecttable );
+              	  add=(Button) layout.findViewById(R.id.addProject);
+              	  add.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							addButton();
+						}
 
-												
-											});
-			                            	  
-			                            	  
-			                            	  builder.setPositiveButton("Add",new  DialogInterface.OnClickListener(){
-	
-			                            		  public void onClick(DialogInterface arg0, int which) {
-			                                          EditText projectName;
-			                                          String proj_name;
-			                                          View v1 = null;
-			                                          List<String> secondProjlist=new ArrayList<String>();
-			                                          projectname = etProject.getText().toString();
-			                                          System.out.println("projectname:"+projectname);
-			                                         
-			                                          System.out.println(idCount);
-			                                          for(int i = 1; i <= idCount ; i++){  
-			                                               v1 = dialog.findViewById(i);
-			                                              if(v1 != null){
-			                                            	  System.out
-																	.println("we are in not null");
-			                                                  projectName = (EditText)dialog.findViewById(i);
-			                                                  proj_name= projectName.getText().toString();
-			                                                  if(!"".equals(proj_name)){
-			                                                      secondProjlist.add(proj_name);
-			                                                  }
-			                                              }
-			                                          }
-			                                          
-			                                          finalProjlist = new ArrayList<String>();
-			                                          if(!"".equals(projectname)){
-			                                              finalProjlist.add(projectname);
-			                                          }
-			                                         
-			                                          finalProjlist.addAll(secondProjlist);
-			                                          System.out.println("final project list");
-			                                          System.out
-															.println("seconlist is:"+secondProjlist);
-			                                          System.out.println(finalProjlist);
-			                                          
-			                                        //call the getAllProjects method to get all projects
-			                      					Object[] projectnames = (Object[]) organisation.getAllProjects(client_id);
-			                      					// create new array list of type String to add gropunames
-			                      					List<String> projectnamelist = new ArrayList<String>();
-			                      					projectnamelist.add("No Project");
-			                      					for(Object pn : projectnames)
-			                      					{	
-			                      						Object[] p = (Object[]) pn;
-			                      						projectnamelist.add((String) p[1]); //p[0] is project code & p[1] is projectname
-			                      					}	
-			                      					System.out.println("second project list");
-			                      					System.out.println(projectnamelist);
-			                      					
-			                      					String ac;
-			                      					boolean  flag = false;
-			                      					String nameExists = "";
-			                      					
-			                      					for (int i = 0; i < finalProjlist.size(); i++) {
-			                      						ac = finalProjlist.get(i);
-			                      						for (int j = 0; j < finalProjlist.size(); j++)
-			                      						{
-			                      							if (i!=j)
-			                      							{
-			                      								System.out.println("next element"+finalProjlist.get(j));
-			                      								if(ac.equals(finalProjlist.get(j)))
-			                      								{
-			                      									System.out.println("equal");
-			                      									flag = true;
-			                      									break;
-			                      								}
-			                      							}
-			                      							else
-			                      							{
-			                      								flag = false;
-			                      								System.out.println("not equal");
-			                      							}
-			                      						}
-			                      					}
-			                      					
-			                      					if(flag == true){
-			                      						Toast.makeText(context, "Project names can not be same", Toast.LENGTH_SHORT).show();
-			                      					}
-			                      					else{
-			                  	    					for(int i=0;i<finalProjlist.size();i++){
-			                  	    						for(int j=0;j<projectnamelist.size();j++){
-			                  	    							if((finalProjlist.get(i).toString()).equals(projectnamelist.get(j).toString())){
-			                  	    								projectExistsFlag = true;
-			                  	    								nameExists = finalProjlist.get(i).toString();
-			                  	    								break;
-			                  	    							}
-			                  	    							else{
-			                  	    								projectExistsFlag = false;
-			                  	    							}
-			                  	    						}
-			                  	    						if(projectExistsFlag == true){
-			                      								break;
-			                      							}
-			                  	    					}
-			                  	    					
-			                  	    					 if(etProject.length()<1){
-			                  	                             Toast.makeText(context, "Please enter project name", Toast.LENGTH_SHORT).show();
-			                  	                         }
-			                  	                         else if(projectExistsFlag == true){
-			                  	                         	Toast.makeText(context, "Project "+nameExists+" already exists", Toast.LENGTH_SHORT).show();
-			                  	                         }
-			                  	                         else
-			                  	                          {
-			                  	                        	 System.out.println("we are goinng to meet backend"+finalProjlist);
-			                  	                        	setProject = preferences.setProjects(finalProjlist,client_id);
-			                  	                        	 //To pass on the activity to the next page
-			                  	                        	 Toast.makeText(context, "Preferences have been saved successfully!    ", Toast.LENGTH_SHORT).show();
-			                  	                             etProject.setText("");
-			                  	                             projectTable.removeAllViews();
-			                  	                           }
-			                      					}
-			                                         
+						
+					});
+              	  
+              	  
+              	  builder.setPositiveButton("Add",new  DialogInterface.OnClickListener(){
 
-			                                      }
-				              						
-				              						 
-				              					 });
-			                            	  
-			                            	  builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
-			                            		  @Override
-			                            		  public void onClick(DialogInterface dialog, int which) {
-			                            			  
-			                            		  }
-			                            		  });
-			                            	  dialog=builder.create();
-			                            	  ((Dialog) dialog).show();
-			                              }break;
-			            		}	
-			        	}	
-			        });
-			        //building a complete dialog
-					dialog=builder.create();
-					dialog.show(); 
+              		  public void onClick(DialogInterface arg0, int which) {
+                            EditText projectName;
+                            String proj_name;
+                            View v1 = null;
+                            List<String> secondProjlist=new ArrayList<String>();
+                            projectname = etProject.getText().toString();
+                           
+                            for(int i = 1; i <= idCount ; i++){  
+                                 v1 = dialog.findViewById(i);
+                                if(v1 != null){
+                              	  
+                                    projectName = (EditText)dialog.findViewById(i);
+                                    proj_name= projectName.getText().toString();
+                                    if(!"".equals(proj_name)){
+                                        secondProjlist.add(proj_name);
+                                    }
+                                }
+                            }
+                            
+                            finalProjlist = new ArrayList<String>();
+                            if(!"".equals(projectname)){
+                                finalProjlist.add(projectname);
+                            }
+                           
+                            finalProjlist.addAll(secondProjlist);
+                            
+                          //call the getAllProjects method to get all projects
+        					Object[] projectnames = (Object[]) organisation.getAllProjects(client_id);
+        					// create new array list of type String to add gropunames
+        					List<String> projectnamelist = new ArrayList<String>();
+        					projectnamelist.add("No Project");
+        					for(Object pn : projectnames)
+        					{	
+        						Object[] p = (Object[]) pn;
+        						projectnamelist.add((String) p[1]); //p[0] is project code & p[1] is projectname
+        					}	
+        					
+        					String ac;
+        					boolean  flag = false;
+        					String nameExists = "";
+        					
+        					for (int i = 0; i < finalProjlist.size(); i++) {
+        						ac = finalProjlist.get(i);
+        						for (int j = 0; j < finalProjlist.size(); j++)
+        						{
+        							if (i!=j)
+        							{
+        								if(ac.equals(finalProjlist.get(j)))
+        								{
+        									flag = true;
+        									break;
+        								}
+        							}
+        							else
+        							{
+        								flag = false;
+        							}
+        						}
+        					}
+        					
+        					if(flag == true){
+        						String message = "Project names can not be same";
+        						toastValidationMessage(message);
+        					}
+        					else{
+    	    					for(int i=0;i<finalProjlist.size();i++){
+    	    						for(int j=0;j<projectnamelist.size();j++){
+    	    							if((finalProjlist.get(i).toString()).equals(projectnamelist.get(j).toString())){
+    	    								projectExistsFlag = true;
+    	    								nameExists = finalProjlist.get(i).toString();
+    	    								break;
+    	    							}
+    	    							else{
+    	    								projectExistsFlag = false;
+    	    							}
+    	    						}
+    	    						if(projectExistsFlag == true){
+        								break;
+        							}
+    	    					}
+    	    					
+    	    					 if(etProject.length()<1){
+    	    						 String message = "Please enter project name";
+    	    						 toastValidationMessage(message);
+    	                         }
+    	                         else if(projectExistsFlag == true){
+    	                        	String message = "Project "+nameExists+" already exists";
+    	        					toastValidationMessage(message);
+    	        					}
+    	                         else
+    	                          {
+    	                        	setProject = preferences.setProjects(finalProjlist,client_id);
+    	                        	 //To pass on the activity to the next page
+    	                        	
+    	                        	AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    	    				        builder.setMessage("Project added successfully!")
+    	    				                .setCancelable(false)
+    	    				                .setPositiveButton("Ok",
+    	    				                        new DialogInterface.OnClickListener() {
+    	    				                            public void onClick(DialogInterface dialog, int id) {
+    	    				                            	
+    	    				                            }
+    	    				                        });
+    	    				                
+    	    				        AlertDialog alert = builder.create();
+    	    				        alert.show();
+    	    				        etProject.setText("");
+    	                            projectTable.removeAllViews();
+    	                           }
+        					}
+                           
+
+                        }
+    						
+    						 
+    					 });
+              	  
+              	  builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
+              		  @Override
+              		  public void onClick(DialogInterface dialog, int which) {
+              			  
+              		  }
+              		  });
+              	  dialog=builder.create();
+              	  ((Dialog) dialog).show();
 					}
 				} 
 		});
@@ -345,7 +325,7 @@ public class menu extends ListActivity{
         EditText etdynamic = new EditText(newRow.getContext());
         etdynamic.setText( "" );
         etdynamic.setHint("Tap to enter                              ");
-        etdynamic.setWidth(200); //for emulator 215
+        etdynamic.setWidth(215); //for emulator 215
         etdynamic.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
         etdynamic.setId(++rowsSoFar);
        
@@ -368,6 +348,22 @@ public class menu extends ListActivity{
         projectTable.addView(newRow);
        
     }
+    
+    public void toastValidationMessage(String message) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            	
+                            }
+                        });
+                
+        AlertDialog alert = builder.create();
+        alert.show();
+		
+	} 
    
     
 }

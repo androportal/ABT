@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import com.gkaakash.controller.Startup;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 public class selectOrg extends Activity{
 	Object[] orgNameList;
@@ -23,6 +26,9 @@ public class selectOrg extends Activity{
 	private Button bProceed;
 	Object[] financialyearList;
 	final Context context = this;
+	private Button btnDeleteOrg;
+	protected AdapterView<SpinnerAdapter> parent;
+	protected Object selectedFinancialYear;
 	//static String existingOrgFlag;
 	protected static Integer client_id;
 	protected static String selectedOrgName;
@@ -42,9 +48,11 @@ public class selectOrg extends Activity{
     	getOrgNames.setMinimumWidth(100);
     	getFinancialyear.setMinimumWidth(250);
     	bProceed = (Button) findViewById(R.id.bProceed);
+    	btnDeleteOrg = (Button) findViewById(R.id.btnDeleteOrg);
     	getExistingOrgNames();
-    	addListenerOnButton();
     	addListenerOnItem();
+    	addListenerOnButton();
+    	
     }// End of onCreate
 	
 	// getExistingOrgNames()
@@ -78,16 +86,75 @@ public class selectOrg extends Activity{
 
 			@Override
 			public void onClick(android.view.View v) {
-				//parameters pass to core_engine xml_rpc functions
-				deployparams=new Object[]{selectedOrgName,fromDate,toDate};
-				//call method login from startup.java 
-				client_id = startup.login(deployparams);
-				System.out.println("login "+ client_id);
-				//To pass on the activity to the next page  
-				Intent intent = new Intent(context,menu.class);
-                startActivity(intent); 
+				
+				if(orgNameList.length>0)
+				{
+					//parameters pass to core_engine xml_rpc functions
+					deployparams=new Object[]{selectedOrgName,fromDate,toDate};
+					//call method login from startup.java 
+					client_id = startup.login(deployparams);
+					//System.out.println("login "+ client_id);
+					//To pass on the activity to the next page  
+					Intent intent = new Intent(context,menu.class);
+	                startActivity(intent); 
+				}else{
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			        builder.setMessage("Please create organisation")
+			                .setCancelable(false)
+			                .setPositiveButton("Ok",
+			                        new DialogInterface.OnClickListener() {
+			                            public void onClick(DialogInterface dialog, int id) {
+			                            	//parameters pass to core_engine xml_rpc functions
+			                            	//To pass on the activity to the next page  
+			            					Intent intent = new Intent(context,MainActivity.class);
+			            	                startActivity(intent); 
+			                            }
+			                        });
+			                
+			        AlertDialog alert = builder.create();
+			        alert.show();
+				}
 			}
 		});
+		btnDeleteOrg.setOnClickListener(new OnClickListener() {
+			
+			private Object[] deleteprgparams;
+			private Boolean deleted;
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		        builder.setMessage("Are you sure you want to permanetly delete "+selectedOrgName+" for financialyear "+fromDate+" To "+toDate+"?\n" +
+		        		"if you will delete an item , It will be permanetly lost ")
+		                .setCancelable(false)
+		                .setPositiveButton("Delete",
+		                        new DialogInterface.OnClickListener() {
+		                            public void onClick(DialogInterface dialog, int id) {
+		                            	//parameters pass to core_engine xml_rpc functions
+		                				deleteprgparams=new Object[]{selectedOrgName,fromDate,toDate};
+		                				deleted = startup.deleteOrgnisationName(deleteprgparams);
+		                				getExistingOrgNames();
+		                		    	addListenerOnItem();
+		                		    	addListenerOnButton();
+		                				//Intent intent = new Intent(context,selectOrg.class);
+		                				//startActivity(intent);
+		                				
+		                            }
+		                        })
+		                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int id) {
+		                        dialog.cancel();
+		                    }
+		                });
+		        AlertDialog alert = builder.create();
+		        alert.show();
+		       
+			}
+			
+		
+		});
+		
 	}
 	
 	void addListenerOnItem(){
@@ -98,9 +165,6 @@ public class selectOrg extends Activity{
 			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
 				//Retrieving the selected org type from the Spinner and assigning it to a variable 
 				selectedOrgName = parent.getItemAtPosition(position).toString();
-				
-				if(selectedOrgName!=null){
-					
 					//call getFinancialYear method from startup.java 
 			    	//it will give you financialYear list according to orgname
 			    	financialyearList = startup.getFinancialYear(selectedOrgName);
@@ -112,26 +176,46 @@ public class selectOrg extends Activity{
 			    		Object[] y = (Object[]) fy;
 			    		// concatination From and To date 
 			    		financialyearlist.add(y[0]+" to "+y[1]);
-			    		fromDate=y[0].toString();
-			    		toDate=y[1].toString();
+			    		//fromDate=y[0].toString();
+			    		//toDate=y[1].toString();
 			    	}
-			    	//String fromDate = Startup.setOrgansationname((String)fromDate);
-			    	Startup.setfinancialFromDate(fromDate);
-			    	Startup.setFinancialToDate(toDate);
+			    	
 			    	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
 			    			android.R.layout.simple_spinner_item, financialyearlist);
 			    	
 			    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			    	
 			    	getFinancialyear.setAdapter(dataAdapter);
-				    	}// End of if condition
-				} // End of onItemSelected()
+				    	}
+
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});// End of getOrgNames.setOnItemSelectedListener
+		getFinancialyear.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			private String[] finallist;
+		
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
+				// TODO Auto-generated method stub
+				selectedFinancialYear = parent.getItemAtPosition(position).toString();
+				finallist = selectedFinancialYear.toString().split(" to ");
+				fromDate = finallist[0];
+				toDate = finallist[1];
+				
+				//String fromDate = Startup.setOrgansationname((String)fromDate);
+		    	Startup.setfinancialFromDate(fromDate);
+		    	Startup.setFinancialToDate(toDate);
+			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
 				
 			}
-		});// End of getOrgNames.setOnItemSelectedListener
+		});
 	} // end of addListenerOnItem()
 }// End of Class 

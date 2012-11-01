@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import com.gkaakash.controller.*;
-import com.gkaakash.controller.Startup;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,6 +11,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -267,14 +267,25 @@ public class orgDetails extends Activity{
                 
                 setOrgDetails = org.setOrganisation(orgparams,client_id);
                 System.out.println(setOrgDetails);
-                if (setOrgDetails==true)
-                	Toast.makeText(context,"Organisation "+getOrgName+" details saved successfully",Toast.LENGTH_LONG).show();
-				//To pass on the activity to the next page
-				Intent intent = new Intent(context, preferences.class);
-                startActivity(intent);  
-                
-				//get all the parameters to save organisation details
-                
+                if (setOrgDetails==true){
+                	String message = "Organisation "+getOrgName+" with details saved successfully";
+                	
+                	AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			        builder.setMessage(message)
+			                .setCancelable(false)
+			                .setPositiveButton("Ok",
+			                        new DialogInterface.OnClickListener() {
+			                            public void onClick(DialogInterface dialog, int id) {
+			                            	
+			                            }
+			                        });
+			                
+			        AlertDialog alert = builder.create();
+			        alert.show();
+    				//To pass on the activity to the next page
+    				Intent intent = new Intent(context, preferences.class);
+                    startActivity(intent);
+                }
                 
 			}
 		}); 

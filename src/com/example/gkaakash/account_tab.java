@@ -18,7 +18,7 @@ public class account_tab extends TabActivity{
 	private Integer client_id;
 	private Preferences preferences;
 	
-	  @SuppressWarnings("deprecation")
+	 
 	public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.tab);
@@ -40,7 +40,8 @@ public class account_tab extends TabActivity{
 	        client_id = Startup.getClient_id();
 	        // call getPreferences to get flag for account code
 	        accCodeCheckFlag = preferences.getPreferences(new Object[]{2},client_id);
-			System.out.println(accCodeCheckFlag);
+	        //for visibility of account tab layout 
+			MainActivity.tabFlag = true;
 	        Intent create = new Intent(this, createAccount.class);
 	        // flag for finish button of account page 
 	        //create.putExtra("finish_flag","menu");

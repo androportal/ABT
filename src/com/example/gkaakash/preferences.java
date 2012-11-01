@@ -7,7 +7,9 @@ import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Preferences;
 import com.gkaakash.controller.Startup;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -57,13 +59,17 @@ public class preferences extends Activity {
        	client_id= Startup.getClient_id();
         etProject = (EditText) findViewById(R.id.etProject);
         
+      //for visibility of account tab layout
+        MainActivity.tabFlag = false;
+        
         //String from = Startup.getfinancialFromDate();
         //String to = Startup.getFinancialToDate();
         //System.out.println("from and to are...");
         //System.out.println(from+"-"+to);
        
         btnaddproj = (Button) findViewById(R.id.addProj);
-       
+        btnSavePref =(Button) findViewById(R.id.btnSavePref);
+        btnSavePref.setVisibility(Button.GONE);
         //setting visibility
         etProject.setVisibility(EditText.GONE);
         btnaddproj.setVisibility(Button.GONE);
@@ -219,7 +225,8 @@ public class preferences extends Activity {
     					}
     					
     					if(flag == true){
-    						Toast.makeText(context, "Project names can not be same", Toast.LENGTH_SHORT).show();
+    						String message = "Project names can not be same";
+    						toastValidationMessage(message);
     					}
     					else{
 	    					for(int i=0;i<finalProjlist.size();i++){
@@ -235,33 +242,60 @@ public class preferences extends Activity {
 	    						}
 	    						if(projectExistsFlag == true){
     								break;
-    							}
+    							} 
 	    					}
 	    					
 	    					 if(refNoflag.equals("optional")&& etProject.length()<1){
-	                             Toast.makeText(context, "Please enter project name", Toast.LENGTH_SHORT).show();
+	    						 String message = "Please enter project name";
+	     						toastValidationMessage(message);
 	                         }
 	                         else if(projectExistsFlag == true){
-	                         	Toast.makeText(context, "Project "+nameExists+" already exists", Toast.LENGTH_SHORT).show();
-	                         }
+	                        	 String message = "Project "+nameExists+" already exists";
+		     					toastValidationMessage(message);
+		     					}
 	                         else
 	                          {
 	                               Object[] params = new Object[]{"1",refNoflag,"2",accCodeflag};
 	                               //Object[] params1 = new Object[]{finalProjlist};
 	                               setpref = preference.setPreferences(params, finalProjlist, client_id);
 	                               //To pass on the activity to the next page
-	                               Toast.makeText(context, "Preferences have been saved successfully!    ", Toast.LENGTH_SHORT).show();
-	                               cbAccCode.setChecked(false);
+	                               
+	                               AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		       		               builder.setMessage("Preferences have been saved successfully!");
+		       		               AlertDialog alert = builder.create();
+		       		               alert.setCancelable(true);
+		       		               alert.setCanceledOnTouchOutside(true);
+		       		               alert.show();
+	                               
+		       				        
+		       				       cbAccCode.setChecked(false);
 	                               cbProject.setChecked(false);
 	                               etProject.setVisibility(EditText.GONE);
 	                               etProject.setText("");
 	                               btnaddproj.setVisibility(EditText.GONE);
 	                               projectTable.removeAllViews();
+	                               btnSavePref.setVisibility(Button.GONE);
 	                           }
     					}
                        
 
                     }
+
+                    public void toastValidationMessage(String message) {
+                		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setMessage(message)
+                                .setCancelable(false)
+                                .setPositiveButton("Ok",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                            	
+                                            }
+                                        });
+                                
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                		
+                	} 
                 });
         btnQuit =(Button) findViewById(R.id.btnQuit);
         btnQuit.setOnClickListener(new OnClickListener() {
@@ -312,7 +346,7 @@ public class preferences extends Activity {
         EditText etdynamic = new EditText(newRow.getContext());
         etdynamic.setText( "" );
         etdynamic.setHint("Tap to enter                              ");
-        etdynamic.setWidth(200); //for emulator 215
+        etdynamic.setWidth(215); //for emulator 215
         etdynamic.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
         etdynamic.setId(++rowsSoFar);
        

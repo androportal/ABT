@@ -10,10 +10,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -21,11 +20,11 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class createAccount<group> extends Activity{ 
+public class createAccount<group> extends Activity{
 	// Declaring variables
 	static String accCodeCheckFlag;
 	TextView tvaccCode, tvDbOpBal, tvOpBal,tvAccName,tvAccCode;
@@ -58,7 +57,12 @@ public class createAccount<group> extends Activity{
 	static final int ID_SCREENDIALOG = 1;
 	private static String groupChar;
 	private String account_code;
-		
+	protected static Boolean tabflag;
+	
+	String sub_grp_name;
+	private String subgroup_exist;
+	private String accountcode_exist;
+	protected String accountname_exist;	
 		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -80,6 +84,23 @@ public class createAccount<group> extends Activity{
 		tvSubGrp = (TextView) findViewById(R.id.tvSubGrp);
 		etSubGrp = (EditText) findViewById(R.id.etSubGrp);
 		etAccName= (EditText) findViewById(R.id.etAccName);
+		
+		//for visibility of account tab layout
+        tabflag=MainActivity.tabFlag;
+        LinearLayout l1=(LinearLayout)findViewById(R.id.createacc_tab1);  
+        LinearLayout l2=(LinearLayout)findViewById(R.id.createacc_tab2);
+        if(tabflag){
+            l1.setVisibility(LinearLayout.VISIBLE);
+            l2.setVisibility(LinearLayout.VISIBLE);
+
+          
+
+        }else {
+            l1.setVisibility(LinearLayout.INVISIBLE);
+            l2.setVisibility(LinearLayout.INVISIBLE);
+        }
+        
+		
 		// call getPrefernece to get set preference related to account code flag   
 		accCodeCheckFlag = preferencObj.getPreferences(new Object[]{"2"},client_id);
 		System.out.println("accCodeCheckFlag :"+accCodeCheckFlag);
@@ -332,32 +353,132 @@ public class createAccount<group> extends Activity{
 				accountname = etAccName.getText().toString();
 				accountcode = etaccCode.getText().toString();
 				openingbalance= etOpBal.getText().toString();
-				
+				//sub_grp_name = etSubGrp.getText().toString();
 				// check for blank fields
 				if("Create New Sub-Group".equals(selSubGrpName)&&newsubgrpname.length()<1||("manually".equals(accCodeCheckFlag)&& accountcode.length()<1))
 				{
-				Toast.makeText(context,"Please fill field",Toast.LENGTH_SHORT).show();
-				}else if ((accountname.length()<1)||(openingbalance.length()<1))
+					alertBlankField();
+				//Toast.makeText(context,"Please fill field",Toast.LENGTH_SHORT).show();
+				}else if((accountname.length()<1)||(openingbalance.length()<1))
 				{
-				etOpBal.setText("0.00");
-				Toast.makeText(context,"TextFields cannot be blank",Toast.LENGTH_SHORT).show();
+				//etOpBal.setText("0.00");
+				alertBlankField();
+				//Toast.makeText(context,"TextFields cannot be blank",Toast.LENGTH_SHORT).show();
 				}
+				else if("Create New Sub-Group".equals(selSubGrpName)&&newsubgrpname.length()>=1)
+				{
+					subgroup_exist = group.subgroupExists(new Object[]{newsubgrpname},client_id);
+					if (subgroup_exist.equals("1"))
+					{
+						AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		                builder.setMessage("Subgroup "+newsubgrpname+" already exist")
+		                        .setCancelable(false)
+		                        .setPositiveButton("Ok",
+		                                new DialogInterface.OnClickListener() {
+		                                    public void onClick(DialogInterface dialog, int id) {
+		                                    	 
+		                                    	etSubGrp.setText("");
+		                                    	etSubGrp.requestFocus();
+		                                    }
+		                                });
+		                        
+		                AlertDialog alert = builder.create();
+		                alert.show();
+						
+					}
+					if(accountname.length()>=1)
+		        	{
+			        	accountname_exist = account.checkAccountName(new Object[]{accountname,accCodeCheckFlag,groupChar},client_id);
+			        	if (accountname_exist.equals("exist"))
+			        	{
+			        		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			                builder.setMessage("Account "+accountname+" already exist")
+			                        .setCancelable(false)
+			                        .setPositiveButton("Ok",
+			                                new DialogInterface.OnClickListener() {
+			                                    public void onClick(DialogInterface dialog, int id) {
+			                                    	 
+			                                    	etAccName.setText("");
+			                		        		etAccName.requestFocus();
+			                                    }
+			                                });
+			                        
+			                AlertDialog alert = builder.create();
+			                alert.show();
+			        	}
+			        	else{
+			        		etaccCode.setText(accountcode);
+			        		}
+				}
+				if("manually".equals(accCodeCheckFlag)&&accountcode.length()>=1)
+					{
+						accountcode_exist = account.checkAccountCode(new Object[]{accountcode},client_id);
+						if (accountcode_exist.equals("1"))
+						{
+							AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			                builder.setMessage("Acountcode "+accountcode+" already exist")
+			                        .setCancelable(false)
+			                        .setPositiveButton("Ok",
+			                                new DialogInterface.OnClickListener() {
+			                                    public void onClick(DialogInterface dialog, int id) {
+			                                    	 
+			                                    	etaccCode.setText("");
+			                                    	etaccCode.requestFocus();
+			                                    }
+			                                });
+			                        
+			                AlertDialog alert = builder.create();
+			                alert.show();
+							//Toast.makeText(context,account_code+" already exist",Toast.LENGTH_LONG).show();
+							//etaccCode.setText(accountcode);
+						}
+					}else
+					{	
+						Object[] params = new Object[]{accCodeCheckFlag,selGrpName,selSubGrpName,newsubgrpname,accountname,accountcode,openingbalance}; 
+						// call the setAccount method and pass the above parameters
+						account.setAccount(params,client_id);
+						getTotalBalances();
+						getExistingGroupNames();
+						//creating interface to listen activity on Item 
+						addListenerOnItem();
+						
+						AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		                builder.setMessage("Account "+accountname+" have been saved successfully");
+		                AlertDialog alert = builder.create();
+		                alert.setCancelable(true);
+		                alert.setCanceledOnTouchOutside(true);
+		                alert.show();
+		                
+						//Toast.makeText(context,"Account "+accountname+" saved successfully!",Toast.LENGTH_SHORT).show();
+						etSubGrp.setText("");
+						etAccName.setText("");
+						etaccCode.setText("");
+						etOpBal.setText("0.00");
+					}// close else
+				
+	        	}
 				else
 				{	
-				System.out.println("accCodeCheckFlag "+accCodeCheckFlag);
-				Object[] params = new Object[]{accCodeCheckFlag,selGrpName,selSubGrpName,newsubgrpname,accountname,accountcode,openingbalance}; 
-				// call the setAccount method and pass the above parameters
-				account.setAccount(params,client_id);
-				getTotalBalances();
-				getExistingGroupNames();
-				//creating interface to listen activity on Item 
-				addListenerOnItem();
-				Toast.makeText(context,"Account "+accountname+" saved successfully!",Toast.LENGTH_SHORT).show();
-				etSubGrp.setText("");
-				etAccName.setText("");
-				etaccCode.setText("");
-				etOpBal.setText("0.00");
-				}// close else
+					Object[] params = new Object[]{accCodeCheckFlag,selGrpName,selSubGrpName,newsubgrpname,accountname,accountcode,openingbalance}; 
+					// call the setAccount method and pass the above parameters
+					account.setAccount(params,client_id);
+					getTotalBalances();
+					getExistingGroupNames();
+					//creating interface to listen activity on Item 
+					addListenerOnItem();
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+	                builder.setMessage("Account "+accountname+" have been saved successfully");
+	                AlertDialog alert = builder.create();
+	                alert.show();
+	                alert.setCancelable(true);
+	                alert.setCanceledOnTouchOutside(true);
+					//Toast.makeText(context,"Account "+accountname+" saved successfully!",Toast.LENGTH_SHORT).show();
+					etSubGrp.setText("");
+					etAccName.setText("");
+					etaccCode.setText("");
+					etOpBal.setText("0.00");
+					}// close else
+				
 			}
 
 		}); // close setOnClickListener
@@ -368,7 +489,7 @@ public class createAccount<group> extends Activity{
 	{
 	etAccName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 		
-	      String accountname;
+	      
 		@Override
 	      public void onFocusChange(View v, boolean hasFocus) {
 			accountname = etAccName.getText().toString();
@@ -384,26 +505,32 @@ public class createAccount<group> extends Activity{
 		        	accountcode = account.checkAccountName(new Object[]{accountname,accCodeCheckFlag,groupChar},client_id);
 		        	if (accountcode.equals("exist"))
 		        	{
-		        		Toast.makeText(context,accountname+" already exist",Toast.LENGTH_LONG).show();
-		        		etAccName.setText("");
-		        		
-		        		
+		        		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		                builder.setMessage("Account "+accountname+" already exist")
+		                        .setCancelable(false)
+		                        .setPositiveButton("Ok",
+		                                new DialogInterface.OnClickListener() {
+		                                    public void onClick(DialogInterface dialog, int id) {
+		                                    	 
+		                                    	etAccName.setText("");
+		                		        		etAccName.requestFocus();
+		                                    }
+		                                });
+		                        
+		                AlertDialog alert = builder.create();
+		                alert.show();
 		        	}
 		        	else{
 		        		etaccCode.setText(accountcode);
 		        		}
 	        	}
-	        	/*else
-	        	{
-	        		Toast.makeText(context," Please enter accountname",Toast.LENGTH_LONG).show();
-	        		etAccName.setText("");
-	        	}*/
+	        	
 	        }
 	      }
 	    });// close addEditTextListner()
 	
 	// It will check for account exist 
-	etAccName.addTextChangedListener(new TextWatcher() {
+	/*etAccName.addTextChangedListener(new TextWatcher() {
 
      @Override
 		public void afterTextChanged(Editable s) {
@@ -439,19 +566,17 @@ public class createAccount<group> extends Activity{
 		            //Toast.LENGTH_LONG).show();
 		} 
 
-	});// close addTextChangedListener
+	});// close addTextChangedListener*/
 	// It will check for new subgroup name exist 
 	etSubGrp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 		
-		String sub_grp_name;
-		private String subgroup_exist;
 		@Override
 	      public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				sub_grp_name = etSubGrp.getText().toString();
 				 if(hasFocus)
 			        {
-					 	etSubGrp.setText("");
+					 	
 			        }
 			        else{
 						if(sub_grp_name.length()>=1)
@@ -459,7 +584,21 @@ public class createAccount<group> extends Activity{
 							subgroup_exist = group.subgroupExists(new Object[]{sub_grp_name},client_id);
 							if (subgroup_exist.equals("1"))
 							{
-								Toast.makeText(context,sub_grp_name+" already exist",Toast.LENGTH_LONG).show();
+								AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				                builder.setMessage("Subgroup "+sub_grp_name+" already exist")
+				                        .setCancelable(false)
+				                        .setPositiveButton("Ok",
+				                                new DialogInterface.OnClickListener() {
+				                                    public void onClick(DialogInterface dialog, int id) {
+				                                    	 
+				                                    	etAccName.setText("");
+				                		        		etAccName.requestFocus();
+				                                    }
+				                                });
+				                        
+				                AlertDialog alert = builder.create();
+				                alert.show();
+								//Toast.makeText(context,sub_grp_name+" already exist",Toast.LENGTH_LONG).show();
 								etSubGrp.setText("");
 							}
 						}
@@ -472,7 +611,6 @@ public class createAccount<group> extends Activity{
 	etaccCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			
 			
-			private String accountcode_exist;
 			@Override
 		      public void onFocusChange(View v, boolean hasFocus) {
 					// TODO Auto-generated method stub
@@ -487,7 +625,21 @@ public class createAccount<group> extends Activity{
 								accountcode_exist = account.checkAccountCode(new Object[]{account_code},client_id);
 								if (accountcode_exist.equals("1"))
 								{
-									Toast.makeText(context,account_code+" already exist",Toast.LENGTH_LONG).show();
+									AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					                builder.setMessage("Acountcode "+account_code+" already exist")
+					                        .setCancelable(false)
+					                        .setPositiveButton("Ok",
+					                                new DialogInterface.OnClickListener() {
+					                                    public void onClick(DialogInterface dialog, int id) {
+					                                    	 
+					                                    	etAccName.setText("");
+					                		        		etAccName.requestFocus();
+					                                    }
+					                                });
+					                        
+					                AlertDialog alert = builder.create();
+					                alert.show();
+									//Toast.makeText(context,account_code+" already exist",Toast.LENGTH_LONG).show();
 									etaccCode.setText(accountcode);
 								}
 							}
@@ -496,5 +648,39 @@ public class createAccount<group> extends Activity{
 
 			});// close setOnFocusChangeListener
 	} // close addEditTextListner()
+	
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onBackPressed()
+	 * depending upon flag go to respective page on back button pressed
+	 */
+	public void onBackPressed() {
+        
+        if(tabflag){
+            Intent intent = new Intent(getApplicationContext(), menu.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+    }
+	
+	public void alertBlankField()
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Please fill textfield")
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            	
+                            }
+                        });
+                
+        AlertDialog alert = builder.create();
+        alert.show();
+	}
 	
 }

@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.w3c.dom.Text;
+
 import com.gkaakash.controller.Account;
 import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Startup;
@@ -26,10 +28,11 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class reportMenu extends ListActivity{
@@ -103,8 +106,9 @@ public class reportMenu extends ListActivity{
 
 					
 					if(accountnamelist.size() <= 0){
-						Toast.makeText(context, "Ledger can not be displayed, Please create account!", Toast.LENGTH_SHORT).show();
-					}
+						String message = "Ledger can not be displayed, Please create account!";
+						toastValidationMessage(message);
+						}
 					else{
 						//call the getAllProjects method to get all projects
 						Object[] projectnames = (Object[]) organisation.getAllProjects(client_id);
@@ -122,7 +126,7 @@ public class reportMenu extends ListActivity{
 						//Building DatepPcker dialog
 						AlertDialog.Builder builder = new AlertDialog.Builder(context);
 						builder.setView(layout);
-						builder.setTitle("Ledger (Sroll down for more options)");
+						builder.setTitle("Ledger");
 						
 						//populate all account names in accountname dropdown(spinner)
 						final Spinner accountNames = (Spinner)layout.findViewById(R.id.sAccountNameinLedger);
@@ -151,7 +155,11 @@ public class reportMenu extends ListActivity{
 					   	String settomonth = dateParts1[1];
 					   	String settoyear = dateParts1[2];
 					   	
-				  	   	
+				  	   	CheckBox cbNarration = (CheckBox)layout.findViewById(R.id.cbNarration);
+				  	   	cbNarration.setVisibility(CheckBox.GONE);
+				  	   	TextView tvcbNarration= (TextView)layout.findViewById(R.id.tvcbNarration);
+				  	   	tvcbNarration.setVisibility(TextView.GONE);
+					   	
 					   	DatePicker LedgerFrom = (DatePicker) layout.findViewById(R.id.dpsetLedgerFromdate);
 					   	LedgerFrom.init(Integer.parseInt(setfromyear),(Integer.parseInt(setfrommonth)-1),Integer.parseInt(setfromday), null);
 					   	
@@ -207,15 +215,14 @@ public class reportMenu extends ListActivity{
 						        		
 						        		selectedAccount = accountNames.getSelectedItem().toString();
 						        		selectedProject = projectNames.getSelectedItem().toString();
-						        		
-						        		Toast.makeText(context, "ledger", Toast.LENGTH_SHORT).show();
 										
 										Intent intent = new Intent(context, ledger.class);
 										// To pass on the value to the next page
 										startActivity(intent);
 						        	}
 						        	else{
-						        		Toast.makeText(context, "Please enter proper date!", Toast.LENGTH_SHORT).show();
+						        		String message = "Please enter proper date";
+						        		toastValidationMessage(message);
 						        	}
 								} catch (Exception e) {
 									// TODO: handle exception
@@ -261,6 +268,12 @@ public class reportMenu extends ListActivity{
 					DatePicker trialFrom = (DatePicker) layout.findViewById(R.id.dpTrialsetT0date);
 					trialFrom.init(Integer.parseInt(setyear),(Integer.parseInt(setmonth)-1),Integer.parseInt(setday), null);
 					
+					Spinner strialBalanceType = (Spinner)layout.findViewById(R.id.strialBalanceType);
+					strialBalanceType.setVisibility(Spinner.GONE);
+					
+					TextView tvtrialBalanceType = (TextView)layout.findViewById(R.id.tvtrialBalanceType);
+					tvtrialBalanceType.setVisibility(TextView.GONE);
+					
 					builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 						@Override
 						public void onClick(DialogInterface arg0, int arg1) {
@@ -296,14 +309,14 @@ public class reportMenu extends ListActivity{
 					        	cal3.setTime(date3);
 					        	
 					        	if((cal3.after(cal1) && cal3.before(cal2)) || cal3.equals(cal1) || cal3.equals(cal2) ){
-					        		Toast.makeText(context, "trial balance", Toast.LENGTH_SHORT).show();
 									
 									Intent intent = new Intent(context, trialBalance.class);
 									// To pass on the value to the next page
 									startActivity(intent);
 					        	}
 					        	else{
-					        		Toast.makeText(context, "Please enter proper date!", Toast.LENGTH_SHORT).show();
+					        		String message = "Please enter proper date";
+					        		toastValidationMessage(message);
 					        	}
 							} catch (Exception e) {
 								// TODO: handle exception
@@ -435,4 +448,20 @@ public class reportMenu extends ListActivity{
 			} 
 		});
 	}
+	
+	public void toastValidationMessage(String message) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            	
+                            }
+                        });
+                
+        AlertDialog alert = builder.create();
+        alert.show();
+		
+	} 
 }

@@ -7,8 +7,10 @@ import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.Transaction;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 public class voucherMenu extends ListActivity {
 	//adding voucher list items
@@ -58,9 +59,7 @@ public class voucherMenu extends ListActivity {
 					vouchertypeflag  = parent.getItemAtPosition(position).toString();
 					getAccountsByRule(params);
 					if(Accountlist.size() < 2){
-						Toast.makeText(context
-								, "At lease 2 accounts should be require to enter transaction, please create account!"
-								, Toast.LENGTH_SHORT).show();
+						toastValidationMessage();
 					}
 					else{
 						Intent intent = new Intent(context, transaction_tab.class);
@@ -75,9 +74,7 @@ public class voucherMenu extends ListActivity {
 					
 					getAccountsByRule(params);
 					if(Accountlist.size() < 2){
-						Toast.makeText(context
-								, "At lease 2 accounts should be require to enter transaction, please create account!"
-								, Toast.LENGTH_SHORT).show();
+						toastValidationMessage();
 					}
 					else{
 						Intent intent = new Intent(context, transaction_tab.class);
@@ -99,9 +96,7 @@ public class voucherMenu extends ListActivity {
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						Toast.makeText(context
-								, "At lease 2 accounts should be require to enter transaction, please create account!"
-								, Toast.LENGTH_SHORT).show();
+						toastValidationMessage();
 					}
 					else{
 						Intent intent = new Intent(context, transaction_tab.class);
@@ -123,9 +118,7 @@ public class voucherMenu extends ListActivity {
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						Toast.makeText(context
-								, "At lease 2 accounts should be require to enter transaction, please create account!"
-								, Toast.LENGTH_SHORT).show();
+						toastValidationMessage();
 					}
 					else{
 						Intent intent = new Intent(context, transaction_tab.class);
@@ -147,9 +140,7 @@ public class voucherMenu extends ListActivity {
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						Toast.makeText(context
-								, "At lease 2 accounts should be require to enter transaction, please create account!"
-								, Toast.LENGTH_SHORT).show();
+						toastValidationMessage();
 					}
 					else{
 						Intent intent = new Intent(context, transaction_tab.class);
@@ -171,9 +162,7 @@ public class voucherMenu extends ListActivity {
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						Toast.makeText(context
-								, "At lease 2 accounts should be require to enter transaction, please create account!"
-								, Toast.LENGTH_SHORT).show();
+						toastValidationMessage();
 					}
 					else{
 						Intent intent = new Intent(context, transaction_tab.class);
@@ -195,9 +184,7 @@ public class voucherMenu extends ListActivity {
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						Toast.makeText(context
-								, "At lease 2 accounts should be require to enter transaction, please create account!"
-								, Toast.LENGTH_SHORT).show();
+						toastValidationMessage();
 					}
 					else{
 						Intent intent = new Intent(context, transaction_tab.class);
@@ -219,9 +206,7 @@ public class voucherMenu extends ListActivity {
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						Toast.makeText(context
-								, "At lease 2 accounts should be require to enter transaction, please create account!"
-								, Toast.LENGTH_SHORT).show();
+						toastValidationMessage();
 					}
 					else{
 						Intent intent = new Intent(context, transaction_tab.class);
@@ -243,9 +228,7 @@ public class voucherMenu extends ListActivity {
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						Toast.makeText(context
-								, "At lease 2 accounts should be require to enter transaction, please create account!"
-								, Toast.LENGTH_SHORT).show();
+						toastValidationMessage();
 					}
 					else{
 						Intent intent = new Intent(context, transaction_tab.class);
@@ -267,9 +250,7 @@ public class voucherMenu extends ListActivity {
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						Toast.makeText(context
-								, "At lease 2 accounts should be require to enter transaction, please create account!"
-								, Toast.LENGTH_SHORT).show();
+						toastValidationMessage();
 					}
 					else{
 						Intent intent = new Intent(context, transaction_tab.class);
@@ -277,6 +258,22 @@ public class voucherMenu extends ListActivity {
 						startActivity(intent);
 					}
 				}
+				
+			}
+
+			public void toastValidationMessage() {
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		        builder.setMessage("At lease 2 accounts require to enter transaction, please create account!")
+		                .setCancelable(false)
+		                .setPositiveButton("Ok",
+		                        new DialogInterface.OnClickListener() {
+		                            public void onClick(DialogInterface dialog, int id) {
+		                            	
+		                            }
+		                        });
+		                
+		        AlertDialog alert = builder.create();
+		        alert.show();
 				
 			} 
 		});

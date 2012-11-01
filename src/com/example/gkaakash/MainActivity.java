@@ -20,80 +20,93 @@ public class MainActivity extends Activity {
 	private View select_org;
 	private static Object[] orgNameList;
 	Spinner getOrgNames;
-	final Context context = this;	
+	final Context context = this;
+	static Boolean tabFlag = false;
+	
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	//Calling activity_main.xml which is first page of GNUKhata
     	setContentView(R.layout.activity_main);
-    	//create object of Startup to access connection  
+    	//create object of Startup to access connection
     	startup = new Startup();
     	// call the getOrganisationName method from startup
     	orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
-    	//Request a reference to the button from the activity by calling “findViewById” 
+    	//Request a reference to the button from the activity by calling “findViewById”
     	//and assign the retrieved button to an instance variable
         create_org = (Button) findViewById(R.id.bcreateOrg);
         select_org =(Button) findViewById(R.id. bselectOrg);
-        //Request a reference to the spinner from the activity by calling “findViewById” 
+        //Request a reference to the spinner from the activity by calling “findViewById”
         //and assign the retrieved spinner to an instance variable
-    	getOrgNames = (Spinner)findViewById(R.id.sGetOrgNames);
-        //creating new method do event on button 
+        getOrgNames = (Spinner)findViewById(R.id.sGetOrgNames);
+        //creating new method do event on button
         addListenerOnButton();
-    }// End Of onCreate method
+   }// End Of onCreate method
     
-    	//Attach a listener to the click event for the button
-		void addListenerOnButton() {
+     //Attach a listener to the click event for the button
+	void addListenerOnButton() {
+	
+		//Create a class implementing “OnClickListener”
+		//and set it as the on click listener for the button
+		create_org.setOnClickListener(new OnClickListener() {
+		
+		public void onClick(View arg0) {
+				//To pass on the activity to the next page
+				Intent intent = new Intent(context, createOrg.class);
+				startActivity(intent);
 			
-			//Create a class implementing “OnClickListener” 
-			//and set it as the on click listener for the button
-			create_org.setOnClickListener(new OnClickListener() {
-				 
-				public void onClick(View arg0) {
-					//To pass on the activity to the next page
-				    Intent intent = new Intent(context, createOrg.class);
-				    startActivity(intent);   
-	 
-				}// end of onClick
-			});// end of create_org.setOnClickListener
-			select_org.setOnClickListener(new OnClickListener() {
-			
-				public void onClick(View arg0) {
-					// check existing organisation name list is null
-					if(orgNameList == null || orgNameList.length == 0)
-					{
-						Toast.makeText(context,"Organisation Not Exist",Toast.LENGTH_SHORT).show();
-					}
-					else
-					{
-						//To pass on the activity to the next page
-						Intent intent = new Intent(context, selectOrg.class);
-						startActivity(intent);   
-					}
-				}// end of onClick
+			}// end of onClick
+		});// end of create_org.setOnClickListener
+		select_org.setOnClickListener(new OnClickListener() {
+		
+		public void onClick(View arg0) {
+			// check existing organisation name list is null
+			if(orgNameList.length<1)
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Please create organisation")
+                        .setCancelable(false)
+                        .setPositiveButton("Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                       //do nothing
+                                    }
+                                });
+                       
+                AlertDialog alert = builder.create();
+                alert.show();                    }
+            else
+            {
+                //To pass on the activity to the next page
+                Intent intent = new Intent(context, selectOrg.class);
+                startActivity(intent);  
+            }
+		}// end of onClick
 		});// end of select_org.setOnClickListener
-	}// end of addListenerOnButton() method
+}// end of addListenerOnButton() method
+
+
+	public void onBackPressed() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Are you sure you want to exit?")
+		.setCancelable(false)
+		.setPositiveButton("Yes",
+		new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int id) {
+			Intent intent = new Intent(Intent.ACTION_MAIN);
+			intent.addCategory(Intent.CATEGORY_HOME);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
 		
-		
-		public void onBackPressed() {
-			 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		        builder.setMessage("Are you sure you want to exit?")
-		                .setCancelable(false)
-		                .setPositiveButton("Yes",
-		                        new DialogInterface.OnClickListener() {
-		                            public void onClick(DialogInterface dialog, int id) {
-		                            	 Intent intent = new Intent(Intent.ACTION_MAIN);
-		                        		 intent.addCategory(Intent.CATEGORY_HOME);
-		                        		 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		                        		 startActivity(intent);
-		                        		 
-		                            }
-		                        })
-		                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-		                    public void onClick(DialogInterface dialog, int id) {
-		                        dialog.cancel();
-		                    }
-		                });
-		        AlertDialog alert = builder.create();
-		        alert.show();
-		 }
+		}
+		})
+		.setNegativeButton("No", new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int id) {
+			dialog.cancel();
+		}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+		}
 }

@@ -1,6 +1,7 @@
 package com.example.gkaakash;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
@@ -10,10 +11,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -22,56 +20,95 @@ public class ledger extends Activity{
     TableLayout ledgertable;
     TableRow tr;
     TextView label,tvaccontName,tvfinancialFromDate,tvfinancialToDate;
-    ArrayList<ArrayList<String>> ledgerGrid;
+    ArrayList<ArrayList> ledgerGrid;
     static Object[] ledgerResult;
     static Integer client_id;
     private Report report;
     ArrayList<String> ledgerResultList;
+	private ArrayList accountlist;
    
      
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.ledger_table);
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.ledger_table);
        
-        report = new Report();
-           client_id= Startup.getClient_id();
-           System.out.println("param ledger are.......");
+       report = new Report();
+       client_id= Startup.getClient_id();
+      
+       String financialFromDate =Startup.getfinancialFromDate();
+       String financialToDate=Startup.getFinancialToDate();
+       String accountName = reportMenu.selectedAccount;
+       String projectName = reportMenu.selectedProject;
+       String fromDate = reportMenu.LedgerFromDateString;
+       String toDate = reportMenu.LedgerToDateString;
+   
+       tvaccontName = (TextView) findViewById( R.id.tvaccountName );
+       tvfinancialFromDate = (TextView) findViewById( R.id.tvfinancialFromDate );
+       tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
+      
+       tvaccontName.setText("Account Name: "+accountName);
+       tvfinancialFromDate.setText("Financial from date: " +financialFromDate);
+       tvfinancialToDate.setText("Financial to date: " +financialToDate);
           
-           String financialFromDate =Startup.getfinancialFromDate();
-           String financialToDate=Startup.getFinancialToDate();
-           String accountName = reportMenu.selectedAccount;
-           String projectName = reportMenu.selectedProject;
-           String fromDate = reportMenu.LedgerFromDateString;
-           String toDate = reportMenu.LedgerToDateString;
-       
-           tvaccontName = (TextView) findViewById( R.id.tvaccountName );
-           tvfinancialFromDate = (TextView) findViewById( R.id.tvfinancialFromDate );
-           tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
-          
-           tvaccontName.setText("Account Name: "+accountName);
-           tvfinancialFromDate.setText("Financial from date: " +financialFromDate);
-           tvfinancialToDate.setText("Financial to date: " +financialToDate);
-          
-           
           
         Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,projectName};
         ledgerResult = (Object[]) report.getLedger(params,client_id);
        
-        ledgerGrid = new ArrayList<ArrayList<String>>();
+        ledgerGrid = new ArrayList<ArrayList>();
         for(Object tb : ledgerResult) 
         {
            
             Object[] t = (Object[]) tb;
             ledgerResultList = new ArrayList<String>();
-            for(int i=0;i<(t.length-1);i++){
-               
-                ledgerResultList.add((String) t[i].toString());
-               
+            for(int i=0;i<(t.length-1);i++)
+            {
+            	if (i==1)
+            	{
+            		Object[] acc = new Object[]{t[i]};
+            		ArrayList accledgerGrid = new ArrayList();
+            		
+            		for(Object a : acc) 
+                    {
+            			Object[] abc= (Object[]) a;
+            			int yy = abc.length;
+            			System.out.println(yy);
+            				// accledgerGrid.add(abc[]);
+            				// System.out.println(accledgerGrid);
+            	         if(abc.length == 1){
+            	        	 accledgerGrid.add(abc[0]);
+            	        	 //ledgerResultList.add(accledgerGrid.toString());
+            	         }
+            	         else if(abc.length > 1){
+                     		String allaccnames = "";
+            	        	 for(int j=0;j<yy;j++){
+            	        		 System.out.println("i am"+abc[j]);
+            	        		 if(j==yy-1)
+            	        		 {
+            	        			 allaccnames = allaccnames+abc[j].toString() ;
+            	        		 }
+            	        		 else
+            	        		 {
+            	        			 allaccnames = allaccnames+abc[j].toString()+"\n";
+            	        		 }
+            	        		
+            	        		 //accledgerGrid.add(abc[j].toString());
+            	        	 }
+            	        	 System.out.println("all acc name is"+allaccnames);
+            	        	 accledgerGrid.add(allaccnames);
+            	         }
+            			 
+                    }
+            		ledgerResultList.add(accledgerGrid.toString());
+            	}
+            	else
+            	{
+            		ledgerResultList.add((String) t[i].toString());
+            	}
+            	
             }
+            
             ledgerGrid.add(ledgerResultList);
-        }   
-        System.out.println(ledgerResultList);
-        System.out.println(ledgerGrid);
+        } 
        
         ledgertable = (TableLayout)findViewById(R.id.maintable);
         addTable();
@@ -80,32 +117,46 @@ public class ledger extends Activity{
    
     private void addTable() {
         addHeader();
+        System.out.println("ledgerGrid."+ledgerGrid);
+        
         /** Create a TableRow dynamically **/
         for(int i=0;i<ledgerGrid.size();i++){
-            System.out.println(ledgerGrid.get(i));
-            ArrayList<String> columnValue = new ArrayList<String>();
+            ArrayList columnValue = new ArrayList();
             columnValue.addAll(ledgerGrid.get(i));
             tr = new TableRow(this);
            
             for(int j=0;j<columnValue.size();j++){
-                System.out.println("this is me"+j);
-                System.out.println(columnValue.get(j));
-                /** Creating a TextView to add to the row **/
-                addRow(columnValue.get(j));   
-                label.setBackgroundColor(Color.BLACK);
+            	if(j == 1 ){
+            		String[] accname = new String[]{columnValue.get(1).toString()}; 
+            		for(String a : accname){
+            		
+            			String particular =  a.substring(1,(a.length()-1));
+            			/** Creating a TextView to add to the row **/ 
+            			addRow(particular);
+            			
+            		}
+            		
+            	}
+            	else{
+            		/** Creating a TextView to add to the row **/ 
+            		addRow(columnValue.get(j).toString());
+            	}
+            	
+            	
+            	label.setBackgroundColor(Color.BLACK);
                 if(j == 3 || j == 4){
-                       label.setGravity(Gravity.RIGHT);
+                	label.setGravity(Gravity.RIGHT);
                 }
                 else{
                     label.setGravity(Gravity.CENTER);
                 }
-               
             }
            
             // Add the TableRow to the TableLayout
             ledgertable.addView(tr, new TableLayout.LayoutParams(
                     LayoutParams.FILL_PARENT,
                     LayoutParams.WRAP_CONTENT));
+           
         }
     }
 
@@ -114,6 +165,7 @@ public class ledger extends Activity{
         String[] ColumnNameList = new String[] {"Date","Particulars","Reference No","Debit","Credit","Narration"};
        
         tr = new TableRow(this);
+        
         for(int k=0;k<ColumnNameList.length;k++){
             /** Creating a TextView to add to the row **/
             addRow(ColumnNameList[k]);
@@ -132,19 +184,19 @@ public class ledger extends Activity{
         label = new TextView(this);
         label.setText(param);
         label.setTextColor(Color.WHITE);
+        //label.setBackgroundColor(Color.);
         label.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT));
+                LayoutParams.MATCH_PARENT));
+        label.setBackgroundColor(Color.BLACK);
         label.setPadding(2, 2, 2, 2);
       
         LinearLayout Ll = new LinearLayout(this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,
-                LayoutParams.WRAP_CONTENT);
+                LayoutParams.FILL_PARENT);
         params.setMargins(1, 1, 1, 1);
         //Ll.setPadding(10, 5, 5, 5);
         Ll.addView(label,params);
         tr.addView((View)Ll);
-       
-       
     }
 
    

@@ -28,16 +28,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:gravity="right" >
-
-			<Button
-			    android:id="@+id/btnChangeVoucher"
-			    android:layout_width="wrap_content"
-			    android:layout_height="fill_parent"
-			    android:layout_weight="0.13"
-			    android:background="@drawable/buttontitle"
-			    android:text=" View Other Transactions"
-			    android:textAppearance="?android:attr/textAppearanceMedium"
-			    android:textColor="#FFFFFF" />
 			
 			<Button
 			   android:id="@+id/btnhome"

@@ -11,7 +11,7 @@ public class Startup {
 	private Object[] states;
 	private Object[] financialyear;
 	private CoreConnection conn;
-	private Boolean deleteOrg;
+	private Boolean deleteOrg, closeConnectionFlag;
 	private static String  financialFromDate,financialToDate;
 	
 	/***
@@ -113,6 +113,20 @@ public class Startup {
 		}
 		return client_id;
 	}
+	
+	public Boolean closeConnection(Object[] params)
+	{
+	try {
+			
+		closeConnectionFlag = (Boolean)conn.getClient().call("closeConnection",params);
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return closeConnectionFlag;
+	}
+	
+	
 	
 	/***
 	 * method getCities it will take params states 
