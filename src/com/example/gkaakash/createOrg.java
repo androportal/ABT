@@ -44,7 +44,7 @@ public class createOrg extends MainActivity {
 	private EditText orgName;
 	Object[] deployparams;
 	DecimalFormat mFormat;
-	private static Object[] orgNameList;
+	private Object[] orgNameList;
 	Object[] financialyearList;
 	boolean orgExistFlag;
 	static Integer client_id;
@@ -225,6 +225,7 @@ public class createOrg extends MainActivity {
 				else if(orgExistFlag == true){
 					String message = "Organisation name "+organisationName+" with this financial year exist";
 					toastValidationMessage(message);
+					orgExistFlag = false;
 					}
 				else{
 					//To pass on the activity to the next page

@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
@@ -45,18 +46,17 @@ import android.widget.AdapterView.OnItemClickListener;
  
 public class createVoucher extends Activity {
 	TableLayout list;
-	int rowsSoFar = 0;
-	String amount;
+	int rowsSoFar = 0, tableRowCount;
+	String amount, financialFromDate, financialToDate, drcramount, vouchertypeflag;
 	AlertDialog dialog;
 	final Context context = this;
-	TextView voucherDate;
+	TextView voucherDate, tvTotalDebit, tvTotalCredit, projectName;
 	final List<String> dr_cr=new ArrayList<String>();
 	ListView voucher_date,projetct_name;;
 	final Calendar c = Calendar.getInstance();
 	static int day, month, year;
 	static final int VOUCHER_DATE_DIALOG_ID = 1;
 	private SimpleAdapter dateAdapter,projectAdapter;
-	String vouchertypeflag;
 	static Integer client_id;
 	private Transaction transaction;
 	private Organisation organisation;
@@ -64,33 +64,18 @@ public class createVoucher extends Activity {
 	static Integer setVoucher;
 	static ArrayAdapter<String> dataAdapter;
 	protected String selDrCr;
-	Spinner account;
-	Spinner actionButton;
-	Spinner DrCr;
-	Spinner sp1;
+	Spinner account, actionButton, DrCr, sp1;
 	TableRow newRow;
-	EditText et;
-	TextView tvTotalDebit;
-	TextView tvTotalCredit;
 	ArrayList<ArrayList> paramsMaster;
-	float totalDr;
-	float totalCr;
-	TextView projectName;
-	static String vDate;
-	static String vproject;
+	float totalDr, totalCr;
+	static String vDate, vproject;
 	DecimalFormat mFormat;
-	String financialFromDate;
-	String financialToDate;
-	EditText firstRowamount;
+	EditText firstRowamount, etRefNumber, etnarration, et;
 	private Object diffbal;
-	int tableRowCount;
-	Float drcrAmountFirstRow;
-	String drcramount;
-	Float drcrAmount;
+	Float drcrAmountFirstRow, drcrAmount, amountdrcr;
 	boolean addRowFlag = true;
-	Float amountdrcr;
-	EditText etRefNumber;
-	EditText etnarration;
+	List<String> accnames, DrAccountlist, CrAccountlist;
+	
 	
     @Override 
     public void onCreate(Bundle savedInstanceState) {
@@ -101,7 +86,7 @@ public class createVoucher extends Activity {
 	       	organisation = new Organisation();
 	       	client_id= Startup.getClient_id();
 	       	
-	      //for two digit format date for dd and mm
+	       	//two digit date format for dd and mm
 			mFormat= new DecimalFormat("00");
 			mFormat.setRoundingMode(RoundingMode.DOWN);
 	       	
@@ -110,12 +95,6 @@ public class createVoucher extends Activity {
 	       	
 	       	account = (Spinner) findViewById(R.id.getAccountByRule);
 	    	account.setMinimumWidth(283);
-	    	
-	       	//set first dr/cr row
-	    	Object[] params = new Object[]{"Dr"};
-			getAccountsByRule(params);
-			//set adaptor with account name list in spinner
-	    	account.setAdapter(dataAdapter);
 	    	
 	    	//for setting voucher date
 	       	voucher_date =  (ListView)findViewById(R.id.voucher_list);
@@ -160,7 +139,6 @@ public class createVoucher extends Activity {
                             }
                             amountdrcr = Float.parseFloat(drcramount);
                             
-                            System.out.println("amount :"+amountdrcr);
                             if(amountdrcr<=0){
                             	addRowFlag = false;
                                 break;
@@ -212,15 +190,44 @@ public class createVoucher extends Activity {
 	        //add all onclick events in this method
 	        OnClickListener();
 	        
-	        //set second dr/cr row
-	        setSecondRow();
+	        //add second row and set first & second row account names in spinner
+	        setFirstAndSecondRow();
 	        
 	        //on dr/cr item selected from dropdown...
-	        OnDrCrItemSelectedListenerFirstRow();
+	        OnDrCrItemSelectedListener();
+	        
+	        OnAmountFocusChangeListener(); 
     }
 	
 
-    public void testAmountTally() {
+    private void OnAmountFocusChangeListener() {
+    	/*
+    	 * onfocuschange of amount edittext move focus to reference number
+    	 */
+    	tableRowCount = list.getChildCount();
+		System.out.println(tableRowCount);
+		for(int i=0;i<(tableRowCount);i++){
+			View row = list.getChildAt(i);
+			//amount edittext
+			final EditText e = (EditText)((ViewGroup) row).getChildAt(5);
+			
+			e.setOnFocusChangeListener(new OnFocusChangeListener() {
+				
+				@Override
+				public void onFocusChange(View v, boolean hasFocus) {
+					
+					etRefNumber = (EditText)findViewById(R.id.etRefNumber);
+					e.setNextFocusDownId(etRefNumber.getId());
+				}
+			});
+		}
+	}
+
+
+	public void testAmountTally() {
+    	/*
+    	 * this method calculate toatalDr and totalCr
+    	 */
     	totalDr = 0;
     	totalCr = 0;
     	
@@ -255,13 +262,12 @@ public class createVoucher extends Activity {
 			//amount edittext
 			EditText e = (EditText)((ViewGroup) row).getChildAt(5);
 			drcramount = e.getText().toString();
-			drcrAmount = Float.parseFloat(drcramount);
 			
 			if(drcramount.length()<1)
             {
                 drcramount="0.00";
             }
-			float drcrAmount = Float.parseFloat(drcramount);
+			drcrAmount = Float.parseFloat(drcramount);
 			
 			if("Dr".equals(drcr)){
 				totalDr = totalDr + drcrAmount;
@@ -277,31 +283,73 @@ public class createVoucher extends Activity {
 		
 	}
 
-	private void setSecondRow() {
-		// TODO Auto-generated method stub
+	private void setFirstAndSecondRow() {
+		/*this onload function takes the account name list 
+		 * from voucherMenu.java depending upon getAccountByRule
+		 * sets first row account name spinner
+		 * add the second row and set the account name in spinner
+		 */
+		if("Contra".equals(vouchertypeflag) || "Journal".equals(vouchertypeflag)){
+			accnames = voucherMenu.Accountlist;
+			
+			//set first row account name spinner
+			dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, accnames);
+	    	//set resource layout of spinner to that adapter
+	    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			account.setAdapter(dataAdapter);
+	    	
+			//add second row
+			addButton();
+			
+			dr_cr.add("Dr");
+	    	dr_cr.add("Cr");
+	    	ArrayAdapter<String> da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
+	  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	        sp1.setAdapter(da1);
+	        sp1.setSelection(1);
+			
+			//set adaptor with account name list in second row spinner
+	    	actionButton.setAdapter(dataAdapter);
+		}
+		else{
+			DrAccountlist = voucherMenu.DrAccountlist;
+			CrAccountlist = voucherMenu.CrAccountlist;
+			
+			//set first row 
+			dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, DrAccountlist);
+	    	//set resource layout of spinner to that adapter
+	    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			account.setAdapter(dataAdapter);
+			
+			//add second row
+			addButton();
+			
+			dr_cr.add("Dr");
+	    	dr_cr.add("Cr");
+	    	ArrayAdapter<String> da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
+	  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	        sp1.setAdapter(da1);
+	        sp1.setSelection(1);
+			
+	        //set adaptor with account name list in second row spinner
+			dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, CrAccountlist);
+	    	//set resource layout of spinner to that adapter
+	    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			//set adaptor with account name list in spinner
+	    	actionButton.setAdapter(dataAdapter);
+		}
 		
-		addButton();
 		
-		dr_cr.add("Dr");
-    	dr_cr.add("Cr");
-    	ArrayAdapter<String> da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
-  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp1.setAdapter(da1);
-        sp1.setSelection(1);
-		
-		Object[] params = new Object[]{"Cr"};
-		getAccountsByRule(params);
-		//set adaptor with account name list in spinner
-    	actionButton.setAdapter(dataAdapter);
 	}
 
 
 
 
-	private void OnDrCrItemSelectedListenerFirstRow() {
-		// TODO Auto-generated method stub
-    		
-    		
+	private void OnDrCrItemSelectedListener() {
+			/*
+			 * to set account names in dropdown when Dr/Cr changed
+			 */
+    		//for first row
 	        DrCr.setOnItemSelectedListener(new OnItemSelectedListener() {
 	
 			@Override
@@ -320,7 +368,7 @@ public class createVoucher extends Activity {
 				// ignore this method!!! :)
 			}
 		});
-	        
+	        //for remaining rows
 	        sp1.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 				@Override
@@ -345,6 +393,10 @@ public class createVoucher extends Activity {
 	
 	
 	private void getAccountsByRule(Object[] DrCrFlag) {
+		/*
+		 * get account name list depending upon voucher type and 
+		 * dr/cr flag (standard accounting rule)
+		 */
 		if("Contra".equals(vouchertypeflag)){
 			voucherAccounts = (Object[]) transaction.getContraAccounts(client_id);
 		}
@@ -396,7 +448,12 @@ public class createVoucher extends Activity {
 	}
 
 	private void OnClickListener() { 
-		// TODO Auto-generated method stub
+		/*
+		 * on click method for save and reset button
+		 * save: takes all necessary field values and calls transaction.setTransaction
+		 * for adding transaction and resets all fileds after adding transaction
+		 * reset: resets all fields
+		 */
     	Button btnSaveVoucher = (Button) findViewById( R.id.btnSaveVoucher );
     	btnSaveVoucher.setOnClickListener(new OnClickListener() {
 
@@ -527,7 +584,7 @@ public class createVoucher extends Activity {
 						firstRowamount.setText("0.00");
 						
 						list.removeAllViews();
-						setSecondRow();
+						setFirstAndSecondRow();
 						
 						 
 					}
@@ -582,7 +639,7 @@ public class createVoucher extends Activity {
 		                				firstRowamount.setText("0.00");
 		                				
 		                				list.removeAllViews();
-		                				setSecondRow();
+		                				setFirstAndSecondRow();
 		                				
 		                            }
 		                        })
@@ -601,7 +658,12 @@ public class createVoucher extends Activity {
 	}
 
 	private void setProject() {
-		// TODO Auto-generated method stub
+		/*
+		 * set 'No Project' in the subtitle on load and when item is clicked,
+		 * populates the list of project names present in database
+		 * when item(project name) is selected,
+		 * sets selected name in the subtitle
+		 */
     	
 		String[] abc = new String[] {"rowid", "col_1"};
 		int[] pqr = new int[] { R.id.tvRowTitle1, R.id.tvSubItem1};
@@ -676,7 +738,10 @@ public class createVoucher extends Activity {
 	
 
 	private void setVoucherDate() {
-		// TODO Auto-generated method stub
+		/*
+		 * set the financial year from date in the subtitle and when date is changed by user,
+		 * sets date in the subtitle
+		 */
 		financialFromDate =Startup.getfinancialFromDate();
 		String dateParts[] = financialFromDate.split("-");
 	   	String fromday  = dateParts[0];
@@ -805,7 +870,6 @@ public class createVoucher extends Activity {
     	
     	public void onClick( View view ) {
     		int tableRowCount = list.getChildCount();
-            System.out.println("total Child " +tableRowCount);
             if (tableRowCount == 1){
             }else{
                 list.removeView( rowToBeRemoved );
@@ -814,6 +878,9 @@ public class createVoucher extends Activity {
     }
     
     public void addButton() {
+    	/*
+    	 * this method add the transaction row to the table
+    	 */
     	newRow = new TableRow( list.getContext() );
     	newRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
     	//newRow.addView(child, width, height)
@@ -835,7 +902,7 @@ public class createVoucher extends Activity {
         actionButton.setMinimumWidth(259); //for emulator keep 283
         
         
-        OnDrCrItemSelectedListenerFirstRow();
+        OnDrCrItemSelectedListener();
         
         TextView tv1 = new TextView(newRow.getContext());
     	tv1.setText( "        Amount" );
@@ -852,9 +919,6 @@ public class createVoucher extends Activity {
     	Button removeSelfButton = new Button( newRow.getContext() );
     	removeSelfButton.setText( "   -   " ); //for tablet ***** add  space
     	
-    	
-    	//removeSelfButton.setBackgroundResource(R.drawable.button_plus_green);
-    	//removeSelfButton.setBackgroundColor(color)
     	// pass on all the information necessary for deletion
     	removeSelfButton.setOnClickListener( new RowRemover( list, newRow ));
     	newRow.addView(tvac);
@@ -868,8 +932,12 @@ public class createVoucher extends Activity {
     	
     }
     
-    
+   
     public void toastValidationMessage(String message) {
+    	 /*
+         * call this method for alert messages
+         * input: a message Strig to be display on alert
+         */
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message)
                 .setCancelable(false)

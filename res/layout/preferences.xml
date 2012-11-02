@@ -62,7 +62,7 @@
                     android:layout_weight="1.7"
                     android:hint="Tap to enter                        "
                     android:visibility="invisible" 
-                    android:inputType="textCapSentences"/>
+                    android:inputType="textCapWords"/>
 
                 <Button
                     android:id="@+id/addProj"

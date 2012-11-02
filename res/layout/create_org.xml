@@ -32,7 +32,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Maximum 50 characters " 
-        android:inputType="textCapSentences">
+        android:inputType="textCapWords"
+        android:maxLength="50">
 
         <requestFocus android:layout_width="wrap_content" />
 

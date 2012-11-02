@@ -338,6 +338,9 @@ public class reportMenu extends ListActivity{
 				}
 				if(position == 2)
 				{
+					String message = "This functionality is not implemented yet";
+	        		toastValidationMessage(message);
+					/*
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.project_statement, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
@@ -360,9 +363,13 @@ public class reportMenu extends ListActivity{
 					});
 					dialog=builder.create();
 	        		dialog.show();
+	        		*/
 				}
 				if(position == 3)
 				{
+					String message = "This functionality is not implemented yet";
+	        		toastValidationMessage(message);
+	        		/*
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.cash_flow, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
@@ -392,9 +399,13 @@ public class reportMenu extends ListActivity{
 						lp.copyFrom(dialog.getWindow().getAttributes());
 						lp.width = 600;
 						dialog.getWindow().setAttributes(lp);
+					*/
 				}
 				if(position == 4)
 				{
+					String message = "This functionality is not implemented yet";
+	        		toastValidationMessage(message);
+	        		/*
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.balance_sheet, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
@@ -419,9 +430,13 @@ public class reportMenu extends ListActivity{
 					});
 					dialog=builder.create();
 	        		dialog.show();
+	        		*/
 				}
 				if(position == 5)
 				{
+					String message = "This functionality is not implemented yet";
+	        		toastValidationMessage(message);
+	        		/*
 				    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.income_expenditure, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
@@ -444,6 +459,7 @@ public class reportMenu extends ListActivity{
 						 });
 					dialog=builder.create();
 	        		dialog.show();
+	        	*/
 				}
 			} 
 		});

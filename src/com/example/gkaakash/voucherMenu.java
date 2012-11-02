@@ -28,7 +28,9 @@ public class voucherMenu extends ListActivity {
 	static Object[] voucherAccounts;
 	static Integer client_id;
 	private Transaction transaction;
-	List<String> Accountlist;
+	static List<String> Accountlist;
+	static ArrayList<String> DrAccountlist;
+	static ArrayList<String> CrAccountlist;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,12 +89,12 @@ public class voucherMenu extends ListActivity {
 					vouchertypeflag  = parent.getItemAtPosition(position).toString();
 					
 					getAccountsByRule(params);
-					ArrayList<String> DrAccountlist = new ArrayList<String>();
+					DrAccountlist = new ArrayList<String>();
 					DrAccountlist.addAll(Accountlist);
 					
 					Object[] params1 = new Object[]{"Cr"};
 					getAccountsByRule(params1);
-					ArrayList<String> CrAccountlist = new ArrayList<String>();
+					CrAccountlist = new ArrayList<String>();
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
@@ -109,12 +111,12 @@ public class voucherMenu extends ListActivity {
 					vouchertypeflag  = parent.getItemAtPosition(position).toString();
 					
 					getAccountsByRule(params);
-					ArrayList<String> DrAccountlist = new ArrayList<String>();
+					DrAccountlist = new ArrayList<String>();
 					DrAccountlist.addAll(Accountlist);
 					
 					Object[] params1 = new Object[]{"Cr"};
 					getAccountsByRule(params1);
-					ArrayList<String> CrAccountlist = new ArrayList<String>();
+					CrAccountlist = new ArrayList<String>();
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
@@ -131,12 +133,12 @@ public class voucherMenu extends ListActivity {
 					vouchertypeflag  = parent.getItemAtPosition(position).toString();
 					
 					getAccountsByRule(params);
-					ArrayList<String> DrAccountlist = new ArrayList<String>();
+					DrAccountlist = new ArrayList<String>();
 					DrAccountlist.addAll(Accountlist);
 					
 					Object[] params1 = new Object[]{"Cr"};
 					getAccountsByRule(params1);
-					ArrayList<String> CrAccountlist = new ArrayList<String>();
+					CrAccountlist = new ArrayList<String>();
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
@@ -153,12 +155,12 @@ public class voucherMenu extends ListActivity {
 					vouchertypeflag  = parent.getItemAtPosition(position).toString();
 					
 					getAccountsByRule(params);
-					ArrayList<String> DrAccountlist = new ArrayList<String>();
+					DrAccountlist = new ArrayList<String>();
 					DrAccountlist.addAll(Accountlist);
 					
 					Object[] params1 = new Object[]{"Cr"};
 					getAccountsByRule(params1);
-					ArrayList<String> CrAccountlist = new ArrayList<String>();
+					CrAccountlist = new ArrayList<String>();
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
@@ -175,12 +177,12 @@ public class voucherMenu extends ListActivity {
 					vouchertypeflag  = parent.getItemAtPosition(position).toString();
 					
 					getAccountsByRule(params);
-					ArrayList<String> DrAccountlist = new ArrayList<String>();
+					DrAccountlist = new ArrayList<String>();
 					DrAccountlist.addAll(Accountlist);
 					
 					Object[] params1 = new Object[]{"Cr"};
 					getAccountsByRule(params1);
-					ArrayList<String> CrAccountlist = new ArrayList<String>();
+					CrAccountlist = new ArrayList<String>();
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
@@ -197,12 +199,12 @@ public class voucherMenu extends ListActivity {
 					vouchertypeflag  = parent.getItemAtPosition(position).toString();
 					
 					getAccountsByRule(params);
-					ArrayList<String> DrAccountlist = new ArrayList<String>();
+					DrAccountlist = new ArrayList<String>();
 					DrAccountlist.addAll(Accountlist);
 					
 					Object[] params1 = new Object[]{"Cr"};
 					getAccountsByRule(params1);
-					ArrayList<String> CrAccountlist = new ArrayList<String>();
+					CrAccountlist = new ArrayList<String>();
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
@@ -219,12 +221,12 @@ public class voucherMenu extends ListActivity {
 					vouchertypeflag  = parent.getItemAtPosition(position).toString();
 					
 					getAccountsByRule(params);
-					ArrayList<String> DrAccountlist = new ArrayList<String>();
+					DrAccountlist = new ArrayList<String>();
 					DrAccountlist.addAll(Accountlist);
 					
 					Object[] params1 = new Object[]{"Cr"};
 					getAccountsByRule(params1);
-					ArrayList<String> CrAccountlist = new ArrayList<String>();
+					CrAccountlist = new ArrayList<String>();
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
@@ -241,12 +243,12 @@ public class voucherMenu extends ListActivity {
 					vouchertypeflag  = parent.getItemAtPosition(position).toString();
 					
 					getAccountsByRule(params);
-					ArrayList<String> DrAccountlist = new ArrayList<String>();
+					DrAccountlist = new ArrayList<String>();
 					DrAccountlist.addAll(Accountlist);
 					
 					Object[] params1 = new Object[]{"Cr"};
 					getAccountsByRule(params1);
-					ArrayList<String> CrAccountlist = new ArrayList<String>();
+					CrAccountlist = new ArrayList<String>();
 					CrAccountlist.addAll(Accountlist);
 					
 					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){

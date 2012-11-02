@@ -137,7 +137,7 @@ public class menu extends ListActivity{
 					startActivity(intent);					 
 				}
 				
-				//for "preferences", adding popup menu ...
+				//for "adding project", adding popup menu ...
 				if(position == 3)
 				{
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -287,7 +287,22 @@ public class menu extends ListActivity{
               		  });
               	  dialog=builder.create();
               	  ((Dialog) dialog).show();
+	              	WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+					//customizing the width and location of the dialog on screen 
+					lp.copyFrom(dialog.getWindow().getAttributes());
+					lp.height = 300;
+					dialog.getWindow().setAttributes(lp);
 					}
+				//for administration
+				if(position == 4){
+					String message = "This functionality is not implemented yet";
+					toastValidationMessage(message);
+				}
+				//for help
+				if(position == 5){
+					String message = "This functionality is not implemented yet";
+					toastValidationMessage(message);
+				}
 				} 
 		});
 	 
@@ -326,7 +341,7 @@ public class menu extends ListActivity{
         etdynamic.setText( "" );
         etdynamic.setHint("Tap to enter                              ");
         etdynamic.setWidth(215); //for emulator 215
-        etdynamic.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etdynamic.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         etdynamic.setId(++rowsSoFar);
        
        

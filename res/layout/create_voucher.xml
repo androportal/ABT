@@ -214,8 +214,8 @@
 			        android:layout_height="wrap_content"
 			        android:layout_weight="30"
 			        android:hint="Tap to enter voucher narration" 
-			        android:inputType=""
-			        android:paddingTop="2dp"/>
+			        android:paddingTop="2dp"
+			        android:inputType="textCapSentences"/>
 	</LinearLayout>
 	
 	</LinearLayout>

@@ -129,6 +129,9 @@ public class preferences extends Activity {
                  }
                  else {
                      accCodeflag = "automatic";
+                     Object[] params = new Object[]{"1",refNoflag,"2",accCodeflag};
+                     //Object[] params1 = new Object[]{finalProjlist};
+                     setpref = preference.setPreferences(params, finalProjlist, client_id);
                  }
             }
             });
@@ -347,7 +350,7 @@ public class preferences extends Activity {
         etdynamic.setText( "" );
         etdynamic.setHint("Tap to enter                              ");
         etdynamic.setWidth(215); //for emulator 215
-        etdynamic.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etdynamic.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         etdynamic.setId(++rowsSoFar);
        
        

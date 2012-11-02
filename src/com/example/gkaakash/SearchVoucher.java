@@ -31,7 +31,6 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SearchVoucher extends Activity  {
 	int textlength=0;
@@ -137,19 +136,16 @@ public class SearchVoucher extends Activity  {
 							etNarration.setVisibility(EditText.GONE);
 							timeInterval.setVisibility(LinearLayout.GONE);
 							etVoucherCode.setVisibility(EditText.VISIBLE);
-							Toast.makeText(context, "voucher number", Toast.LENGTH_SHORT).show();
 						}
 						if(position == 1){
 							etVoucherCode.setVisibility(EditText.GONE);
 							etNarration.setVisibility(EditText.GONE);
 							timeInterval.setVisibility(LinearLayout.VISIBLE);
-							Toast.makeText(context, "time interval", Toast.LENGTH_SHORT).show();
 						}
 						if(position == 2){
 							etVoucherCode.setVisibility(EditText.GONE);
 							timeInterval.setVisibility(LinearLayout.GONE);
 							etNarration.setVisibility(EditText.VISIBLE);
-							Toast.makeText(context, "narration", Toast.LENGTH_SHORT).show();
 						}
 						
 					}
@@ -171,7 +167,8 @@ public class SearchVoucher extends Activity  {
 					   	if(pos == 0){
 					   		String searchByVoucherCode = etVoucherCode.getText().toString();
 					   		if(searchByVoucherCode.length() < 1){
-					   			Toast.makeText(context, "Please enter voucher code", Toast.LENGTH_SHORT).show();
+					   			String message = "Please enter voucher code";
+				        		toastValidationMessage(message);
 					   		}
 					   		else{
 					   			Object[] params = new Object[]{1,searchByVoucherCode,fromdate,todate,""};
@@ -223,7 +220,8 @@ public class SearchVoucher extends Activity  {
 					        		getallvouchers(params);
 					        	}
 					        	else{
-					        		Toast.makeText(context, "Please enter proper date!", Toast.LENGTH_SHORT).show();
+					        		String message = "Please enter proper date";
+					        		toastValidationMessage(message);
 					        	}
 							} catch (Exception e) {
 								// TODO: handle exception
@@ -233,7 +231,8 @@ public class SearchVoucher extends Activity  {
 					   	else if(pos == 2){
 					   		String searchByNarration = etNarration.getText().toString();
 							if(searchByNarration.length() < 1){
-								Toast.makeText(context, "Please enter narration", Toast.LENGTH_SHORT).show();
+								String message = "Please enter narration";
+				        		toastValidationMessage(message);
 							}
 							else{
 								
@@ -362,4 +361,21 @@ public class SearchVoucher extends Activity  {
 	       
         addTable();
 	}
+	
+	
+	public void toastValidationMessage(String message) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            	
+                            }
+                        });
+                
+        AlertDialog alert = builder.create();
+        alert.show();
+		
+	} 
 }

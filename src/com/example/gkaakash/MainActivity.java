@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
 	Button create_org;
 	Startup startup;
 	private View select_org;
-	private static Object[] orgNameList;
+	private Object[] orgNameList;
 	Spinner getOrgNames;
 	final Context context = this;
 	static Boolean tabFlag = false;
@@ -62,6 +62,8 @@ public class MainActivity extends Activity {
 		
 		public void onClick(View arg0) {
 			// check existing organisation name list is null
+			// call the getOrganisationName method from startup
+	    	orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
 			if(orgNameList.length<1)
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
