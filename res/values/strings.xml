@@ -71,4 +71,19 @@
         <item>Narration</item>
     </string-array>
     
+    <string name="about_para">
+	    \n<b>GNUKhata</b> is a Free Accounting Software provides 
+	    students and accountants to carry on there work while on the go.
+	    Designed and developed at IIT Bombay. 
+        \n
+        \nVersion: <b>0.9</b> (beta)
+        \n
+        \nRepository: <b>https://github.com/androportal/gkaakash</b> 
+        \n
+        \nLicense:
+		GNU GPL, version-3, 29 June 2007
+		\nhttp://www.gnu.org/licenses/gpl-3.0.txt
+		\nCopyright © 2012, IIT Bombay 
+   </string>
+    
     </resources>

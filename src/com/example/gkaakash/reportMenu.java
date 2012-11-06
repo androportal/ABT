@@ -79,7 +79,7 @@ public class reportMenu extends ListActivity{
 		//getting the list view and setting background
 		final ListView listView = getListView();
 		listView.setTextFilterEnabled(true);
-		listView.setBackgroundColor(Color.BLACK);
+		listView.setBackgroundColor(R.drawable.dark_gray_background);
 		listView.setCacheColorHint(Color.TRANSPARENT);
 		
 		//for two digit format date for dd and mm
@@ -98,14 +98,14 @@ public class reportMenu extends ListActivity{
 					Object[] accountnames = (Object[]) account.getAllAccountNames(client_id);
 					// create new array list of type String to add account names
 					List<String> accountnamelist = new ArrayList<String>();
-					
+					accountnamelist.add("Please select account name");
 					for(Object an : accountnames)
 					{	
 						accountnamelist.add((String) an); 
 					}	
 
 					
-					if(accountnamelist.size() <= 0){
+					if(accountnamelist.size() <= 1){
 						String message = "Ledger can not be displayed, Please create account!";
 						toastValidationMessage(message);
 						}
@@ -210,11 +210,15 @@ public class reportMenu extends ListActivity{
 						        	cal3.setTime(date3);
 						        	cal4.setTime(date4);  
 						        	
-						        	if(((cal3.after(cal1)&&(cal3.before(cal2))) || (cal3.equals(cal1) || (cal3.equals(cal2)))) 
+						        	
+						        	if(selectedAccount.equalsIgnoreCase("Please select account name")){
+						        		String message = "Please select account name";
+						        		toastValidationMessage(message);
+						        	}
+						        	else if(((cal3.after(cal1)&&(cal3.before(cal2))) || (cal3.equals(cal1) || (cal3.equals(cal2)))) 
 						        			&& ((cal4.after(cal1) && (cal4.before(cal2))) || (cal4.equals(cal2)) || (cal4.equals(cal1)))){
 						        		
-						        		selectedAccount = accountNames.getSelectedItem().toString();
-						        		selectedProject = projectNames.getSelectedItem().toString();
+						        		
 										
 										Intent intent = new Intent(context, ledger.class);
 										// To pass on the value to the next page

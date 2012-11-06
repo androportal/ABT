@@ -26,7 +26,11 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_weight="80"
-    android:background="@drawable/dark_gray_background" >
+    android:background="@drawable/dark_gray_background" 
+    android:scrollbarFadeDuration="0"
+    android:scrollbarAlwaysDrawVerticalTrack="true" 
+    android:scrollbarAlwaysDrawHorizontalTrack="true">
+    
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:orientation="vertical"
 	    android:layout_width="match_parent"

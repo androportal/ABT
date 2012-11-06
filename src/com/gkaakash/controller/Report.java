@@ -1,6 +1,7 @@
 package com.gkaakash.controller;
 
 import org.xmlrpc.android.XMLRPCException;
+import org.xmlrpc.android.XMLRPCFault;
 
 import android.R.string;
 
@@ -30,7 +31,15 @@ public class Report {
 			System.out.println(params);
 			trialResult = (Object[])conn.getClient().call("reports.getTrialBalance",params,client_id);
 			
-		} catch (XMLRPCException e) { 
+		} catch (XMLRPCFault e) {
+			try {
+				trialResult = (Object[])conn.getClient().call("reports.getTrialBalance",params,client_id);
+			} catch (XMLRPCException e1) {
+			
+				e1.printStackTrace();
+			}
+		}
+		catch (Exception e) { 
 			
 			e.printStackTrace();
 		} 
@@ -45,10 +54,17 @@ public class Report {
 			System.out.println(params);
 			ledgerResult = (Object[])conn.getClient().call("reports.getLedger",params,client_id);
 			System.out.println(ledgerResult);
-		} catch (XMLRPCException e) {
+		} catch (XMLRPCFault e) {
+			try {
+				ledgerResult = (Object[])conn.getClient().call("reports.getLedger",params,client_id);
+			} catch (XMLRPCException e1) {
+				
+				e1.printStackTrace();
+			}
+		}catch (Exception e) {
 			
-			e.printStackTrace();
 		}
+		
 		return ledgerResult;
 	}
 

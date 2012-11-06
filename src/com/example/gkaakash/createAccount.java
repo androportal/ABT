@@ -70,55 +70,76 @@ public class createAccount<group> extends Activity{
 		super.onCreate(savedInstanceState);
 		// Calling create_account.xml
 		setContentView(R.layout.create_account);
-		// create the object of Group class
-		group = new Group();
-		account = new Account();
-		preferencObj= new Preferences();
-		// getting client id 
-		client_id = Startup.getClient_id();
-		System.out.println("client_id :"+client_id);
-		// Request a reference to the button from the activity by calling
-		// “findViewById” and assign the retrieved button to an instance variable
-		tvaccCode = (TextView) findViewById(R.id.tvAccCode);
-		etaccCode = (EditText) findViewById(R.id.etAccCode);
-		tvSubGrp = (TextView) findViewById(R.id.tvSubGrp);
-		etSubGrp = (EditText) findViewById(R.id.etSubGrp);
-		etAccName= (EditText) findViewById(R.id.etAccName);
 		
-		//for visibility of account tab layout
-        tabflag=MainActivity.tabFlag;
-        LinearLayout l1=(LinearLayout)findViewById(R.id.createacc_tab1);  
-        LinearLayout l2=(LinearLayout)findViewById(R.id.createacc_tab2);
-        if(tabflag){
-            l1.setVisibility(LinearLayout.VISIBLE);
-            l2.setVisibility(LinearLayout.VISIBLE);
-        }else {
-            l1.setVisibility(LinearLayout.INVISIBLE);
-            l2.setVisibility(LinearLayout.INVISIBLE);
-        }
-        // call getPrefernece to get set preference related to account code flag   
-		accCodeCheckFlag = preferencObj.getPreferences(new Object[]{"2"},client_id);
-		
-		// Setting visibility depending upon account code flag value
-		if (accCodeCheckFlag.equals("automatic")) {
-			etaccCode.setVisibility(EditText.GONE);
-			tvaccCode.setVisibility(TextView.GONE);
-		} else {
-			etaccCode.setVisibility(EditText.VISIBLE);
-			tvaccCode.setVisibility(TextView.VISIBLE);
+		try {
+			//for visibility of account tab layout
+	        tabflag=MainActivity.tabFlag;
+	        LinearLayout l1=(LinearLayout)findViewById(R.id.createacc_tab1);  
+	        LinearLayout l2=(LinearLayout)findViewById(R.id.createacc_tab2);
+	        if(tabflag){
+	            l1.setVisibility(LinearLayout.VISIBLE);
+	            l2.setVisibility(LinearLayout.VISIBLE);
+	        }else {
+	            l1.setVisibility(LinearLayout.INVISIBLE);
+	            l2.setVisibility(LinearLayout.INVISIBLE);
+	        }
+			
+			// create the object of Group class
+			group = new Group();
+			account = new Account();
+			preferencObj= new Preferences();
+			
+			// getting client id 
+			client_id = Startup.getClient_id();
+			
+			// Request a reference to the button from the activity by calling
+			// “findViewById” and assign the retrieved button to an instance variable
+			tvaccCode = (TextView) findViewById(R.id.tvAccCode);
+			etaccCode = (EditText) findViewById(R.id.etAccCode);
+			tvSubGrp = (TextView) findViewById(R.id.tvSubGrp);
+			etSubGrp = (EditText) findViewById(R.id.etSubGrp);
+			etAccName= (EditText) findViewById(R.id.etAccName);
+			sgrpName = (Spinner) findViewById(R.id.sGroupNames);
+			ssubGrpName = (Spinner) findViewById(R.id.sSubGrpNames);
+			etDrBal = (EditText) findViewById(R.id.etDrBal);
+			etCrBal = (EditText) findViewById(R.id.etCrBal);
+			etDiffbal = (EditText) findViewById(R.id.etDiffBal);
+			
+			// call getPrefernece to get set preference related to account code flag   
+			accCodeCheckFlag = preferencObj.getPreferences(new Object[]{"2"},client_id);
+			
+			// Setting visibility depending upon account code flag value
+			if (accCodeCheckFlag.equals("automatic")) {
+				etaccCode.setVisibility(EditText.GONE);
+				tvaccCode.setVisibility(TextView.GONE);
+			} else {
+				etaccCode.setVisibility(EditText.VISIBLE);
+				tvaccCode.setVisibility(TextView.VISIBLE);
+			}
+			
+			getTotalBalances();
+			
+			getExistingGroupNames();
+		} catch (Exception e) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+	           builder.setMessage("Please try again")
+	                   .setCancelable(false)
+	                   .setPositiveButton("Ok",
+	                           new DialogInterface.OnClickListener() {
+	                               public void onClick(DialogInterface dialog, int id) {
+	                               	
+	                               }
+	                           });
+	                   
+	           AlertDialog alert = builder.create();
+	           alert.show();
 		}
 		
-		sgrpName = (Spinner) findViewById(R.id.sGroupNames);
-		ssubGrpName = (Spinner) findViewById(R.id.sSubGrpNames);
-		etDrBal = (EditText) findViewById(R.id.etDrBal);
-		etCrBal = (EditText) findViewById(R.id.etCrBal);
-		etDiffbal = (EditText) findViewById(R.id.etDiffBal);
-		
-		getTotalBalances();
 		addListeneronButton();
-		getExistingGroupNames();
+		
 		//creating interface to listen activity on Item 
 		addListenerOnItem();
+		
 		addEditTextListner();
 	}
 	private void getTotalBalances() {

@@ -7,6 +7,8 @@ import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ledger extends Activity{
     TableLayout ledgertable;
@@ -35,83 +38,98 @@ public class ledger extends Activity{
        report = new Report();
        client_id= Startup.getClient_id();
       
-       String financialFromDate =Startup.getfinancialFromDate();
-       String financialToDate=Startup.getFinancialToDate();
-       String accountName = reportMenu.selectedAccount;
-       String projectName = reportMenu.selectedProject;
-       String fromDate = reportMenu.LedgerFromDateString;
-       String toDate = reportMenu.LedgerToDateString;
-   
-       tvaccontName = (TextView) findViewById( R.id.tvaccountName );
-       tvfinancialFromDate = (TextView) findViewById( R.id.tvfinancialFromDate );
-       tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
-      
-       tvaccontName.setText("Account Name: "+accountName);
-       tvfinancialFromDate.setText("Financial from date: " +financialFromDate);
-       tvfinancialToDate.setText("Financial to date: " +financialToDate);
-          
-          
-        Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,projectName};
-        ledgerResult = (Object[]) report.getLedger(params,client_id);
+       try {
+    	   String financialFromDate =Startup.getfinancialFromDate();
+           String financialToDate=Startup.getFinancialToDate();
+           String accountName = reportMenu.selectedAccount;
+           String projectName = reportMenu.selectedProject;
+           String fromDate = reportMenu.LedgerFromDateString;
+           String toDate = reportMenu.LedgerToDateString;
        
-        ledgerGrid = new ArrayList<ArrayList>();
-        for(Object tb : ledgerResult) 
-        {
+           tvaccontName = (TextView) findViewById( R.id.tvaccountName );
+           tvfinancialFromDate = (TextView) findViewById( R.id.tvfinancialFromDate );
+           tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
+          
+           tvaccontName.setText("Account name: "+accountName);
+           tvfinancialFromDate.setText("Financial from date: " +financialFromDate);
+           tvfinancialToDate.setText("Financial to date: " +financialToDate);
+              
+              
+            Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,projectName};
+            ledgerResult = (Object[]) report.getLedger(params,client_id);
            
-            Object[] t = (Object[]) tb;
-            ledgerResultList = new ArrayList<String>();
-            for(int i=0;i<(t.length-1);i++)
+            ledgerGrid = new ArrayList<ArrayList>();
+            for(Object tb : ledgerResult) 
             {
-            	if (i==1)
-            	{
-            		Object[] acc = new Object[]{t[i]};
-            		ArrayList accledgerGrid = new ArrayList();
-            		
-            		for(Object a : acc) 
-                    {
-            			Object[] abc= (Object[]) a;
-            			int yy = abc.length;
-            			System.out.println(yy);
-            				// accledgerGrid.add(abc[]);
-            				// System.out.println(accledgerGrid);
-            	         if(abc.length == 1){
-            	        	 accledgerGrid.add(abc[0]);
-            	        	 //ledgerResultList.add(accledgerGrid.toString());
-            	         }
-            	         else if(abc.length > 1){
-                     		String allaccnames = "";
-            	        	 for(int j=0;j<yy;j++){
-            	        		 System.out.println("i am"+abc[j]);
-            	        		 if(j==yy-1)
-            	        		 {
-            	        			 allaccnames = allaccnames+abc[j].toString() ;
-            	        		 }
-            	        		 else
-            	        		 {
-            	        			 allaccnames = allaccnames+abc[j].toString()+"\n";
-            	        		 }
-            	        		
-            	        		 //accledgerGrid.add(abc[j].toString());
-            	        	 }
-            	        	 System.out.println("all acc name is"+allaccnames);
-            	        	 accledgerGrid.add(allaccnames);
-            	         }
-            			 
-                    }
-            		ledgerResultList.add(accledgerGrid.toString());
-            	}
-            	else
-            	{
-            		ledgerResultList.add((String) t[i].toString());
-            	}
-            	
-            }
-            
-            ledgerGrid.add(ledgerResultList);
-        } 
+               
+                Object[] t = (Object[]) tb;
+                ledgerResultList = new ArrayList<String>();
+                for(int i=0;i<(t.length-1);i++)
+                {
+                	if (i==1)
+                	{
+                		Object[] acc = new Object[]{t[i]};
+                		ArrayList accledgerGrid = new ArrayList();
+                		
+                		for(Object a : acc) 
+                        {
+                			Object[] abc= (Object[]) a;
+                			int yy = abc.length;
+                				// accledgerGrid.add(abc[]);
+                				// System.out.println(accledgerGrid);
+                	         if(abc.length == 1){
+                	        	 accledgerGrid.add(abc[0]);
+                	        	 //ledgerResultList.add(accledgerGrid.toString());
+                	         }
+                	         else if(abc.length > 1){
+                         		String allaccnames = "";
+                	        	 for(int j=0;j<yy;j++){
+                	        		 if(j==yy-1)
+                	        		 {
+                	        			 allaccnames = allaccnames+abc[j].toString() ;
+                	        		 }
+                	        		 else
+                	        		 {
+                	        			 allaccnames = allaccnames+abc[j].toString()+"\n";
+                	        		 }
+                	        		
+                	        		 //accledgerGrid.add(abc[j].toString());
+                	        	 }
+                	        	 accledgerGrid.add(allaccnames);
+                	         }
+                			 
+                        }
+                		ledgerResultList.add(accledgerGrid.toString());
+                	}
+                	else
+                	{
+                		ledgerResultList.add((String) t[i].toString());
+                	}
+                	
+                }
+                
+                ledgerGrid.add(ledgerResultList);
+            } 
+           
+            ledgertable = (TableLayout)findViewById(R.id.maintable);
+            addTable();
+       } catch (Exception e) {
+    	   AlertDialog.Builder builder = new AlertDialog.Builder(ledger.this);
+           builder.setMessage("Please try again")
+                   .setCancelable(false)
+                   .setPositiveButton("Ok",
+                           new DialogInterface.OnClickListener() {
+                               public void onClick(DialogInterface dialog, int id) {
+                               	
+                               }
+                           });
+                   
+           AlertDialog alert = builder.create();
+           alert.show();
+    	   
+       }
        
-        ledgertable = (TableLayout)findViewById(R.id.maintable);
-        addTable();
+       
        
     }
    
@@ -155,7 +173,7 @@ public class ledger extends Activity{
             // Add the TableRow to the TableLayout
             ledgertable.addView(tr, new TableLayout.LayoutParams(
                     LayoutParams.FILL_PARENT,
-                    LayoutParams.WRAP_CONTENT));
+                    LayoutParams.MATCH_PARENT));
            
         }
     }
@@ -176,12 +194,12 @@ public class ledger extends Activity{
          // Add the TableRow to the TableLayout
         ledgertable.addView(tr, new TableLayout.LayoutParams(
                 LayoutParams.FILL_PARENT,
-                LayoutParams.WRAP_CONTENT));
+                LayoutParams.MATCH_PARENT));
        
     }
    
     void addRow(String param){
-        label = new TextView(this);
+    	label = new TextView(this);
         label.setText(param);
         label.setTextColor(Color.WHITE);
         //label.setBackgroundColor(Color.);
@@ -191,12 +209,13 @@ public class ledger extends Activity{
         label.setPadding(2, 2, 2, 2);
       
         LinearLayout Ll = new LinearLayout(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,
-                LayoutParams.FILL_PARENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT);
         params.setMargins(1, 1, 1, 1);
         //Ll.setPadding(10, 5, 5, 5);
         Ll.addView(label,params);
         tr.addView((View)Ll);
+        
     }
 
    

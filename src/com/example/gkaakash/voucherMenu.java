@@ -47,7 +47,7 @@ public class voucherMenu extends ListActivity {
 		//getting the list view and setting background
 		final ListView listView = getListView();
 		listView.setTextFilterEnabled(true);
-		listView.setBackgroundColor(Color.BLACK);
+		listView.setBackgroundColor(R.drawable.dark_gray_background);
 		listView.setCacheColorHint(Color.TRANSPARENT);
 		
 		//when voucher list items are clicked, code for respective actions goes here ...

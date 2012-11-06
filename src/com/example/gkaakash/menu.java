@@ -3,11 +3,11 @@ package com.example.gkaakash;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Preferences;
 import com.gkaakash.controller.Startup;
 
+import android.R.drawable;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
@@ -18,6 +18,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.text.InputType;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class menu extends ListActivity{
@@ -63,8 +67,9 @@ public class menu extends ListActivity{
     
 	//adding list items to the newly created menu list
 	String[] menuOptions = new String[] { "Create account", "Transaction", "Reports",
-			"Add projects", "Administration", "Help" };
+			"Add projects", "Help", "About" };
 
+	/*
 	//adding options to the options menu
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,7 +90,8 @@ public class menu extends ListActivity{
 	    }
 	    return super.onOptionsItemSelected(item);
 	}
-	 
+	*/
+	
 	 @Override
 	 public void onBackPressed() {
 		 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -105,7 +111,7 @@ public class menu extends ListActivity{
 		//getting the list view and setting background
 		final ListView listView = getListView();
 		listView.setTextFilterEnabled(true);
-		listView.setBackgroundColor(Color.BLACK);
+		listView.setBackgroundColor(R.drawable.dark_gray_background);
 		listView.setCacheColorHint(Color.TRANSPARENT);
 		
 		
@@ -300,8 +306,39 @@ public class menu extends ListActivity{
 				}
 				//for help
 				if(position == 5){
-					String message = "This functionality is not implemented yet";
-					toastValidationMessage(message);
+					AlertDialog about_dialog;
+					final SpannableString s = 
+				            new SpannableString(context.getText(R.string.about_para));
+							Linkify.addLinks(s, Linkify.WEB_URLS);
+							
+
+					        // Building DatepPcker dialog
+					        AlertDialog.Builder builder = new AlertDialog.Builder(
+					                context);
+					        builder.setTitle("GNUKhata");
+					        builder.setIcon(R.drawable.logo);
+					        builder.setMessage( s );
+					        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					            public void onClick(DialogInterface dialog, int which) {
+					                // TODO Auto-generated method stub
+					                
+					            }
+					          
+					        });
+					        
+					        about_dialog = builder.create();
+					        about_dialog.show();
+					        
+					        ((TextView)about_dialog.findViewById(android.R.id.message))
+				            .setMovementMethod(LinkMovementMethod.getInstance());
+					        
+					        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+					        // customizing the width and location of the dialog on screen
+					        lp.copyFrom(about_dialog.getWindow().getAttributes());
+					        lp.width = 600;
+					        
+					        
+					        about_dialog.getWindow().setAttributes(lp);
 				}
 				} 
 		});

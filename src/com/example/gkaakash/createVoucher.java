@@ -89,113 +89,56 @@ public class createVoucher extends Activity {
 	       	//two digit date format for dd and mm
 			mFormat= new DecimalFormat("00");
 			mFormat.setRoundingMode(RoundingMode.DOWN);
-	       	
-	       	list = (TableLayout) findViewById( R.id.Vouchertable );
+			
+			list = (TableLayout) findViewById( R.id.Vouchertable );
 	       	vouchertypeflag =  voucherMenu.vouchertypeflag;
+	       	
+	       	DrCr = (Spinner) findViewById(R.id.sDrCr);
 	       	
 	       	account = (Spinner) findViewById(R.id.getAccountByRule);
 	    	account.setMinimumWidth(283);
-	    	
-	    	//for setting voucher date
-	       	voucher_date =  (ListView)findViewById(R.id.voucher_list);
-	       	voucher_date.setTextFilterEnabled(true);
-			voucher_date.setCacheColorHint(color.transparent);
-	        setVoucherDate();
-	        
-	        //for setting project 
-			projetct_name =  (ListView)findViewById(R.id.voucher_list4);
-	       	projetct_name.setTextFilterEnabled(true);
-			projetct_name.setCacheColorHint(color.transparent);
-			setProject();
-	        
-			DrCr = (Spinner) findViewById(R.id.sDrCr);
+	       	
+	       	try {
+	       		//add second row and set first & second row account names in spinner
+		        setFirstAndSecondRow();
+	       		
+	       		//for setting voucher date
+		       	voucher_date =  (ListView)findViewById(R.id.voucher_list);
+		       	voucher_date.setTextFilterEnabled(true);
+				voucher_date.setCacheColorHint(color.transparent);
+		        setVoucherDate();
+		        
+		        //for setting project 
+				projetct_name =  (ListView)findViewById(R.id.voucher_list4);
+		       	projetct_name.setTextFilterEnabled(true);
+				projetct_name.setCacheColorHint(color.transparent);
+				setProject();
+				
+			} catch (Exception ex) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		           builder.setMessage("Please try again")
+		                   .setCancelable(false)
+		                   .setPositiveButton("Ok",
+		                           new DialogInterface.OnClickListener() {
+		                               public void onClick(DialogInterface dialog, int id) {
+		                               	
+		                               }
+		                           });
+		                   
+		           AlertDialog alert = builder.create();
+		           alert.show();	
+			}
+	       	
 			//tvTotalDebit = (TextView) findViewById( R.id.tvTotalDebit );
 			//tvTotalCredit = (TextView) findViewById( R.id.tvTotalCredit );
-	        Button addButton = (Button) findViewById( R.id.add );
 	        
-	        // Every time the "+" button is clicked,
-	        // add a new row to the table.
-	        addButton.setOnClickListener( new OnClickListener() {
-				public void onClick(View view) { 
-					testAmountTally();
-					if(totalDr == totalCr){
-						String message = "Debit and Credit amount is tally";
-						toastValidationMessage(message);
-					}
-					else if (drcrAmountFirstRow <= 0 || drcrAmount <= 0) {
-						String message = "No row can be added,Please fill the existing row";
-						toastValidationMessage(message);
-				        }
-					else{
-						for(int i=0;i<(tableRowCount);i++){
-                            View row = list.getChildAt(i);
-                           
-                            //amount edittext
-                            EditText e = (EditText)((ViewGroup) row).getChildAt(5);
-                            drcramount = e.getText().toString();
-                            if(drcramount.length()<1)
-                            {
-                                drcramount="0.00";
-                            }
-                            amountdrcr = Float.parseFloat(drcramount);
-                            
-                            if(amountdrcr<=0){
-                            	addRowFlag = false;
-                                break;
-                            }
-                            else{
-                            	addRowFlag = true;
-                            }
-                        }
-						
-						if(addRowFlag == true){
-							//add new row
-							addButton();
-							ArrayAdapter<String> da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
-					  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-					        sp1.setAdapter(da1);
-					        
-					        //set totalDr and totalCr in textview
-					        String tvTotalDr = Float.toString(totalDr);
-					        //tvTotalDebit.setText("Total Debit: "+tvTotalDr+"0");
-					        
-					        String tvTotalCr = Float.toString(totalCr);
-					        //tvTotalCredit.setText("Total Credit: "+tvTotalCr+"0");
-							
-					        //set Dr/Cr selected in dropdown according to the condition and set amount in new row
-							if(totalDr > totalCr){
-								diffbal = totalDr-totalCr;
-								et.setText(String.format("%.2f",diffbal ));
-								//set 'Cr' selected in Dr/Cr dropdown
-								sp1.setSelection(1);
-							}
-							else{
-								diffbal = totalCr-totalDr;
-								et.setText(String.format("%.2f",diffbal ));
-								//set 'Dr' selected in Dr/Cr dropdown
-								sp1.setSelection(0);
-							}
-							
-						}
-						else{
-							String message = "No row can be added,Please fill the existing row";
-							toastValidationMessage(message);
-					        }
-						
-					}
-				}
-
-				
-			});  
 	        //add all onclick events in this method
 	        OnClickListener();
-	        
-	        //add second row and set first & second row account names in spinner
-	        setFirstAndSecondRow();
 	        
 	        //on dr/cr item selected from dropdown...
 	        OnDrCrItemSelectedListener();
 	        
+	        //move foucs from amount to reference number edittext
 	        OnAmountFocusChangeListener(); 
     }
 	
@@ -449,11 +392,94 @@ public class createVoucher extends Activity {
 
 	private void OnClickListener() { 
 		/*
-		 * on click method for save and reset button
-		 * save: takes all necessary field values and calls transaction.setTransaction
-		 * for adding transaction and resets all fileds after adding transaction
-		 * reset: resets all fields
+		 * on click method for add, save and reset button
+		 * 1. add: Every time the "+" button is clicked, add a new row to the table
+		 * 2. save: takes all necessary field values and calls transaction.setTransaction
+		 * 			for adding transaction and resets all fileds after adding transaction
+		 * 3. reset: resets all fields
 		 */
+		
+		/*==============================================================================
+    	 * Every time the "+" button is clicked, add a new row to the table 
+    	 */
+		Button addButton = (Button) findViewById( R.id.add );
+        addButton.setOnClickListener( new OnClickListener() {
+			public void onClick(View view) { 
+				testAmountTally();
+				if(totalDr == totalCr){
+					String message = "Debit and Credit amount is tally";
+					toastValidationMessage(message);
+				}
+				else if (drcrAmountFirstRow <= 0 || drcrAmount <= 0) {
+					String message = "No row can be added,Please fill the existing row";
+					toastValidationMessage(message);
+			        }
+				else{
+					for(int i=0;i<(tableRowCount);i++){
+                        View row = list.getChildAt(i);
+                       
+                        //amount edittext
+                        EditText e = (EditText)((ViewGroup) row).getChildAt(5);
+                        drcramount = e.getText().toString();
+                        if(drcramount.length()<1)
+                        {
+                            drcramount="0.00";
+                        }
+                        amountdrcr = Float.parseFloat(drcramount);
+                        
+                        if(amountdrcr<=0){
+                        	addRowFlag = false;
+                            break;
+                        }
+                        else{
+                        	addRowFlag = true;
+                        }
+                    }
+					
+					if(addRowFlag == true){
+						//add new row
+						addButton();
+						ArrayAdapter<String> da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
+				  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				        sp1.setAdapter(da1);
+				        
+				        //set totalDr and totalCr in textview
+				        String tvTotalDr = Float.toString(totalDr);
+				        //tvTotalDebit.setText("Total Debit: "+tvTotalDr+"0");
+				        
+				        String tvTotalCr = Float.toString(totalCr);
+				        //tvTotalCredit.setText("Total Credit: "+tvTotalCr+"0");
+						
+				        //set Dr/Cr selected in dropdown according to the condition and set amount in new row
+						if(totalDr > totalCr){
+							diffbal = totalDr-totalCr;
+							et.setText(String.format("%.2f",diffbal ));
+							//set 'Cr' selected in Dr/Cr dropdown
+							sp1.setSelection(1);
+						}
+						else{
+							diffbal = totalCr-totalDr;
+							et.setText(String.format("%.2f",diffbal ));
+							//set 'Dr' selected in Dr/Cr dropdown
+							sp1.setSelection(0);
+						}
+						
+					}
+					else{
+						String message = "No row can be added,Please fill the existing row";
+						toastValidationMessage(message);
+				        }
+					
+				}
+			}
+
+			
+		});  
+		
+        /*==============================================================================
+    	 * save transaction
+    	 */
+		
     	Button btnSaveVoucher = (Button) findViewById( R.id.btnSaveVoucher );
     	btnSaveVoucher.setOnClickListener(new OnClickListener() {
 
@@ -543,10 +569,13 @@ public class createVoucher extends Activity {
 								flag = false;
 								System.out.println("not equal");
 							}
-							
+							if(flag == true){
+								break;
+							}
 						}
-						
-						
+						if(flag == true){
+							break;
+						}
 					}
 					if(flag == false)
 					{
@@ -606,7 +635,7 @@ public class createVoucher extends Activity {
 		}
 		}); 
     	
-    	/*
+    	/*==============================================================================
     	 * reset all fields
     	 */
     	Button btnResetVoucher = (Button) findViewById( R.id.btnResetVoucher );
@@ -650,9 +679,6 @@ public class createVoucher extends Activity {
 		                });
 		        AlertDialog alert = builder.create();
 		        alert.show();
-						
-				
-				
 			}
 		});
 	}
