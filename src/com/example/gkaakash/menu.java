@@ -301,7 +301,7 @@ public class menu extends ListActivity{
 					}
 				//for administration
 				if(position == 4){
-					String message = "This functionality is not implemented yet";
+					String message = "No help content yet";
 					toastValidationMessage(message);
 				}
 				//for help

@@ -70,7 +70,11 @@ public class ledger extends Activity{
                 	{
                 		Object[] acc = new Object[]{t[i]};
                 		ArrayList accledgerGrid = new ArrayList();
-                		
+                		ArrayList dateGrid = new ArrayList();
+                		ArrayList refGrid = new ArrayList();
+                		ArrayList debitGrid = new ArrayList();
+                		ArrayList creditGrid = new ArrayList();
+                		ArrayList narrationGrid = new ArrayList();
                 		for(Object a : acc) 
                         {
                 			Object[] abc= (Object[]) a;
@@ -78,11 +82,21 @@ public class ledger extends Activity{
                 				// accledgerGrid.add(abc[]);
                 				// System.out.println(accledgerGrid);
                 	         if(abc.length == 1){
+                	        	 dateGrid.add((String) t[0].toString());
                 	        	 accledgerGrid.add(abc[0]);
+                	        	 refGrid.add((String) t[2].toString());
+                	        	 debitGrid.add((String) t[3].toString());
+                	        	 creditGrid.add((String) t[4].toString());
+                	        	 narrationGrid.add((String) t[5].toString());
                 	        	 //ledgerResultList.add(accledgerGrid.toString());
                 	         }
                 	         else if(abc.length > 1){
                          		String allaccnames = "";
+                         		String date = (String) t[0].toString();
+                         		String ref = (String) t[2].toString();
+                         		String debit = (String) t[3].toString();
+                         		String credit = (String) t[4].toString();
+                         		String narr = (String) t[5].toString();
                 	        	 for(int j=0;j<yy;j++){
                 	        		 if(j==yy-1)
                 	        		 {
@@ -91,20 +105,37 @@ public class ledger extends Activity{
                 	        		 else
                 	        		 {
                 	        			 allaccnames = allaccnames+abc[j].toString()+"\n";
+                	        			 date = date+"\n";
+                	        			 ref = ref+"\n";
+                	        			 debit = debit+"\n";
+                	        			 credit = credit+"\n";
+                	        			 narr = narr+"\n";
                 	        		 }
                 	        		
                 	        		 //accledgerGrid.add(abc[j].toString());
                 	        	 }
                 	        	 accledgerGrid.add(allaccnames);
+                	        	 dateGrid.add(date);
+                	        	 refGrid.add(ref);
+                	        	 debitGrid.add(debit);
+                	        	 creditGrid.add(credit);
+                	        	 narrationGrid.add(narr);
                 	         }
                 			 
                         }
+                		ledgerResultList.add(dateGrid.toString());
                 		ledgerResultList.add(accledgerGrid.toString());
+                		ledgerResultList.add(refGrid.toString());
+                		ledgerResultList.add(debitGrid.toString());
+                		ledgerResultList.add(creditGrid.toString());
+                		ledgerResultList.add(narrationGrid.toString());
                 	}
+                	/*
                 	else
                 	{
                 		ledgerResultList.add((String) t[i].toString());
                 	}
+                	*/
                 	
                 }
                 
@@ -144,8 +175,8 @@ public class ledger extends Activity{
             tr = new TableRow(this);
            
             for(int j=0;j<columnValue.size();j++){
-            	if(j == 1 ){
-            		String[] accname = new String[]{columnValue.get(1).toString()}; 
+            	
+            		String[] accname = new String[]{columnValue.get(j).toString()}; 
             		for(String a : accname){
             		
             			String particular =  a.substring(1,(a.length()-1));
@@ -154,11 +185,6 @@ public class ledger extends Activity{
             			
             		}
             		
-            	}
-            	else{
-            		/** Creating a TextView to add to the row **/ 
-            		addRow(columnValue.get(j).toString());
-            	}
             	
             	
             	label.setBackgroundColor(Color.BLACK);
