@@ -11,6 +11,8 @@ public class Report {
 	private CoreConnection conn;
 	private Object[] trialResult;
 	private Object[] ledgerResult;
+	private Object[] grosstrialResult;
+	private Object[] extendedtrialResult;
 	
 	/***
 	 * Default constructor
@@ -63,6 +65,50 @@ public class Report {
 		}
 		
 		return ledgerResult;
+	}
+public Object getGrossTrialBalance(Object[] params,Object client_id) {
+		
+		try {
+			System.out.println(client_id);
+			System.out.println("we are in gross trial");
+			System.out.println(params);
+			grosstrialResult = (Object[])conn.getClient().call("reports.getGrossTrialBalance",params,client_id);
+			
+		} catch (XMLRPCFault e) {
+			try {
+				grosstrialResult = (Object[])conn.getClient().call("reports.getGrossTrialBalance",params,client_id);
+			} catch (XMLRPCException e1) {
+			
+				e1.printStackTrace(); 
+			}
+		}
+		catch (Exception e) { 
+			
+			e.printStackTrace(); 
+		} 
+		return grosstrialResult;
+	}
+	public Object getExtendedTrialBalance(Object[] params,Object client_id) {
+		
+		try {
+			System.out.println(client_id);
+			System.out.println("we are in extendedtrial");
+			System.out.println(params);
+			extendedtrialResult = (Object[])conn.getClient().call("reports.getExtendedTrialBalance",params,client_id);
+			
+		} catch (XMLRPCFault e) {
+			try {
+				extendedtrialResult = (Object[])conn.getClient().call("reports.getExtendedTrialBalance",params,client_id);
+			} catch (XMLRPCException e1) {
+			
+				e1.printStackTrace(); 
+			}
+		}
+		catch (Exception e) { 
+			
+			e.printStackTrace();
+		} 
+		return extendedtrialResult;
 	}
 
 }

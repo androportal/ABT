@@ -51,6 +51,7 @@ public class reportMenu extends ListActivity{
 	static String selectedAccount;
 	static String selectedProject;
 	String day, month, year, day1, month1, year1; 
+	static String trialbalancetype;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -273,8 +274,8 @@ public class reportMenu extends ListActivity{
 					DatePicker trialFrom = (DatePicker) layout.findViewById(R.id.dpTrialsetT0date);
 					trialFrom.init(Integer.parseInt(setyear),(Integer.parseInt(setmonth)-1),Integer.parseInt(setday), null);
 					
-					Spinner strialBalanceType = (Spinner)layout.findViewById(R.id.strialBalanceType);
-					strialBalanceType.setVisibility(Spinner.GONE);
+					final Spinner strialBalanceType = (Spinner)layout.findViewById(R.id.strialBalanceType);
+					
 					
 					TextView tvtrialBalanceType = (TextView)layout.findViewById(R.id.tvtrialBalanceType);
 					tvtrialBalanceType.setVisibility(TextView.GONE);
@@ -314,7 +315,7 @@ public class reportMenu extends ListActivity{
 					        	cal3.setTime(date3);
 					        	
 					        	if((cal3.after(cal1) && cal3.before(cal2)) || cal3.equals(cal1) || cal3.equals(cal2) ){
-									
+					        		trialbalancetype=strialBalanceType.getSelectedItem().toString();
 									Intent intent = new Intent(context, trialBalance.class);
 									// To pass on the value to the next page
 									startActivity(intent);

@@ -31,6 +31,8 @@ public class trialBalance extends Activity{
     TextView label;
     ArrayList<ArrayList<String>> trialBalGrid;
     ArrayList<String> trialBalanceResultList;
+    String trialbalancetype;
+    String[] ColumnNameList;
    
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -45,20 +47,29 @@ public class trialBalance extends Activity{
 		    String financialFromDate =Startup.getfinancialFromDate();
 		    String financialToDate=Startup.getFinancialToDate();
 		    String trialToDateString = reportMenu.trialToDateString;
+		    trialbalancetype=reportMenu.trialbalancetype;
 		    /*
 		     * set financial from date and to date in textview
 		     */
 		    TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
 		    TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
 		      
-		    tvfinancialFromDate.setText("Financial from: " +financialFromDate);
-		    tvfinancialToDate.setText("Financial to: " +financialToDate);
+		    tvfinancialFromDate.setText("Financial from : " +financialFromDate);
+		    tvfinancialToDate.setText("Financial to : " +financialToDate);
 		    /*
 		     * send params to controller report.getTrialBalance to get the result
 		     */
+		  
 		    Object[] params = new Object[]{financialFromDate,financialFromDate,trialToDateString};
-	        trialBalanceResult = (Object[]) report.getTrialBalance(params,client_id);
-	       
+		    System.out.println("Trial Balance Type: "+trialbalancetype);
+		   if("Net Trial Balance".equals(trialbalancetype)){
+			   trialBalanceResult = (Object[]) report.getTrialBalance(params,client_id);
+		   }else if ("Gross Trial Balance".equals(trialbalancetype)) {
+			   trialBalanceResult = (Object[]) report.getGrossTrialBalance(params,client_id);
+		   }else if ("Extended Trial Balance".equals(trialbalancetype)) {
+			   trialBalanceResult = (Object[]) report.getExtendedTrialBalance(params,client_id);
+		   }
+		       
 	        trialBalGrid = new ArrayList<ArrayList<String>>();
 	        for(Object tb : trialBalanceResult)
 	        {
@@ -67,14 +78,18 @@ public class trialBalance extends Activity{
 	            for(int i=0;i<t.length;i++){
 	            	
 	                trialBalanceResultList.add((String) t[i].toString());
+	                System.out.println("result :"+i+" "+(String) t[i].toString());
 	               
 	            }
 	            trialBalGrid.add(trialBalanceResultList);
+	            System.out.println(trialBalGrid);
 	        }
         trialBaltable = (TableLayout)findViewById(R.id.maintable);
         addTable();
 	    } catch (Exception e) {
+	    	System.out.println("m in exte err"+e);
 	    	AlertDialog.Builder builder = new AlertDialog.Builder(trialBalance.this);
+	    	
 	           builder.setMessage("Please try again")
 	                   .setCancelable(false)
 	                   .setPositiveButton("Ok",
@@ -103,18 +118,36 @@ public class trialBalance extends Activity{
                 /*
                  * set right aligned gravity for amount and for others set center gravity
                  */
-                if(j==3 || j==4){
-                    label.setGravity(Gravity.RIGHT);
-                    //For adding rupee symbol
-                    if(columnValue.get(j).length() > 0){
-                    
-                        final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs)); 
-                        label.setText(rsSymbol+" "+columnValue.get(j).toString());
+                
+                
+                if(!"Extended Trial Balance".equals(trialbalancetype)){
+                	if(j==3 || j==4){
+                        label.setGravity(Gravity.RIGHT);
+                        //For adding rupee symbol
+                        if(columnValue.get(j).length() > 0){
+                        
+                            final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs)); 
+                            label.setText(rsSymbol+" "+columnValue.get(j).toString());
+                        }
                     }
-                }
-                else{
-                    label.setGravity(Gravity.CENTER);
-                }
+                    else{
+                        label.setGravity(Gravity.CENTER);
+                    }	
+                }else {
+                	if(j==3 || j==4 || j==5 || j==6 || j==7){
+                        label.setGravity(Gravity.RIGHT);
+                        //For adding rupee symbol
+                        if(columnValue.get(j).length() > 0){
+                        
+                            final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs)); 
+                            label.setText(rsSymbol+" "+columnValue.get(j).toString());
+                        }
+                    }
+                    else{
+                        label.setGravity(Gravity.CENTER);
+                    }	
+				}
+                
             }
             // Add the TableRow to the TableLayout
             trialBaltable.addView(tr, new TableLayout.LayoutParams(
@@ -125,12 +158,19 @@ public class trialBalance extends Activity{
         /*
          * display the difference between total dr and total cr
          */
-        ArrayList<String> lastrow=trialBalGrid.get(trialBalGrid.size()-1);
-        Float result=Float.parseFloat(lastrow.get(4))-Float.parseFloat(lastrow.get(3));
         TextView difference = (TextView) findViewById(R.id.tvdifference);
-        
         final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs));
-        difference.setText("Difference : "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
+        ArrayList<String> lastrow=trialBalGrid.get(trialBalGrid.size()-1);
+        if(!"Extended Trial Balance".equals(trialbalancetype)){
+        	Float result=Float.parseFloat(lastrow.get(4))-Float.parseFloat(lastrow.get(3));
+            difference.setText("Difference : "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
+        }else {
+        	Float result=Float.parseFloat(lastrow.get(7))-Float.parseFloat(lastrow.get(6));
+        	difference.setText("Difference : "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
+		}
+       
+        
+        
     }
 
     /*
@@ -138,7 +178,13 @@ public class trialBalance extends Activity{
      */
     void addHeader(){
         /** Create a TableRow dynamically **/
-        String[] ColumnNameList = new String[] { "Sr. no.","Account name","Group name","Total debit","Total credit"};
+    	if ("Net Trial Balance".equals(trialbalancetype)){
+    		 ColumnNameList = new String[] { "Sr. no.","Account name","Group name","Debit","Credit"};	
+    	}else if ("Gross Trial Balance".equals(trialbalancetype)) {
+    		ColumnNameList = new String[] { "Sr. no.","Account name","Group name","Total debit","Total credit"};	
+		}else if ("Extended Trial Balance".equals(trialbalancetype)) {
+			ColumnNameList = new String[] { "Sr. no.","Account name","Group name","Opening Balance","Total debit transaction","Total credit transaction","Debit balance","Credit balance"};	
+		}
        
         tr = new TableRow(this);
        
@@ -172,6 +218,8 @@ public class trialBalance extends Activity{
         params.setMargins(1, 1, 1, 1);
         Ll.addView(label,params);
         tr.addView((View)Ll); // Adding textView to tablerow.
+        
+        
        
     }
 
