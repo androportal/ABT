@@ -10,7 +10,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Set To-Date"
+            android:text="Set to-date"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
@@ -25,9 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Trial Balance Type"
-            android:textColor="#FFFFFF" 
-            android:textSize="20dp"/>
+            android:text="Trial balance type"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
 
         <Spinner
             android:id="@+id/strialBalanceType"

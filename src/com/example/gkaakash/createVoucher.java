@@ -914,7 +914,7 @@ public class createVoucher extends Activity {
         
         
     	TextView tv = new TextView(newRow.getContext());
-    	tv.setText("        Account Name");
+    	tv.setText("        Account name");
     	tv.setTextSize(14); //for emulator 14
     	tv.setTextColor(Color.WHITE);
     	

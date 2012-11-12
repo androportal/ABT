@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
         getOrgNames = (Spinner)findViewById(R.id.sGetOrgNames);
         //creating new method do event on button
         addListenerOnButton();
-        help_popup();
+        //help_popup();
         
    }// End Of onCreate method
     

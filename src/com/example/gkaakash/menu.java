@@ -155,7 +155,7 @@ public class menu extends ListActivity{
                     View layout = inflater.inflate(R.layout.add_project, (ViewGroup) findViewById(R.id.layout_root));
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setView(layout);
-                    builder.setTitle("Add Projects");
+                    builder.setTitle("Add projects");
                     etProject = (EditText)layout.findViewById(R.id.etProjectname);
                     projectTable = (TableLayout)layout.findViewById( R.id.projecttable );
                     add=(Button) layout.findViewById(R.id.addProject);

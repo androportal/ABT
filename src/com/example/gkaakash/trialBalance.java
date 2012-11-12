@@ -130,7 +130,7 @@ public class trialBalance extends Activity{
         TextView difference = (TextView) findViewById(R.id.tvdifference);
         
         final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs));
-        difference.setText("Diference : "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
+        difference.setText("Difference : "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
     }
 
     /*

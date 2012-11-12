@@ -10,9 +10,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Set To-Date"
-            android:textColor="#FFFFFF" 
-            android:textSize="20dp"/>
+            android:text="Set to-date"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
         
         <DatePicker
             android:id="@+id/datePicker1"

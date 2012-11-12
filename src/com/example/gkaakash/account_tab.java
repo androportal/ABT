@@ -33,7 +33,7 @@ public class account_tab extends TabActivity{
 	        tab1.setTextSize(18.0f);
 	        tab1.setHeight(50);
 	        tab1.setTextColor(Color.WHITE);
-	        tab1.setText("Create Account");
+	        tab1.setText("Create account");
 	        createspec.setIndicator(tab1);//assigning TextView to tab Indicator
 	        preferences = new Preferences();
 	        // this is client_id get after getConnetion method call for existing organisation 
@@ -56,7 +56,7 @@ public class account_tab extends TabActivity{
 	        tab2.setTextSize(18.0f);
 	        tab2.setHeight(50);
 	        tab2.setTextColor(Color.WHITE);
-	        tab2.setText("Search Account");
+	        tab2.setText("Search account");
 	        editspec.setIndicator(tab2);//assigning TextView to tab Indicator
 	        Intent edit = new Intent(this, edit_account.class);
 	        editspec.setContent(edit);

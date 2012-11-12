@@ -7,15 +7,14 @@
         android:orientation="vertical"
          android:id="@+id/layout_root" >
          
-
          <TextView
-            android:id="@+id/tvAccName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Account Name"
-            android:textColor="#FFFFFF" 
-            android:textSize="20dp"/>
+             android:id="@+id/tvAccName"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:text="Account name"
+             android:textColor="#FFFFFF"
+             android:textSize="20dp" />
 
         <Spinner
             android:id="@+id/sAccountNameinLedger"
@@ -42,13 +41,13 @@
           android:layout_weight="50" >
         
          <TextView
-            android:id="@+id/tvsetFromdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Set From Date"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+             android:id="@+id/tvsetFromdate"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:text="Set from-date"
+             android:textColor="#FFFFFF"
+             android:textSize="20dp" />
 
          <DatePicker
              android:id="@+id/dpsetLedgerFromdate"
@@ -66,13 +65,12 @@
          android:id="@+id/layout_root"
          android:layout_weight="50" >
          
-        
         <TextView
             android:id="@+id/tvsetT0date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Set To-Date"
+            android:text="Set to-date"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
@@ -102,7 +100,7 @@
 		        android:id="@+id/tvcbNarration"
 		        android:layout_width="wrap_content"
 		        android:layout_weight="1.7"
-		        android:text="View Ledger With Narration"
+		        android:text="View ledger with narration"
 		        android:textColor="#FFFFFF"
 		        android:textSize="20dp" />
 		</TableRow>

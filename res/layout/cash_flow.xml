@@ -14,13 +14,13 @@
           android:layout_weight="50" >
         
          <TextView
-            android:id="@+id/tvsetfromdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Set From Date"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+             android:id="@+id/tvsetfromdate"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:text="Set from-date"
+             android:textColor="#FFFFFF"
+             android:textSize="20dp" />
 
          <DatePicker
              android:id="@+id/dpsetFromdate"
@@ -38,13 +38,12 @@
          android:id="@+id/layout_root"
          android:layout_weight="50" >
          
-        
         <TextView
             android:id="@+id/tvsetT0date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Set To-Date"
+            android:text="Set to-date"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 

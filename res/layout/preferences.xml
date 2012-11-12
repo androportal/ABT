@@ -106,7 +106,7 @@
             android:layout_width="112dp"
             android:layout_height="46dp"
             android:layout_gravity="center"
-            android:text="     save      " 
+            android:text="     Save      " 
             android:textSize="20dp"
             android:visibility="invisible"/>
 	</TableRow>
@@ -151,7 +151,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_weight="0.73"
-            android:text="create account"
+            android:text="Create account"
             android:textSize="20dp" />
        
         <Button
@@ -159,7 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="quit"
+            android:text="Quit"
             android:textSize="20dp"
            android:layout_alignParentBottom="true"/>
 </LinearLayout>

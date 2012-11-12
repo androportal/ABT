@@ -348,7 +348,7 @@ public class preferences extends Activity {
        
         EditText etdynamic = new EditText(newRow.getContext());
         etdynamic.setText( "" );
-        etdynamic.setHint("Tap to enter                              ");
+        etdynamic.setHint("Tap to enter                             ");
         etdynamic.setWidth(215); //for emulator 215
         etdynamic.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         etdynamic.setId(++rowsSoFar);
