@@ -71,6 +71,12 @@
         <item>Narration</item>
     </string-array>
     
+    <string name="searchAccountBy_prompt">Search account by</string>
+    <string-array name="searchAccountBy_arrays">
+        <item>Search account by name</item>
+        <item>Search account by code</item>
+    </string-array>
+    
     <string name="help_para1">
         \n<b>1.GNUKhata welcome page:</b>
         \nUser can create new organization or select an existing one.

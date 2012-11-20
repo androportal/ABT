@@ -51,8 +51,8 @@ public class trialBalance extends Activity{
 		    TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
 		    TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
 		      
-		    tvfinancialFromDate.setText("Financial from date: " +financialFromDate);
-		    tvfinancialToDate.setText("Financial to date: " +financialToDate);
+		    tvfinancialFromDate.setText("Financial from: " +financialFromDate);
+		    tvfinancialToDate.setText("Financial to: " +financialToDate);
 		    /*
 		     * send params to controller report.getTrialBalance to get the result
 		     */
@@ -138,7 +138,7 @@ public class trialBalance extends Activity{
      */
     void addHeader(){
         /** Create a TableRow dynamically **/
-        String[] ColumnNameList = new String[] { "Sr. No.","Account Name","Group Name","Total Debit","Total Credit"};
+        String[] ColumnNameList = new String[] { "Sr. no.","Account name","Group name","Total debit","Total credit"};
        
         tr = new TableRow(this);
        

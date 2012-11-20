@@ -37,7 +37,8 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class reportMenu extends ListActivity{
 	//adding report list items
-	String[] reportType = new String[] { "Ledger","Trial Balance","Project Statement","Cash Flow","Balance Sheet","Profit and Loss Account" };
+	String[] reportType = new String[] { "Ledger","Trial balance","Project statement",
+			"Cash flow","Balance sheet","Profit and loss account" };
 	final Context context = this;
 	AlertDialog dialog;
 	DecimalFormat mFormat;
@@ -259,7 +260,7 @@ public class reportMenu extends ListActivity{
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					builder.setTitle("Trial Balance");	
+					builder.setTitle("Trial balance");	
 					
 					final String financialToDate = Startup.getFinancialToDate();
 				   	String dateParts1[] = financialToDate.split("-");
@@ -342,7 +343,7 @@ public class reportMenu extends ListActivity{
 				}
 				if(position == 2)
 				{
-					String message = "This functionality is not implemented yet";
+					String message = "This functionality is not yet implemented";
 	        		toastValidationMessage(message);
 					/*
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -350,7 +351,7 @@ public class reportMenu extends ListActivity{
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					builder.setTitle("Project Statement");
+					builder.setTitle("Project statement");
 					builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
 
 						@Override
@@ -371,7 +372,7 @@ public class reportMenu extends ListActivity{
 				}
 				if(position == 3)
 				{
-					String message = "This functionality is not implemented yet";
+					String message = "This functionality is not yet implemented";
 	        		toastValidationMessage(message);
 	        		/*
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -379,7 +380,7 @@ public class reportMenu extends ListActivity{
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					builder.setTitle("Cash Flow");
+					builder.setTitle("Cash flow");
 					
 					 builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
 
@@ -407,7 +408,7 @@ public class reportMenu extends ListActivity{
 				}
 				if(position == 4)
 				{
-					String message = "This functionality is not implemented yet";
+					String message = "This functionality is not yet implemented";
 	        		toastValidationMessage(message);
 	        		/*
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -415,7 +416,7 @@ public class reportMenu extends ListActivity{
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					builder.setTitle("Balance Sheet");
+					builder.setTitle("Balance sheet");
 					builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -438,7 +439,7 @@ public class reportMenu extends ListActivity{
 				}
 				if(position == 5)
 				{
-					String message = "This functionality is not implemented yet";
+					String message = "This functionality is not yet implemented";
 	        		toastValidationMessage(message);
 	        		/*
 				    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -446,7 +447,7 @@ public class reportMenu extends ListActivity{
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					builder.setTitle("Profit and Loss Account");
+					builder.setTitle("Profit and loss account");
 					builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
 						@Override
 						public void onClick(DialogInterface dialog, int which) {

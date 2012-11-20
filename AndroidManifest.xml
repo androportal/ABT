@@ -65,7 +65,7 @@
             android:name=".voucherMenu" >
         </activity>
          <activity
-            android:theme="@style/mytheme1"
+            android:theme="@style/CustomTheme"
             android:label=""
             android:name=".edit_account" >
             

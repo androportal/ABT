@@ -52,8 +52,8 @@ public class ledger extends Activity{
            tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
           
            tvaccontName.setText("Account name: "+accountName);
-           tvfinancialFromDate.setText("Financial from date: " +financialFromDate);
-           tvfinancialToDate.setText("Financial to date: " +financialToDate);
+           tvfinancialFromDate.setText("Financial from: " +financialFromDate);
+           tvfinancialToDate.setText("Financial to: " +financialToDate);
               
               
             Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,projectName};
@@ -215,7 +215,7 @@ public class ledger extends Activity{
 
     void addHeader(){
         /** Create a TableRow dynamically **/
-        String[] ColumnNameList = new String[] {"Date","Particulars","Reference No","Debit","Credit","Narration"};
+        String[] ColumnNameList = new String[] {"Date","Particulars","Reference no.","Debit","Credit","Narration"};
        
         tr = new TableRow(this);
         

@@ -17,13 +17,17 @@ public class Account {
 	private String total_crbal;
 	private Double diff_bal;
 	private Object[] allAccountNames;
+	private Object[] allAccountCodes;
 	private String accountExists;
 	private Object code_suggestion_chars;
 	private String character;
 	private String suggested_code;
 	private String accChar;
 	private String accountCodeExists;
-
+	private Object[] accountDetails;
+	private Object editaccount;
+	private Double closing_bal;
+	
 	/***
 	 * Default constructor
 	 * create instance of CoreConnection() to get connection with server
@@ -138,6 +142,23 @@ public class Account {
 	
 	
 	/***
+	 * call getAllAccountCodes method from core_engine account.py 
+	 * @param params client id
+	 */
+	public Object getAllAccountCodes(Object client_id) {
+		
+		try {
+			allAccountCodes = (Object[])conn.getClient().call("account.getAllAccountCodes",client_id);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return allAccountCodes;
+	}
+	
+	
+	/***
 	 * 
 	 * @param params [account name , accountCodeFlag , groupnameChar]
 	 * @param client_id
@@ -147,7 +168,6 @@ public class Account {
 		try {
 			
 			accountExists =(String) conn.getClient().call("account.accountExists",new Object[]{params[0]},client_id);
-			System.out.println("accountExists :"+accountExists);
 			if(accountExists.equals("1"))
 			{
 				return "exist";
@@ -156,10 +176,8 @@ public class Account {
 			{
 				accChar = params[0].toString().substring(0, 1);
 				code_suggestion_chars= (params[2].toString()).concat(accChar);
-				System.out.println("code_suggestion_chars:"+code_suggestion_chars);
 				suggested_code = (String) conn.getClient().call("account.getSuggestedCode",
 						new Object[]{code_suggestion_chars},client_id);
-				System.out.println("suggested_code :"+suggested_code);
 				return suggested_code;
 			}
 			} catch (XMLRPCException e) {
@@ -173,8 +191,6 @@ public class Account {
 		try {
 			
 			accountCodeExists =(String) conn.getClient().call("account.accountCodeExists",new Object[]{params[0]},client_id);
-			System.out.println("accountExists :"+accountExists);
-			
 			
 			} catch (XMLRPCException e) {
 			
@@ -183,4 +199,45 @@ public class Account {
 		return accountCodeExists;
 		}
 	
+	/*
+	 * call getAccount method from rpc_account.py
+	 * @param: if search account by account code
+	 * 				params: 1, accountname
+	 * 
+	 * 		   if search account by account name
+	 * 				params: 2, accountname
+	 * 
+	 * @return account detail list: accountcode, groupname, subgroupname,
+	 * accountname, opening balance
+	 */
+	public Object getAccount(Object[] params,Object client_id) {
+		
+		try {
+			accountDetails = (Object[])conn.getClient().call("account.getAccount",params,client_id);
+			
+		} catch (XMLRPCException e) {  
+			
+			e.printStackTrace(); 
+		}
+		return accountDetails;
+	}
+	
+	/*
+	 * call editAccount method from rpc_account.py
+	 * @param: [newAccountName, accountcode, groupname, 
+	 * newOpeningBalance(for all groupnames except DI,DE, II, IE)] and client_id
+	 * @return closing balance and updates account table
+	 */
+	public Object editAccount(Object[] params,Object client_id) {
+			
+			try {
+				editaccount = (Object)conn.getClient().call("account.editAccount",params,client_id);
+				
+			} catch (XMLRPCException e) {
+				
+				e.printStackTrace();
+			}
+			
+			return editaccount;
+		}
 }

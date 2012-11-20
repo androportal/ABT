@@ -22,7 +22,9 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class voucherMenu extends ListActivity {
 	//adding voucher list items
-	String[] voucherType = new String[] { "Contra","Journal","Payment","Receipt","Credit Note","Debit Note","Sales","Sales Return","Purchase","Purchase Return" };
+	String[] voucherType = new String[] { "Contra","Journal","Payment","Receipt",
+			"Credit note","Debit note","Sales","Sales return",
+			"Purchase","Purchase return" };
 	final Context context = this;
 	static String vouchertypeflag;
 	static Object[] voucherAccounts;

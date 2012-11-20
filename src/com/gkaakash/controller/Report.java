@@ -26,9 +26,6 @@ public class Report {
 	public Object getTrialBalance(Object[] params,Object client_id) {
 		
 		try {
-			System.out.println(client_id);
-			System.out.println("we are in trial");
-			System.out.println(params);
 			trialResult = (Object[])conn.getClient().call("reports.getTrialBalance",params,client_id);
 			
 		} catch (XMLRPCFault e) {
