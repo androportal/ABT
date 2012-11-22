@@ -13,6 +13,7 @@ public class Report {
 	private Object[] ledgerResult;
 	private Object[] grosstrialResult;
 	private Object[] extendedtrialResult;
+	private Object[] projectStatement;
 	
 	/***
 	 * Default constructor
@@ -111,4 +112,23 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 		return extendedtrialResult;
 	}
 
+	
+	/*
+	 * get project statement report
+	 */ 
+	public Object getProjectStatementReport(Object[] params,Object client_id) {
+		
+		try {
+			projectStatement = (Object[])conn.getClient().call("reports.getProjectStatementReport",params,client_id);
+		} catch (XMLRPCException e1) {
+		
+			e1.printStackTrace();
+		}
+		
+		catch (Exception e) { 
+			
+			e.printStackTrace();
+		} 
+		return projectStatement;
+	}
 }

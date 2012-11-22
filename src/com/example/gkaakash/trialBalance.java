@@ -46,7 +46,7 @@ public class trialBalance extends Activity{
 		      */
 		    String financialFromDate =Startup.getfinancialFromDate();
 		    String financialToDate=Startup.getFinancialToDate();
-		    String trialToDateString = reportMenu.trialToDateString;
+		    String trialToDateString = reportMenu.givenToDateString;
 		    trialbalancetype=reportMenu.trialbalancetype;
 		    /*
 		     * set financial from date and to date in textview

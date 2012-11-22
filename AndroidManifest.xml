@@ -57,7 +57,7 @@
         </activity>
          <activity 
              android:theme="@style/CustomTheme"
-            android:label="Voucher Types"
+            android:label="Voucher types"
             android:name=".SearchVoucher">
         </activity>
         <activity
@@ -86,7 +86,7 @@
        </activity>
         <activity
             
-      		 android:label="Select Organisation"
+      		 android:label="Select organisation"
             android:name=".selectOrg" >
        </activity> 
        
@@ -102,9 +102,14 @@
        </activity> 
        
          <activity
-      		 android:label="Trial Balance"
+      		 android:label="Trial balance"
             android:name=".trialBalance" >
        </activity> 
+       
+         <activity
+      		android:label="Project statement"
+      		android:name=".projectStatement" >
+       </activity>
     </application>
     
 

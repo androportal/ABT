@@ -42,15 +42,17 @@ public class reportMenu extends ListActivity{
 	final Context context = this;
 	AlertDialog dialog;
 	DecimalFormat mFormat;
-	static String trialToDateString;
-	static String LedgerFromDateString;
-	static String LedgerToDateString;
+	static String financialFromDate;
+	static String financialToDate;
+	static String givenfromDateString;
+	static String givenToDateString;
 	static Integer client_id;
 	private Account account;
 	private Organisation organisation;
 	static String selectedAccount;
 	static String selectedProject;
-	String day, month, year, day1, month1, year1; 
+	static String fromday, frommonth, fromyear, today, tomonth, toyear; 
+	static boolean validateDateFlag;
 	static String trialbalancetype;
 	
 	@Override
@@ -62,17 +64,18 @@ public class reportMenu extends ListActivity{
 		
        	client_id= Startup.getClient_id();
        	
-       	final String financialFromDate =Startup.getfinancialFromDate();  	   	
+       	//get financial from and to date, split and store day, month and year in seperate variable
+       	financialFromDate =Startup.getfinancialFromDate();  	   	
 	   	String dateParts[] = financialFromDate.split("-");
-	   	day  = dateParts[0];
-	   	month = dateParts[1];
-	   	year = dateParts[2];
+	   	fromday  = dateParts[0];
+	   	frommonth = dateParts[1];
+	   	fromyear = dateParts[2];
 	   	
-	   	final String financialToDate = Startup.getFinancialToDate();
+	   	financialToDate = Startup.getFinancialToDate();
 	   	String dateParts1[] = financialToDate.split("-");
-	   	day1  = dateParts1[0];
-	   	month1 = dateParts1[1];
-	   	year1 = dateParts1[2];
+	   	today  = dateParts1[0];
+	   	tomonth = dateParts1[1];
+	   	toyear = dateParts1[2];
 	   	
 		
 		//calling report.xml page
@@ -92,6 +95,7 @@ public class reportMenu extends ListActivity{
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				
 				//for "Ledger"
 				if(position == 0)
 				{
@@ -114,7 +118,7 @@ public class reportMenu extends ListActivity{
 					else{
 						//call the getAllProjects method to get all projects
 						Object[] projectnames = (Object[]) organisation.getAllProjects(client_id);
-						// create new array list of type String to add gropunames
+						// create new array list of type String to add projectnames
 						List<String> projectnamelist = new ArrayList<String>();
 						projectnamelist.add("No Project");
 						for(Object pn : projectnames)
@@ -145,94 +149,39 @@ public class reportMenu extends ListActivity{
 				  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				  	   	projectNames.setAdapter(da1);
 				  	   	
-				  	   	final String financialFromDate =Startup.getfinancialFromDate();  	   	
-					   	String dateParts[] = financialFromDate.split("-");
-					   	String setfromday  = dateParts[0];
-					   	String setfrommonth = dateParts[1];
-					   	String setfromyear = dateParts[2];
-					   	
-					   	final String financialToDate = Startup.getFinancialToDate();
-					   	String dateParts1[] = financialToDate.split("-");
-					   	String settoday  = dateParts1[0];
-					   	String settomonth = dateParts1[1];
-					   	String settoyear = dateParts1[2];
+				  	   	
 					   	
 				  	   	CheckBox cbNarration = (CheckBox)layout.findViewById(R.id.cbNarration);
 				  	   	cbNarration.setVisibility(CheckBox.GONE);
 				  	   	TextView tvcbNarration= (TextView)layout.findViewById(R.id.tvcbNarration);
 				  	   	tvcbNarration.setVisibility(TextView.GONE);
 					   	
-					   	DatePicker LedgerFrom = (DatePicker) layout.findViewById(R.id.dpsetLedgerFromdate);
-					   	LedgerFrom.init(Integer.parseInt(setfromyear),(Integer.parseInt(setfrommonth)-1),Integer.parseInt(setfromday), null);
+					   	final DatePicker LedgerFromdate = (DatePicker) layout.findViewById(R.id.dpsetLedgerFromdate);
+					   	LedgerFromdate.init(Integer.parseInt(fromyear),(Integer.parseInt(frommonth)-1),Integer.parseInt(fromday), null);
 					   	
-					   	DatePicker LedgerT0 = (DatePicker) layout.findViewById(R.id.dpsetLedgerT0date);
-					   	LedgerT0.init(Integer.parseInt(settoyear),(Integer.parseInt(settomonth)-1),Integer.parseInt(settoday), null);
+					   	final DatePicker LedgerT0date = (DatePicker) layout.findViewById(R.id.dpsetLedgerT0date);
+					   	LedgerT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
 					   	
 						builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 
 							@Override
 							public void onClick(DialogInterface arg0, int arg1) {
-								final   DatePicker LedgerFromdate = (DatePicker) dialog.findViewById(R.id.dpsetLedgerFromdate);
-							   	int LedgerFromDay = LedgerFromdate.getDayOfMonth();
-							   	int LedgerFromMonth = LedgerFromdate.getMonth();
-							   	int LedgerFromYear = LedgerFromdate.getYear();
-							   	
-							   	LedgerFromDateString = mFormat.format(Double.valueOf(LedgerFromDay))+ "-" 
-							   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(LedgerFromMonth))))+ 1))) + "-" 
-							   	+ LedgerFromYear;
-							   	
-							   	final   DatePicker LedgerT0date = (DatePicker) dialog.findViewById(R.id.dpsetLedgerT0date);
-							   	int LedgerT0Day = LedgerT0date.getDayOfMonth();
-							   	int LedgerT0Month = LedgerT0date.getMonth();
-							   	int LedgerT0Year = LedgerT0date.getYear();
-							   	
-							   	LedgerToDateString = mFormat.format(Double.valueOf(LedgerT0Day))+ "-" 
-							   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(LedgerT0Month))))+ 1))) + "-" 
-							   	+ LedgerT0Year;
-							   	
-							   	selectedAccount = accountNames.getSelectedItem().toString();
-				        		selectedProject = projectNames.getSelectedItem().toString();
-				        		
-							   	
-							   	try {
-							   		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-						        	Date date1 = sdf.parse(financialFromDate);
-						        	Date date2 = sdf.parse(financialToDate);
-						        	Date date3 = sdf.parse(LedgerFromDateString);
-						        	Date date4 = sdf.parse(LedgerToDateString);
-						        	
-						        	System.out.println("all dates are...........");
-						        	System.out.println(financialFromDate+"---"+financialToDate+"---"+LedgerFromDateString+"---"+LedgerToDateString);
-						        	Calendar cal1 = Calendar.getInstance(); //financial from date
-						        	Calendar cal2 = Calendar.getInstance(); //financial to date
-						        	Calendar cal3 = Calendar.getInstance(); //from date
-						        	Calendar cal4 = Calendar.getInstance(); //to date
-						        	cal1.setTime(date1);
-						        	cal2.setTime(date2);
-						        	cal3.setTime(date3);
-						        	cal4.setTime(date4);  
-						        	
-						        	
-						        	if(selectedAccount.equalsIgnoreCase("Please select account name")){
-						        		String message = "Please select account name";
-						        		toastValidationMessage(message);
-						        	}
-						        	else if(((cal3.after(cal1)&&(cal3.before(cal2))) || (cal3.equals(cal1) || (cal3.equals(cal2)))) 
-						        			&& ((cal4.after(cal1) && (cal4.before(cal2))) || (cal4.equals(cal2)) || (cal4.equals(cal1)))){
-						        		
-						        		
-										
-										Intent intent = new Intent(context, ledger.class);
-										// To pass on the value to the next page
-										startActivity(intent);
-						        	}
-						        	else{
-						        		String message = "Please enter proper date";
-						        		toastValidationMessage(message);
-						        	}
-								} catch (Exception e) {
-									// TODO: handle exception
+								
+								selectedAccount = accountNames.getSelectedItem().toString();
+								selectedProject = projectNames.getSelectedItem().toString();
+								
+								validateDate(LedgerFromdate, LedgerT0date, "validatebothFromToDate");
+								
+								if(selectedAccount.equalsIgnoreCase("Please select account name")){
+					        		String message = "Please select account name";
+					        		toastValidationMessage(message);
+					        	}
+								else if(validateDateFlag){
+									Intent intent = new Intent(context, ledger.class);
+									// To pass on the value to the next page
+									startActivity(intent);
 								}
+								
 							}
 						});
 						
@@ -254,6 +203,7 @@ public class reportMenu extends ListActivity{
 					
 					
 				}
+				//trial balance
 				if(position == 1)
 				{
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -263,19 +213,11 @@ public class reportMenu extends ListActivity{
 					builder.setView(layout);
 					builder.setTitle("Trial balance");	
 					
-					final String financialToDate = Startup.getFinancialToDate();
-				   	String dateParts1[] = financialToDate.split("-");
-				   	String setday  = dateParts1[0];
-				   	String setmonth = dateParts1[1];
-				   	String setyear = dateParts1[2];
 					
-				   	System.out.println(setday+""+setmonth+""+setyear);
-				   	
-					DatePicker trialFrom = (DatePicker) layout.findViewById(R.id.dpTrialsetT0date);
-					trialFrom.init(Integer.parseInt(setyear),(Integer.parseInt(setmonth)-1),Integer.parseInt(setday), null);
+					final DatePicker trialtodate = (DatePicker) layout.findViewById(R.id.dpTrialsetT0date);
+					trialtodate.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
 					
 					final Spinner strialBalanceType = (Spinner)layout.findViewById(R.id.strialBalanceType);
-					
 					
 					TextView tvtrialBalanceType = (TextView)layout.findViewById(R.id.tvtrialBalanceType);
 					tvtrialBalanceType.setVisibility(TextView.GONE);
@@ -284,51 +226,15 @@ public class reportMenu extends ListActivity{
 						@Override
 						public void onClick(DialogInterface arg0, int arg1) {
 							
+							trialbalancetype=strialBalanceType.getSelectedItem().toString();
 							
+							validateDate(null, trialtodate, null);
 							
-							final   DatePicker trialToDate = (DatePicker) dialog.findViewById(R.id.dpTrialsetT0date);
-						   	int trialDay = trialToDate.getDayOfMonth();
-						   	int trialMonth = trialToDate.getMonth();
-						   	int trialYear = trialToDate.getYear();
-						   	
-						   	trialToDateString = mFormat.format(Double.valueOf(trialDay))+ "-" 
-						   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(trialMonth))))+ 1))) + "-" 
-						   	+ trialYear;
-						   	
-						   	/*
-						   	 * compare financial from date and trial to date
-						   	 * trial to date should be greater than equal to financial from date
-						   	 */
-						   	
-						   	try {
-						   		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-					        	Date date1 = sdf.parse(financialFromDate);
-					        	Date date2 = sdf.parse(financialToDate);
-					        	Date date3 = sdf.parse(trialToDateString);
-					        	System.out.println(financialFromDate);
-					        	
-					        	Calendar cal1 = Calendar.getInstance();
-					        	Calendar cal2 = Calendar.getInstance();
-					        	Calendar cal3 = Calendar.getInstance();
-					        	cal1.setTime(date1);
-					        	cal2.setTime(date2);
-					        	cal3.setTime(date3);
-					        	
-					        	if((cal3.after(cal1) && cal3.before(cal2)) || cal3.equals(cal1) || cal3.equals(cal2) ){
-					        		trialbalancetype=strialBalanceType.getSelectedItem().toString();
-									Intent intent = new Intent(context, trialBalance.class);
-									// To pass on the value to the next page
-									startActivity(intent);
-					        	}
-					        	else{
-					        		String message = "Please enter proper date";
-					        		toastValidationMessage(message);
-					        	}
-							} catch (Exception e) {
-								// TODO: handle exception
+						   	if(validateDateFlag){
+								Intent intent = new Intent(context, trialBalance.class);
+								// To pass on the value to the next page
+								startActivity(intent);
 							}
-						   	
-							
 							
 						}
 						
@@ -342,22 +248,52 @@ public class reportMenu extends ListActivity{
 					dialog=builder.create();
 	        		dialog.show();
 				}
+				//project statement
 				if(position == 2)
 				{
-					String message = "This functionality is not yet implemented";
-	        		toastValidationMessage(message);
-					/*
+					
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.project_statement, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
 					builder.setTitle("Project statement");
+					
+					
+					final DatePicker dpProjectStatementSetT0date = (DatePicker) layout.findViewById(R.id.dpProjectStatementSetT0date);
+					dpProjectStatementSetT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
+					
+					//call the getAllProjects method to get all projects
+					Object[] projectnames = (Object[]) organisation.getAllProjects(client_id);
+					// create new array list of type String to add projectnames
+					List<String> projectnamelist = new ArrayList<String>();
+					projectnamelist.add("No Project");
+					for(Object pn : projectnames)
+					{	
+						Object[] p = (Object[]) pn;
+						projectnamelist.add((String) p[1]); //p[0] is project code & p[1] is projectname
+					}	
+					
+					//populate all project names in project dropdown(spinner)
+					final Spinner projectNames = (Spinner)layout.findViewById(R.id.sProject);
+					ArrayAdapter<String> da1 = new ArrayAdapter<String>(reportMenu.this, 
+												android.R.layout.simple_spinner_item,projectnamelist);
+			  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			  	   	projectNames.setAdapter(da1);
+					
 					builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+							selectedProject = projectNames.getSelectedItem().toString();
 							
+							validateDate(null, dpProjectStatementSetT0date, null);
+							
+						   	if(validateDateFlag){
+								Intent intent = new Intent(context, projectStatement.class);
+								// To pass on the value to the next page
+								startActivity(intent);
+							}
 						}
 					});
 					
@@ -369,13 +305,13 @@ public class reportMenu extends ListActivity{
 					});
 					dialog=builder.create();
 	        		dialog.show();
-	        		*/
+	        		
 				}
 				if(position == 3)
 				{
-					String message = "This functionality is not yet implemented";
-	        		toastValidationMessage(message);
-	        		/*
+					//String message = "This functionality is not yet implemented";
+	        		//toastValidationMessage(message);
+	        		
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.cash_flow, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
@@ -405,13 +341,13 @@ public class reportMenu extends ListActivity{
 						lp.copyFrom(dialog.getWindow().getAttributes());
 						lp.width = 600;
 						dialog.getWindow().setAttributes(lp);
-					*/
+					
 				}
 				if(position == 4)
 				{
-					String message = "This functionality is not yet implemented";
-	        		toastValidationMessage(message);
-	        		/*
+					//String message = "This functionality is not yet implemented";
+	        		//toastValidationMessage(message);
+	        		///*
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.balance_sheet, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
@@ -436,13 +372,13 @@ public class reportMenu extends ListActivity{
 					});
 					dialog=builder.create();
 	        		dialog.show();
-	        		*/
+	        		//*/
 				}
 				if(position == 5)
 				{
-					String message = "This functionality is not yet implemented";
-	        		toastValidationMessage(message);
-	        		/*
+					//String message = "This functionality is not yet implemented";
+	        		//toastValidationMessage(message);
+	        		//*
 				    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.income_expenditure, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
@@ -465,11 +401,85 @@ public class reportMenu extends ListActivity{
 						 });
 					dialog=builder.create();
 	        		dialog.show();
-	        	*/
+	        	//*/
 				}
 			} 
 		});
 	}
+	
+	
+	public boolean validateDate(DatePicker fromdate, DatePicker todate, String flag) {
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			Date date1 = sdf.parse(financialFromDate);
+	    	Date date2 = sdf.parse(financialToDate);
+			
+	    	Calendar cal1 = Calendar.getInstance(); //financial from date
+	    	Calendar cal2 = Calendar.getInstance(); //financial to date
+	    	Calendar cal3 = Calendar.getInstance(); //from date
+	    	Calendar cal4 = Calendar.getInstance(); //to date
+	    	
+	    	cal1.setTime(date1);
+	    	cal2.setTime(date2);
+	    	
+			if("validatebothFromToDate".equals(flag)){
+				int FromDay = fromdate.getDayOfMonth();
+			   	int FromMonth = fromdate.getMonth();
+			   	int FromYear = fromdate.getYear();
+			   	
+			   	givenfromDateString = mFormat.format(Double.valueOf(FromDay))+ "-" 
+			   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(FromMonth))))+ 1))) + "-" 
+			   	+ FromYear;
+			   	
+			   	Date date3 = sdf.parse(givenfromDateString);
+			   	cal3.setTime(date3);
+			}
+			
+			int T0Day = todate.getDayOfMonth();
+		   	int T0Month = todate.getMonth();
+		   	int T0Year = todate.getYear();
+		   	
+		   	givenToDateString = mFormat.format(Double.valueOf(T0Day))+ "-" 
+		   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(T0Month))))+ 1))) + "-" 
+		   	+ T0Year;
+		   	
+		   	Date date4 = sdf.parse(givenToDateString);
+		   	cal4.setTime(date4);  
+			
+	    	//System.out.println("all dates are...........");
+	    	//System.out.println(financialFromDate+"---"+financialToDate+"---"+givenfromDateString+"---"+givenToDateString);
+	    	
+	    	if("validatebothFromToDate".equals(flag)){
+	    		if(((cal3.after(cal1)&&(cal3.before(cal2))) || (cal3.equals(cal1) || (cal3.equals(cal2)))) 
+	        			&& ((cal4.after(cal1) && (cal4.before(cal2))) || (cal4.equals(cal2)) || (cal4.equals(cal1)))){
+	        		
+	        		validateDateFlag = true;
+	        	}
+	        	else{
+	        		String message = "Please enter proper date";
+	        		toastValidationMessage(message);
+	        		validateDateFlag = false;
+	        	}
+	    	}
+	    	else {
+	    		if((cal4.after(cal1) && cal4.before(cal2)) || cal4.equals(cal1) || cal4.equals(cal2) ){
+					
+	    			validateDateFlag = true;
+	        	}
+	        	else{
+	        		String message = "Please enter proper date";
+	        		toastValidationMessage(message);
+	        		validateDateFlag = false;
+	        	}
+	    	}
+    	
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return validateDateFlag;
+		
+	} 
+	
 	
 	public void toastValidationMessage(String message) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);

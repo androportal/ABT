@@ -44,8 +44,8 @@ public class ledger extends Activity{
            String financialToDate=Startup.getFinancialToDate();
            String accountName = reportMenu.selectedAccount;
            String projectName = reportMenu.selectedProject;
-           String fromDate = reportMenu.LedgerFromDateString;
-           String toDate = reportMenu.LedgerToDateString;
+           String fromDate = reportMenu.givenfromDateString;
+           String toDate = reportMenu.givenToDateString;
        
            tvaccontName = (TextView) findViewById( R.id.tvaccountName );
            tvfinancialFromDate = (TextView) findViewById( R.id.tvfinancialFromDate );
