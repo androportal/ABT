@@ -1,6 +1,6 @@
-=========================
-GNUkhata on Aakash tablet
-=========================
+===========================
+Accounting on Aakash tablet
+===========================
 
 Porting of `GNUkhata <http://gnukhata.org/>`_ on `Aakash
 <http://www.iitb.ac.in/AK/Aakash.htm>`_ tablet, a ``low cost access
@@ -24,17 +24,23 @@ level needs.
 
 - GNUkhata is a software for
 
-  1. Maintaining books of accounts 
-  2. Recording vouchers, bills, invoices and other documents
+  #. Maintaining books of accounts 
+  #. Recording vouchers, bills, invoices and other documents
      generated in day-to-day transactions
-  3. Generating reports such as Ledger Accounts, Trial Balance,
+  #. Generating reports such as Ledger Accounts, Trial Balance,
      Profit and Loss Account, Project Statement, Cash Flow
      Statement and Balance Sheet
-  4. Bank Reconciliation
+  #. Bank Reconciliation
 
+
+Install
+-------
+
+Please refer to **Install** section of `gkAakashCore
+<https://github.com/androportal/gkAakashCore>`_
 
 gkAakashCore - a backend to gkAakash
-------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `gkAakashCore <https://github.com/androportal/gkAakashCore>`_ provides
 a backend to **gkAakash**. On Aakash tablet, it runs in a ``chroot``
@@ -46,8 +52,8 @@ can be found `here
 Usage 
 ------
 
-This `branch` contains an Android(4.0.3, API-15) code for the User Interface
-of GNUkhata. 
+This `branch` contains an Android(4.0.3, API-15) code for the User
+Interface
 
 User's can clone this repo by typing
 ::
@@ -64,13 +70,13 @@ if you want to clone code for Android(2.2, API-8), type
 if you want to checkout all branches then type,
 ::
 
-   git checkout -b froyo remotes/origin/froyo
    git checkout -b ics remotes/origin/ics
    git checkout -b docs remotes/origin/docs
-   
+   git checkout -b froyo remotes/origin/froyo
+
 
 Importing gkAakash as an `eclipse <http://www.eclipse.org/>`_ project
----------------------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Note`: we have used Eclipse version 3.7.2(Indigo)
  
 - For setting up Android SDK and AVD, please visit this `link
@@ -92,16 +98,16 @@ After cloning the require branch, start eclipse
   button and select the cloned repository
 
 Important note
---------------
+~~~~~~~~~~~~~~
 
 - to test gkAakash on tablet
 - go to
   ``gkAakash/src/com/gkaakash/coreconection/CoreConnection.java`` and
-  change the url from ``"http://10.0.2.2:7081"`` to
-  ``"http://127.0.0.1:7081"``
+  change the url from ``http://10.0.2.2:7081`` to
+  ``http://127.0.0.1:7081``
 
 Documentation
--------------
+~~~~~~~~~~~~~
 
 More documentation in raw `sphinx <http://sphinx.pocoo.org/>`_ format
 can be found at 
@@ -110,8 +116,12 @@ can be found at
 
    git clone -b docs https://github.com/androportal/gkAakash.git
 
-please read the ``README.rst`` on how to generate html docs
+please refer ``README.rst`` on how to generate html docs
 
+Help
+~~~~
+
+Write to us at  accounting-on-aakash@googlegroups.com
 
 License
 -------
