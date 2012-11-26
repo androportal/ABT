@@ -2,11 +2,9 @@ package com.example.gkaakash;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.gkaakash.controller.Account;
 import com.gkaakash.controller.Preferences;
 import com.gkaakash.controller.Startup;
-
 import android.R.color;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -26,11 +24,9 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class edit_account extends Activity{
 	static String accCodeCheckFlag;
@@ -64,7 +60,7 @@ public class edit_account extends Activity{
         sSearchAccountBy = (Spinner) findViewById(R.id.sSearchAccountBy);
         
         Preferences preferencObj = new Preferences();
-  	    // call getPrefernece to get set preference related to account code flag   
+  	    // call getPrefernece to get set preference related to account code flag 
   	    accCodeCheckFlag = preferencObj.getPreferences(new Object[]{"2"},client_id);
         
   	    //set visibility of spinner
@@ -81,7 +77,7 @@ public class edit_account extends Activity{
         accountnames = (Object[])account.getAllAccountNames(client_id);
         getResultList(accountnames);
         
-        //search account by name
+        //search account
         searchAccount();
         
         //edit or delete account
@@ -319,25 +315,12 @@ private void editAccount() {
 											toastValidationMessage(message);
 										}
 										
-										if(accCodeCheckFlag.equals("automatic")){
-											//get all updated acoount names in list view
-											accountnames = (Object[])account.getAllAccountNames(client_id);
-									        getResultList(accountnames);
-			                      	    }
-			                      	    else if (sSearchAccountBy.getVisibility() == View.VISIBLE) {
-			                      	    	    // Its visible
-			                      	    		if(sSearchAccountBy.getSelectedItemPosition()== 0){
-			                      	    			//for search by account name, get all updated acoount names in list view
-			                      	    			accountnames = (Object[])account.getAllAccountNames(client_id);
-											        getResultList(accountnames);
-			                      	    			
-			                      	    		}
-			                      	    }
+										setaccountlist();
 									}
 									
 								}//end of onclick
 							});// end of onclickListener
-              	            
+              	             
               	            builder.setNegativeButton("Cancel", new OnClickListener() {
 								
 								@Override
@@ -359,7 +342,28 @@ private void editAccount() {
                 		break;
 	                case 1:
 	                              {
-	                            	  Toast.makeText(edit_account.this,"Clicked on:"+items[pos],Toast.LENGTH_SHORT).show();
+	                            	  Object[] params = new Object[]{List.getItemAtPosition(position).toString()};
+	                        		  String accountDeleteValue =  (String) account.deleteAccount(params,client_id);
+	                        		  if("account deleted".equals(accountDeleteValue)){
+	                        			  String message = "Account '"+List.getItemAtPosition(position).toString()+"' has been deleted successfully";
+	                        			  toastValidationMessage(message);
+	                        			  setaccountlist();
+	                        		  }
+	                        		  else if("has both opening balance and trasaction".equals(accountDeleteValue)){
+	                        			  String message = "Account '"+List.getItemAtPosition(position).toString()
+	                        					  			+"' has both opening balance and transaction, it can not be deleted";
+	                        			  toastValidationMessage(message); 
+	                        		  }
+	                        		  else if("has opening balance".equals(accountDeleteValue)){
+	                        			  String message = "Account '"+List.getItemAtPosition(position).toString()
+	              					  			+"' has opening balance, it can not be deleted";
+	                        			  toastValidationMessage(message);
+	                        		  }
+	                        		  else if("has transaction".equals(accountDeleteValue)){
+	                        			  String message = "Account '"+List.getItemAtPosition(position).toString()
+	                					  					+"' has transaction, it can not be deleted";
+	                          			  toastValidationMessage(message);
+	                        		  }
 	                      }break;
 	            }
 	        }
@@ -375,7 +379,7 @@ private void editAccount() {
 		
 	}
 
-	//search account by name or code
+	//search account
     private void searchAccount() {
     	//attaching listener to textView
         etSearch.addTextChangedListener(new TextWatcher()
@@ -421,6 +425,24 @@ private void editAccount() {
         }   
          List.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getList));
        
+    }
+    
+    
+    void setaccountlist(){
+    	if(accCodeCheckFlag.equals("automatic")){
+			//get all updated acoount names in list view
+			accountnames = (Object[])account.getAllAccountNames(client_id);
+	        getResultList(accountnames);
+  	    }
+  	    else if (sSearchAccountBy.getVisibility() == View.VISIBLE) {
+  	    	    // Its visible
+  	    		if(sSearchAccountBy.getSelectedItemPosition()== 0){
+  	    			//for search by account name, get all updated acoount names in list view
+  	    			accountnames = (Object[])account.getAllAccountNames(client_id);
+			        getResultList(accountnames);
+  	    			
+  	    	}
+  	    }
     }
     
     

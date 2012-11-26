@@ -75,6 +75,7 @@ public class createOrg extends MainActivity {
 	private void setDateOnLoad() {
 		tvDisplayFromDate = (TextView) findViewById(R.id.tvFromDate);
 		tvDisplayToDate = (TextView) findViewById(R.id.tvToDate);
+		
 		/*
 		 * set "from date" and "to date" textView
 		 * for creating calendar object and linking with its 'getInstance' method, 
@@ -177,7 +178,7 @@ public class createOrg extends MainActivity {
 				//Preparing views
 				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 				View layout = inflater.inflate(R.layout.datepiker, (ViewGroup) findViewById(R.id.layout_root));
-				//Building DatepPcker dialog
+				//Building DatepPicker dialog
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				builder.setView(layout);
 	            builder.setTitle("Set to date");

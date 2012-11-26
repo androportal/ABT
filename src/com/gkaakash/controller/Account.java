@@ -26,6 +26,7 @@ public class Account {
 	private String accountCodeExists;
 	private Object[] accountDetails;
 	private Object editaccount;
+	private Object deleteaccount;
 	private Double closing_bal;
 	
 	/***
@@ -235,9 +236,22 @@ public class Account {
 				
 			} catch (XMLRPCException e) {
 				
-				e.printStackTrace();
+				e.printStackTrace(); 
 			}
 			
 			return editaccount;
 		}
+	
+	public Object deleteAccount(Object[] params,Object client_id) {
+		
+		try {
+			deleteaccount = (Object)conn.getClient().call("account.deleteAccountNameMaster",params,client_id);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return deleteaccount;
+	}
 }
