@@ -112,7 +112,7 @@ public class reportMenu extends ListActivity{
 
 					
 					if(accountnamelist.size() <= 1){
-						String message = "Ledger can not be displayed, Please create account!";
+						String message = "Ledger cannot be displayed, Please create account!";
 						toastValidationMessage(message);
 						}
 					else{
