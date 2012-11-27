@@ -4,15 +4,18 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.Transaction;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -29,11 +32,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TabHost;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class SearchVoucher extends Activity  {
+public class SearchVoucher extends Activity {
 	int textlength=0;
 	Context context = SearchVoucher.this;
 	AlertDialog dialog;
@@ -47,12 +52,18 @@ public class SearchVoucher extends Activity  {
     TextView label;
     static String financialFromDate;
     static String financialToDate;
-	
+    int rowid=0;
+    static String vouchertypeflag;
+    static ArrayList<String> value;
+    static String name;
+    static Boolean cloneflag=false;
+    String vouchercode;
+    protected Boolean deleteVoucher;
 	  @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	    	super.onCreate(savedInstanceState);
 	        setContentView(R.layout.search_voucher);
-	        
+	       
 	        client_id = Startup.getClient_id();
 	        transaction = new Transaction();
 	        
@@ -68,11 +79,16 @@ public class SearchVoucher extends Activity  {
 		      
 		    tvVFromdate.setText("Financial from date: " +financialFromDate);
 		    tvVTodate.setText("Financial to date: " +financialToDate);
+		    
+			vouchertypeflag = voucherMenu.vouchertypeflag;
+		    
 			try {
 				 setOnSearchButtonClick();
 			        
-			     Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
-			      getallvouchers(params);
+				 Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
+				 getallvouchers(params);
+				
+				 
 			} catch (Exception e) {
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(SearchVoucher.this);
@@ -293,7 +309,8 @@ public class SearchVoucher extends Activity  {
            
             for(int j=0;j<columnValue.size();j++){
                 /** Creating a TextView to add to the row **/
-                addRow(columnValue.get(j));   
+                addRow(columnValue.get(j),i);  ////
+               // System.out.println("rowid"+i);
                 label.setBackgroundColor(Color.BLACK);
                 /*
                  * set center aligned gravity for amount and for others set center gravity
@@ -306,6 +323,9 @@ public class SearchVoucher extends Activity  {
                 else{
                     label.setGravity(Gravity.CENTER);
                 }
+               // tr.setId(i);
+                
+                
             }
            
             // Add the TableRow to the TableLayout
@@ -326,7 +346,7 @@ public class SearchVoucher extends Activity  {
        
         for(int k=0;k<ColumnNameList.length;k++){
             /** Creating a TextView to add to the row **/
-            addRow(ColumnNameList[k]);
+            addRow(ColumnNameList[k],k);
             label.setBackgroundColor(Color.parseColor("#348017"));
             label.setGravity(Gravity.CENTER);
         }
@@ -341,7 +361,111 @@ public class SearchVoucher extends Activity  {
 	/*
 	 * this function add the value to the row
 	 */
-	public void addRow(String string) {
+	public void addRow(String string,final int i) {
+		tr.setClickable(true);
+		
+		tr.setOnClickListener(new OnClickListener() {
+			 
+			@Override
+			public void onClick(View v) {
+				// Toast.makeText(SearchVoucher.this, tr.getId(), Toast.LENGTH_SHORT).show(); 
+				 
+				 try {
+					 final CharSequence[] items = { "Edit voucher", "Clone voucher","Delete voucher"};
+						//creating a dialog box for popup
+				        AlertDialog.Builder builder = new AlertDialog.Builder(SearchVoucher.this);
+				        //setting title
+				        builder.setTitle("Edit/Delete Voucher");
+				        //adding items
+				        builder.setItems(items, new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int pos) {
+								if(pos == 0){
+									MainActivity.nameflag=true;
+								 	name="Edit voucher";
+								 	Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+								 	cloneflag=false;
+								 	
+									//System.out.println("in addrow"+i); 
+									value=searchedVoucherGrid.get(i);
+									System.out.println(value);
+									Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show();
+									
+									MainActivity.searchFlag=true;
+									Intent intent = new Intent(context, transaction_tab.class);
+									// To pass on the value to the next page
+									startActivity(intent);
+									System.out.println("edit");
+								}
+								if(pos==1){
+									System.out.println("clone");
+								 	MainActivity.nameflag=true;
+								 	cloneflag=true;
+								    name="Clone voucher";
+								    Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+									//System.out.println("in addrow"+i); 
+									value=searchedVoucherGrid.get(i);
+									System.out.println(value);
+									Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show(); 
+									MainActivity.searchFlag=true;
+									Intent intent = new Intent(context, transaction_tab.class);
+									// To pass on the value to the next page
+									startActivity(intent);
+									Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+								}
+								
+								if(pos==2){
+									AlertDialog.Builder builder = new AlertDialog.Builder(SearchVoucher.this);
+									builder.setMessage("Are you sure you want to detete the Voucher?")
+											.setCancelable(false)
+											.setPositiveButton("Yes",
+													new DialogInterface.OnClickListener() {
+														public void onClick(DialogInterface dialog, int id) {
+															value=searchedVoucherGrid.get(i);
+															System.out.println(value);
+															vouchercode=value.get(0);
+															System.out.println("code "+vouchercode);
+															Object[] params = new Object[]{vouchercode};
+															deleteVoucher = (Boolean) transaction.deleteVoucher(params,client_id);
+															
+															Object[] allvouchersparams = new Object[]{2,"",financialFromDate,financialToDate,""};
+														    getallvouchers(allvouchersparams);
+														      
+															System.out.println("delete:"+deleteVoucher);
+															 Toast.makeText(context,"Voucher Deleted",Toast.LENGTH_SHORT).show();
+														}
+													})
+											.setNegativeButton("No", new DialogInterface.OnClickListener() {
+												public void onClick(DialogInterface dialog, int id) {
+													dialog.cancel();
+												}
+											});
+									AlertDialog alert = builder.create();
+									alert.show();
+								}
+							}				        	
+				        });
+				        dialog=builder.create();
+          	            ((Dialog) dialog).show();
+          	              WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+          	            //customizing the width and location of the dialog on screen 
+          	            lp.copyFrom(dialog.getWindow().getAttributes());
+          	            lp.height = 600;
+          	            lp.width = 400;
+          	            dialog.getWindow().setAttributes(lp);		
+				        
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+				 
+				
+				 
+			}
+			
+		});
+		
 		label = new TextView(SearchVoucher.this);
         label.setText(string);
         label.setTextColor(Color.WHITE);
@@ -355,7 +479,7 @@ public class SearchVoucher extends Activity  {
         //Ll.setPadding(10, 5, 5, 5);
         Ll.addView(label,params);
         tr.addView((View)Ll); // Adding textView to tablerow.
-		
+       
 	}
 	
 	public void getallvouchers(Object[] params){
@@ -367,8 +491,13 @@ public class SearchVoucher extends Activity  {
             searchedVoucherList = new ArrayList<String>();
             for(int i=0;i<v.length;i++){
             	
-            	searchedVoucherList.add((String) v[i].toString());
-               
+            	System.out.println("list "+(String) v[3].toString());
+            	System.out.println("flag "+vouchertypeflag);
+            	
+            	if(((String) v[3].toString()).equalsIgnoreCase(vouchertypeflag)){
+            		searchedVoucherList.add((String) v[i].toString());
+            	}
+            	
             }
             searchedVoucherGrid.add(searchedVoucherList);
 		}
@@ -398,4 +527,9 @@ public class SearchVoucher extends Activity  {
         alert.show();
 		
 	} 
+	 public void onBackPressed() {
+		 Intent intent = new Intent(getApplicationContext(), voucherMenu.class);
+		 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		 startActivity(intent);
+	}
 }

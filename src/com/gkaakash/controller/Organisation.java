@@ -11,7 +11,7 @@ public class Organisation {
 	private Object[] projects;
 	Object[] Params;
 	
-	/***
+	/*** 
 	 * 
 	 */
 	public Organisation() {

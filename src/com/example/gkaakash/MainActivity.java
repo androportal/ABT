@@ -38,7 +38,9 @@ public class MainActivity extends Activity {
     int Help = Menu.FIRST;
     AlertDialog help_dialog;
     int help_option_menu_flag = 0;
-    
+    static Boolean searchFlag=false;
+    static Boolean nameflag=false;
+
      public boolean onCreateOptionsMenu(Menu menu) {
             menu.add(group1Id, Help, Help, "Help");
           
