@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+
+import com.example.gkaakash.R.layout;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.Transaction;
 import android.app.Activity;
@@ -18,6 +20,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Layout;
 import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -319,6 +322,7 @@ public class SearchVoucher extends Activity {
                 	final SpannableString rsSymbol = new SpannableString(SearchVoucher.this.getText(R.string.Rs)); 
                     label.setText(rsSymbol+" "+columnValue.get(j).toString());
                     label.setGravity(Gravity.RIGHT);
+                    
                 }
                 else{
                     label.setGravity(Gravity.CENTER);
@@ -468,18 +472,19 @@ public class SearchVoucher extends Activity {
 		
 		label = new TextView(SearchVoucher.this);
         label.setText(string);
+        label.setTextSize(15);
         label.setTextColor(Color.WHITE);
+        label.setGravity(Gravity.CENTER_VERTICAL);
         label.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT));
         label.setPadding(2, 2, 2, 2);
         LinearLayout Ll = new LinearLayout(SearchVoucher.this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT);
+               35);
         params.setMargins(1, 1, 1, 1);
         //Ll.setPadding(10, 5, 5, 5);
         Ll.addView(label,params);
         tr.addView((View)Ll); // Adding textView to tablerow.
-       
 	}
 	
 	public void getallvouchers(Object[] params){
