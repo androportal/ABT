@@ -28,6 +28,7 @@ public class Account {
 	private Object editaccount;
 	private Object deleteaccount;
 	private Double closing_bal;
+	private Object[] getAllBankAccounts;
 	
 	/***
 	 * Default constructor
@@ -254,4 +255,22 @@ public class Account {
 		
 		return deleteaccount;
 	}
+	
+	
+	/***
+	 * call getAllBankAccounts method from core_engine account.py 
+	 * @param params client id
+	 */
+	public Object getAllBankAccounts(Object client_id) {
+		
+		try {
+			getAllBankAccounts = (Object[])conn.getClient().call("account.getAllBankAccounts",client_id);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return getAllBankAccounts;
+	}
+	
 }

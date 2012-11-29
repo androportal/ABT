@@ -37,8 +37,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class reportMenu extends ListActivity{
 	//adding report list items
-	String[] reportType = new String[] { "Ledger","Trial balance","Project statement",
-			"Cash flow","Balance sheet","Profit and loss account" };
+	
 	final Context context = this;
 	AlertDialog dialog;
 	DecimalFormat mFormat;
@@ -54,6 +53,11 @@ public class reportMenu extends ListActivity{
 	static String fromday, frommonth, fromyear, today, tomonth, toyear; 
 	static boolean validateDateFlag;
 	static String trialbalancetype;
+	String[] reportType;
+	static String orgtype;
+	boolean reportmenuflag;
+	String orgname;
+	static String reportTypeFlag;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,30 @@ public class reportMenu extends ListActivity{
 		organisation = new Organisation();
 		
        	client_id= Startup.getClient_id();
+       	
+       	
+       	/*
+       	 * get org type from create page or select org page
+       	 */
+       	if(reportmenuflag==true){
+            orgtype=createOrg.orgTypeFlag;
+        }
+       	else {
+	         orgname=selectOrg.selectedOrgName;
+	         System.out.println("org name in selett "+orgname);
+	         Object[] params = new Object[]{orgname};
+	         orgtype = (String) organisation.getorgTypeByname(params, client_id);;
+	         System.out.println("org type in select"+orgtype);
+       	}
+        if("NGO".equals(orgtype))
+        {
+            reportType = new String[] { "Ledger","Trial balance","Project statement",
+                 "Cash flow","Balance sheet","Income and Expenditure" };
+        }
+        else{
+            reportType = new String[] { "Ledger","Trial balance","Project statement",
+                 "Cash flow","Balance sheet","Profit and Loss account" };
+        }
        	
        	//get financial from and to date, split and store day, month and year in seperate variable
        	financialFromDate =Startup.getfinancialFromDate();  	   	
@@ -104,14 +132,13 @@ public class reportMenu extends ListActivity{
 					Object[] accountnames = (Object[]) account.getAllAccountNames(client_id);
 					// create new array list of type String to add account names
 					List<String> accountnamelist = new ArrayList<String>();
-					accountnamelist.add("Please select account name");
 					for(Object an : accountnames)
 					{	
 						accountnamelist.add((String) an); 
 					}	
 
 					
-					if(accountnamelist.size() <= 1){
+					if(accountnamelist.size() <= 0){
 						String message = "Ledger cannot be displayed, Please create account!";
 						toastValidationMessage(message);
 						}
@@ -172,11 +199,7 @@ public class reportMenu extends ListActivity{
 								
 								validateDate(LedgerFromdate, LedgerT0date, "validatebothFromToDate");
 								
-								if(selectedAccount.equalsIgnoreCase("Please select account name")){
-					        		String message = "Please select account name";
-					        		toastValidationMessage(message);
-					        	}
-								else if(validateDateFlag){
+								if(validateDateFlag){
 									Intent intent = new Intent(context, ledger.class);
 									// To pass on the value to the next page
 									startActivity(intent);
@@ -218,9 +241,6 @@ public class reportMenu extends ListActivity{
 					trialtodate.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
 					
 					final Spinner strialBalanceType = (Spinner)layout.findViewById(R.id.strialBalanceType);
-					
-					TextView tvtrialBalanceType = (TextView)layout.findViewById(R.id.tvtrialBalanceType);
-					tvtrialBalanceType.setVisibility(TextView.GONE);
 					
 					builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 						@Override
@@ -309,9 +329,6 @@ public class reportMenu extends ListActivity{
 				}
 				if(position == 3)
 				{
-					//String message = "This functionality is not yet implemented";
-	        		//toastValidationMessage(message);
-	        		
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.cash_flow, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
@@ -319,13 +336,25 @@ public class reportMenu extends ListActivity{
 					builder.setView(layout);
 					builder.setTitle("Cash flow");
 					
+					final DatePicker CashFlowFromdate = (DatePicker) layout.findViewById(R.id.dpsetCashFlowFromdate);
+					CashFlowFromdate.init(Integer.parseInt(fromyear),(Integer.parseInt(frommonth)-1),Integer.parseInt(fromday), null);
+				   	
+				   	final DatePicker CashFlowT0date = (DatePicker) layout.findViewById(R.id.dpsetCashFlowT0date);
+				   	CashFlowT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
+					
 					 builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
-
+		
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							
+							validateDate(CashFlowFromdate, CashFlowT0date, "validatebothFromToDate");
+							
+							if(validateDateFlag){
+								Intent intent = new Intent(context, cashFlow.class);
+								// To pass on the value to the next page
+								startActivity(intent);
+							}
 						}
-						 
 					 });
 					 builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
 							@Override
@@ -376,19 +405,35 @@ public class reportMenu extends ListActivity{
 				}
 				if(position == 5)
 				{
-					//String message = "This functionality is not yet implemented";
-	        		//toastValidationMessage(message);
-	        		//*
 				    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.income_expenditure, (ViewGroup) findViewById(R.id.layout_root));
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					builder.setTitle("Profit and loss account");
+					if(orgtype.equalsIgnoreCase("NGO")){
+						builder.setTitle("Income and Expenditure");
+						reportTypeFlag = "Income and Expenditure";
+					}
+					else{
+						builder.setTitle("Profit and Loss");
+						reportTypeFlag = "Profit and Loss";
+					}
+					
+					
+					final DatePicker dpIEPLT0date = (DatePicker) layout.findViewById(R.id.dpIEPLSetT0date);
+					dpIEPLT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
+					
 					builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							
+							validateDate(null, dpIEPLT0date, null);
+							
+						   	if(validateDateFlag){
+								Intent intent = new Intent(context, incomeExpenditure.class);
+								// To pass on the value to the next page
+								startActivity(intent);
+							}
 						}
 						 
 					 });

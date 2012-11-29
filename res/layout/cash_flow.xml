@@ -14,7 +14,6 @@
           android:layout_weight="50" >
         
          <TextView
-             android:id="@+id/tvsetfromdate"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_gravity="center"
@@ -23,7 +22,7 @@
              android:textSize="20dp" />
 
          <DatePicker
-             android:id="@+id/dpsetFromdate"
+             android:id="@+id/dpsetCashFlowFromdate"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_gravity="center" />
@@ -39,7 +38,6 @@
          android:layout_weight="50" >
          
         <TextView
-            android:id="@+id/tvsetT0date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -48,7 +46,7 @@
             android:textSize="20dp" />
 
         <DatePicker
-            android:id="@+id/dpsetT0date"
+            android:id="@+id/dpsetCashFlowT0date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />

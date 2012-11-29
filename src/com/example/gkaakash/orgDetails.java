@@ -198,97 +198,24 @@ public class orgDetails extends Activity{
 		getToDate=createOrg.todate;
 		//Create a class implementing “OnClickListener” and set it as the on click listener for the button
 		btnSkip.setOnClickListener(new OnClickListener() {
-			
-
+		
 			@Override
-			public void onClick(android.view.View v) {
-				//progress bar moving image to show wait state
-				progressBar = new ProgressDialog(context);
-                progressBar.setCancelable(false);
-                progressBar.setMessage("Please Wait, Saving Organisation Details ...");
-                progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressBar.setProgress(0);
-                progressBar.setMax(1000);
-                progressBar.show();
-				//list of input parameters type of Object 
-				deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
-				//call method deploy from startup.java 
-				client_id = startup.deploy(deployparams);
-				 //To pass on the activity to the next page   
-				Intent intent = new Intent(context, preferences.class);
-                startActivity(intent); 
-                
-                 
+			public void onClick(View v) {
+				
+				savedeatils();
 			}
-		});
+		}); 
+		
+		
 		btnorgDetailSave.setOnClickListener(new OnClickListener() {
 		
 			@Override
 			public void onClick(View v) {
-				getOrgName = createOrg.organisationName;
-				getFromDate = createOrg.fromdate;
-				getToDate = createOrg.todate;
-				getAddr = etGetAddr.getText().toString();
-			
-				getPin = sGetPostal.getText().toString();
-				eGetTelNo = eGetPhone.getText().toString();
-				eGetFaxNO = eGetFax.getText().toString();
-				etGetWeb = etGetWebSite.getText().toString();
-				eGetEmail = eGetEmailid.getText().toString();
-				etPan = etPanNo.getText().toString();
-				etMVATno = etMVATnum.getText().toString();
-				etServiceTaxno = etServiceTaxnum.getText().toString();
-				etRegNo = etRegNum.getText().toString();
-				RegDate = btnRegDate.getText().toString();
-				etFcraNo = etFcraNum.getText().toString();
 				
-				FcraDate = btnFcraDate.getText().toString();
-				
-				//progress bar moving image to show wait state
-				progressBar = new ProgressDialog(context);
-                progressBar.setCancelable(false);
-                progressBar.setMessage("Please Wait, Saving Organisation Details ...");
-                progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressBar.setProgress(0);
-                progressBar.setMax(1000);
-                progressBar.show();
-              //list of input parameters type of Object 
-				deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
-				//call method deploy from startup.java 
-				client_id = startup.deploy(deployparams);
-				
-			     orgparams = new Object[]{getSelectedOrgType,getOrgName,
-                						getAddr,selectedCityName,getPin, 
-                						selectedStateName,selectedCounrty, 
-                						eGetTelNo,eGetFaxNO,etGetWeb,eGetEmail,
-                						etPan,etMVATno,etServiceTaxno,etRegNo,
-                						RegDate,etFcraNo,FcraDate }; 
-                System.out.println("all parameters :"+orgparams);
-                
-                setOrgDetails = org.setOrganisation(orgparams,client_id);
-                System.out.println(setOrgDetails);
-                if (setOrgDetails==true){
-                	String message = "Organisation "+getOrgName+" with details saved successfully";
-                	
-                	AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			        builder.setMessage(message)
-			                .setCancelable(false)
-			                .setPositiveButton("Ok",
-			                        new DialogInterface.OnClickListener() {
-			                            public void onClick(DialogInterface dialog, int id) {
-			                            	
-			                            }
-			                        });
-			                
-			        AlertDialog alert = builder.create();
-			        alert.show();
-    				//To pass on the activity to the next page
-    				Intent intent = new Intent(context, preferences.class);
-                    startActivity(intent);
-                }
-                
+				savedeatils();
 			}
 		}); 
+		
 		
 		
 		btnRegDate.setOnClickListener(new OnClickListener() {
@@ -443,4 +370,73 @@ public class orgDetails extends Activity{
 			
 		});
 	} // end of addListenerOnItem()
+	
+	
+	/*
+	 * get all values and pass to the backend through controller
+	 */
+	private void savedeatils() {
+		// TODO Auto-generated method stub
+		getOrgName = createOrg.organisationName;
+		getFromDate = createOrg.fromdate;
+		getToDate = createOrg.todate;
+		getAddr = etGetAddr.getText().toString();
+	
+		getPin = sGetPostal.getText().toString();
+		eGetTelNo = eGetPhone.getText().toString();
+		eGetFaxNO = eGetFax.getText().toString();
+		etGetWeb = etGetWebSite.getText().toString();
+		eGetEmail = eGetEmailid.getText().toString();
+		etPan = etPanNo.getText().toString();
+		etMVATno = etMVATnum.getText().toString();
+		etServiceTaxno = etServiceTaxnum.getText().toString();
+		etRegNo = etRegNum.getText().toString();
+		RegDate = btnRegDate.getText().toString();
+		etFcraNo = etFcraNum.getText().toString();
+		
+		FcraDate = btnFcraDate.getText().toString();
+		
+		//progress bar moving image to show wait state
+		progressBar = new ProgressDialog(context);
+        progressBar.setCancelable(false);
+        progressBar.setMessage("Please Wait, Saving Organisation Details ...");
+        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressBar.setProgress(0);
+        progressBar.setMax(1000);
+        progressBar.show();
+      //list of input parameters type of Object 
+		deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
+		//call method deploy from startup.java 
+		client_id = startup.deploy(deployparams);
+		
+	     orgparams = new Object[]{getSelectedOrgType,getOrgName,
+        						getAddr,selectedCityName,getPin, 
+        						selectedStateName,selectedCounrty, 
+        						eGetTelNo,eGetFaxNO,etGetWeb,eGetEmail,
+        						etPan,etMVATno,etServiceTaxno,etRegNo,
+        						RegDate,etFcraNo,FcraDate }; 
+        System.out.println("all parameters :"+orgparams);
+        
+        setOrgDetails = org.setOrganisation(orgparams,client_id);
+        System.out.println(setOrgDetails);
+        if (setOrgDetails==true){
+        	String message = "Organisation "+getOrgName+" with details saved successfully";
+        	
+        	AlertDialog.Builder builder = new AlertDialog.Builder(context);
+	        builder.setMessage(message)
+	                .setCancelable(false)
+	                .setPositiveButton("Ok",
+	                        new DialogInterface.OnClickListener() {
+	                            public void onClick(DialogInterface dialog, int id) {
+	                            	
+	                            }
+	                        });
+	                
+	        AlertDialog alert = builder.create();
+	        alert.show();
+			//To pass on the activity to the next page
+			Intent intent = new Intent(context, preferences.class);
+            startActivity(intent);
+        }
+	}
 } // End of Class

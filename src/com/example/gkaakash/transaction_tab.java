@@ -46,7 +46,7 @@ public class transaction_tab extends TabActivity {
 	        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.voucher_title);
 	        final TextView label = (TextView) findViewById(R.id.tvVoucherTitle);
 	        String vouchertypeflag = voucherMenu.vouchertypeflag;
-	        label.setText("Menu >> Transaction >>" + vouchertypeflag);
+	        label.setText("Menu >> Transaction >> " + vouchertypeflag);
 	        final Button home = (Button) findViewById(R.id.btnhome);
 	        home.setOnClickListener(new OnClickListener() {
 

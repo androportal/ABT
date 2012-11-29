@@ -1,0 +1,100 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dark_gray_background">
+   <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/layout_root"
+            android:layout_weight="50"
+            android:paddingTop="10dp">
+      
+        <LinearLayout
+            android:id="@+id/layout_root"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+           
+         <TextView
+             android:id="@+id/tvTfinancialFromDate"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="start"
+             android:layout_weight="50"
+             android:gravity="center_horizontal"
+             android:textColor="#FFFFFF"
+             android:textSize="15dp" />
+            
+          <TextView
+              android:id="@+id/tvTfinancialToDate"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="right"
+              android:layout_weight="50"
+              android:gravity="center_horizontal"
+              android:textColor="#FFFFFF"
+              android:textSize="15dp" />
+          
+        </LinearLayout>
+  
+         <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/layout_root"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="10dp" >
+             <HorizontalScrollView 
+              	android:layout_height="fill_parent"
+          		android:layout_width="fill_parent"
+            	android:fillViewport="true">
+              <ScrollView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:fillViewport="true"
+	            android:scrollbarFadeDuration="0"
+	            android:scrollbarAlwaysDrawVerticalTrack="true" 
+	            android:scrollbarAlwaysDrawHorizontalTrack="true">
+	            
+            	<LinearLayout
+       				android:layout_width="wrap_content"
+            		android:layout_height="0dp"
+            		android:orientation="vertical">
+            		
+		            <LinearLayout
+		                android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:orientation="horizontal">
+		            
+		                <TableLayout
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+				            android:stretchColumns=",1,2"
+				            android:id="@+id/maintable1"
+				            android:background="#696565"
+				            android:layout_weight="1" />
+	               
+			            <!-- just add space line -->
+				    	<Space
+				    	    android:layout_width="10dip"
+					        android:layout_height="10dip"/>
+		    	
+		                <TableLayout
+				            android:id="@+id/maintable2"
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+				            android:stretchColumns=",1,2"
+				            android:background="#696565"
+				            android:layout_weight="1" />
+               
+                	</LinearLayout>
+                
+                </LinearLayout>
+            </ScrollView>
+            </HorizontalScrollView>
+         </LinearLayout>  
+        
+        
+    </LinearLayout>
+</RelativeLayout>

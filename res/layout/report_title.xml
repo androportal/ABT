@@ -33,17 +33,6 @@
             android:gravity="right" >
 
             <Button
-                android:id="@+id/btnChangeReport"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/buttontitle"
-                android:gravity="center_vertical"
-                android:text=" View Other Reports"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#FFFFFF" />
-
-            <Button
                 android:id="@+id/btnhome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

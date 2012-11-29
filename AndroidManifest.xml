@@ -110,6 +110,21 @@
       		android:label="Project statement"
       		android:name=".projectStatement" >
        </activity>
+       
+         <activity
+      		android:label="Profit and Loss"
+      		android:name=".incomeExpenditure" >
+       </activity>
+       
+         <activity
+      		android:label="Cash flow"
+      		android:name=".cashFlow" >
+       </activity>
+       
+         <activity
+      		android:label="Bank reconciliation"
+      		android:name=".bankReconciliation" >
+       </activity>
     </application>
     
 

@@ -14,6 +14,8 @@ public class Report {
 	private Object[] grosstrialResult;
 	private Object[] extendedtrialResult;
 	private Object[] projectStatement;
+	private Object[] profitLossStatement;
+	private Object[] cashFlowStatement;
 	
 	/***
 	 * Default constructor
@@ -130,5 +132,43 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 			e.printStackTrace();
 		} 
 		return projectStatement;
+	}
+	
+	/*
+	 * get Income and Expenditure/Profit and Loss report
+	 */ 
+	public Object getProfitLossDisplay(Object[] params,Object client_id) {
+		
+		try { 
+			profitLossStatement = (Object[])conn.getClient().call("reports.getProfitLossDisplay",params,client_id);
+		} catch (XMLRPCException e1) {
+		
+			e1.printStackTrace();
+		}
+		
+		catch (Exception e) { 
+			
+			e.printStackTrace();
+		} 
+		return profitLossStatement;
+	}
+	
+	/*
+	 * get cash flow report
+	 */ 
+	public Object getCashFlow(Object[] params,Object client_id) {
+		
+		try { 
+			cashFlowStatement = (Object[])conn.getClient().call("reports.getCashFlow",params,client_id);
+		} catch (XMLRPCException e1) {
+		
+			e1.printStackTrace();
+		}
+		
+		catch (Exception e) { 
+			
+			e.printStackTrace();
+		} 
+		return cashFlowStatement;
 	}
 }

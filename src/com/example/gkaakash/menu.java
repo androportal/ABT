@@ -4,8 +4,15 @@ package com.example.gkaakash;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import com.gkaakash.controller.Account;
 import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Preferences;
 import com.gkaakash.controller.Startup;
@@ -37,9 +44,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -58,9 +67,11 @@ public class menu extends ListActivity{
     private TableLayout projectTable;
     int rowsSoFar=0;
     int count;
+	static String fromday, frommonth, fromyear, today, tomonth, toyear; 
     static int idCount;
     EditText etProject,etdynamic;
     private Integer client_id;
+    private Account account;
     private Preferences preferences;
     private Organisation organisation;
     ArrayList<String> finalProjlist;
@@ -69,10 +80,19 @@ public class menu extends ListActivity{
     boolean projectExistsFlag = false;
     private boolean setProject;
     AlertDialog help_dialog;
+    static String financialFromDate;
+	static String financialToDate;
+	static String givenfromDateString;
+	static String givenToDateString;
+	DecimalFormat mFormat;
+	static boolean validateDateFlag;
+	static String selectedAccount;
+	static boolean cleared_tran_flag;
+	static boolean narration_flag;
     
     //adding list items to the newly created menu list
     String[] menuOptions = new String[] { "Create account", "Transaction", "Reports",
-            "Add projects","Help","About" };
+            "Add projects","Bank Reconciliation","Help","About" };
 
     /*
     //adding options to the options menu
@@ -107,9 +127,28 @@ public class menu extends ListActivity{
     //on load...
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        account = new Account();
         preferences = new Preferences();
         organisation = new Organisation();
         client_id= Startup.getClient_id();
+        
+      //get financial from and to date, split and store day, month and year in seperate variable
+       	financialFromDate =Startup.getfinancialFromDate();  	   	
+	   	String dateParts[] = financialFromDate.split("-");
+	   	fromday  = dateParts[0];
+	   	frommonth = dateParts[1];
+	   	fromyear = dateParts[2];
+	   	
+	   	financialToDate = Startup.getFinancialToDate();
+	   	String dateParts1[] = financialToDate.split("-");
+	   	today  = dateParts1[0];
+	   	tomonth = dateParts1[1];
+	   	toyear = dateParts1[2];
+	   	
+	   	//for two digit format date for dd and mm
+	  	mFormat= new DecimalFormat("00");
+	  	mFormat.setRoundingMode(RoundingMode.DOWN);
+        
         //calling menu.xml and adding menu list into the page
         setListAdapter(new ArrayAdapter<String>(this, R.layout.menu,menuOptions));
  
@@ -303,8 +342,103 @@ public class menu extends ListActivity{
                     dialog.getWindow().setAttributes(lp);
                     }
                 
-                //for help
+                //bank reconcilition
                 if(position == 4){
+                	
+                	//call the getAllBankAccounts method to get all bank account names
+					Object[] accountnames = (Object[]) account.getAllBankAccounts(client_id);
+					// create new array list of type String to add account names
+					List<String> accountnamelist = new ArrayList<String>();
+					for(Object an : accountnames)
+					{	
+						accountnamelist.add((String) an); 
+					}	
+					
+					if(accountnamelist.size() <= 0){
+						String message = "Bank reconciliation statement cannot be displayed, Please create bank account!";
+						toastValidationMessage(message);
+						}
+					else{
+                	
+	                	LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+						View layout = inflater.inflate(R.layout.bank_recon_index, (ViewGroup) findViewById(R.id.layout_root));
+						//Building DatepPcker dialog
+						AlertDialog.Builder builder = new AlertDialog.Builder(context);
+						builder.setView(layout);
+						builder.setTitle("Bank reconcilition");
+						
+						//populate all bank account names in accountname dropdown(spinner)
+						final Spinner sBankAccounts = (Spinner)layout.findViewById(R.id.sBankAccounts);
+						ArrayAdapter<String> da = new ArrayAdapter<String>(menu.this, 
+													android.R.layout.simple_spinner_item,accountnamelist);
+				  	   	da.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				  	   	sBankAccounts.setAdapter(da);
+						
+						final DatePicker ReconFromdate = (DatePicker) layout.findViewById(R.id.dpsetReconFromdate);
+						ReconFromdate.init(Integer.parseInt(fromyear),(Integer.parseInt(frommonth)-1),Integer.parseInt(fromday), null);
+					   	
+					   	final DatePicker ReconT0date = (DatePicker) layout.findViewById(R.id.dpsetReconT0date);
+					   	ReconT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
+						
+					   	final CheckBox cbClearedTransaction = (CheckBox)layout.findViewById(R.id.cbClearedTransaction);
+					   	final CheckBox cbNarration = (CheckBox)layout.findViewById(R.id.cbReconNarration);
+					   	
+						builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							
+								if(cbClearedTransaction.isChecked()){
+							   		cleared_tran_flag = true;
+							   	}
+							   	else{
+							   		cleared_tran_flag = false;
+							   	}
+							   	
+							   	if(cbNarration.isChecked()){
+							   		narration_flag = true;
+							   	}
+							   	else{
+							   		narration_flag = false;
+							   	}
+								
+								selectedAccount = sBankAccounts.getSelectedItem().toString();
+								
+								System.out.println("i am account"+selectedAccount);
+								validateDate(ReconFromdate, ReconT0date, "validatebothFromToDate");
+								
+								
+								if(validateDateFlag){
+									Intent intent = new Intent(context, bankReconciliation.class);
+									// To pass on the value to the next page
+									startActivity(intent);
+								}
+							}
+	
+							
+							
+						});
+						
+						builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
+	
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+							}
+							
+						});
+						dialog=builder.create();
+		        		dialog.show();
+		        		
+		        		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+						//customizing the width and location of the dialog on screen 
+						lp.copyFrom(dialog.getWindow().getAttributes());
+						lp.width = 700;
+						dialog.getWindow().setAttributes(lp);
+					}
+                }
+                
+                //for help
+                if(position == 5){
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                     final View layout = inflater.inflate(R.layout.help_popup,
                             (ViewGroup) findViewById(R.id.layout_root));
@@ -327,7 +461,7 @@ public class menu extends ListActivity{
                 }
                 
                 //for about
-                if(position == 5){
+                if(position == 6){
                     AlertDialog about_dialog;
                     final SpannableString s = 
                             new SpannableString(context.getText(R.string.about_para));
@@ -422,6 +556,78 @@ public class menu extends ListActivity{
         projectTable.addView(newRow);
        
     }
+    
+    
+    private boolean validateDate(DatePicker fromdate, DatePicker todate, String flag){
+    	try {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			Date date1 = sdf.parse(financialFromDate);
+	    	Date date2 = sdf.parse(financialToDate);
+			
+	    	Calendar cal1 = Calendar.getInstance(); //financial from date
+	    	Calendar cal2 = Calendar.getInstance(); //financial to date
+	    	Calendar cal3 = Calendar.getInstance(); //from date
+	    	Calendar cal4 = Calendar.getInstance(); //to date
+	    	
+	    	cal1.setTime(date1);
+	    	cal2.setTime(date2);
+	    	
+			if("validatebothFromToDate".equals(flag)){
+				int FromDay = fromdate.getDayOfMonth();
+			   	int FromMonth = fromdate.getMonth();
+			   	int FromYear = fromdate.getYear();
+			   	
+			   	givenfromDateString = mFormat.format(Double.valueOf(FromDay))+ "-" 
+			   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(FromMonth))))+ 1))) + "-" 
+			   	+ FromYear;
+			   	
+			   	Date date3 = sdf.parse(givenfromDateString);
+			   	cal3.setTime(date3);
+			}
+			
+			int T0Day = todate.getDayOfMonth();
+		   	int T0Month = todate.getMonth();
+		   	int T0Year = todate.getYear();
+		   	
+		   	givenToDateString = mFormat.format(Double.valueOf(T0Day))+ "-" 
+		   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(T0Month))))+ 1))) + "-" 
+		   	+ T0Year;
+		   	
+		   	Date date4 = sdf.parse(givenToDateString);
+		   	cal4.setTime(date4);  
+			
+	    	//System.out.println("all dates are...........");
+	    	//System.out.println(financialFromDate+"---"+financialToDate+"---"+givenfromDateString+"---"+givenToDateString);
+	    	
+	    	if("validatebothFromToDate".equals(flag)){
+	    		if(((cal3.after(cal1)&&(cal3.before(cal2))) || (cal3.equals(cal1) || (cal3.equals(cal2)))) 
+	        			&& ((cal4.after(cal1) && (cal4.before(cal2))) || (cal4.equals(cal2)) || (cal4.equals(cal1)))){
+	        		
+	        		validateDateFlag = true;
+	        	}
+	        	else{
+	        		String message = "Please enter proper date";
+	        		toastValidationMessage(message);
+	        		validateDateFlag = false;
+	        	}
+	    	}
+	    	else {
+	    		if((cal4.after(cal1) && cal4.before(cal2)) || cal4.equals(cal1) || cal4.equals(cal2) ){
+					
+	    			validateDateFlag = true;
+	        	}
+	        	else{
+	        		String message = "Please enter proper date";
+	        		toastValidationMessage(message);
+	        		validateDateFlag = false;
+	        	}
+	    	}
+    	
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return validateDateFlag;
+	}
     
     public void toastValidationMessage(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
