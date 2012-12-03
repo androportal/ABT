@@ -74,7 +74,7 @@ public class Organisation {
 	public String getorgTypeByname(Object[] params,Object client_id) {
 	       
 	        try {
-	            orgtype = (String)conn.getClient().call("organisation.getOrgTypeByname",params,client_id);
+	            orgtype = (String)conn.getClient().call("organisation.getorgTypeByname",params,client_id);
 	        } catch (XMLRPCException e) {
 	           
 	            e.printStackTrace();

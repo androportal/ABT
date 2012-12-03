@@ -35,6 +35,7 @@ public class balanceSheet extends Activity{
 	private ArrayList<String> TotalAmountList;
 	private TextView balDiff;
 	String balanceToDateString;
+	String getSelectedOrgType;
     public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        balancetype=reportMenu.balancetype;
@@ -62,6 +63,7 @@ public class balanceSheet extends Activity{
    		balDiff = (TextView) findViewById(R.id.tvdifference);
    		System.out.println("balacesheet diff :"+balDiff.getText());
        balancetype=reportMenu.balancetype;
+       getSelectedOrgType = reportMenu.orgtype;
        /*
 	     * set financial from date and to date in textview
 	     */
@@ -70,7 +72,7 @@ public class balanceSheet extends Activity{
 	      
 	    tvfinancialFromDate.setText("Financial from : " +financialFromDate);
 	    tvfinancialToDate.setText("Financial to : " +financialToDate);
-       Object[] params = new Object[]{financialFromDate,financialFromDate,balanceToDateString,"balancesheet","NGO",balancetype};
+       Object[] params = new Object[]{financialFromDate,financialFromDate,balanceToDateString,"balancesheet",getSelectedOrgType,balancetype};
        balancesheetresult = (Object[]) report.getBalancesheetDisplay(params,client_id);
        System.out.println("balacesheet report :"+balancesheetresult);
        //balancesheetresult is 3 dimensional list 

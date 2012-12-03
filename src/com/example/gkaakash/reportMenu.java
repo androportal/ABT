@@ -84,12 +84,12 @@ public class reportMenu extends ListActivity{
        	}
         if("NGO".equals(orgtype))
         {
-            reportType = new String[] { "Ledger","Trial balance","Project statement",
-                 "Cash flow","Balance sheet","Income and Expenditure" };
+            reportType = new String[] { "Ledger","Trial Balance","Project Statement",
+                 "Cash Flow","Balance Sheet","Income and Expenditure" };
         }
         else{
-            reportType = new String[] { "Ledger","Trial balance","Project statement",
-                 "Cash flow","Balance sheet","Profit and Loss account" };
+            reportType = new String[] { "Ledger","Trial Balance","Project Statement",
+                 "Cash Flow","Balance Sheet","Profit and Loss account" };
         }
        	
        	//get financial from and to date, split and store day, month and year in seperate variable
@@ -234,7 +234,7 @@ public class reportMenu extends ListActivity{
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					builder.setTitle("Trial balance");	
+					builder.setTitle("Trial Balance");	
 					
 					
 					final DatePicker trialtodate = (DatePicker) layout.findViewById(R.id.dpTrialsetT0date);
