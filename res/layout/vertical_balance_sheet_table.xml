@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/dark_gray_background">
-   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   <LinearLayout 
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -12,7 +12,6 @@
             android:paddingTop="10dp">
       
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/layout_root"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -51,25 +50,46 @@
           		android:layout_width="fill_parent"
             	android:fillViewport="true">
               <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fillViewport="true"
-            android:scrollbarFadeDuration="0"
-            android:scrollbarAlwaysDrawVerticalTrack="true" 
-            android:scrollbarAlwaysDrawHorizontalTrack="true">
-                <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:stretchColumns=",1,2,3,4"
-            android:id="@+id/maintable"
-            android:background="#696565" >
-               </TableLayout>
-                
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:fillViewport="true"
+	            android:scrollbarFadeDuration="0"
+	            android:scrollbarAlwaysDrawVerticalTrack="true" 
+	            android:scrollbarAlwaysDrawHorizontalTrack="true">
+
+            	<LinearLayout
+       				android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:orientation="vertical">
+            		
+		          <TableLayout
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+				            android:stretchColumns=",1,2,3"
+				            android:id="@+id/col1"
+				            android:background="#696565"
+				            android:layout_weight="1" />
+		                
+		                 <!-- just add space line -->
+				    	<Space
+				    	    android:layout_width="10dip"
+					        android:layout_height="10dip"/>
+
+                        <TableLayout
+				            android:id="@+id/col2"
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+				            android:stretchColumns=",1,2,3"
+				            android:background="#696565"
+				            android:layout_weight="1" />
+                </LinearLayout>
+                 
             </ScrollView>
             </HorizontalScrollView>
+            
+            
          </LinearLayout>  
-        
-          <LinearLayout
+         <LinearLayout
               xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/layout_root"
               android:layout_width="fill_parent"
@@ -87,8 +107,7 @@
               android:textColor="#FFFFFF"
               android:textSize="15dp" />
              
-          </LinearLayout>
-             
+          </LinearLayout> 
         
     </LinearLayout>
 </ScrollView>

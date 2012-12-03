@@ -101,50 +101,57 @@ public class createVoucher extends Activity {
 	       	transaction = new Transaction();
 	       	organisation = new Organisation();
 	       	client_id= Startup.getClient_id();
-	       	
+	    	vouchertypeflag =  voucherMenu.vouchertypeflag;
 	       
 	     	try {
 	       	searchFlag=MainActivity.searchFlag;
-	       	cloneflag=SearchVoucher.cloneflag;
-	        Toast.makeText(context, "abbbbccc"+searchFlag, Toast.LENGTH_SHORT).show();
-	        Toast.makeText(context, "clone"+cloneflag, Toast.LENGTH_SHORT).show();
-	       	etRefNumber = (EditText)findViewById(R.id.etRefNumber);
 	       	
+	       	cloneflag=SearchVoucher.cloneflag;
+	        //Toast.makeText(context, "abbbbccc"+searchFlag, Toast.LENGTH_SHORT).show();
+	        //Toast.makeText(context, "clone"+cloneflag, Toast.LENGTH_SHORT).show();
+	       	etRefNumber = (EditText)findViewById(R.id.etRefNumber);
+	      	
 	        name = SearchVoucher.name;
-	        Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
-	        if("Edit voucher".equals(name)){
+	        //Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
+	        // after click om edit voucher Reff Edit text non-editable
+	       /* if("Edit voucher".equals(name)){
 	        	etRefNumber = (EditText)findViewById(R.id.etRefNumber);
 	        	
 	         //  etRefNumber.setKeyListener(null);
 	        }else {
 	        	
-			}
+			}*/
 	       	
 			etnarration = (EditText)findViewById(R.id.etVoucherNarration);
 			account = (Spinner) findViewById(R.id.getAccountByRule);
 			firstRowamount = (EditText) findViewById(R.id.etDrCrAmount);
 			DrCr = (Spinner) findViewById(R.id.sDrCr);
 			list = (TableLayout) findViewById( R.id.Vouchertable );
-			
+			if(searchFlag==false){
+				 //for setting voucher reference number
+	     	       etRefNumber =  (EditText)findViewById(R.id.etRefNumber);
+	     	       String reff_no = transaction.getLastReferenceNumber(new Object[]{vouchertypeflag},client_id);
+	     	       etRefNumber.setText(reff_no.toString());
+			}
 			
 			//for edit Details
 	       	if(searchFlag==true){
-	       		System.err.println("cumning form serach voucher"+SearchVoucher.value);
-	       		//list coming from search voucher
-	       		ArrayList<String> abc = SearchVoucher.value;
-	       		vouchercode=abc.get(0);
-	       		System.out.println(vouchercode);
-	       		Object[] params = new Object[]{vouchercode};
-	       		
-	       		Object[] VoucherMaster = (Object[]) transaction.getVoucherMaster(params,client_id);
-	       		Object[] VoucherDetails = (Object[]) transaction.getVoucherDetails(params,client_id);
-	       		
-	       		otherdetailsrow = new ArrayList();
-	       		for(Object row1 : VoucherMaster){
-	       			Object a=(Object)row1;
-	       			otherdetailsrow.add(a.toString());//getting vouchermaster details
+		       		System.err.println("cumning form serach voucher"+SearchVoucher.value);
+		       		//list coming from search voucher
+		       		ArrayList<String> abc = SearchVoucher.value;
+		       		vouchercode=abc.get(0);
+		       		System.out.println(vouchercode);
+		       		Object[] params = new Object[]{vouchercode};
+		       		
+		       		Object[] VoucherMaster = (Object[]) transaction.getVoucherMaster(params,client_id);
+		       		Object[] VoucherDetails = (Object[]) transaction.getVoucherDetails(params,client_id);
+		       		
+		       		otherdetailsrow = new ArrayList();
+		       		for(Object row1 : VoucherMaster){
+		       			Object a=(Object)row1;
+		       			otherdetailsrow.add(a.toString());//getting vouchermaster details
 	       		}
-	       		
+	       	
 	       		System.out.println(otherdetailsrow);
 	       		String refno=(String) otherdetailsrow.get(0);
 	       		System.out.println("refNo."+refno);
@@ -176,12 +183,13 @@ public class createVoucher extends Activity {
 	       		System.out.println("Second list of list"+accdetailsList.get(1));
 	       		account.setMinimumWidth(283);
 	       	}
-	       	
+	       
+       	
 	       	//two digit date format for dd and mm
 	       	mFormat= new DecimalFormat("00");
 			mFormat.setRoundingMode(RoundingMode.DOWN);
 			list = (TableLayout) findViewById( R.id.Vouchertable );
-	       	vouchertypeflag =  voucherMenu.vouchertypeflag;
+	       
 	    	account.setMinimumWidth(283);
 	    	
        		//add second row and set first & second row account names in spinner
@@ -192,8 +200,8 @@ public class createVoucher extends Activity {
 	       	voucher_date.setTextFilterEnabled(true);
 			voucher_date.setCacheColorHint(color.transparent);
 	        setVoucherDate();
-	        
-	        //for setting project 
+	      
+	       // for setting project 
 			projetct_name =  (ListView)findViewById(R.id.voucher_list4);
 	       	projetct_name.setTextFilterEnabled(true);
 			projetct_name.setCacheColorHint(color.transparent);
@@ -213,11 +221,7 @@ public class createVoucher extends Activity {
 		           AlertDialog alert = builder.create();
 		           alert.show();	
 			}
-	       	
-			//tvTotalDebit = (TextView) findViewById( R.id.tvTotalDebit );
-			//tvTotalCredit = (TextView) findViewById( R.id.tvTotalCredit );
-	        
-	        //add all onclick events in this method
+	         //add all onclick events in this method
 	        OnClickListener();
 	        
 	        //on dr/cr item selected from dropdown...
@@ -697,23 +701,20 @@ public class createVoucher extends Activity {
                         }
                     }
 					
-					if(addRowFlag == true){/////////////////////////////////////
+					if(addRowFlag == true){
 						//add new row
 						addButton();
 						ArrayAdapter<String> da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
 				  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				        sp1.setAdapter(da1);
-				        
-				       
-				        
+				      
 				        //set totalDr and totalCr in textview
 				        String tvTotalDr = Float.toString(totalDr);
 				        //tvTotalDebit.setText("Total Debit: "+tvTotalDr+"0");
 				        
 				        String tvTotalCr = Float.toString(totalCr);
 				        //tvTotalCredit.setText("Total Credit: "+tvTotalCr+"0");
-						 
-				        
+						
 				        DrCr.setOnItemSelectedListener(new OnItemSelectedListener() {
 				        	
 							@Override
@@ -979,11 +980,16 @@ public class createVoucher extends Activity {
 		              //reset all fields
 		                if(searchFlag==false||cloneflag==false){
 		                	
-							etRefNumber.setText("");
+							//etRefNumber.setText("");
+		                	 etRefNumber =  (EditText)findViewById(R.id.etRefNumber);
+		  	     	       	String reff_no = transaction.getLastReferenceNumber(new Object[]{vouchertypeflag},client_id);
+		  	     	       	etRefNumber.setText(reff_no.toString());
 							etnarration.setText("");
 							
 							TextView tvproject = (TextView)projetct_name.findViewById(R.id.tvSubItem1);
 							tvproject.setText("No Project");
+							
+							setVoucherDate(); 
 							
 							DrCr.setSelection(0); 
 							account.setSelection(0);
@@ -1035,10 +1041,12 @@ public class createVoucher extends Activity {
 		                     	       // if("Create voucher".equals(name)){
 		                     	        	//etRefNumber.setClickable(true);
 		                     	        //}
-		                            	etRefNumber = (EditText)findViewById(R.id.etRefNumber);
-		                				etRefNumber.setText("");
+		                            	etRefNumber =  (EditText)findViewById(R.id.etRefNumber);
+		              	     	       	String reff_no = transaction.getLastReferenceNumber(new Object[]{vouchertypeflag},client_id);
+		              	     	       	etRefNumber.setText(reff_no.toString());
 		                				etnarration = (EditText)findViewById(R.id.etVoucherNarration);
 		                				etnarration.setText("");
+		                				
 		                				
 		                				TextView tvproject = (TextView)projetct_name.findViewById(R.id.tvSubItem1);
 		                				tvproject.setText("No Project");
@@ -1053,15 +1061,9 @@ public class createVoucher extends Activity {
 		                				firstRowamount.setText("0.00");
 		                				searchFlag=false;
 		                				cloneflag=true;
-		                				
+		                				setVoucherDate();
 		                				 
 		                				// add a keylistener to keep track user input
-		                				
-		                				
-		                				
-		                				
-		                				
-		                				
 		                				
 		                				list.removeAllViews();
 		                				setFirstAndSecondRow();
@@ -1175,12 +1177,16 @@ public class createVoucher extends Activity {
 		 * set the financial year from date in the subtitle and when date is changed by user,
 		 * sets date in the subtitle
 		 */
+		
 		if(searchFlag==true){
 			//will get executed while clonning and editing
 			financialFromDate =searchdate;
+			
 		}else {
 			//will get executed while creating account 
 			financialFromDate =Startup.getfinancialFromDate();
+			financialFromDate = transaction.getLastReferenceDate(new Object[]{financialFromDate,vouchertypeflag}, client_id);
+			
 		}
 		
 		String dateParts[] = financialFromDate.split("-");

@@ -16,7 +16,7 @@ public class Report {
 	private Object[] projectStatement;
 	private Object[] profitLossStatement;
 	private Object[] cashFlowStatement;
-	
+	private Object[] getBalancesheetDisplay;
 	/***
 	 * Default constructor
 	 * create instance of CoreConnection() to get connection with server
@@ -170,5 +170,29 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 			e.printStackTrace();
 		} 
 		return cashFlowStatement;
+	}
+	/***
+	 * It will give balance sheet report grid with the front-end 
+	 * display sequence 1st coloum , 2nd coloum  and headers values
+	 * We can also call getBalancesheetReport contain values to 
+	 * be displayed  
+	 * @param params list
+	 * contains financialyear_from, report_fromdate,report_todate,
+	 * report_type, org_type,balancesheet_type
+	 * @param client_id
+	 * @return list of list 
+	 */
+	public Object getBalancesheetDisplay(Object[] params,Object client_id) {
+		
+		try {
+			getBalancesheetDisplay = (Object[])conn.getClient().call("reports.getBalancesheetDisplay",params,client_id);
+			System.out.println("getBalancesheetDisplay :"+getBalancesheetDisplay);
+		} 
+		catch (XMLRPCException e1) {
+		
+			e1.printStackTrace();
+		}
+		
+		return getBalancesheetDisplay;
 	}
 }

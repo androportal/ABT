@@ -26,6 +26,8 @@ public class Transaction {
 	private Object[] getVoucherDetails;
 	private Object editVoucher;
 	private boolean deleteVoucher;
+	private String getLastReference;
+	private String getLastReffDate;
 	/***
 	 * Default constructor
 	 * create instance of CoreConnection() to get connection with server
@@ -270,6 +272,28 @@ public Object searchVoucher(Object[] params,Object client_id) {
 		return deleteVoucher;
 	}
 	
-	
+	public String getLastReferenceNumber(Object[] params,Object client_id) {
+		System.out.println("voucherType :"+params[0]);
+		try {
+			getLastReference = (String)conn.getClient().call("transaction.getLastReference",params,client_id);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return getLastReference;
+	}
+	public String getLastReferenceDate(Object[] params,Object client_id) {
+		
+		try {
+			getLastReffDate = (String)conn.getClient().call("transaction.getLastReffDate",params,client_id);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return getLastReffDate;
+	}
+
 	
 }

@@ -58,7 +58,7 @@ public class reportMenu extends ListActivity{
 	boolean reportmenuflag;
 	String orgname;
 	static String reportTypeFlag;
-	
+	static String balancetype;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -277,7 +277,7 @@ public class reportMenu extends ListActivity{
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					builder.setTitle("Project statement");
+					builder.setTitle("Project Statement");
 					
 					
 					final DatePicker dpProjectStatementSetT0date = (DatePicker) layout.findViewById(R.id.dpProjectStatementSetT0date);
@@ -334,7 +334,7 @@ public class reportMenu extends ListActivity{
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					builder.setTitle("Cash flow");
+					builder.setTitle("Cash Flow");
 					
 					final DatePicker CashFlowFromdate = (DatePicker) layout.findViewById(R.id.dpsetCashFlowFromdate);
 					CashFlowFromdate.init(Integer.parseInt(fromyear),(Integer.parseInt(frommonth)-1),Integer.parseInt(fromday), null);
@@ -342,7 +342,7 @@ public class reportMenu extends ListActivity{
 				   	final DatePicker CashFlowT0date = (DatePicker) layout.findViewById(R.id.dpsetCashFlowT0date);
 				   	CashFlowT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
 					
-					 builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
+					 builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 		
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -374,19 +374,34 @@ public class reportMenu extends ListActivity{
 				}
 				if(position == 4)
 				{
-					//String message = "This functionality is not yet implemented";
-	        		//toastValidationMessage(message);
-	        		///*
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					View layout = inflater.inflate(R.layout.balance_sheet, (ViewGroup) findViewById(R.id.layout_root));
+					final DatePicker dpBalanceSheetsetT0date = (DatePicker) layout.findViewById(R.id.dpBalanceSheetsetT0date);
+					dpBalanceSheetsetT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
+					
+					final Spinner sbalanceSheetType = (Spinner)layout.findViewById(R.id.sbalanceSheetType);
+					
+					TextView tvbalanceSheetType = (TextView)layout.findViewById(R.id.tvbalanceSheetType);
+					
 					//Building DatepPcker dialog
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
-					builder.setTitle("Balance sheet");
-					builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
+					builder.setTitle("Balance Sheet");
+					builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
+						
+					
+
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-						
+
+							validateDate(null, dpBalanceSheetsetT0date, null);
+							
+						   	if(validateDateFlag){
+								balancetype=sbalanceSheetType.getSelectedItem().toString();
+								Intent intent = new Intent(context, balanceSheet.class);
+								// To pass on the value to the next page
+								startActivity(intent);
+						   	}
 						}
 						
 					});
@@ -401,7 +416,7 @@ public class reportMenu extends ListActivity{
 					});
 					dialog=builder.create();
 	        		dialog.show();
-	        		//*/
+	        		
 				}
 				if(position == 5)
 				{

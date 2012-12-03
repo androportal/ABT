@@ -15,7 +15,7 @@
             android:textSize="20dp" />
 
         <DatePicker
-            android:id="@+id/dpsetT0date"
+            android:id="@+id/dpBalanceSheetsetT0date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="BalanceSheet type"
+            android:text="Balance Sheet type"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
