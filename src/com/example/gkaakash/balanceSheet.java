@@ -39,16 +39,12 @@ public class balanceSheet extends Activity{
     public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        balancetype=reportMenu.balancetype;
-      
-       System.out.println("bal tyep"+balancetype);
        if(balancetype.equals("Conventional Balance Sheet"))
        {
-    	   System.out.println("we are horizontall");
     	   setContentView(R.layout.balance_sheet_table);
        }
        else
        {
-    	   System.out.println("we are vertical");
     	   setContentView(R.layout.vertical_balance_sheet_table);
        }
       
@@ -61,7 +57,6 @@ public class balanceSheet extends Activity{
        	cashFlowtable1 = (TableLayout)findViewById(R.id.col1);
    		cashFlowtable2 = (TableLayout)findViewById(R.id.col2);
    		balDiff = (TextView) findViewById(R.id.tvdifference);
-   		System.out.println("balacesheet diff :"+balDiff.getText());
        balancetype=reportMenu.balancetype;
        getSelectedOrgType = reportMenu.orgtype;
        /*
@@ -74,7 +69,6 @@ public class balanceSheet extends Activity{
 	    tvfinancialToDate.setText("Financial to : " +financialToDate);
        Object[] params = new Object[]{financialFromDate,financialFromDate,balanceToDateString,"balancesheet",getSelectedOrgType,balancetype};
        balancesheetresult = (Object[]) report.getBalancesheetDisplay(params,client_id);
-       System.out.println("balacesheet report :"+balancesheetresult);
        //balancesheetresult is 3 dimensional list 
        int count = 0;
   
@@ -93,22 +87,18 @@ public class balanceSheet extends Activity{
 	           	balancesheetresultList = new ArrayList<String>();
 	
 	           	for(int j=0;j<t1.length;j++){
-	           		//System.out.println("item :"+t1[j].toString());
 	           		balancesheetresultList.add((String) t1[j].toString());
-	           	}
-	        System.out.println("balancesheetresultList "+balancesheetresultList); 	
-           	BalanceSheetGrid.add(balancesheetresultList);
+	           	}	
+           BalanceSheetGrid.add(balancesheetresultList);
             
            } 
            }
          
            if (count == 3)
            {
-        	   System.out.println("Total :"+t[0]);
         	   balDiff.setText(t[0].toString());
            }
            if(count == 1){
-        	   System.out.println("im in count 1 table");
            	addTable(cashFlowtable1);
            }
            else if(count == 2){
@@ -117,7 +107,6 @@ public class balanceSheet extends Activity{
            
        }
    } catch (Exception e) {
-   	System.out.println("I am an error"+e);
    	AlertDialog.Builder builder = new AlertDialog.Builder(balanceSheet.this);
 
           builder.setMessage("Please try again")
@@ -138,7 +127,6 @@ private void addTable(TableLayout tableID) {
    	
        ArrayList<String> columnValue = new ArrayList<String>();
        columnValue.addAll(BalanceSheetGrid.get(i));
-       System.out.println("columnValue:"+columnValue);
        //create new row
        tr = new TableRow(this);
       
@@ -194,7 +182,6 @@ private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color) 
                 		||amount.equalsIgnoreCase("Net DEFICIT")
                 		||amount.equalsIgnoreCase("NET PROFIT"))
             	{
-                	Toast.makeText(this, "Net Sr", Toast.LENGTH_SHORT).show();
         			((TextView)label).setGravity(Gravity.CENTER);
         			
             	}

@@ -161,7 +161,6 @@ public class incomeExpenditure extends Activity{
             columnValue.addAll(IEGrid.get(i));
             //create new row
             tr = new TableRow(this);
-            System.out.println("i am row"+columnValue);
             
             if(columnValue.get(2).equalsIgnoreCase("Amount")){
             	//for heading pass green color code

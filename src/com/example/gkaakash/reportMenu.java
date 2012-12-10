@@ -301,7 +301,7 @@ public class reportMenu extends ListActivity{
 			  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			  	   	projectNames.setAdapter(da1);
 					
-					builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
+					builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -438,7 +438,7 @@ public class reportMenu extends ListActivity{
 					final DatePicker dpIEPLT0date = (DatePicker) layout.findViewById(R.id.dpIEPLSetT0date);
 					dpIEPLT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
 					
-					builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
+					builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							

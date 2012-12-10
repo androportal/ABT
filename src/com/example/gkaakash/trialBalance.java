@@ -61,7 +61,7 @@ public class trialBalance extends Activity{
 		     */
 		  
 		    Object[] params = new Object[]{financialFromDate,financialFromDate,trialToDateString};
-		    System.out.println("Trial Balance Type: "+trialbalancetype);
+		    //System.out.println("Trial Balance Type: "+trialbalancetype);
 		   if("Net Trial Balance".equals(trialbalancetype)){
 			   trialBalanceResult = (Object[]) report.getTrialBalance(params,client_id);
 		   }else if ("Gross Trial Balance".equals(trialbalancetype)) {
@@ -78,11 +78,9 @@ public class trialBalance extends Activity{
 	            for(int i=0;i<t.length;i++){
 	            	
 	                trialBalanceResultList.add((String) t[i].toString());
-	                System.out.println("result :"+i+" "+(String) t[i].toString());
 	               
 	            }
 	            trialBalGrid.add(trialBalanceResultList);
-	            System.out.println(trialBalGrid);
 	        }
         trialBaltable = (TableLayout)findViewById(R.id.maintable);
         addTable();

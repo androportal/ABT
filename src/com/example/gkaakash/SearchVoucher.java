@@ -199,13 +199,11 @@ public class SearchVoucher extends Activity {
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
 						int pos = searchBy.getSelectedItemPosition();
-					   	System.out.println(pos);
 					   	
 					   	if(pos == 0){
 					   		String searchByVoucherCode = etVoucherCode.getText().toString();
 					   		if(searchByVoucherCode.length() < 1){
-					   			String message = "Please enter voucher reference number";
-				        		toastValidationMessage(message);
+				        		toastValidationMessage("Please enter voucher reference number");
 					   		}
 					   		else{
 					   			Object[] params = new Object[]{1,searchByVoucherCode,fromdate,todate,""};
@@ -238,9 +236,10 @@ public class SearchVoucher extends Activity {
 					        	Date date2 = sdf.parse(financialToDate);
 					        	Date date3 = sdf.parse(SearchVoucherFromdate);
 					        	Date date4 = sdf.parse(SearchVoucherTodate);
-					        	
+					        	/*
 					        	System.out.println("all dates are...........");
 					        	System.out.println(financialFromDate+"---"+financialToDate+"---"+SearchVoucherFromdate+"---"+SearchVoucherTodate);
+					        	*/
 					        	Calendar cal1 = Calendar.getInstance(); //financial from date
 					        	Calendar cal2 = Calendar.getInstance(); //financial to date
 					        	Calendar cal3 = Calendar.getInstance(); //from date
@@ -257,8 +256,7 @@ public class SearchVoucher extends Activity {
 					        		getallvouchers(params);
 					        	}
 					        	else{
-					        		String message = "Please enter proper date";
-					        		toastValidationMessage(message);
+					        		toastValidationMessage("Please enter proper date");
 					        	}
 							} catch (Exception e) {
 								// TODO: handle exception
@@ -268,8 +266,7 @@ public class SearchVoucher extends Activity {
 					   	else if(pos == 2){
 					   		String searchByNarration = etNarration.getText().toString();
 							if(searchByNarration.length() < 1){
-								String message = "Please enter narration";
-				        		toastValidationMessage(message);
+				        		toastValidationMessage("Please enter narration");
 							}
 							else{
 								
@@ -344,7 +341,7 @@ public class SearchVoucher extends Activity {
      */
 	public void addHeader() {
 		 /** Create a TableRow dynamically **/
-        String[] ColumnNameList = new String[] { "Sr. No.","Reference No","Date","Voucher Type","Account Name","Particular","Amount","Narration"};
+        String[] ColumnNameList = new String[] { "V. No.","Reference No","Date","Voucher Type","Account Name","Particular","Amount","Narration"};
        
         tr = new TableRow(SearchVoucher.this);
        
@@ -394,24 +391,20 @@ public class SearchVoucher extends Activity {
 								 	
 									//System.out.println("in addrow"+i); 
 									value=searchedVoucherGrid.get(i);
-									System.out.println(value);
 									Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show();
 									
 									MainActivity.searchFlag=true;
 									Intent intent = new Intent(context, transaction_tab.class);
 									// To pass on the value to the next page
 									startActivity(intent);
-									System.out.println("edit");
 								}
 								if(pos==1){
-									System.out.println("clone");
 								 	MainActivity.nameflag=true;
 								 	cloneflag=true;
 								    name="Clone voucher";
 								    Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
 									//System.out.println("in addrow"+i); 
 									value=searchedVoucherGrid.get(i);
-									System.out.println(value);
 									Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show(); 
 									MainActivity.searchFlag=true;
 									Intent intent = new Intent(context, transaction_tab.class);
@@ -428,17 +421,14 @@ public class SearchVoucher extends Activity {
 													new DialogInterface.OnClickListener() {
 														public void onClick(DialogInterface dialog, int id) {
 															value=searchedVoucherGrid.get(i);
-															System.out.println(value);
 															vouchercode=value.get(0);
-															System.out.println("code "+vouchercode);
 															Object[] params = new Object[]{vouchercode};
 															deleteVoucher = (Boolean) transaction.deleteVoucher(params,client_id);
 															
 															Object[] allvouchersparams = new Object[]{2,"",financialFromDate,financialToDate,""};
 														    getallvouchers(allvouchersparams);
-														      
-															System.out.println("delete:"+deleteVoucher);
-															 Toast.makeText(context,"Voucher Deleted",Toast.LENGTH_SHORT).show();
+														    
+															toastValidationMessage("Voucher deleted successfully");
 														}
 													})
 											.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -496,9 +486,6 @@ public class SearchVoucher extends Activity {
             searchedVoucherList = new ArrayList<String>();
             for(int i=0;i<v.length;i++){
             	
-            	System.out.println("list "+(String) v[3].toString());
-            	System.out.println("flag "+vouchertypeflag);
-            	
             	if(((String) v[3].toString()).equalsIgnoreCase(vouchertypeflag)){
             		searchedVoucherList.add((String) v[i].toString());
             	}
@@ -507,8 +494,6 @@ public class SearchVoucher extends Activity {
             searchedVoucherGrid.add(searchedVoucherList);
 		}
 		
-		System.out.println("grid is...");
-		System.out.println(searchedVoucherGrid);
 		
 		vouchertable = (TableLayout)findViewById(R.id.maintable);
 		vouchertable.removeAllViews();

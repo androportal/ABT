@@ -344,7 +344,10 @@ public class menu extends ListActivity{
                 
                 //bank reconcilition
                 if(position == 4){
+                	String message = "This functionality is not implemented yet";
+                	toastValidationMessage(message);
                 	
+                	/*
                 	//call the getAllBankAccounts method to get all bank account names
 					Object[] accountnames = (Object[]) account.getAllBankAccounts(client_id);
 					// create new array list of type String to add account names
@@ -383,7 +386,7 @@ public class menu extends ListActivity{
 					   	final CheckBox cbClearedTransaction = (CheckBox)layout.findViewById(R.id.cbClearedTransaction);
 					   	final CheckBox cbNarration = (CheckBox)layout.findViewById(R.id.cbReconNarration);
 					   	
-						builder.setPositiveButton("Set",new  DialogInterface.OnClickListener(){
+						builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 							
@@ -435,6 +438,7 @@ public class menu extends ListActivity{
 						lp.width = 700;
 						dialog.getWindow().setAttributes(lp);
 					}
+					*/
                 }
                 
                 //for help

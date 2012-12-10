@@ -37,7 +37,6 @@ public class transaction_tab extends TabActivity {
 	        setContentView(R.layout.tab);
 	        //tab name flag
 	        nameflag=MainActivity.nameflag;
-	        Toast.makeText(context,"flag"+nameflag,Toast.LENGTH_SHORT).show();
 	        name=SearchVoucher.name;
 	        //Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
 	       
@@ -75,7 +74,6 @@ public class transaction_tab extends TabActivity {
 	        }else {//setting tab name while creating account
 	        	tab1.setText("Create voucher");
 	        	tabname=(String) tab1.getText();
-	        	System.out.println("tru create acc "+tabname);
 			} 
 	        createspec.setIndicator(tab1);//assigning TextView to tab Indicator
 	        Intent create = new Intent(this, createVoucher.class);

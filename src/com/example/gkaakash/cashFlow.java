@@ -87,7 +87,6 @@ public class cashFlow extends Activity{
 	            	
 	            	cashFlowGrid.add(cashFlowResultList);
 	            }
-	            System.out.println("i am cash flow "+count+cashFlowGrid);
 	           
 	            if(count == 1){
 	            	addTable(cashFlowtable1);
@@ -123,7 +122,6 @@ public class cashFlow extends Activity{
             columnValue.addAll(cashFlowGrid.get(i));
             //create new row
             tr = new TableRow(this);
-            System.out.println("i am row"+columnValue);
             
         	//for remaining rows pass black color code
         	setRowColorSymbolGravity(columnValue, Color.BLACK);

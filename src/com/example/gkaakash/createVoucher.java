@@ -140,7 +140,6 @@ public class createVoucher extends Activity {
 		       		//list coming from search voucher
 		       		ArrayList<String> abc = SearchVoucher.value;
 		       		vouchercode=abc.get(0);
-		       		System.out.println(vouchercode);
 		       		Object[] params = new Object[]{vouchercode};
 		       		
 		       		Object[] VoucherMaster = (Object[]) transaction.getVoucherMaster(params,client_id);
@@ -152,14 +151,11 @@ public class createVoucher extends Activity {
 		       			otherdetailsrow.add(a.toString());//getting vouchermaster details
 	       		}
 	       	
-	       		System.out.println(otherdetailsrow);
 	       		String refno=(String) otherdetailsrow.get(0);
-	       		System.out.println("refNo."+refno);
 	       		//String date=(String) row.get(1);
 	       		String narration=(String)otherdetailsrow.get(3);
 	       		proj=(String)otherdetailsrow.get(4);
 	       		searchdate=(String) otherdetailsrow.get(1);
-	       		System.out.println("date"+searchdate);
 	       		etnarration.setText(narration);
 	       		etRefNumber.setText(refno);
 	       		
@@ -179,8 +175,6 @@ public class createVoucher extends Activity {
 	       		}
 	       		//for filling 1st row amount
 	       		firstRowamount.setText(accdetailsList.get(0).get(2));
-	       		System.out.println("first list of list"+accdetailsList.get(0));
-	       		System.out.println("Second list of list"+accdetailsList.get(1));
 	       		account.setMinimumWidth(283);
 	       	}
 	       
@@ -237,7 +231,6 @@ public class createVoucher extends Activity {
     	 * onfocuschange of amount edittext move focus to reference number
     	 */
     	tableRowCount = list.getChildCount();
-		System.out.println(tableRowCount);
 		for(int i=0;i<(tableRowCount);i++){
 			View row = list.getChildAt(i);
 			//amount edittext
@@ -284,7 +277,6 @@ public class createVoucher extends Activity {
 		//selected dr/cr and amount of the remaining rows
 		
 		tableRowCount = list.getChildCount();
-		System.out.println("Table row count in tally"+tableRowCount);
 		
 		for(int i=0;i<(tableRowCount);i++){
 			View row = list.getChildAt(i);
@@ -309,10 +301,6 @@ public class createVoucher extends Activity {
 				totalCr = totalCr + drcrAmount;
 			}
 		}
-		
-		System.out.println(totalDr);
-		System.out.println(totalCr);
-		
 		
 	}
 
@@ -349,12 +337,10 @@ public class createVoucher extends Activity {
 				
 				//for setting 1st row's 2nd spinner
 				Fsecond_spinner = accdetailsList.get(0).get(0);
-				System.out.println("Fsecond_spinner:"+Fsecond_spinner);
 				//setting adapter
 				dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, accnames);
 				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				FaccnamePosition = dataAdapter.getPosition(Fsecond_spinner);
-				System.out.println("position of name:"+FaccnamePosition);
 				account.setAdapter(dataAdapter);
 				account.setSelection(FaccnamePosition);
 				
@@ -367,14 +353,10 @@ public class createVoucher extends Activity {
 		    	//for setting 1st spinner of 1st and 2nd row 
 		    	Sacctype=accdetailsList.get(1).get(1);
 		    	Facctype=accdetailsList.get(0).get(1);
-		    	System.out.println("Sacctype"+Sacctype);
-		    	System.out.println("acctype"+Facctype);
 		    	da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
 		  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		     	SacctypePosition=da1.getPosition(Sacctype);
 		     	FacctypePosition=da1.getPosition(Facctype);
-		     	System.out.println("drcrser:"+SacctypePosition);
-		     	System.out.println("drcrser:"+FacctypePosition);
 		     	sp1.setAdapter(da1);
 		        sp1.setSelection(SacctypePosition);//setting spinner selection acc to obtained value
 		        DrCr.setAdapter(da1);
@@ -385,40 +367,30 @@ public class createVoucher extends Activity {
 		        
 				//for setting 2nd row's 2nd spinner
 		    	Ssecond_spinner = accdetailsList.get(1).get(0);
-		    	System.out.println("mystring:"+Ssecond_spinner);
 		     	SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
 		     	actionButton.setAdapter(dataAdapter);
 		    	actionButton.setSelection(SaccnamePosition);//setting spinner selection acc to obtained value
-		    	System.out.println("position of name1:"+SaccnamePosition);
-		  	   	
+		    	
 		        tableRowCount = list.getChildCount();
-				System.out.println("no of row:"+tableRowCount);
 				
 				//if row count of 2nd table(list) is more than 1 code bellow will be executed
 				
-				System.out.println("final list size"+accdetailsList.size()); 
 				if(accdetailsList.size()>2){
-					System.out.println("increase");
 					for(int i=2;i<accdetailsList.size();i++){
-					System.out.println(accdetailsList.get(i));
 					addButton();
 					et.setText(accdetailsList.get(i).get(2));
 					
 					Ssecond_spinner = accdetailsList.get(i).get(0);
-			    	System.out.println("mystring:"+Ssecond_spinner);
 			     	SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
 			     	actionButton.setAdapter(dataAdapter);
 			    	actionButton.setSelection(SaccnamePosition);
-			    	System.out.println("position of name1:"+SaccnamePosition);
 			    	
 			    	dr_cr.add("Dr");
 			    	dr_cr.add("Cr");
 			    	Sacctype=accdetailsList.get(i).get(1);
-			    	System.out.println("Sacctype"+Sacctype);
 			    	da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
 			  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			     	SacctypePosition=da1.getPosition(Sacctype);
-			     	System.out.println("drcrser:"+SacctypePosition);
 			     	sp1.setAdapter(da1);
 			        sp1.setSelection(SacctypePosition);
 					
@@ -460,14 +432,10 @@ public class createVoucher extends Activity {
 		    	dr_cr.add("Cr");
 		    	Sacctype=accdetailsList.get(1).get(1);
 		    	Facctype=accdetailsList.get(0).get(1);
-		    	System.out.println("Sacctype"+Sacctype);
-		    	System.out.println("acctype"+Facctype);
 		    	da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
 		  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		     	SacctypePosition=da1.getPosition(Sacctype);
 		     	FacctypePosition=da1.getPosition(Facctype);
-		     	System.out.println("drcrser:"+SacctypePosition);
-		     	System.out.println("drcrser:"+FacctypePosition);
 		     	sp1.setAdapter(da1);
 		        sp1.setSelection(SacctypePosition);
 		        DrCr.setAdapter(da1);
@@ -479,10 +447,8 @@ public class createVoucher extends Activity {
 		        	dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, CrAccountlist);
 				}
 		        Fsecond_spinner = accdetailsList.get(0).get(0);
-				System.out.println("Fsecond_spinner:"+Fsecond_spinner);
 				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				FaccnamePosition = dataAdapter.getPosition(Fsecond_spinner);
-				System.out.println("position of name:"+FaccnamePosition);
 				account.setAdapter(dataAdapter);
 				account.setSelection(FaccnamePosition);
 		        
@@ -497,20 +463,14 @@ public class createVoucher extends Activity {
 				}
 		        
 		    	Ssecond_spinner = accdetailsList.get(1).get(0);
-		    	System.out.println("mystring:"+Ssecond_spinner);
 		     	SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
 		     	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		     	actionButton.setAdapter(dataAdapter);
 		    	actionButton.setSelection(SaccnamePosition);
-		    	System.out.println("position of name1:"+SaccnamePosition);
 		  	   	
 		        tableRowCount = list.getChildCount();
-				System.out.println("no of row:"+tableRowCount);
-				System.out.println("final list size"+accdetailsList.size()); 
 				if(accdetailsList.size()>2){
-					System.out.println("increase");
 					for(int i=2;i<accdetailsList.size();i++){
-					System.out.println(accdetailsList.get(i));
 					addButton();
 					et.setText(accdetailsList.get(i).get(2));
 					
@@ -522,20 +482,16 @@ public class createVoucher extends Activity {
 					}
 					
 					Ssecond_spinner = accdetailsList.get(i).get(0);
-			    	System.out.println("mystring:"+Ssecond_spinner);
 			     	SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
 			     	actionButton.setAdapter(dataAdapter);
 			    	actionButton.setSelection(SaccnamePosition);
-			    	System.out.println("position of name1:"+SaccnamePosition);
 			    	
 			    	dr_cr.add("Dr");
 			    	dr_cr.add("Cr");
 			    	Sacctype=accdetailsList.get(i).get(1);
-			    	System.out.println("Sacctype"+Sacctype);
 			    	da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
 			  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			     	SacctypePosition=da1.getPosition(Sacctype);
-			     	System.out.println("drcrser:"+SacctypePosition);
 			     	sp1.setAdapter(da1);
 			        sp1.setSelection(SacctypePosition);
 					
@@ -619,11 +575,11 @@ public class createVoucher extends Activity {
 			
 			voucherAccounts = (Object[]) transaction.getPaymentAccounts(DrCrFlag,client_id);
 		}
-		else if("Debit Note".equals(vouchertypeflag)){
+		else if("Debit Note".equalsIgnoreCase(vouchertypeflag)){
 			
 			voucherAccounts = (Object[]) transaction.getDebitNoteAccounts(DrCrFlag,client_id);
 		}
-		else if("Credit Note".equals(vouchertypeflag)){
+		else if("Credit Note".equalsIgnoreCase(vouchertypeflag)){
 			
 			voucherAccounts = (Object[]) transaction.getCreditNoteAccounts(DrCrFlag,client_id);
 		}
@@ -635,11 +591,11 @@ public class createVoucher extends Activity {
 			
 			voucherAccounts = (Object[]) transaction.getPurchaseAccounts(DrCrFlag,client_id);
 		}
-		else if("Sales Return".equals(vouchertypeflag)){
+		else if("Sales Return".equalsIgnoreCase(vouchertypeflag)){
 			
 			voucherAccounts = (Object[]) transaction.getSalesReturnAccounts(DrCrFlag,client_id);
 		}
-		else if("Purchase Return".equals(vouchertypeflag)){
+		else if("Purchase Return".equalsIgnoreCase(vouchertypeflag)){
 			
 			voucherAccounts = (Object[]) transaction.getPurchaseReturnAccounts(DrCrFlag,client_id);
 		}
@@ -829,13 +785,11 @@ public class createVoucher extends Activity {
 							paramFirstRow.add(firstRowAmount);
 							paramFirstRow.add("0");
 							paramsMaster.add((ArrayList<String>) paramFirstRow);
-							System.out.println("Dr list"+paramsMaster);
 						}else {
 							paramFirstRow.add(fistRowAccountName);
 							paramFirstRow.add("0");
 							paramFirstRow.add(firstRowAmount);
 							paramsMaster.add((ArrayList<String>) paramFirstRow);
-							System.out.println("Cr list"+paramsMaster);
 						}
 					}
 					else if (cloneflag==true) {//for cloning account
@@ -865,7 +819,6 @@ public class createVoucher extends Activity {
 						//amount edittext
 						EditText etamount = (EditText)((ViewGroup) row).getChildAt(5);
 						String rowAmount = etamount.getText().toString();
-						System.out.println("amount is :"+ rowAmount);
 						if(searchFlag==false){//for editing account
 							paramRow.add(drcrFlag);
 							paramRow.add(accountName);
@@ -877,13 +830,11 @@ public class createVoucher extends Activity {
 								paramRow.add(rowAmount);
 								paramRow.add("0");
 								paramsMaster.add((ArrayList<String>) paramRow);	
-								System.out.println("Drlist"+paramsMaster);
 							}else {
 								paramRow.add(accountName);
 								paramRow.add("0");
 								paramRow.add(rowAmount);
 								paramsMaster.add((ArrayList<String>) paramRow);	
-								System.out.println("Crlist"+paramsMaster);
 							}
 						}else if (cloneflag==true) {//for clonning account
 							paramRow.add(drcrFlag);
@@ -892,20 +843,15 @@ public class createVoucher extends Activity {
 							paramsMaster.add((ArrayList<String>) paramRow);
 						}
 					}
-					System.out.println("list is :"+ paramsMaster);
-					System.out.println(accNames);
 					
 					for (int i = 0; i < accNames.size(); i++) {
 						ac = accNames.get(i);
-						System.out.println("accountname :"+ac);
 						for (int j = 0; j < accNames.size(); j++)
 						{
 							if (i!=j)
 							{
-								System.out.println("next element"+accNames.get(j));
 								if(ac.equals(accNames.get(j)))
 								{
-									System.out.println("equal");
 									flag = true;
 									break;
 								}
@@ -914,7 +860,6 @@ public class createVoucher extends Activity {
 							else
 							{
 								flag = false;
-								System.out.println("not equal");
 							}
 							if(flag == true){
 								break;
@@ -939,12 +884,12 @@ public class createVoucher extends Activity {
 						if(searchFlag==false){//for saving accounts details
 							Object[] params_master = new Object[]{refNumber,vDate,vouchertypeflag,vproject,narration};
 							setVoucher = (Integer) transaction.setTransaction(params_master,paramsMaster,client_id);
-							System.out.println("set:"+setVoucher);
+							
 							//for satisfying reset condition
 							searchFlag=false;
 							edittabflag=false;
 						}else if (cloneflag==false) {//for saving edited account details
-							System.out.println("list:"+paramsMaster);
+							
 							Object[] params_master = new Object[]{vouchercode,vDate,vproject,narration};
 							transaction.editVoucher(params_master,paramsMaster,client_id);
 							//for satisfying reset condition
@@ -958,7 +903,7 @@ public class createVoucher extends Activity {
 						else if (cloneflag==true) {//for saving cloned details 
 							Object[] params_master = new Object[]{refNumber,vDate,vouchertypeflag,vproject,narration};
 							setVoucher = (Integer) transaction.setTransaction(params_master,paramsMaster,client_id);
-							System.out.println("set:"+setVoucher);
+							
 							//for not getting reseted
 							searchFlag=true;
 							edittabflag=false;//this flag is seted for changing tab name on tab change 
@@ -1134,7 +1079,6 @@ public class createVoucher extends Activity {
 						projectnamelist.add((String) p[1]); //p[0] is project code & p[1] is projectname
 					}	
 					
-					System.out.println(projectnamelist);
 					
 					/*
 					 * 'builder.setItems' takes Charsequence Array as a parameter, 
@@ -1143,7 +1087,7 @@ public class createVoucher extends Activity {
 					*/
  
 					final CharSequence[] allProjectNames = projectnamelist.toArray(new String[0]);
-					System.out.println(allProjectNames);
+					
 					
 					//creating a dialog box for popup
 			        AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -1233,7 +1177,6 @@ public class createVoucher extends Activity {
 		switch (id) {
 		case VOUCHER_DATE_DIALOG_ID:
 			// set 'from date' date picker as current date
-			System.out.println(day+"-"+month+"-"+year);
 			   return new DatePickerDialog(this, fromdatePickerListener, 
 	                         year, month-1,day);
 		}
@@ -1267,11 +1210,11 @@ public class createVoucher extends Activity {
         	cal1.setTime(date1);
         	cal2.setTime(date2);
         	cal3.setTime(date3);
-        	
+        	/*
         	System.out.println(financialFromDate+financialToDate+mFormat.format(Double.valueOf(day))+"-"
         					+mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(month))))+ 1))+"-"
         					+mFormat.format(Double.valueOf(year)));
-        	
+        	*/
         	
         	if((cal3.after(cal1) && cal3.before(cal2)) || cal3.equals(cal1) || cal3.equals(cal2)){
         		voucherDate =  (TextView)findViewById(R.id.tvSubItem1); 

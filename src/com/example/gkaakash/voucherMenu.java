@@ -297,11 +297,11 @@ public class voucherMenu extends ListActivity {
 			
 			voucherAccounts = (Object[]) transaction.getPaymentAccounts(DrCrFlag,client_id);
 		}
-		else if("Debit Note".equals(vouchertypeflag)){
+		else if("Debit Note".equalsIgnoreCase(vouchertypeflag)){
 			
 			voucherAccounts = (Object[]) transaction.getDebitNoteAccounts(DrCrFlag,client_id);
 		}
-		else if("Credit Note".equals(vouchertypeflag)){
+		else if("Credit Note".equalsIgnoreCase(vouchertypeflag)){
 			
 			voucherAccounts = (Object[]) transaction.getCreditNoteAccounts(DrCrFlag,client_id);
 		}
@@ -313,11 +313,11 @@ public class voucherMenu extends ListActivity {
 			
 			voucherAccounts = (Object[]) transaction.getPurchaseAccounts(DrCrFlag,client_id);
 		}
-		else if("Sales Return".equals(vouchertypeflag)){
+		else if("Sales Return".equalsIgnoreCase(vouchertypeflag)){
 			
 			voucherAccounts = (Object[]) transaction.getSalesReturnAccounts(DrCrFlag,client_id);
 		}
-		else if("Purchase Return".equals(vouchertypeflag)){
+		else if("Purchase Return".equalsIgnoreCase(vouchertypeflag)){
 			
 			voucherAccounts = (Object[]) transaction.getPurchaseReturnAccounts(DrCrFlag,client_id);
 		}
