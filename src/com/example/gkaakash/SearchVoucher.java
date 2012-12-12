@@ -61,6 +61,7 @@ public class SearchVoucher extends Activity {
     static String name;
     static Boolean cloneflag=false;
     String vouchercode;
+    LinearLayout.LayoutParams params;
     protected Boolean deleteVoucher;
 	  @Override
 	    public void onCreate(Bundle savedInstanceState) {
@@ -347,7 +348,9 @@ public class SearchVoucher extends Activity {
        
         for(int k=0;k<ColumnNameList.length;k++){
             /** Creating a TextView to add to the row **/
+        	
             addRow(ColumnNameList[k],k);
+            params.height=LayoutParams.WRAP_CONTENT;
             label.setBackgroundColor(Color.parseColor("#348017"));
             label.setGravity(Gravity.CENTER);
         }
@@ -386,12 +389,12 @@ public class SearchVoucher extends Activity {
 								if(pos == 0){
 									MainActivity.nameflag=true;
 								 	name="Edit voucher";
-								 	Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+								 	//Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
 								 	cloneflag=false;
 								 	
 									//System.out.println("in addrow"+i); 
 									value=searchedVoucherGrid.get(i);
-									Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show();
+									//Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show();
 									
 									MainActivity.searchFlag=true;
 									Intent intent = new Intent(context, transaction_tab.class);
@@ -402,15 +405,15 @@ public class SearchVoucher extends Activity {
 								 	MainActivity.nameflag=true;
 								 	cloneflag=true;
 								    name="Clone voucher";
-								    Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+								    //Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
 									//System.out.println("in addrow"+i); 
 									value=searchedVoucherGrid.get(i);
-									Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show(); 
+									//Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show(); 
 									MainActivity.searchFlag=true;
 									Intent intent = new Intent(context, transaction_tab.class);
 									// To pass on the value to the next page
 									startActivity(intent);
-									Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+									//Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
 								}
 								
 								if(pos==2){
@@ -469,7 +472,7 @@ public class SearchVoucher extends Activity {
                 LayoutParams.WRAP_CONTENT));
         label.setPadding(2, 2, 2, 2);
         LinearLayout Ll = new LinearLayout(SearchVoucher.this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+        params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                35);
         params.setMargins(1, 1, 1, 1);
         //Ll.setPadding(10, 5, 5, 5);

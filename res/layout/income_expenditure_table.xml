@@ -9,7 +9,7 @@
             android:orientation="vertical"
             android:id="@+id/layout_root"
             android:layout_weight="50"
-            android:paddingTop="10dp">
+           >
       
         <LinearLayout
             android:id="@+id/layout_root"
@@ -33,7 +33,8 @@
               android:layout_height="wrap_content"
               android:layout_gravity="right"
               android:layout_weight="50"
-              android:gravity="center_horizontal"
+              android:gravity="right"
+              android:paddingRight="10dp"
               android:textColor="#FFFFFF"
               android:textSize="15dp" />
           
@@ -77,8 +78,8 @@
 	               
 			            <!-- just add space line -->
 				    	<Space
-				    	    android:layout_width="10dip"
-					        android:layout_height="10dip"/>
+				    	    android:layout_width="2dip"
+					        android:layout_height="2dip"/>
 		    	
 		                <TableLayout
 				            android:id="@+id/maintable2"
@@ -90,38 +91,6 @@
                
                 	</LinearLayout>
                 
-		            <!-- just add space line -->
-			    	<Space
-			    	    android:layout_width="10dip"
-				        android:layout_height="10dip"/>
-				            
-		            <LinearLayout
-		                android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:orientation="horizontal">
-		            
-		                <TableLayout
-				            android:layout_width="wrap_content"
-				            android:layout_height="wrap_content"
-				            android:stretchColumns=",1,2"
-				            android:id="@+id/maintable3"
-				            android:background="#696565"
-				            android:layout_weight="1" />
-		               
-		                <!-- just add space line -->
-			    		<Space
-				    	    android:layout_width="10dip"
-					        android:layout_height="10dip"/>
-	                
-		                <TableLayout
-				            android:id="@+id/maintable4"
-				            android:layout_width="wrap_content"
-				            android:layout_height="wrap_content"
-				            android:stretchColumns=",1,2"
-				            android:background="#696565"
-				            android:layout_weight="1" />
-               
-                	</LinearLayout>
                 </LinearLayout>
             </ScrollView>
             </HorizontalScrollView>

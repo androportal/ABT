@@ -33,7 +33,7 @@ public class trialBalance extends Activity{
     ArrayList<String> trialBalanceResultList;
     String trialbalancetype;
     String[] ColumnNameList;
-   
+    String trialToDateString ;
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.trial_table);
@@ -46,7 +46,8 @@ public class trialBalance extends Activity{
 		      */
 		    String financialFromDate =Startup.getfinancialFromDate();
 		    String financialToDate=Startup.getFinancialToDate();
-		    String trialToDateString = reportMenu.givenToDateString;
+		    trialToDateString = reportMenu.givenToDateString;
+		   // String trialFromoDateString = reportMenu.givenfromDateString;
 		    trialbalancetype=reportMenu.trialbalancetype;
 		    /*
 		     * set financial from date and to date in textview
@@ -54,8 +55,9 @@ public class trialBalance extends Activity{
 		    TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
 		    TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
 		      
-		    tvfinancialFromDate.setText("Financial from : " +financialFromDate);
-		    tvfinancialToDate.setText("Financial to : " +financialToDate);
+		    //tvfinancialFromDate.setText("Financial from : " +financialFromDate);
+		    //tvfinancialToDate.setText("Financial to : " +trialToDateString);
+		    tvfinancialToDate.setText("Period : "+financialFromDate+" to "+trialToDateString);   
 		    /*
 		     * send params to controller report.getTrialBalance to get the result
 		     */
@@ -161,10 +163,10 @@ public class trialBalance extends Activity{
         ArrayList<String> lastrow=trialBalGrid.get(trialBalGrid.size()-1);
         if(!"Extended Trial Balance".equals(trialbalancetype)){
         	Float result=Float.parseFloat(lastrow.get(4))-Float.parseFloat(lastrow.get(3));
-            difference.setText("Difference : "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
+            difference.setText("Difference in Opening Balances: "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
         }else {
         	Float result=Float.parseFloat(lastrow.get(7))-Float.parseFloat(lastrow.get(6));
-        	difference.setText("Difference : "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
+        	difference.setText("Difference in Opening Balances: "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
 		}
        
         

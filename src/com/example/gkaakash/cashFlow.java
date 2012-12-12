@@ -29,14 +29,20 @@ public class cashFlow extends Activity{
     ArrayList<ArrayList<String>> cashFlowGrid;
     String[] ColumnNameList;
     String getSelectedOrgType;
-    
+    TextView Netdifference ;
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-        setContentView(R.layout.income_expenditure_table);
+        setContentView(R.layout.cash_flow_table);
         report = new Report();
 	    client_id= Startup.getClient_id();
 	    
 	    try {
+	    	
+	    	 /*
+	         * display the difference between total dr and total cr
+	         */
+	    	Netdifference = (TextView) findViewById(R.id.tvdifference);
+	     
 	    	/*
 		     * get reference of all table IDs
 		     */
@@ -57,8 +63,8 @@ public class cashFlow extends Activity{
 		    TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
 		    TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
 		      
-		    tvfinancialFromDate.setText("Financial from : " +financialFromDate);
-		    tvfinancialToDate.setText("Financial to : " +financialToDate);
+		    //tvfinancialFromDate.setText();
+		    tvfinancialToDate.setText("Period : " +fromDateString+" to " +toDateString);
 		    /*
 		     * send params to controller report.getCashFlow to get the result
 		     */
@@ -69,30 +75,39 @@ public class cashFlow extends Activity{
 		    
 		  //cashFlowResult is 3 dimensional list 
 	        int count = 0;
-	        for(Object tb : cashFlowResult){
+	        for(Object cf : cashFlowResult){
 	        	
-	            Object[] t = (Object[]) tb;
+	            Object[] c = (Object[]) cf;
 	            count = count + 1;
 	            cashFlowGrid = new ArrayList<ArrayList<String>>();
-	            
-	            for(Object tb1 : t){
-	            	
-	            	Object[] t1 = (Object[]) tb1;
-	            	cashFlowResultList = new ArrayList<String>();
-	            	
-	            	for(int j=0;j<t1.length;j++){
-	            		
-	            		cashFlowResultList.add((String) t1[j].toString());
-	            	}
-	            	
-	            	cashFlowGrid.add(cashFlowResultList);
+	            if(count !=3)   
+	            {
+		            for(Object cf1 : c){
+		            	
+		            	Object[] c1 = (Object[]) cf1;
+		            	cashFlowResultList = new ArrayList<String>();
+		            	
+		            	for(int j=0;j<c1.length;j++){
+		            		
+		            		cashFlowResultList.add((String) c1[j].toString());
+		            	}
+		            	
+		            	cashFlowGrid.add(cashFlowResultList);
+		            }
 	            }
+	           // System.out.println("i am cash flow "+count+cashFlowGrid);
 	           
 	            if(count == 1){
 	            	addTable(cashFlowtable1);
 	            }
-	            else if(count == 2){
+	            if(count == 2){
 	            	addTable(cashFlowtable2);
+	            }
+	            if(count == 3)
+	            {
+	            	 final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs)); 
+	            	 Netdifference.setText("Net Flow: "+rsSymbol+" "+c[0].toString());
+	            
 	            }
 	        }
 		   
@@ -122,10 +137,15 @@ public class cashFlow extends Activity{
             columnValue.addAll(cashFlowGrid.get(i));
             //create new row
             tr = new TableRow(this);
-            
-        	//for remaining rows pass black color code
-        	setRowColorSymbolGravity(columnValue, Color.BLACK);
-            
+            if(columnValue.get(0).equalsIgnoreCase("Account Name")){
+               	//for heading pass green color code
+            	  // System.out.println("iam in chaninging color "+columnValue.get(1));
+               	setRowColorSymbolGravity(columnValue, Color.parseColor("#348017"));
+               }
+               else{
+               	//for remaining rows pass black color code
+               	setRowColorSymbolGravity(columnValue, Color.BLACK);
+               }
             // Add the TableRow to the TableLayout
             tableID.addView(tr, new TableLayout.LayoutParams(
                     LayoutParams.FILL_PARENT,
@@ -144,19 +164,34 @@ public class cashFlow extends Activity{
             /** Creating a TextView to add to the row **/
             addRow(columnValue.get(j));   
             label.setBackgroundColor(color);
-            
-        	if(j==2){//for amount coloumn
-        		
-    			label.setGravity(Gravity.RIGHT);
-                //For adding rupee symbol
-                if(columnValue.get(j).length() > 0){
-                
-                    final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs)); 
-                    label.setText(rsSymbol+" "+columnValue.get(j).toString());
-                }
+            String amount = columnValue.get(1).toString();
+            String name = columnValue.get(0).toString();
+        	if(j==1){//for amount coloumn
+        		if(!amount.equalsIgnoreCase("Amount(Inflow)")&&!amount.equalsIgnoreCase("Amount(Outflow)"))
+        		{
+	    			label.setGravity(Gravity.RIGHT);
+	                //For adding rupee symbol
+	                if(columnValue.get(j).length() > 0){
+	                
+	                    final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs)); 
+	                    label.setText(rsSymbol+" "+columnValue.get(j).toString());
+	                }
+        		}else 
+        		{
+        			label.setGravity(Gravity.CENTER);
+	               
+        		}
             }
             else{
-                label.setGravity(Gravity.CENTER);
+            	if(!name.equalsIgnoreCase("Total"))
+            	{
+            		label.setGravity(Gravity.CENTER);
+            		
+            	}else{
+            		 
+            		 label.setGravity(Gravity.RIGHT);
+            	}
+               
             }
         }
 	}

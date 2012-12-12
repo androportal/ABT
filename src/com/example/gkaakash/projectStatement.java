@@ -31,7 +31,7 @@ public class projectStatement extends Activity{
     TextView label;
     ArrayList<ArrayList<String>> projectStatementGrid;
     ArrayList<String> projectStatementResultList;
-   
+    String ToDateString;
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.project_statement_table);
@@ -44,7 +44,7 @@ public class projectStatement extends Activity{
 		      */
 		    String financialFromDate =Startup.getfinancialFromDate();
 		    String financialToDate=Startup.getFinancialToDate();
-		    String ToDateString = reportMenu.givenToDateString;
+		    ToDateString = reportMenu.givenToDateString;
 		    
 		    String projectName = reportMenu.selectedProject;
 		    /*
@@ -53,8 +53,9 @@ public class projectStatement extends Activity{
 		    TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
 		    TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
 		      
-		    tvfinancialFromDate.setText("Financial from: " +financialFromDate);
-		    tvfinancialToDate.setText("Financial to: " +financialToDate);
+		    //tvfinancialFromDate.setText("Financial from: " +financialFromDate);
+		   // tvfinancialToDate.setText("Financial to: " +ToDateString);
+		    tvfinancialToDate.setText("Period : "+financialFromDate+" to "+ToDateString);
 		    /*
 		     * send params to controller report.getProjectStatementReport to get the result
 		     */
@@ -132,7 +133,7 @@ public class projectStatement extends Activity{
         TextView difference = (TextView) findViewById(R.id.tvdifference);
         
         final SpannableString rsSymbol = new SpannableString(projectStatement.this.getText(R.string.Rs));
-        difference.setText("Difference : "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
+        difference.setText("Difference in Opening Balances : "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
     }
 
     /*

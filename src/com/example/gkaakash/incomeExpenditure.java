@@ -33,7 +33,7 @@ public class incomeExpenditure extends Activity{
     ArrayList<ArrayList<String>> IEGrid;
     String[] ColumnNameList;
     String getSelectedOrgType;
-    
+    String IEToDateString;
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -71,7 +71,7 @@ public class incomeExpenditure extends Activity{
 		    /*
 		     * get given to date from previous page
 		     */
-		    String IEToDateString = reportMenu.givenToDateString;
+		    IEToDateString = reportMenu.givenToDateString;
 		    
 		    getSelectedOrgType = reportMenu.orgtype;
 		    
@@ -80,17 +80,15 @@ public class incomeExpenditure extends Activity{
 		     */
 		    IEtable1 = (TableLayout)findViewById(R.id.maintable1);
 	        IEtable2 = (TableLayout)findViewById(R.id.maintable2);
-	        IEtable3 = (TableLayout)findViewById(R.id.maintable3);
-	        IEtable4 = (TableLayout)findViewById(R.id.maintable4);
-		    
+	   
 		    /*
 		     * set financial from date and to date in textview
 		     */
 		    TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
 		    TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
-		    tvfinancialFromDate.setText("Financial from : " +financialFromDate);
-		    tvfinancialToDate.setText("Financial to : " +financialToDate);
-		    
+		    //tvfinancialFromDate.setText("Financial from : " +financialFromDate);
+		    //tvfinancialToDate.setText("Financial to : " +IEToDateString);
+		    tvfinancialToDate.setText("Period : "+financialFromDate+" to "+IEToDateString);   
 		    
 		    /*
 		     * send params to controller report.getProfitLossDisplay to get the result
@@ -127,12 +125,7 @@ public class incomeExpenditure extends Activity{
 	            else if(count == 2){
 	            	addTable(IEtable2);
 	            }
-	            else if(count == 3){
-	            	addTable(IEtable3);
-	            }
-	            else if(count == 4){
-	            	addTable(IEtable4);
-	            }
+	            
 	        }
         
         
@@ -161,6 +154,7 @@ public class incomeExpenditure extends Activity{
             columnValue.addAll(IEGrid.get(i));
             //create new row
             tr = new TableRow(this);
+            System.out.println("i am row"+columnValue);
             
             if(columnValue.get(2).equalsIgnoreCase("Amount")){
             	//for heading pass green color code
@@ -187,14 +181,17 @@ public class incomeExpenditure extends Activity{
     private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color) {
     	for(int j=0;j<columnValue.size();j++){
             /** Creating a TextView to add to the row **/
-            addRow(columnValue.get(j));   
-            label.setBackgroundColor(color);
+           
             
         	if(j==2){//for amount coloumn
         		if(columnValue.get(j).equalsIgnoreCase("Amount")){ // for heading "Amount"
+        			 addRow(columnValue.get(j));   
+        	            label.setBackgroundColor(color);
         			label.setGravity(Gravity.CENTER);
         		}
         		else{
+        			 addRow(columnValue.get(j));   
+        	            label.setBackgroundColor(color);
         			label.setGravity(Gravity.RIGHT);
                     //For adding rupee symbol
                     if(columnValue.get(j).length() > 0){
@@ -204,8 +201,33 @@ public class incomeExpenditure extends Activity{
                     }
         		}
             }
-            else{
-                label.setGravity(Gravity.CENTER);
+            else if (j==1){
+            	
+            	if(columnValue.get(j).equalsIgnoreCase("Direct Expense")
+            			||columnValue.get(j).equalsIgnoreCase("Direct Income")
+            			||columnValue.get(j).equalsIgnoreCase("Indirect Expense")
+            			||columnValue.get(j).equalsIgnoreCase("Indirect Income")){ // for heading "Amount"
+        				label.setGravity(Gravity.LEFT);
+        				 addRow(columnValue.get(j));   
+        		            label.setBackgroundColor(color);
+        		}else
+        		{
+        			if(!columnValue.get(j).equalsIgnoreCase("Total"))
+        			{
+	        			 addRow("          "+columnValue.get(j));   
+	        	         label.setBackgroundColor(color);
+	        	        
+        			}else
+        			{
+        				addRow(columnValue.get(j));   
+	        	        label.setBackgroundColor(color);
+        				label.setGravity(Gravity.RIGHT);
+        			}
+        		}
+            }else
+            {
+            	addRow(columnValue.get(j));   
+	            label.setBackgroundColor(color);
             }
         }
 	}

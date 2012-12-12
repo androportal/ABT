@@ -52,9 +52,9 @@ public class ledger extends Activity{
            tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
           
            tvaccontName.setText("Account name: "+accountName);
-           tvfinancialFromDate.setText("Financial from: " +financialFromDate);
-           tvfinancialToDate.setText("Financial to: " +financialToDate);
-              
+           //tvfinancialFromDate.setText("Financial from: " +fromDate);
+           //tvfinancialToDate.setText("Financial to: " +toDate);
+           tvfinancialToDate.setText("Period : "+fromDate+" to "+toDate);   
               
             Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,projectName};
             ledgerResult = (Object[]) report.getLedger(params,client_id);

@@ -982,7 +982,7 @@ public class createVoucher extends Activity {
 		                            public void onClick(DialogInterface dialog, int id) {
 		                            	
 		                            	name="Create voucher";
-		                            	 Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
+		                            	// Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
 		                     	       // if("Create voucher".equals(name)){
 		                     	        	//etRefNumber.setClickable(true);
 		                     	        //}

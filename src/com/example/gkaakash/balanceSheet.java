@@ -36,6 +36,7 @@ public class balanceSheet extends Activity{
 	private TextView balDiff;
 	String balanceToDateString;
 	String getSelectedOrgType;
+	private String balancefromDateString;
     public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        balancetype=reportMenu.balancetype;
@@ -52,7 +53,7 @@ public class balanceSheet extends Activity{
        client_id= Startup.getClient_id();
        financialFromDate =Startup.getfinancialFromDate();
        financialToDate=Startup.getFinancialToDate();
-       //fromDate = reportMenu.givenfromDateString;
+      // balancefromDateString = reportMenu.givenfromDateString;
        balanceToDateString = reportMenu.givenToDateString;
        	cashFlowtable1 = (TableLayout)findViewById(R.id.col1);
    		cashFlowtable2 = (TableLayout)findViewById(R.id.col2);
@@ -65,8 +66,8 @@ public class balanceSheet extends Activity{
 	    TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
 	    TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
 	      
-	    tvfinancialFromDate.setText("Financial from : " +financialFromDate);
-	    tvfinancialToDate.setText("Financial to : " +financialToDate);
+	    //tvfinancialFromDate.setText("Financial from : " +financialFromDate);
+	    tvfinancialToDate.setText("Period : "+financialFromDate+" to "+balanceToDateString);
        Object[] params = new Object[]{financialFromDate,financialFromDate,balanceToDateString,"balancesheet",getSelectedOrgType,balancetype};
        balancesheetresult = (Object[]) report.getBalancesheetDisplay(params,client_id);
        //balancesheetresult is 3 dimensional list 
@@ -96,7 +97,9 @@ public class balanceSheet extends Activity{
          
            if (count == 3)
            {
-        	   balDiff.setText(t[0].toString());
+        	  
+        	   final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs)); 
+        	   balDiff.setText("Difference in Opening Balances: "+rsSymbol+" "+t[0].toString());
            }
            if(count == 1){
            	addTable(cashFlowtable1);
@@ -180,23 +183,13 @@ private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color) 
                 if(amount.equalsIgnoreCase("Net Surplus")
                 		||amount.equalsIgnoreCase("Net Loss")
                 		||amount.equalsIgnoreCase("Net DEFICIT")
-                		||amount.equalsIgnoreCase("NET PROFIT"))
+                		||amount.equalsIgnoreCase("NET PROFIT")
+                		||amount.equalsIgnoreCase("Amount"))
             	{
         			((TextView)label).setGravity(Gravity.CENTER);
         			
             	}
                
-                if(amount.equalsIgnoreCase("Amount"))
-                {
-                	((TextView)label).setGravity(Gravity.CENTER);
-        			//For adding rupee symbol
-                    if(columnValue.get(j).length() > 0)
-                    {
-                    
-                        final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs)); 
-                        ((TextView) label).setText(rsSymbol+" "+columnValue.get(j).toString());
-                    }
-                }
     		}else
     		{
     			
@@ -208,13 +201,7 @@ private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color) 
             if(total_amount.equalsIgnoreCase("Total Amount")||total_amount.equalsIgnoreCase("Amount"))
             {
     			((TextView)label).setGravity(Gravity.CENTER);
-    			//For adding rupee symbol
-                if(columnValue.get(j).length() > 0)
-                {
-                
-                    final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs)); 
-                    ((TextView) label).setText(rsSymbol+" "+columnValue.get(j).toString());
-                }
+    			
             }else
             {
             	((TextView)label).setGravity(Gravity.RIGHT);
@@ -228,18 +215,18 @@ private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color) 
             }
         }
         if(j==0) {
-        	if(balancetype.equals("Conventional Balance Sheet"))
+        	if(balancetype.equalsIgnoreCase("Conventional Balance Sheet"))
         	{
-	        	if(name.equals("CORPUS")
-	        			||name.equals("CAPITAL") 
-	        			||name.equals("RESERVES")
-	        			||name.equals("LOANS")
-	        			||name.equals("CURRENT LIABILITIES")
-	        			||name.equals("FIXED ASSETS")
-	        			||name.equals("CURRENT ASSETS")
-	        			||name.equals("LOANS")
-	        			||name.equals("INVESTMENTS")
-	        			||name.equals("MISCELLANEOUS EXPENSES(ASSET)"))
+	        	if(name.equalsIgnoreCase("CORPUS")
+	        			||name.equalsIgnoreCase("CAPITAL") 
+	        			||name.equalsIgnoreCase("RESERVES")
+	        			||name.equalsIgnoreCase("LOANS")
+	        			||name.equalsIgnoreCase("CURRENT LIABILITIES")
+	        			||name.equalsIgnoreCase("FIXED ASSETS")
+	        			||name.equalsIgnoreCase("CURRENT ASSETS")
+	        			||name.equalsIgnoreCase("LOANS")
+	        			||name.equalsIgnoreCase("INVESTMENTS")
+	        			||name.equalsIgnoreCase("MISCELLANEOUS EXPENSES(ASSET)"))
 	        	{
 	        		((TextView)label).setGravity(Gravity.LEFT);
 	        	}
@@ -249,18 +236,20 @@ private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color) 
 	        	}
         	}
         	else{
-        		if(name.equals("TOTAL CAPITAL")
-	        			||name.equals("TOTAL RESERVES & SURPLUS") 
-	        			||name.equals("TOTAL MISCELLANEOUS EXPENSES(ASSET)")
-	        			||name.equals("TOTAL OF OWNER'S FUNDS")
-	        			||name.equals("TOTAL BORROWED FUNDS")
-	        			||name.equals("TOTAL FUNDS AVAILABLE / CAPITAL EMPLOYED")
-	        			||name.equals("TOTAL FIXED ASSETS(NET)")
-	        			||name.equals("TOTAL LONG TERM INVESTMENTS")
-	        			||name.equals("TOTAL LOANS(ASSETS)")
-	        			||name.equals("TOTAL CURRENT ASSETS")
-	        			||name.equals("TOTAL CURRENT LIABILITIES")
-	        			||name.equals("NET CURRENT ASSETS OR WORKING CAPITAL")
+        		if(name.equalsIgnoreCase("TOTAL CORPUS")
+        				||name.equalsIgnoreCase("TOTAL CAPITAL")
+	        			||name.equalsIgnoreCase("TOTAL RESERVES & SURPLUS") 
+	        			||name.equalsIgnoreCase("TOTAL MISCELLANEOUS EXPENSES(ASSET)")
+	        			||name.equalsIgnoreCase("TOTAL OF OWNER'S FUNDS")
+	        			||name.equalsIgnoreCase("TOTAL BORROWED FUNDS")
+	        			||name.equalsIgnoreCase("TOTAL FUNDS AVAILABLE / CAPITAL EMPLOYED")
+	        			||name.equalsIgnoreCase("TOTAL FIXED ASSETS(NET)")
+	        			||name.equalsIgnoreCase("TOTAL LONG TERM INVESTMENTS")
+	        			||name.equalsIgnoreCase("TOTAL LOANS(ASSETS)")
+	        			||name.equalsIgnoreCase("TOTAL CURRENT ASSETS")
+	        			||name.equalsIgnoreCase("TOTAL CURRENT LIABILITIES")
+	        			||name.equalsIgnoreCase("NET CURRENT ASSETS OR WORKING CAPITAL")
+	        			
         				){
         			((TextView)label).setGravity(Gravity.RIGHT);
         		}
@@ -278,13 +267,7 @@ private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color) 
         		if(amount.equalsIgnoreCase("Amount"))
                 {
         			((TextView)label).setGravity(Gravity.CENTER);
-        			//For adding rupee symbol
-                    if(columnValue.get(j).length() > 0)
-                    {
-                    
-                        final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs)); 
-                        ((TextView) label).setText(rsSymbol+" "+columnValue.get(j).toString());
-                    }
+        			
                 }
         		else
         		{
