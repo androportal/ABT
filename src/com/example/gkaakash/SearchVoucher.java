@@ -141,12 +141,12 @@ public class SearchVoucher extends Activity {
 			   	String settoyear = dateParts1[2];
 				
 			   	final String fromdate = mFormat.format(Double.valueOf(setfromday))+ "-" 
-					   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(setfrommonth))))+ 1))) + "-" 
+					   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(setfrommonth))))))) + "-" 
 					   	+ setfromyear; 
 			   			
 			   			
 			   	final String todate = mFormat.format(Double.valueOf(settoday))+ "-" 
-					   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(settomonth))))+ 1))) + "-" 
+					   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(settomonth))))))) + "-" 
 					   	+ settoyear;  
 			   			
 			   	
@@ -194,7 +194,7 @@ public class SearchVoucher extends Activity {
 						
 					}
 				});
-				
+				 
 				builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 
 					@Override
@@ -207,6 +207,7 @@ public class SearchVoucher extends Activity {
 				        		toastValidationMessage("Please enter voucher reference number");
 					   		}
 					   		else{
+					   			System.out.println(fromdate+todate);
 					   			Object[] params = new Object[]{1,searchByVoucherCode,fromdate,todate,""};
 					   			getallvouchers(params);
 					   			

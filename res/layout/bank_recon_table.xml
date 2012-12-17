@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Scroll"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -43,7 +44,8 @@
               android:layout_height="wrap_content"
               android:layout_gravity="right"
               android:layout_weight="50"
-              android:gravity="center_horizontal"
+              android:gravity="right"
+              android:paddingRight="10dp"
               android:textColor="#FFFFFF"
               android:textSize="15dp" />
           
@@ -55,29 +57,60 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:padding="10dp" >
-            <HorizontalScrollView 
-                android:layout_height="fill_parent"
-            	android:layout_width="fill_parent"
+             <HorizontalScrollView 
+              	android:layout_height="fill_parent"
+          		android:layout_width="fill_parent"
             	android:fillViewport="true">
               <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fillViewport="true">
-            
-                <TableLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:stretchColumns="0,1,2,3,4,5"
-                    android:id="@+id/maintable"
-                    android:background="#696565" >
-                </TableLayout>
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:fillViewport="true"
+	            android:scrollbarFadeDuration="0"
+	            android:scrollbarAlwaysDrawVerticalTrack="true" 
+	            android:scrollbarAlwaysDrawHorizontalTrack="true">
+
+            	<LinearLayout
+       				android:layout_width="wrap_content"
+            		android:layout_height="0dp"
+            		android:orientation="vertical">
+            		
+		            <LinearLayout
+		                android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:orientation="vertical">
+
+		                <TableLayout
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+				            android:stretchColumns="0,1,2,3,4,5,6,7"
+				            android:id="@+id/maintable"
+				            android:background="#696565"
+				            android:layout_weight="1" />
+
+			            <!-- just add space line -->
+				    	<Space
+				    	    android:layout_width="10dip"
+					        android:layout_height="10dip"/>
+
+		                <TableLayout
+				            android:id="@+id/statementtable"
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+				            android:stretchColumns="*"
+				            android:background="#696565"
+				            android:layout_weight="1" />
+               
+                	</LinearLayout>
+                
+                </LinearLayout>
             </ScrollView>
-       
             </HorizontalScrollView>
-            
-         </LinearLayout>
+         </LinearLayout>  
        
-       
+         
        
     </LinearLayout>
-</RelativeLayout>
+
+   
+
+</ScrollView>

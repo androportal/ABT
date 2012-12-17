@@ -14,7 +14,11 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -37,17 +41,29 @@ public class balanceSheet extends Activity{
 	String balanceToDateString;
 	String getSelectedOrgType;
 	private String balancefromDateString;
+	Boolean updown=false;
+	ScrollView sv;
+	
     public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
+       requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
        balancetype=reportMenu.balancetype;
+       
+     
+       
        if(balancetype.equals("Conventional Balance Sheet"))
        {
     	   setContentView(R.layout.balance_sheet_table);
+    	   sv = (ScrollView)findViewById(R.id.ScrollBalanceSheet);
        }
        else
        {
     	   setContentView(R.layout.vertical_balance_sheet_table);
+    	   sv = (ScrollView)findViewById(R.id.ScrollVertiBalanceSheet);
        }
+       
+     //customizing title bar
+       getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
       
        report = new Report();
        client_id= Startup.getClient_id();
@@ -109,6 +125,27 @@ public class balanceSheet extends Activity{
            }
            
        }
+       
+       final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
+       tvReportTitle.setText("Menu >> "+"Report >> "+balancetype);
+       final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
+       btnSaveRecon.setVisibility(Button.GONE);
+       final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+       btnScrollDown.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			if(updown==false){
+				sv.fullScroll(ScrollView.FOCUS_DOWN); 
+               btnScrollDown.setBackgroundResource(R.drawable.up);
+               updown=true;
+          }else {
+        	  sv.fullScroll(ScrollView.FOCUS_UP); 
+               btnScrollDown.setBackgroundResource(R.drawable.down);
+               updown=false;
+          }
+			}
+       });
    } catch (Exception e) {
    	AlertDialog.Builder builder = new AlertDialog.Builder(balanceSheet.this);
 
@@ -136,11 +173,11 @@ private void addTable(TableLayout tableID) {
        if(columnValue.get(1).equalsIgnoreCase("Amount")){
        	//for heading pass green color code
     	  // System.out.println("iam in chaninging color "+columnValue.get(1));
-       	setRowColorSymbolGravity(columnValue, Color.parseColor("#348017"));
+       	setRowColorSymbolGravity(columnValue, Color.parseColor("#348017"), true);
        }
        else{
        	//for remaining rows pass black color code
-       	setRowColorSymbolGravity(columnValue, Color.BLACK);
+       	setRowColorSymbolGravity(columnValue, Color.BLACK, false);
        }
        
        // Add the TableRow to the TableLayout
@@ -155,10 +192,22 @@ private void addTable(TableLayout tableID) {
  * 2. set right aligned gravity for amount and center aligned for other values
  * 3. set rupee symbol for amount
  */
-private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color) {
+private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color, Boolean headerFlag) {
 	for(int j=0;j<columnValue.size();j++){
         /** Creating a TextView to add to the row **/
-        addRow(columnValue.get(j));   
+		if(headerFlag == true){
+			if(j == 1 || j == 2 || j == 3){ //amount column
+				//For adding rupee symbol
+		    	final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs));
+				addRow(rsSymbol+" "+columnValue.get(j));   
+			}else{
+				addRow(columnValue.get(j));   
+			}
+			
+		}
+		else{
+			addRow(columnValue.get(j));   
+		}
         label.setBackgroundColor(color);
         String name = columnValue.get(0).toString();
         String amount = columnValue.get(1).toString();
@@ -171,12 +220,10 @@ private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color) 
     			if(!amount.equalsIgnoreCase("Amount")&&!amount.equalsIgnoreCase("Net Surplus"))
     			{
     				((TextView)label).setGravity(Gravity.RIGHT);
-        			//For adding rupee symbol
+        			
                     if(columnValue.get(j).length() > 0)
                     {
-                    
-                        final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs)); 
-                        ((TextView) label).setText(rsSymbol+" "+columnValue.get(j).toString());
+                        ((TextView) label).setText(columnValue.get(j).toString());
                     }
     			}
                 
@@ -205,12 +252,10 @@ private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color) 
             }else
             {
             	((TextView)label).setGravity(Gravity.RIGHT);
-	            //For adding rupee symbol
+	            
 	            if(columnValue.get(j).length() > 0)
 	            {
-	            
-	                final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs)); 
-	                ((TextView) label).setText(rsSymbol+" "+columnValue.get(j).toString());
+	                ((TextView) label).setText(columnValue.get(j).toString());
 	            }
             }
         }
@@ -272,11 +317,10 @@ private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color) 
         		else
         		{
     			((TextView)label).setGravity(Gravity.RIGHT);
-                //For adding rupee symbol
+                
                 if(columnValue.get(j).length() > 0){
                 
-                    final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs)); 
-                    ((TextView) label).setText(rsSymbol+" "+columnValue.get(j).toString());
+                    ((TextView) label).setText(columnValue.get(j).toString());
                 }
         	}
            }

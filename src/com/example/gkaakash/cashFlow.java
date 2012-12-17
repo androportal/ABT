@@ -10,7 +10,11 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -30,11 +34,17 @@ public class cashFlow extends Activity{
     String[] ColumnNameList;
     String getSelectedOrgType;
     TextView Netdifference ;
+    Boolean updown=false;
+    
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
+    	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.cash_flow_table);
         report = new Report();
 	    client_id= Startup.getClient_id();
+	    
+	  //customizing title bar
+	    getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
 	    
 	    try {
 	    	
@@ -111,6 +121,28 @@ public class cashFlow extends Activity{
 	            }
 	        }
 		   
+	        final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
+            tvReportTitle.setText("Menu >> "+"Report >> "+"Cash Flow");
+            final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
+            btnSaveRecon.setVisibility(Button.GONE);
+            final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+            btnScrollDown.setOnClickListener(new OnClickListener() {
+ 			
+ 			@Override
+ 			public void onClick(View v) {
+ 				if(updown==false){
+                    ScrollView sv = (ScrollView)findViewById(R.id.ScrollCashFlow);
+                    sv.fullScroll(ScrollView.FOCUS_DOWN); 
+                    btnScrollDown.setBackgroundResource(R.drawable.up);
+                    updown=true;
+               }else {
+                    ScrollView sv = (ScrollView)findViewById(R.id.ScrollCashFlow);
+                    sv.fullScroll(ScrollView.FOCUS_UP); 
+                    btnScrollDown.setBackgroundResource(R.drawable.down);
+                    updown=false;
+               }
+ 				}
+            });
         
 	    } catch (Exception e) {
 	    	System.out.println("I am an error"+e);
@@ -140,11 +172,11 @@ public class cashFlow extends Activity{
             if(columnValue.get(0).equalsIgnoreCase("Account Name")){
                	//for heading pass green color code
             	  // System.out.println("iam in chaninging color "+columnValue.get(1));
-               	setRowColorSymbolGravity(columnValue, Color.parseColor("#348017"));
+               	setRowColorSymbolGravity(columnValue, Color.parseColor("#348017"), true);
                }
                else{
                	//for remaining rows pass black color code
-               	setRowColorSymbolGravity(columnValue, Color.BLACK);
+               	setRowColorSymbolGravity(columnValue, Color.BLACK, false);
                }
             // Add the TableRow to the TableLayout
             tableID.addView(tr, new TableLayout.LayoutParams(
@@ -159,10 +191,22 @@ public class cashFlow extends Activity{
      * 2. set right aligned gravity for amount and center aligned for other values
      * 3. set rupee symbol for amount
      */
-    private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color) {
+    private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color, Boolean headerFlag) {
     	for(int j=0;j<columnValue.size();j++){
             /** Creating a TextView to add to the row **/
-            addRow(columnValue.get(j));   
+    		if(headerFlag == true){
+    			if(j == 1){ //amount column
+    				//For adding rupee symbol
+    		    	final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs));
+    				addRow(rsSymbol+" "+columnValue.get(j));   
+    			}else{
+    				addRow(columnValue.get(j));   
+    			}
+    			
+    		}
+    		else{
+    			addRow(columnValue.get(j));   
+    		}
             label.setBackgroundColor(color);
             String amount = columnValue.get(1).toString();
             String name = columnValue.get(0).toString();
@@ -170,11 +214,10 @@ public class cashFlow extends Activity{
         		if(!amount.equalsIgnoreCase("Amount(Inflow)")&&!amount.equalsIgnoreCase("Amount(Outflow)"))
         		{
 	    			label.setGravity(Gravity.RIGHT);
-	                //For adding rupee symbol
+	                
 	                if(columnValue.get(j).length() > 0){
 	                
-	                    final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs)); 
-	                    label.setText(rsSymbol+" "+columnValue.get(j).toString());
+	                    label.setText(columnValue.get(j).toString());
 	                }
         		}else 
         		{
@@ -193,6 +236,8 @@ public class cashFlow extends Activity{
             	}
                
             }
+    		
+            
         }
 	}
 

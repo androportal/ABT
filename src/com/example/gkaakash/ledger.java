@@ -14,7 +14,11 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -30,14 +34,19 @@ public class ledger extends Activity{
     private Report report;
     ArrayList<String> ledgerResultList;
     private ArrayList accountlist;
+    Boolean updown=false;
    
      
     public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
+       requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
        setContentView(R.layout.ledger_table);
        
        report = new Report();
        client_id= Startup.getClient_id();
+       
+     //customizing title bar
+       getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
       
        try {
            String financialFromDate =Startup.getfinancialFromDate();
@@ -48,14 +57,18 @@ public class ledger extends Activity{
            String toDate = reportMenu.givenToDateString;
        
            tvaccontName = (TextView) findViewById( R.id.tvaccountName );
-           tvfinancialFromDate = (TextView) findViewById( R.id.tvfinancialFromDate );
            tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
           
            tvaccontName.setText("Account name: "+accountName);
            //tvfinancialFromDate.setText("Financial from: " +fromDate);
            //tvfinancialToDate.setText("Financial to: " +toDate);
            tvfinancialToDate.setText("Period : "+fromDate+" to "+toDate);   
-              
+           
+           if(!projectName.equalsIgnoreCase("No Project")){
+		    	TextView tvProjectName = (TextView) findViewById( R.id.tvProjectName );
+		    	tvProjectName.setText("Project name: " +projectName);
+		    }
+            System.out.println("ledger with project"+accountName+financialFromDate+fromDate+toDate+projectName);
             Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,projectName};
             ledgerResult = (Object[]) report.getLedger(params,client_id);
            
@@ -75,6 +88,29 @@ public class ledger extends Activity{
            
             ledgertable = (TableLayout)findViewById(R.id.maintable);
             addTable();
+            
+            final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
+            tvReportTitle.setText("Menu >> "+"Report >> "+"Ledger");
+            final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
+            btnSaveRecon.setVisibility(Button.GONE);
+            final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+            btnScrollDown.setOnClickListener(new OnClickListener() {
+ 			
+ 			@Override
+ 			public void onClick(View v) {
+ 				if(updown==false){
+                    ScrollView sv = (ScrollView)findViewById(R.id.ScrollLedger);
+                    sv.fullScroll(ScrollView.FOCUS_DOWN); 
+                    btnScrollDown.setBackgroundResource(R.drawable.up);
+                    updown=true;
+               }else {
+                    ScrollView sv = (ScrollView)findViewById(R.id.ScrollLedger);
+                    sv.fullScroll(ScrollView.FOCUS_UP); 
+                    btnScrollDown.setBackgroundResource(R.drawable.down);
+                    updown=false;
+               }
+ 				}
+            });
        } catch (Exception e) {
            AlertDialog.Builder builder = new AlertDialog.Builder(ledger.this);
            builder.setMessage("Please try again")
@@ -110,8 +146,8 @@ public class ledger extends Activity{
                 label.setBackgroundColor(Color.BLACK);
                 if(j == 3 || j == 4){
                     if(columnValue.get(j).trim().length() > 0){
-                        final SpannableString rsSymbol = new SpannableString(ledger.this.getText(R.string.Rs)); 
-                        label.setText(rsSymbol+" "+columnValue.get(j)); 
+                        
+                        label.setText(columnValue.get(j)); 
                     } 
                     label.setGravity(Gravity.RIGHT);
                 }
@@ -129,8 +165,10 @@ public class ledger extends Activity{
     }
 
     void addHeader(){
+    	//For adding rupee symbol
+    	final SpannableString rsSymbol = new SpannableString(ledger.this.getText(R.string.Rs));
         /** Create a TableRow dynamically **/
-        String[] ColumnNameList = new String[] {"Date","Particulars","Reference no.","Debit","Credit","Narration"};
+        String[] ColumnNameList = new String[] {"Date","Particulars","Reference no.",rsSymbol+" Debit",rsSymbol+" Credit","Narration"};
        
         tr = new TableRow(this);
         

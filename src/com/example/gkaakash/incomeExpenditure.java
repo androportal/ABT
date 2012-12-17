@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -34,6 +35,8 @@ public class incomeExpenditure extends Activity{
     String[] ColumnNameList;
     String getSelectedOrgType;
     String IEToDateString;
+    Boolean updown=false;
+    
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -41,26 +44,9 @@ public class incomeExpenditure extends Activity{
         report = new Report();
 	    client_id= Startup.getClient_id();
 	    
-	    //customizing title bar
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.report_title);
-        final TextView label = (TextView) findViewById(R.id.tvReportTitle);
-        String Reporttypeflag = reportMenu.reportTypeFlag;
-        label.setText("Menu >> Transaction >> " + Reporttypeflag);
-        
-        //set on click listener for home button
-        final Button home = (Button) findViewById(R.id.btnhome);
-        home.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(incomeExpenditure.this, menu.class);
-				// To pass on the value to the next page
-				startActivity(intent);
-				
-			}
-        	
-        });
-        
+	  //customizing title bar
+	    getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
+	    
 	    try {
 	    	/*
 		      * get financial from and to date from startup page
@@ -127,7 +113,30 @@ public class incomeExpenditure extends Activity{
 	            }
 	            
 	        }
-        
+	        String Reporttypeflag = reportMenu.reportTypeFlag;
+	        final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
+            tvReportTitle.setText("Menu >> "+"Report >> "+Reporttypeflag);
+            final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
+            btnSaveRecon.setVisibility(Button.GONE);
+            final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+            btnScrollDown.setOnClickListener(new OnClickListener() {
+ 			
+ 			@Override
+ 			public void onClick(View v) {
+ 				if(updown==false){
+                    ScrollView sv = (ScrollView)findViewById(R.id.ScrollIncome);
+                    sv.fullScroll(ScrollView.FOCUS_DOWN); 
+                    btnScrollDown.setBackgroundResource(R.drawable.up);
+                    updown=true;
+               }else {
+                    ScrollView sv = (ScrollView)findViewById(R.id.ScrollIncome);
+                    sv.fullScroll(ScrollView.FOCUS_UP); 
+                    btnScrollDown.setBackgroundResource(R.drawable.down);
+                    updown=false;
+               }
+ 				}
+            });
+	        
         
 	    } catch (Exception e) {
 	    	System.out.println("I am an error"+e);
@@ -185,19 +194,19 @@ public class incomeExpenditure extends Activity{
             
         	if(j==2){//for amount coloumn
         		if(columnValue.get(j).equalsIgnoreCase("Amount")){ // for heading "Amount"
-        			 addRow(columnValue.get(j));   
-        	            label.setBackgroundColor(color);
+        			//For adding rupee symbol
+        	    	final SpannableString rsSymbol = new SpannableString(incomeExpenditure.this.getText(R.string.Rs));
+        			addRow(rsSymbol+" "+columnValue.get(j));   
+        	        label.setBackgroundColor(color);
         			label.setGravity(Gravity.CENTER);
         		}
         		else{
-        			 addRow(columnValue.get(j));   
-        	            label.setBackgroundColor(color);
-        			label.setGravity(Gravity.RIGHT);
+        			addRow(columnValue.get(j));   
+        	        label.setBackgroundColor(color);
+        	        label.setGravity(Gravity.RIGHT);
                     //For adding rupee symbol
                     if(columnValue.get(j).length() > 0){
-                    
-                        final SpannableString rsSymbol = new SpannableString(incomeExpenditure.this.getText(R.string.Rs)); 
-                        label.setText(rsSymbol+" "+columnValue.get(j).toString());
+                        label.setText(columnValue.get(j).toString());
                     }
         		}
             }

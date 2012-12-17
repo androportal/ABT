@@ -1,5 +1,7 @@
 package com.gkaakash.controller;
 
+import java.util.ArrayList;
+
 import org.xmlrpc.android.XMLRPCException;
 import org.xmlrpc.android.XMLRPCFault;
 
@@ -17,6 +19,10 @@ public class Report {
 	private Object[] profitLossStatement;
 	private Object[] cashFlowStatement;
 	private Object[] getBalancesheetDisplay;
+	private Object[] getLedgerForBankRecon;
+	private String setBankReconciliationResult;
+	private Boolean result;
+	
 	/***
 	 * Default constructor
 	 * create instance of CoreConnection() to get connection with server
@@ -195,4 +201,67 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 		
 		return getBalancesheetDisplay;
 	}
+	
+	
+	/*
+	 * get all cleared and uncleared transactions for bank recon
+	 * depending upon clear flag
+	 */
+	public Object getLedgerForBankRecon(Object[] params,Object[] flag, Integer client_id) {
+		try {
+			
+			getLedgerForBankRecon = (Object[])conn.getClient().call("reports.updateBankRecon",params,flag, client_id);
+			
+		} catch (XMLRPCFault e1) {
+			
+			e1.printStackTrace();
+			
+		}catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		return getLedgerForBankRecon;
+	}
+	
+	/*
+	 * pass the list of all rows to be clear
+	 */
+	public String setBankReconciliation(ArrayList<ArrayList> list, Integer client_id) {
+		try {
+			setBankReconciliationResult = (String) conn.getClient().call("reports.setBankReconciliation", list, client_id);
+			
+		} catch (XMLRPCFault e1) {
+			
+			e1.printStackTrace();
+			
+		}catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		return setBankReconciliationResult;
+	}
+	
+	/*
+	 * uncleare the cleared transactions
+	 */
+	public Boolean deleteClearedRecon(ArrayList<String> list, Integer client_id) {
+		try {
+			result = (Boolean) conn.getClient().call("reports.deleteClearedRecon", list, client_id);
+			
+		} catch (XMLRPCFault e1) {
+			
+			e1.printStackTrace();
+			
+		}catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
+	
 }

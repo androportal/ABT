@@ -12,8 +12,12 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -34,11 +38,18 @@ public class trialBalance extends Activity{
     String trialbalancetype;
     String[] ColumnNameList;
     String trialToDateString ;
+    Boolean updown=false;
+
+    
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
+    	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.trial_table);
         report = new Report();
 	    client_id= Startup.getClient_id();
+	    
+	  //customizing title bar
+	    getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
 	    
 	    try {
 	    	/*
@@ -86,6 +97,30 @@ public class trialBalance extends Activity{
 	        }
         trialBaltable = (TableLayout)findViewById(R.id.maintable);
         addTable();
+        
+        final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
+        tvReportTitle.setText("Menu >> "+"Report >> "+trialbalancetype);
+        final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
+        btnSaveRecon.setVisibility(Button.GONE);
+        final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+        btnScrollDown.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(updown==false){
+                ScrollView sv = (ScrollView)findViewById(R.id.ScrollTrial);
+                sv.fullScroll(ScrollView.FOCUS_DOWN); 
+                btnScrollDown.setBackgroundResource(R.drawable.up);
+                updown=true;
+           }else {
+                ScrollView sv = (ScrollView)findViewById(R.id.ScrollTrial);
+                sv.fullScroll(ScrollView.FOCUS_UP); 
+                btnScrollDown.setBackgroundResource(R.drawable.down);
+                updown=false;
+           }
+				}
+        });
+        
 	    } catch (Exception e) {
 	    	System.out.println("m in exte err"+e);
 	    	AlertDialog.Builder builder = new AlertDialog.Builder(trialBalance.this);
@@ -123,11 +158,9 @@ public class trialBalance extends Activity{
                 if(!"Extended Trial Balance".equals(trialbalancetype)){
                 	if(j==3 || j==4){
                         label.setGravity(Gravity.RIGHT);
-                        //For adding rupee symbol
-                        if(columnValue.get(j).length() > 0){
                         
-                            final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs)); 
-                            label.setText(rsSymbol+" "+columnValue.get(j).toString());
+                        if(columnValue.get(j).length() > 0){
+                            label.setText(columnValue.get(j).toString());
                         }
                     }
                     else{
@@ -139,8 +172,7 @@ public class trialBalance extends Activity{
                         //For adding rupee symbol
                         if(columnValue.get(j).length() > 0){
                         
-                            final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs)); 
-                            label.setText(rsSymbol+" "+columnValue.get(j).toString());
+                            label.setText(columnValue.get(j).toString());
                         }
                     }
                     else{
@@ -177,13 +209,16 @@ public class trialBalance extends Activity{
      * add column heads to the table
      */
     void addHeader(){
+    	//For adding rupee symbol
+    	final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs)); 
+    	
         /** Create a TableRow dynamically **/
     	if ("Net Trial Balance".equals(trialbalancetype)){
-    		 ColumnNameList = new String[] { "Sr. no.","Account name","Group name","Debit","Credit"};	
+    		 ColumnNameList = new String[] { "Sr. no.","Account name","Group name",rsSymbol+" Debit",rsSymbol+" Credit"};	
     	}else if ("Gross Trial Balance".equals(trialbalancetype)) {
-    		ColumnNameList = new String[] { "Sr. no.","Account name","Group name","Total debit","Total credit"};	
+    		ColumnNameList = new String[] { "Sr. no.","Account name","Group name",rsSymbol+" Total debit",rsSymbol+" Total credit"};	
 		}else if ("Extended Trial Balance".equals(trialbalancetype)) {
-			ColumnNameList = new String[] { "Sr. no.","Account name","Group name","Opening Balance","Total debit transaction","Total credit transaction","Debit balance","Credit balance"};	
+			ColumnNameList = new String[] { "Sr. no.","Account name"," Group name ",rsSymbol+" Opening  Balance ",rsSymbol+" Total  debit  transaction ",rsSymbol+" Total  credit  transaction ",rsSymbol+" Debit  balance ",rsSymbol+" Credit  balance "};	
 		}
        
         tr = new TableRow(this);
