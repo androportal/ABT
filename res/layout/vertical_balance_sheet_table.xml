@@ -67,7 +67,7 @@
 		          <TableLayout
 				            android:layout_width="wrap_content"
 				            android:layout_height="wrap_content"
-				            android:stretchColumns=",1,2,3"
+				            android:stretchColumns=",1,2,3,4"
 				            android:id="@+id/col1"
 				            android:background="#696565"
 				            android:layout_weight="1" />
@@ -81,7 +81,7 @@
 				            android:id="@+id/col2"
 				            android:layout_width="wrap_content"
 				            android:layout_height="wrap_content"
-				            android:stretchColumns=",1,2,3"
+				            android:stretchColumns=",1,2,3,4"
 				            android:background="#696565"
 				            android:layout_weight="1" />
                 </LinearLayout>

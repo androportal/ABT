@@ -161,172 +161,204 @@ public class balanceSheet extends Activity{
           AlertDialog alert = builder.create();
           alert.show();		}
 }
-private void addTable(TableLayout tableID) {
-   /** Create a TableRow dynamically **/
-   for(int i=0;i<BalanceSheetGrid.size();i++){
-   	
-       ArrayList<String> columnValue = new ArrayList<String>();
-       columnValue.addAll(BalanceSheetGrid.get(i));
-       //create new row
-       tr = new TableRow(this);
-      
-       if(columnValue.get(1).equalsIgnoreCase("Amount")){
-       	//for heading pass green color code
-    	  // System.out.println("iam in chaninging color "+columnValue.get(1));
-       	setRowColorSymbolGravity(columnValue, Color.parseColor("#348017"), true);
-       }
-       else{
-       	//for remaining rows pass black color code
-       	setRowColorSymbolGravity(columnValue, Color.BLACK, false);
-       }
-       
-       // Add the TableRow to the TableLayout
-       tableID.addView(tr, new TableLayout.LayoutParams(
-               LayoutParams.FILL_PARENT,
-               LayoutParams.WRAP_CONTENT));
-   }
-   
-   
-}/*
+    private void addTable(TableLayout tableID) {
+    	   /** Create a TableRow dynamically **/
+    	   for(int i=0;i<BalanceSheetGrid.size();i++){
+    	   	
+    	       ArrayList<String> columnValue = new ArrayList<String>();
+    	       columnValue.addAll(BalanceSheetGrid.get(i));
+    	       //create new row
+    	       tr = new TableRow(this);
+    	      
+    	       if(columnValue.get(1).equalsIgnoreCase("Amount")||columnValue.get(1).equalsIgnoreCase("Debit")){
+    	       	//for heading pass green color code
+    	    	  // System.out.println("iam in chaninging color "+columnValue.get(1));
+    	       	setRowColorSymbolGravity(columnValue, Color.parseColor("#348017"),true);
+    	       }
+    	       else{
+    	       	//for remaining rows pass black color code
+    	       	setRowColorSymbolGravity(columnValue, Color.BLACK,false);
+    	       }
+    	       
+    	       // Add the TableRow to the TableLayout
+    	       tableID.addView(tr, new TableLayout.LayoutParams(
+    	               LayoutParams.FILL_PARENT,
+    	               LayoutParams.WRAP_CONTENT));
+    	   }
+    	 
+    	}
+/*
  * 1. set the green background color for heading and black for remaining rows
  * 2. set right aligned gravity for amount and center aligned for other values
  * 3. set rupee symbol for amount
  */
-private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color, Boolean headerFlag) {
+private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color,Boolean headerFlag) {
 	for(int j=0;j<columnValue.size();j++){
         /** Creating a TextView to add to the row **/
-		if(headerFlag == true){
-			if(j == 1 || j == 2 || j == 3){ //amount column
-				//For adding rupee symbol
-		    	final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs));
-				addRow(rsSymbol+" "+columnValue.get(j));   
-			}else{
-				addRow(columnValue.get(j));   
-			}
-			
-		}
-		else{
-			addRow(columnValue.get(j));   
-		}
-        label.setBackgroundColor(color);
-        String name = columnValue.get(0).toString();
-        String amount = columnValue.get(1).toString();
-        String total_amount = columnValue.get(2).toString();
-        if(j==1)
-        {//for amount coloumn
-    		
-    		if(!amount.equalsIgnoreCase("Total"))
-    		{
-    			if(!amount.equalsIgnoreCase("Amount")&&!amount.equalsIgnoreCase("Net Surplus"))
-    			{
-    				((TextView)label).setGravity(Gravity.RIGHT);
-        			
-                    if(columnValue.get(j).length() > 0)
-                    {
-                        ((TextView) label).setText(columnValue.get(j).toString());
-                    }
-    			}
-                
-                if(amount.equalsIgnoreCase("Net Surplus")
-                		||amount.equalsIgnoreCase("Net Loss")
-                		||amount.equalsIgnoreCase("Net DEFICIT")
-                		||amount.equalsIgnoreCase("NET PROFIT")
-                		||amount.equalsIgnoreCase("Amount"))
-            	{
-        			((TextView)label).setGravity(Gravity.CENTER);
-        			
-            	}
-               
-    		}else
-    		{
-    			
-    			((TextView)label).setGravity(Gravity.CENTER);
-    		} 
-        }
-    	if(j==2){//for amount coloumn
+		 	
+		 	if(headerFlag == true){
+		 		if(j == 1 || j == 2 || j == 3){ //amount column
+		 		//For adding rupee symbol
+		 		final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs));
+		 		addRow(rsSymbol+" "+columnValue.get(j));
+		 		}else{
+		 		addRow(columnValue.get(j));
+		 		}
 
-            if(total_amount.equalsIgnoreCase("Total Amount")||total_amount.equalsIgnoreCase("Amount"))
-            {
-    			((TextView)label).setGravity(Gravity.CENTER);
-    			
-            }else
-            {
-            	((TextView)label).setGravity(Gravity.RIGHT);
-	            
-	            if(columnValue.get(j).length() > 0)
-	            {
-	                ((TextView) label).setText(columnValue.get(j).toString());
-	            }
-            }
-        }
-        if(j==0) {
-        	if(balancetype.equalsIgnoreCase("Conventional Balance Sheet"))
-        	{
-	        	if(name.equalsIgnoreCase("CORPUS")
-	        			||name.equalsIgnoreCase("CAPITAL") 
-	        			||name.equalsIgnoreCase("RESERVES")
-	        			||name.equalsIgnoreCase("LOANS")
-	        			||name.equalsIgnoreCase("CURRENT LIABILITIES")
-	        			||name.equalsIgnoreCase("FIXED ASSETS")
-	        			||name.equalsIgnoreCase("CURRENT ASSETS")
-	        			||name.equalsIgnoreCase("LOANS")
-	        			||name.equalsIgnoreCase("INVESTMENTS")
-	        			||name.equalsIgnoreCase("MISCELLANEOUS EXPENSES(ASSET)"))
-	        	{
-	        		((TextView)label).setGravity(Gravity.LEFT);
-	        	}
-	        	else
-	        	{
-	        		//((TextView)label).setGravity(Gravity.CENTER);
-	        	}
-        	}
-        	else{
-        		if(name.equalsIgnoreCase("TOTAL CORPUS")
-        				||name.equalsIgnoreCase("TOTAL CAPITAL")
-	        			||name.equalsIgnoreCase("TOTAL RESERVES & SURPLUS") 
-	        			||name.equalsIgnoreCase("TOTAL MISCELLANEOUS EXPENSES(ASSET)")
-	        			||name.equalsIgnoreCase("TOTAL OF OWNER'S FUNDS")
-	        			||name.equalsIgnoreCase("TOTAL BORROWED FUNDS")
-	        			||name.equalsIgnoreCase("TOTAL FUNDS AVAILABLE / CAPITAL EMPLOYED")
-	        			||name.equalsIgnoreCase("TOTAL FIXED ASSETS(NET)")
-	        			||name.equalsIgnoreCase("TOTAL LONG TERM INVESTMENTS")
-	        			||name.equalsIgnoreCase("TOTAL LOANS(ASSETS)")
-	        			||name.equalsIgnoreCase("TOTAL CURRENT ASSETS")
-	        			||name.equalsIgnoreCase("TOTAL CURRENT LIABILITIES")
-	        			||name.equalsIgnoreCase("NET CURRENT ASSETS OR WORKING CAPITAL")
+		 		}else{
+		 			addRow(columnValue.get(j));
+		 		}
+		 		
+	        label.setBackgroundColor(color);
+	        String name = columnValue.get(0).toString();
+	        String amount = columnValue.get(1).toString();
+	        String total_amount = columnValue.get(2).toString();
+	        String totalamount = columnValue.get(3);
+	       
+	       
+	       
+	        if(j==1)
+	        {//for amount coloumn
+	    		
+	    			
+	                if(amount.equalsIgnoreCase("Net Surplus")
+	                		||amount.equalsIgnoreCase("Net Loss")
+	                		||amount.equalsIgnoreCase("Net DEFICIT")
+	                		||amount.equalsIgnoreCase("NET PROFIT")
+	                		||amount.equalsIgnoreCase("Amount")
+	                		||amount.equalsIgnoreCase("Debit"))
+	            	{
+	        			((TextView)label).setGravity(Gravity.CENTER);
 	        			
-        				){
-        			((TextView)label).setGravity(Gravity.RIGHT);
-        		}
-        		if(name.equalsIgnoreCase("Particulars"))
-        		{
-        			((TextView)label).setGravity(Gravity.CENTER);
-        		}
-        		
-        	}
-        }
-        if(!balancetype.equals("Conventional Balance Sheet"))
-        {
-        	if(j==3)
-        	{//for amount coloumn
-        		if(amount.equalsIgnoreCase("Amount"))
-                {
-        			((TextView)label).setGravity(Gravity.CENTER);
-        			
-                }
-        		else
-        		{
-    			((TextView)label).setGravity(Gravity.RIGHT);
-                
-                if(columnValue.get(j).length() > 0){
-                
-                    ((TextView) label).setText(columnValue.get(j).toString());
-                }
-        	}
-           }
-        }
+	            	}else{
+	            		((TextView)label).setGravity(Gravity.RIGHT);
+			            //For adding rupee symbol
+			            if(columnValue.get(j).length() > 0)
+			            {
+			            	
+			            	 ((TextView) label).setText(columnValue.get(j).toString());
+			            }
+	            		
+	            	}
+	               
+	    		}
+	        
+	    	if(j==2){//for amount coloumn
+
+	            if(total_amount.equalsIgnoreCase("Credit"))
+	            {
+	    			((TextView)label).setGravity(Gravity.CENTER);
+	    			
+	            }else
+	            {
+	            		((TextView)label).setGravity(Gravity.RIGHT);
+			            //For adding rupee symbol
+			            if(columnValue.get(j).length() > 0)
+			            {
+			            
+			            	 ((TextView) label).setText(columnValue.get(j).toString());
+			            }
+	            		
+	            	
+	            	
+	            }
+	        }
+	        if(j==0) {
+	        	if(balancetype.equals("Conventional Balance Sheet"))
+	        	{
+		        	if(name.equals("CORPUS")
+		        			||name.equals("CAPITAL") 
+		        			||name.equals("RESERVES")
+		        			||name.equals("LOANS(Liability)")
+		        			||name.equals("CURRENT LIABILITIES")
+		        			||name.equals("FIXED ASSETS")
+		        			||name.equals("CURRENT ASSETS")
+		        			||name.equals("LOANS(Asset)")
+		        			||name.equals("INVESTMENTS")
+		        			||name.equals("MISCELLANEOUS EXPENSES(ASSET)"))
+		        	{
+		        		((TextView)label).setGravity(Gravity.LEFT);
+		        	}
+		        	else
+		        	{
+		        		if(name.equalsIgnoreCase("Total"))
+		        		{
+		        			
+		        			((TextView)label).setGravity(Gravity.RIGHT);
+		        		}
+		        		else{
+		        			   
+		        	        label.setBackgroundColor(color);
+		        			((TextView)label).setGravity(Gravity.CENTER);
+		        		}
+		        		
+		        	}
+	        	}
+	        	else{
+	        		if(name.equalsIgnoreCase("TOTAL CORPUS")
+	        				||name.equalsIgnoreCase("TOTAL CAPITAL")
+		        			||name.equalsIgnoreCase("TOTAL RESERVES & SURPLUS") 
+		        			||name.equalsIgnoreCase("TOTAL MISCELLANEOUS EXPENSES(ASSET)")
+		        			||name.equalsIgnoreCase("TOTAL OF OWNER'S FUNDS")
+		        			||name.equalsIgnoreCase("TOTAL BORROWED FUNDS")
+		        			||name.equalsIgnoreCase("TOTAL FUNDS AVAILABLE / CAPITAL EMPLOYED")
+		        			||name.equalsIgnoreCase("TOTAL FIXED ASSETS(NET)")
+		        			||name.equalsIgnoreCase("TOTAL LONG TERM INVESTMENTS")
+		        			||name.equalsIgnoreCase("TOTAL LOANS(ASSET)")
+		        			||name.equalsIgnoreCase("TOTAL CURRENT ASSETS")
+		        			||name.equalsIgnoreCase("TOTAL CURRENT LIABILITIES")
+		        			||name.equalsIgnoreCase("NET CURRENT ASSETS OR WORKING CAPITAL")
+		        			
+	        				){
+	        			((TextView)label).setGravity(Gravity.RIGHT);
+	        		}
+	        		if(name.equalsIgnoreCase("Particulars"))
+	        		{
+	        			((TextView)label).setGravity(Gravity.CENTER);
+	        		}
+	        		
+	        	} 
+	        }
+	        if(j==3)
+	        	{//for amount coloumn
+	        		if(totalamount.equalsIgnoreCase("Total Amount")||totalamount.equalsIgnoreCase("Amount"))
+	                {
+	        			((TextView)label).setGravity(Gravity.CENTER);
+	        			
+	                }
+	        		else
+	        		{
+	    			((TextView)label).setGravity(Gravity.RIGHT);
+	                //For adding rupee symbol
+	                if(columnValue.get(j).length() > 0){
+	                
+	                	 ((TextView) label).setText(columnValue.get(j).toString());
+	                }
+	        	}
+	           
+	        }
+	        if(!balancetype.equals("Conventional Balance Sheet"))
+	        {
+	         if(j==4)
+	         {//for amount coloumn
+	        	 if(columnValue.get(4).toString().equalsIgnoreCase("Amount"))
+	                {
+	        		 	((TextView)label).setGravity(Gravity.CENTER);
+	        
+	                }
+	        	 else
+	        	 {
+	        		 	((TextView)label).setGravity(Gravity.RIGHT);
+	        		 	//For adding rupee symbol
+	        		 	if(columnValue.get(j).length() > 0)
+	        		 	{
+	        		 		 ((TextView) label).setText(columnValue.get(j).toString());
+	        		 	}
+	        	 }
+	           }
+	        }
+	    }
     }
-	}
 
 	/*
  * this function add the value to the row
