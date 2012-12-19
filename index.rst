@@ -11,8 +11,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   user_guide
-
+   user/user_guide
+   devel/devel_guide
+   
 
 Indices and tables
 ==================

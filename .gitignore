@@ -1,22 +1,9 @@
-# built application files
-*.apk
-*.ap_
+# for sphinx
 
-# files for the dex VM
-*.dex
+_build/
+*~
+*.html
+*.pyc
 
-# Java class files
-*.class
-
-# generated files
-bin/
-gen/
-
-# Local configuration file (sdk path, etc)
-local.properties
-
-.project
-.classpath
-.settings/
 
 
