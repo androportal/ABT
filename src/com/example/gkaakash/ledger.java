@@ -35,7 +35,7 @@ public class ledger extends Activity{
     ArrayList<String> ledgerResultList;
     private ArrayList accountlist;
     Boolean updown=false;
-   
+    boolean checked;
      
     public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
@@ -53,6 +53,7 @@ public class ledger extends Activity{
            String financialToDate=Startup.getFinancialToDate();
            String accountName = reportMenu.selectedAccount;
            String projectName = reportMenu.selectedProject;
+           checked = reportMenu.cheched;
            String fromDate = reportMenu.givenfromDateString;
            String toDate = reportMenu.givenToDateString;
        
@@ -80,7 +81,14 @@ public class ledger extends Activity{
                 ledgerResultList = new ArrayList<String>();
                 for(int i=0;i<(t.length-1);i++) 
                 {
-                	ledgerResultList.add((String) t[i].toString());
+                	if(i == 5){ //****************
+                		if(checked == true){
+                			ledgerResultList.add((String) t[i].toString());
+                    	}
+                		
+                	}else{
+                		ledgerResultList.add((String) t[i].toString());
+                	}
                 }
                 
                 ledgerGrid.add(ledgerResultList);
@@ -172,7 +180,15 @@ public class ledger extends Activity{
        
         tr = new TableRow(this);
         
-        for(int k=0;k<ColumnNameList.length;k++){
+        int len;
+        if(checked == true){
+        	len = ColumnNameList.length;
+        }
+        else{
+        	len = ColumnNameList.length-1;
+        }
+        
+        for(int k=0;k<len;k++){
             /** Creating a TextView to add to the row **/
             addRow(ColumnNameList[k]);
             label.setBackgroundColor(Color.parseColor("#348017"));

@@ -62,7 +62,10 @@ public class SearchVoucher extends Activity {
     static Boolean cloneflag=false;
     String vouchercode;
     LinearLayout.LayoutParams params;
+    static int searchVoucherBy = 2; // by date
     protected Boolean deleteVoucher;
+    static String searchByNarration;
+    static String searchByRefNumber;
 	  @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	    	super.onCreate(savedInstanceState);
@@ -140,16 +143,6 @@ public class SearchVoucher extends Activity {
 			   	String settomonth = dateParts1[1];
 			   	String settoyear = dateParts1[2];
 				
-			   	final String fromdate = mFormat.format(Double.valueOf(setfromday))+ "-" 
-					   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(setfrommonth))))))) + "-" 
-					   	+ setfromyear; 
-			   			
-			   			
-			   	final String todate = mFormat.format(Double.valueOf(settoday))+ "-" 
-					   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(settomonth))))))) + "-" 
-					   	+ settoyear;  
-			   			
-			   	
 			   	DatePicker SearchVoucherFromdate = (DatePicker) layout.findViewById(R.id.dpSearchVoucherFromdate);
 			   	SearchVoucherFromdate.init(Integer.parseInt(setfromyear),(Integer.parseInt(setfrommonth)-1),Integer.parseInt(setfromday), null);
 			   	
@@ -202,13 +195,13 @@ public class SearchVoucher extends Activity {
 						int pos = searchBy.getSelectedItemPosition();
 					   	
 					   	if(pos == 0){
-					   		String searchByVoucherCode = etVoucherCode.getText().toString();
-					   		if(searchByVoucherCode.length() < 1){
+					   		searchByRefNumber = etVoucherCode.getText().toString();
+					   		if(searchByRefNumber.length() < 1){
 				        		toastValidationMessage("Please enter voucher reference number");
 					   		}
 					   		else{
-					   			System.out.println(fromdate+todate);
-					   			Object[] params = new Object[]{1,searchByVoucherCode,fromdate,todate,""};
+					   			searchVoucherBy = 1; //by reference no
+					   			Object[] params = new Object[]{1,searchByRefNumber,financialFromDate,financialToDate,""};
 					   			getallvouchers(params);
 					   			
 					   		}
@@ -253,7 +246,7 @@ public class SearchVoucher extends Activity {
 					        	
 					        	if(((cal3.after(cal1)&&(cal3.before(cal2))) || (cal3.equals(cal1) || (cal3.equals(cal2)))) 
 					        			&& ((cal4.after(cal1) && (cal4.before(cal2))) || (cal4.equals(cal2)) || (cal4.equals(cal1)))){
-					        		
+					        		searchVoucherBy = 2; // by date
 					        		Object[] params = new Object[]{2,"",SearchVoucherFromdate,SearchVoucherTodate,""};
 					        		getallvouchers(params);
 					        	}
@@ -266,13 +259,13 @@ public class SearchVoucher extends Activity {
 						   	
 					   	}
 					   	else if(pos == 2){
-					   		String searchByNarration = etNarration.getText().toString();
+					   		searchByNarration = etNarration.getText().toString();
 							if(searchByNarration.length() < 1){
 				        		toastValidationMessage("Please enter narration");
 							}
 							else{
-								
-								Object[] params = new Object[]{3,"",fromdate,todate,searchByNarration};
+								searchVoucherBy = 3; //by narration
+								Object[] params = new Object[]{3,"",financialFromDate,financialToDate,searchByNarration};
 								getallvouchers(params);
 							}
 					   	}
@@ -505,6 +498,30 @@ public class SearchVoucher extends Activity {
         addTable();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onResume()
+	 * to execute code when tab is changed because 
+     * when the tab is clicked onResume is called for that activity
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+        if(searchVoucherBy == 1){ // by reference number
+        	Object[] params = new Object[]{1,searchByRefNumber,financialFromDate,financialToDate,""};
+   			getallvouchers(params);
+        }
+        else if(searchVoucherBy == 2){ // by date
+        	Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
+    		getallvouchers(params);
+        }
+        else if(searchVoucherBy == 3){ // narration
+        	Object[] params = new Object[]{3,"",financialFromDate,financialToDate,searchByNarration};
+			getallvouchers(params);
+        }
+		
+	}
+	
 	
 	public void toastValidationMessage(String message) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -521,6 +538,8 @@ public class SearchVoucher extends Activity {
         alert.show();
 		
 	} 
+	
+	
 	 public void onBackPressed() {
 		 Intent intent = new Intent(getApplicationContext(), voucherMenu.class);
 		 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

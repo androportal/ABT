@@ -44,6 +44,7 @@ public class edit_account extends Activity{
     AlertDialog dialog;
     static Object[] accountDetail;
     ArrayList accountDetailList;
+    static int flag = 1;
    
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,14 +93,14 @@ public class edit_account extends Activity{
 			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
 				if(position == 0){
 					etSearch.setHint("Search by name");
-					
+					flag = 1;
 					//get all acoount names in list view
 					accountnames = (Object[])account.getAllAccountNames(client_id);
 			        getResultList(accountnames);
 				}
 				if(position == 1){
 					etSearch.setHint("Search by code");
-					
+					flag = 2;
 					//get all acoount codes in list view
 					accountcodes = (Object[])account.getAllAccountCodes(client_id);
 					getResultList(accountcodes);
@@ -342,8 +343,13 @@ private void editAccount() {
                 		break;
 	                case 1:
 	                              {
-	                            	  Object[] params = new Object[]{List.getItemAtPosition(position).toString()};
+	                            	  if(accCodeCheckFlag.equals("automatic")){
+	                            		  flag = 1;
+	                            	  }
+	                            	  Object[] params = new Object[]{List.getItemAtPosition(position).toString(),flag};
+	                            	  System.out.println(List.getItemAtPosition(position));
 	                        		  String accountDeleteValue =  (String) account.deleteAccount(params,client_id);
+	                        		  System.out.println("value"+accountDeleteValue);
 	                        		  if("account deleted".equals(accountDeleteValue)){
 	                        			  String message = "Account '"+List.getItemAtPosition(position).toString()+"' has been deleted successfully";
 	                        			  toastValidationMessage(message);
@@ -441,28 +447,49 @@ private void editAccount() {
   	    			accountnames = (Object[])account.getAllAccountNames(client_id);
 			        getResultList(accountnames);
   	    			
-  	    	}
+  	    		}
+  	    		else if(sSearchAccountBy.getSelectedItemPosition()== 1){
+  	    			//search by account code
+  	    			accountnames = (Object[])account.getAllAccountCodes(client_id);
+			        getResultList(accountnames);
+  	    			 
+  	    		}  
   	    }
     }
     
+    /*
+     * (non-Javadoc)
+     * @see android.app.Activity#onResume()
+     *  to execute code when tab is changed because 
+     *  when the tab is clicked onResume is called for that activity
+     */
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	//get all acoount names in list view on load
+        accountnames = (Object[])account.getAllAccountNames(client_id);
+        getResultList(accountnames);
+        setaccountlist();
+    }
     
+    
+    /*
+     * call this method for alert messages
+     * input: a message Strig to be display on alert
+     */
     public void toastValidationMessage(String message) {
-   	 /*
-        * call this method for alert messages
-        * input: a message Strig to be display on alert
-        */
-		AlertDialog.Builder builder = new AlertDialog.Builder(edit_account.this);
-       builder.setMessage(message)
-               .setCancelable(false)
+    	AlertDialog.Builder builder = new AlertDialog.Builder(edit_account.this);
+	    builder.setMessage(message)
+	           .setCancelable(false)
                .setPositiveButton("Ok",
                        new DialogInterface.OnClickListener() {
                            public void onClick(DialogInterface dialog, int id) {
                            	
                            }
                        });
-               
-       AlertDialog alert = builder.create();
-       alert.show();
+	               
+	     AlertDialog alert = builder.create();
+	     alert.show();
 		
 	} 
 }

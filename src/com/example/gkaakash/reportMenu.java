@@ -50,6 +50,7 @@ public class reportMenu extends ListActivity{
 	private Organisation organisation;
 	static String selectedAccount;
 	static String selectedProject;
+	static boolean cheched = false;
 	static String fromday, frommonth, fromyear, today, tomonth, toyear; 
 	static boolean validateDateFlag;
 	static String trialbalancetype;
@@ -178,10 +179,8 @@ public class reportMenu extends ListActivity{
 				  	   	
 				  	   	
 					   	
-				  	   	CheckBox cbNarration = (CheckBox)layout.findViewById(R.id.cbNarration);
-				  	   	cbNarration.setVisibility(CheckBox.GONE);
+				  	   	final CheckBox cbNarration = (CheckBox)layout.findViewById(R.id.cbNarration);
 				  	   	TextView tvcbNarration= (TextView)layout.findViewById(R.id.tvcbNarration);
-				  	   	tvcbNarration.setVisibility(TextView.GONE);
 					   	
 					   	final DatePicker LedgerFromdate = (DatePicker) layout.findViewById(R.id.dpsetLedgerFromdate);
 					   	LedgerFromdate.init(Integer.parseInt(fromyear),(Integer.parseInt(frommonth)-1),Integer.parseInt(fromday), null);
@@ -196,7 +195,7 @@ public class reportMenu extends ListActivity{
 								
 								selectedAccount = accountNames.getSelectedItem().toString();
 								selectedProject = projectNames.getSelectedItem().toString();
-								
+								cheched = cbNarration.isChecked();
 								validateDate(LedgerFromdate, LedgerT0date, "validatebothFromToDate");
 								
 								if(validateDateFlag){
