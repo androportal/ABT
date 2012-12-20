@@ -4,7 +4,7 @@ Aakash Accounting
 
 **Aakash Accounting** is a portable accounting platform on Android
 intended for Accountants and Students. `Aakash
-<http://www.iitb.ac.in/aakash2/index.jsp>`_ is a low cost
+<http://www.it.iitb.ac.in/aakash2/index.jsp>`_ is a low cost
 computing device/tablet for students, the project is initiated and
 funded by MHRD, Govt. of India. Aakash already runs Android 4.0 with
 many educational apps developed at IIT Bombay. Please refer to
@@ -16,7 +16,7 @@ version covers basic account management, creating vouchers and
 reports.
 
 
-It was initially derived from `GNUkhata <gnukhata.org>`_, a free
+It was initially derived from `GNUkhata <http://www.gnukhata.org>`_, a free
 accounting software which is mostly based on Python framework.
 
 Some features included:
