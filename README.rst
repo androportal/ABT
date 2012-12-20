@@ -1,43 +1,41 @@
-=========================
-GNUkhata on Aakash tablet
-=========================
+=================
+Aakash Accounting
+=================
 
-Porting of `GNUkhata <http://gnukhata.org/>`_ on `Aakash
-<http://www.iitb.ac.in/AK/Aakash.htm>`_ tablet, a ``low cost access
-device`` is an effort to make GNUkhata, a web-app work on a portable
-android device. **gkAakash** provides students and accountants to
-carry on there work while on the go. They don't have to carry a laptop
-or need to have a live internet connection to work on GNUkhata. This
-is a complete Android application and requires **no** internet
-connection and work natively on Aakash.
+**Aakash Accounting** is a portable accounting platform on Android
+ intended for Accountants and Students. `Aakash
+ <http://www.it.iitb.ac.in/aakash2/index.jsp>`_ is a low cost
+ computing device/tablet for students, the project is initiated and
+ funded by MHRD, Govt. of India. Aakash already runs Android 4.0 with
+ many educational apps developed at IIT Bombay. Please refer to
+ `androportal <https://github.com/androportal/>`_ for some of the
+ apps. Aakash Accounting provides an easy to use interface specially
+ for students/newbies who have just started accounting. We have tried
+ to make the user's experience simple and elegant. This initial
+ version covers basic account management, creating vouchers and
+ reports.
 
 
-About GNUKhata
---------------
+It was initially derived from `GNUkhata <gnukhata.org>`, a free
+accounting software which is mostly based on Python framework.
 
-GNUkhata is a Free Accounting Software which can be deployed by both
-``profit making`` and ``non-profit making`` organizations. GNUkhata
-provides a free and open source solution from basic book keeping to
-advanced accounting. The software is developed to be flexible enough
-to suit small business enterprises, personal accounting and enterprise
-level needs.
-
-- GNUkhata is a software for
-
-  1. Maintaining books of accounts 
-  2. Recording vouchers, bills, invoices and other documents
-     generated in day-to-day transactions
-  3. Generating reports such as Ledger Accounts, Trial Balance,
-     Profit and Loss Account, Project Statement, Cash Flow
-     Statement and Balance Sheet
-  4. Bank Reconciliation
+- Some features included:
+  #. Managing Organizations
+  #. Maintaining books of accounts
+  #. Recording, cloning and editing transactions
+  #. Recording of transactions under particular project
+  #. Generating reports such as Ledger Accounts, Trial Balance(Net,
+     Gross, Extended), Profit and Loss Account, Project Statement,
+     Cash Flow and Balance Sheet
+  #. Bank Reconciliation
 
 
 gkAakashCore - a backend to gkAakash
 ------------------------------------
 
-`gkAakashCore <https://github.com/androportal/gkAakashCore>`_ provides
-a backend to **gkAakash**. On Aakash tablet, it runs in a ``chroot``
+The entire backend has Python code base. `gkAakashCore
+<https://github.com/androportal/gkAakashCore>`_ provides a backend to
+**gkAakash**. On Aakash tablet, it runs in a ``chroot``
 environment(your device need to be rooted for this!). More information
 can be found `here
 <https://github.com/androportal/gkAakashCore/blob/master/README.rst>`_
@@ -61,13 +59,14 @@ if you want to clone code for Android(2.2, API-8), type
    git clone -b froyo https://github.com/androportal/gkAakash.git
 
 
+*note: this branch is obsolete*
+
 if you want to checkout all branches then type,
 ::
 
-   git checkout -b froyo remotes/origin/froyo
    git checkout -b ics remotes/origin/ics
    git checkout -b docs remotes/origin/docs
-   
+   git checkout -b froyo remotes/origin/froyo   
 
 Importing gkAakash as an `eclipse <http://www.eclipse.org/>`_ project
 ---------------------------------------------------------------------
@@ -88,7 +87,7 @@ After cloning the require branch, start eclipse
 - from the ``Import`` dialog box, select ``Android``
 - from ``Android`` section, select ``Existing Android Code Into
   Workspace`` and click ``Next`` button.
-- you will taken to ``Import Projects`` dialog box, click ``Browse``
+- you will be taken to ``Import Projects`` dialog box, click ``Browse``
   button and select the cloned repository
 
 Important note

@@ -33,8 +33,8 @@ public class balanceSheet extends Activity{
 	TableRow tr;
 	private ArrayList<ArrayList<String>> BalanceSheetGrid;
 	private ArrayList<String> balancesheetresultList;
-	private TableLayout cashFlowtable1;
-	private TableLayout cashFlowtable2;
+	private TableLayout balanceSheetTable1;
+	private TableLayout balanceSheetTable2;
 	private View label;
 	private ArrayList<String> TotalAmountList;
 	private TextView balDiff;
@@ -47,9 +47,9 @@ public class balanceSheet extends Activity{
     public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-       balancetype=reportMenu.balancetype;
        
-     
+       try {
+       balancetype=reportMenu.balancetype;
        
        if(balancetype.equals("Conventional Balance Sheet"))
        {
@@ -62,34 +62,56 @@ public class balanceSheet extends Activity{
     	   sv = (ScrollView)findViewById(R.id.ScrollVertiBalanceSheet);
        }
        
-     //customizing title bar
+       //customizing title bar
        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
       
        report = new Report();
        client_id= Startup.getClient_id();
        financialFromDate =Startup.getfinancialFromDate();
        financialToDate=Startup.getFinancialToDate();
-      // balancefromDateString = reportMenu.givenfromDateString;
+       // balancefromDateString = reportMenu.givenfromDateString;
        balanceToDateString = reportMenu.givenToDateString;
-       	cashFlowtable1 = (TableLayout)findViewById(R.id.col1);
-   		cashFlowtable2 = (TableLayout)findViewById(R.id.col2);
+       
+       balanceSheetTable1 = (TableLayout)findViewById(R.id.col1);
+   		balanceSheetTable2 = (TableLayout)findViewById(R.id.col2);
    		balDiff = (TextView) findViewById(R.id.tvdifference);
-       balancetype=reportMenu.balancetype;
+   		
        getSelectedOrgType = reportMenu.orgtype;
        /*
 	     * set financial from date and to date in textview
 	     */
 	    TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
 	    TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
-	      
-	    //tvfinancialFromDate.setText("Financial from : " +financialFromDate);
-	    tvfinancialToDate.setText("Period : "+financialFromDate+" to "+balanceToDateString);
+	   
+	    final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
+	    tvReportTitle.setText("Menu >> "+"Report >> "+balancetype);
+	    final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
+	    btnSaveRecon.setVisibility(Button.GONE);
+	    final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+	    btnScrollDown.setOnClickListener(new OnClickListener() {
+			
+		@Override
+		public void onClick(View v) {
+			if(updown==false){
+					sv.fullScroll(ScrollView.FOCUS_DOWN); 
+	               btnScrollDown.setBackgroundResource(R.drawable.up);
+	               updown=true;
+	        }else {
+	        	  sv.fullScroll(ScrollView.FOCUS_UP); 
+	               btnScrollDown.setBackgroundResource(R.drawable.down);
+	               updown=false;
+	        }
+				}
+	    });
+	    
+	   //tvfinancialFromDate.setText("Financial from : " +financialFromDate);
+	   tvfinancialToDate.setText("Period : "+financialFromDate+" to "+balanceToDateString);
        Object[] params = new Object[]{financialFromDate,financialFromDate,balanceToDateString,"balancesheet",getSelectedOrgType,balancetype};
        balancesheetresult = (Object[]) report.getBalancesheetDisplay(params,client_id);
        //balancesheetresult is 3 dimensional list 
        int count = 0;
   
-       try {
+       
        for(Object tb : balancesheetresult){
 
            Object[] t = (Object[]) tb;
@@ -115,37 +137,19 @@ public class balanceSheet extends Activity{
            {
         	  
         	   final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs)); 
+        	   System.out.println("diff"+t[0].toString());
         	   balDiff.setText("Difference in Opening Balances: "+rsSymbol+" "+t[0].toString());
            }
            if(count == 1){
-           	addTable(cashFlowtable1);
+           	addTable(balanceSheetTable1);
            }
            else if(count == 2){
-           	addTable(cashFlowtable2);
+           	addTable(balanceSheetTable2);
            }
            
        }
        
-       final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
-       tvReportTitle.setText("Menu >> "+"Report >> "+balancetype);
-       final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
-       btnSaveRecon.setVisibility(Button.GONE);
-       final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
-       btnScrollDown.setOnClickListener(new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			if(updown==false){
-				sv.fullScroll(ScrollView.FOCUS_DOWN); 
-               btnScrollDown.setBackgroundResource(R.drawable.up);
-               updown=true;
-          }else {
-        	  sv.fullScroll(ScrollView.FOCUS_UP); 
-               btnScrollDown.setBackgroundResource(R.drawable.down);
-               updown=false;
-          }
-			}
-       });
+       
    } catch (Exception e) {
    	AlertDialog.Builder builder = new AlertDialog.Builder(balanceSheet.this);
 
@@ -162,6 +166,7 @@ public class balanceSheet extends Activity{
           alert.show();		}
 }
     private void addTable(TableLayout tableID) {
+    		System.out.println(BalanceSheetGrid);
     	   /** Create a TableRow dynamically **/
     	   for(int i=0;i<BalanceSheetGrid.size();i++){
     	   	

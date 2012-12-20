@@ -142,18 +142,7 @@ public class bankReconciliation extends Activity{
 		});
             
        } catch (Exception e) {
-           AlertDialog.Builder builder = new AlertDialog.Builder(bankReconciliation.this);
-           builder.setMessage("Please try again")
-                   .setCancelable(false)
-                   .setPositiveButton("Ok",
-                           new DialogInterface.OnClickListener() {
-                               public void onClick(DialogInterface dialog, int id) {
-                                   
-                               }
-                           });
-                    
-           AlertDialog alert = builder.create();
-           alert.show();
+    	   toastValidationMessage("Please try again");
        }
        
     }
@@ -383,6 +372,7 @@ public class bankReconciliation extends Activity{
      * bank reconciliation statemnt in the second table
 	 */
 	private void addTable(TableLayout tableID, String flag) {  
+		System.out.println("reco grid"+bankReconGrid);
 		//for adding only header and transaction rows
 		if(!flag.equalsIgnoreCase("statement")){
 			if(bankReconGrid.size() > 1){
@@ -813,14 +803,20 @@ public class bankReconciliation extends Activity{
                                  * 'set previous date' will set the previous cleared date of the transaction 
                                  */
                                 if(pos==2){
-                                        String Cdate1 = (String) for_clearenceDate.get(rowid);
-                                        int rowcount = bankRecontable.getChildCount();    
-                                        for(int k=0;k<rowcount;k++){
-                                            View row = bankRecontable.getChildAt(rowid+1);
-                                            LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
-                                            tvdate = (TextView) l.getChildAt(0);
-                                            tvdate.setText(Cdate1);
-                                       }
+                                		try {
+                                			String Cdate1 = (String) for_clearenceDate.get(rowid);
+                                            int rowcount = bankRecontable.getChildCount();    
+                                            for(int k=0;k<rowcount;k++){
+                                                View row = bankRecontable.getChildAt(rowid+1);
+                                                LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
+                                                tvdate = (TextView) l.getChildAt(0);
+                                                tvdate.setText(Cdate1);
+                                            }
+										} catch (Exception e) {
+											toastValidationMessage("Please try again");
+										}
+                                        
+                                       
                                 }
                             }                           
                         });
