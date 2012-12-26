@@ -23,7 +23,7 @@ public class Preferences {
     private Boolean setProject;
     private String getPreference;
     private boolean setproject;
-
+    private String editproject;
    
     /***
      * default constructor
@@ -105,4 +105,29 @@ public class Preferences {
 		return setproject;
 	}
    
+    public String editProject(Object[] params, Object client_id) {
+		
+		try {
+			editproject = (String)conn.getClient().call("organisation.editProject", params, client_id);
+            
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return editproject;
+	}
+
+
+public String deleteProjectName(Object[] params, Object client_id) {
+	
+	try {
+		editproject = (String)conn.getClient().call("organisation.deleteProjectName", params, client_id);
+        
+	} catch (XMLRPCException e) {
+		
+		e.printStackTrace();
+	}
+	return editproject;
+}
+    
 }

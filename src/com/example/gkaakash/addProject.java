@@ -11,18 +11,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.style.BulletSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.gkaakash.controller.Account;
 import com.gkaakash.controller.Organisation;
@@ -44,7 +48,7 @@ public class addProject extends MainActivity{
     private Organisation organisation;
     private ListView ltProjectNames;
     private Object[] projectnames;
-    List getList;
+    List projectNameList, projectCodeList;
     ArrayList<String> finalProjlist;
     protected String projectname;
     protected ArrayList<String>[] projectnamelist;
@@ -70,10 +74,131 @@ public class addProject extends MainActivity{
         getResultList(projectnames);
         
         addProject();
+        editProject();
     }
 
 	
-    private void addProject() {
+    private void editProject() {
+    	ltProjectNames = (ListView) findViewById(R.id.ltProjectNames);
+    	ltProjectNames.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,final int position, long id) {
+				
+				final CharSequence[] items = { "Edit project name", "Delete project" };
+				//creating a dialog box for popup
+		        AlertDialog.Builder builder = new AlertDialog.Builder(addProject.this);
+		        //setting title
+		        builder.setTitle("Edit/Delete project");
+		      //adding items
+		        builder.setItems(items, new DialogInterface.OnClickListener() {
+		        	public void onClick(DialogInterface which, int pos) {
+		        		//code for the actions to be performed on clicking popup item goes here ...
+			            switch (pos) {
+			            	//edit project
+			                case 0:
+		                			{
+
+		                    			//Toast.makeText(edit_account.this,"Clicked on:"+items[pos],Toast.LENGTH_SHORT).show();
+		                          		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+		                          	    View layout = inflater.inflate(R.layout.edit_projectname, (ViewGroup) findViewById(R.id.layout_root));
+		                          	    AlertDialog.Builder builder = new AlertDialog.Builder(addProject.this);
+		                          	    builder.setView(layout);
+		                          	    builder.setTitle("Edit project");
+		                          	    //get account details
+    		                      	    final String old_projectname = ltProjectNames.getItemAtPosition(position).toString();
+    		                      	    System.out
+												.println(old_projectname);
+    		                      	    final EditText edit_project_name = (EditText)layout.findViewById(R.id.edit_project_name);
+    		                      	    edit_project_name.setText(old_projectname);
+		                          	    
+		                          	            
+		                  	            builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+		    								
+		    								public void onClick(DialogInterface dialog, int which) {
+		    									
+		    									String new_project_name = edit_project_name.getText().toString();
+		    									
+		    									/*
+		    									 * validation to check whether project exists or blank
+		    									 */
+		    									for(int i=0;i<projectNameList.size();i++){
+		    		                                    if(new_project_name.equalsIgnoreCase((String) projectNameList.get(i))){
+		    		                                        projectExistsFlag = true;
+		    		                                        break;
+		    		                                    }
+		    		                                    else{
+		    		                                        projectExistsFlag = false;
+		    		                                    }
+		    		                            }
+		    		                           
+		    		                             if(new_project_name.length()<1){
+		    		                                 toastValidationMessage("Please enter project name");
+		    		                             }
+		    		                             if(new_project_name.equalsIgnoreCase(old_projectname)){
+		    		                            	 toastValidationMessage("No changes made");
+		    		                             }
+		    		                             else if(projectExistsFlag == true){
+		    		                                toastValidationMessage("Project '"+new_project_name+"' already exists");
+		    		                                }
+		    		                             else
+		    		                              {
+		    		                            	 Integer projCode = (Integer) projectCodeList.get(position);
+		    		                            	 Object[] params = new Object[] {projCode, new_project_name};
+		    		                            	 String edited = (String)preferences.editProject(params,client_id);
+		    		                            	 //get all project names in list view on load
+		    		                            	 projectnames = (Object[])organisation.getAllProjects(client_id);
+				    							     getResultList(projectnames);
+				    							     toastValidationMessage("Project name has been changed from '"+old_projectname+"' to '"+new_project_name+ "'");
+		    		                              }
+		    									
+		    									
+		    									
+		    								}//end of onclick
+		    							});// end of onclickListener
+		                  	             
+		                  	            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		    								
+		    								@Override
+		    								public void onClick(DialogInterface dialog, int which) {
+		    									// TODO Auto-generated method stub
+		    									
+		    								}
+		    							});
+		                          	            
+		                  	            dialog=builder.create();
+		                  	            ((Dialog) dialog).show();
+		                  	           
+		                			}break;
+		                	//delete existing project name
+			                case 1:
+                				{
+                					String proj = ltProjectNames.getItemAtPosition(position).toString();
+                					Object[] params = new Object[] {proj};
+	                            	String edited = (String)preferences.deleteProjectName(params,client_id);
+	                            	if(edited.equalsIgnoreCase("project deleted")){
+	                            		toastValidationMessage("Project '"+ proj +"' deleted successfully");
+	                            		projectnames = (Object[])organisation.getAllProjects(client_id);
+	    							    getResultList(projectnames);
+	                            	}
+	                            	else{
+	                            		toastValidationMessage("Project '"+ proj +"' can't be deleted, it has transactions");
+	                            	}
+	                            	
+                				}break;
+			            }
+		        	}
+		        });
+		        //building a complete dialog
+				dialog=builder.create();
+				dialog.show();
+			}
+		});
+		
+	}
+
+
+	private void addProject() {
 		Button addProject = (Button)findViewById(R.id.add_project);
 		addProject.setOnClickListener(new OnClickListener() {
 			
@@ -160,13 +285,12 @@ public class addProject extends MainActivity{
                         }
                         
                         if(flag == true){
-                            String message = "Project names can not be same";
-                            toastValidationMessage(message);
+                            toastValidationMessage("Project names can not be same");
                         }
                         else{
                             for(int i=0;i<finalProjlist.size();i++){
                                 for(int j=0;j<projectnamelist.size();j++){
-                                    if((finalProjlist.get(i).toString()).equals(projectnamelist.get(j).toString())){
+                                    if((finalProjlist.get(i).toString()).equalsIgnoreCase(projectnamelist.get(j).toString())){
                                         projectExistsFlag = true;
                                         nameExists = finalProjlist.get(i).toString();
                                         break;
@@ -181,37 +305,24 @@ public class addProject extends MainActivity{
                             }
                             
                              if(etProject.length()<1){
-                                 String message = "Please enter project name";
-                                 toastValidationMessage(message);
+                                 toastValidationMessage("Please enter project name");
                              }
                              else if(projectExistsFlag == true){
-                                String message = "Project "+nameExists+" already exists";
-                                toastValidationMessage(message);
+                                toastValidationMessage("Project '"+nameExists+"' already exists");
                                 }
                              else
                               {
                                 setProject = preferences.setProjects(finalProjlist,client_id);
                                  //To pass on the activity to the next page
-                                
-                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                builder.setMessage("Project added successfully!")
-                                        .setCancelable(false)
-                                        .setPositiveButton("Ok",
-                                                new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        
-                                                    }
-                                                });
-                                        
-                                AlertDialog alert = builder.create();
-                                alert.show();
+                                toastValidationMessage("Project added successfully");
+                                //get all project names in list view on load
+                                projectnames = (Object[])organisation.getAllProjects(client_id);
+                                getResultList(projectnames);
                                 etProject.setText("");
                                 projectTable.removeAllViews();
                                }
                         }
-                      //get all project names in list view on load
-                        projectnames = (Object[])organisation.getAllProjects(client_id);
-                        getResultList(projectnames);
+                        
 
                     }
                         
@@ -239,13 +350,15 @@ public class addProject extends MainActivity{
 
 
 	void getResultList(Object[] param){
-        getList = new ArrayList();
+        projectNameList = new ArrayList();
+        projectCodeList = new ArrayList();
         for(Object pn : param)
         {   
         	Object[] p = (Object[]) pn;
-            getList.add((String)p[1]); //p[1] is project_name and p[0] is project code
+        	projectCodeList.add((Integer)p[0]);
+            projectNameList.add((String)p[1]); //p[1] is project_name and p[0] is project code
         }   
-        ltProjectNames.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getList));
+        ltProjectNames.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, projectNameList));
        
     }
 	

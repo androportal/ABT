@@ -85,8 +85,8 @@ import android.widget.Toast;
 		public boolean onOptionsItemSelected(MenuItem item) {
 			switch (item.getItemId()) {
 			case 1:
-				Toast msg = Toast.makeText(orgDetails.this, "Menu 1", Toast.LENGTH_LONG);
-				msg.show();
+				//Toast msg = Toast.makeText(orgDetails.this, "Menu 1", Toast.LENGTH_LONG);
+				//msg.show();
 				return true;
 			}
 			return super.onOptionsItemSelected(item);
@@ -102,7 +102,6 @@ import android.widget.Toast;
 			org = new Organisation();
 		
 			editDetailsflag = MainActivity.editDetails;
-			Toast.makeText(context, "editflag:"+editDetailsflag, Toast.LENGTH_SHORT).show();
 			btnorgDetailSave = (Button) findViewById(R.id.btnOrgDetailSave);
 			getstate = (Spinner) findViewById(R.id.sGetStates);
 			getcity = (Spinner) findViewById(R.id.sGetCity);
@@ -133,7 +132,6 @@ import android.widget.Toast;
 			if(editDetailsflag==true){
 				detailsList_foredit=menu.accdetailsList;
 				System.out.println("cuming from menu page:"+menu.orgtype);
-				Toast.makeText(context, "result:"+menu.accdetailsList, Toast.LENGTH_SHORT).show();
 				orgcode=detailsList_foredit.get(0);
 				System.out.println("org code:"+orgcode);
 				etGetAddr.setText(detailsList_foredit.get(3));
@@ -161,11 +159,9 @@ import android.widget.Toast;
 			// Retrieving the organisation type flag value from the previous page(create organisation page)
 			if(editDetailsflag==false){
 				getSelectedOrgType=createOrg.orgTypeFlag;
-				System.out.println("from create org :orgtype "+getSelectedOrgType);
 				}
 		        else {
 		        getSelectedOrgType=menu.orgtype;
-		        System.out.println("cuming from select org :orgtype "+getSelectedOrgType);
 		        }
 			if("NGO".equals(getSelectedOrgType))
 			{
@@ -184,7 +180,6 @@ import android.widget.Toast;
 			}
 			else
 			{
-				Toast.makeText(context, "in else", Toast.LENGTH_SHORT).show();
 				tvRegNum.setVisibility(TextView.GONE);
 				etRegNum.setVisibility(EditText.GONE);
 				tvRegDate.setVisibility(TextView.GONE);
@@ -246,23 +241,38 @@ import android.widget.Toast;
 					if(editDetailsflag==false){
 						savedeatils();
 					}else {
-						etGetAddr.setText("");
-						sGetPostal.setText("");
-						eGetPhone.setText("");
-						eGetFax.setText("");
-						eGetEmailid.setText("");
-						etGetWebSite.setText("");
-						etMVATnum.setText("");
-						etServiceTaxnum.setText("");
-						etPanNo.setText("");
-						etMVATnum.setText("");
-						etServiceTaxnum.setText("");
-						etRegNum.setText(""); 
-						etFcraNum.setText("");
-						btnRegDate.setText(Startup.getfinancialFromDate());
-						btnFcraDate.setText(Startup.getfinancialFromDate());
-						getstate.setSelection(0);
-						getcity.setSelection(0);
+						AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				        builder.setMessage("Are you sure, you want to reset all fields? ")
+				                .setCancelable(false)
+				                .setPositiveButton("Yes",
+				                        new DialogInterface.OnClickListener() {
+				                            public void onClick(DialogInterface dialog, int id) {
+												etGetAddr.setText("");
+												sGetPostal.setText("");
+												eGetPhone.setText("");
+												eGetFax.setText("");
+												eGetEmailid.setText("");
+												etGetWebSite.setText("");
+												etMVATnum.setText("");
+												etServiceTaxnum.setText("");
+												etPanNo.setText("");
+												etMVATnum.setText("");
+												etServiceTaxnum.setText("");
+												etRegNum.setText(""); 
+												etFcraNum.setText("");
+												btnRegDate.setText(Startup.getfinancialFromDate());
+												btnFcraDate.setText(Startup.getfinancialFromDate());
+												getstate.setSelection(0);
+												getcity.setSelection(0);
+				                            }
+		                        })
+			                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+			                    public void onClick(DialogInterface dialog, int id) {
+			                        dialog.cancel();
+			                    }
+		                });
+		        AlertDialog alert = builder.create();
+		        alert.show();
 					}
 				}
 			}); 
@@ -379,12 +389,10 @@ import android.widget.Toast;
 				getstate.setAdapter(dataAdapter);
 			}else {
 				String state1 = detailsList_foredit.get(6);
-				System.out.println("state name:"+state1);
 				dataAdapter = new ArrayAdapter<String>(context,
 						android.R.layout.simple_spinner_item, statelist);
 				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				int pos1 = dataAdapter.getPosition(state1);
-				System.out.println("position of name state:"+pos1);
 				getstate.setAdapter(dataAdapter);
 				getstate.setSelection(pos1);
 			}
@@ -403,7 +411,6 @@ import android.widget.Toast;
 						// array of selected state name of type Object
 						stateparmas = new Object[]{selectedStateName};
 						// call the getCities method to get all related cities of given selected state name 
-						System.out.println("state params name "+stateparmas);
 						Object[] CityList = startup.getCities(stateparmas);
 						List<String> citylist = new ArrayList<String>();
 		   
@@ -420,16 +427,12 @@ import android.widget.Toast;
 									getcity.setAdapter(dataAdapter1);
 								}else {
 									String city = detailsList_foredit.get(4).trim();
-									System.out.println("size:"+city.length());
-									System.out.println("city name:"+city); 
 									dataAdapter1 = new ArrayAdapter<String>(context,
 											android.R.layout.simple_spinner_item, citylist);
 									dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		   
 									//System.out.println("city name"+dataAdapter1.getItem(2).trim().);
 									int pos = dataAdapter1.getPosition(city);
-		   
-									System.out.println("position of name city:"+pos);
 									getcity.setAdapter(dataAdapter1);
 									getcity.setSelection(pos);
 		   
@@ -503,7 +506,6 @@ import android.widget.Toast;
 		      //list of input parameters type of Object 
 		deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
 			
-		System.out.println(RegDate);
 			if(editDetailsflag==false){
 				orgparams = new Object[]{getOrgName,getSelectedOrgType,selectedCounrty,selectedStateName,
 						selectedCityName,getAddr,getPin,eGetTelNo,eGetFaxNO,etGetWeb,eGetEmail,
@@ -518,30 +520,36 @@ import android.widget.Toast;
 						etPan};
 				client_id = startup.login(deployparams);
 				save_edit = (String)org.updateOrg(orgparams, client_id);
-				Toast.makeText(context,"edited", Toast.LENGTH_SHORT).show();
+				toastValidationMessage("Organisation details edited successfully");
 				
 			}
 		           
 			if (setOrgDetails==true){
-				String message = "Organisation "+getOrgName+" with details saved successfully";
-		       
-		        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		        builder.setMessage(message)
-		               .setCancelable(false)
-		               .setPositiveButton("Ok",
-		                       new DialogInterface.OnClickListener() { 
-		                           public void onClick(DialogInterface dialog, int id) {
-		                           
-		                           } 
-		                       });
-		               
-		        AlertDialog alert = builder.create();
-		        alert.show();
+		        toastValidationMessage("Organisation "+getOrgName+" with details saved successfully");
 		        //To pass on the activity to the next page
 		        Intent intent = new Intent(context, preferences.class);
 		        startActivity(intent); 
 		        }
 		}
+	
+	
+	public void toastValidationMessage(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                
+                            }
+                        });
+                
+        AlertDialog alert = builder.create();
+        alert.show();
+        
+    } 
+	
+	
 	public void onBackPressed() {
     	
 		MainActivity.editDetails=false;

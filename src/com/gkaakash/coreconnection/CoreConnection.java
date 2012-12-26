@@ -15,7 +15,7 @@ public class CoreConnection {
 	public CoreConnection()  { 
 		try {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-			StrictMode.setThreadPolicy(policy); 
+			StrictMode.setThreadPolicy(policy);  
 			//url = new URL("http://127.0.0.1:7081"); //uncomment on tablet
 			url = new URL("http://10.0.2.2:7081"); // uncomment for emulator  
 			client = new XMLRPCClient(url);

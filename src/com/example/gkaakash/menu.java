@@ -181,11 +181,11 @@ public class menu extends ListActivity{
                 
                 //for "adding project", adding popup menu ...
                 if(position == 3)
-                {                	final CharSequence[] items = { "Edit Organisation Details", "Add New Project" };
+                {                	final CharSequence[] items = { "Edit organisation details", "Add/Edit/Delete project" };
             	//creating a dialog box for popup
      	       AlertDialog.Builder builder = new AlertDialog.Builder(context);
      	       //setting title
-     	       builder.setTitle("Select Preference");
+     	       builder.setTitle("Select preference");
      	       //adding items
      	       builder.setItems(items, new DialogInterface.OnClickListener() {
      	       public void onClick(DialogInterface dialog1, int pos) {

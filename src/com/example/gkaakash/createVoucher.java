@@ -973,7 +973,7 @@ public class createVoucher extends Activity {
 			public void onClick(View v) {
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		        builder.setMessage("Are you sure, you want reset all fields? ")
+		        builder.setMessage("Are you sure, you want to reset all fields? ")
 		                .setCancelable(false)
 		                .setPositiveButton("Yes",
 		                        new DialogInterface.OnClickListener() {
