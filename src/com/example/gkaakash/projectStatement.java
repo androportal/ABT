@@ -1,7 +1,10 @@
 package com.example.gkaakash;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -37,6 +40,8 @@ public class projectStatement extends Activity{
     ArrayList<String> projectStatementResultList;
     String ToDateString;
     Boolean updown=false;
+    DecimalFormat formatter = new DecimalFormat("#,##,##,###.00");
+  	String colValue;
     
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -144,8 +149,27 @@ public class projectStatement extends Activity{
                     label.setGravity(Gravity.RIGHT);
                     //For adding rupee symbol
                     if(columnValue.get(j).length() > 0){
-                    
-                        label.setText(columnValue.get(j).toString());
+                      	colValue=columnValue.get(j);
+                    	if(!"".equals(colValue)){
+                    		System.out.println("m in ");
+                    		if(!"0.00".equals(colValue)){
+                    			// for checking multiple \n and pattern matching
+                    			Pattern pattern = Pattern.compile("\\n");
+                    			Matcher matcher = pattern.matcher(colValue);
+                    			boolean found = matcher.find();
+                    			System.out.println("value:"+found);
+                    			if(found==false){
+                    				double amount = Double.parseDouble(colValue);	
+                    				label.setText(formatter.format(amount));
+                    			}else {
+                    				label.setText(colValue);
+								}
+                    			
+                    		}else {
+                    			label.setText(colValue);
+							}
+                    		
+                    	}
                     }
                 }
                 else{

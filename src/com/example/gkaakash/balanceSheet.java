@@ -1,6 +1,9 @@
 package com.example.gkaakash;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
@@ -43,6 +46,9 @@ public class balanceSheet extends Activity{
 	private String balancefromDateString;
 	Boolean updown=false;
 	ScrollView sv;
+	DecimalFormat formatter = new DecimalFormat("#,##,##,###.00");
+	String colValue;
+	
 	
     public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
@@ -240,8 +246,25 @@ private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color,B
 			            //For adding rupee symbol
 			            if(columnValue.get(j).length() > 0)
 			            {
+			            	colValue=columnValue.get(j);
+			            	if(!"".equals(colValue)){
+			            		System.out.println("m in ");
+                        		if(!"0.00".equals(colValue)){
+                        			Pattern pattern = Pattern.compile("\\n");
+                        			Matcher matcher = pattern.matcher(colValue);
+                        			boolean found = matcher.find();
+                        			System.out.println("value:"+found);
+                        			if(found==false){
+                        				double amount1 = Double.parseDouble(colValue);	
+                        				System.out.println("A:"+amount1);
+                        				((TextView) label).setText(formatter.format(amount1));
+                        			}else {
+                        				((TextView) label).setText(colValue);
+									}
+                        		}
+			            	}
 			            	
-			            	 ((TextView) label).setText(columnValue.get(j).toString());
+			            	
 			            }
 	            		
 	            	}
@@ -256,14 +279,30 @@ private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color,B
 	    			
 	            }else
 	            {
-	            		((TextView)label).setGravity(Gravity.RIGHT);
-			            //For adding rupee symbol
-			            if(columnValue.get(j).length() > 0)
-			            {
-			            
-			            	 ((TextView) label).setText(columnValue.get(j).toString());
-			            }
-	            		
+	            	((TextView)label).setGravity(Gravity.RIGHT);
+		            //For adding rupee symbol
+		            if(columnValue.get(j).length() > 0)
+		            {	
+		            	colValue=columnValue.get(j);
+	            	if(!"".equals(colValue)){
+	            		System.out.println("m in ");
+                		if(!"0.00".equals(colValue)){
+                			Pattern pattern = Pattern.compile("\\n");
+                			Matcher matcher = pattern.matcher(colValue);
+                			boolean found = matcher.find();
+                			System.out.println("value:"+found);
+                			if(found==false){
+                				double amount1 = Double.parseDouble(colValue);	
+                				System.out.println("A:"+amount1);
+                				((TextView) label).setText(formatter.format(amount1));
+                			}else {
+                				((TextView) label).setText(colValue);
+							}
+                		}
+	            	}
+	            	
+		            }
+            		
 	            	
 	            	
 	            }
@@ -333,12 +372,29 @@ private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color,B
 	                }
 	        		else
 	        		{
-	    			((TextView)label).setGravity(Gravity.RIGHT);
-	                //For adding rupee symbol
-	                if(columnValue.get(j).length() > 0){
-	                
-	                	 ((TextView) label).setText(columnValue.get(j).toString());
-	                }
+	        			((TextView)label).setGravity(Gravity.RIGHT);
+		                //For adding rupee symbol
+		                if(columnValue.get(j).length() > 0){
+		                
+		                	colValue=columnValue.get(j);
+			            	if(!"".equals(colValue)){
+			            		System.out.println("m in ");
+	                    		if(!"0.00".equals(colValue)){
+	                    			Pattern pattern = Pattern.compile("\\n");
+	                    			Matcher matcher = pattern.matcher(colValue);
+	                    			boolean found = matcher.find();
+	                    			System.out.println("value:"+found);
+	                    			if(found==false){
+	                    				double amount1 = Double.parseDouble(colValue);	
+	                    				System.out.println("A:"+amount1);
+	                    				((TextView) label).setText(formatter.format(amount1));
+	                    			}else {
+	                    				((TextView) label).setText(colValue);
+									}
+	                    		}
+			            	}
+			            	
+		                }
 	        	}
 	           
 	        }
@@ -353,11 +409,28 @@ private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color,B
 	                }
 	        	 else
 	        	 {
-	        		 	((TextView)label).setGravity(Gravity.RIGHT);
+	        		 ((TextView)label).setGravity(Gravity.RIGHT);
 	        		 	//For adding rupee symbol
 	        		 	if(columnValue.get(j).length() > 0)
 	        		 	{
-	        		 		 ((TextView) label).setText(columnValue.get(j).toString());
+	        		 		colValue=columnValue.get(j);
+			            	if(!"".equals(colValue)){
+			            		System.out.println("m in ");
+                     		if(!"0.00".equals(colValue)){
+                     			Pattern pattern = Pattern.compile("\\n");
+                     			Matcher matcher = pattern.matcher(colValue);
+                     			boolean found = matcher.find();
+                     			System.out.println("value:"+found);
+                     			if(found==false){
+                     				double amount1 = Double.parseDouble(colValue);	
+                     				System.out.println("A:"+amount1);
+                     				((TextView) label).setText(formatter.format(amount1));
+                     			}else {
+                     				((TextView) label).setText(colValue);
+									}
+                     		}
+			            	}
+			            	
 	        		 	}
 	        	 }
 	           }

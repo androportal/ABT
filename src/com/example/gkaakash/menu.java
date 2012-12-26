@@ -78,10 +78,13 @@ public class menu extends ListActivity{
 	static String selectedAccount;
 	static boolean cleared_tran_flag;
 	static boolean narration_flag;
+	static ArrayList<String> accdetailsList;
+    static String orgtype;
+    String orgname;
     
     //adding list items to the newly created menu list
     String[] menuOptions = new String[] { "Create account", "Transaction", "Reports",
-            "Add projects","Bank Reconciliation","Help","About" };
+            "Preferences","Bank Reconciliation","Help","About" };
 
     /*
     //adding options to the options menu
@@ -178,11 +181,58 @@ public class menu extends ListActivity{
                 
                 //for "adding project", adding popup menu ...
                 if(position == 3)
-                {
-                	Intent intent = new Intent(context, addProject.class);
-                    // To pass on the value to the next page
-                    startActivity(intent);
-                	
+                {                	final CharSequence[] items = { "Edit Organisation Details", "Add New Project" };
+            	//creating a dialog box for popup
+     	       AlertDialog.Builder builder = new AlertDialog.Builder(context);
+     	       //setting title
+     	       builder.setTitle("Select Preference");
+     	       //adding items
+     	       builder.setItems(items, new DialogInterface.OnClickListener() {
+     	       public void onClick(DialogInterface dialog1, int pos) {
+     	        //code for the actions to be performed on clicking popup item goes here ...
+     	           switch (pos) {
+     	               case 0:
+     	                             {
+     	                            //for getting org type
+     	                          orgname = selectOrg.selectedOrgName; 
+     	                                System.out.println("org name in selett "+orgname);
+     	                                Object[] params = new Object[]{orgname};
+     	                                orgtype = (String) organisation.getorgTypeByname(params, client_id);
+     	                                System.out.println("org type in select"+orgtype);
+     	                             
+     	                             System.out.println( MainActivity.editDetails);
+     	                             MainActivity.editDetails=true;
+     	                             Object[] editDetails = (Object[])organisation.getOrganisation(client_id);
+     	                              accdetailsList = new ArrayList<String>();
+     	                              for(Object row2 : editDetails){
+     	                        Object[] a2=(Object[])row2;
+     	                        ArrayList<String> accdetails = new ArrayList<String>();
+     	                        for(int i=0;i<a2.length;i++){
+     	                                  accdetails.add((String) a2[i].toString());
+     	                                 }
+     	                        accdetailsList.addAll(accdetails);
+     	                        }
+     	                             
+     	                        System.out.println("details:"+accdetailsList);
+     	                           
+     	                             Intent intent = new Intent(context, orgDetails.class);
+     	                                 // To pass on the value to the next page
+     	                                 startActivity(intent);
+     	                             }break;
+     	               case 1:
+     	                             {
+     	                             Intent intent = new Intent(context, addProject.class);
+     	                                 // To pass on the value to the next page
+     	                                 startActivity(intent);
+     	                                        
+     	                     }break;
+     	           }
+     	       }
+     	       });
+     	       //building a complete dialog
+     	dialog=builder.create();
+     	dialog.show();
+     	
                 }
                 //bank reconcilition
                 if(position == 4){

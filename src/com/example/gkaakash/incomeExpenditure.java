@@ -1,6 +1,10 @@
 package com.example.gkaakash;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ActionBar.LayoutParams;
@@ -36,6 +40,8 @@ public class incomeExpenditure extends Activity{
     String getSelectedOrgType;
     String IEToDateString;
     Boolean updown=false;
+    DecimalFormat formatter = new DecimalFormat("#,##,##,###.00");
+ 	String colValue;
     
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -204,9 +210,25 @@ public class incomeExpenditure extends Activity{
         			addRow(columnValue.get(j));   
         	        label.setBackgroundColor(color);
         	        label.setGravity(Gravity.RIGHT);
-                    //For adding rupee symbol
-                    if(columnValue.get(j).length() > 0){
-                        label.setText(columnValue.get(j).toString());
+                   
+                    if(columnValue.get(j).length() > 0){///
+                 		colValue=columnValue.get(j);
+		            	if(!"".equals(colValue)){
+		            		System.out.println("m in ");
+                    		if(!"0.00".equals(colValue)){
+                    			Pattern pattern = Pattern.compile("\\n");
+                    			Matcher matcher = pattern.matcher(colValue);
+                    			boolean found = matcher.find();
+                    			System.out.println("value:"+found);
+                    			if(found==false){
+                    				double amount1 = Double.parseDouble(colValue);	
+                    				System.out.println("A:"+amount1);
+                    				((TextView) label).setText(formatter.format(amount1));
+                    			}else {
+                    				((TextView) label).setText(colValue);
+								}
+                    		}
+		            	}
                     }
         		}
             }

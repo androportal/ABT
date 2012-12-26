@@ -41,6 +41,7 @@ public class MainActivity extends Activity {
     static Boolean searchFlag=false;
     static Boolean nameflag=false;
     static boolean reportmenuflag;
+    static boolean editDetails=false;
 
      public boolean onCreateOptionsMenu(Menu menu) {
             menu.add(group1Id, Help, Help, "Help");

@@ -307,6 +307,7 @@ public class createOrg extends MainActivity {
 					}
 				else{
 					//To pass on the activity to the next page
+					MainActivity.editDetails=false;
 					Intent intent = new Intent(context, orgDetails.class);
 				    startActivity(intent); 
 				}
@@ -317,7 +318,7 @@ public class createOrg extends MainActivity {
                         .setCancelable(false)
                         .setPositiveButton("Ok",
                                 new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
+                                     public void onClick(DialogInterface dialog, int id) {
                                     	Intent intent = new Intent(context, MainActivity.class);
                     				    startActivity(intent); 
                                     }

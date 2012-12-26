@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import com.example.gkaakash.R.layout;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.Transaction;
@@ -66,6 +67,9 @@ public class SearchVoucher extends Activity {
     protected Boolean deleteVoucher;
     static String searchByNarration;
     static String searchByRefNumber;
+    DecimalFormat formatter = new DecimalFormat("#,##,##,###.00");
+  	String colValue;
+     
 	  @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	    	super.onCreate(savedInstanceState);
@@ -294,7 +298,11 @@ public class SearchVoucher extends Activity {
 	}
 	
 	public void addTable() {
-		addHeader();
+		
+		if(searchedVoucherGrid.size()>1){
+			addHeader();
+		}
+	
 		
 		/** Create a TableRow dynamically **/
         for(int i=0;i<searchedVoucherGrid.size();i++){
@@ -311,15 +319,41 @@ public class SearchVoucher extends Activity {
                  * set center aligned gravity for amount and for others set center gravity
                  */
                 if(j==6){
-                	final SpannableString rsSymbol = new SpannableString(SearchVoucher.this.getText(R.string.Rs)); 
-                    label.setText(rsSymbol+" "+columnValue.get(j).toString());
-                    label.setGravity(Gravity.RIGHT);
+                	
+          	label.setGravity(Gravity.RIGHT);
                     
+                    if(columnValue.get(j).length() > 0){
+                    	
+                    	colValue=columnValue.get(j);
+                    	if(!"".equals(colValue)){
+                    		System.out.println("m in ");
+                    		if(!"0.00".equals(colValue)){
+                    			// for checking multiple \n and pattern matching
+                    			Pattern pattern = Pattern.compile("\\n");
+                    			Matcher matcher = pattern.matcher(colValue);
+                    			boolean found = matcher.find();
+                    			System.out.println("value:"+found);
+                    			if(found==false){
+                    				double amount = Double.parseDouble(colValue);	
+                    				label.setText(formatter.format(amount));
+                    			}else {
+                    				label.setText(colValue);
+								}
+                    			
+                    		}else {
+                    			label.setText(colValue);
+							}
+                    		
+                    	}
+                       
+                    }
+                
                 }
                 else{
                     label.setGravity(Gravity.CENTER);
                 }
                // tr.setId(i);
+                
                 
                 
             }
@@ -335,8 +369,10 @@ public class SearchVoucher extends Activity {
      * add column heads to the table
      */
 	public void addHeader() {
+		
 		 /** Create a TableRow dynamically **/
-        String[] ColumnNameList = new String[] { "V. No.","Reference No","Date","Voucher Type","Account Name","Particular","Amount","Narration"};
+		final SpannableString rsSymbol = new SpannableString(SearchVoucher.this.getText(R.string.Rs)); 
+        String[] ColumnNameList = new String[] { "V. No.","Reference No","Date","Voucher Type","Account Name","Particular",rsSymbol+"Amount","Narration"};
        
         tr = new TableRow(SearchVoucher.this);
        
@@ -347,6 +383,7 @@ public class SearchVoucher extends Activity {
             params.height=LayoutParams.WRAP_CONTENT;
             label.setBackgroundColor(Color.parseColor("#348017"));
             label.setGravity(Gravity.CENTER);
+            tr.setClickable(false);
         }
        
          // Add the TableRow to the TableLayout

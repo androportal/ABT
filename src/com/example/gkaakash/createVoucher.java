@@ -114,13 +114,11 @@ public class createVoucher extends Activity {
 	        name = SearchVoucher.name;
 	        //Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
 	        // after click om edit voucher Reff Edit text non-editable
-	       /* if("Edit voucher".equals(name)){
-	        	etRefNumber = (EditText)findViewById(R.id.etRefNumber);
-	        	
-	         //  etRefNumber.setKeyListener(null);
+	        if("Edit voucher".equals(name)){
+	    	   	etRefNumber.setEnabled(false);
 	        }else {
-	        	
-			}*/
+	        	etRefNumber.setEnabled(true); 
+			}
 	       	
 			etnarration = (EditText)findViewById(R.id.etVoucherNarration);
 			account = (Spinner) findViewById(R.id.getAccountByRule);
@@ -983,9 +981,9 @@ public class createVoucher extends Activity {
 		                            	
 		                            	name="Create voucher";
 		                            	// Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
-		                     	       // if("Create voucher".equals(name)){
-		                     	        	//etRefNumber.setClickable(true);
-		                     	        //}
+		                            	 if("Create voucher".equals(name)){
+			                     	        	etRefNumber.setEnabled(true);
+			                     	        }
 		                            	etRefNumber =  (EditText)findViewById(R.id.etRefNumber);
 		              	     	       	String reff_no = transaction.getLastReferenceNumber(new Object[]{vouchertypeflag},client_id);
 		              	     	       	etRefNumber.setText(reff_no.toString());
@@ -1317,10 +1315,10 @@ public class createVoucher extends Activity {
     	
     	newRow.addView(sp1);
     	newRow.addView(tv);
-    	newRow.addView( actionButton );
+    	newRow.addView(actionButton,259,50);
     	newRow.addView(tv1);
     	newRow.addView(tv2);
-    	newRow.addView(et);
+    	newRow.addView(et,159,50);
     	newRow.addView( removeSelfButton );
     	list.addView(newRow);
     	OnAmountFocusChangeListener();

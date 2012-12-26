@@ -11,6 +11,9 @@ public class Organisation {
     private Object[] projects;
     Object[] Params;
     private String orgtype;
+    private Object[] getOrganisation;
+    String updateOrg;
+    
     /***
      *
      */
@@ -81,6 +84,29 @@ public class Organisation {
 	        }
 	        return orgtype;
 	    }
-   
+	public Object getOrganisation(Object client_id) {
+		try { 
+		System.out.println("wr are in getOrganisation");
+		getOrganisation = (Object[])conn.getClient().call("organisation.getOrganisation",client_id);
+		System.out.println("wr are in getOrganisation..."+getOrganisation);
+		} catch (XMLRPCException e) {
+		e.printStackTrace(); 
+		} 
+		return getOrganisation;
+		}
+		public String updateOrg(Object[] params,Object client_id) {
+		      
+		      
+		try {
+		System.out.println("wr are in update org");
+		// System.out.println(Params);
+		        updateOrg = (String)conn.getClient().call("organisation.updateOrg",params,client_id);
+		        System.out.println("details:"+updateOrg);
+		        } catch (XMLRPCException e) {
+		           System.out.println(e);
+		            e.printStackTrace();
+		        }
+		        return updateOrg;
+		    }
  
 }

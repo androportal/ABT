@@ -1,7 +1,10 @@
 package com.example.gkaakash;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
@@ -36,6 +39,8 @@ public class ledger extends Activity{
     private ArrayList accountlist;
     Boolean updown=false;
     boolean checked;
+    DecimalFormat formatter = new DecimalFormat("#,##,##,###.00");
+  	String colValue;
      
     public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
@@ -153,11 +158,33 @@ public class ledger extends Activity{
             	addRow(columnValue.get(j));   
                 label.setBackgroundColor(Color.BLACK);
                 if(j == 3 || j == 4){
-                    if(columnValue.get(j).trim().length() > 0){
-                        
-                        label.setText(columnValue.get(j)); 
-                    } 
-                    label.setGravity(Gravity.RIGHT);
+            	label.setGravity(Gravity.RIGHT);
+                    
+                    if(columnValue.get(j).length() > 0){
+                    
+                    	colValue=columnValue.get(j);
+                    	if(!"".equals(colValue)){
+                    		System.out.println("m in ");
+                    		if(!"0.00".equals(colValue)){
+                    			// for checking multiple \n and pattern matching
+                    			Pattern pattern = Pattern.compile("\\n");
+                    			Matcher matcher = pattern.matcher(colValue);
+                    			boolean found = matcher.find();
+                    			System.out.println("value:"+found);
+                    			if(found==false){
+                    				double amount = Double.parseDouble(colValue);	
+                    				label.setText(formatter.format(amount));
+                    			}else {
+                    				label.setText(colValue);
+								}
+                    			
+                    		}else {
+                    			label.setText(colValue);
+							}
+                    		
+                    	}
+                       
+                    }
                 }
                 else{ 
                     label.setGravity(Gravity.CENTER);
@@ -169,7 +196,7 @@ public class ledger extends Activity{
                     LayoutParams.FILL_PARENT,
                     LayoutParams.MATCH_PARENT));
            
-        }
+        } 
     }
 
     void addHeader(){
