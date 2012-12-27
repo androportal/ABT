@@ -73,6 +73,7 @@ public class reportMenu extends ListActivity{
        	/*
        	 * get org type from create page or select org page
        	 */
+       	reportmenuflag=MainActivity.reportmenuflag;
        	if(reportmenuflag==true){
             orgtype=createOrg.orgTypeFlag;
         }

@@ -299,7 +299,7 @@ public class SearchVoucher extends Activity {
 	
 	public void addTable() {
 		
-		if(searchedVoucherGrid.size()>1){
+		if(searchedVoucherGrid.size()>0){
 			addHeader();
 		}
 	

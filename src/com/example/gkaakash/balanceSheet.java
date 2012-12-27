@@ -36,7 +36,7 @@ public class balanceSheet extends Activity{
 	TableRow tr;
 	private ArrayList<ArrayList<String>> BalanceSheetGrid;
 	private ArrayList<String> balancesheetresultList;
-	private TableLayout balanceSheetTable1;
+	private TableLayout balanceSheetTable1; 
 	private TableLayout balanceSheetTable2;
 	private View label;
 	private ArrayList<String> TotalAmountList;

@@ -253,10 +253,12 @@ public class createVoucher extends Activity {
     	 */
     	totalDr = 0;
     	totalCr = 0;
-    	
+    	System.out.println("m in..........");
 		//selected dr/cr and amount of the first row
+    	
 		String Dr_Cr = DrCr.getSelectedItem().toString();
 		
+		System.out.println("sasa:"+Dr_Cr);
 		
 		String drcramountFirstRow = firstRowamount.getText().toString();
 		if(drcramountFirstRow.length()<1)
@@ -281,6 +283,7 @@ public class createVoucher extends Activity {
 			//dr cr spinner
 			Spinner s = (Spinner)((ViewGroup) row).getChildAt(0);
 			String drcr = s.getSelectedItem().toString();
+			System.out.println("ssdsdSSS:"+drcr);
 			
 			//amount edittext
 			EditText e = (EditText)((ViewGroup) row).getChildAt(5);
@@ -321,6 +324,7 @@ public class createVoucher extends Activity {
 				//add second row
 				addButton();
 				
+				dr_cr.clear();
 				dr_cr.add("Dr");
 		    	dr_cr.add("Cr");
 		    	da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
@@ -332,7 +336,7 @@ public class createVoucher extends Activity {
 		    	actionButton.setAdapter(dataAdapter);
 		    	
 			}else {//for setting second row for editing
-				
+				dr_cr.clear();
 				//for setting 1st row's 2nd spinner
 				Fsecond_spinner = accdetailsList.get(0).get(0);
 				//setting adapter
@@ -383,8 +387,7 @@ public class createVoucher extends Activity {
 			     	actionButton.setAdapter(dataAdapter);
 			    	actionButton.setSelection(SaccnamePosition);
 			    	
-			    	dr_cr.add("Dr");
-			    	dr_cr.add("Cr");
+			    	
 			    	Sacctype=accdetailsList.get(i).get(1);
 			    	da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
 			  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -409,6 +412,7 @@ public class createVoucher extends Activity {
 				account.setAdapter(dataAdapter);
 				//add second row
 				addButton();
+				dr_cr.clear();
 				dr_cr.add("Dr");
 				dr_cr.add("Cr");
 				ArrayAdapter<String> da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
@@ -425,10 +429,11 @@ public class createVoucher extends Activity {
 			}else {
 				//add second row
 				addButton();
-				
+				dr_cr.clear();
 		    	dr_cr.add("Dr");
 		    	dr_cr.add("Cr");
 		    	Sacctype=accdetailsList.get(1).get(1);
+		    
 		    	Facctype=accdetailsList.get(0).get(1);
 		    	da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
 		  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -461,6 +466,7 @@ public class createVoucher extends Activity {
 				}
 		        
 		    	Ssecond_spinner = accdetailsList.get(1).get(0);
+		    	System.out.println("sdss:"+Ssecond_spinner);
 		     	SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
 		     	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		     	actionButton.setAdapter(dataAdapter);
@@ -472,18 +478,21 @@ public class createVoucher extends Activity {
 					addButton();
 					et.setText(accdetailsList.get(i).get(2));
 					
-					
-					if("Dr".equals(Facctype)){
+				
+					if("Dr".equals(Sacctype)){
 			        	dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, DrAccountlist);
 			        }else {
 			        	dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, CrAccountlist);
 					}
 					
+					
 					Ssecond_spinner = accdetailsList.get(i).get(0);
+					System.out.println("ashagdSec:"+Ssecond_spinner+"");
 			     	SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
+			     	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			     	actionButton.setAdapter(dataAdapter);
 			    	actionButton.setSelection(SaccnamePosition);
-			    	
+			    	dr_cr.clear();
 			    	dr_cr.add("Dr");
 			    	dr_cr.add("Cr");
 			    	Sacctype=accdetailsList.get(i).get(1);
@@ -543,7 +552,7 @@ public class createVoucher extends Activity {
 						
 					}
 					
-				}
+				} 
 
 				@Override
 				public void onNothingSelected(AdapterView<?> arg0) {
@@ -869,9 +878,6 @@ public class createVoucher extends Activity {
 					}
 					if(flag == false)
 					{
-						//clear Dr/Cr from dropdown
-						
-						dr_cr.clear();
 						//other voucher details...
 						etnarration = (EditText)findViewById(R.id.etVoucherNarration);
 						String narration = etnarration.getText().toString();
@@ -973,7 +979,7 @@ public class createVoucher extends Activity {
 			public void onClick(View v) {
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		        builder.setMessage("Are you sure, you want to reset all fields? ")
+		        builder.setMessage("Are you sure, you want reset all fields? ")
 		                .setCancelable(false)
 		                .setPositiveButton("Yes",
 		                        new DialogInterface.OnClickListener() {
