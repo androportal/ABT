@@ -400,7 +400,7 @@ public class bankReconciliation extends Activity{
 		                        }
 		                        
 		                        if(k == 4 || k == 5){// dr and cr amount
-				                    label.setGravity(Gravity.RIGHT);
+		                        	 label.setGravity(Gravity.CENTER|Gravity.RIGHT);
 				                }
 				                else
 				                {
@@ -433,7 +433,7 @@ public class bankReconciliation extends Activity{
 			                    if(columnValue.get(j).trim().length() > 0){
 			                        label.setText(columnValue.get(j)); 
 			                    } 
-			                    label.setGravity(Gravity.RIGHT);
+			                    label.setGravity(Gravity.CENTER|Gravity.RIGHT);
 			                }
 			                else
 			                {
@@ -465,7 +465,7 @@ public class bankReconciliation extends Activity{
 		            }
 		            else{ 
 		            		/*
-		            		 * if transaction is clear set clearance date and meno into the textview
+		            		 * if transaction is clear set clearance date and memo into the textview
 		            		 */
 		            		addRow(bankReconGrid.get(i).get(6).toString(),i,6,1);  //date
 		                	//memo

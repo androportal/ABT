@@ -899,7 +899,7 @@ public class createVoucher extends Activity {
 							//for satisfying reset condition
 							searchFlag=false;
 							edittabflag=true;
-							
+							MainActivity.nameflag=false;
 							transaction_tab.tabHost.setCurrentTab(1);//for changing the tab
 							String tabname1 = transaction_tab.tabname;
 							transaction_tab.tab1.setText(tabname1);//for changing tab name
@@ -1125,22 +1125,26 @@ public class createVoucher extends Activity {
 		 * set the financial year from date in the subtitle and when date is changed by user,
 		 * sets date in the subtitle
 		 */
-		
+		String fromday,frommonth,fromyear,LastFromDate;
 		if(searchFlag==true){
 			//will get executed while clonning and editing
 			financialFromDate =searchdate;
-			
+			String dateParts[] = financialFromDate.split("-");
+			fromday  = dateParts[0];
+		   	frommonth = dateParts[1];
+		   	fromyear = dateParts[2];
 		}else {
 			//will get executed while creating account 
 			financialFromDate =Startup.getfinancialFromDate();
-			financialFromDate = transaction.getLastReferenceDate(new Object[]{financialFromDate,vouchertypeflag}, client_id);
-			
+			LastFromDate = transaction.getLastReferenceDate(new Object[]{financialFromDate,vouchertypeflag}, client_id);
+			String dateParts[] = LastFromDate.split("-");
+			fromday  = dateParts[0];
+		   	frommonth = dateParts[1];
+		   	fromyear = dateParts[2];
 		}
 		
-		String dateParts[] = financialFromDate.split("-");
-	   	String fromday  = dateParts[0];
-	   	String frommonth = dateParts[1];
-	   	String fromyear = dateParts[2];
+		
+	   
 	   	financialToDate = Startup.getFinancialToDate();
 	   	
 	   	
@@ -1354,7 +1358,8 @@ public class createVoucher extends Activity {
     public void onBackPressed() {
     	 MainActivity.searchFlag=false;
     	 MainActivity.nameflag=false;
-		 Intent intent = new Intent(getApplicationContext(), voucherMenu.class);
+    	
+    	Intent intent = new Intent(getApplicationContext(), voucherMenu.class);
 		 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		 startActivity(intent);
 	}

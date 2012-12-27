@@ -254,10 +254,11 @@ private void editAccount() {
 										newOpBal = etEditOpBal.getText().toString();
 										if(newOpBal.length() < 1){
 											newOpBal = "";
-										}
+										}else
+										{
 										newOpBal = String.format("%.2f",
 				            	        		Float.valueOf(newOpBal.trim()).floatValue());
-										
+										}
 									} 
 									else{ 
 										newOpBal = tvEditOpBal.getText().toString();
@@ -266,57 +267,73 @@ private void editAccount() {
 									String subgroupname = tvEditSubgroupName.getText().toString();
 									String accountcode = tvEditAccountCode.getText().toString();
 									
-									if((newAccountName.length()<1))
-					                {
-					                
-										String message = "Please fill accountname field";
+									if((newAccountName.length()<1)&&("".equals(newOpBal)))
+									{
+										String message = "Please fill field";
 										toastValidationMessage(message);
-					                    
+									   
 					                }
-									else if("".equals(newOpBal)){
+									else if("".equals(newOpBal))
+									{
 										String message = "Please fill amount field";
 										toastValidationMessage(message);
 									}
-									else{
-										Object[] params;
-										if("Direct Income".equals(accountDetailList.get(1).toString()) 
-												|| "Direct Expense".equals(accountDetailList.get(1).toString()) 
-												|| "Indirect Income".equals(accountDetailList.get(1).toString()) 
-												||  "Indirect Expense".equals(accountDetailList.get(1).toString())){
-											params = new Object[]{newAccountName,accountcode,groupname};
-	                      	    			
-										}
-										else{
-											params = new Object[]{newAccountName,accountcode,groupname,newOpBal};
-										}
-										account.editAccount(params,client_id);
-										
-										//set alert messages after account edit
-										if(!newAccountName.equalsIgnoreCase(oldAccountName) &&
-												!newOpBal.equals(oldOpBal)){
+									else if((newAccountName.length()<1)){
+										String message = "Please fill accountname field";
+										toastValidationMessage(message);
+									}
+									if((newAccountName.length()>=1)&&(!"".equals(newOpBal)))
+									{ 
+										String accountcode_exist = account.checkAccountName(new Object[]{newAccountName,"",""},client_id);
+		                                if (!newAccountName.equalsIgnoreCase(oldAccountName)&&accountcode_exist.equals("exist"))
+		                                {
+		                                	String message = "Account '"+ newAccountName+"' already exist";
+											toastValidationMessage(message);
+		                                
+		                                }else
+		                                {
+		                                	Object[] params;
+											if("Direct Income".equals(accountDetailList.get(1).toString()) 
+													|| "Direct Expense".equals(accountDetailList.get(1).toString()) 
+													|| "Indirect Income".equals(accountDetailList.get(1).toString()) 
+													||  "Indirect Expense".equals(accountDetailList.get(1).toString())){
+												params = new Object[]{newAccountName,accountcode,groupname};
+		                      	    			
+											}
+											else{
+												params = new Object[]{newAccountName,accountcode,groupname,newOpBal};
+											}
+											account.editAccount(params,client_id);
 											
-											String message = "Account name has been changed from '"+
-													oldAccountName+"' to '"+ newAccountName+
-													"' and opening balance has been changed from '"+ 
-													oldOpBal + "' to '"+ newOpBal+"'";
-											toastValidationMessage(message);
-										}
-										else if(!newAccountName.equalsIgnoreCase(oldAccountName)){
-											String message = "Account name has been changed from '"+
-													oldAccountName+"' to '"+ newAccountName+"'";
-											toastValidationMessage(message);
-										}
-										else if(!newOpBal.equals(oldOpBal)){
-											String message = "Opening balance has been changed from '"+
-													oldOpBal+"' to '"+ newOpBal+"'";
-											toastValidationMessage(message);
-										}
-										else{
-											String message = "No changes made";
-											toastValidationMessage(message);
-										}
-										
-										setaccountlist();
+											//set alert messages after account edit
+											if(!newAccountName.equalsIgnoreCase(oldAccountName) &&
+													!newOpBal.equals(oldOpBal)){
+												
+												String message = "Account name has been changed from '"+
+														oldAccountName+"' to '"+ newAccountName+
+														"' and opening balance has been changed from '"+ 
+														oldOpBal + "' to '"+ newOpBal+"'";
+												toastValidationMessage(message);
+											}
+											else if(!newAccountName.equalsIgnoreCase(oldAccountName)){
+												String message = "Account name has been changed from '"+
+														oldAccountName+"' to '"+ newAccountName+"'";
+												toastValidationMessage(message);
+											}
+											else if(!newOpBal.equals(oldOpBal)){
+												String message = "Opening balance has been changed from '"+
+														oldOpBal+"' to '"+ newOpBal+"'";
+												toastValidationMessage(message);
+											}
+											else{
+												String message = "No changes made";
+												toastValidationMessage(message);
+											}
+											
+											setaccountlist();
+		                                	
+		                                }
+											
 									}
 									
 								}//end of onclick
@@ -332,7 +349,7 @@ private void editAccount() {
 							});
                       	            
               	            dialog=builder.create();
-              	            ((Dialog) dialog).show();
+              	           ((Dialog) dialog).show();
               	              WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
               	            //customizing the width and location of the dialog on screen 
               	            lp.copyFrom(dialog.getWindow().getAttributes());

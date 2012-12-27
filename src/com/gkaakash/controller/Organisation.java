@@ -29,7 +29,7 @@ public class Organisation {
        
         try {
            
-            if(params[0].equals("NGO"))
+            if(params[1].equals("NGO"))
             {
                 System.out.println("rg date:"+params[17]);
               Params=new Object[]{params[0],params[1],params[2],

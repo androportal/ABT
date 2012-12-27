@@ -31,13 +31,13 @@ public class voucherMenu extends ListActivity {
 	static List<String> Accountlist;
 	static ArrayList<String> DrAccountlist;
 	static ArrayList<String> CrAccountlist;
-	
+	static boolean flag;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		transaction = new Transaction();
        	client_id= Startup.getClient_id();
-		
+		flag = true;
 		//calling transactions.xml page
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.transactions,voucherType));
 		

@@ -11,8 +11,8 @@
     
     <string name="orgType_prompt">Select organisation type</string>
     <string-array name="orgType_arrays">
-        <item>Profit Making</item>
-        <item>NGO</item>
+       	<item>NGO</item>
+         <item>Profit Making</item>
     </string-array>
     
     <string name="country">Select country</string>

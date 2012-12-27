@@ -216,12 +216,12 @@ import android.widget.Toast;
 			btnRegDate.setText(new StringBuilder()
 			// Month is 0 based, just add 1
 			.append(day).append("-").append(month + 1).append("-")
-			.append(year).append(" "));
+			.append(year));
 			//set current date to FCRA registration button
 			btnFcraDate.setText(new StringBuilder()
 			// Month is 0 based, just add 1
 			.append(day).append("-").append(month + 1).append("-")
-			.append(year).append(" "));
+			.append(year));
 		}
 
 
@@ -306,7 +306,10 @@ import android.widget.Toast;
 					setfrommonth1 = dateParts[1];
 					setfromyear1 = dateParts[2];
 	 
-					System.out.println("fcradate is:"+fcraDate);
+					//System.out.println("fcradate is:"+setfromday1);
+					//System.out.println("fcradate is:"+setfrommonth1);
+					//System.out.println("fcradate is:"+setfromyear1);
+					//System.out.println("fcradate is:"+fcraDate);
 					showDialog(FCRA_DATE_DIALOG_ID);
 				}
 			});
@@ -315,25 +318,17 @@ import android.widget.Toast;
 		protected Dialog onCreateDialog(int id) {
 			switch (id) {
 			case REG_DATE_DIALOG_ID:
-				if(editDetailsflag==false){
-					// set date picker as current date
-					return new DatePickerDialog(this, fcradatePickerListener, 
-	                        year, month,day);
-				}else {
+				
 					// set date picker as current date
 					return new DatePickerDialog(this, regdatePickerListener, 
 							Integer.parseInt(setfromyear), Integer.parseInt(setfrommonth)-1,Integer.parseInt(setfromday));
-				}
+				
 			case FCRA_DATE_DIALOG_ID:
-				if(editDetailsflag==false){
+				
 					// set date picker as current date
 					return new DatePickerDialog(this, fcradatePickerListener, 
-	                        year, month,day);
-				}else {
-					// set date picker as current date
-					return new DatePickerDialog(this, regdatePickerListener, 
 							Integer.parseInt(setfromyear1), Integer.parseInt(setfrommonth1)-1,Integer.parseInt(setfromday1));
-				}
+				
 			}
 			return null;
 		}
@@ -349,7 +344,7 @@ import android.widget.Toast;
 					btnRegDate.setText(new StringBuilder()
 					// Month is 0 based, just add 1
 					.append(day).append("-").append(month + 1).append("-")
-					.append(year).append(" "));
+					.append(year));
 			}
 		};
 		private DatePickerDialog.OnDateSetListener fcradatePickerListener 
@@ -364,7 +359,7 @@ import android.widget.Toast;
 				btnFcraDate.setText(new StringBuilder()
 				// Month is 0 based, just add 1
 				.append(day).append("-").append(month + 1).append("-")
-				.append(year).append(" "));
+				.append(year));
 			}
 		};
 		// Method getStates
@@ -525,17 +520,29 @@ import android.widget.Toast;
 			}
 		           
 			if (setOrgDetails==true){
-		        toastValidationMessage("Organisation "+getOrgName+" with details saved successfully");
-		        //To pass on the activity to the next page
-		        Intent intent = new Intent(context, preferences.class);
-		        startActivity(intent); 
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		        builder.setMessage("Organisation "+getOrgName+" with details saved successfully") 
+		                .setCancelable(false)
+		                .setPositiveButton("Ok",
+		                        new DialogInterface.OnClickListener() {
+		                            public void onClick(DialogInterface dialog, int id) {
+		                            	 //To pass on the activity to the next page
+		                		        Intent intent = new Intent(context, preferences.class);
+		                		        startActivity(intent); 
+		                            }
+		                        });
+		                
+		        AlertDialog alert = builder.create();
+		        alert.show();
+		        
 		        }
 		}
 	
 	
 	public void toastValidationMessage(String message) {
+		
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(message)
+        builder.setMessage(message) 
                 .setCancelable(false)
                 .setPositiveButton("Ok",
                         new DialogInterface.OnClickListener() {
@@ -551,10 +558,14 @@ import android.widget.Toast;
 	
 	
 	public void onBackPressed() {
-    	
-		MainActivity.editDetails=false;
-    	Intent intent = new Intent(getApplicationContext(), menu.class);
-    	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    	startActivity(intent);
+		if(editDetailsflag==false){
+			Intent intent = new Intent(getApplicationContext(), createOrg.class);
+			    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			    startActivity(intent);
+			}else {
+			Intent intent = new Intent(getApplicationContext(), menu.class);
+			    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			    startActivity(intent);
+			};
         }
 	} // End of Class
