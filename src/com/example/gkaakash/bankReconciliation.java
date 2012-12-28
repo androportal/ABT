@@ -576,6 +576,7 @@ public class bankReconciliation extends Activity{
     void addRow(String param, final int i, final int j, final int flag){
         label = new TextView(this);
         label.setText(param);
+        label.setTextSize(18);
         label.setGravity(Gravity.CENTER);
         label.setTextColor(Color.WHITE);
         //label.setBackgroundColor(Color.);
@@ -958,6 +959,7 @@ public class bankReconciliation extends Activity{
     void addStatementRow(String param){
         label1 = new TextView(this);
         label1.setText(param);
+        label1.setTextSize(18);
         label1.setGravity(Gravity.CENTER);
         label1.setTextColor(Color.WHITE);
         //label.setBackgroundColor(Color.);

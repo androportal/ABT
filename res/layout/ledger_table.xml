@@ -1,29 +1,28 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ScrollLedger"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/dark_gray_background">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/layout_root"
+            android:id="@+id/main_heading"
             android:layout_weight="50"
-            android:paddingTop="10dp">
+            android:paddingTop="10dp"
+            android:background="@drawable/dark_gray_background">
         
        <TextView
            android:id="@+id/tvaccountName"
            android:layout_width="wrap_content"
-           android:layout_height="match_parent"
+           android:layout_height="match_parent" 
            android:layout_gravity="center"
            android:gravity="center_horizontal"
            android:textColor="#FFFFFF"
-           android:textSize="15dp" />
+           android:textSize="18dp" />
       
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/layout_root"
+            android:id="@+id/llperiod"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
@@ -34,7 +33,7 @@
              android:layout_height="wrap_content"
              android:gravity="center_horizontal"
              android:textColor="#FFFFFF"
-             android:textSize="15dp"
+             android:textSize="18dp"
              android:paddingLeft="10dp" />
             
           <TextView
@@ -46,39 +45,163 @@
               android:gravity="right"
               android:paddingRight="10dp"
               android:textColor="#FFFFFF"
-              android:textSize="15dp" />
+              android:textSize="18dp" />
           
         </LinearLayout>
   
+        
+      
          <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/layout_root"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:padding="10dp" >
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp" >
             <HorizontalScrollView 
                 android:layout_height="fill_parent"
-            	android:layout_width="fill_parent"
-            	android:fillViewport="true">
+            android:layout_width="fill_parent"
+            android:fillViewport="true">
+                
+                <LinearLayout 
+                    android:layout_height="fill_parent"
+            		android:layout_width="fill_parent"
+            		android:orientation="vertical">
+            		
+                    <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1,2,3,4,5"
+                    android:id="@+id/floating_heading_table"
+                    android:background="#696565" 
+                    android:visibility="invisible">
+                </TableLayout>
+                
               <ScrollView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/ScrollLedger"
             android:fillViewport="true">
             
                 <TableLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:stretchColumns="0,1,2,3,4,5"
                     android:id="@+id/maintable"
-                    android:background="#696565" >
+                    android:background="#696565">
                 </TableLayout>
             </ScrollView>
-       
+       		</LinearLayout>
             </HorizontalScrollView>
             
          </LinearLayout>
-       
-       
-       
-    </LinearLayout>
+     
+
+
+ </LinearLayout>
+ 	<!-- floating button at top|left
+<Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:text="Button" />
+         -->
+    <Button 
+        android:id="@+id/btnOrgDetailsDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true"
+       android:background="@drawable/arrow"/>
+      
+    <LinearLayout 
+        android:id="@+id/Llalert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true"
+           android:background="#FFFFFF">
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" 
+                    android:background="#FFFFFF"
+                    android:padding="1dp">
+            
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="35dp"
+                    android:background="#000000"
+                    android:textSize="20dp"
+                    android:text="Organisation info" 
+                    android:gravity="center"
+                    android:textColor="#FFFFFF"/>
+                
+                <LinearLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" 
+                    android:background="#FFFFFF"
+                    android:padding="10dp">
+                 <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#CCCCB2"
+                    android:textSize="17dp"
+                    android:text="Organisation name" 
+                    android:textColor="#000000"/>
+                
+                 <TextView
+                    android:id="@+id/tvOrgNameAlert"
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:textColor="#000000"
+                    android:textSize="17dp"/>
+                
+                 
+                 <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#CCCCB2"
+                    android:text="Organisation type" 
+                    android:textSize="17dp"
+                    android:textColor="#000000"/>
+                 
+                 <TextView
+                    android:id="@+id/tvOrgTypeAlert"
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:textColor="#000000"
+                    android:textSize="17dp"/>
+                 
+                 <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#CCCCB2"
+                    android:text="Financial year(dd-mm-yyyy)" 
+                    android:textSize="17dp"
+                    android:textColor="#000000"/>
+                
+                 <TextView
+                    android:id="@+id/tvFinancialYearAlert"
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:textColor="#000000"
+                    android:textSize="17dp"/>
+                </LinearLayout>
+        </LinearLayout>
 </ScrollView>
+</LinearLayout>
+ </RelativeLayout>

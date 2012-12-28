@@ -496,6 +496,7 @@ public class SearchVoucher extends Activity {
 		
 		label = new TextView(SearchVoucher.this);
         label.setText(string);
+        label.setTextSize(18);
         label.setTextSize(15);
         label.setTextColor(Color.WHITE);
         label.setGravity(Gravity.CENTER_VERTICAL);
