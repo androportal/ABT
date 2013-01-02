@@ -320,7 +320,7 @@ public class SearchVoucher extends Activity {
                  */
                 if(j==6){
                 	
-          	label.setGravity(Gravity.RIGHT);
+          	label.setGravity(Gravity.CENTER|Gravity.RIGHT);
                     
                     if(columnValue.get(j).length() > 0){
                     	

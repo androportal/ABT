@@ -258,27 +258,28 @@ private void addTable(TableLayout tableID) {
  * 3. set rupee symbol for amount
  */
 private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color,Boolean headerFlag) {
-for(int j=0;j<columnValue.size();j++){
+	for(int j=0;j<columnValue.size();j++)
+	{
         /** Creating a TextView to add to the row **/
-if(headerFlag == true){
-if(j == 1 || j == 2 || j == 3){ //amount column
-//For adding rupee symbol
-final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs));
-addRow(rsSymbol+" "+columnValue.get(j));
-}else{
-addRow(columnValue.get(j));
-}
+		if(headerFlag == true)
+		{
+			
+			if(j == 1 || j == 2 || j == 3){ //amount column
+				//For adding rupee symbol
+				final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs));
+				addRow(rsSymbol+" "+columnValue.get(j));
+			}else{
+				addRow(columnValue.get(j));
+			}
 
-}else{
-addRow(columnValue.get(j));
-}
+		}else{
+			addRow(columnValue.get(j));
+		}
        label.setBackgroundColor(color);
        String name = columnValue.get(0).toString();
        String amount = columnValue.get(1).toString();
        String total_amount = columnValue.get(2).toString();
        String totalamount = columnValue.get(3);
-      
-      
       
        if(j==1)
        {//for amount coloumn
@@ -290,38 +291,40 @@ addRow(columnValue.get(j));
                	||amount.equalsIgnoreCase("NET PROFIT")
                	||amount.equalsIgnoreCase("Amount")
                	||amount.equalsIgnoreCase("Debit"))
-           	{
-       	((TextView)label).setGravity(Gravity.CENTER);
+           		{
+            	   ((TextView)label).setGravity(Gravity.CENTER);
        	
-           	}else{
-           	((TextView)label).setGravity(Gravity.RIGHT);
-           //For adding rupee symbol
-           if(columnValue.get(j).length() > 0)
-           {
-           	colValue=columnValue.get(j);
-           	if(!"".equals(colValue)){
-           	System.out.println("m in ");
-                        if(!"0.00".equals(colValue)){
-                        Pattern pattern = Pattern.compile("\\n");
-                        Matcher matcher = pattern.matcher(colValue);
-                        boolean found = matcher.find();
-                        System.out.println("value:"+found);
-                        if(found==false){
-                        double amount1 = Double.parseDouble(colValue);	
-                        System.out.println("A:"+amount1);
-                        ((TextView) label).setText(formatter.format(amount1));
-                        }else {
-                        ((TextView) label).setText(colValue);
-}
-                        }
-           	}
-           	
-           	
-           }
-           	
-           	}
-              
-   	}
+           		}
+               else
+               {
+           			((TextView)label).setGravity(Gravity.RIGHT);
+           		
+           			if(columnValue.get(j).length() > 0)
+           			{
+           				colValue=columnValue.get(j);
+           				if(!"".equals(colValue))
+           				{
+           				
+	                        if(!"0.00".equals(colValue))
+	                        {
+	                        	Pattern pattern = Pattern.compile("\\n");
+	                        	Matcher matcher = pattern.matcher(colValue);
+	                        	boolean found = matcher.find();
+	                        	System.out.println("value:"+found);
+	                        	if(found==false)
+	                        	{
+	                        		double amount1 = Double.parseDouble(colValue);	
+	                        		System.out.println("A:"+amount1);
+	                        		((TextView) label).setText(formatter.format(amount1));
+	                        	}else
+	                        	{
+	                        		((TextView) label).setText(colValue);
+	                        	}
+	                       }
+           				}
+           			}
+           		}
+   		}
        
    	if(j==2){//for amount coloumn
 
@@ -359,61 +362,61 @@ addRow(columnValue.get(j));
            	
            }
        }
-       if(j==0) {
-       	if(balancetype.equals("Conventional Balance Sheet"))
-       	{
-       	if(name.equals("CORPUS")
-       	||name.equals("CAPITAL") 
-       	||name.equals("RESERVES")
-       	||name.equals("LOANS(Liability)")
-       	||name.equals("CURRENT LIABILITIES")
-       	||name.equals("FIXED ASSETS")
-       	||name.equals("CURRENT ASSETS")
-       	||name.equals("LOANS(Asset)")
-       	||name.equals("INVESTMENTS")
-       	||name.equals("MISCELLANEOUS EXPENSES(ASSET)"))
-       	{
-       	((TextView)label).setGravity(Gravity.LEFT);
-       	}
-       	else
-       	{
-       	if(name.equalsIgnoreCase("Total"))
-       	{
-       	
-       	((TextView)label).setGravity(Gravity.RIGHT);
-       	}
-       	else{
-       	  
-       	       label.setBackgroundColor(color);
-       	((TextView)label).setGravity(Gravity.CENTER);
-       	}
-       	
-       	}
-       	}
-       	else{
-       	if(name.equalsIgnoreCase("TOTAL CORPUS")
-       	||name.equalsIgnoreCase("TOTAL CAPITAL")
-       	||name.equalsIgnoreCase("TOTAL RESERVES & SURPLUS") 
-       	||name.equalsIgnoreCase("TOTAL MISCELLANEOUS EXPENSES(ASSET)")
-       	||name.equalsIgnoreCase("TOTAL OF OWNER'S FUNDS")
-       	||name.equalsIgnoreCase("TOTAL BORROWED FUNDS")
-       	||name.equalsIgnoreCase("TOTAL FUNDS AVAILABLE / CAPITAL EMPLOYED")
-       	||name.equalsIgnoreCase("TOTAL FIXED ASSETS(NET)")
-       	||name.equalsIgnoreCase("TOTAL LONG TERM INVESTMENTS")
-       	||name.equalsIgnoreCase("TOTAL LOANS(ASSET)")
-       	||name.equalsIgnoreCase("TOTAL CURRENT ASSETS")
-       	||name.equalsIgnoreCase("TOTAL CURRENT LIABILITIES")
-       	||name.equalsIgnoreCase("NET CURRENT ASSETS OR WORKING CAPITAL")
-       	
-       	){
-       	((TextView)label).setGravity(Gravity.RIGHT);
-       	}
-       	if(name.equalsIgnoreCase("Particulars"))
-       	{
-       	((TextView)label).setGravity(Gravity.CENTER);
-       	}
-       	
-       	} 
+       if(j==0) 
+       {
+	       	if(balancetype.equals("Conventional Balance Sheet"))
+	       	{
+		       	if(name.equals("CORPUS")
+		       			||name.equals("CAPITAL") 
+		       			||name.equals("RESERVES")
+		       			||name.equals("LOANS(Liability)")
+		       			||name.equals("CURRENT LIABILITIES")
+		       			||name.equals("FIXED ASSETS")
+		       			||name.equals("CURRENT ASSETS")
+		       			||name.equals("LOANS(Asset)")
+		       			||name.equals("INVESTMENTS")
+		       			||name.equals("MISCELLANEOUS EXPENSES(ASSET)"))
+		       	{
+		       		((TextView)label).setGravity(Gravity.LEFT);
+		       	}
+		       	else
+		       	{
+		       		if(name.equalsIgnoreCase("Total"))
+		       		{
+	       	
+		       			((TextView)label).setGravity(Gravity.RIGHT);
+		       		}
+		       		else{
+	       	  
+		       			label.setBackgroundColor(color);
+		       			((TextView)label).setGravity(Gravity.LEFT);
+		       		}
+	       	
+		       	}
+	       	}
+	       	else
+	       	{
+	       		if(name.equalsIgnoreCase("TOTAL CORPUS")
+	       				||name.equalsIgnoreCase("TOTAL CAPITAL")
+	       				||name.equalsIgnoreCase("TOTAL RESERVES & SURPLUS") 
+	       				||name.equalsIgnoreCase("TOTAL MISCELLANEOUS EXPENSES(ASSET)")
+	       				||name.equalsIgnoreCase("TOTAL OF OWNER'S FUNDS")
+	       				||name.equalsIgnoreCase("TOTAL BORROWED FUNDS")
+	       				||name.equalsIgnoreCase("TOTAL FUNDS AVAILABLE / CAPITAL EMPLOYED")
+	       				||name.equalsIgnoreCase("TOTAL FIXED ASSETS(NET)")
+	       				||name.equalsIgnoreCase("TOTAL LONG TERM INVESTMENTS")
+	       				||name.equalsIgnoreCase("TOTAL LOANS(ASSET)")
+	       				||name.equalsIgnoreCase("TOTAL CURRENT ASSETS")
+	       				||name.equalsIgnoreCase("TOTAL CURRENT LIABILITIES")
+	       				||name.equalsIgnoreCase("NET CURRENT ASSETS OR WORKING CAPITAL"))
+	       		{
+	       			((TextView)label).setGravity(Gravity.RIGHT);
+	       		}
+	       		if(name.equalsIgnoreCase("Particulars"))
+	       		{
+	       			((TextView)label).setGravity(Gravity.CENTER);
+	       		}
+	       	} 
        }
        if(j==3)
        	{//for amount coloumn

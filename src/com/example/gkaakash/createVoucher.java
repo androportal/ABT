@@ -915,7 +915,7 @@ public class createVoucher extends Activity {
 						
 						AlertDialog.Builder builder = new AlertDialog.Builder(context);
 						if(searchFlag==false && edittabflag==false ){
-							builder.setMessage("Transaction added successfully");
+			 				builder.setMessage("Transaction added successfully");
 						}else if (cloneflag==false && edittabflag==true) {
 							builder.setMessage("Transaction edited successfully");	
 						}else if (cloneflag==true) {
