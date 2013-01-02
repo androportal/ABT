@@ -72,6 +72,7 @@ import android.widget.Toast;
 		ArrayList<String> detailsList_foredit ;
 		String orgcode;
 		String reg_date,fcra_date;
+		static String orgtype;
 		//adding options to the options menu
 		@Override
 		public boolean onCreateOptionsMenu(Menu menu) {
@@ -132,6 +133,11 @@ import android.widget.Toast;
 			if(editDetailsflag==true){
 				detailsList_foredit=menu.accdetailsList;
 				System.out.println("cuming from menu page:"+menu.orgtype);
+	
+				orgtype=detailsList_foredit.get(1);
+				
+				System.out.println("OT"+orgtype);
+				
 				orgcode=detailsList_foredit.get(0);
 				System.out.println("org code:"+orgcode);
 				etGetAddr.setText(detailsList_foredit.get(3));
@@ -161,7 +167,7 @@ import android.widget.Toast;
 				getSelectedOrgType=createOrg.orgTypeFlag;
 				}
 		        else {
-		        getSelectedOrgType=menu.orgtype;
+		        getSelectedOrgType=orgtype; 
 		        }
 			if("NGO".equals(getSelectedOrgType))
 			{

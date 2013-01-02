@@ -114,7 +114,7 @@ public class createVoucher extends Activity {
 	        name = SearchVoucher.name;
 	        //Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
 	        // after click om edit voucher Reff Edit text non-editable
-	        if("Edit voucher".equals(name)){
+	        if(searchFlag==true&&cloneflag==false){
 	    	   	etRefNumber.setEnabled(false);
 	        }else {
 	        	etRefNumber.setEnabled(true); 
