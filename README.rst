@@ -1,8 +1,8 @@
 =================
-Aakash Accounting
+Aakash Business Tool
 =================
 
-**Aakash Accounting** is a portable accounting platform on Android
+**Aakash Business Tool** is a portable accounting platform on Android
 intended for Accountants and Students. `Aakash
 <http://www.it.iitb.ac.in/aakash2/index.jsp>`_ is a low cost
 computing device/tablet for students, the project is initiated and
@@ -19,7 +19,7 @@ reports.
 It was initially derived from `GNUkhata <http://www.gnukhata.org>`_, a free
 accounting software which is mostly based on Python framework.
 
-Some features included:
+Some features included in Aakash Business Tool:
   #. Managing Organizations
   #. Maintaining books of accounts
   #. Recording, cloning and editing transactions
@@ -28,12 +28,12 @@ Some features included:
   #. Bank Reconciliation
 
 
-gkAakashCore - a backend to gkAakash
+gkAakashCore - a backend to Aakash Business Tool
 ------------------------------------
 
 The entire backend has Python code base. `gkAakashCore
 <https://github.com/androportal/gkAakashCore>`_ provides a backend to
-**gkAakash**. On Aakash tablet, it runs in a ``chroot``
+**Aakash Business Tool**. On Aakash tablet, it runs in a ``chroot``
 environment(your device need to be rooted for this!). More information
 can be found `here
 <https://github.com/androportal/gkAakashCore/blob/master/README.rst>`_
@@ -43,7 +43,7 @@ Usage
 ------
 
 This `branch` contains an Android(4.0.3, API-15) code for the User Interface
-of GNUkhata. 
+of Aakash Business Tool. 
 
 User's can clone this repo by typing
 ::
@@ -66,7 +66,7 @@ if you want to checkout all branches then type,
    git checkout -b docs remotes/origin/docs
    git checkout -b froyo remotes/origin/froyo   
 
-Importing gkAakash as an `eclipse <http://www.eclipse.org/>`_ project
+Importing Aakash Business Tool as an `eclipse <http://www.eclipse.org/>`_ project
 ---------------------------------------------------------------------
 `Note`: we have used Eclipse version 3.7.2(Indigo)
  
@@ -91,7 +91,7 @@ After cloning the require branch, start eclipse
 Important note
 --------------
 
-- to test gkAakash on tablet
+- to test Aakash Business Tool on tablet
 - go to
   ``gkAakash/src/com/gkaakash/coreconection/CoreConnection.java`` and
   change the url from ``"http://10.0.2.2:7081"`` to

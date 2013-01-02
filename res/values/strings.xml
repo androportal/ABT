@@ -1,9 +1,9 @@
 <resources>
 
-    <string name="app_name">Gnukhata</string>
-    <string name="hello_world">Welcome to GNUKhata!</string>
+    <string name="app_name">Aakash Business Tool</string>
+    <string name="hello_world">Welcome to Aakash Business Tool!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">GNUKhata</string>
+    <string name="title_activity_main">Aakash Business Tool</string>
     <string name="createOrgButton"> Create  new  organisation </string>
     <string name="selectOrgButton">Select existing organisation</string>
     <string name="orgName">Enter organisation name</string>
@@ -78,7 +78,7 @@
     </string-array>
     
     <string name="help_para1">
-        \n<b>1.GNUKhata welcome page:</b>
+        \n<b>1.Aakash Business Tool welcome page:</b>
         \n	Here the user can create a new organization or select an existing one.
    </string> 
    
@@ -113,7 +113,7 @@
    
     <string name="help_para7">
         \n<b>7.Master menu:</b>
-        \n	This is the master menu of GNUKhata. Here, user can create/search account, enter/search transaction, 
+        \n	This is the master menu of Aakash Business Tool. Here, user can create/search account, enter/search transaction, 
         view reports(ledger and trial balance) and add more projects.
     </string>
    
@@ -134,7 +134,7 @@
     
     
     <string name="about_para">
-        \n<b>GNUKhata</b> is a Free Accounting Software that provides 
+        \n<b>Aakash Business Tool</b> is a Free Accounting Software that provides 
         students and accountants to carry on their work while on the go.
         Designed and developed at IIT Bombay. 
         \n

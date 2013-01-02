@@ -193,14 +193,7 @@ public class menu extends ListActivity{
      	           switch (pos) {
      	               case 0:
      	                             {
-     	                            //for getting org type
-     	                          orgname = selectOrg.selectedOrgName; 
-     	                                System.out.println("org name in selett "+orgname);
-     	                                Object[] params = new Object[]{orgname};
-     	                                orgtype = (String) organisation.getorgTypeByname(params, client_id);
-     	                                System.out.println("org type in select"+orgtype);
-     	                             
-     	                             System.out.println( MainActivity.editDetails);
+     	                           
      	                             MainActivity.editDetails=true;
      	                             Object[] editDetails = (Object[])organisation.getOrganisation(client_id);
      	                              accdetailsList = new ArrayList<String>();
@@ -364,7 +357,7 @@ public class menu extends ListActivity{
                             // Building DatepPcker dialog
                             AlertDialog.Builder builder = new AlertDialog.Builder(
                                     context);
-                            builder.setTitle("GNUKhata");
+                            builder.setTitle("Aakash Business Tool");
                             builder.setIcon(R.drawable.logo);
                             builder.setMessage( s );
                             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
