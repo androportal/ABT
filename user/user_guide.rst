@@ -1,10 +1,17 @@
+%%%%%%%%%%
 User Guide
-==========
-
-Contents:
+%%%%%%%%%%
 
 .. toctree::
-   :maxdepth: 2
-
-   intro
+   :numbered: 
+   
+   about
+   intro 
+   Master_menu
+   Account_management
+   Recording_transations
+   Reports  
+   Setting_up_preferences
+   Bank_reconciliation
+   
    

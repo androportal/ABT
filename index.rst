@@ -1,19 +1,19 @@
-.. gkAakash documentation master file, created by
+.. Aakash Business Tool documentation master file, created by
    sphinx-quickstart on Fri Aug 17 13:35:39 2012.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to gkAakash's documentation!
-====================================
+Welcome to Aakash Business Tool(ABT) documentation!
+===================================================
 
-Contents:
+**Parts of the documentation:**
 
-.. toctree::
-   :maxdepth: 2
+`User guide <user/user_guide.html>`_
+ start here
 
-   user/user_guide
-   devel/devel_guide
-   
+`Developers guide <devel/devel_guide>`_
+ reference for programmers
+
 
 Indices and tables
 ==================
