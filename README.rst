@@ -3,16 +3,16 @@ Aakash Business Tool
 =====================
 
 **Aakash Business Tool** is a portable accounting platform on Android
-intended for Accountants and Students. `Aakash <http://aakashlabs.org>`_ is a
-low cost computing device/tablet for students, the project is
-initiated and funded by MHRD, Govt. of India. Aakash already runs
-Android 4.0 with many educational apps developed at IIT Bombay. Please
-refer to `androportal <https://github.com/androportal/>`_ for some of
-the apps. Aakash Accounting provides an easy to use interface
-specially for students/newbies who have just started accounting. We
-have tried to make the user's experience simple and elegant. This
-initial version covers basic account management, creating vouchers and
-reports.
+intended for Accountants and Students. `Aakash
+<http://aakashlabs.org>`_ is a low cost computing device/tablet for
+students, the project is initiated and funded by MHRD, Govt. of
+India. Aakash already runs Android 4.0 with many educational apps
+developed at IIT Bombay. Please refer to `androportal
+<https://github.com/androportal/>`_ for some of the apps. Aakash
+Accounting provides an easy to use interface specially for
+students/newbies who have just started accounting. We have tried to
+make the user's experience simple and elegant. This initial version
+covers basic account management, creating vouchers and reports.
 
 
 It was initially derived from `GNUkhata <http://www.gnukhata.org>`_, a free
