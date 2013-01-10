@@ -22,7 +22,12 @@ public class Transaction {
 	private Object[] salesReturnAccounts;
 	private Object[] purchaseReturnAccounts;
 	private Object[] searchedVouchers;
-	
+	private Object[] getVoucherMaster;
+	private Object[] getVoucherDetails;
+	private Object editVoucher;
+	private boolean deleteVoucher;
+	private String getLastReference;
+	private String getLastReffDate;
 	/***
 	 * Default constructor
 	 * create instance of CoreConnection() to get connection with server
@@ -220,5 +225,75 @@ public Object searchVoucher(Object[] params,Object client_id) {
 	return searchedVouchers;
 }
 
+	public Object getVoucherMaster(Object[] params,Object client_id){
+	try {
+		getVoucherMaster = (Object[])conn.getClient().call("transaction.getVoucherMaster",params,client_id);
+		
+	} catch (XMLRPCException e) {
+		
+		e.printStackTrace();
+	}
+	return getVoucherMaster;
+	}
 
+	public Object getVoucherDetails(Object[] params,Object client_id){
+		try {
+			getVoucherDetails = (Object[])conn.getClient().call("transaction.getVoucherDetails",params,client_id);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return getVoucherDetails;
+		}
+	
+	public Object editVoucher(Object[] params_master,ArrayList<ArrayList> params_details,Object client_id) {
+		try {  
+			editVoucher = (Object)conn.getClient().call("transaction.editVoucher",params_master,params_details,client_id);
+			 
+		} catch (XMLRPCException e) {
+			e.printStackTrace();
+		}
+		return editVoucher; 
+		}
+	
+	
+	
+	public boolean deleteVoucher(Object[] params,Object client_id) {
+		
+		try {
+			
+			deleteVoucher = (Boolean)conn.getClient().call("transaction.deleteVoucher",params,client_id);
+			
+			}catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return deleteVoucher;
+	}
+	
+	public String getLastReferenceNumber(Object[] params,Object client_id) {
+		System.out.println("voucherType :"+params[0]);
+		try {
+			getLastReference = (String)conn.getClient().call("transaction.getLastReference",params,client_id);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return getLastReference;
+	}
+	public String getLastReferenceDate(Object[] params,Object client_id) {
+		
+		try {
+			getLastReffDate = (String)conn.getClient().call("transaction.getLastReffDate",params,client_id);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return getLastReffDate;
+	}
+
+	
 }

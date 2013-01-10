@@ -2,18 +2,15 @@ package com.example.gkaakash;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
-
+import java.util.Date;
 import com.gkaakash.controller.Startup;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,7 +28,7 @@ public class createOrg extends MainActivity {
 	//Declaring variables
 	TextView tvDisplayFromDate, tvDisplayToDate;
 	Button btnChangeFromDate, btnChangeToDate, btnNext;
-	int year, month, day, toYear, toMonth, toDay;
+	static int year, month, day, toYear, toMonth, toDay;
 	static final int FROM_DATE_DIALOG_ID = 0;
 	static final int TO_DATE_DIALOG_ID = 1;
 	Spinner orgType; 
@@ -55,9 +52,17 @@ public class createOrg extends MainActivity {
 		//Calling create_org.xml
 		setContentView(R.layout.create_org);	
 		client_id= Startup.getClient_id();
+		
+		//for two digit format date for dd and mm
+		mFormat= new DecimalFormat("00");
+		mFormat.setRoundingMode(RoundingMode.DOWN);
+		
 		//Declaring new method for setting date into "from date" and "to date" textview
-		setCurrentDateOnView();
-		//creating a new interface for showing a date picker dialog that allows the user to select financial year start date and to date
+		setDateOnLoad();
+		/*
+		 * creating a new interface for showing a date picker dialog that
+		 * allows the user to select financial year start date and to date
+		 */
 		addListeneronDateButton();
 		//creating interface to pass on the activity to next page
 		addListeneronNextButton();
@@ -67,41 +72,36 @@ public class createOrg extends MainActivity {
 		addListenerOnItem();
 	}
 
-	private void setCurrentDateOnView() {
+	private void setDateOnLoad() {
 		tvDisplayFromDate = (TextView) findViewById(R.id.tvFromDate);
 		tvDisplayToDate = (TextView) findViewById(R.id.tvToDate);
 		
-		//for creating calendar object and linking with its 'getInstance' method, for getting a default instance of this class for general use
+		/*
+		 * set "from date" and "to date" textView
+		 * for creating calendar object and linking with its 'getInstance' method, 
+		 * for getting a default instance of this class for general use
+		 */
+		
 		year = c.get(Calendar.YEAR);
-		month = c.get(Calendar.MONTH);
-		day = c.get(Calendar.DAY_OF_MONTH);
-		//System.out.println("date is");
-		//System.out.println(year+"-"+month+"-"+day);
+		month = 3; //month = april
+		day = 1;
 		
-		//for two digit format date for dd and mm
-		mFormat= new DecimalFormat("00");
-		mFormat.setRoundingMode(RoundingMode.DOWN);
-		
-		// set current date into "from date" textView
+		//set from date: day=01, month=April, year=current year
 		tvDisplayFromDate.setText(new StringBuilder()
-		// Month is 0 based, just add 1
-		.append(mFormat.format(Double.valueOf(day))).append("-")
-		.append(mFormat.format(Double.valueOf(month+1))).append("-")
+		.append(mFormat.format(Double.valueOf(1))).append("-")
+		.append(mFormat.format(Double.valueOf(4))).append("-")
 		.append(year));
 		
 		//Add one year to current date time
 		c.add(Calendar.YEAR,1);
-		//one day before
-		c.add(Calendar.DAY_OF_MONTH, -1);
-		toDay = c.get(Calendar.DAY_OF_MONTH);
-		toMonth = c.get(Calendar.MONTH);
 		toYear = c.get(Calendar.YEAR);
+		toMonth = 2;
+		toDay = 31;
 		
-		
+		//set to date: day=31, month=March, year=current year+1
 		tvDisplayToDate.setText(new StringBuilder()
-		// Month is 0 based, just add 1
-		.append(mFormat.format(Double.valueOf(toDay))).append("-")
-		.append(mFormat.format(Double.valueOf(toMonth+1))).append("-")
+		.append(mFormat.format(Double.valueOf(31))).append("-")
+		.append(mFormat.format(Double.valueOf(3))).append("-")
 		.append(toYear));
 		
 		
@@ -109,6 +109,15 @@ public class createOrg extends MainActivity {
 
 	private void addListeneronDateButton() {
 		btnChangeFromDate = (Button) findViewById(R.id.btnChangeFromDate);
+		btnChangeToDate = (Button) findViewById(R.id.btnChangeToDate);
+
+
+		/*
+		 * when button is clicked, user can select from date(day, month and year) from datepicker,
+		 * selected date will set in 'from date' textview and set date in 'to date' text view
+		 * which is greater than from date by one year and minus one day(standard financial year format)
+		 * 
+		 */
 		btnChangeFromDate.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -119,39 +128,108 @@ public class createOrg extends MainActivity {
 				//Building DatepPcker dialog
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				builder.setView(layout);
-	            builder.setTitle("Set Date");
+	            builder.setTitle("Set from date");
+	            final DatePicker dp = (DatePicker)layout.findViewById(R.id.datePicker1);
+	            dp.init(year,month,day, null);
+	            
 	            builder.setPositiveButton("Set",new  DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface arg0, int arg1) {
-					 final   DatePicker dp = (DatePicker) dialog.findViewById(R.id.datePicker1);
-					 
-					 int y = dp.getYear();
-					 int m = dp.getMonth();
-					 int d =  dp.getDayOfMonth();
-					 String strDateTime = mFormat.format(Double.valueOf(d)) + "-" 
-					 + (mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(m))))+ 1))) + "-" 
-					 + y;
+					 year = dp.getYear();
+					 month = dp.getMonth();
+					 day =  dp.getDayOfMonth();
+					 String strDateTime = mFormat.format(Double.valueOf(day)) + "-" 
+					 + (mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(month))))+ 1))) + "-" 
+					 + year;
+					 //set date in from date textview
+					 tvDisplayFromDate.setText(strDateTime);
 					 
 					 //setting selected date into calender's object
-					 c.set(y, m, d);
+					 c.set(year, month, day);
+					 //add one year
+					 c.add(Calendar.YEAR, +1);
 					 //subtracting one day
 					 c.add(Calendar.DAY_OF_MONTH, -1);
 					 
-					 int mYear = c.get(Calendar.YEAR);
-					 int mMonth = c.get(Calendar.MONTH);
-					 int mDay = c.get(Calendar.DAY_OF_MONTH);
-					 tvDisplayFromDate.setText(strDateTime);
+					 toYear = c.get(Calendar.YEAR);
+					 toMonth = c.get(Calendar.MONTH);
+					 toDay = c.get(Calendar.DAY_OF_MONTH);
 					 
+					//set date in to date textview
 					 tvDisplayToDate.setText(new StringBuilder()
-					 .append(mFormat.format(Double.valueOf(mDay)))
-					 .append("-").append(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(mMonth))))+ 1)))
-					 .append("-").append(mYear + 1));
+					 .append(mFormat.format(Double.valueOf(toDay)))
+					 .append("-").append(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(toMonth+1)))))))
+					 .append("-").append(toYear));
 				}
 				}); 
                 dialog=builder.create();
         		dialog.show();
 			}	
 		});
+		
+		/*
+		 * when button clicked, user can change the 'to date' from datepicker,
+		 * it will set the selected date in 'to date' textview, if to date is greater than from date
+		 */
+		btnChangeToDate.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				//Preparing views
+				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+				View layout = inflater.inflate(R.layout.datepiker, (ViewGroup) findViewById(R.id.layout_root));
+				//Building DatepPicker dialog
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setView(layout);
+	            builder.setTitle("Set to date");
+	            
+	            final   DatePicker dp = (DatePicker) layout.findViewById(R.id.datePicker1);
+	            dp.init(toYear,toMonth,toDay, null);
+	            
+	            builder.setPositiveButton("Set",new  DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					 
+					int Year = dp.getYear();
+					int Month = dp.getMonth();
+					int Day =  dp.getDayOfMonth();
+					 
+					 try {
+						 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+							Date date1 = sdf.parse(day+"-"+month+"-"+year); //from date
+					    	Date date2 = sdf.parse(Day+"-"+Month+"-"+Year); //to date
+							
+					    	Calendar cal1 = Calendar.getInstance(); 
+					    	Calendar cal2 = Calendar.getInstance(); 
+					    	
+					    	cal1.setTime(date1);
+					    	cal2.setTime(date2);
+					    	
+					    	if(cal2.after(cal1)){
+					    		toYear = Year;
+								toMonth = Month;
+								toDay =  Day;
+								String strDateTime = mFormat.format(Double.valueOf(toDay)) + "-" 
+								 + (mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(toMonth))))+ 1))) + "-" 
+								 + toYear;
+					    		tvDisplayToDate.setText(strDateTime);
+					    	}
+					    	else{
+					    		String message = "Please enter proper date";
+				        		toastValidationMessage(message);
+					    	}
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+					 
+					 
+				}
+				}); 
+                dialog=builder.create();
+        		dialog.show();
+			}	
+		});
+		
 	}
 	// method to take ItemSelectedListner interface as a argument  
 	void addListenerOnItem(){
@@ -229,6 +307,7 @@ public class createOrg extends MainActivity {
 					}
 				else{
 					//To pass on the activity to the next page
+					MainActivity.editDetails=false;
 					Intent intent = new Intent(context, orgDetails.class);
 				    startActivity(intent); 
 				}
@@ -239,7 +318,7 @@ public class createOrg extends MainActivity {
                         .setCancelable(false)
                         .setPositiveButton("Ok",
                                 new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
+                                     public void onClick(DialogInterface dialog, int id) {
                                     	Intent intent = new Intent(context, MainActivity.class);
                     				    startActivity(intent); 
                                     }

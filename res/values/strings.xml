@@ -1,9 +1,9 @@
 <resources>
 
-    <string name="app_name">Gnukhata</string>
-    <string name="hello_world">Welcome to GNUKhata!</string>
+    <string name="app_name">Aakash Business Tool</string>
+    <string name="hello_world">Welcome to Aakash Business Tool!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">GNUKhata</string>
+    <string name="title_activity_main">Aakash Business Tool</string>
     <string name="createOrgButton"> Create  new  organisation </string>
     <string name="selectOrgButton">Select existing organisation</string>
     <string name="orgName">Enter organisation name</string>
@@ -11,8 +11,8 @@
     
     <string name="orgType_prompt">Select organisation type</string>
     <string-array name="orgType_arrays">
-        <item>Profit Making</item>
-        <item>NGO</item>
+       	<item>NGO</item>
+         <item>Profit Making</item>
     </string-array>
     
     <string name="country">Select country</string>
@@ -71,77 +71,81 @@
         <item>Narration</item>
     </string-array>
     
+    <string name="searchAccountBy_prompt">Search account by</string>
+    <string-array name="searchAccountBy_arrays">
+        <item>Search account by name</item>
+        <item>Search account by code</item>
+    </string-array>
+    
     <string name="help_para1">
-        \n<b>1.GNUKhata welcome page:</b>
-        \nUser can create new organization or select an existing one.
+        \n<b>1.Aakash Business Tool welcome page:</b>
+        \n	Here the user can create a new organization or select an existing one.
    </string> 
    
     <string name="help_para2">
         \n<b>2.Create new organization:</b>
-        \nWhen the user clicks on <b>Create new organization</b> button on the main page, 
-        it will call create new organization page.
+        \n	When the user clicks on <b>Create new organization</b> button on the main page, 
+        \n it will call the <b>Create new organization</b> page.
    </string>
    
     <string name="help_para3">
         \n<b>3.Select organization:</b>
-        \nClick on <b>Select existing organization</b> button, this will show select organization page.    
+        \n	When the user clicks on <b>Select existing organization</b> button, 
+        \n it will call the <b>select organization</b> page.    
    </string>
    
     <string name="help_para4">
         \n<b>4.Fill organization details:</b>
-        \nAfter the user fills organization details, click on <b>Save</b> button. 
-        If the user do not want to fill the information, he can simply click <b>skip</b> button.
+        \n	After the user fills organization details, he can save the information by clicking on the <b>Save</b> button. 
+           if the user does not want to fill the information, he can simply click the <b>Skip</b> button.
    </string>
    
     <string name="help_para5">
         \n<b>5.Preferences:</b>
-        \nUser can add new projects and check the account code using the <b>check-box</b> if manual account code has to be provided.
+        \n	User can add new projects and check the <b>Account code</b> using the <b>check-box</b>,if a manual account code has to be provided. 
    </string>
    
     <string name="help_para6">
         \n<b>6.Create account:</b>
-        \nUser can create an account under respective group name and subgroup name with an
-        opening balance. This will automatically update the total debit opening balance, total credit opening
-        balance and difference between them.
+        \n	User can create an account under respective <b>Group name</b> and <b>Subgroup name</b> with an opening balance. 
+	     This will automatically update the total debit opening balance, total credit opening balance and difference between them.
    </string>
    
     <string name="help_para7">
         \n<b>7.Master menu:</b>
-        \nThis is the master menu of GNUKhata. Here, user can create/search account, enter/search
-        transaction, view reports(ledger and trial balance) and add more projects.
-   </string>
+        \n	This is the master menu of Aakash Business Tool. Here, user can create/search account, enter/search transaction, 
+        view reports(ledger and trial balance) and add more projects.
+    </string>
    
     <string name="help_para8">
         \n<b>8.Enter transaction:</b>
-        \nThis page provide the user to enter(see figure [a]) and search(see figure [c]) transactions. <b>home</b> button
-        will take the user to master menu page(see figure [b]). <b>search</b> botton will help to search transaction by 
-        voucher reference number, date and narration(see figure [d]).
-   </string>
+        \n	This page allows the user to enter and search transactions(see below figure [a] and [c])) . 
+	  <b>Home</b> button will take the user to the master menu page(see figure [b]). 
+	  <b>Search</b> botton will help to locate a transaction by the voucher reference number, date and narration(see figure [d]).
+    </string>
    
     <string name="help_para9">
         \n<b>9.Reports Menu:</b>
-        \nThis page provides list of all report types. After the user clicks on report
-        type he will get an alert dialog which will allow him to enter necessary details to view
-        the report. We are done with ledger(see figure [e]) and trial balance(see figure [f]).
-   </string>
+        \n	This page provides a list of all report types. After the user clicks on <b>Report</b> type,
+	  he will get an alert dialog, which will allow him to enter necessary details in order to view the report. 
+	  For Example: <b>Ledger</b>(see figure [e]) , <b>Trial Balance</b>(see figure [f]) and so on.
+     </string>
 
     
     
     <string name="about_para">
-        \n<b>GNUKhata</b> is a Free Accounting Software provides 
-        students and accountants to carry on there work while on the go.
+        \n<b>Aakash Business Tool</b> is a Free Accounting Software that provides 
+        students and accountants to carry on their work while on the go.
         Designed and developed at IIT Bombay. 
         \n
         \nVersion: <b>0.9</b> (beta)
         \n
-        \nRepository: <b>https://github.com/androportal/gkaakash</b> 
+        \nRepository: <b>https://github.com/androportal/gkAakash</b> 
         \n
         \nLicense:
         GNU GPL, version-3, 29 June 2007
         \nhttp://www.gnu.org/licenses/gpl-3.0.txt
         \nCopyright © 2012, IIT Bombay 
    </string>
-    
-    
-    <string name="Rs">\u20B9</string>  
+   <string name="Rs">\u20B9</string>  
     </resources>

@@ -38,7 +38,11 @@ public class MainActivity extends Activity {
     int Help = Menu.FIRST;
     AlertDialog help_dialog;
     int help_option_menu_flag = 0;
-    
+    static Boolean searchFlag=false;
+    static Boolean nameflag=false;
+    static boolean reportmenuflag;
+    static boolean editDetails=false;
+
      public boolean onCreateOptionsMenu(Menu menu) {
             menu.add(group1Id, Help, Help, "Help");
           
@@ -177,6 +181,7 @@ public class MainActivity extends Activity {
         create_org.setOnClickListener(new OnClickListener() {
         
         public void onClick(View arg0) {
+        		reportmenuflag = true;
                 //To pass on the activity to the next page
                 Intent intent = new Intent(context, createOrg.class);
                 startActivity(intent);
@@ -186,6 +191,7 @@ public class MainActivity extends Activity {
         select_org.setOnClickListener(new OnClickListener() {
         
         public void onClick(View arg0) {
+        	reportmenuflag = false;
             // check existing organisation name list is null
         	try{
             // call the getOrganisationName method from startup

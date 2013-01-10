@@ -235,7 +235,7 @@
 		    android:id="@+id/tvMVATnum"
 		    android:layout_width="0dip"
 		    android:layout_weight="1"
-		    android:text="MVAT no."
+		    android:text="VAT no."
 		    android:textColor="#FFFFFF"
 		    android:textSize="20dp"
 		    android:visibility="invisible" />
@@ -244,7 +244,7 @@
 		    android:id="@+id/etMVATnum"
 		    android:layout_width="0dip"
 			android:layout_weight="2"
-			android:hint="Tap to enter MVAT number"
+			android:hint="Tap to enter VAT number"
 			android:visibility="invisible"/>
 		</TableRow>
 		

@@ -12,27 +12,40 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class transaction_tab extends TabActivity{
+public class transaction_tab extends TabActivity {
 	
-	TextView tab1 = null;
-	TextView tab2 = null;
+	static TextView tab1 = null;
+	static TextView tab2 = null;
 	AlertDialog dialog;
 	final Context context = this;
-	
+	Boolean nameflag;
+    String name;
+    Boolean edittabflag=false;
+    static TabHost tabHost;
+    static String tabname;
+    EditText etRefNumber;
 	  public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 	        setContentView(R.layout.tab);
-	        
+	        //tab name flag
+	        nameflag=MainActivity.nameflag;
+	        name=SearchVoucher.name;
+	        //Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+	       
+	        edittabflag=createVoucher.edittabflag;
 	      //customizing title bar
 	        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.voucher_title);
 	        final TextView label = (TextView) findViewById(R.id.tvVoucherTitle);
 	        String vouchertypeflag = voucherMenu.vouchertypeflag;
-	        label.setText("Menu >> Transaction >>" + vouchertypeflag);
+	        label.setText("Menu >> Transaction >> " + vouchertypeflag);
 	        final Button home = (Button) findViewById(R.id.btnhome);
 	        home.setOnClickListener(new OnClickListener() {
 
@@ -46,7 +59,7 @@ public class transaction_tab extends TabActivity{
 	        	
 	        });
 	        
-	        final TabHost tabHost = getTabHost();
+	        tabHost = getTabHost();
 	        //creating TabSpec for create voucher
 	        TabSpec createspec = tabHost.newTabSpec("tab1");
 	        tab1 = new TextView(this);
@@ -55,9 +68,14 @@ public class transaction_tab extends TabActivity{
 	        tab1.setTextSize(18.0f);
 	        tab1.setHeight(50);
 	        tab1.setTextColor(Color.WHITE);
-	        tab1.setText("Create voucher");
-	        createspec.setIndicator(tab1);//assigning TextView to tab Indicator
 	        
+	        if(nameflag==true){//setting tab name while editing and cloning
+	        	tab1.setText(name); 
+	        }else {//setting tab name while creating account
+	        	tab1.setText("Create voucher");
+	        	tabname=(String) tab1.getText();
+			} 
+	        createspec.setIndicator(tab1);//assigning TextView to tab Indicator
 	        Intent create = new Intent(this, createVoucher.class);
 	        create.putExtra("flag", vouchertypeflag);
 	        createspec.setContent(create);
@@ -78,8 +96,6 @@ public class transaction_tab extends TabActivity{
 	        editspec.setContent(edit);
 	        tabHost.addTab(editspec); // Adding edit tab
 	        tabHost.setCurrentTab(0);//setting tab1 on load
-	       
-	        
-	       
 	 }
+	
 }

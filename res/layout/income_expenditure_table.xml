@@ -1,19 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-
-
-   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   <LinearLayout 
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/layout_root1"
+            android:id="@+id/layout_root"
             android:layout_weight="50"
-            android:background="@drawable/dark_gray_background" >
+           >
       
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/llperiod"
+            android:id="@+id/layout_root"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
@@ -22,12 +19,11 @@
              android:id="@+id/tvTfinancialFromDate"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-              android:layout_gravity="start"
+             android:layout_gravity="start"
              android:layout_weight="50"
              android:gravity="center_horizontal"
              android:textColor="#FFFFFF"
-             android:textSize="18dp"
-             />
+             android:textSize="18dp" />
             
           <TextView
               android:id="@+id/tvTfinancialToDate"
@@ -38,63 +34,82 @@
               android:gravity="right"
               android:paddingRight="10dp"
               android:textColor="#FFFFFF"
-              android:textSize="18dp"/>
+              android:textSize="18dp" />
           
         </LinearLayout>
   
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollIncome"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dark_gray_background">
          <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/content"
+            android:id="@+id/layout_root"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:paddingBottom="30dp" >
-            <HorizontalScrollView 
-                android:layout_height="fill_parent"
-            android:layout_width="fill_parent"
+            android:padding="10dp" >
+             <HorizontalScrollView 
+              android:layout_height="fill_parent"
+          android:layout_width="fill_parent"
             android:fillViewport="true">
-                
-                <LinearLayout 
-                    android:layout_height="fill_parent"
-            		android:layout_width="fill_parent"
-            		android:orientation="vertical">
-            		
-                    <TableLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:stretchColumns="0,1,2,3,4,5"
-                    android:id="@+id/floating_heading_table"
-                    android:background="#696565" 
-                    android:visibility="invisible">
-                </TableLayout>
-                
               <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ScrollTrial"
-            android:fillViewport="true">
-            
-                <TableLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:stretchColumns="0,1,2,3,4,5"
-                    android:id="@+id/maintable"
-                    android:background="#696565">
-                </TableLayout>
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:fillViewport="true"
+           android:scrollbarFadeDuration="0"
+           android:scrollbarAlwaysDrawVerticalTrack="true" 
+           android:scrollbarAlwaysDrawHorizontalTrack="true">
+           
+            <LinearLayout
+       	android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+           
+           <LinearLayout
+               android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           
+               <TableLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:stretchColumns=",1,2"
+           android:id="@+id/maintable1"
+           android:background="#696565"
+           android:layout_weight="1" />
+              
+           <!-- just add space line -->
+   	<Space
+   	   android:layout_width="2dip"
+       android:layout_height="2dip"/>
+   	
+               <TableLayout
+           android:id="@+id/maintable2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:stretchColumns=",1,2"
+           android:background="#696565"
+           android:layout_weight="1" />
+               
+                </LinearLayout>
+                
+                </LinearLayout>
             </ScrollView>
-       		</LinearLayout>
             </HorizontalScrollView>
+         </LinearLayout>  
+        </ScrollView>
+        
+    </LinearLayout>
+    
             
-         </LinearLayout>
-       
-         </LinearLayout>
  	<!-- floating button at top|left
 <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentLeft="true" 
         android:layout_marginTop="15dp"
         android:layout_marginLeft="15dp"
         android:text="Button" />
@@ -194,30 +209,4 @@
         </LinearLayout>
   </ScrollView>
 </LinearLayout>
-       
-        <LinearLayout
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/layout_root"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:paddingRight="10dp"
-              android:paddingBottom="10dp" 
-              android:layout_alignParentBottom="true"
-              android:layout_alignParentRight="true">
-             
-               <TextView
-              android:id="@+id/tvdifference"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="left"
-              android:text="Difference:"
-              android:layout_weight="80"
-              android:gravity="center|right"
-              android:textColor="#FFFFFF"
-              android:textSize="18dp" />
-             
-          </LinearLayout>
-             
-        
-   
-</RelativeLayout>
+ </RelativeLayout>
