@@ -10,12 +10,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Set To-Date"
+            android:text="To"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
         <DatePicker
-            android:id="@+id/dpsetT0date"
+            android:id="@+id/dpProjectStatementSetT0date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
@@ -34,7 +34,6 @@
             android:layout_width="254dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:entries="@array/BalanceSheet_arrays"
-            android:prompt="@string/BalanceSheet_prompt" />
+            android:prompt="@string/projectName_prompt" />
 
     </LinearLayout>

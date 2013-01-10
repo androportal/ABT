@@ -25,19 +25,38 @@
            android:paddingRight="20dp"
            android:background="#60AFFE"/>
     
-<EditText
-    android:id="@+id/etSearch"
+    
+    <LinearLayout 
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:hint="Search">
+	android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="10dp"
+	android:paddingRight="10dp">
+     
+        <Spinner
+        android:id="@+id/sSearchAccountBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_weight="1"
+        android:entries="@array/searchAccountBy_arrays"
+        android:prompt="@string/searchAccountBy_prompt" />
+        
+		<EditText
+		    android:id="@+id/etSearch"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:hint="Search by name"
+		    android:layout_weight="2"/>
 
-</EditText>
-
+	</LinearLayout>
+	
+    
 <ListView 
     android:id="@+id/ltAccname"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="fill_parent"
+	android:paddingLeft="10dp"
+	android:paddingRight="10dp">
 </ListView>
 </LinearLayout>
-
 

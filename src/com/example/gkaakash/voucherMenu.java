@@ -1,7 +1,7 @@
 package com.example.gkaakash;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List; 
 
 import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Startup;
@@ -22,7 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class voucherMenu extends ListActivity {
 	//adding voucher list items
-	String[] voucherType = new String[] { "Contra","Journal","Payment","Receipt","Credit Note","Debit Note","Sales","Sales Return","Purchase","Purchase Return" };
+	String[] voucherType = new String[] { "Contra","Journal","Payment","Receipt","Credit note","Debit note","Sales","Sales return","Purchase","Purchase return" };
 	final Context context = this;
 	static String vouchertypeflag;
 	static Object[] voucherAccounts;
@@ -31,13 +31,13 @@ public class voucherMenu extends ListActivity {
 	static List<String> Accountlist;
 	static ArrayList<String> DrAccountlist;
 	static ArrayList<String> CrAccountlist;
-	
+	static boolean flag;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		transaction = new Transaction();
        	client_id= Startup.getClient_id();
-		
+		flag = true;
 		//calling transactions.xml page
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.transactions,voucherType));
 		
@@ -64,6 +64,7 @@ public class voucherMenu extends ListActivity {
 						toastValidationMessage();
 					}
 					else{
+						MainActivity.searchFlag=false;
 						Intent intent = new Intent(context, transaction_tab.class);
 						// To pass on the value to the next page
 						startActivity(intent);
@@ -296,11 +297,11 @@ public class voucherMenu extends ListActivity {
 			
 			voucherAccounts = (Object[]) transaction.getPaymentAccounts(DrCrFlag,client_id);
 		}
-		else if("Debit Note".equals(vouchertypeflag)){
+		else if("Debit Note".equalsIgnoreCase(vouchertypeflag)){
 			
 			voucherAccounts = (Object[]) transaction.getDebitNoteAccounts(DrCrFlag,client_id);
 		}
-		else if("Credit Note".equals(vouchertypeflag)){
+		else if("Credit Note".equalsIgnoreCase(vouchertypeflag)){
 			
 			voucherAccounts = (Object[]) transaction.getCreditNoteAccounts(DrCrFlag,client_id);
 		}
@@ -312,11 +313,11 @@ public class voucherMenu extends ListActivity {
 			
 			voucherAccounts = (Object[]) transaction.getPurchaseAccounts(DrCrFlag,client_id);
 		}
-		else if("Sales Return".equals(vouchertypeflag)){
+		else if("Sales Return".equalsIgnoreCase(vouchertypeflag)){
 			
 			voucherAccounts = (Object[]) transaction.getSalesReturnAccounts(DrCrFlag,client_id);
 		}
-		else if("Purchase Return".equals(vouchertypeflag)){
+		else if("Purchase Return".equalsIgnoreCase(vouchertypeflag)){
 			
 			voucherAccounts = (Object[]) transaction.getPurchaseReturnAccounts(DrCrFlag,client_id);
 		}

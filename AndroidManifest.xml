@@ -2,13 +2,11 @@
     package="com.example.gkaakash"
     android:versionCode="1"
     android:versionName="1.0" >
-
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
-
     <uses-permission android:name="android.permission.INTERNET" />
-    
+     
     <application
         android:icon="@drawable/logo"
         android:label="@string/app_name"
@@ -57,7 +55,7 @@
         </activity>
          <activity 
              android:theme="@style/CustomTheme"
-            android:label="Voucher Types"
+            android:label="Voucher types"
             android:name=".SearchVoucher">
         </activity>
         <activity
@@ -65,7 +63,7 @@
             android:name=".voucherMenu" >
         </activity>
          <activity
-            android:theme="@style/mytheme1"
+            android:theme="@style/CustomTheme"
             android:label=""
             android:name=".edit_account" >
             
@@ -86,7 +84,7 @@
        </activity>
         <activity
             
-      		 android:label="Select Organisation"
+      		 android:label="Select organisation"
             android:name=".selectOrg" >
        </activity> 
        
@@ -102,9 +100,38 @@
        </activity> 
        
          <activity
-      		 android:label="Trial Balance"
+      		 android:label="Trial balance"
             android:name=".trialBalance" >
        </activity> 
+       
+         <activity
+      		android:label="Project statement"
+      		android:name=".projectStatement" >
+       </activity>
+       
+         <activity
+      		android:label="Profit and Loss"
+      		android:name=".incomeExpenditure" >
+       </activity>
+       
+         <activity
+      		android:label="Cash flow"
+      		android:name=".cashFlow" >
+       </activity>
+       
+         <activity
+      		android:label="Bank reconciliation"
+      		android:name=".bankReconciliation" >
+       </activity>
+       <activity
+      		android:label="Balance Sheet"
+      		android:name=".balanceSheet" >
+       </activity>
+       
+       <activity
+      		android:label="Add project"
+      		android:name=".addProject" >
+       </activity>
     </application>
     
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="@drawable/black_main_page">
+    android:background="@drawable/main_page">
 
     <LinearLayout
             android:layout_width="wrap_content"
@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="On Aakash"
+            android:text=""
             android:textColor="#FFFFFF" />
 
     </LinearLayout>
