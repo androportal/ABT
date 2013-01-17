@@ -53,6 +53,9 @@ public class createOrg extends MainActivity {
 		setContentView(R.layout.create_org);	
 		client_id= Startup.getClient_id();
 		
+		MainActivity.no_dailog=true;
+		MainActivity.help_dialog.dismiss();
+		
 		//for two digit format date for dd and mm
 		mFormat= new DecimalFormat("00");
 		mFormat.setRoundingMode(RoundingMode.DOWN);
@@ -211,7 +214,7 @@ public class createOrg extends MainActivity {
 								toDay =  Day;
 								String strDateTime = mFormat.format(Double.valueOf(toDay)) + "-" 
 								 + (mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(toMonth))))+ 1))) + "-" 
-								 + toYear;
+								 + toYear; 
 					    		tvDisplayToDate.setText(strDateTime);
 					    	}
 					    	else{

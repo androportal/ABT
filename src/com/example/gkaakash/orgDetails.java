@@ -133,11 +133,10 @@ import android.widget.Toast;
 			if(editDetailsflag==true){
 				detailsList_foredit=menu.accdetailsList;
 				System.out.println("cuming from menu page:"+menu.orgtype);
-				
+
 				orgtype=detailsList_foredit.get(1);
-                
-                System.out.println("OT"+orgtype);
-                
+				System.out.println("OT"+orgtype);
+
 				orgcode=detailsList_foredit.get(0);
 				System.out.println("org code:"+orgcode);
 				etGetAddr.setText(detailsList_foredit.get(3));
@@ -167,7 +166,7 @@ import android.widget.Toast;
 				getSelectedOrgType=createOrg.orgTypeFlag;
 				}
 		        else {
-		        getSelectedOrgType=orgtype;
+			    getSelectedOrgType=orgtype; 
 		        }
 			if("NGO".equals(getSelectedOrgType))
 			{
