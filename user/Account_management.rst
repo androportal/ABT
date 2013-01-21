@@ -33,14 +33,13 @@ Search/Edit account
 	   :name: ABT main page
 	   :align: center
 
-  #. If ``manual account code`` was checked in Preferences, there will be ``two`` options ie. Search by account name and code.
-     Otherwise,search by account name.
+  #. If ``manual account code`` was checked in Preferences, there will be ``two`` options ie. Search by account name and code. Otherwise,search by account name.
 
   #. To Edit/Delete select account name from the list.
 
-	- Edit account
+      - Edit account
 
-		+ It will display complete information about the respective account name as shown in fig..
+		+ It will display complete information about respective account as shown in fig..
 
 			.. image:: images/edit_account.png
 			   :name: ABT main page
@@ -50,10 +49,9 @@ Search/Edit account
 
 		+ Press ``Save`` to save the changes.
 	  
- 	  (Note: Opening balance field is not editable, if account comes under group ``Direct Income, ``Direct Expense``
-	  , ``Indirect Income and ``Indirect Expense`` due to its ``zero`` opening balance)
+ 	    (**Note**: Opening balance field is not editable, if account comes under group ``Direct Income, ``Direct Expense``, ``Indirect Income and ``Indirect Expense`` due to its ``zero`` opening balance)
 	
-	- Delete account
+      - Delete account
 
 		+ Press ``Delete`` to delete the transaction.
 

@@ -6,12 +6,7 @@ User Guide
    :numbered: 
    
    about
-   intro 
-   Master_menu
-   Account_management
-   Recording_transations
-   Reports  
-   Setting_up_preferences
-   Bank_reconciliation
+   how_to_operate
+   issues
    
    
