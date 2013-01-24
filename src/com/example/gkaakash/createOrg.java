@@ -50,11 +50,12 @@ public class createOrg extends MainActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//Calling create_org.xml
-		setContentView(R.layout.create_org);	
+		setContentView(R.layout.create_org);
 		client_id= Startup.getClient_id();
 		
-		MainActivity.no_dailog=true;
-		MainActivity.help_dialog.dismiss();
+		
+		MainActivity.no_dailog = true; //comment this line if running this app on emulator
+		MainActivity.help_dialog.dismiss(); //comment this line if running this app on emulator
 		
 		//for two digit format date for dd and mm
 		mFormat= new DecimalFormat("00");
@@ -214,7 +215,7 @@ public class createOrg extends MainActivity {
 								toDay =  Day;
 								String strDateTime = mFormat.format(Double.valueOf(toDay)) + "-" 
 								 + (mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(toMonth))))+ 1))) + "-" 
-								 + toYear; 
+								 + toYear;
 					    		tvDisplayToDate.setText(strDateTime);
 					    	}
 					    	else{

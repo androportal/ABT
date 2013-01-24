@@ -81,13 +81,14 @@ public class MainActivity extends Activity {
     	* help_option_menu_flag is set to 1
     	*/
     	switch (item.getItemId()) {
-        case 1:
+        case 1: 
         	//Toast.makeText(context, "help_flag_option is set to 1", Toast.LENGTH_SHORT).show();
             help_option_menu_flag = 1;
+            //if running this app on emulator, comment the below line
             help_popup();
         }
         return super.onOptionsItemSelected(item);
-    }
+    }//if running this app on emulator, comment the below line
           
          
     @Override
@@ -119,7 +120,11 @@ public class MainActivity extends Activity {
         	System.out.println("NOT copying files from asset");
         }
        if(no_dailog==false){
-       	 help_popup(); 
+    	   //if running this app on emulator, comment the below line
+    	   help_popup(); 
+       }
+       else{
+    	   help_dialog.dismiss();
        }
        
     }
@@ -414,7 +419,7 @@ public class MainActivity extends Activity {
         	 * below link is within IITB
         	 **/
     	
-            String url = "http://10.102.152.27/installer/gkaakash.img.tar.gz";
+            String url = "http://10.102.152.27/downloads/gkaakash.img.tar.gz";
             new DownloadFileAsync().execute(url);
         }    
         

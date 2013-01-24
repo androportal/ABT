@@ -3,7 +3,7 @@
     <string name="app_name">Aakash Business Tool</string>
     <string name="hello_world">Welcome to Aakash Business Tool!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">Aakash Business Tool</string>
+    <string name="title_activity_main">ABT</string>
     <string name="createOrgButton"> Create  new  organisation </string>
     <string name="selectOrgButton">Select existing organisation</string>
     <string name="orgName">Enter organisation name</string>
@@ -140,7 +140,7 @@
         \n
         \nVersion: <b>0.9</b> (beta)
         \n
-        \nRepository: <b>https://github.com/androportal/gkAakash</b> 
+        \nRepository: <b>https://github.com/androportal/ABT</b> 
         \n
         \nLicense:
         GNU GPL, version-3, 29 June 2007

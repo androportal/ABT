@@ -332,7 +332,6 @@ public class menu extends ListActivity{
                     // builder
                     AlertDialog.Builder builder = new AlertDialog.Builder(menu.this);
                     builder.setView(layout);
-                    builder.setIcon(R.drawable.logo);
                     builder.setTitle("Help");
                     CheckBox cbHelp = (CheckBox)layout.findViewById(R.id.cbHelp);
                     cbHelp.setVisibility(CheckBox.GONE);
@@ -358,7 +357,6 @@ public class menu extends ListActivity{
                             AlertDialog.Builder builder = new AlertDialog.Builder(
                                     context);
                             builder.setTitle("Aakash Business Tool");
-                            builder.setIcon(R.drawable.logo);
                             builder.setMessage( s );
                             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
