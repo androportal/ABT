@@ -1,8 +1,8 @@
-==============================
-Documentation for **gkAakash**
-==============================
+==========================
+Documentation for **ABT**
+==========================
 
-This `branch` contains user's manual and reference for ``gkAakash``
+This `branch` contains user's manual and reference for ``ABT``
 in `sphinx <http://sphinx.pocoo.org/>`_
 
 
@@ -13,7 +13,7 @@ clone the repo using
 
 ::
 
-   git clone -b docs https://github.com/androportal/gkAakash.git
+   git clone -b docs https://github.com/androportal/ABT.git
 
 
 to generate all html in one go, type:

@@ -1,9 +1,13 @@
 %%%%%%%%%%%%%%%
 Developer Guide
 %%%%%%%%%%%%%%%
+**Includes Three Parts**
 
 .. toctree::
    :numbered: 
    
-   setting_android_environment
-   snippet
+   
+   chroot_setup
+   backend_server
+   frontend_javaclient
+  
