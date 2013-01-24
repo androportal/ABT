@@ -16,8 +16,11 @@ clone the repo using
    git clone -b docs https://github.com/androportal/ABT.git
 
 
-to generate all html in one go, type:
+to generate all html in one go,  type:
 
+::
+   cd ABT
+   
 ::
 
    make html

@@ -12,15 +12,18 @@ About
 =====
 
 	This is the backbone of **Aakash Business Tool**.
+	
 	**Aakash Business Tool core(ABTcore)** provides a Back-end to ABT 
-	which is derived from core_engine of abt.
+	which is derived from core_engine of `GNUKhata <http://www.gnukhata.org/>`_.
+	
 	This provides all the accounting functionality completely written in `Python
-	<http://docs.python.org/2/tutorial/>`_ language,and used twisted
-	liabrary to implement xmlrpc server and to access xmlrpc functions and
+	<http://docs.python.org/2/tutorial/>`_ language.
+	and used twisted liabrary to implement xmlrpc server and to access xmlrpc functions and
 	android-xmlrpc client access liabrary at client side and used Sqlite3
 	database server to maintain data.
+	
 	We have completely dropped an idea of ``stored procedures``, 
-	instead we have implemented an Object relational mapping using SQLAlchemy.
+	instead we have implemented an ``Object Relational Mapping`` using SQLAlchemy.
 	
 	
 Installation of Dependencies:
