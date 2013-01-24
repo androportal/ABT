@@ -29,15 +29,15 @@ Some features included in Aakash Business Tool:
   #. Bank Reconciliation
 
 
-gkAakashCore - a backend to Aakash Business Tool
+ABTcore - a backend to Aakash Business Tool
 -------------------------------------------------
 
-The entire backend has Python code base. `gkAakashCore
-<https://github.com/androportal/gkAakashCore>`_ provides a backend to
+The entire backend has Python code base. `ABTcore
+<https://github.com/androportal/ABTcore>`_ provides a backend to
 **Aakash Business Tool**. On Aakash tablet, it runs in a ``chroot``
 environment(your device need to be rooted for this!). More information
 can be found `here
-<https://github.com/androportal/gkAakashCore/blob/master/README.rst>`_
+<https://github.com/androportal/ABTcore/blob/master/README.rst>`_
 
 
 Usage 
@@ -49,13 +49,13 @@ Interface of Aakash Business Tool.
 User's can clone this repo by typing
 ::
 
-   git clone -b ics https://github.com/androportal/gkAakash.git
+   git clone -b ics https://github.com/androportal/ABT.git
 
 
 if you want to clone code for Android(2.2, API-8), type
 ::
 
-   git clone -b froyo https://github.com/androportal/gkAakash.git
+   git clone -b froyo https://github.com/androportal/ABT.git
 
 
 *note: this branch is obsolete*
@@ -92,11 +92,11 @@ After cloning the require branch, start eclipse
 Important note
 ~~~~~~~~~~~~~~
 
-- to test Aakash Business Tool on tablet
-- go to
-  ``gkAakash/src/com/gkaakash/coreconection/CoreConnection.java`` and
-  change the url from ``http://10.0.2.2:7081`` to
-  ``http://127.0.0.1:7081``
+To test Aakash Business Tool on emulator, go to
+	- ``gkAakash/src/com/gkaakash/coreconection/CoreConnection.java`` and change the url from ``http://127.0.0.1:7081`` to ``http://10.0.2.2:7081``
+	- ``gkAakash/src/com/example/gkaakash/MainActivity``, comment line no. 88 and 124
+	- ``gkAakash/src/com/example/gkaakash/createOrg``, comment line no. 57 and 58
+	- ``gkAakash/src/com/example/gkaakash/selectOrg``, comment line no. 43
 
 Documentation
 ~~~~~~~~~~~~~
@@ -106,7 +106,7 @@ can be found at
 
 ::
 
-   git clone -b docs https://github.com/androportal/gkAakash.git
+   git clone -b docs https://github.com/androportal/ABT.git
 
 please refer ``README.rst`` on how to generate html docs
 
