@@ -47,7 +47,7 @@
             android:layout_height="68dp"
             android:layout_gravity="right"
             android:layout_weight="1.81"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo_app" />
     </LinearLayout>
 
 </LinearLayout> 
