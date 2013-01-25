@@ -55,69 +55,69 @@ public class projectStatement extends Activity{
     ScrollView sv;
     
     public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+    	super.onCreate(savedInstanceState);
+    	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.project_statement_table);
         report = new Report();
-   client_id= Startup.getClient_id();
+        client_id= Startup.getClient_id();
    
-   reportmenuflag=MainActivity.reportmenuflag;
-   //customizing title bar
-   getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
+        reportmenuflag=MainActivity.reportmenuflag;
+        //customizing title bar
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
    
-   try {
-	   floating_heading_table = (TableLayout)findViewById(R.id.floating_heading_table);
-	   floating_heading_table.setVisibility(TableLayout.GONE);
+        try {
+        	floating_heading_table = (TableLayout)findViewById(R.id.floating_heading_table);
+        	floating_heading_table.setVisibility(TableLayout.GONE);
 	   
-   	/*
-     * get financial from and to date from startup page
-     */
-   String financialFromDate =Startup.getfinancialFromDate();
-   String financialToDate=Startup.getFinancialToDate();
-   ToDateString = reportMenu.givenToDateString;
+        	/*
+        	 * get financial from and to date from startup page
+        	 */
+        	String financialFromDate =Startup.getfinancialFromDate();
+        	String financialToDate=Startup.getFinancialToDate();
+        	ToDateString = reportMenu.givenToDateString;
    
-   String projectName = reportMenu.selectedProject;
+        	String projectName = reportMenu.selectedProject;
    
-   if(!projectName.equalsIgnoreCase("No Project")){
-   	TextView tvProjectName = (TextView) findViewById( R.id.tvProjectName );
-   	tvProjectName.setText("Project name: " +projectName);
-   }
-   /*
-    * set financial from date and to date in textview
-    */
-   TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
-   tvfinancialToDate.setText("Period : "+financialFromDate+" to "+ToDateString);
-   /*
-    * send params to controller report.getProjectStatementReport to get the result
-    */
-   Object[] params = new Object[]{projectName, financialFromDate,financialFromDate,ToDateString};
-       projectStatementResult = (Object[]) report.getProjectStatementReport(params,client_id);
+        	if(!projectName.equalsIgnoreCase("No Project")){
+        		TextView tvProjectName = (TextView) findViewById( R.id.tvProjectName );
+        		tvProjectName.setText("Project name: " +projectName);
+        	}
+        	/*
+        	 * set financial from date and to date in textview
+        	 */
+        	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
+        	tvfinancialToDate.setText("Period : "+financialFromDate+" to "+ToDateString);
+        	/*
+        	 * send params to controller report.getProjectStatementReport to get the result
+        	 */
+        	Object[] params = new Object[]{projectName, financialFromDate,financialFromDate,ToDateString};
+        	projectStatementResult = (Object[]) report.getProjectStatementReport(params,client_id);
       
-       projectStatementGrid = new ArrayList<ArrayList<String>>();
-       for(Object tb : projectStatementResult)
-       {
-           Object[] t = (Object[]) tb;
-           projectStatementResultList = new ArrayList<String>();
-           for(int i=0;i<t.length;i++){
+        	projectStatementGrid = new ArrayList<ArrayList<String>>();
+        	for(Object tb : projectStatementResult)
+        	{
+        		Object[] t = (Object[]) tb;
+        		projectStatementResultList = new ArrayList<String>();
+        		for(int i=0;i<t.length;i++){
            	
-               projectStatementResultList.add((String) t[i].toString());
+        			projectStatementResultList.add((String) t[i].toString());
               
-           }
-           projectStatementGrid.add(projectStatementResultList);
-       }
-        projectStatementTable = (TableLayout)findViewById(R.id.maintable);
-        addTable();
+        		}
+        		projectStatementGrid.add(projectStatementResultList);
+        	}
+        	projectStatementTable = (TableLayout)findViewById(R.id.maintable);
+        	addTable();
         
-        final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
-        tvReportTitle.setText("Menu >> "+"Report >> "+"Project Statement");
-        final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
-        btnSaveRecon.setVisibility(Button.GONE);
-        final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
-        btnScrollDown.setOnClickListener(new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-		if(updown==false){
-		                ScrollView sv = (ScrollView)findViewById(R.id.ScrollProjStatement);
+        	final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
+        	tvReportTitle.setText("Menu >> "+"Report >> "+"Project Statement");
+        	final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
+        	btnSaveRecon.setVisibility(Button.GONE);
+        	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+        	btnScrollDown.setOnClickListener(new OnClickListener() {
+        		@Override
+        		public void onClick(View v) {
+        			if(updown==false){
+        				ScrollView sv = (ScrollView)findViewById(R.id.ScrollProjStatement);
 		                sv.fullScroll(ScrollView.FOCUS_DOWN); 
 		                btnScrollDown.setBackgroundResource(R.drawable.up);
 		                updown=true;
@@ -127,15 +127,15 @@ public class projectStatement extends Activity{
 		                btnScrollDown.setBackgroundResource(R.drawable.down);
 		                updown=false;
 		           }
-		}
-        });
-        animated_dialog();
-        floatingHeader();
+        		}
+        	});
+        	animated_dialog();
+        	floatingHeader();
         
-   } catch (Exception e) {
-   	System.out.println("error:"+e);
-   	AlertDialog.Builder builder = new AlertDialog.Builder(projectStatement.this);
-          builder.setMessage("Please try again")
+        } catch (Exception e) {
+        	//System.out.println("error:"+e);
+        	AlertDialog.Builder builder = new AlertDialog.Builder(projectStatement.this);
+        	builder.setMessage("Please try again")
                   .setCancelable(false)
                   .setPositiveButton("Ok",
                           new DialogInterface.OnClickListener() {
@@ -144,12 +144,13 @@ public class projectStatement extends Activity{
                               }
                           });
                   
-          AlertDialog alert = builder.create();
-          alert.show();	}
+        	AlertDialog alert = builder.create();
+        	alert.show();	}
     }
    
+    
     private void floatingHeader() {
-    		projectStatementTable.setOnTouchListener(new OnTouchListener() {
+    	projectStatementTable.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -157,7 +158,7 @@ public class projectStatement extends Activity{
 				if(oneTouch == 1){
 					floating_heading_table.setVisibility(TableLayout.VISIBLE);
 					
-					System.out.println("we are in if");
+					//System.out.println("we are in if");
 					
 					int rowcount = projectStatementTable.getChildCount();    
 	                View row = projectStatementTable.getChildAt(rowcount-1);
@@ -202,11 +203,11 @@ public class projectStatement extends Activity{
 				return false;
 			}
 		});
-		
 	}
 
+    
 	private void animated_dialog() {
-    try {
+		try {
             final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
             Llalert.setVisibility(LinearLayout.GONE);
             animation2 = ObjectAnimator.ofFloat(Llalert,
@@ -229,9 +230,9 @@ public class projectStatement extends Activity{
                         if(reportmenuflag==true){
                             tvOrgNameAlert.setText(createOrg.organisationName);
                         }
-                           else {
-                               tvOrgNameAlert.setText(selectOrg.selectedOrgName);
-                           }
+                        else {
+                        	tvOrgNameAlert.setText(selectOrg.selectedOrgName);
+                        }
                         
                         
                         TextView tvOrgTypeAlert = (TextView)findViewById(R.id.tvOrgTypeAlert);
@@ -243,7 +244,7 @@ public class projectStatement extends Activity{
                         animation2 = ObjectAnimator.ofFloat(Llalert,
                                   "x", 300);
                         alertdialog=true;
-                     }else {
+                    }else {
                          
                         animation2 = ObjectAnimator.ofFloat(Llalert,
                                   "x", 1000);
@@ -258,9 +259,10 @@ public class projectStatement extends Activity{
         } catch (Exception e) {
             // TODO: handle exception
         }
-}
+	}
 
-private void addTable() {
+	
+	private void addTable() {
         addHeader();
         /** Create a TableRow dynamically **/
         for(int i=0;i<projectStatementGrid.size();i++){
@@ -279,27 +281,26 @@ private void addTable() {
                     label.setGravity(Gravity.RIGHT);
                     //For adding rupee symbol
                     if(columnValue.get(j).length() > 0){
-                      colValue=columnValue.get(j);
-                    if(!"".equals(colValue)){
-                    System.out.println("m in ");
-                    if(!"0.00".equals(colValue)){
-                    // for checking multiple \n and pattern matching
-                    Pattern pattern = Pattern.compile("\\n");
-                    Matcher matcher = pattern.matcher(colValue);
-                    boolean found = matcher.find();
-                    System.out.println("value:"+found);
-                    if(found==false){
-                    double amount = Double.parseDouble(colValue);	
-                    label.setText(formatter.format(amount));
-                    }else {
-                    label.setText(colValue);
-}
+                    	colValue=columnValue.get(j);
+                    	if(!"".equals(colValue)){
+                    		//System.out.println("m in ");
+                    		if(!"0.00".equals(colValue)){
+                    			// for checking multiple \n and pattern matching
+                    			Pattern pattern = Pattern.compile("\\n");
+                    			Matcher matcher = pattern.matcher(colValue);
+                    			boolean found = matcher.find();
+                    			//System.out.println("value:"+found);
+                    			if(found==false){
+                    				double amount = Double.parseDouble(colValue);	
+                    				label.setText(formatter.format(amount));
+                    			}else {
+                    				label.setText(colValue);
+                    			}
                    
-                    }else {
-                    label.setText(colValue);
-}
-                   
-                    }
+                    		}else {
+                    			label.setText(colValue);
+                    		}
+                    	}
                     }
                 }
                 else{
@@ -323,11 +324,12 @@ private void addTable() {
         difference.setText("Difference in Opening Balances : "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
     }
 
+	
     /*
      * add column heads to the table
      */
     void addHeader(){
-    //For adding rupee symbol
+    	//For adding rupee symbol
         final SpannableString rsSymbol = new SpannableString(projectStatement.this.getText(R.string.Rs)); 
         /** Create a TableRow dynamically **/
         String[] ColumnNameList = new String[] { "Sr. no.","Account name","Group name",rsSymbol+" Total debit",rsSymbol+" Total credit"};
@@ -341,7 +343,7 @@ private void addTable() {
             label.setGravity(Gravity.CENTER);
         }
        
-         // Add the TableRow to the TableLayout
+        // Add the TableRow to the TableLayout
         projectStatementTable.addView(tr, new TableLayout.LayoutParams(
                 LayoutParams.FILL_PARENT,
                 LayoutParams.MATCH_PARENT));

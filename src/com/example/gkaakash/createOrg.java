@@ -219,8 +219,7 @@ public class createOrg extends MainActivity {
 					    		tvDisplayToDate.setText(strDateTime);
 					    	}
 					    	else{
-					    		String message = "Please enter proper date";
-				        		toastValidationMessage(message);
+				        		toastValidationMessage("Please enter proper date");
 					    	}
 					} catch (Exception e) {
 						// TODO: handle exception
@@ -233,8 +232,9 @@ public class createOrg extends MainActivity {
         		dialog.show();
 			}	
 		});
-		
 	}
+	
+	
 	// method to take ItemSelectedListner interface as a argument  
 	void addListenerOnItem(){
 		//Attach a listener to the Organisation Type Spinner
@@ -254,6 +254,8 @@ public class createOrg extends MainActivity {
 		});// End of orgType.setOnItemSelectedListener
 	
 	}// End of addListenerOnItem()
+	
+	
 	private void addListeneronNextButton() {
 		final Context context = this;
 		//Request a reference to the button from the activity by calling “findViewById” 
@@ -301,12 +303,10 @@ public class createOrg extends MainActivity {
 				}
 		    	
 				if("".equals(organisationName)){
-					String message = "Please enter the organisation name";
-					toastValidationMessage(message);
+					toastValidationMessage("Please enter the organisation name");
 				}
 				else if(orgExistFlag == true){
-					String message = "Organisation name "+organisationName+" with this financial year exist";
-					toastValidationMessage(message);
+					toastValidationMessage("Organisation name "+organisationName+" with this financial year exist");
 					orgExistFlag = false;
 					}
 				else{
@@ -335,6 +335,7 @@ public class createOrg extends MainActivity {
 		}); //End of btnNext.setOnClickListener
  
 	}// End of addListeneronNextButton()
+	
 	
 	public void onBackPressed() {
 		 Intent intent = new Intent(getApplicationContext(), MainActivity.class);

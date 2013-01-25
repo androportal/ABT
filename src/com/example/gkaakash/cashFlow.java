@@ -57,119 +57,119 @@ public class cashFlow extends Activity{
     requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.cash_flow_table);
         report = new Report();
-   client_id= Startup.getClient_id();
+        client_id= Startup.getClient_id();
    
- //customizing title bar
-   getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
+        //customizing title bar
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
    
-   try {
-	   floating_heading_table1 = (TableLayout)findViewById(R.id.mainheadertable1);
-	   floating_heading_table2 = (TableLayout)findViewById(R.id.mainheadertable2);
+        try {
+        	floating_heading_table1 = (TableLayout)findViewById(R.id.mainheadertable1);
+        	floating_heading_table2 = (TableLayout)findViewById(R.id.mainheadertable2);
 	   
-	   floating_heading_table1.setVisibility(TableLayout.GONE);
-	   floating_heading_table2.setVisibility(TableLayout.GONE);
-	   sv = (ScrollView)findViewById(R.id.ScrollCashFlow);
+        	floating_heading_table1.setVisibility(TableLayout.GONE);
+        	floating_heading_table2.setVisibility(TableLayout.GONE);
+        	sv = (ScrollView)findViewById(R.id.ScrollCashFlow);
    	
-   	/*
-        * display the difference between total dr and total cr
-        */
-   	Netdifference = (TextView) findViewById(R.id.tvdifference);
+        	/*
+        	 * display the difference between total dr and total cr
+        	 */
+        	Netdifference = (TextView) findViewById(R.id.tvdifference);
     
-   	/*
-    * get reference of all table IDs
-    */
-   	cashFlowtable1 = (TableLayout)findViewById(R.id.maintable1);
-   	cashFlowtable2 = (TableLayout)findViewById(R.id.maintable2);
+        	/*
+        	 * get reference of all table IDs
+        	 */
+        	cashFlowtable1 = (TableLayout)findViewById(R.id.maintable1);
+        	cashFlowtable2 = (TableLayout)findViewById(R.id.maintable2);
    	
-   	/*
-     * get financial from and to date from startup page
-     */
-   String financialFromDate =Startup.getfinancialFromDate();
-   String financialToDate=Startup.getFinancialToDate();
-   String fromDateString = reportMenu.givenfromDateString;
-   String toDateString = reportMenu.givenToDateString;
+        	/*
+        	 * get financial from and to date from startup page
+        	 */
+        	String financialFromDate =Startup.getfinancialFromDate();
+        	String financialToDate=Startup.getFinancialToDate();
+        	String fromDateString = reportMenu.givenfromDateString;
+        	String toDateString = reportMenu.givenToDateString;
    
-   /*
-    * set financial from date and to date in textview
-    */
-   TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
-   TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
+        	/*
+        	 * set financial from date and to date in textview
+        	 */
+        	TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
+        	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
      
-   //tvfinancialFromDate.setText();
-   tvfinancialToDate.setText("Period : " +fromDateString+" to " +toDateString);
-   /*
-    * send params to controller report.getCashFlow to get the result
-    */
+        	//tvfinancialFromDate.setText();
+        	tvfinancialToDate.setText("Period : " +fromDateString+" to " +toDateString);
+        	/*
+        	 * send params to controller report.getCashFlow to get the result
+        	 */
  
-   Object[] params = new Object[]{financialFromDate,fromDateString,toDateString};
+        	Object[] params = new Object[]{financialFromDate,fromDateString,toDateString};
    
-   cashFlowResult = (Object[]) report.getCashFlow(params,client_id);
+        	cashFlowResult = (Object[]) report.getCashFlow(params,client_id);
    
- //cashFlowResult is 3 dimensional list 
-       int count = 0;
-       for(Object cf : cashFlowResult){
+        	//cashFlowResult is 3 dimensional list 
+        	int count = 0;
+        	for(Object cf : cashFlowResult){
        	
-           Object[] c = (Object[]) cf;
-           count = count + 1;
-           cashFlowGrid = new ArrayList<ArrayList<String>>();
-           if(count !=3)   
-           {
-           for(Object cf1 : c){
+        		Object[] c = (Object[]) cf;
+        		count = count + 1;
+        		cashFlowGrid = new ArrayList<ArrayList<String>>();
+        		if(count !=3)   
+        		{
+        			for(Object cf1 : c){
            	
-           	Object[] c1 = (Object[]) cf1;
-           	cashFlowResultList = new ArrayList<String>();
+        				Object[] c1 = (Object[]) cf1;
+        				cashFlowResultList = new ArrayList<String>();
            	
-           	for(int j=0;j<c1.length;j++){
+        				for(int j=0;j<c1.length;j++){
            	
-           	cashFlowResultList.add((String) c1[j].toString());
-           	}
+        					cashFlowResultList.add((String) c1[j].toString());
+        				}
            	
-           	cashFlowGrid.add(cashFlowResultList);
-           }
-           }
-          // System.out.println("i am cash flow "+count+cashFlowGrid);
+        				cashFlowGrid.add(cashFlowResultList);
+        			}
+        		}
+        		// System.out.println("i am cash flow "+count+cashFlowGrid);
           
-           if(count == 1){
-           	addTable(cashFlowtable1);
-           }
-           if(count == 2){
-           	addTable(cashFlowtable2);
-           }
-           if(count == 3)
-           {
-           	final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs)); 
-           	Netdifference.setText("Net Flow: "+rsSymbol+" "+c[0].toString());
+        		if(count == 1){
+        			addTable(cashFlowtable1);
+        		}
+        		if(count == 2){
+        			addTable(cashFlowtable2);
+        		}
+        		if(count == 3)
+        		{
+        			final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs)); 
+        			Netdifference.setText("Net Flow: "+rsSymbol+" "+c[0].toString());
            
-           }
-       }
+        		}
+        	}
   
-       final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
+        	final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
             tvReportTitle.setText("Menu >> "+"Report >> "+"Cash Flow");
             final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
             btnSaveRecon.setVisibility(Button.GONE);
             final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
             btnScrollDown.setOnClickListener(new OnClickListener() {
  	
- 	@Override
- 	public void onClick(View v) {
- 	if(updown==false){
-                    sv.fullScroll(ScrollView.FOCUS_DOWN); 
-                    btnScrollDown.setBackgroundResource(R.drawable.up);
-                    updown=true;
-               }else {
-                    sv.fullScroll(ScrollView.FOCUS_UP); 
-                    btnScrollDown.setBackgroundResource(R.drawable.down);
-                    updown=false;
-               }
- 	}
+            	@Override
+            	public void onClick(View v) {
+            		if(updown==false){
+            			sv.fullScroll(ScrollView.FOCUS_DOWN); 
+            			btnScrollDown.setBackgroundResource(R.drawable.up);
+            			updown=true;
+            		}else {
+            			sv.fullScroll(ScrollView.FOCUS_UP); 
+            			btnScrollDown.setBackgroundResource(R.drawable.down);
+            			updown=false;
+            		}
+            	}
             });
             animated_dialog();
             //floatingHeader();
-   } catch (Exception e) {
-   	System.out.println("I am an error"+e);
-   	AlertDialog.Builder builder = new AlertDialog.Builder(cashFlow.this);
+        } catch (Exception e) {
+        	//System.out.println("I am an error"+e);
+        	AlertDialog.Builder builder = new AlertDialog.Builder(cashFlow.this);
    	
-          builder.setMessage("Please try again")
+        	builder.setMessage("Please try again")
                   .setCancelable(false)
                   .setPositiveButton("Ok",
                           new DialogInterface.OnClickListener() {
@@ -178,118 +178,113 @@ public class cashFlow extends Activity{
                               }
                           });
                   
-          AlertDialog alert = builder.create();
-          alert.show();	}
-    }
+        	AlertDialog alert = builder.create();
+        	alert.show();	}
+    	}
    
  
-private void floatingHeader() {
-	cashFlowtable1.setOnTouchListener(new OnTouchListener() {
+    private void floatingHeader() {
+    	cashFlowtable1.setOnTouchListener(new OnTouchListener() {
 		
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
+    		@Override
+    		public boolean onTouch(View v, MotionEvent event) {
 			
-			if(oneTouch == 1){
-				floating_heading_table1.setVisibility(TableLayout.VISIBLE);
-				floating_heading_table2.setVisibility(TableLayout.VISIBLE);
+    			if(oneTouch == 1){
+    				floating_heading_table1.setVisibility(TableLayout.VISIBLE);
+    				floating_heading_table2.setVisibility(TableLayout.VISIBLE);
 				
-				System.out.println("we are in if");
+    				//System.out.println("we are in if");
 				
-				int rowcount = cashFlowtable1.getChildCount();    
-                View row = cashFlowtable1.getChildAt(rowcount-1);
+    				int rowcount = cashFlowtable1.getChildCount();    
+    				View row = cashFlowtable1.getChildAt(rowcount-1);
                 
-                int rowcount1 = cashFlowtable2.getChildCount();    
-                View row1 = cashFlowtable2.getChildAt(rowcount1-1);
+    				int rowcount1 = cashFlowtable2.getChildCount();    
+    				View row1 = cashFlowtable2.getChildAt(rowcount1-1);
 				
-				final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs));
-		        /** Create a TableRow dynamically **/
-		        String[] ColumnNameList = new String[] {"Account name",rsSymbol+" Amount(Inflow)"};
-		        String[] ColumnNameList1 = new String[] {"Account name",rsSymbol+" Amount(Outflow)"};
+    				final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs));
+    				/** Create a TableRow dynamically **/
+    				String[] ColumnNameList = new String[] {"Account name",rsSymbol+" Amount(Inflow)"};
+    				String[] ColumnNameList1 = new String[] {"Account name",rsSymbol+" Amount(Outflow)"};
 		        
+    				tr = new TableRow(cashFlow.this);
 		        
-		       
-		        tr = new TableRow(cashFlow.this);
-		        
-		        for(int k=0;k<ColumnNameList.length;k++){
-		            /** Creating a TextView to add to the row **/
-		            addRow(ColumnNameList[k]);
-		            label.setBackgroundColor(Color.parseColor("#348017"));
-		            label.setGravity(Gravity.CENTER);
+    				for(int k=0;k<ColumnNameList.length;k++){
+    					/** Creating a TextView to add to the row **/
+    					addRow(ColumnNameList[k]);
+    					label.setBackgroundColor(Color.parseColor("#348017"));
+    					label.setGravity(Gravity.CENTER);
 		            
-		            LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(k);
-		            label.setWidth(l.getWidth());
-	                System.out.println("size is"+l.getWidth());
-		            
-		        }
+    					LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(k);
+    					label.setWidth(l.getWidth());
+    					//System.out.println("size is"+l.getWidth());
+    				}
 		        
-		         // Add the TableRow to the TableLayout
-		        floating_heading_table1.addView(tr, new TableLayout.LayoutParams(
-		                LayoutParams.FILL_PARENT,
-		                LayoutParams.MATCH_PARENT));
+    				// Add the TableRow to the TableLayout
+    				floating_heading_table1.addView(tr, new TableLayout.LayoutParams(
+    						LayoutParams.FILL_PARENT,
+    						LayoutParams.MATCH_PARENT));
 				
-				//ledgertable.removeViewAt(0);
-		        /*
-				cashFlowtable1.getChildAt(0).setVisibility(View.INVISIBLE);
+    				//ledgertable.removeViewAt(0);
+    				/*
+					cashFlowtable1.getChildAt(0).setVisibility(View.INVISIBLE);
 				
-				View firstrow = cashFlowtable1.getChildAt(0);
-				for(int k=0;k<ColumnNameList.length;k++){
-					LinearLayout l = (LinearLayout)((ViewGroup) firstrow).getChildAt(k);
-					TextView tv = (TextView) l.getChildAt(0);
-		            tv.setHeight(0);
+					View firstrow = cashFlowtable1.getChildAt(0);
+					for(int k=0;k<ColumnNameList.length;k++){
+						LinearLayout l = (LinearLayout)((ViewGroup) firstrow).getChildAt(k);
+						TextView tv = (TextView) l.getChildAt(0);
+		            	tv.setHeight(0);
 		            
-		            l.getLayoutParams().height = 0;
-				}
-				*/
-				//ledgertable.getChildAt(0).setLayoutParams(new TableLayout.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, 0));
+		            	l.getLayoutParams().height = 0;
+					}
+    				 */
+    				//ledgertable.getChildAt(0).setLayoutParams(new TableLayout.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, 0));
 			
-				//================================================================
+    				//================================================================
 				
-				tr = new TableRow(cashFlow.this);
+    				tr = new TableRow(cashFlow.this);
 		        
-		        for(int k=0;k<ColumnNameList1.length;k++){
-		            /** Creating a TextView to add to the row **/
-		            addRow(ColumnNameList1[k]);
-		            label.setBackgroundColor(Color.parseColor("#348017"));
-		            label.setGravity(Gravity.CENTER);
-		            
-		            LinearLayout l = (LinearLayout)((ViewGroup) row1).getChildAt(k);
-		            label.setWidth(l.getWidth());
-	                System.out.println("size is"+l.getWidth());
-		            
-		        }
+    				for(int k=0;k<ColumnNameList1.length;k++){
+    					/** Creating a TextView to add to the row **/
+    					addRow(ColumnNameList1[k]);
+    					label.setBackgroundColor(Color.parseColor("#348017"));
+    					label.setGravity(Gravity.CENTER);
+    					
+    					LinearLayout l = (LinearLayout)((ViewGroup) row1).getChildAt(k);
+    					label.setWidth(l.getWidth());
+    					//System.out.println("size is"+l.getWidth());
+    				}
 		        
-		         // Add the TableRow to the TableLayout
-		        floating_heading_table2.addView(tr, new TableLayout.LayoutParams(
-		                LayoutParams.FILL_PARENT,
-		                LayoutParams.MATCH_PARENT));
+    				// Add the TableRow to the TableLayout
+    				floating_heading_table2.addView(tr, new TableLayout.LayoutParams(
+    						LayoutParams.FILL_PARENT,
+    						LayoutParams.MATCH_PARENT));
 				
-				//ledgertable.removeViewAt(0);
-		        /*
-				cashFlowtable2.getChildAt(0).setVisibility(View.INVISIBLE);
+    				//ledgertable.removeViewAt(0);
+    				/*
+					cashFlowtable2.getChildAt(0).setVisibility(View.INVISIBLE);
 				
-				View firstrow2 = cashFlowtable2.getChildAt(0);
-				for(int k=0;k<ColumnNameList1.length;k++){
-					LinearLayout l = (LinearLayout)((ViewGroup) firstrow2).getChildAt(k);
-					TextView tv = (TextView) l.getChildAt(0);
-		            tv.setHeight(0);
+					View firstrow2 = cashFlowtable2.getChildAt(0);
+					for(int k=0;k<ColumnNameList1.length;k++){
+						LinearLayout l = (LinearLayout)((ViewGroup) firstrow2).getChildAt(k);
+						TextView tv = (TextView) l.getChildAt(0);
+		            	tv.setHeight(0);
 		            
-		            l.getLayoutParams().height = 0;
+		            	l.getLayoutParams().height = 0;
 		            
-				}
-				*/
-			}
-			oneTouch ++;
+					}
+    				 */
+    			}
+    			oneTouch ++;
 			
-			return false;
-		}
-	});
-		
-	}
+    			return false;
+    		}
+    	});
+    }
 
 
-private void animated_dialog() {
-try {
-            final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
+    private void animated_dialog() {
+    	try {
+    		final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
             Llalert.setVisibility(LinearLayout.GONE);
             animation2 = ObjectAnimator.ofFloat(Llalert,
                     "x", 1000);
@@ -297,13 +292,12 @@ try {
             animation2.start();
             
             final Button btnOrgDetailsDialog = (Button) findViewById(R.id.btnOrgDetailsDialog);
-        
            
             btnOrgDetailsDialog.setOnClickListener(new OnClickListener() {
                 
                 @Override
                 public void onClick(View v) {
-                   btnOrgDetailsDialog.setAlpha(100);
+                	btnOrgDetailsDialog.setAlpha(100);
                     if(alertdialog==false){
                         Llalert.setVisibility(LinearLayout.VISIBLE);
                         TextView tvOrgNameAlert = (TextView)findViewById(R.id.tvOrgNameAlert);
@@ -311,9 +305,9 @@ try {
                         if(reportmenuflag==true){
                             tvOrgNameAlert.setText(createOrg.organisationName);
                         }
-                           else {
-                               tvOrgNameAlert.setText(selectOrg.selectedOrgName);
-                           }
+                        else {
+                        	tvOrgNameAlert.setText(selectOrg.selectedOrgName);
+                        }
                         
                         
                         TextView tvOrgTypeAlert = (TextView)findViewById(R.id.tvOrgTypeAlert);
@@ -325,9 +319,9 @@ try {
                         animation2 = ObjectAnimator.ofFloat(Llalert,
                                   "x", 300);
                         alertdialog=true;
-                     }else {
+                    }else {
                          
-                        animation2 = ObjectAnimator.ofFloat(Llalert,
+                    	animation2 = ObjectAnimator.ofFloat(Llalert,
                                   "x", 1000);
                         alertdialog=false;
                      }
@@ -335,15 +329,14 @@ try {
                      animation2.setDuration(1000);
                      animation2.start();
                 }
-                
             });
         } catch (Exception e) {
             // TODO: handle exception
         }
-}
+    }
 
 
-private void addTable(TableLayout tableID) {
+    private void addTable(TableLayout tableID) {
         /** Create a TableRow dynamically **/
         for(int i=0;i<cashFlowGrid.size();i++){
        
@@ -353,19 +346,18 @@ private void addTable(TableLayout tableID) {
             tr = new TableRow(this);
             if(columnValue.get(0).equalsIgnoreCase("Account Name")){
                	//for heading pass green color code
-             // System.out.println("iam in chaninging color "+columnValue.get(1));
+            	// System.out.println("iam in chaninging color "+columnValue.get(1));
                	setRowColorSymbolGravity(columnValue, Color.parseColor("#348017"), true);
-               }
-               else{
-               	//for remaining rows pass black color code
+            }
+            else{
+            	//for remaining rows pass black color code
                	setRowColorSymbolGravity(columnValue, Color.BLACK, false);
-               }
+            }
             // Add the TableRow to the TableLayout
             tableID.addView(tr, new TableLayout.LayoutParams(
                     LayoutParams.FILL_PARENT,
                     LayoutParams.WRAP_CONTENT));
         }
-        
     }  
     
     /*
@@ -374,76 +366,71 @@ private void addTable(TableLayout tableID) {
      * 3. set rupee symbol for amount
      */
     private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color, Boolean headerFlag) {
-    for(int j=0;j<columnValue.size();j++){
+    	for(int j=0;j<columnValue.size();j++){
             /** Creating a TextView to add to the row **/
-    if(headerFlag == true){
-    if(j == 1){ //amount column
-    //For adding rupee symbol
-       	final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs));
-    addRow(rsSymbol+" "+columnValue.get(j));   
-    }else{
-    addRow(columnValue.get(j));   
-    }
-   
-    }
-    else{
-    addRow(columnValue.get(j));   
-    }
-            label.setBackgroundColor(color);
+    		if(headerFlag == true){
+    			if(j == 1){ //amount column
+    				//For adding rupee symbol
+    				final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs));
+    				addRow(rsSymbol+" "+columnValue.get(j));   
+    			}else{
+    				addRow(columnValue.get(j));   
+    			}
+    		}
+    		else{
+    			addRow(columnValue.get(j));   
+    		}
+    		label.setBackgroundColor(color);
             String amount = columnValue.get(1).toString();
             String name = columnValue.get(0).toString();
-        if(j==1){//for amount coloumn
-        if(!amount.equalsIgnoreCase("Amount(Inflow)")&&!amount.equalsIgnoreCase("Amount(Outflow)"))
-        {
-   	label.setGravity(Gravity.RIGHT);
+            if(j==1){//for amount coloumn
+            	if(!amount.equalsIgnoreCase("Amount(Inflow)")&&!amount.equalsIgnoreCase("Amount(Outflow)"))
+            	{
+            		label.setGravity(Gravity.RIGHT);
                
-               if(columnValue.get(j).length() > 0){
-                 	DecimalFormat formatter = new DecimalFormat("#,##,##,###.00");
-               	String colValue;
-              ((TextView)label).setGravity(Gravity.RIGHT);
-           //For adding rupee symbol
-           	colValue=columnValue.get(j);
-           	if(!"".equals(colValue)){
-           	System.out.println("m in ");
-                    if(!"0.00".equals(colValue)){
-                    Pattern pattern = Pattern.compile("\\n");
-                    Matcher matcher = pattern.matcher(colValue);
-                    boolean found = matcher.find();
-                    System.out.println("value:"+found);
-                    if(found==false){
-                    double amount1 = Double.parseDouble(colValue);	
-                    System.out.println("A:"+amount1);
-                    ((TextView) label).setText(formatter.format(amount1));
-                    }else {
-                    ((TextView) label).setText(colValue);
-}
-                    }
-           	
-           }
-               }
-        }else 
-        {
-        label.setGravity(Gravity.CENTER);
+            		if(columnValue.get(j).length() > 0){
+            			DecimalFormat formatter = new DecimalFormat("#,##,##,###.00");
+            			String colValue;
+            			((TextView)label).setGravity(Gravity.RIGHT);
+            			//For adding rupee symbol
+            			colValue=columnValue.get(j);
+            			if(!"".equals(colValue)){
+            				//System.out.println("m in ");
+            				if(!"0.00".equals(colValue)){
+            					Pattern pattern = Pattern.compile("\\n");
+            					Matcher matcher = pattern.matcher(colValue);
+            					boolean found = matcher.find();
+            					//System.out.println("value:"+found);
+            					if(found==false){
+            						double amount1 = Double.parseDouble(colValue);	
+            						//System.out.println("A:"+amount1);
+            						((TextView) label).setText(formatter.format(amount1));
+            					}else {
+            						((TextView) label).setText(colValue);
+            					}
+            				}
+            			}
+            		}
+            	}else 
+            	{
+            		label.setGravity(Gravity.CENTER);
               
-        }
+            	}
             }
             else{
-            if(!name.equalsIgnoreCase("Total"))
-            {
-            label.setGravity(Gravity.CENTER);
+            	if(!name.equalsIgnoreCase("Total"))
+            	{
+            		label.setGravity(Gravity.CENTER);
            
-            }else{
+            	}else{
              
-            label.setGravity(Gravity.RIGHT);
+            		label.setGravity(Gravity.RIGHT);
+            	}
             }
-               
-            }
-   
-            
         }
-}
+    }
 
-/*
+    /*
      * this function add the value to the row
      */
     void addRow(String param){

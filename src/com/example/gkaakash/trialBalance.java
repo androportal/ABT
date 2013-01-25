@@ -65,67 +65,67 @@ public class trialBalance extends Activity{
 	    client_id= Startup.getClient_id();
 	    reportmenuflag = MainActivity.reportmenuflag;
 	    //customizing title bar
-	   getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
+	    getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
 	   
-	   try {
-		   floating_heading_table = (TableLayout)findViewById(R.id.floating_heading_table);
-    	   floating_heading_table.setVisibility(TableLayout.GONE);
-    	   sv = (ScrollView)findViewById(R.id.ScrollTrial);
+	    try {
+	    	floating_heading_table = (TableLayout)findViewById(R.id.floating_heading_table);
+	    	floating_heading_table.setVisibility(TableLayout.GONE);
+	    	sv = (ScrollView)findViewById(R.id.ScrollTrial);
 		   
 		   
-	   	/*
-	     * get financial from and to date from startup page
-	     */
-		   String financialFromDate =Startup.getfinancialFromDate();
-		   String financialToDate=Startup.getFinancialToDate();
-		   trialToDateString = reportMenu.givenToDateString;
-		  // String trialFromoDateString = reportMenu.givenfromDateString;
-		   trialbalancetype=reportMenu.trialbalancetype;
-		   /*
+	    	/*
+	    	 * get financial from and to date from startup page
+	    	 */
+	    	String financialFromDate =Startup.getfinancialFromDate();
+	    	String financialToDate=Startup.getFinancialToDate();
+	    	trialToDateString = reportMenu.givenToDateString;
+	    	// String trialFromoDateString = reportMenu.givenfromDateString;
+	    	trialbalancetype=reportMenu.trialbalancetype;
+	    	/*
 		    * set financial from date and to date in textview
 		    */
-		   TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
-		   TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
-		     
-		   //tvfinancialFromDate.setText("Financial from : " +financialFromDate);
-		   //tvfinancialToDate.setText("Financial to : " +trialToDateString);
-		   tvfinancialToDate.setText("Period : "+financialFromDate+" to "+trialToDateString);   
-		   /*
+	    	TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
+	    	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
+		   
+	    	//tvfinancialFromDate.setText("Financial from : " +financialFromDate);
+	    	//tvfinancialToDate.setText("Financial to : " +trialToDateString);
+	    	tvfinancialToDate.setText("Period : "+financialFromDate+" to "+trialToDateString);   
+	    	/*
 		    * send params to controller report.getTrialBalance to get the result
 		    */
 		 
-		   Object[] params = new Object[]{financialFromDate,financialFromDate,trialToDateString};
-		   //System.out.println("Trial Balance Type: "+trialbalancetype);
-		   if("Net Trial Balance".equals(trialbalancetype)){
-			   trialBalanceResult = (Object[]) report.getTrialBalance(params,client_id);
-		   }else if ("Gross Trial Balance".equals(trialbalancetype)) {
-			   trialBalanceResult = (Object[]) report.getGrossTrialBalance(params,client_id);
-		   }else if ("Extended Trial Balance".equals(trialbalancetype)) {
-			   trialBalanceResult = (Object[]) report.getExtendedTrialBalance(params,client_id);
-		   }
+	    	Object[] params = new Object[]{financialFromDate,financialFromDate,trialToDateString};
+	    	//System.out.println("Trial Balance Type: "+trialbalancetype);
+	    	if("Net Trial Balance".equals(trialbalancetype)){
+	    		trialBalanceResult = (Object[]) report.getTrialBalance(params,client_id);
+	    	}else if ("Gross Trial Balance".equals(trialbalancetype)) {
+	    		trialBalanceResult = (Object[]) report.getGrossTrialBalance(params,client_id);
+	    	}else if ("Extended Trial Balance".equals(trialbalancetype)) {
+	    		trialBalanceResult = (Object[]) report.getExtendedTrialBalance(params,client_id);
+	    	}
 		      
-		   trialBalGrid = new ArrayList<ArrayList<String>>();
-	       for(Object tb : trialBalanceResult)
-	       {
-	           Object[] t = (Object[]) tb;
-	           trialBalanceResultList = new ArrayList<String>();
-	           for(int i=0;i<t.length;i++){
+	    	trialBalGrid = new ArrayList<ArrayList<String>>();
+	    	for(Object tb : trialBalanceResult)
+	    	{
+	    		Object[] t = (Object[]) tb;
+	    		trialBalanceResultList = new ArrayList<String>();
+	    		for(int i=0;i<t.length;i++){
 	           	
-	               trialBalanceResultList.add((String) t[i].toString());
+	    			trialBalanceResultList.add((String) t[i].toString());
 	              
-	           }
-	           trialBalGrid.add(trialBalanceResultList);
-	       }
-	       trialBaltable = (TableLayout)findViewById(R.id.maintable);
-	       addTable();
+	    		}
+	    		trialBalGrid.add(trialBalanceResultList);
+	    	}
+	    	trialBaltable = (TableLayout)findViewById(R.id.maintable);
+	    	addTable();
 	        
-	       final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
-	       tvReportTitle.setText("Menu >> "+"Report >> "+trialbalancetype);
-	       final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
-	       btnSaveRecon.setVisibility(Button.GONE);
-	       final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
-	       btnScrollDown.setOnClickListener(new OnClickListener() {
-	    	   	@Override
+	    	final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
+	    	tvReportTitle.setText("Menu >> "+"Report >> "+trialbalancetype);
+	    	final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
+	    	btnSaveRecon.setVisibility(Button.GONE);
+	    	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+	    	btnScrollDown.setOnClickListener(new OnClickListener() {
+	    		@Override
 				public void onClick(View v) {
 					if(updown==false){
 		                sv.fullScroll(ScrollView.FOCUS_DOWN); 
@@ -141,11 +141,11 @@ public class trialBalance extends Activity{
 	        
 	       animated_dialog();
 	       floatingHeader();
-	   	} catch (Exception e) {
-		   	System.out.println("m in exte err"+e);
+	    } catch (Exception e) {
+		   	//System.out.println("m in exte err"+e);
 		   	AlertDialog.Builder builder = new AlertDialog.Builder(trialBalance.this);
 		   	
-	          builder.setMessage("Please try again")
+		   	builder.setMessage("Please try again")
 	                  .setCancelable(false)
 	                  .setPositiveButton("Ok",
 	                          new DialogInterface.OnClickListener() {
@@ -154,11 +154,12 @@ public class trialBalance extends Activity{
 	                              }
 	                          });
 	                  
-	          AlertDialog alert = builder.create();
-	          alert.show();	
+		   	AlertDialog alert = builder.create();
+		   	alert.show();	
 	   	}
     }
    
+    
     private void floatingHeader() {
     		trialBaltable.setOnTouchListener(new OnTouchListener() {
 			
@@ -168,12 +169,12 @@ public class trialBalance extends Activity{
 				if(oneTouch == 1){
 					floating_heading_table.setVisibility(TableLayout.VISIBLE);
 					
-					System.out.println("we are in if");
+					//System.out.println("we are in if");
 					
 					int rowcount = trialBaltable.getChildCount();    
 	                View row = trialBaltable.getChildAt(rowcount-1);
 					
-	              //For adding rupee symbol
+	                //For adding rupee symbol
 	                final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs)); 
 	               
 	                    /** Create a TableRow dynamically **/
@@ -224,7 +225,7 @@ public class trialBalance extends Activity{
 	}
 
 	private void animated_dialog() {
-    try {
+		try {
             final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
             Llalert.setVisibility(LinearLayout.GONE);
             animation2 = ObjectAnimator.ofFloat(Llalert,

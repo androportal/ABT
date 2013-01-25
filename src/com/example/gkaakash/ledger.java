@@ -64,7 +64,7 @@ public class ledger extends Activity{
        report = new Report();
        client_id= Startup.getClient_id();
        reportmenuflag = MainActivity.reportmenuflag;
-     //customizing title bar
+       //customizing title bar
        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
       
        try {
@@ -89,65 +89,65 @@ public class ledger extends Activity{
            tvfinancialToDate.setText("Period : "+fromDate+" to "+toDate);   
            
            if(!projectName.equalsIgnoreCase("No Project")){
-		   	TextView tvProjectName = (TextView) findViewById( R.id.tvProjectName );
-		   	tvProjectName.setText("Project name: " +projectName);
-		   }
-            System.out.println("ledger with project"+accountName+financialFromDate+fromDate+toDate+projectName);
-            Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,projectName};
-            ledgerResult = (Object[]) report.getLedger(params,client_id);
+		   		TextView tvProjectName = (TextView) findViewById( R.id.tvProjectName );
+		   		tvProjectName.setText("Project name: " +projectName);
+           }
+           //System.out.println("ledger with project"+accountName+financialFromDate+fromDate+toDate+projectName);
+           Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,projectName};
+           ledgerResult = (Object[]) report.getLedger(params,client_id);
            
-            ledgerGrid = new ArrayList<ArrayList>();
-            for(Object tb : ledgerResult) 
-            {
+           ledgerGrid = new ArrayList<ArrayList>();
+           for(Object tb : ledgerResult) 
+           {
                
-                Object[] t = (Object[]) tb;
-                ledgerResultList = new ArrayList<String>();
-                for(int i=0;i<(t.length-1);i++) 
-                {
-                if(i == 5){ //****************
-                if(checked == true){
-                ledgerResultList.add((String) t[i].toString());
-                    }
-               
-                }else{
-                ledgerResultList.add((String) t[i].toString());
-                }
-                }
+        	   Object[] t = (Object[]) tb;
+        	   ledgerResultList = new ArrayList<String>();
+        	   for(int i=0;i<(t.length-1);i++) 
+        	   {
+        		   if(i == 5){ //****************
+        			   if(checked == true){
+        				   ledgerResultList.add((String) t[i].toString());
+        			   }
+        			   
+        		   }else{
+        			   ledgerResultList.add((String) t[i].toString());
+        		   }
+        	   }
                 
-                ledgerGrid.add(ledgerResultList);
-            }  
+        	   ledgerGrid.add(ledgerResultList);
+           }  
            
-            ledgertable = (TableLayout)findViewById(R.id.maintable);
-            addTable();
+           ledgertable = (TableLayout)findViewById(R.id.maintable);
+           addTable();
             
-            final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
-            tvReportTitle.setText("Menu >> "+"Report >> "+"Ledger");
-            final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
-            btnSaveRecon.setVisibility(Button.GONE);
-            final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
-            btnScrollDown.setOnClickListener(new OnClickListener() {
+           final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
+           tvReportTitle.setText("Menu >> "+"Report >> "+"Ledger");
+           final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
+           btnSaveRecon.setVisibility(Button.GONE);
+           final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+           btnScrollDown.setOnClickListener(new OnClickListener() {
  	
-		 	@Override
-		 	public void onClick(View v) {
-		 	if(updown==false){
-		                    
-		                    sv.fullScroll(ScrollView.FOCUS_DOWN); 
-		                    btnScrollDown.setBackgroundResource(R.drawable.up);
-		                    updown=true;
-		               }else {
-		                    sv.fullScroll(ScrollView.FOCUS_UP); 
-		                    btnScrollDown.setBackgroundResource(R.drawable.down);
-		                    updown=false;
-		               }
-		 	}
-            });
+        	   @Override
+        	   public void onClick(View v) {
+        		   if(updown==false){
+        			   
+        			   sv.fullScroll(ScrollView.FOCUS_DOWN); 
+        			   btnScrollDown.setBackgroundResource(R.drawable.up);
+        			   updown=true;
+        		   }else {
+        			   sv.fullScroll(ScrollView.FOCUS_UP); 
+        			   btnScrollDown.setBackgroundResource(R.drawable.down);
+        			   updown=false;
+        		   }
+        	   }
+           });
             
-       animated_dialog();
-       floatingHeader();
+           animated_dialog();
+           floatingHeader();
             
        } catch (Exception e) {
-           AlertDialog.Builder builder = new AlertDialog.Builder(ledger.this);
-           builder.setMessage("Please try again")
+    	   AlertDialog.Builder builder = new AlertDialog.Builder(ledger.this);
+    	   builder.setMessage("Please try again")
                    .setCancelable(false)
                    .setPositiveButton("Ok",
                            new DialogInterface.OnClickListener() {
@@ -160,21 +160,19 @@ public class ledger extends Activity{
            alert.show();
            
        }
-       
-       
-       
     }
    
+    
     private void floatingHeader() {
-		ledgertable.setOnTouchListener(new OnTouchListener() {
+    	ledgertable.setOnTouchListener(new OnTouchListener() {
 			
-			@Override
+    		@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				
 				if(oneTouch == 1){
 					floating_heading_table.setVisibility(TableLayout.VISIBLE);
 					
-					System.out.println("we are in if");
+					//System.out.println("we are in if");
 					
 					int rowcount = ledgertable.getChildCount();    
 	                View row = ledgertable.getChildAt(rowcount-1);
@@ -187,10 +185,10 @@ public class ledger extends Activity{
 			        
 			        int len;
 			        if(checked == true){
-			        len = ColumnNameList.length;
+			        	len = ColumnNameList.length;
 			        }
 			        else{
-			        len = ColumnNameList.length-1;
+			        	len = ColumnNameList.length-1;
 			        }
 			        
 			        for(int k=0;k<len;k++){
@@ -201,11 +199,10 @@ public class ledger extends Activity{
 			            
 			            LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(k);
 			            label.setWidth(l.getWidth());
-		                System.out.println("size is"+l.getWidth());
-			            
+		                //System.out.println("size is"+l.getWidth());
 			        }
 			        
-			         // Add the TableRow to the TableLayout
+			        // Add the TableRow to the TableLayout
 			        floating_heading_table.addView(tr, new TableLayout.LayoutParams(
 			                LayoutParams.FILL_PARENT,
 			                LayoutParams.MATCH_PARENT));
@@ -229,12 +226,12 @@ public class ledger extends Activity{
 				return false;
 			}
 		});
-		
 	}
 
+    
 	private void animated_dialog() {
-    try {
-            final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
+		try {
+			final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
             Llalert.setVisibility(LinearLayout.GONE);
             animation2 = ObjectAnimator.ofFloat(Llalert,
                     "x", 1000);
@@ -248,15 +245,15 @@ public class ledger extends Activity{
                 public void onClick(View v) {
                     
                     if(alertdialog==false){
-                        Llalert.setVisibility(LinearLayout.VISIBLE);
+                    	Llalert.setVisibility(LinearLayout.VISIBLE);
                         TextView tvOrgNameAlert = (TextView)findViewById(R.id.tvOrgNameAlert);
                         
                         if(reportmenuflag==true){
-                            tvOrgNameAlert.setText(createOrg.organisationName);
+                        	tvOrgNameAlert.setText(createOrg.organisationName);
                         }
-                           else {
-                               tvOrgNameAlert.setText(selectOrg.selectedOrgName);
-                           }
+                        else {
+                        	tvOrgNameAlert.setText(selectOrg.selectedOrgName);
+                        }
                         
                         
                         TextView tvOrgTypeAlert = (TextView)findViewById(R.id.tvOrgTypeAlert);
@@ -268,26 +265,27 @@ public class ledger extends Activity{
                         animation2 = ObjectAnimator.ofFloat(Llalert,
                                   "x", 300);
                         alertdialog=true;
-                     }else {
+                    }else {
                          
-                        animation2 = ObjectAnimator.ofFloat(Llalert,
+                    	animation2 = ObjectAnimator.ofFloat(Llalert,
                                   "x", 1000);
                         alertdialog=false;
-                     }
+                    }
                       
-                     animation2.setDuration(1000);
-                     animation2.start();
-                }
+                    animation2.setDuration(1000);
+                    animation2.start();
+                }	
                 
             });
-        } catch (Exception e) {
+		} catch (Exception e) {
             // TODO: handle exception
         }
-}
+	}
 
-private void addTable() {
-        addHeader();
-        System.out.println("ledgerGrid."+ledgerGrid);
+	
+	private void addTable() {
+		addHeader();
+        //System.out.println("ledgerGrid."+ledgerGrid);
         
         /** Create a TableRow dynamically **/
         for(int i=0;i<ledgerGrid.size();i++){
@@ -296,35 +294,33 @@ private void addTable() {
             tr = new TableRow(this);
            
             for(int j=0;j<columnValue.size();j++){
-            addRow(columnValue.get(j));   
-                label.setBackgroundColor(Color.BLACK);
-                if(j == 3 || j == 4){
-            label.setGravity(Gravity.RIGHT);
+            	addRow(columnValue.get(j));   
+            	label.setBackgroundColor(Color.BLACK);
+            	if(j == 3 || j == 4){
+            		label.setGravity(Gravity.RIGHT);
                     
-                    if(columnValue.get(j).length() > 0){
+            		if(columnValue.get(j).length() > 0){
                     
-                    colValue=columnValue.get(j);
-                    if(!"".equals(colValue)){
-                    System.out.println("m in ");
-                    if(!"0.00".equals(colValue)){
-                    // for checking multiple \n and pattern matching
-                    Pattern pattern = Pattern.compile("\\n");
-                    Matcher matcher = pattern.matcher(colValue);
-                    boolean found = matcher.find();
-                    System.out.println("value:"+found);
-                    if(found==false){
-                    double amount = Double.parseDouble(colValue);	
-                    label.setText(formatter.format(amount));
-                    }else {
-                    label.setText(colValue);
-}
+            			colValue=columnValue.get(j);
+            			if(!"".equals(colValue)){
+            				//System.out.println("m in ");
+            				if(!"0.00".equals(colValue)){
+            					// for checking multiple \n and pattern matching
+            					Pattern pattern = Pattern.compile("\\n");
+            					Matcher matcher = pattern.matcher(colValue);
+            					boolean found = matcher.find();
+            					//System.out.println("value:"+found);
+            					if(found==false){
+            						double amount = Double.parseDouble(colValue);	
+            						label.setText(formatter.format(amount));
+            					}else {
+            						label.setText(colValue);
+            					}
                    
-                    }else {
-                    label.setText(colValue);
-}
-                   
-                    }
-                       
+            				}else {
+            					label.setText(colValue);
+            				}
+            			}
                     }
                 }
                 else{ 
@@ -340,9 +336,10 @@ private void addTable() {
         } 
     }
 
+	
     void addHeader(){
-    //For adding rupee symbol
-    final SpannableString rsSymbol = new SpannableString(ledger.this.getText(R.string.Rs));
+    	//For adding rupee symbol
+    	final SpannableString rsSymbol = new SpannableString(ledger.this.getText(R.string.Rs));
         /** Create a TableRow dynamically **/
         String[] ColumnNameList = new String[] {"Date","Particulars","Reference no.",rsSymbol+" Debit",rsSymbol+" Credit","Narration"};
        
@@ -350,10 +347,10 @@ private void addTable() {
         
         int len;
         if(checked == true){
-        len = ColumnNameList.length;
+        	len = ColumnNameList.length;
         }
         else{
-        len = ColumnNameList.length-1;
+        	len = ColumnNameList.length-1;
         }
         
         for(int k=0;k<len;k++){
@@ -363,13 +360,13 @@ private void addTable() {
             label.setGravity(Gravity.CENTER);
         }
        
-         // Add the TableRow to the TableLayout
+        // Add the TableRow to the TableLayout
         ledgertable.addView(tr, new TableLayout.LayoutParams(
                 LayoutParams.FILL_PARENT,
                 LayoutParams.MATCH_PARENT));
-       
     }
    
+    
     void addRow(String param){ 
         label = new TextView(this);
         label.setText(param);

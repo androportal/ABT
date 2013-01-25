@@ -142,8 +142,9 @@ public class createAccount<group> extends Activity{
         
         addEditTextListner();
     }
+    
+    
     private void getTotalBalances() {
-        // TODO Auto-generated method stub
         drbal = account.getDrOpeningBalance(client_id);
         crbal = account.getCrOpeningBalance(client_id);
         diffbal =  account.getDiffInBalance(client_id);
@@ -154,9 +155,9 @@ public class createAccount<group> extends Activity{
         etDiffbal.setText(String.format("%.2f",diffbal ));
     }
 
+    
     // It give list of all existing groupname
     void getExistingGroupNames(){
-            
         //call the getAllGroups method to get all groups
         Object[] groupnames = (Object[]) group.getAllGroups(client_id);
         // create new array list of type String to add gropunames
@@ -181,10 +182,11 @@ public class createAccount<group> extends Activity{
         
     }// End getExistingGroupNames()
     
+    
     // method addListnerOnItem() will implement OnItemSelectedListner
     void addListenerOnItem(){
-            //Attach a listener to the states Type Spinner to get dynamic list of subgroup name
-            sgrpName.setOnItemSelectedListener(new OnItemSelectedListener() {
+    	//Attach a listener to the states Type Spinner to get dynamic list of subgroup name
+    	sgrpName.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
                 // Retrieving the selected name from the group name Spinner and
@@ -333,6 +335,8 @@ public class createAccount<group> extends Activity{
             }
         });
     }
+    
+    
     private void addListeneronButton() {
         // TODO Auto-generated method stub
         btnCreateAccSave = (Button) findViewById(R.id.btnCreateAccSave);
@@ -432,6 +436,8 @@ public class createAccount<group> extends Activity{
             }
         }); // close setOnClickListener
     }
+    
+    
     private void addEditTextListner()
     {
     etAccName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -502,6 +508,7 @@ public class createAccount<group> extends Activity{
             });// close setOnFocusChangeListener
     } // close addEditTextListner()
     
+    
     /*
      * (non-Javadoc)
      * @see android.app.Activity#onBackPressed()
@@ -519,6 +526,8 @@ public class createAccount<group> extends Activity{
             startActivity(intent);
         }
     }
+    
+    
     // method for blank fields
     public void alertBlankField()
     {
@@ -535,23 +544,24 @@ public class createAccount<group> extends Activity{
         AlertDialog alert = builder.create();
         alert.show();
     }
+    
+    
     public void alertAccountExist()
     {
-        
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Account "+accountname+" already exist")
-                        .setCancelable(false)
-                        .setPositiveButton("Ok",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                         
-                                        etAccName.setText("");
-                                        etAccName.requestFocus();
-                                    }
-                                });
-                        
-                AlertDialog alert = builder.create();
-                alert.show();
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setMessage("Account "+accountname+" already exist")
+		        .setCancelable(false)
+		        .setPositiveButton("Ok",
+		                new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int id) {
+		                         
+		                        etAccName.setText("");
+		                        etAccName.requestFocus();
+		                    }
+		                });
+		        
+		AlertDialog alert = builder.create();
+		alert.show();
             
             
         
@@ -573,6 +583,8 @@ public class createAccount<group> extends Activity{
     AlertDialog alert = builder.create();
     alert.show();
     }
+    
+    
     public void alertSubGroupExist()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -592,6 +604,8 @@ public class createAccount<group> extends Activity{
         //Toast.makeText(context,sub_grp_name+" already exist",Toast.LENGTH_LONG).show();
         
     }
+    
+    
     public void SaveAccount(){
         Object[] params = new Object[]{accCodeCheckFlag,selGrpName,selSubGrpName,newsubgrpname,accountname,accountcode,openingbalance}; 
         // call the setAccount method and pass the above parameters

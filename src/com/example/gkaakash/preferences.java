@@ -59,7 +59,7 @@ public class preferences extends Activity {
        	client_id= Startup.getClient_id();
         etProject = (EditText) findViewById(R.id.etProject);
         
-      //for visibility of account tab layout
+        //for visibility of account tab layout
         MainActivity.tabFlag = false;
         
         //String from = Startup.getfinancialFromDate();
@@ -84,12 +84,13 @@ public class preferences extends Activity {
         // add a new row to the table.
         addButton.setOnClickListener( new OnClickListener() {
         public void onClick(View view) {
-                    addButton(); }
-                });
+        	addButton(); }
+        });
            
         projectTable = (TableLayout) findViewById( R.id.projtable );
     }
 
+    
     private void addListenerOnChkIos() {
         cbProject = (CheckBox) findViewById(R.id.cbProject);
         etProject = (EditText) findViewById(R.id.etProject);
@@ -164,12 +165,10 @@ public class preferences extends Activity {
                         View v1 = null;
                         List<String> secondProjlist=new ArrayList<String>();
                         projectname = etProject.getText().toString();
-                        System.out.println("projectname:"+projectname);
-                       
-                       
+                        //System.out.println("projectname:"+projectname);
                        
                         for(int i = 1; i <= idCount ; i++){  
-                             v1 = findViewById(i);
+                        	v1 = findViewById(i);
                             if(v1 != null){
                                 projectName = (EditText) findViewById(i);
                                 proj_name= projectName.getText().toString();
@@ -185,10 +184,10 @@ public class preferences extends Activity {
                         }
                        
                         finalProjlist.addAll(secondProjlist);
-                        System.out.println("final project list");
-                        System.out.println(finalProjlist);
+                        //System.out.println("final project list");
+                        //System.out.println(finalProjlist);
                         
-                      //call the getAllProjects method to get all projects
+                        //call the getAllProjects method to get all projects
     					Object[] projectnames = (Object[]) organisation.getAllProjects(client_id);
     					// create new array list of type String to add gropunames
     					List<String> projectnamelist = new ArrayList<String>();
@@ -198,8 +197,8 @@ public class preferences extends Activity {
     						Object[] p = (Object[]) pn;
     						projectnamelist.add((String) p[1]); //p[0] is project code & p[1] is projectname
     					}	
-    					System.out.println("second project list");
-    					System.out.println(projectnamelist);
+    					//System.out.println("second project list");
+    					//System.out.println(projectnamelist);
     					
     					String ac;
     					boolean  flag = false;
@@ -250,12 +249,12 @@ public class preferences extends Activity {
 	    					
 	    					 if(refNoflag.equals("optional")&& etProject.length()<1){
 	    						 String message = "Please enter project name";
-	     						toastValidationMessage(message);
+	    						 toastValidationMessage(message);
 	                         }
 	                         else if(projectExistsFlag == true){
 	                        	 String message = "Project "+nameExists+" already exists";
-		     					toastValidationMessage(message);
-		     					}
+	                        	 toastValidationMessage(message);
+	                         }
 	                         else
 	                          {
 	                               Object[] params = new Object[]{"1",refNoflag,"2",accCodeflag};
@@ -353,7 +352,6 @@ public class preferences extends Activity {
         etdynamic.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         etdynamic.setId(++rowsSoFar);
        
-       
         idCount ++;
          
         //actionButton.setText( "Action: " + ++rowsSoFar );
@@ -366,7 +364,6 @@ public class preferences extends Activity {
         removeSelfButton.setOnClickListener( new RowRemover( projectTable, newRow ));
        
         newRow.addView(etdynamic);
-       
        
         newRow.addView( removeSelfButton );
         projectTable.addView(newRow);

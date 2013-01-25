@@ -119,13 +119,13 @@ public class MainActivity extends Activity {
         	//Toast.makeText(context, "not copying files from asset", Toast.LENGTH_SHORT).show();
         	System.out.println("NOT copying files from asset");
         }
-       if(no_dailog==false){
-    	   //if running this app on emulator, comment the below line
-    	   help_popup(); 
-       }
-       else{
-    	   help_dialog.dismiss();
-       }
+        if(no_dailog==false){
+        	//if running this app on emulator, comment the below line
+        	help_popup(); 
+        }
+        else{
+        	help_dialog.dismiss();
+        }
        
     }
 
@@ -150,12 +150,12 @@ public class MainActivity extends Activity {
         	reportmenuflag = false;
             // check existing organisation name list is null
         	try{
-            // call the getOrganisationName method from startup
-            orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
-            if(orgNameList.length<1)
-            {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Please create organisation")
+        		// call the getOrganisationName method from startup
+        		orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
+        		if(orgNameList.length<1)
+        		{
+        			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        			builder.setMessage("Please create organisation")
                         .setCancelable(false)
                         .setPositiveButton("Ok",
                                 new DialogInterface.OnClickListener() {
@@ -164,18 +164,18 @@ public class MainActivity extends Activity {
                                     }
                                 });
                        
-                AlertDialog alert = builder.create();
-                alert.show();                    }
-            else
-            {
-                //To pass on the activity to the next page
-                Intent intent = new Intent(context, selectOrg.class);
-                startActivity(intent);  
-            }
-        	}catch(Exception e)
-        	{
-        		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Please check server connection")
+        			AlertDialog alert = builder.create();
+        			alert.show();                    }
+        		else
+        		{
+        			//To pass on the activity to the next page
+        			Intent intent = new Intent(context, selectOrg.class);
+        			startActivity(intent);  
+        		}
+        		}catch(Exception e)
+        		{
+        			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        			builder.setMessage("Please check server connection")
                         .setCancelable(false)
                         .setPositiveButton("Ok",
                                 new DialogInterface.OnClickListener() {
@@ -184,13 +184,14 @@ public class MainActivity extends Activity {
                                     }
                                 });
                        
-                AlertDialog alert = builder.create();
-                alert.show();    
-        	}
+	                AlertDialog alert = builder.create();
+	                alert.show();    
+        		}
         }// end of onClick
         });// end of select_org.setOnClickListener
 	}// end of addListenerOnButton() method
 
+	
 	private void loadDataFromAsset() {
         try {
 
@@ -254,7 +255,7 @@ public class MainActivity extends Activity {
             Process process = Runtime.getRuntime().exec("su");
             DataOutputStream os = new DataOutputStream(process.getOutputStream());
             for (String tmpmd : command2){
-                    os.writeBytes(tmpmd +"\n" );
+            	os.writeBytes(tmpmd +"\n" );
             }              
             os.writeBytes("exit\n");
             os.flush();
@@ -494,11 +495,11 @@ public class MainActivity extends Activity {
       
         //for setting the visibility of EditText:'etProject' depending upon the condition
             if (((CheckBox) v).isChecked()) {
-            	Toast.makeText(context, "TRUE", Toast.LENGTH_SHORT).show();
+            	//Toast.makeText(context, "TRUE", Toast.LENGTH_SHORT).show();
                 checkFlag = "true";
             }
             else {
-            	Toast.makeText(context, "FALSE", Toast.LENGTH_SHORT).show();
+            	//Toast.makeText(context, "FALSE", Toast.LENGTH_SHORT).show();
                 checkFlag = "false";
             }
         }

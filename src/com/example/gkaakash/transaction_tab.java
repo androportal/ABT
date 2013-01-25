@@ -31,6 +31,7 @@ public class transaction_tab extends TabActivity {
     static TabHost tabHost;
     static String tabname;
     EditText etRefNumber;
+    
 	  public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -41,7 +42,7 @@ public class transaction_tab extends TabActivity {
 	        //Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
 	       
 	        edittabflag=createVoucher.edittabflag;
-	      //customizing title bar
+	        //customizing title bar
 	        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.voucher_title);
 	        final TextView label = (TextView) findViewById(R.id.tvVoucherTitle);
 	        String vouchertypeflag = voucherMenu.vouchertypeflag;

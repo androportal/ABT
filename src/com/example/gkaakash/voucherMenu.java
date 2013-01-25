@@ -32,6 +32,7 @@ public class voucherMenu extends ListActivity {
 	static ArrayList<String> DrAccountlist;
 	static ArrayList<String> CrAccountlist;
 	static boolean flag;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

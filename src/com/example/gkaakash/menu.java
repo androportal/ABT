@@ -111,10 +111,10 @@ public class menu extends ListActivity{
     
      @Override
      public void onBackPressed() {
-         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+    	 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
          intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
          startActivity(intent); 
-        }
+     }
      
     //on load...
     public void onCreate(Bundle savedInstanceState) {
@@ -124,7 +124,7 @@ public class menu extends ListActivity{
         organisation = new Organisation();
         client_id= Startup.getClient_id();
         
-      //get financial from and to date, split and store day, month and year in seperate variable
+        //get financial from and to date, split and store day, month and year in seperate variable
        	financialFromDate =Startup.getfinancialFromDate();  	   	
 	   	String dateParts[] = financialFromDate.split("-");
 	   	fromday  = dateParts[0];
@@ -181,50 +181,51 @@ public class menu extends ListActivity{
                 
                 //for "adding project", adding popup menu ...
                 if(position == 3)
-                {                	final CharSequence[] items = { "Edit organisation details", "Add/Edit/Delete project" };
-            	//creating a dialog box for popup
-     	       AlertDialog.Builder builder = new AlertDialog.Builder(context);
-     	       //setting title
-     	       builder.setTitle("Select preference");
-     	       //adding items
-     	       builder.setItems(items, new DialogInterface.OnClickListener() {
-     	       public void onClick(DialogInterface dialog1, int pos) {
-     	        //code for the actions to be performed on clicking popup item goes here ...
-     	           switch (pos) {
-     	               case 0:
-     	                             {
-     	                           
-     	                             MainActivity.editDetails=true;
-     	                             Object[] editDetails = (Object[])organisation.getOrganisation(client_id);
-     	                              accdetailsList = new ArrayList<String>();
-     	                              for(Object row2 : editDetails){
-     	                        Object[] a2=(Object[])row2;
-     	                        ArrayList<String> accdetails = new ArrayList<String>();
+                {                	
+                	final CharSequence[] items = { "Edit organisation details", "Add/Edit/Delete project" };
+                	//creating a dialog box for popup
+                	AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                	//setting title
+                	builder.setTitle("Select preference");
+                	//adding items
+                	builder.setItems(items, new DialogInterface.OnClickListener() {
+                		public void onClick(DialogInterface dialog1, int pos) {
+                			//code for the actions to be performed on clicking popup item goes here ...
+                			switch (pos) {
+     	      	        case 0:
+     	      	        {
+     	      	        	
+     	      	        	MainActivity.editDetails=true;
+     	      	        	Object[] editDetails = (Object[])organisation.getOrganisation(client_id);
+     	      	        	accdetailsList = new ArrayList<String>();
+     	      	        	for(Object row2 : editDetails){
+     	      	        		Object[] a2=(Object[])row2;
+     	      	        		ArrayList<String> accdetails = new ArrayList<String>();
      	                        for(int i=0;i<a2.length;i++){
-     	                                  accdetails.add((String) a2[i].toString());
-     	                                 }
-     	                        accdetailsList.addAll(accdetails);
+     	                        	accdetails.add((String) a2[i].toString());
      	                        }
+     	                        accdetailsList.addAll(accdetails);
+     	      	        	}
      	                             
-     	                        System.out.println("details:"+accdetailsList);
+     	      	        	//System.out.println("details:"+accdetailsList);
      	                           
-     	                             Intent intent = new Intent(context, orgDetails.class);
-     	                                 // To pass on the value to the next page
-     	                                 startActivity(intent);
-     	                             }break;
-     	               case 1:
-     	                             {
-     	                             Intent intent = new Intent(context, addProject.class);
-     	                                 // To pass on the value to the next page
-     	                                 startActivity(intent);
-     	                                        
-     	                     }break;
-     	           }
-     	       }
-     	       });
-     	       //building a complete dialog
-     	dialog=builder.create();
-     	dialog.show();
+     	      	        	Intent intent = new Intent(context, orgDetails.class);
+     	      	        	// To pass on the value to the next page
+     	      	        	startActivity(intent);
+     	      	        }break;
+     	      	        case 1:
+     	      	        {
+     	      	        	Intent intent = new Intent(context, addProject.class);
+     	      	        	// To pass on the value to the next page
+     	      	        	startActivity(intent);
+     	      	        	
+     	      	        }break;
+                			}
+                		}
+                	});
+                	//building a complete dialog
+                	dialog=builder.create();
+                	dialog.show();
      	
                 }
                 //bank reconcilition
@@ -377,14 +378,11 @@ public class menu extends ListActivity{
                             lp.copyFrom(about_dialog.getWindow().getAttributes());
                             lp.width = 600;
                             
-                            
                             about_dialog.getWindow().setAttributes(lp);
                 }
-                } 
+            } 
         });
-     
     }
-    
      
     
     private boolean validateDate(DatePicker fromdate, DatePicker todate, String flag){

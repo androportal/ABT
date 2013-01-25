@@ -73,6 +73,8 @@ import android.widget.Toast;
 		String orgcode;
 		String reg_date,fcra_date;
 		static String orgtype;
+		
+		
 		//adding options to the options menu
 		@Override
 		public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,6 +83,7 @@ import android.widget.Toast;
 			menu.add(group1Id, Finish, Finish, "Finish");
 			return super.onCreateOptionsMenu(menu); 
 		}
+		
 		//code for the actions to be performed on clicking options menu goes here ...
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
@@ -132,13 +135,13 @@ import android.widget.Toast;
 		
 			if(editDetailsflag==true){
 				detailsList_foredit=menu.accdetailsList;
-				System.out.println("cuming from menu page:"+menu.orgtype);
+				//System.out.println("cuming from menu page:"+menu.orgtype);
 
 				orgtype=detailsList_foredit.get(1);
-				System.out.println("OT"+orgtype);
+				//System.out.println("OT"+orgtype);
 
 				orgcode=detailsList_foredit.get(0);
-				System.out.println("org code:"+orgcode);
+				//System.out.println("org code:"+orgcode);
 				etGetAddr.setText(detailsList_foredit.get(3));
 				sGetPostal.setText(detailsList_foredit.get(5));
 				eGetPhone.setText(detailsList_foredit.get(8));
@@ -164,10 +167,10 @@ import android.widget.Toast;
 			// Retrieving the organisation type flag value from the previous page(create organisation page)
 			if(editDetailsflag==false){ 
 				getSelectedOrgType=createOrg.orgTypeFlag;
-				}
-		        else {
-			    getSelectedOrgType=orgtype; 
-		        }
+			}
+			else {
+				getSelectedOrgType=orgtype; 
+			}
 			if("NGO".equals(getSelectedOrgType))
 			{
 				tvRegNum.setVisibility(TextView.VISIBLE);

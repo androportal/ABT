@@ -63,6 +63,5 @@ public class account_tab extends TabActivity{
 	        tabHost.addTab(editspec); // Adding edit tab
 	        tabHost.setCurrentTab(0);//setting tab1 on load
 	       
-	        
 	 }
 }

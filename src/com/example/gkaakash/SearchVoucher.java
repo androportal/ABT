@@ -71,58 +71,53 @@ public class SearchVoucher extends Activity {
   	String colValue;
      
 	  @Override
-	    public void onCreate(Bundle savedInstanceState) {
-	    	super.onCreate(savedInstanceState);
-	        setContentView(R.layout.search_voucher);
-	       
-	        client_id = Startup.getClient_id();
-	        transaction = new Transaction();
-	        
-	        //for two digit format date for dd and mm
-			mFormat= new DecimalFormat("00");
-			mFormat.setRoundingMode(RoundingMode.DOWN);
+    public void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+        setContentView(R.layout.search_voucher);
+       
+        client_id = Startup.getClient_id();
+        transaction = new Transaction();
+        
+        //for two digit format date for dd and mm
+		mFormat= new DecimalFormat("00");
+		mFormat.setRoundingMode(RoundingMode.DOWN);
+		
+		financialFromDate =Startup.getfinancialFromDate(); 
+		financialToDate = Startup.getFinancialToDate();
+		
+		TextView tvVFromdate = (TextView) findViewById( R.id.tvVFromdate );
+	    TextView tvVTodate = (TextView) findViewById( R.id.tvVTodate );
+	      
+	    tvVFromdate.setText("Financial from date: " +financialFromDate);
+	    tvVTodate.setText("Financial to date: " +financialToDate);
+	    
+		vouchertypeflag = voucherMenu.vouchertypeflag;
+	    
+		try {
+			 setOnSearchButtonClick();
+		        
+			 Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
+			 getallvouchers(params);
 			
-			financialFromDate =Startup.getfinancialFromDate(); 
-			financialToDate = Startup.getFinancialToDate();
+			 
+		} catch (Exception e) {
 			
-			TextView tvVFromdate = (TextView) findViewById( R.id.tvVFromdate );
-		    TextView tvVTodate = (TextView) findViewById( R.id.tvVTodate );
-		      
-		    tvVFromdate.setText("Financial from date: " +financialFromDate);
-		    tvVTodate.setText("Financial to date: " +financialToDate);
-		    
-			vouchertypeflag = voucherMenu.vouchertypeflag;
-		    
-			try {
-				 setOnSearchButtonClick();
-			        
-				 Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
-				 getallvouchers(params);
-				
-				 
-			} catch (Exception e) {
-				
-				AlertDialog.Builder builder = new AlertDialog.Builder(SearchVoucher.this);
-		           builder.setMessage("Please try again")
-		                   .setCancelable(false)
-		                   .setPositiveButton("Ok",
-		                           new DialogInterface.OnClickListener() {
-		                               public void onClick(DialogInterface dialog, int id) {
-		                                   
-		                               }
-		                           });
-		                   
-		           AlertDialog alert = builder.create();
-		           alert.show();
-			}
-			
-	       
-	        
+			AlertDialog.Builder builder = new AlertDialog.Builder(SearchVoucher.this);
+			builder.setMessage("Please try again")
+	                   .setCancelable(false)
+	                   .setPositiveButton("Ok",
+	                           new DialogInterface.OnClickListener() {
+	                               public void onClick(DialogInterface dialog, int id) {
+	                                   
+	                               }
+	                           });
+	                   
+			AlertDialog alert = builder.create();
+			alert.show();
 		}
+	}
 
 	private void setOnSearchButtonClick() {
-		
-		
 		Button btnSearchVoucher = (Button)findViewById(R.id.btnSearchVoucher);
         btnSearchVoucher.setOnClickListener(new OnClickListener() {
 			
@@ -275,8 +270,6 @@ public class SearchVoucher extends Activity {
 					   	}
 						
 					}
-
-					
 				});
 				
 				builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
@@ -297,6 +290,7 @@ public class SearchVoucher extends Activity {
 		});
 	}
 	
+	
 	public void addTable() {
 		
 		if(searchedVoucherGrid.size()>0){
@@ -313,26 +307,26 @@ public class SearchVoucher extends Activity {
             for(int j=0;j<columnValue.size();j++){
                 /** Creating a TextView to add to the row **/
                 addRow(columnValue.get(j),i);  ////
-               // System.out.println("rowid"+i);
+                // System.out.println("rowid"+i);
                 label.setBackgroundColor(Color.BLACK);
                 /*
                  * set center aligned gravity for amount and for others set center gravity
                  */
                 if(j==6){
                 	
-          	label.setGravity(Gravity.CENTER|Gravity.RIGHT);
+                	label.setGravity(Gravity.CENTER|Gravity.RIGHT);
                     
                     if(columnValue.get(j).length() > 0){
                     	
                     	colValue=columnValue.get(j);
                     	if(!"".equals(colValue)){
-                    		System.out.println("m in ");
+                    		//System.out.println("m in ");
                     		if(!"0.00".equals(colValue)){
                     			// for checking multiple \n and pattern matching
                     			Pattern pattern = Pattern.compile("\\n");
                     			Matcher matcher = pattern.matcher(colValue);
                     			boolean found = matcher.find();
-                    			System.out.println("value:"+found);
+                    			//System.out.println("value:"+found);
                     			if(found==false){
                     				double amount = Double.parseDouble(colValue);	
                     				label.setText(formatter.format(amount));
@@ -365,6 +359,7 @@ public class SearchVoucher extends Activity {
         }
 	}
 	
+	
 	/*
      * add column heads to the table
      */
@@ -393,6 +388,7 @@ public class SearchVoucher extends Activity {
 		
 	}
 
+	
 	/*
 	 * this function add the value to the row
 	 */
@@ -485,13 +481,9 @@ public class SearchVoucher extends Activity {
           	            dialog.getWindow().setAttributes(lp);		
 				        
 				} catch (Exception e) {
-					System.out.println(e);
+					//System.out.println(e);
 				}
-				 
-				
-				 
 			}
-			
 		});
 		
 		label = new TextView(SearchVoucher.this);
@@ -512,6 +504,7 @@ public class SearchVoucher extends Activity {
         tr.addView((View)Ll); // Adding textView to tablerow.
 	}
 	
+	
 	public void getallvouchers(Object[] params){
 		
 		Object[] searchedVoucher = (Object[])transaction.searchVoucher(params,client_id);
@@ -528,8 +521,6 @@ public class SearchVoucher extends Activity {
             }
             searchedVoucherGrid.add(searchedVoucherList);
 		}
-		
-		
 		vouchertable = (TableLayout)findViewById(R.id.maintable);
 		vouchertable.removeAllViews();
 	       

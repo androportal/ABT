@@ -63,8 +63,6 @@ public class addProject extends MainActivity{
         preferences = new Preferences();
         organisation = new Organisation();
         client_id= Startup.getClient_id();
-        
-        
         ltProjectNames = (ListView) findViewById(R.id.ltProjectNames);
         ltProjectNames.setCacheColorHint(color.transparent);
         ltProjectNames.setTextFilterEnabled(true);
@@ -90,7 +88,7 @@ public class addProject extends MainActivity{
 		        AlertDialog.Builder builder = new AlertDialog.Builder(addProject.this);
 		        //setting title
 		        builder.setTitle("Edit/Delete project");
-		      //adding items
+		        //adding items
 		        builder.setItems(items, new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface which, int pos) {
 		        		//code for the actions to be performed on clicking popup item goes here ...
@@ -98,7 +96,6 @@ public class addProject extends MainActivity{
 			            	//edit project
 			                case 0:
 		                			{
-
 		                    			//Toast.makeText(edit_account.this,"Clicked on:"+items[pos],Toast.LENGTH_SHORT).show();
 		                          		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 		                          	    View layout = inflater.inflate(R.layout.edit_projectname, (ViewGroup) findViewById(R.id.layout_root));
@@ -107,12 +104,10 @@ public class addProject extends MainActivity{
 		                          	    builder.setTitle("Edit project");
 		                          	    //get account details
     		                      	    final String old_projectname = ltProjectNames.getItemAtPosition(position).toString();
-    		                      	    System.out
-												.println(old_projectname);
+    		                      	    
     		                      	    final EditText edit_project_name = (EditText)layout.findViewById(R.id.edit_project_name);
     		                      	    edit_project_name.setText(old_projectname);
 		                          	    
-		                          	            
 		                  	            builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
 		    								
 		    								public void onClick(DialogInterface dialog, int which) {
@@ -123,13 +118,13 @@ public class addProject extends MainActivity{
 		    									 * validation to check whether project exists or blank
 		    									 */
 		    									for(int i=0;i<projectNameList.size();i++){
-		    		                                    if(new_project_name.equalsIgnoreCase((String) projectNameList.get(i))){
-		    		                                        projectExistsFlag = true;
-		    		                                        break;
-		    		                                    }
-		    		                                    else{
-		    		                                        projectExistsFlag = false;
-		    		                                    }
+		    										if(new_project_name.equalsIgnoreCase((String) projectNameList.get(i))){
+		    											projectExistsFlag = true;
+		    											break;
+		    										}
+		    										else{
+		    											projectExistsFlag = false;
+		    										}
 		    		                            }
 		    		                           
 		    		                             if(new_project_name.length()<1){
@@ -139,10 +134,9 @@ public class addProject extends MainActivity{
 		    		                            	 toastValidationMessage("No changes made");
 		    		                             }
 		    		                             else if(projectExistsFlag == true){
-		    		                                toastValidationMessage("Project '"+new_project_name+"' already exists");
-		    		                                }
-		    		                             else
-		    		                              {
+		    		                            	 toastValidationMessage("Project '"+new_project_name+"' already exists");
+		    		                             }
+		    		                             else{
 		    		                            	 Integer projCode = (Integer) projectCodeList.get(position);
 		    		                            	 Object[] params = new Object[] {projCode, new_project_name};
 		    		                            	 String edited = (String)preferences.editProject(params,client_id);
@@ -150,10 +144,7 @@ public class addProject extends MainActivity{
 		    		                            	 projectnames = (Object[])organisation.getAllProjects(client_id);
 				    							     getResultList(projectnames);
 				    							     toastValidationMessage("Project name has been changed from '"+old_projectname+"' to '"+new_project_name+ "'");
-		    		                              }
-		    									
-		    									
-		    									
+		    		                             }
 		    								}//end of onclick
 		    							});// end of onclickListener
 		                  	             
@@ -161,8 +152,7 @@ public class addProject extends MainActivity{
 		    								
 		    								@Override
 		    								public void onClick(DialogInterface dialog, int which) {
-		    									// TODO Auto-generated method stub
-		    									
+		    									//do nothing
 		    								}
 		    							});
 		                          	            
@@ -194,7 +184,6 @@ public class addProject extends MainActivity{
 				dialog.show();
 			}
 		});
-		
 	}
 
 
@@ -216,7 +205,6 @@ public class addProject extends MainActivity{
                     
                     @Override
                     public void onClick(View v) {
-                        // TODO Auto-generated method stub
                         addButton();
                     }
 
@@ -232,9 +220,8 @@ public class addProject extends MainActivity{
                         projectname = etProject.getText().toString();
                        
                         for(int i = 1; i <= idCount ; i++){  
-                             v1 = dialog.findViewById(i);
+                        	v1 = dialog.findViewById(i);
                             if(v1 != null){
-                                
                                 projectName = (EditText)dialog.findViewById(i);
                                 proj_name= projectName.getText().toString();
                                 if(!"".equals(proj_name)){
@@ -250,7 +237,7 @@ public class addProject extends MainActivity{
                        
                         finalProjlist.addAll(secondProjlist);
                         AlertDialog help_dialog;
-                      //call the getAllProjects method to get all projects
+                        //call the getAllProjects method to get all projects
                         Object[] projectnames = (Object[]) organisation.getAllProjects(client_id);
                         // create new array list of type String to add gropunames
                         List<String> projectnamelist = new ArrayList<String>();
@@ -305,47 +292,41 @@ public class addProject extends MainActivity{
                             }
                             
                              if(etProject.length()<1){
-                                 toastValidationMessage("Please enter project name");
+                            	 toastValidationMessage("Please enter project name");
                              }
                              else if(projectExistsFlag == true){
-                                toastValidationMessage("Project '"+nameExists+"' already exists");
+                            	 toastValidationMessage("Project '"+nameExists+"' already exists");
                                 }
                              else
                               {
-                                setProject = preferences.setProjects(finalProjlist,client_id);
-                                 //To pass on the activity to the next page
-                                toastValidationMessage("Project added successfully");
-                                //get all project names in list view on load
-                                projectnames = (Object[])organisation.getAllProjects(client_id);
-                                getResultList(projectnames);
-                                etProject.setText("");
-                                projectTable.removeAllViews();
-                               }
+                            	 setProject = preferences.setProjects(finalProjlist,client_id);
+                            	 //To pass on the activity to the next page
+                            	 toastValidationMessage("Project added successfully");
+                            	 //get all project names in list view on load
+                            	 projectnames = (Object[])organisation.getAllProjects(client_id);
+                            	 getResultList(projectnames);
+                            	 etProject.setText("");
+                            	 projectTable.removeAllViews();
+                              }
                         }
-                        
-
-                    }
-                        
-                         
-                     });
+                    }  
+                });
                 
                 builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        
+                        //close the dialog box
                     }
                     });
                 dialog=builder.create();
                 ((Dialog) dialog).show();
-                  WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 //customizing the width and location of the dialog on screen 
                 lp.copyFrom(dialog.getWindow().getAttributes());
                 lp.height = 300;
                 dialog.getWindow().setAttributes(lp);
-				
 			}
 		});
-		
 	}
 
 
@@ -400,8 +381,7 @@ public class addProject extends MainActivity{
         etdynamic.setWidth(215); //for emulator 215
         etdynamic.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         etdynamic.setId(++rowsSoFar);
-       
-       
+        
         idCount ++;
          
         //actionButton.setText( "Action: " + ++rowsSoFar );
@@ -414,7 +394,6 @@ public class addProject extends MainActivity{
         removeSelfButton.setOnClickListener( new RowRemover( projectTable, newRow ));
        
         newRow.addView(etdynamic);
-       
        
         newRow.addView( removeSelfButton );
         projectTable.addView(newRow);

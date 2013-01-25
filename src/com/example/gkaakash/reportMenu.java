@@ -60,6 +60,8 @@ public class reportMenu extends ListActivity{
 	String orgname;
 	static String reportTypeFlag;
 	static String balancetype;
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,7 +70,6 @@ public class reportMenu extends ListActivity{
 		organisation = new Organisation();
 		
        	client_id= Startup.getClient_id();
-       	
        	
        	/*
        	 * get org type from create page or select org page
@@ -79,10 +80,10 @@ public class reportMenu extends ListActivity{
         }
        	else {
 	         orgname=selectOrg.selectedOrgName;
-	         System.out.println("org name in selett "+orgname);
+	         //System.out.println("org name in selett "+orgname);
 	         Object[] params = new Object[]{orgname};
 	         orgtype = (String) organisation.getorgTypeByname(params, client_id);;
-	         System.out.println("org type in select"+orgtype);
+	         //System.out.println("org type in select"+orgtype);
        	}
         if("NGO".equals(orgtype))
         {
@@ -106,7 +107,6 @@ public class reportMenu extends ListActivity{
 	   	today  = dateParts1[0];
 	   	tomonth = dateParts1[1];
 	   	toyear = dateParts1[2];
-	   	
 		
 		//calling report.xml page
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.report,reportType));
@@ -129,7 +129,6 @@ public class reportMenu extends ListActivity{
 				//for "Ledger"
 				if(position == 0)
 				{
-					
 					//call the allAccountNames method to get all account names
 					Object[] accountnames = (Object[]) account.getAllAccountNames(client_id);
 					// create new array list of type String to add account names
@@ -143,7 +142,7 @@ public class reportMenu extends ListActivity{
 					if(accountnamelist.size() <= 0){
 						String message = "Ledger cannot be displayed, Please create account!";
 						toastValidationMessage(message);
-						}
+					}
 					else{
 						//call the getAllProjects method to get all projects
 						Object[] projectnames = (Object[]) organisation.getAllProjects(client_id);
@@ -364,12 +363,12 @@ public class reportMenu extends ListActivity{
 							 
 						 });
 					 dialog=builder.create();
-						dialog.show();
-						WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-						//customizing the width and location of the dialog on screen 
-						lp.copyFrom(dialog.getWindow().getAttributes());
-						lp.width = 600;
-						dialog.getWindow().setAttributes(lp);
+					 dialog.show();
+					 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+					 //customizing the width and location of the dialog on screen 
+					 lp.copyFrom(dialog.getWindow().getAttributes());
+					 lp.width = 600;
+					 dialog.getWindow().setAttributes(lp);
 					
 				}
 				if(position == 4)

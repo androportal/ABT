@@ -73,22 +73,22 @@ public class bankReconciliation extends Activity{
 	 
      
     public void onCreate(Bundle savedInstanceState) {
-       super.onCreate(savedInstanceState);
-       requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-       setContentView(R.layout.bank_recon_table);
+    	super.onCreate(savedInstanceState);
+    	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+    	setContentView(R.layout.bank_recon_table);
        
-       report = new Report();
-       client_id= Startup.getClient_id();
+    	report = new Report();
+    	client_id= Startup.getClient_id();
        
-       //customizing title bar
-       getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
+    	//customizing title bar
+    	getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
        
-       //two digit date format for dd and mm
+    	//two digit date format for dd and mm
       	mFormat= new DecimalFormat("00");
 		mFormat.setRoundingMode(RoundingMode.DOWN);
       
-       try {
-           	financialFromDate =Startup.getfinancialFromDate();
+		try {
+			financialFromDate =Startup.getfinancialFromDate();
 			String dateParts[] = financialFromDate.split("-");
 		   	String fromday  = dateParts[0];
 		   	String frommonth = dateParts[1];
@@ -98,53 +98,52 @@ public class bankReconciliation extends Activity{
 		   	month = Integer.parseInt(frommonth);
 		   	day = Integer.parseInt(fromday);
            
-           financialToDate=Startup.getFinancialToDate();
-           accountName = menu.selectedAccount;
-           fromDate = menu.givenfromDateString;
-           toDate = menu.givenToDateString;
-           cleared_tran_flag = menu.cleared_tran_flag; 
-           narration_flag = menu.narration_flag;
+		   	financialToDate=Startup.getFinancialToDate();
+		   	accountName = menu.selectedAccount;
+		   	fromDate = menu.givenfromDateString;
+		   	toDate = menu.givenToDateString;
+		   	cleared_tran_flag = menu.cleared_tran_flag; 
+		   	narration_flag = menu.narration_flag;
        
-           tvaccontName = (TextView) findViewById( R.id.tvReconAccName );
-           tvfinancialFromDate = (TextView) findViewById( R.id.tvfinancialFromDate );
-           tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
+		   	tvaccontName = (TextView) findViewById( R.id.tvReconAccName );
+		   	tvfinancialFromDate = (TextView) findViewById( R.id.tvfinancialFromDate );
+		   	tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
           
             
-           tvaccontName.setText("Account name: "+accountName);
-           tvfinancialToDate.setText("Period : "+fromDate+" to "+toDate);
+		   	tvaccontName.setText("Account name: "+accountName);
+		   	tvfinancialToDate.setText("Period : "+fromDate+" to "+toDate);
               
-           Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,"No Project"};
-           Object[] flag = new Object[]{cleared_tran_flag};
+		   	Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,"No Project"};
+		   	Object[] flag = new Object[]{cleared_tran_flag};
            
-           setTableAndStatement(params,flag);
+		   	setTableAndStatement(params,flag);
             
-           setbankRecon();
+		   	setbankRecon();
            
-           final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
-           btnSaveRecon.setVisibility(Button.VISIBLE);
-           final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
-           btnScrollDown.setOnClickListener(new OnClickListener() {
+		   	final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
+		   	btnSaveRecon.setVisibility(Button.VISIBLE);
+		   	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+           	btnScrollDown.setOnClickListener(new OnClickListener() {
 			
-			@Override
-			public void onClick(View v) {
-				   if(updown==false){
-	                     ScrollView sv = (ScrollView)findViewById(R.id.Scroll);
-	                     sv.fullScroll(ScrollView.FOCUS_DOWN); 
-	                     btnScrollDown.setBackgroundResource(R.drawable.up);
-	                     updown=true;
+           		@Override
+           		public void onClick(View v) {
+           			if(updown==false){
+           				ScrollView sv = (ScrollView)findViewById(R.id.Scroll);
+	                    sv.fullScroll(ScrollView.FOCUS_DOWN); 
+	                    btnScrollDown.setBackgroundResource(R.drawable.up);
+	                    updown=true;
 	                }else {
-	                     ScrollView sv = (ScrollView)findViewById(R.id.Scroll);
-	                     sv.fullScroll(ScrollView.FOCUS_UP); 
-	                     btnScrollDown.setBackgroundResource(R.drawable.down);
-	                     updown=false;
+	                    ScrollView sv = (ScrollView)findViewById(R.id.Scroll);
+	                    sv.fullScroll(ScrollView.FOCUS_UP); 
+	                    btnScrollDown.setBackgroundResource(R.drawable.down);
+	                    updown=false;
 	                }
-			}
-		});
+           		}
+           	});
             
-       } catch (Exception e) {
-    	   toastValidationMessage("Please try again");
-       }
-       
+		} catch (Exception e) {
+			toastValidationMessage("Please try again");
+		}
     }
    
     /*
@@ -153,8 +152,8 @@ public class bankReconciliation extends Activity{
      * add header and transaction rows in the first table and 
      * bank reconciliation statemnt in the second table
      */
-	private void setTableAndStatement(Object[] params, Object[] flag) {
-		bankReconResult = (Object[]) report.getLedgerForBankRecon(params,flag, client_id);
+    private void setTableAndStatement(Object[] params, Object[] flag) {
+    	bankReconResult = (Object[]) report.getLedgerForBankRecon(params,flag, client_id);
         
         bankReconGrid = new ArrayList<ArrayList>();
         for_naration = new ArrayList<ArrayList>();
@@ -176,13 +175,13 @@ public class bankReconciliation extends Activity{
              		if(narration_flag){
                  		//bankReconResultList.add((String) t[i].toString());
              			with_narration.add((String) t[i].toString());
-                         nara_flag = true;
+                        nara_flag = true;
                  	}
              	}
              	else{
              		//bankReconResultList.add((String) t[i].toString());
              		bankReconResultList.add((String) t[i].toString());
-                     with_narration.add((String) t[i].toString());
+                    with_narration.add((String) t[i].toString());
              	}
              	
              }
@@ -192,7 +191,6 @@ public class bankReconciliation extends Activity{
          } 
          if(cleared_tran_flag==true){
               for(int i=0;i<bankReconGrid.size();i++){
-                  
                       Cdate = bankReconGrid.get(i).get(6).toString();
                       for_clearenceDate.add(Cdate);
               }
@@ -200,10 +198,6 @@ public class bankReconciliation extends Activity{
         
          bankRecontable = (TableLayout)findViewById(R.id.maintable);
          addTable(bankRecontable,"");
-         
-         
-         
-         
          
          /*
           * let add bank reconciliation statement
@@ -215,20 +209,18 @@ public class bankReconciliation extends Activity{
              bankReconResultList = new ArrayList<String>();
              for(int i=0;i<(t.length);i++)
              {
-             		bankReconResultList.add((String) t[i].toString());
+            	 bankReconResultList.add((String) t[i].toString());
              	
              }
-              
              statementGrid.add(bankReconResultList);
          }
          
          statementtable = (TableLayout)findViewById(R.id.statementtable);
          statementtable.removeAllViews();
          addTable(statementtable, "statement");
-         
-		
 	}
 
+    
 	/*
 	 * this method allows to clear transactions and unclear the cleared transactions
 	 */
@@ -303,7 +295,6 @@ public class bankReconciliation extends Activity{
 									+tvclearanceDate.getText().toString()
 									+etmemo.getText().toString()); */
 									
-							
 						} 
 						/*
 						 * unclear the cleared transaction(delete cleared rows)
@@ -336,8 +327,6 @@ public class bankReconciliation extends Activity{
 							listOfRowsTobeClear.add(rowArray);
 						} 
 						
-						
-						
 					}//end of if
 				}//end of for
 				
@@ -359,20 +348,17 @@ public class bankReconciliation extends Activity{
 		        setTableAndStatement(params,clear_flag);
 		        
 				toastValidationMessage("Changes saved successfully");
-				
-        
-                
-		        
 			}//end of onclick
 		}); 
 	}//end of function setbankrecon
 
+	
 	/*
 	 * add header and transaction rows in the first table and 
      * bank reconciliation statemnt in the second table
 	 */
 	private void addTable(TableLayout tableID, String flag) {  
-		System.out.println("reco grid"+bankReconGrid);
+		//System.out.println("reco grid"+bankReconGrid);
 		//for adding only header and transaction rows
 		if(!flag.equalsIgnoreCase("statement")){
 			if(bankReconGrid.size() > 1){
@@ -390,30 +376,28 @@ public class bankReconciliation extends Activity{
 		            	columnValue.addAll(bankReconGrid.get(i));
 		            	for(int k=0;k<columnValue.size();k++){
 		                    /** Creating a TextView to add to the row **/
-		                		
-		                		addRow(columnValue.get(k),k,k,0);
-		                        params.height = 45;
+		            		addRow(columnValue.get(k),k,k,0);
+		                    params.height = 45;
 		                        
-		                      //hide vouchercode column
-		                        if(k==0){
-		                        	Ll.setVisibility(LinearLayout.GONE);//voucher code
-		                        }
+		                    //hide vouchercode column
+		                    if(k==0){
+		                    	Ll.setVisibility(LinearLayout.GONE);//voucher code
+		                    }
 		                        
-		                        if(k == 4 || k == 5){// dr and cr amount
-		                        	 label.setGravity(Gravity.CENTER|Gravity.RIGHT);
-				                }
-				                else
-				                {
-				                    label.setGravity(Gravity.CENTER);
-				                }
-		                        
-		                }
+		                    if(k == 4 || k == 5){// dr and cr amount
+		                    	label.setGravity(Gravity.CENTER|Gravity.RIGHT);
+				            	}
+		                    else
+		                    {
+		                    	label.setGravity(Gravity.CENTER);
+		                    }  
+		            	}
 		            	//add empty field for narration
 		            	if(narration_flag==true){
 	                    	addRow("",i,8,0);   //naration
 	                    }
 		               
-		                 // Add the TableRow to the TableLayout
+		            	// Add the TableRow to the TableLayout
 		                bankRecontable.addView(tr, new TableLayout.LayoutParams(
 		                        LayoutParams.FILL_PARENT,
 		                        LayoutParams.MATCH_PARENT));
@@ -476,7 +460,6 @@ public class bankReconciliation extends Activity{
 		                    if(narration_flag==true){
 		                    	addRow(for_naration.get(i).get(6).toString(),i,8,1);   //naration
 		                    }
-		            	
 		            }
 		            
 		            // Add the TableRow to the TableLayout
@@ -484,11 +467,10 @@ public class bankReconciliation extends Activity{
 		                    LayoutParams.FILL_PARENT,
 		                    LayoutParams.MATCH_PARENT));
 	            }
-	           
-	            
-	            
 	        }
 		}
+		
+		
 		/*
 		 * add reconciliation statement
 		 */
@@ -519,21 +501,18 @@ public class bankReconciliation extends Activity{
 	            			addStatementRow(columnValue.get(j)); 
 			            	params1.height = LayoutParams.WRAP_CONTENT;
 			            	if(j==5){//set right gravity for amount
-				                        label1.setText(columnValue.get(j)); 
-			            		
+			            		label1.setText(columnValue.get(j)); 
 				                label1.setGravity(Gravity.RIGHT);
 			            	}
 		            	}
 	            	}
-	            	
 	            } 
-	         // Add the TableRow to the TableLayout
+	            // Add the TableRow to the TableLayout
 	            tableID.addView(tr1, new TableLayout.LayoutParams(
 	                    LayoutParams.FILL_PARENT,
 	                    LayoutParams.MATCH_PARENT));
 			} 
 		}
-    	
     }
     
     
@@ -552,19 +531,18 @@ public class bankReconciliation extends Activity{
         }
         for(int k=0;k<ColumnNameList.length;k++){
             /** Creating a TextView to add to the row **/
-        		
-        		addRow(ColumnNameList[k],k,k,0);
-                label.setBackgroundColor(Color.parseColor("#348017"));
-                label.setGravity(Gravity.CENTER);
-                params.height = LayoutParams.WRAP_CONTENT;
-                //hide vouchercode column
-                if(k==0){
-                	Ll.setVisibility(LinearLayout.GONE);//voucher code
-                }
+        	addRow(ColumnNameList[k],k,k,0);
+        	label.setBackgroundColor(Color.parseColor("#348017"));
+        	label.setGravity(Gravity.CENTER);
+        	params.height = LayoutParams.WRAP_CONTENT;
+        	//hide vouchercode column
+        	if(k==0){
+        		Ll.setVisibility(LinearLayout.GONE);//voucher code
+        	}
         	
         }
        
-         // Add the TableRow to the TableLayout
+        // Add the TableRow to the TableLayout
         bankRecontable.addView(tr, new TableLayout.LayoutParams(
                 LayoutParams.FILL_PARENT,
                 LayoutParams.MATCH_PARENT));
@@ -605,12 +583,11 @@ public class bankReconciliation extends Activity{
                     if(nara_flag==false){
                     	int rowcount = bankRecontable.getChildCount();    
                         for(int k=0;k<rowcount;k++){
-                        View row = bankRecontable.getChildAt(rowid+1);
-                        LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
-                        tvdate = (TextView) l.getChildAt(0);
-                        clearence_date = (String) tvdate.getText();
-                       
-                       }
+                        	View row = bankRecontable.getChildAt(rowid+1);
+                        	LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
+                        	tvdate = (TextView) l.getChildAt(0);
+                        	clearence_date = (String) tvdate.getText();
+                        }
                     }
                     /*
 					 * if narration flag is true but 'cleared_tran_flag' is true,
@@ -622,15 +599,15 @@ public class bankReconciliation extends Activity{
                     	if(cleared_tran_flag){
                     		int rowcount = bankRecontable.getChildCount();    
                             for(int k=0;k<rowcount;k++){
-                            View row = bankRecontable.getChildAt(rowid+1);
-                            LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
-                            tvdate = (TextView) l.getChildAt(0);
-                            clearence_date = (String) tvdate.getText();
+                            	View row = bankRecontable.getChildAt(rowid+1);
+                            	LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
+                            	tvdate = (TextView) l.getChildAt(0);
+                            	clearence_date = (String) tvdate.getText();
                             }
                     	}  
                     	else{
-                            clearence_date ="";
-                            }
+                    		clearence_date ="";
+                    	}
                     }
                     
                     
@@ -667,7 +644,6 @@ public class bankReconciliation extends Activity{
 	                                    tvdate = (TextView) l.getChildAt(0);
 	                                    retrived_date = (String) tvdate.getText();
 	                                    result=retrived_date;
-                                   
                                    }
                                    /*
                                     * if date is cleared, we are setting a space in the textview
@@ -762,8 +738,7 @@ public class bankReconciliation extends Activity{
                                                     }
                                                 }
                                                 else{
-                                                    String message = "Please enter proper date";
-                                                    toastValidationMessage(message);
+                                                    toastValidationMessage("Please enter proper date");
                                                 }
                                               
                                             } catch (Exception e) {
@@ -771,19 +746,16 @@ public class bankReconciliation extends Activity{
                                             }
                                              
                                         }}
-                                   
-                                   
-                                   
                                     );
                                   
                                     dialog1=builder.create();
                                     dialog1.show();
                                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                                      //customizing the width and location of the dialog on screen
-                                      lp.copyFrom(((Dialog) dialog1).getWindow().getAttributes());
-                                      lp.height = 600;
-                                      lp.width = 400;
-                                      ((Dialog) dialog).getWindow().setAttributes(lp);   
+                                    //customizing the width and location of the dialog on screen
+                                    lp.copyFrom(((Dialog) dialog1).getWindow().getAttributes());
+                                    lp.height = 600;
+                                    lp.width = 400;
+                                    ((Dialog) dialog).getWindow().setAttributes(lp);   
                                 }
                                 /*
                                  * option 'clear date' will clear date in the textview and instead set just a space
@@ -791,14 +763,13 @@ public class bankReconciliation extends Activity{
                                  * so, we added just a space in textview)
                                  */
                                 if(pos==1){
-                                   
                                     int rowcount = bankRecontable.getChildCount();    
                                     for(int k=0;k<rowcount;k++){
                                         View row = bankRecontable.getChildAt(rowid+1);
                                         LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
                                         tvdate = (TextView) l.getChildAt(0);
                                         tvdate.setText(" ");
-                                      }
+                                    }
                                 }
                                 /*
                                  * 'set previous date' will set the previous cleared date of the transaction 
@@ -816,8 +787,6 @@ public class bankReconciliation extends Activity{
 										} catch (Exception e) {
 											toastValidationMessage("Please try again");
 										}
-                                        
-                                       
                                 }
                             }                           
                         });
@@ -848,96 +817,89 @@ public class bankReconciliation extends Activity{
                         sel_month = Integer.parseInt(frommonth);
                         sel_day = Integer.parseInt(fromday);
                         
-                       AlertDialog dialog2;
+                        AlertDialog dialog2;
                       
-                      //Preparing views
-                       LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                       View layout = inflater.inflate(R.layout.datepiker, null);
+                        //Preparing views
+                        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                        View layout = inflater.inflate(R.layout.datepiker, null);
                     
                    
-                       //Building DatepPicker dialog
-                       AlertDialog.Builder builder = new AlertDialog.Builder(bankReconciliation.this);
-                       builder.setView(layout);
-                       builder.setTitle("Set clearance date");
+                        //Building DatepPicker dialog
+                        AlertDialog.Builder builder = new AlertDialog.Builder(bankReconciliation.this);
+                        builder.setView(layout);
+                        builder.setTitle("Set clearance date");
                       
-                       final   DatePicker dp = (DatePicker) layout.findViewById(R.id.datePicker1);
-                       dp.init(sel_year,sel_month-1,sel_day, null);
+                        final   DatePicker dp = (DatePicker) layout.findViewById(R.id.datePicker1);
+                        dp.init(sel_year,sel_month-1,sel_day, null);
                       
-                       builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener() {
-                           @Override
-                           public void onClick(DialogInterface arg0, int arg1) {
+                        builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener() {
+                          	@Override
+                          	public void onClick(DialogInterface arg0, int arg1) {
                         	   //do nothing
-                           }
-                           });
+                          	}
+                           	});
                     
-                    
-                    
-                       builder.setPositiveButton("Set",new  DialogInterface.OnClickListener() {
-                           @Override
-                           public void onClick(DialogInterface arg0, int arg1) {
-                               try {
+                        builder.setPositiveButton("Set",new  DialogInterface.OnClickListener() {
+                        	@Override
+                        	public void onClick(DialogInterface arg0, int arg1) {
+                        		try {
                                 
-                                   int selectedYear = dp.getYear();
-                                   int selectedMonth = dp.getMonth();
-                                   int selectedDay =  dp.getDayOfMonth();
+                        			int selectedYear = dp.getYear();
+                        			int selectedMonth = dp.getMonth();
+                        			int selectedDay =  dp.getDayOfMonth();
                                 
-                                   SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                                   Date date1 = sdf.parse(financialFromDate);
-                                   Date date2 = sdf.parse(financialToDate);
-                                   Date date3 = sdf.parse(mFormat.format(Double.valueOf(selectedDay))+"-"
+                        			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                        			Date date1 = sdf.parse(financialFromDate);
+                        			Date date2 = sdf.parse(financialToDate);
+                        			Date date3 = sdf.parse(mFormat.format(Double.valueOf(selectedDay))+"-"
                                                    +mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(selectedMonth))))+ 1))+"-"
                                                    +mFormat.format(Double.valueOf(selectedYear)));
-                                   Calendar cal1 = Calendar.getInstance(); //financial from date
-                                   Calendar cal2 = Calendar.getInstance(); //financial to date
-                                   Calendar cal3 = Calendar.getInstance(); //voucher date
+                        			Calendar cal1 = Calendar.getInstance(); //financial from date
+                        			Calendar cal2 = Calendar.getInstance(); //financial to date
+                        			Calendar cal3 = Calendar.getInstance(); //voucher date
                                
-                                   cal1.setTime(date1);
-                                   cal2.setTime(date2);
-                                   cal3.setTime(date3);
+                        			cal1.setTime(date1);
+                        			cal2.setTime(date2);
+                        			cal3.setTime(date3);
                                
                                
-                                   if((cal3.after(cal1) && cal3.before(cal2)) || cal3.equals(cal1) || cal3.equals(cal2)){
+                        			if((cal3.after(cal1) && cal3.before(cal2)) || cal3.equals(cal1) || cal3.equals(cal2)){
                                    
                                    
-                                       date = mFormat.format(Double.valueOf(selectedDay))+"-"
+                        				date = mFormat.format(Double.valueOf(selectedDay))+"-"
                                                +mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(selectedMonth))))+ 1))+"-"
                                                +mFormat.format(Double.valueOf(selectedYear));
                                    
-                                       bankRecontable = (TableLayout)findViewById(R.id.maintable);
-                                       int rowcount = bankRecontable.getChildCount();
-                                       for(int k=0;k<rowcount;k++){
-                                           View row = bankRecontable.getChildAt(rowid+1);
-                                           LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
-                                           tvdate = (TextView) l.getChildAt(0);
-                                           tvdate.setText(date);
-                                       }
-                                   }
-                                   else{
-                                       String message = "Please enter proper date";
-                                       toastValidationMessage(message);
-                                   }
+                        				bankRecontable = (TableLayout)findViewById(R.id.maintable);
+                        				int rowcount = bankRecontable.getChildCount();
+                        				for(int k=0;k<rowcount;k++){
+                        					View row = bankRecontable.getChildAt(rowid+1);
+                        					LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
+                        					tvdate = (TextView) l.getChildAt(0);
+                        					tvdate.setText(date);
+                        				}
+                        			}
+                        			else{
+                        				toastValidationMessage("Please enter proper date");
+                        			}
                                
-                               } catch (Exception e) {
+                        		} catch (Exception e) {
                              
-                               }
+                        		}
                               
-                           }
-                       });
+                        	}
+                        });
                       
-                      
-                      
-                      
-                       dialog2=builder.create();
-                       dialog2.show();
-                       WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                       //customizing the width and location of the dialog on screen
-                       lp.copyFrom(((Dialog) dialog2).getWindow().getAttributes());
-                       lp.height = 600;
-                       lp.width = 400;
-                       ((Dialog) dialog2).getWindow().setAttributes(lp);
-                      
+                        dialog2=builder.create();
+                        dialog2.show();
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        //customizing the width and location of the dialog on screen
+                        lp.copyFrom(((Dialog) dialog2).getWindow().getAttributes());
+                        lp.height = 600;
+                        lp.width = 400;
+                        ((Dialog) dialog2).getWindow().setAttributes(lp);
+                       
                     }
-                  
                 }
             });
         }
@@ -968,7 +930,6 @@ public class bankReconciliation extends Activity{
         label1.setBackgroundColor(Color.BLACK);
         label1.setPadding(2, 2, 2, 2);
         label1.setClickable(false);
-        
         
         Ll1 = new LinearLayout(this);
         params1 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
@@ -1032,14 +993,12 @@ public class bankReconciliation extends Activity{
     				}
 	        	}
 	        	else{
-	        		String message = "Please enter proper voucher date";
-					toastValidationMessage(message);
+					toastValidationMessage("Please enter proper voucher date");
 	        	}
 	        	
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
-			
 		}
     };
 
