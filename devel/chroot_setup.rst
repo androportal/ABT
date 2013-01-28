@@ -15,7 +15,7 @@ Setting up Chroot Environment
    	
 **On Ubuntu System**
  	
- 	If you are working on emulator then please see `Backend server setup <backend_server.html#how-to-run-gkaakashcore-server>`_ for set up all the depnedencies.
+ 	If you are working on emulator then please see `Backend server setup <backend_server.html#how-to-run-abtcore-server>`_ for set up all the depnedencies.
  	
 
    

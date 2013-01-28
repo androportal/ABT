@@ -1,5 +1,6 @@
-rpc_reports
-+++++++++++
+rpc_reports.py
+++++++++++++++
+
 	+ This rpc module will provide details about all reports
 	+ It privides calculation's for all reports and it's display
 	+ it genarate Ledger,trial balance,balancesheet,profit and loss

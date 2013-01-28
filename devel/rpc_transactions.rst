@@ -1,8 +1,9 @@
 .. toctree::
    :numbered:
    
-rpc_transactions
-++++++++++++++++
+rpc_transactions.py
++++++++++++++++++++
+
 	+ This rpc module will proved details about all transactions
 	+ It will save , edit , clone , delete and some other operations.
 	+ create class ``transactions`` inherit the ``XMLRPC`` class

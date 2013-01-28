@@ -132,9 +132,13 @@ On Aakash Device(ARM-arch)
 	
 		sudo apt-get install ia32-libs-multiarch
 
-	Once adb is in place, attach USB data cable provided with Aakash to your linux system and other end(micro-socket) to Aakash. Now you can push``the content of ``ABTcore/ directory inside Aakash to PATH ``/data/local/abt/root/ABTcore`` (please refer this link for adb usage). 
-	Please note that we have a chroot environment under ``/data/local/abt`` on Aakash. Details of chroot'ing is not provided 
-	here. We will soon upload an chroot image which can be downloaded and should be kept in ``/mnt/sdcard/`` of Aakash.
+	Once adb is in place, attach USB data cable provided with Aakash to your linux system and other end(micro-socket) to Aakash. 
+	
+	Now you can ``push`` the content of ``ABTcore/`` directory inside Aakash to PATH ``/data/local/abt/root/ABTcore`` (please refer this link for adb usage). 
+	
+	Please note that we have a chroot environment under ``/data/local/abt`` on Aakash. Details of chroot'ing is not provided here. 
+	
+	We will soon upload an chroot image which can be downloaded and should be kept in ``/mnt/sdcard/`` of Aakash.
 
 	Once ABTcore is pushed inside the device, do
 	
@@ -184,6 +188,13 @@ abtserver
 ~~~~~~~~~
 
         + It is a full package of ``ABTcore`` which contain all the ``rpc`` modules each single rpc files does specific work.
+        
+        ** Note: 
+		 #. Input parameter`s ``queryParams`` for any function will be the list of input values.
+		 #. to remove blanckespaces from input values used 
+		    ``blankspace.remove_whitespaces(queryParams)`` from ``modules`` of ``ABTcore``.
+		 #. to convert String date time to sqlite datetime format used ``from datetime import datetime, time``. 
+		
        
 	.. toctree::
 	   :numbered:
@@ -199,11 +210,7 @@ abtserver
 	   rpc_organisation
            
            
-	** Note: 
-		 #. Input parameter`s ``queryParams`` for any function will be the list of input values.
-		 #. to remove blanckespaces from input values used 
-		    ``blankspace.remove_whitespaces(queryParams)`` from ``modules`` of ``ABTcore``.
-		 #. to convert String date time to sqlite datetime format used ``from datetime import datetime, time``. 
+	
        
 
 

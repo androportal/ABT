@@ -1,5 +1,6 @@
-data.py
-+++++++
+rpc_data.py
++++++++++++
+
 	+ This file gives the information about states and cities present in the ``places.db``.
 	+ you can locate ``places.db`` in ABTcore/src before running ABTcore but if you have ABTcore
 	  running om your machine then locate it at ``/opt/abt/``

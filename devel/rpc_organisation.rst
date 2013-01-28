@@ -1,8 +1,9 @@
 .. toctree::
    :numbered:
 
-rpc_organisation
-++++++++++++++++
+rpc_organisation.py
++++++++++++++++++++
+
 	+ This rpc file provide the information about the organisation
 	+ it performs the task like save,edit,update organisation information
 	+ also perform some task related to project and preferences

@@ -215,7 +215,7 @@ How to start ABT
 		- then execute: 
 		    	::
 		    		
-		    		adb install bin/gkAakash.apk
+		    		adb install bin/ABT.apk
 
     		- On your device, locate ABT and open it.
 
@@ -241,13 +241,13 @@ How to start ABT
 	    	- Make sure the Android SDK platform-tools/ directory is included in your PATH environment variable, then execute: 
 		    	::
 		    		
-		    		adb install bin/gkAakash.apk
+		    		adb install bin/ABT.apk
 
 	    	- On the emulator, locate ABT and open it.
 
 
 + Start back-end server
-	Before running ABT android application on eclipse, make sure that gkAakashCore is started and not inside an  exception. To start the server, go through `this <backend_server.html#how-to-run-gkaakashcore-server>`_ link.	
+	Before running ABT android application on eclipse, make sure that ABTcore is started and not inside an  exception. To start the server, go through `this <backend_server.html#how-to-run-abtcore-server>`_ link.	
 
 	
 + Run ABT on eclipse
