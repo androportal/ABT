@@ -313,6 +313,7 @@ public class preferences extends Activity {
     public void onBackPressed(){
         //To pass on the activity to the next page
         Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
    

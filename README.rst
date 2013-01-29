@@ -65,13 +65,13 @@ Simple and recommended install procedure
 Alternate installation
 ~~~~~~~~~~~~~~~~~~~~~~
 
-  #. Download compressed image ``gkaakash.img`` to your computer from
+  #. Download compressed image ``abt.img`` to your computer from
      this `link
-     <https://github.com/downloads/androportal/ABTcore/gkaakash.img.tar.bz2>`_. The
+     <https://github.com/downloads/androportal/ABTcore/abt.tar.gz>`_. The
      untar or unzip process of above file will produce
-     ``gkaakash.img`` or you can download an entire image from `here
-     <https://github.com/downloads/androportal/ABTcore/gkaakash.img>`_. Copy
-     ``gkaakash.img`` to sdcard(internal or external) of your Aakash
+     ``abt.img`` or you can download an entire image from `here
+     <https://github.com/downloads/androportal/ABTcore/abt.img>`_. Copy
+     ``abt.img`` to sdcard(internal or external) of your Aakash
      tablet.
   #. Then install `ABT.apk <http://aakashlabs.org/builds/ABT.apk>`_ in
      your Aakash, ``shutdown`` and ``start`` your Aakash to finish
@@ -84,13 +84,13 @@ Yet another alternate Installation
      <https://github.com/downloads/androportal/ABTcore/install.zip>`_
      in your system
   #. Connect Aakash to your system using an USB data cable.
-  #. Download compressed image ``gkaakash.img`` from this `link
-     <https://github.com/downloads/androportal/ABTcore/gkaakash.img.tar.bz2>`_
+  #. Download compressed image ``abt.img`` from this `link
+     <https://github.com/downloads/androportal/ABTcore/abt.tar.gz>`_
      or you can download an entire image from `here
-     <https://github.com/downloads/androportal/ABTcore/gkaakash.img>`_
+     <https://github.com/downloads/androportal/ABTcore/abt.img>`_
      , uncompress and copy to ``install`` directory ::
        
-       cp -v gkaakash.img install
+       cp -v abt.img install
 
   #. ``cd`` to ``install`` directory ::
       
@@ -156,19 +156,19 @@ Important note
 
 To test Aakash Business Tool on emulator, go to
 
-- ``gkAakash/src/com/gkaakash/coreconection/CoreConnection.java`` and
+- ``ABT/src/com/gkaakash/coreconection/CoreConnection.java`` and
   change the url from ``http://127.0.0.1:7081`` to
   ``http://10.0.2.2:7081``
-- ``gkAakash/src/com/example/gkaakash/MainActivity``, comment line
+- ``ABT/src/com/example/gkaakash/MainActivity``, comment line
   no. 88 and 124. Basically you need to comment ``help_popup()``
   function on both lines.
-- ``gkAakash/src/com/example/gkaakash/createOrg``, comment line no. 57
+- ``ABT/src/com/example/gkaakash/createOrg``, comment line no. 57
   and 58. You need to comment below two line ::
 
     MainActivity.no_dailog = true;
     MainActivity.help_dialog.dismiss();
 
-- ``gkAakash/src/com/example/gkaakash/selectOrg``, comment line
+- ``ABT/src/com/example/gkaakash/selectOrg``, comment line
   no. 43, which is ::
      
      MainActivity.no_dailog = true;

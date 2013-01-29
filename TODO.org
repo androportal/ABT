@@ -1,0 +1,30 @@
+* TODO :: b4 any push
+
+
+** ABTcore/install/
+  *** aakash.sh
+  *** preinstall.sh
+  *** APK
+
+** aakash.sh
+  *** gkstart.py (change the PATH to ABTcore)
+  
+** chroot
+  *** creating CHROOT env
+  *** installing pkg in chroot for ABT
+  *** how to build an image
+  
+**  multiple dr cr, recongrid is incorrect in bank recon
+
+    ***    needed to add preticularRow in [ ] in update bank recon
+    ***    title for trial balance types and  balance sheet type
+    ***    when account name is edited, it is affecting bankrecon table
+
+  
+** floating header
+    *** search voucher
+    *** bank reconciliation
+
+** import and export data
+
+**  sync data

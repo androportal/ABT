@@ -1,5 +1,6 @@
 package com.example.gkaakash;
 
+import java.io.File;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -53,9 +54,12 @@ public class createOrg extends MainActivity {
 		setContentView(R.layout.create_org);
 		client_id= Startup.getClient_id();
 		
+		help_flag = new File("/data/data/com.example.gkaakash/files/help_flag.txt");
+		if(!help_flag.exists()){
+			MainActivity.no_dailog = true; //comment this line if running this app on emulator
+			MainActivity.help_dialog.dismiss(); //comment this line if running this app on emulator
+		}
 		
-		MainActivity.no_dailog = true; //comment this line if running this app on emulator
-		MainActivity.help_dialog.dismiss(); //comment this line if running this app on emulator
 		
 		//for two digit format date for dd and mm
 		mFormat= new DecimalFormat("00");

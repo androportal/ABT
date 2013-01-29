@@ -11,8 +11,8 @@ export EG=/data/example
 export SDCARD=/mnt/sdcard/APL
 export WWW=/data/local/linux/var/www/html
 
-### gkaakash 
-export MNTG=/data/local/gkaakash
+### Aakash Business Tool 
+export MNTG=/data/local/abt
 
 ### ipython
 export MNTI=/data/local/ipy
@@ -111,29 +111,29 @@ while true
         
 	##############################################################
 
-        if [ -f /mnt/sdcard/gkaakash.img ] && [ $GK -eq 1 ]
+        if [ -f /mnt/sdcard/abt.img ] && [ $GK -eq 1 ]
         then
-            # mounting essential file systems to chroot for gkaakash
-        	busybox mount -o loop /mnt/sdcard/gkaakash.img $MNTG
+            # mounting essential file systems to chroot for abt
+        	busybox mount -o loop /mnt/sdcard/abt.img $MNTG
             busybox mount -t proc proc $MNTG/proc
             busybox mount -o bind /dev $MNTG/dev
             busybox mount -t sysfs sysfs $MNTG/sys
             busybox chroot  $MNTG /bin/bash -c "mount /dev/pts" 
             busybox chroot $MNTG /bin/bash -c "source /root/.bashrc"
-        	#busybox chroot /data/local/gkaakash /bin/bash -c "python /root/ABTcore/abtstart &> '/dev/null' &"
+        	#busybox chroot /data/local/abt /bin/bash -c "python /root/ABTcore/abtstart &> '/dev/null' &"
         	busybox chroot ${MNTG} /bin/bash -c "/root/ABTcore/abtstart"
             GK=0
 	
-            elif [ -f /mnt/extsd/gkaakash.img ] && [ $GK -eq 1 ]
+            elif [ -f /mnt/extsd/abt.img ] && [ $GK -eq 1 ]
             then
-            # mounting essential file systems to chroot for gkaakash
-        	busybox mount -o loop /mnt/extsd/gkaakash.img $MNTG
+            # mounting essential file systems to chroot for abt
+        	busybox mount -o loop /mnt/extsd/abt.img $MNTG
             busybox mount -t proc proc $MNTG/proc
             busybox mount -o bind /dev $MNTG/dev
             busybox mount -t sysfs sysfs $MNTG/sys
             busybox chroot  $MNTG /bin/bash -c "mount /dev/pts" 
             busybox chroot $MNTG /bin/bash -c "source /root/.bashrc"
-	        #busybox chroot /data/local/gkaakash /bin/bash -c "python /root/ABTcore/abtstart &> '/dev/null' &"
+	        #busybox chroot /data/local/abt /bin/bash -c "python /root/ABTcore/abtstart &> '/dev/null' &"
         	busybox chroot ${MNTG} /bin/bash -c "/root/ABTcore/abtstart"
             GK=0
         fi

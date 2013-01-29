@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
     static boolean editDetails=false;
     static AlertDialog help_dialog;
     private ProgressDialog mProgressDialog, progressBar;
-    String checkFlag;
+    static String checkFlag;
     int help_option_menu_flag = 0;
     private int group1Id = 1;
     int Help = Menu.FIRST;
@@ -113,7 +113,7 @@ public class MainActivity extends Activity {
         // copy 'aakash.sh and 'preinstall.sh to their respective paths'
         File path = new File("/data/data/com.example.gkaakash/files/copyFilesFlag.txt");
         if(!path.exists()){
-        	//loadDataFromAsset();
+        	loadDataFromAsset();
         }
         else {
         	//Toast.makeText(context, "not copying files from asset", Toast.LENGTH_SHORT).show();
@@ -124,7 +124,10 @@ public class MainActivity extends Activity {
         	help_popup(); 
         }
         else{
-        	help_dialog.dismiss();
+        	if(checkFlag=="false"){
+        		help_dialog.dismiss();
+        	}
+        	
         }
        
     }
@@ -271,15 +274,15 @@ public class MainActivity extends Activity {
     	/**
          * checks existance of:
          * 1) /data/local/linux/etc/fstab
-         * 2) /mnt/sdcard/gkaakash.img
-         * 3) /mnt/sdcard/gkaakash.img.tar.gz
+         * 2) /mnt/sdcard/abt.img
+         * 3) /mnt/sdcard/abt.tar.gz
          * 4) /data/data/com.example.gkaakash/files/help_flag.txt
          * 
          **/
-        File fstab = new File("/data/local/gkaakash/etc/fstab");
-        checkImg = new File("/mnt/sdcard/gkaakash.img");
-        checkImgextsd = new File("/mnt/extsd/gkaakash.img");
-        checkTar = new File("/mnt/sdcard/gkaakash.img.tar.gz");
+        File fstab = new File("/data/local/abt/etc/fstab");
+        checkImg = new File("/mnt/sdcard/abt.img");
+        checkImgextsd = new File("/mnt/extsd/abt.img");
+        checkTar = new File("/mnt/sdcard/abt.tar.gz");
         help_flag = new File("/data/data/com.example.gkaakash/files/help_flag.txt");
         
         if(fstab.exists()) {
@@ -359,7 +362,7 @@ public class MainActivity extends Activity {
                                                 public void onClick(DialogInterface dialog, int id) {
                                                     dialog.dismiss();
                                                     help_dialog.dismiss();
-                                                    String[] command = {"rm /mnt/sdcard/gkaakash.img.tar.gz"};
+                                                    String[] command = {"rm /mnt/sdcard/abt.tar.gz"};
                                                     RunAsRoot(command);  
                                                     finish();
                                                     android.os.Process.killProcess(android.os.Process.myPid());
@@ -420,7 +423,7 @@ public class MainActivity extends Activity {
         	 * below link is within IITB
         	 **/
     	
-            String url = "http://10.102.152.27/downloads/gkaakash.img.tar.gz";
+            String url = "http://10.102.152.4/abt_image/abt.tar.gz";
             new DownloadFileAsync().execute(url);
         }    
         
@@ -564,7 +567,7 @@ public class MainActivity extends Activity {
 
                 InputStream input = new BufferedInputStream(url.openStream());
                 OutputStream output = new FileOutputStream(
-                        "/mnt/sdcard/gkaakash.img.tar.gz");
+                        "/mnt/sdcard/abt.tar.gz");
 
                 byte data[] = new byte[1024];
 
@@ -666,7 +669,7 @@ public class MainActivity extends Activity {
 			// 
 			try {      
 				
-                String strSourceFile = "/mnt/sdcard/gkaakash.img.tar.gz";
+                String strSourceFile = "/mnt/sdcard/abt.tar.gz";
                 String strDest = "/mnt/sdcard/";
                 System.out.println(strSourceFile);
               //  Toast.makeText(context, "aa"+strSourceFile, Toast.LENGTH_SHORT).show();
@@ -692,7 +695,7 @@ public class MainActivity extends Activity {
 			}
 			else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		        builder.setMessage("Failed to download gkaakash.img, exiting the application")
+		        builder.setMessage("Failed to download abt.img, exiting the application")
 		                .setCancelable(false)
 		                .setPositiveButton("Ok",
 		                        new DialogInterface.OnClickListener() {
