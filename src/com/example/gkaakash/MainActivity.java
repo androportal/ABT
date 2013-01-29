@@ -420,10 +420,10 @@ public class MainActivity extends Activity {
                   
                 }  */
         	/**
-        	 * below link is within IITB
+        	 * download image from aakashlabs.org
         	 **/
     	
-            String url = "http://10.102.152.4/abt_image/abt.tar.gz";
+            String url = "http://aakashlabs.org/builds/abt.tar.gz";
             new DownloadFileAsync().execute(url);
         }    
         

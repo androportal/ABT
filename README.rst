@@ -160,10 +160,10 @@ To test Aakash Business Tool on emulator, go to
   change the url from ``http://127.0.0.1:7081`` to
   ``http://10.0.2.2:7081``
 - ``ABT/src/com/example/gkaakash/MainActivity``, comment line
-  no. 88 and 124. Basically you need to comment ``help_popup()``
+  no. 88 and 128. Basically you need to comment ``help_popup()``
   function on both lines.
-- ``ABT/src/com/example/gkaakash/createOrg``, comment line no. 57
-  and 58. You need to comment below two line ::
+- ``ABT/src/com/example/gkaakash/createOrg``, comment line no. 59
+  and 60. You need to comment below two line ::
 
     MainActivity.no_dailog = true;
     MainActivity.help_dialog.dismiss();
