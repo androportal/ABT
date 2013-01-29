@@ -51,9 +51,9 @@ Simple and recommended install procedure
      ``WiFi`` -> ``Advance Options``. Also bypass ``127.0.0.1`` proxy
      settings.  This is **not** required for direct internet
      connections
-  #. Open the browser and visit this link:
-     **http://aakashlabs.org/builds/ABT.apk**. Download and install
-     the APK.
+  #. Open the browser on Aakash and visit this link:
+     **http://aakashlabs.org/builds/ABT.apk**. Download and install the
+     APK.
   #. Click on **ABT icon** from android's application menu and allow
      it to download ``~300MB`` image file.
   #. The download and uncompress process will take some while, so
@@ -65,12 +65,9 @@ Simple and recommended install procedure
 Alternate installation
 ~~~~~~~~~~~~~~~~~~~~~~
 
-  #. Download compressed image ``abt.img`` to your computer from
-     this `link
-     <https://github.com/downloads/androportal/ABTcore/abt.tar.gz>`_. The
-     untar or unzip process of above file will produce
-     ``abt.img`` or you can download an entire image from `here
-     <https://github.com/downloads/androportal/ABTcore/abt.img>`_. Copy
+  #. Download compressed image ``abt.img`` to your computer from this
+     `link <http://aakashlabs.org/builds/abt.tar.gz>`_. The untar or
+     unzip process of above file will produce ``abt.img``. Copy
      ``abt.img`` to sdcard(internal or external) of your Aakash
      tablet.
   #. Then install `ABT.apk <http://aakashlabs.org/builds/ABT.apk>`_ in
@@ -85,10 +82,8 @@ Yet another alternate Installation
      in your system
   #. Connect Aakash to your system using an USB data cable.
   #. Download compressed image ``abt.img`` from this `link
-     <https://github.com/downloads/androportal/ABTcore/abt.tar.gz>`_
-     or you can download an entire image from `here
-     <https://github.com/downloads/androportal/ABTcore/abt.img>`_
-     , uncompress and copy to ``install`` directory ::
+     <http://aakashlabs.org/builds/abt.tar.gz>`_ , uncompress and copy
+     to ``install`` directory ::
        
        cp -v abt.img install
 
@@ -160,10 +155,10 @@ To test Aakash Business Tool on emulator, go to
   change the url from ``http://127.0.0.1:7081`` to
   ``http://10.0.2.2:7081``
 - ``ABT/src/com/example/gkaakash/MainActivity``, comment line
-  no. 88 and 124. Basically you need to comment ``help_popup()``
+  no. 88 and 128. Basically you need to comment ``help_popup()``
   function on both lines.
-- ``ABT/src/com/example/gkaakash/createOrg``, comment line no. 57
-  and 58. You need to comment below two line ::
+- ``ABT/src/com/example/gkaakash/createOrg``, comment line no. 59
+  and 60. You need to comment below two line ::
 
     MainActivity.no_dailog = true;
     MainActivity.help_dialog.dismiss();
