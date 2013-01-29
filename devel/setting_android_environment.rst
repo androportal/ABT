@@ -247,7 +247,7 @@ How to start ABT
 
 
 + Start back-end server
-	Before running ABT android application on eclipse, make sure that ABTcore is started and not inside an  exception. To start the server, go through `this <backend_server.html#how-to-run-abtcore-server>`_ link.	
+	Before running ABT android application on eclipse, make sure that ABTcore is started and not inside an  exception. To start the server, go through `this <backend_server.html#how-to-run-abtcoreserver>`_ link.	
 
 	
 + Run ABT on eclipse
