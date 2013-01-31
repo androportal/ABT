@@ -18,7 +18,7 @@ android-xmlrpc client generation
 * Create class CoreConnection
 
 * xmlrpc-server(gkAakashCore) is running on 7081 port. To connect with that port and generate client, 
- we need to create an object of url and pass it to the XMLRPCClient. 
+  we need to create an object of url and pass it to the XMLRPCClient. 
 	::
 		
 		public class CoreConnection {
@@ -99,19 +99,18 @@ Connection to back-end(xmlrpc-server)
 			return client_id;
 		}
 
-
 Referenced Libraries
 --------------------
 + **ant-1.6.jar**
 
   Start eclipse, There is a ``jar`` file called ``ant-1.6.jar`` in ABT/libs which is used to untar a tar file programmatically from java into a certain directory. For information, ant-1.6.jar.tar can be downloaded from `ant.jar <http://www.java2s.com/Code/Jar/a/Downloadant16jar.htm>`_.
-	
+    
 
 + **android-xmlrpc.jar**
 
-  android-xmlrpc.jar is located at ABT/libs. As ABT is a client-server application, to access the remote procedure call we have used android-xmlrpc client access method on remote server. To download visit `android-xmlrpc <http://www.java2s.com/Code/Jar/a/Downloadandroidxmlrpcjar.htm>`_.	
-	
-	
+  android-xmlrpc.jar is located at ABT/libs. As ABT is a client-server application, to access the remote procedure call we have used android-xmlrpc client access method on remote server. To download visit `android-xmlrpc <http://www.java2s.com/Code/Jar/a/Downloadandroidxmlrpcjar.htm>`_.   
+
+
 Android AndroidManifest.xml, src and res
 ----------------------------------------
 you should be aware of a few directories and files in the Android project:
@@ -1140,6 +1139,168 @@ Maintaining organisations
 		      }
 
 
+	* **File  res/layout/create_org.xml**
+
+		::
+
+			?xml version="1.0" encoding="utf-8"?>
+			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			 android:layout_width="fill_parent" 
+			 android:layout_height="fill_parent"
+			 android:orientation="vertical"
+			 android:weightSum="100"
+			 android:background="@drawable/dark_gray_background">
+			<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:background="@drawable/dark_gray_background"
+			    android:layout_weight="80">
+			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			    xmlns:tools="http://schemas.android.com/tools"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:orientation="vertical" 
+			    android:paddingLeft="10dp"
+			 	android:paddingRight="10dp">
+
+			    <TextView
+				android:id="@+id/tvOrgName"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="Enter organisation name"
+				android:textColor="#FFFFFF"
+				android:textSize="20dp" />
+
+			    <EditText
+				android:id="@+id/etOrgName"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:ems="10"
+				android:hint="Maximum 50 characters " 
+				android:inputType="textCapWords"
+				android:maxLength="50">
+
+				<requestFocus android:layout_width="wrap_content" />
+
+			    </EditText>
+
+			    <TextView
+				android:id="@+id/tvOrgType"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="Select organisation type"
+				android:textColor="#FFFFFF"
+				android:textSize="20dp" />
+
+			    <Spinner
+				android:id="@+id/sOrgType"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:entries="@array/orgType_arrays"
+				android:prompt="@string/orgType_prompt" />
+			    
+			    <TextView
+				android:id="@+id/tvFnclYear"
+				android:layout_width="fill_parent"
+				android:layout_height="60dp"
+				android:layout_weight="30"
+				android:gravity="center"
+				android:text="Financial year"
+				android:textColor="#FFFFFF"
+				android:textSize="20dp" />
+			    
+			      
+			    <LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:paddingLeft="40dp"
+				android:paddingRight="40dp"
+				android:weightSum="100" >
+
+				<Button
+				    android:id="@+id/btnChangeFromDate"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="40"
+				    android:textSize="20dp"
+				    android:text="Set from date" />
+					<View
+					android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:layout_weight="20" >
+			    	</View>
+				<Button
+				    android:id="@+id/btnChangeToDate"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="40"
+				    android:textSize="20dp"
+				    android:text=" Set to date " />
+			    </LinearLayout>
+			    
+			    <LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:weightSum="100" 
+				android:paddingLeft="40dp"
+				android:paddingRight="40dp">
+
+				<TextView
+				    android:id="@+id/tvFromDate"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="40"
+				    android:gravity="center"
+				    android:text=""
+				    android:textSize="20dp"
+				    android:textColor="#FFFFFF" />
+
+				<View
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:layout_weight="20" >
+			    	</View>
+
+				<TextView
+				    android:id="@+id/tvToDate"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="40"
+				    android:gravity="center"
+				    android:text=""
+				   	android:textSize="20dp"
+				    android:textColor="#FFFFFF" />
+			    </LinearLayout>
+
+			    
+			</LinearLayout>
+			</ScrollView>
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_weight="20"
+				android:layout_alignParentBottom="true"
+				android:background="@drawable/blackbutton" >
+
+				<Button
+				    android:id="@+id/btnNext"
+				    android:layout_width="fill_parent"
+				    android:layout_height="match_parent"
+				    android:layout_gravity="center_vertical"
+				    android:text="Next"
+				    android:textSize="20dp" />
+			    </LinearLayout>
+			</LinearLayout>
+
+.. image:: images/create_org.png
+	   :name: ABT main page
+	   :align: center
+
+
 * **File src/com/example/gkaakash/createOrg.java**
 
 	* To get started with the application, there should be atleast one organization.
@@ -1181,7 +1342,26 @@ Maintaining organisations
 	* onCreate method loads all the required methods at load time.
 
 		::	
-	
+
+			TextView tvDisplayFromDate, tvDisplayToDate;
+			Button btnChangeFromDate, btnChangeToDate, btnNext;
+			static int year, month, day, toYear, toMonth, toDay;
+			static final int FROM_DATE_DIALOG_ID = 0;
+			static final int TO_DATE_DIALOG_ID = 1;
+			Spinner orgType; 
+			String org;
+			static String organisationName,orgTypeFlag,selectedOrgType,todate;
+			static String fromdate;
+			AlertDialog dialog;
+			final Calendar c = Calendar.getInstance();
+			final Context context = this;
+			private EditText orgName;
+			Object[] deployparams;
+			DecimalFormat mFormat;
+			private Object[] orgNameList;
+			Object[] financialyearList;
+			boolean orgExistFlag;
+			static Integer client_id;
 			@Override
 			public void onCreate(Bundle savedInstanceState) {
 				super.onCreate(savedInstanceState);
@@ -1385,6 +1565,298 @@ Maintaining organisations
 		
 		    }
 
+	**File  res/layout/select_org.xml**
+
+		::
+
+			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				   android:layout_width="fill_parent"
+				   android:layout_height="fill_parent"
+				   android:background="@drawable/dark_gray_background"
+				   android:orientation="vertical"
+				   android:padding="20dp" >
+
+				   <LinearLayout
+				       android:layout_width="match_parent"
+				       android:layout_height="wrap_content"
+				       android:orientation="vertical" >
+
+				       <LinearLayout
+					   android:layout_width="match_parent"
+					   android:layout_height="81dp" >
+
+					   <TableLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+			       
+					 <TableRow
+					     android:layout_width="wrap_content"
+					     android:layout_height="wrap_content" >
+
+					   <TextView
+					       android:id="@+id/textView1"
+					       android:layout_width="wrap_content"
+					       android:layout_height="wrap_content"
+					       android:layout_weight="0.5"
+					       android:text="Organisation name"
+					       android:textColor="#FFFFFF"
+					       android:textSize="20dp" />
+
+					   <Spinner
+					       android:id="@+id/sGetOrgNames"
+					       android:layout_width="0dip"
+					       android:layout_height="wrap_content"
+					       android:layout_weight="2.5"
+					       android:prompt="@string/orgName_prompt" />
+
+					   </TableRow>
+					   </TableLayout>
+				       </LinearLayout>
+				   </LinearLayout>
+
+				   <LinearLayout
+				       android:layout_width="match_parent"
+				       android:layout_height="wrap_content" >
+
+				     <TableRow
+					 android:layout_width="fill_parent"
+					 android:layout_height="wrap_content" >
+
+				       <TextView
+					   android:id="@+id/textView2"
+					   android:layout_width="wrap_content"
+					   android:layout_height="wrap_content"
+					   android:layout_weight="0.5"
+					   android:text="Financial year         "
+					   android:textColor="#FFFFFF"
+					   android:textSize="20dp" />
+
+				       <Spinner
+					   android:id="@+id/sGetFinancialYear"
+					   android:layout_width="0dip"
+					   android:layout_height="wrap_content"
+					   android:layout_weight="2.5"
+					   android:prompt="@string/financialyear_prompt"/>
+					</TableRow>
+				   </LinearLayout>
+
+				    
+				    <LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_weight="20">
+
+				<Button
+				    android:id="@+id/btnDeleteOrg"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_gravity="center_vertical"
+				    android:layout_weight="0.90"
+				    android:text="Delete organisation"
+				    android:textSize="20dp" />
+		
+				<Button
+				    android:id="@+id/bProceed"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="0.96"
+				    android:text="  Proceed >>"
+				    android:textSize="20dp" 
+				    android:layout_gravity="center_vertical"/>
+
+			</LinearLayout>
+			</LinearLayout>
+
+.. image:: images/select_org.png
+	   :name: ABT main page
+	   :align: center
+
+
+* **File src/com/example/gkaakash/selectOrg.java**
+
+	* This page allows to select the already created or existing organisation from database
+	  with a particular financial year.
+
+	* Its activiy is explained below along with code. 
+
+	* The activity contains the essential and required import like
+
+		::
+
+			import java.util.ArrayList;
+			import java.util.List;
+			import com.gkaakash.controller.Startup;
+			import android.app.Activity;
+			import android.app.AlertDialog;
+			import android.content.Context;
+			import android.content.DialogInterface;
+			import android.content.Intent;
+			import android.os.Bundle;
+			import android.view.View;
+			import android.view.View.OnClickListener;
+			import android.widget.AdapterView;
+			import android.widget.AdapterView.OnItemSelectedListener;
+			import android.widget.ArrayAdapter;
+			import android.widget.Button;
+			import android.widget.Spinner;
+			import android.widget.SpinnerAdapter;
+
+	* The activity intializes all the essential parameters and variables.
+
+	* onCreate method loads all the required methods at load time. 
+
+		::
+
+			Object[] orgNameList;
+			Spinner getOrgNames;
+			private Spinner getFinancialyear;
+			private Startup startup;
+			private Button bProceed;
+			Object[] financialyearList;
+			final Context context = this;
+			private Button btnDeleteOrg;
+			protected AdapterView<SpinnerAdapter> parent;
+			protected Object selectedFinancialYear;
+			//static String existingOrgFlag;
+			protected static Integer client_id;
+			protected static String selectedOrgName;
+			protected static String fromDate;
+			protected static String  toDate;
+
+			public void onCreate(Bundle savedInstanceState) {
+		    	super.onCreate(savedInstanceState);
+		    	setContentView(R.layout.select_org);
+		    	
+		    	MainActivity.no_dailog = true; //comment this line if running this app on emulator
+		    	
+		    	// set flag to true , if we are in existing organisation
+		    	//existingOrgFlag="true";
+		    	// call startup to get client connection 
+		    	startup = new Startup();
+		    	getOrgNames = (Spinner) findViewById(R.id.sGetOrgNames);
+		    	getFinancialyear = (Spinner) findViewById(R.id.sGetFinancialYear);
+		    	getOrgNames.setMinimumWidth(100);
+		    	getFinancialyear.setMinimumWidth(250);
+		    	bProceed = (Button) findViewById(R.id.bProceed);
+		    	btnDeleteOrg = (Button) findViewById(R.id.btnDeleteOrg);
+		    	getExistingOrgNames();
+		    	addListenerOnItem();
+		    	addListenerOnButton();
+		    	
+		        }// End of onCreate
+
+
+	* The below method loads all the organisation name from the database and populates 
+	  organization name spinner.
+
+		::
+
+			// getExistingOrgNames()
+			void getExistingOrgNames(){
+			
+				//call getOrganisationNames method 
+		    	orgNameList = startup.getOrgnisationName();
+		    	System.out.println(orgNameList);
+		    	List<String> list = new ArrayList<String>();
+		    	
+		    	for(Object st : orgNameList)
+		    		list.add((String) st);
+		
+		    	// creating array adaptor to take list of existing organisation name
+		    	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+		    			android.R.layout.simple_spinner_item, list);
+		    	//set resource layout of spinner to that adaptor
+		    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			    //set adaptor with orglist in spinner
+		    	getOrgNames.setAdapter(dataAdapter);
+		    	
+			}// End of getExistingOrgNames()
+
+
+	* The below method attaches onclick listener to two buttons ie. ``Proceed and Delete`` .
+
+		::
+
+			//Attach a listener to the click event for the button
+			private void addListenerOnButton(){
+				final Context context = this;
+				bProceed.setOnClickListener(new OnClickListener() {
+			
+					private Object[] deployparams;
+
+					@Override
+					public void onClick(android.view.View v) {
+				
+						if(orgNameList.length>0)
+						{
+							//parameters pass to core_engine xml_rpc functions
+							deployparams=new Object[]{selectedOrgName,fromDate,toDate};
+							//call method login from startup.java 
+							client_id = startup.login(deployparams);
+							//System.out.println("login "+ client_id);
+							//To pass on the activity to the next page  
+							Intent intent = new Intent(context,menu.class);
+					startActivity(intent); 
+						}else{
+							AlertDialog.Builder builder = new AlertDialog.Builder(context);
+						builder.setMessage("Please create organisation")
+							.setCancelable(false)
+							.setPositiveButton("Ok",
+							        new DialogInterface.OnClickListener() {
+							            public void onClick(DialogInterface dialog, int id) {
+							            	//parameters pass to core_engine xml_rpc functions
+							            	//To pass on the activity to the next page  
+						    					Intent intent = new Intent(context,MainActivity.class);
+						    	                startActivity(intent); 
+							            }
+							        });
+							
+						AlertDialog alert = builder.create();
+						alert.show();
+						}
+					}
+				});
+				btnDeleteOrg.setOnClickListener(new OnClickListener() {
+			
+					private Object[] deleteprgparams;
+					private Boolean deleted;
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					builder.setMessage("Are you sure you want to permanetly delete "+selectedOrgName+" for financialyear "+fromDate+" To "+toDate+"?\n" +
+							"if you will delete an item , It will be permanetly lost ")
+						.setCancelable(false)
+						.setPositiveButton("Delete",
+						        new DialogInterface.OnClickListener() {
+						            public void onClick(DialogInterface dialog, int id) {
+						            	//parameters pass to core_engine xml_rpc functions
+										deleteprgparams=new Object[]{selectedOrgName,fromDate,toDate};
+										deleted = startup.deleteOrgnisationName(deleteprgparams);
+										getExistingOrgNames();
+								    	addListenerOnItem();
+								    	addListenerOnButton();
+										//Intent intent = new Intent(context,selectOrg.class);
+										//startActivity(intent);
+										
+						            }
+						        })
+						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+						    public void onClick(DialogInterface dialog, int id) {
+						        dialog.cancel();
+						    }
+						});
+					AlertDialog alert = builder.create();
+					alert.show();
+				       
+					}
+				});
+			}
+
+	
+
 
 
 Transaction management
@@ -1507,6 +1979,272 @@ Transaction management
 			 }
 	
 			}
+
+	 **File  res/layout/create_voucher.xml**
+
+		::
+
+			<?xml version="1.0" encoding="utf-8"?>
+			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			 android:layout_width="fill_parent" 
+			 android:layout_height="fill_parent"
+			 android:orientation="vertical"
+			 android:weightSum="100"
+			 android:background="@drawable/dark_gray_background">
+			 
+			    <LinearLayout
+				   android:orientation="horizontal"
+				   android:layout_width="400dp"
+				   android:layout_height="3dp"
+				   android:paddingLeft="20dp"
+				   android:paddingRight="20dp"
+				   android:background="#60AFFE"/>
+			   
+			    <LinearLayout
+				   android:orientation="horizontal"
+				   android:layout_width="match_parent"
+				   android:layout_height="3dp"
+				   android:paddingLeft="20dp"
+				   android:paddingRight="20dp"
+				   android:background="#60AFFE"/>
+			    
+			<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:layout_weight="80"
+			    android:background="@drawable/dark_gray_background" >
+				<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				    android:orientation="vertical"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+				    android:paddingTop="5dp" >
+			 
+					<TableLayout
+					    xmlns:android="http://schemas.android.com/apk/res/android"
+					    android:layout_width="match_parent"
+					    android:layout_height="wrap_content"
+					    android:orientation="vertical"
+					    android:paddingLeft="20dp"
+					    android:paddingRight="20dp"
+					    android:stretchColumns="7" >
+
+					    <TableRow
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content" >
+
+						   	
+					    <Spinner
+						android:id="@+id/sDrCr"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:entries="@array/SearchBy_arrays"
+						android:prompt="@string/Search_prompt" />
+						
+					    <TextView
+						android:id="@+id/accountName"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="        Account name"
+						android:textSize="14dp"
+						android:textColor="#FFFFFF" />
+
+					    <Spinner
+						android:id="@+id/getAccountByRule"
+						android:layout_width="259px"
+						android:layout_height="wrap_content"
+						android:entries="@array/accountName_arrays"
+						android:prompt="@string/accountName_prompt" />
+			    
+					    <TextView
+						android:id="@+id/amount"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="        Amount"
+						android:textSize="14dp"
+						android:textColor="#FFFFFF" />
+					    
+					     <TextView
+						android:id="@+id/rupeeSym"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/Rs"
+						android:textColor="#FFFFFF"
+						android:textSize="19dp"
+						android:paddingRight="5dp"
+						android:paddingLeft="10dp"/>
+					     
+			    
+						  <EditText
+						android:id="@+id/etDrCrAmount"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_weight="2"
+						android:inputType="numberDecimal"
+						android:text="0.00         " >
+
+					  <requestFocus />
+						  </EditText>
+						   
+						 <Button
+						    android:id="@+id/add"
+						    android:layout_weight="0.3"
+						    android:text=" +  " />
+			   
+					    </TableRow>
+					</TableLayout>
+		
+					<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				    android:id="@+id/Vouchertable"
+				    android:orientation="vertical"
+				    android:layout_width="fill_parent"
+				    android:layout_height="fill_parent" 
+		    		    android:stretchColumns="7" 
+		    		    android:paddingLeft="20dp"
+		    		    android:paddingRight="20dp"
+		    		    android:paddingBottom="5dp"
+			    		/>
+		
+					<LinearLayout 
+				    android:orientation="horizontal"
+				    android:layout_width="match_parent"
+				    android:layout_height="1dp"
+				    android:paddingLeft="20dp"
+				    android:paddingRight="20dp"
+				    android:weightSum="100" 
+				    android:background="@android:color/darker_gray">
+		
+		
+		
+					</LinearLayout>
+
+				<ListView
+				android:id="@+id/voucher_list"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+				</ListView>
+	
+				<LinearLayout 
+				    android:orientation="horizontal"
+				    android:layout_width="match_parent"
+				    android:layout_height="0.01dp"
+				    android:paddingLeft="20dp"
+				    android:paddingRight="20dp"
+				    android:background="@android:color/darker_gray"/>
+	
+				<ListView
+				android:id="@+id/voucher_list4"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+				</ListView>
+	
+				<LinearLayout 
+				    android:orientation="horizontal"
+				    android:layout_width="match_parent"
+				    android:layout_height="0.01dp"
+				    android:paddingLeft="20dp"
+				    android:paddingRight="20dp"
+				    android:background="@android:color/darker_gray"/>
+	
+				<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:weightSum="100"
+				android:paddingTop="3dp"
+				android:paddingRight="20dp"
+				android:gravity="left">
+				<TextView
+				    android:id="@+id/tvRefNumber"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="Voucher reference number"
+				    android:layout_weight="70"
+				    android:textSize="14dp"
+				    android:paddingLeft="20dp"
+				    android:textColor="#FFFFFF"/>
+	
+				<EditText
+					android:id="@+id/etRefNumber"
+					android:layout_width="305dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="30"
+					android:hint="Tap to enter reference number" 
+					android:paddingTop="2dp"/>
+				</LinearLayout>
+	
+				<LinearLayout 
+					android:orientation="horizontal"
+					android:layout_width="match_parent"
+					android:layout_height="0.01dp"
+					android:paddingLeft="20dp"
+					android:paddingRight="20dp"
+					android:background="@android:color/darker_gray"/>
+	
+				<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:weightSum="100"
+				android:paddingTop="3dp"
+				android:paddingRight="20dp"
+				android:gravity="left">
+				<TextView
+					android:id="@+id/tvVoucherNarration"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Voucher narration"
+					android:layout_weight="70"
+					android:textSize="14dp"
+					android:paddingLeft="20dp"
+					android:textColor="#FFFFFF"/>
+	
+				<EditText
+					android:id="@+id/etVoucherNarration"
+					android:layout_width="283dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="30"
+					android:hint="Tap to enter voucher narration" 
+					android:paddingTop="2dp"
+					android:inputType="textCapSentences"/>
+				</LinearLayout>
+	
+				</LinearLayout>
+			</ScrollView>
+
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_weight="20"
+				android:weightSum="100"
+				android:layout_alignParentBottom="true"
+				android:background="@drawable/blackbutton" >
+
+				<Button
+				    android:id="@+id/btnSaveVoucher"
+				    android:layout_width="wrap_content"
+				    android:layout_height="match_parent"
+				    android:layout_gravity="center_vertical"
+				    android:layout_weight="50"
+				    android:text="Save"
+				    android:textSize="20dp" />
+		
+				<Button
+				    android:id="@+id/btnResetVoucher"
+				    android:layout_width="wrap_content"
+				    android:layout_height="match_parent"
+				    android:layout_gravity="center_vertical"
+				    android:layout_weight="50"
+				    android:text="Reset"
+				    android:textSize="20dp" />
+
+			    </LinearLayout>
+			</LinearLayout>
+
+.. image:: images/create_voucher.png
+	   :name: ABT main page
+	   :align: center
 
 * **File src/com/example/gkaakash/createVoucher.java**
 
@@ -2974,7 +3712,107 @@ Transaction management
 			}
 		        }
 
-* **File src/com/example/gkaakash/SearchVoucher**.java
+	  **File  res/layout/search_voucher.xml**
+		
+		::
+
+			<?xml version="1.0" encoding="utf-8"?>
+			<LinearLayout 
+			    android:id="@+id/LinearLayout01"
+			    android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+			    xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:orientation="vertical"
+			    android:background="@drawable/dark_gray_background">
+
+			    <LinearLayout
+				   android:orientation="horizontal"
+				   android:layout_width="400dp"
+				   android:layout_height="3dp"
+				   android:layout_gravity="right"
+				   android:paddingLeft="20dp"
+				   android:paddingRight="20dp"
+				   android:background="#60AFFE"/>
+			   
+			    <LinearLayout
+				   android:orientation="horizontal"
+				   android:layout_width="match_parent"
+				   android:layout_height="3dp"
+				   android:paddingLeft="20dp"
+				   android:paddingRight="20dp"
+				   android:background="#60AFFE"/>
+
+			    <LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" 
+				android:paddingBottom="3dp"
+				android:paddingTop="3dp">
+
+				<TextView
+				    android:id="@+id/tvVFromdate"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="1"
+				    android:paddingLeft="10dp"
+				    android:textSize="15dp"
+				    android:textColor="#FFFFFF"/>
+
+				<Button
+				    android:id="@+id/btnSearchVoucher"
+				    style="?android:attr/buttonStyleSmall"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:background="@drawable/ic_action_search"/>
+
+				<TextView
+				    android:id="@+id/tvVTodate"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="1"
+				    android:gravity="right"
+				    android:paddingRight="10dp"
+				    android:textSize="15dp"
+				    android:textColor="#FFFFFF"/>
+
+			    </LinearLayout>
+			    
+			    
+			    <LinearLayout
+				    xmlns:android="http://schemas.android.com/apk/res/android"
+				    android:id="@+id/layout_root"
+				    android:layout_width="fill_parent"
+				    android:layout_height="fill_parent"
+				    android:paddingLeft="10dp"
+				    android:paddingRight="10dp"
+				    android:paddingBottom="10dp" >
+					 <HorizontalScrollView 
+			       			android:layout_height="fill_parent"
+				    	android:layout_width="fill_parent"
+				    	android:fillViewport="true">
+				    
+				      <ScrollView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:fillViewport="true">
+					<TableLayout
+				    android:layout_width="wrap_content"
+				    android:layout_height="0dp"
+				    android:stretchColumns=",1,2,3,4"
+				    android:id="@+id/maintable"
+				    android:background="#696565" >
+				       </TableLayout>
+				
+				    </ScrollView>
+				    </HorizontalScrollView>
+				 </LinearLayout>
+
+			</LinearLayout>
+
+.. image:: images/search_voucher.png
+	   :name: ABT main page
+	   :align: center
+
+* **File src/com/example/gkaakash/SearchVoucher.java**
 
 	* The activity contains the essential and required import like
 
@@ -3547,18 +4385,18 @@ Transaction management
 			 * (non-Javadoc)
 			 * @see android.app.Activity#onResume()
 			 * to execute code when tab is changed because 
-		    	 * when the tab is clicked onResume is called for that activity
+			 * when the tab is clicked onResume is called for that activity
 			 */
 			@Override
 			protected void onResume() {
 				super.onResume();
 			if(searchVoucherBy == 1){ // by reference number
 				Object[] params = new Object[]{1,searchByRefNumber,financialFromDate,financialToDate,""};
-		   			getallvouchers(params);
+					getallvouchers(params);
 			}
 			else if(searchVoucherBy == 2){ // by date
 				Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
-		    		getallvouchers(params);
+				getallvouchers(params);
 			}
 			else if(searchVoucherBy == 3){ // narration
 				Object[] params = new Object[]{3,"",financialFromDate,financialToDate,searchByNarration};
@@ -3566,6 +4404,973 @@ Transaction management
 			}	
 			}
 
-		    
+Account management
++++++++++++++++++++
+
+	- Account management covers three major parts ie. Create,Search and Delete .
+
+	- All the three options are included in a path ``src/com.example.gkaakash/account_tab.java`` .
+
+	- It maintains all account details such as opening balances,closeing balances etc.
+
+	- **File src/com/example/gkaakash/account_tab.java**
+
+	- Its activity is explained below along with code.
+
+	- The activity contains the essential and required import like
+
+		::			
+
+			import com.gkaakash.controller.Preferences;
+			import com.gkaakash.controller.Startup;
+			import android.app.TabActivity;
+			import android.content.Intent;
+			import android.graphics.Color;
+			import android.os.Bundle;
+			import android.widget.TabHost;
+			import android.widget.TabHost.TabSpec;
+			import android.widget.TextView;
+
+	* The activity intializes all the essential parameters and variables.
+
+	* onCreate method creates two Tabspec and include them in Tabhost.
+
+	* It sets Create account as bydefault tab.
+
+		::
+		
+			String accCodeCheckFlag;
+			TextView tab1 = null;
+			TextView tab2 = null;
+			private Integer client_id;
+			private Preferences preferences;
+
+			public void onCreate(Bundle savedInstanceState) {
+				super.onCreate(savedInstanceState);
+				setContentView(R.layout.tab);
+				//accCodeCheckFlag = getIntent().getExtras().getString("flag");
+			 
+				final TabHost tabHost = getTabHost();
+				//creating TabSpec for create account
+				TabSpec createspec = tabHost.newTabSpec("tab1");
+				tab1 = new TextView(this);
+				//setting properties in textView
+				tab1.setGravity(android.view.Gravity.CENTER);
+				tab1.setTextSize(18.0f);
+				tab1.setHeight(50);
+				tab1.setTextColor(Color.WHITE);
+				tab1.setText("Create account");
+				createspec.setIndicator(tab1);//assigning TextView to tab Indicator
+				preferences = new Preferences();
+				// this is client_id get after getConnetion method call for existing organisation 
+				client_id = Startup.getClient_id();
+				// call getPreferences to get flag for account code
+				accCodeCheckFlag = preferences.getPreferences(new Object[]{2},client_id);
+				//for visibility of account tab layout 
+					MainActivity.tabFlag = true;
+				Intent create = new Intent(this, createAccount.class);
+				// flag for finish button of account page 
+				//create.putExtra("finish_flag","menu");
+				createspec.setContent(create);
+				tabHost.addTab(createspec);  // Adding create tab
+			
+				//creating TabSpec for edit account
+				TabSpec editspec = tabHost.newTabSpec("tab2");
+				tab2 = new TextView(this);
+				//setting properties in textView
+				tab2.setGravity(android.view.Gravity.CENTER);
+				tab2.setTextSize(18.0f);
+				tab2.setHeight(50);
+				tab2.setTextColor(Color.WHITE);
+				tab2.setText("Search/Edit account");
+				editspec.setIndicator(tab2);//assigning TextView to tab Indicator
+				Intent edit = new Intent(this, edit_account.class);
+				editspec.setContent(edit);
+				tabHost.addTab(editspec); // Adding edit tab
+				tabHost.setCurrentTab(0);//setting tab1 on load
+			       
+			
+			 }
+			}
 
 
+	- **File  res/layout/create_account.xml**
+
+		::
+
+			<?xml version="1.0" encoding="utf-8"?>
+			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			 android:layout_width="fill_parent" 
+			 android:layout_height="fill_parent"
+			 android:orientation="vertical"
+			 android:weightSum="100"
+			 android:background="@drawable/dark_gray_background">
+			 
+			    <LinearLayout
+				   android:id="@+id/createacc_tab1"
+				   android:orientation="horizontal"
+				   android:layout_width="400dp"
+				   android:layout_height="3dp"
+				   android:paddingLeft="20dp"
+				   android:paddingRight="20dp"
+				   android:background="#60AFFE"
+				   android:visibility="invisible"/>
+			   
+			    <LinearLayout
+				    android:id="@+id/createacc_tab2"
+				   android:orientation="horizontal"
+				   android:layout_width="match_parent"
+				   android:layout_height="3dp"
+				   android:paddingLeft="20dp"
+				   android:paddingRight="20dp"
+				   android:background="#60AFFE"
+				   android:visibility="invisible"/>
+			    
+			<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:layout_weight="80">
+
+			    <TableLayout 
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:paddingLeft="10dp"
+					 android:paddingRight="10dp">
+		
+				<TableRow>
+				    <TextView 
+					android:layout_width="0dip"
+					android:layout_weight="1"
+					android:text="Group name"
+					android:textColor="#FFFFFF"
+					android:textSize="20dp"
+					android:layout_gravity="center_vertical"/>
+				<Spinner 
+				    android:id="@+id/sGroupNames"
+				    android:layout_width="0dip"
+				    android:layout_weight="1.3"
+				    android:prompt="@string/grpName_prompt"
+				    />
+				</TableRow>
+		
+				<TableRow>
+				    <TextView 
+					android:layout_width="0dip"
+					android:layout_weight="1"
+					android:text="Subgroup name"
+					android:textColor="#FFFFFF"
+					android:textSize="20dp"
+					android:layout_gravity="center_vertical"/>
+				<Spinner 
+				    android:id="@+id/sSubGrpNames"
+				    android:layout_width="0dip"
+				     android:prompt="@string/subgrpName_prompt"
+				    android:layout_weight="1.3"
+				    />
+				</TableRow>
+				 <TableRow>
+				    <TextView 
+					android:id="@+id/tvSubGrp"
+					android:layout_width="0dip"
+					android:layout_weight="1"
+					android:text="Enter new subgroupname"
+					android:textColor="#FFFFFF"
+					android:textSize="20dp"
+					android:layout_gravity="center_vertical"/>
+				<EditText 
+				    android:id="@+id/etSubGrp"
+				    android:layout_width="0dip"
+				    android:layout_weight="1.3"
+				    android:hint="Tap to enter newsubgroup name"
+				    android:inputType="textCapWords"/>
+				</TableRow>
+			 
+				<TableRow>
+				    <TextView 
+					android:layout_width="0dip"
+					android:layout_weight="1"
+					android:text="Account name"
+					android:textColor="#FFFFFF"
+					android:textSize="20dp"
+					android:layout_gravity="center_vertical"/>
+				<EditText 
+				    android:id="@+id/etAccName"
+				    android:layout_width="0dip"
+				    android:layout_weight="1.3"
+				    android:hint="Tap to enter account name"
+				    android:inputType="textCapWords" />
+				</TableRow>
+		
+				<TableRow>
+				    <TextView 
+					android:id="@+id/tvAccCode"
+					android:layout_width="0dip"
+					android:layout_weight="1"
+					android:text="Account code"
+					android:textColor="#FFFFFF"
+					android:textSize="20dp"
+					android:layout_gravity="center_vertical"
+					android:visibility="invisible"/>
+				<EditText 
+				    android:id="@+id/etAccCode"
+				    android:layout_width="0dip"
+				    android:layout_weight="1.3"
+				    android:hint="Tap to enter account code"
+				    android:visibility="invisible" />
+				</TableRow>
+		
+				<TableRow>
+				    <TextView 
+					android:id="@+id/tvOpBal"
+					android:layout_width="0dip"
+					android:layout_weight="0.95"
+					android:text="Opening balance"
+					android:textColor="#FFFFFF"
+					android:textSize="20dp"
+					android:layout_gravity="center_vertical"/>
+				    
+				 <TextView 
+					android:id="@+id/tvOpBalRupeeSymbol"
+					android:layout_width="0dip"
+					android:layout_weight="0.05"
+					android:text="\u20B9"
+					android:textColor="#FFFFFF"
+					android:textSize="22dp"
+					android:layout_gravity="center_vertical"/>
+				    
+				<EditText 
+				    android:id="@+id/etOpBal"
+				    android:layout_width="0dip"
+				    android:layout_weight="1.3"
+				    android:text="0.00"
+				    android:inputType="phone"/>
+				</TableRow>
+		
+				<TableRow>
+				    <TextView 
+					android:layout_width="0dip"
+					android:layout_weight="0.95"
+					android:text="Total debit opening balance"
+					android:textColor="#FFFFFF"
+					android:textSize="20dp"
+					android:layout_gravity="center_vertical"/>
+				    
+				 <TextView 
+					android:layout_width="0dip"
+					android:layout_weight="0.05"
+					android:text="\u20B9"
+					android:textColor="#FFFFFF"
+					android:textSize="22dp"
+					android:layout_gravity="center_vertical"/>
+				    
+				<EditText 
+				    android:id="@+id/etDrBal"
+				    android:layout_width="0dip"
+				    android:layout_weight="1.3"
+				    android:editable="false"
+				    android:text="0.00" />
+				</TableRow>
+		
+				<TableRow>
+				    <TextView 
+					android:layout_width="0dip"
+					android:layout_weight="0.95"
+					android:text="Total credit opening balance"
+					android:textColor="#FFFFFF"
+					android:textSize="20dp"
+					android:layout_gravity="center_vertical"/>
+				    
+				  <TextView 
+					android:layout_width="0dip"
+					android:layout_weight="0.05"
+					android:text="\u20B9"
+					android:textColor="#FFFFFF"
+					android:textSize="22dp"
+					android:layout_gravity="center_vertical"/>  
+				  
+				<EditText
+				    android:id="@+id/etCrBal" 
+				    android:layout_width="0dip"
+				    android:layout_weight="1.3"
+				    android:editable="false"
+				    android:text="0.00" />
+				</TableRow>
+		
+				<TableRow>
+				    <TextView 
+					android:layout_width="0dip"
+					android:layout_weight="0.95"
+					android:text="Difference in opening balances"
+					android:textColor="#FFFFFF"
+					android:textSize="20dp"
+					android:layout_gravity="center_vertical"/>
+				    
+				 <TextView 
+					android:layout_width="0dip"
+					android:layout_weight="0.05"
+					android:text="\u20B9"
+					android:textColor="#FFFFFF"
+					android:textSize="22dp"
+					android:layout_gravity="center_vertical"/>
+				    
+				<EditText 
+				    android:id="@+id/etDiffBal"
+				    android:layout_width="0dip"
+				    android:layout_weight="1.3"
+				    android:editable="false" 
+				    android:text="0.00" />
+				    
+				</TableRow>
+		
+			    </TableLayout>
+			</ScrollView>
+
+			    <LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_weight="20"
+				android:layout_alignParentBottom="true" 
+				android:background="@drawable/blackbutton">
+
+				<Button
+				    android:id="@+id/btnCreateAccSave"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_alignParentBottom="true"
+				    android:layout_weight="0.96"
+				    android:text="Save"
+				    android:textSize="20dp" 
+				    android:layout_gravity="center_vertical"/>
+		
+				<Button
+				    android:id="@+id/btnCreateAccFinish"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_alignParentBottom="true"
+				    android:layout_weight="0.90"
+				    android:text="Finish"
+				    android:textSize="20dp"
+				    android:layout_gravity="center_vertical" />
+
+			</LinearLayout>
+			</LinearLayout>
+
+.. image:: images/create_account.png
+	   :name: ABT main page
+	   :align: center
+
+* **File src/com/example/gkaakash/createAccount.java**
+
+	* The activity contains the essential and required import like
+
+		::
+
+			import java.util.ArrayList;
+			import java.util.List;
+			import com.gkaakash.controller.Account;
+			import com.gkaakash.controller.Group;
+			import com.gkaakash.controller.Preferences;
+			import com.gkaakash.controller.Startup;
+			import android.app.Activity;
+			import android.app.AlertDialog;
+			import android.app.Dialog;
+			import android.content.Context;
+			import android.content.DialogInterface;
+			import android.content.Intent;
+			import android.os.Bundle;
+			import android.view.View;
+			import android.view.View.OnClickListener;
+			import android.widget.AdapterView;
+			import android.widget.AdapterView.OnItemSelectedListener;
+			import android.widget.ArrayAdapter;
+			import android.widget.Button;
+			import android.widget.EditText;
+			import android.widget.LinearLayout;
+			import android.widget.Spinner;
+			import android.widget.TextView;
+			import android.widget.Toast;
+
+	* The activity intializes all the essential parameters and variables.
+	
+	* OnCreate method calls all required methods at load time.
+
+		::
+
+			static String accCodeCheckFlag;
+			TextView tvaccCode, tvDbOpBal, tvOpBal,tvOpBalRupeeSymbol,tvAccName,tvAccCode;
+			EditText etaccCode, etDtOpBal, etOpBal,etAccCode;
+			Spinner sgrpName,sSearchBy,sAccName;
+			Button btnCreateAccSave,btnCreateAccFinish,btnokdialog;
+			private String newsubgrpname;
+			static Integer client_id;
+			AlertDialog dialog;
+			final Context context = this;
+			Dialog screenDialog;
+			private Group group;
+			private Spinner ssubGrpName;
+			private TextView tvSubGrp;
+			private EditText etSubGrp;
+			protected String selGrpName;
+			protected String selSubGrpName;
+			private EditText etAccName;
+			protected String accountname;
+			protected String accountcode;
+			protected String openingbalance;
+			private Account account;
+			private EditText etDrBal;
+			private EditText etCrBal;
+			private EditText etDiffbal;
+			private Object drbal;
+			private Object crbal;
+			private Object diffbal;
+			private Preferences preferencObj;
+			static String finishflag;
+			static final int ID_SCREENDIALOG = 1;
+			private static String groupChar;
+			private String account_code;
+			protected static Boolean tabflag;
+			String sub_grp_name;
+			private String subgroup_exist;
+			private String accountcode_exist;
+			protected String accountname_exist;  
+
+			@Override
+			public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			// Calling create_account.xml
+			setContentView(R.layout.create_account);
+
+			try {
+			//for visibility of account tab layout
+			tabflag=MainActivity.tabFlag;
+			LinearLayout l1=(LinearLayout)findViewById(R.id.createacc_tab1);  
+			LinearLayout l2=(LinearLayout)findViewById(R.id.createacc_tab2);
+			if(tabflag){
+			l1.setVisibility(LinearLayout.VISIBLE);
+			l2.setVisibility(LinearLayout.VISIBLE);
+			}else {
+			l1.setVisibility(LinearLayout.INVISIBLE);
+			l2.setVisibility(LinearLayout.INVISIBLE);
+			}
+
+			// create the object of Group class
+			group = new Group();
+			account = new Account();
+			preferencObj= new Preferences();
+
+			// getting client id 
+			client_id = Startup.getClient_id();
+
+			// Request a reference to the button from the activity by calling
+			// “findViewById” and assign the retrieved button to an instance variable
+			tvaccCode = (TextView) findViewById(R.id.tvAccCode);
+			etaccCode = (EditText) findViewById(R.id.etAccCode);
+			tvSubGrp = (TextView) findViewById(R.id.tvSubGrp);
+			etSubGrp = (EditText) findViewById(R.id.etSubGrp);
+			etAccName= (EditText) findViewById(R.id.etAccName);
+			sgrpName = (Spinner) findViewById(R.id.sGroupNames);
+			ssubGrpName = (Spinner) findViewById(R.id.sSubGrpNames);
+			etDrBal = (EditText) findViewById(R.id.etDrBal);
+			etCrBal = (EditText) findViewById(R.id.etCrBal);
+			etDiffbal = (EditText) findViewById(R.id.etDiffBal);
+
+			// call getPrefernece to get set preference related to account code flag   
+			accCodeCheckFlag = preferencObj.getPreferences(new Object[]{"2"},client_id);
+
+			// Setting visibility depending upon account code flag value
+			if (accCodeCheckFlag.equals("automatic")) {
+			etaccCode.setVisibility(EditText.GONE);
+			tvaccCode.setVisibility(TextView.GONE);
+			} else {
+			etaccCode.setVisibility(EditText.VISIBLE);
+			tvaccCode.setVisibility(TextView.VISIBLE);
+			}
+
+			getTotalBalances();
+
+			getExistingGroupNames();
+			} catch (Exception e) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setMessage("Please try again")
+			       .setCancelable(false)
+			       .setPositiveButton("Ok",
+				       new DialogInterface.OnClickListener() {
+					   public void onClick(DialogInterface dialog, int id) {
+					       
+					   }
+				       });
+			       
+			AlertDialog alert = builder.create();
+			alert.show();
+			}
+
+			addListeneronButton();
+
+			//creating interface to listen activity on Item 
+			addListenerOnItem();
+
+			addEditTextListner();
+			} 
+
+	* The below method sets the credit opening,debit opening and difference in opening balance in their respective
+	  text fields.  
+
+		::
+
+
+			private void getTotalBalances() {
+			// TODO Auto-generated method stub
+			drbal = account.getDrOpeningBalance(client_id);
+			crbal = account.getCrOpeningBalance(client_id);
+			diffbal =  account.getDiffInBalance(client_id);
+		
+			// setting text values in respective Edit Text fields
+			etDrBal.setText(drbal.toString());
+			etCrBal.setText(crbal.toString());
+			etDiffbal.setText(String.format("%.2f",diffbal ));
+			}
+
+	* The below method populates all the existing groupnames in the spinner from the database.
+
+		::
+
+			void getExistingGroupNames(){
+			    
+			//call the getAllGroups method to get all groups
+			Object[] groupnames = (Object[]) group.getAllGroups(client_id);
+			// create new array list of type String to add gropunames
+			List<String> groupnamelist = new ArrayList<String>();
+			// create new array list of type Integer to add gropcode
+			List<Integer> groupcodelist = new ArrayList<Integer>();
+		
+			for(Object gs : groupnames)
+			{    
+			    Object[] g = (Object[]) gs;
+			    groupcodelist.add((Integer) g[0]); //groupcode
+			    groupnamelist.add((String) g[1]); //groupname
+			    //groupdesc.add(g[2]); //description
+			}    
+			// creating array adaptor to take list of existing group name
+			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, groupnamelist);
+			//set resource layout of spinner to that adaptor
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			//set adaptor with groupname list in spinner
+			sgrpName.setAdapter(dataAdapter);
+		
+		       }// End getExistingGroupNames()
+
+
+	* The below method attaches OnItemSelectedListner to the spinner. 
+
+		::
+
+			// method addListnerOnItem() will implement OnItemSelectedListner
+			void addListenerOnItem(){
+			    //Attach a listener to the states Type Spinner to get dynamic list of subgroup name
+			    sgrpName.setOnItemSelectedListener(new OnItemSelectedListener() {
+			    @Override
+			    public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
+				// Retrieving the selected name from the group name Spinner and
+				// assigning it to a variable
+				selGrpName = parent.getItemAtPosition(position).toString();
+				tvOpBal = (TextView) findViewById(R.id.tvOpBal);
+				tvOpBalRupeeSymbol = (TextView) findViewById(R.id.tvOpBalRupeeSymbol);
+				etOpBal = (EditText) findViewById(R.id.etOpBal);
+
+				// Comparing the variable value to group name and setting visibility
+				if ("Current Asset".equals(selGrpName)
+					| "Investment".equals(selGrpName)
+					| "Loans(Asset)".equals(selGrpName)
+					| "Fixed Assets".equals(selGrpName)
+					| "Miscellaneous Expenses(Asset)".equals(selGrpName)) {
+				    etOpBal.setVisibility(EditText.VISIBLE);
+				    tvOpBalRupeeSymbol.setVisibility(TextView.VISIBLE);
+				    tvOpBal.setVisibility(TextView.VISIBLE);
+				    tvOpBal.setText("Debit opening balance");
+
+				} else if ("Direct Income".equals(selGrpName)
+					| "Direct Expense".equals(selGrpName)
+					| "Indirect Income".equals(selGrpName)
+					| "Indirect Expense".equals(selGrpName)) {
+				    etOpBal.setVisibility(EditText.GONE);
+				    tvOpBalRupeeSymbol.setVisibility(TextView.GONE);
+				    tvOpBal.setVisibility(TextView.GONE);
+				} else {
+				    etOpBal.setVisibility(EditText.VISIBLE);
+				    tvOpBal.setVisibility(TextView.VISIBLE);
+				    tvOpBalRupeeSymbol.setVisibility(TextView.VISIBLE);
+				    tvOpBal.setText("Credit opening balance");
+				}
+	
+				if (selGrpName.equals("Capital"))
+				{
+				    groupChar = "CP";
+				    }else if (selGrpName.equals("Corpus"))
+				{
+				    groupChar = "CR";
+	
+				}else if (selGrpName.equals("Current Asset"))
+				{
+				    groupChar = "CA";
+	
+				}else if (selGrpName.equals("Current Liability"))
+				{
+				    groupChar = "CL";
+			    
+				}else if (selGrpName.equals("Direct Income"))
+				{
+				    groupChar = "DI";
+			    
+				}else if (selGrpName.equals("Direct Expense"))
+				{
+				    groupChar = "DE";
+
+				}else if (selGrpName.equals("Fixed Assets"))
+				{
+				    groupChar = "FA";
+	
+				}else if (selGrpName.equals("Indirect Income"))
+				{
+				    groupChar = "II";
+			    
+				}else if (selGrpName.equals("Indirect Expense"))
+				{
+				    groupChar = "IE";
+
+				}else if (selGrpName.equals("Investment"))
+				{
+				    groupChar = "IV";
+
+				}else if (selGrpName.equals("Loans(Asset)"))
+				{
+				    groupChar = "LA";
+
+				}else if (selGrpName.equals("Reserves"))
+				{
+				    groupChar = "RS" ;
+
+				}else if (selGrpName.equals("Miscellaneous Expenses(Asset)"))
+				{
+				    groupChar = "ME";
+
+				}else
+				{
+				    groupChar = "LL";
+
+				}
+				// checks for the selected value of item is not null
+				if(selGrpName!=null){
+				    // create new array list of type String to add subgroup names
+				    List<String> subgroupnamelist = new ArrayList<String>();
+				    // input params contains group name
+				    Object[] params = new Object[]{selGrpName};
+				    // call com.gkaakash.controller.Group.getSubGroupsByGroupName pass params
+				    Object[] subgroupnames = (Object[])group.getSubGroupsByGroupName(params,client_id);
+				    // loop through subgroup names list 
+				    for(Object sbgrp : subgroupnames)
+				    
+					subgroupnamelist.add((String)sbgrp);
+
+				    // creating array adaptor to take list of subgroups 
+				    ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(context,
+					    android.R.layout.simple_spinner_item, subgroupnamelist);
+				    // set resource layout of spinner to that adaptor
+				    dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				    // set Adaptor contain subgroups list to spinner 
+				    ssubGrpName.setAdapter(dataAdapter1);
+				}// End of if condition
+			    }
+			    
+			    @Override
+			    public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+	
+			    }
+			});// End of sgrpName.setOnItemSelectedListener
+
+			//Attach a listener to the states Type Spinner to show or hide subgroup name text filed
+			ssubGrpName.setOnItemSelectedListener(new OnItemSelectedListener() {
+			    
+			    @Override
+			    public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
+				// get the current value of subgroup spinner
+				selSubGrpName = parent.getItemAtPosition(position).toString();
+	
+				if("Create New Sub-Group".equals(selSubGrpName))
+				{
+				    tvSubGrp.setVisibility(EditText.VISIBLE);
+				    etSubGrp.setVisibility(TextView.VISIBLE);
+	
+				}// End of if condition
+				else{
+				    tvSubGrp.setVisibility(EditText.GONE);
+				    etSubGrp.setVisibility(TextView.GONE);
+				}// End of else condition
+				    
+			    }// End of onItemSelected
+
+			    @Override
+			    public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+	
+			    }
+			});
+			}
+
+	* The below method adds on click listner to finish and create account button.
+
+	* Checks for blank field(edit text).
+
+	* Checks the length of account name entered in the edit text.
+
+		::
+
+			 private void addListeneronButton() {
+				// TODO Auto-generated method stub
+				btnCreateAccSave = (Button) findViewById(R.id.btnCreateAccSave);
+				btnCreateAccFinish = (Button) findViewById(R.id.btnCreateAccFinish);
+				btnCreateAccFinish.setOnClickListener(new OnClickListener() {
+				    @Override
+				    public void onClick(View arg0) {
+			    
+					// To pass on the activity to the next page
+					Intent intent = new Intent(context, menu.class);
+					startActivity(intent);
+				    }
+
+				});
+				// setListner on Save Button
+				btnCreateAccSave.setOnClickListener(new OnClickListener() {
+				    @Override
+				    public void onClick(View arg0) {
+				
+					// get text values from respective Edit Text 
+					newsubgrpname = etSubGrp.getText().toString();
+					accountname = etAccName.getText().toString();
+					accountcode = etaccCode.getText().toString();
+					openingbalance= etOpBal.getText().toString();
+				    
+					// check for blank fields
+					if("Create New Sub-Group".equals(selSubGrpName)&&newsubgrpname.length()<1||("manually".equals(accCodeCheckFlag)&& accountcode.length()<1))
+					{
+					    alertBlankField();
+					    
+					}else if((accountname.length()<1)||(openingbalance.length()<1))
+					{
+				
+					    alertBlankField();
+					    
+					}
+					else if("Create New Sub-Group".equals(selSubGrpName)&&newsubgrpname.length()>=1)
+					{
+					    subgroup_exist = group.subgroupExists(new Object[]{newsubgrpname},client_id);
+					    if (subgroup_exist.equals("1"))
+					    {
+						alertSubGroupExist();
+					    }else if(accountname.length()>=1)
+					    {
+						    accountname_exist = account.checkAccountName(new Object[]{accountname,accCodeCheckFlag,groupChar},client_id);
+						    if (accountname_exist.equals("exist"))
+						    {
+						        alertAccountExist();
+						    }else if("manually".equals(accCodeCheckFlag)&&accountcode.length()>=1)
+						    {
+						        accountcode_exist = account.checkAccountCode(new Object[]{accountcode},client_id);
+						        if (accountcode_exist.equals("1"))
+						        {
+						            alertAccountCodeExist();
+						        
+						        }else
+						        {    
+						            SaveAccount();
+						        }// close else
+						    }else
+						    {    
+						        SaveAccount();
+						    }// close else
+						    
+					    }else
+					    {    
+						SaveAccount();
+					    }// close else
+					    
+					}
+					else
+					{
+					    if(accountname.length()>=1)
+					    {
+						    accountname_exist = account.checkAccountName(new Object[]{accountname,accCodeCheckFlag,groupChar},client_id);
+						    if (accountname_exist.equals("exist"))
+						    {
+						        alertAccountExist();
+						    }else if("manually".equals(accCodeCheckFlag)&&accountcode.length()>=1)
+						    {
+						        accountcode_exist = account.checkAccountCode(new Object[]{accountcode},client_id);
+						        if (accountcode_exist.equals("1"))
+						        {
+						            alertAccountCodeExist();
+						            
+						        }else
+						        {
+						            SaveAccount();
+						        }
+						    }else
+						    {
+						        SaveAccount();
+						    }
+					    }
+
+					}
+				    }
+				}); // close setOnClickListener
+			    }
+
+
+
+
+
+	* The below method manages activites when focus changes from one edit text to another.
+
+		::
+
+			private void addEditTextListner()
+			{
+			etAccName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@Override
+			  public void onFocusChange(View v, boolean hasFocus) {
+			    accountname = etAccName.getText().toString();
+			    
+			    if(hasFocus)
+			    {
+				etaccCode.setText("");
+			    }
+			    else{
+				if(accountname.length()>=1)
+				{
+				    accountcode = account.checkAccountName(new Object[]{accountname,accCodeCheckFlag,groupChar},client_id);
+				    if(accountcode.equals("exist"))
+				    {
+					alertAccountExist();
+				    }else{
+					etaccCode.setText(accountcode);
+					}
+				}
+	
+				}
+			  }
+			});// close addEditTextListner()
+
+
+			// It will check for new subgroup name exist 
+			etSubGrp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+			@Override
+			  public void onFocusChange(View v, boolean hasFocus) {
+				// TODO Auto-generated method stub
+				sub_grp_name = etSubGrp.getText().toString();
+	
+					if(sub_grp_name.length()>=1)
+					{
+					    subgroup_exist = group.subgroupExists(new Object[]{sub_grp_name},client_id);
+					    if (subgroup_exist.equals("1"))
+					    {
+						alertSubGroupExist();
+					    }
+					}
+				}
+
+			});// close setOnFocusChangeListener
+
+			// It will check for account code exist 
+			etaccCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			    @Override
+			      public void onFocusChange(View v, boolean hasFocus) {
+				    // TODO Auto-generated method stub
+				    account_code = etaccCode.getText().toString();
+				    
+					    if(account_code.length()>=1)
+					    {
+						accountcode_exist = account.checkAccountCode(new Object[]{account_code},client_id);
+						if (accountcode_exist.equals("1"))
+						{
+						    alertAccountCodeExist();
+						    etaccCode.setText(account_code);
+						}
+					    
+				     }
+				}
+
+			    });// close setOnFocusChangeListener
+			} // close addEditTextListner()
+
+	* The below method bulids an alert box with a message to fill the blank textfield.
+
+		::
+
+
+			// method for blank fields
+			    public void alertBlankField()
+			    {
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setMessage("Please fill textfield")
+					.setCancelable(false)
+					.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener() {
+						    public void onClick(DialogInterface dialog, int id) {
+						        
+						    }
+						});
+				
+				AlertDialog alert = builder.create();
+				alert.show();
+			    }
+
+	* The below method builds an alert box with a message saying duplicate account name.
+
+		::
+
+
+			public void alertAccountExist()
+			    {
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					builder.setMessage("Account "+accountname+" already exist")
+						.setCancelable(false)
+						.setPositiveButton("Ok",
+							new DialogInterface.OnClickListener() {
+							    public void onClick(DialogInterface dialog, int id) {
+								 
+								etAccName.setText("");
+								etAccName.requestFocus();
+							    }
+							});
+				
+					AlertDialog alert = builder.create();
+					alert.show();
+			    }
+
+	* The below method takes all the data filled in the fields and save them in the database.
+
+		::
+
+			 public void SaveAccount(){
+				Object[] params = new Object[]{accCodeCheckFlag,selGrpName,selSubGrpName,newsubgrpname,accountname,accountcode,openingbalance}; 
+				// call the setAccount method and pass the above parameters
+				account.setAccount(params,client_id);
+				getTotalBalances();
+				getExistingGroupNames();
+				//creating interface to listen activity on Item 
+				addListenerOnItem();
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setMessage("Account "+accountname+" have been saved successfully");
+				AlertDialog alert = builder.create();
+				alert.show();
+				alert.setCancelable(true);
+				alert.setCanceledOnTouchOutside(true);
+			    
+				etSubGrp.setText("");
+				etAccName.setText("");
+				etaccCode.setText("");
+				etOpBal.setText("0.00");
+			    }
