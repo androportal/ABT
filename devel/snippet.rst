@@ -99,6 +99,19 @@ Connection to back-end(xmlrpc-server)
 			return client_id;
 		}
 
+
+Referenced Libraries
+--------------------
++ **ant-1.6.jar**
+
+  Start eclipse, There is a ``jar`` file called ``ant-1.6.jar`` in ABT/libs which is used to untar a tar file programmatically from java into a certain directory. For information, ant-1.6.jar.tar can be downloaded from `ant.jar <http://www.java2s.com/Code/Jar/a/Downloadant16jar.htm>`_.
+	
+
++ **android-xmlrpc.jar**
+
+  android-xmlrpc.jar is located at ABT/libs. As ABT is a client-server application, to access the remote procedure call we have used android-xmlrpc client access method on remote server. To download visit `android-xmlrpc <http://www.java2s.com/Code/Jar/a/Downloadandroidxmlrpcjar.htm>`_.	
+	
+	
 Android AndroidManifest.xml, src and res
 ----------------------------------------
 you should be aware of a few directories and files in the Android project:
