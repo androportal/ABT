@@ -1,6 +1,4 @@
 * TODO :: b4 any push
-
-
 ** ABTcore /install/
   *** aakash.sh
   *** preinstall.sh
@@ -25,3 +23,6 @@
 
 ** import and export data
 ** sync data
+** check storage size before downloading tar-ball
+   - image + tarball
+   - if internal space not avail, then download to external SDCARD
