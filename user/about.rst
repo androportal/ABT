@@ -2,7 +2,7 @@
    :numbered:
 
 About Aakash Business Tool(ABT)
-==========================
+===============================
 
 **Aakash Business Tool** is a portable accounting platform on Android
 intended for Accountants and Students. `Aakash

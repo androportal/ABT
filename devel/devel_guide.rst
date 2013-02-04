@@ -10,4 +10,4 @@ Developer Guide
    chroot_setup
    backend_server
    frontend_javaclient
-  
+   devel_feedback
