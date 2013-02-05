@@ -16,7 +16,8 @@
         android:theme="@style/CustomTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main" 
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,115 +26,139 @@
         </activity>
         <activity
             android:label="Create new organisation"
-            android:name=".createOrg" >
+            android:name=".createOrg"
+            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:label="Organisation details"
-            android:name=".orgDetails" >
+            android:name=".orgDetails"
+            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:label="Preferences"
-            android:name=".preferences" >
+            android:name=".preferences"
+            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:label="Create account"
-            android:name=".createAccount" >
+            android:name=".createAccount"
+            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:label="Menu"
-            android:name=".menu" >
+            android:name=".menu"
+            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:label="Edit preferences"
-            android:name=".editPreferences" >
+            android:name=".editPreferences"
+            android:screenOrientation="landscape" >
         </activity>
         <activity 
             android:theme="@style/CustomTheme"
             android:label="Report types"
-            android:name=".report" >
+            android:name=".report"
+            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:label="Menu >> Report"
-            android:name=".reportMenu" >
+            android:name=".reportMenu"
+            android:screenOrientation="landscape" >
         </activity>
          <activity 
              android:theme="@style/CustomTheme"
             android:label="Voucher types"
-            android:name=".SearchVoucher">
+            android:name=".SearchVoucher"
+            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:label="Menu >> Transaction"
-            android:name=".voucherMenu" >
+            android:name=".voucherMenu"
+            android:screenOrientation="landscape" >
         </activity>
          <activity
             android:theme="@style/CustomTheme"
             android:label=""
-            android:name=".edit_account" >
+            android:name=".edit_account"
+            android:screenOrientation="landscape" >
             
         </activity>
          <activity
       		 android:label="Account"
-            android:name=".account_tab" >
+            android:name=".account_tab"
+            android:screenOrientation="landscape" >
        </activity>
        <activity
             android:theme="@style/CustomTheme"
       		 android:label="Transaction"
-            android:name=".transaction_tab" >
+            android:name=".transaction_tab"
+            android:screenOrientation="landscape" >
        </activity>
         <activity
             
       		 android:label="Transaction"
-            android:name=".createVoucher" >
+            android:name=".createVoucher"
+            android:screenOrientation="landscape" >
        </activity>
         <activity
             
       		 android:label="Select organisation"
-            android:name=".selectOrg" >
+            android:name=".selectOrg"
+            android:screenOrientation="landscape" >
        </activity> 
        
          <activity
             
       		 android:label="Login"
-            android:name=".login" >
+            android:name=".login"
+            android:screenOrientation="landscape" >
        </activity> 
        
          <activity
       		 android:label="Ledger"
-            android:name=".ledger" >
+            android:name=".ledger"
+            android:screenOrientation="landscape" >
        </activity> 
        
          <activity
       		 android:label="Trial balance"
-            android:name=".trialBalance" >
+            android:name=".trialBalance"
+            android:screenOrientation="landscape" >
        </activity> 
        
          <activity
       		android:label="Project statement"
-      		android:name=".projectStatement" >
+      		android:name=".projectStatement"
+      		android:screenOrientation="landscape" >
        </activity>
        
          <activity
       		android:label="Profit and Loss"
-      		android:name=".incomeExpenditure" >
+      		android:name=".incomeExpenditure"
+      		android:screenOrientation="landscape" >
        </activity>
        
          <activity
       		android:label="Cash flow"
-      		android:name=".cashFlow" >
+      		android:name=".cashFlow"
+      		android:screenOrientation="landscape" >
        </activity>
        
          <activity
       		android:label="Bank reconciliation"
-      		android:name=".bankReconciliation" >
+      		android:name=".bankReconciliation"
+      		android:screenOrientation="landscape" >
        </activity>
        <activity
       		android:label="Balance Sheet"
-      		android:name=".balanceSheet" >
+      		android:name=".balanceSheet"
+      		android:screenOrientation="landscape" >
        </activity>
        
        <activity
       		android:label="Add project"
-      		android:name=".addProject" >
+      		android:name=".addProject"
+      		android:screenOrientation="landscape" >
        </activity>
     </application>
     

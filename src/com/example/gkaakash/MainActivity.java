@@ -26,6 +26,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StatFs;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,6 +65,7 @@ public class MainActivity extends Activity {
     File checkImg;
     File checkImgextsd;
     File checkTar;
+    File checkTarExtsd;
     File help_flag;
     static boolean no_dailog=false;
      
@@ -109,7 +112,7 @@ public class MainActivity extends Activity {
         getOrgNames = (Spinner)findViewById(R.id.sGetOrgNames);
         //creating new method do event on button
         addListenerOnButton();
-        
+		
         // copy 'aakash.sh and 'preinstall.sh to their respective paths'
         File path = new File("/data/data/com.example.gkaakash/files/copyFilesFlag.txt");
         if(!path.exists()){
@@ -132,6 +135,7 @@ public class MainActivity extends Activity {
        
     }
 
+    
     //Attach a listener to the click event for the button
 	private void addListenerOnButton() {
 	    
@@ -275,7 +279,7 @@ public class MainActivity extends Activity {
          * checks existance of:
          * 1) /data/local/linux/etc/fstab
          * 2) /mnt/sdcard/abt.img
-         * 3) /mnt/sdcard/abt.tar.gz
+         * 3) /mnt/sdcard/abt.tar.gz or /mnt/extsd/abt.tar.gz
          * 4) /data/data/com.example.gkaakash/files/help_flag.txt
          * 
          **/
@@ -283,6 +287,7 @@ public class MainActivity extends Activity {
         checkImg = new File("/mnt/sdcard/abt.img");
         checkImgextsd = new File("/mnt/extsd/abt.img");
         checkTar = new File("/mnt/sdcard/abt.tar.gz");
+        checkTarExtsd = new File("/mnt/extsd/abt.tar.gz");
         help_flag = new File("/data/data/com.example.gkaakash/files/help_flag.txt");
         
         if(fstab.exists()) {
@@ -316,7 +321,12 @@ public class MainActivity extends Activity {
         else if(checkTar.exists()) {
         	// extract
         	// reboot
-        	spinner();
+        	spinner("mnt/sdcard");
+        } 
+        else if(checkTarExtsd.exists()) {
+        	// extract
+        	// reboot
+        	spinner("mnt/extsd");
         } 
         else {
         	// download
@@ -346,39 +356,81 @@ public class MainActivity extends Activity {
             Button btnyes = (Button) layout.findViewById(R.id.btnyes);
             btnyes.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    startDownload();
-                    mProgressDialog = new ProgressDialog(context);
-                    mProgressDialog.setMessage("Downloading file..");
-                    mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                    mProgressDialog.setCancelable(false);
-                    mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"Cancel",new DialogInterface.OnClickListener() {
+                	
+                	if(isInternetOn()) {
+                    // INTERNET IS AVAILABLE, DO STUFF..
+                        Toast.makeText(context, "Connected to network", Toast.LENGTH_SHORT).show();
+                        
+                        /**
+        				 * download image from aakashlabs.org
+        				 **/
+        				String url = "http://aakashlabs.org/builds/abt.tar.gz";
+        				String dest;
+        				
+        				/*
+        				 * check free space available in /mnt/sdcard, it should be greater than 380MB(292+78)
+        				 * if YES, download abt.tar.gz
+        				 */
+        				
+        				if(getAvailableSpaceInMB("mnt/sdcard") > 380L){
+        					
+        					Toast.makeText(context, "Downloading abt.tar.gz in /mnt/sdcard", Toast.LENGTH_SHORT).show();
+        			        dest = "mnt/sdcard";
+        			        startDownloadProgressBar(dest);
+        			        new DownloadFileAsync().execute(url,dest);
+        			        
+        				}else{
+        					AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        			        builder.setMessage("No enough space on sdcard, exiting the application!")
+        			                .setCancelable(false)
+        			                .setPositiveButton("Ok",
+        			                        new DialogInterface.OnClickListener() {
+        			                            public void onClick(DialogInterface dialog, int id) {
+        			                                finish();
+        			                                android.os.Process
+        			                                        .killProcess(android.os.Process.myPid());
+        			                            }
+        			                        });
+        			                
+        			                
+        			        AlertDialog alert = builder.create();
+        			        alert.show();
+        				}
+        				/*else{
+        					
+        					if(getAvailableSpaceInMB("mnt/extsd") > 380L){
+        						
+        						Toast.makeText(context, "we are in extsd", Toast.LENGTH_SHORT).show();
+        						dest = "mnt/extsd";
+        						startDownloadProgressBar(dest);
+        			            new DownloadFileAsync().execute(url,dest);
+        			            
+        					}else{
+        						
+        						Toast.makeText(context, "failed to download abt.tar.gz, No space available on sdcard", Toast.LENGTH_SHORT).show();
+        					}
+        			
+        				} */
+                        
+                    }else{
+                    // NO INTERNET AVAILABLE, DO STUFF..
+                        Toast.makeText(context, "Network disconnected", Toast.LENGTH_SHORT).show();
+                        //rebootFlag = 1;
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setMessage("No Connection Found, please check your network setting!")
+                                .setCancelable(false)
+                                .setPositiveButton("OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                finish();
+                                                android.os.Process
+                                                        .killProcess(android.os.Process.myPid());
+                                            }
+                                        });
+                        AlertDialog alert = builder.create();
+                        alert.show();
                       
-                        public void onClick(DialogInterface dialog, int which) {
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                            builder.setMessage("Are you sure you want cancel downloading?")
-                                    .setCancelable(false)
-                                    .setPositiveButton("Yes",
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    dialog.dismiss();
-                                                    help_dialog.dismiss();
-                                                    String[] command = {"rm /mnt/sdcard/abt.tar.gz"};
-                                                    RunAsRoot(command);  
-                                                    finish();
-                                                    android.os.Process.killProcess(android.os.Process.myPid());
-                                                }
-                                            })
-                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            mProgressDialog.show();
-                                        }
-                                    });
-                            AlertDialog alert = builder.create();
-                            alert.show();
-                          
-                        }
-                    });
-                    mProgressDialog.show();
+                    } 
                 }
             });
             
@@ -396,36 +448,40 @@ public class MainActivity extends Activity {
         ////////////////////////////
         
     
-    private void startDownload() {
-        	/*if(isInternetOn()) {
-                // INTERNET IS AVAILABLE, DO STUFF..
-                    Toast.makeText(context, "Connected to network", Toast.LENGTH_SHORT).show();
-                }else{
-                // NO INTERNET AVAILABLE, DO STUFF..
-                    Toast.makeText(context, "Network disconnected", Toast.LENGTH_SHORT).show();
-                    //rebootFlag = 1;
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage("No Connection Found, please check your network setting!")
-                            .setCancelable(false)
-                            .setPositiveButton("OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            finish();
-                                            android.os.Process
-                                                    .killProcess(android.os.Process.myPid());
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                  
-                }  */
-        	/**
-        	 * download image from aakashlabs.org
-        	 **/
-    	
-            String url = "http://aakashlabs.org/builds/abt.tar.gz";
-            new DownloadFileAsync().execute(url);
-        }    
+    private void startDownloadProgressBar(final String dest) {
+    	 mProgressDialog = new ProgressDialog(context);
+         mProgressDialog.setMessage("Downloading file..");
+         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+         mProgressDialog.setCancelable(false);
+         mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"Cancel",new DialogInterface.OnClickListener() {
+           
+             public void onClick(DialogInterface dialog, int which) {
+                 final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                 builder.setMessage("Are you sure you want cancel downloading?")
+                         .setCancelable(false)
+                         .setPositiveButton("Yes",
+                                 new DialogInterface.OnClickListener() {
+                                     public void onClick(DialogInterface dialog, int id) {
+                                         dialog.dismiss();
+                                         help_dialog.dismiss();
+                                         String[] command = {"rm "+dest+"/abt.tar.gz"};
+                                         RunAsRoot(command);  
+                                         finish();
+                                         android.os.Process.killProcess(android.os.Process.myPid());
+                                     }
+                                 })
+                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int id) {
+                                 mProgressDialog.show();
+                             }
+                         });
+                 AlertDialog alert = builder.create();
+                 alert.show();
+               
+             }
+         });
+         mProgressDialog.show();
+    }    
         
      private final boolean isInternetOn() {
     	// check internet connection via wifi   
@@ -447,10 +503,11 @@ public class MainActivity extends Activity {
             	return false;
             }
           
-    private void spinner() {
-    	// will start spinner first and then extraction
-    	//Toast.makeText(context, "we are in extraction spinner",Toast.LENGTH_SHORT).show();
-    	// start spinner to show extraction progress
+    private void spinner(String extraction_source) {
+    	/*
+    	 * this method will start spinner first to show extraction progress
+    	 * and then extraction
+    	*/
     	progressBar = new ProgressDialog(context);
         progressBar.setCancelable(false);
         progressBar.setMessage("Extracting files, please wait...");
@@ -458,7 +515,7 @@ public class MainActivity extends Activity {
         progressBar.show();
         
         // start actual extraction
-        new Extract_TAR_GZ_FILE().execute();
+        new Extract_TAR_GZ_FILE().execute(extraction_source);
     }
     
     
@@ -548,8 +605,9 @@ public class MainActivity extends Activity {
     // DOWNLOAD ??
     class DownloadFileAsync extends AsyncTask<String, String, String> {
     	/**
-    	 * download tar.gz from URL and write in '/mnt/sdcard'
+    	 * download tar.gz from URL and write in destination mnt/sdcard or mnt/extsd
     	 **/
+    	String download_destination;
         @Override        	
         public void onPreExecute() {
             super.onPreExecute();
@@ -560,6 +618,7 @@ public class MainActivity extends Activity {
 
             try {
                 URL url = new URL(aurl[0]);
+                download_destination = aurl[1];
                 URLConnection conexion = url.openConnection();
                 conexion.connect();
 
@@ -567,7 +626,7 @@ public class MainActivity extends Activity {
 
                 InputStream input = new BufferedInputStream(url.openStream());
                 OutputStream output = new FileOutputStream(
-                        "/mnt/sdcard/abt.tar.gz");
+                        download_destination+"/abt.tar.gz");
 
                 byte data[] = new byte[1024];
 
@@ -594,9 +653,37 @@ public class MainActivity extends Activity {
         public void onPostExecute(String unused) {
         	mProgressDialog.dismiss();
         	help_dialog.dismiss();
-        
-        	if (checkTar.exists()){
-        		spinner();
+        	File checkTarExists = new File(download_destination+"/abt.tar.gz");
+        	if (checkTarExists.exists()){
+        		/*
+        		 * Get length of tar file in MB, it should be grater than 78MB
+        		 * if YES, start spinner for extraction
+        		 */
+        		
+        		long fileSizeInMB = checkTarExists.length()/(1024 * 1024);      		
+        		if (fileSizeInMB >= 78) {
+        			spinner(download_destination);
+        		}else{
+        			String[] command = {"busybox rm -r "+download_destination+"/abt.tar.gz"};
+                    RunAsRoot(command);
+        			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+    		        builder.setMessage("Failed to download complete file, Exiting the application!")
+    		                .setCancelable(false)
+    		                .setPositiveButton("Ok",
+    		                        new DialogInterface.OnClickListener() {
+    		                            public void onClick(DialogInterface dialog, int id) {
+    		                                finish();
+    		                                android.os.Process
+    		                                        .killProcess(android.os.Process.myPid());
+    		                            }
+    		                        });
+    		                
+    		                
+    		        AlertDialog alert = builder.create();
+    		        alert.show();
+        			
+        		}
+        		
         	}
     }
         //delete internal files during un-installation 
@@ -612,8 +699,9 @@ public class MainActivity extends Activity {
     // EXTRACT CLASS
     public class Extract_TAR_GZ_FILE extends AsyncTask<String, String, String>{
         /**
-         * extract an image asynchronously to '/mnt/sdcard'
+         * extract an image asynchronously to '/mnt/sdcard' or 'mnt/extsd'
          **/
+    	String img_destination;
 		@Override
         public void onPreExecute() {
 			 
@@ -668,11 +756,9 @@ public class MainActivity extends Activity {
 		protected String doInBackground(String... params) {
 			// 
 			try {      
-				
-                String strSourceFile = "/mnt/sdcard/abt.tar.gz";
-                String strDest = "/mnt/sdcard/";
-                System.out.println(strSourceFile);
-              //  Toast.makeText(context, "aa"+strSourceFile, Toast.LENGTH_SHORT).show();
+				img_destination = params[0];
+                String strSourceFile = img_destination+"/abt.tar.gz";
+                String strDest = img_destination;
                 InputStream in = getInputStream(strSourceFile);
                 untar(in, strDest);
                     
@@ -690,8 +776,36 @@ public class MainActivity extends Activity {
 			// 
 			super.onPostExecute(result);
 			progressBar.dismiss();
-			if (checkImg.exists()){ 
-			reboot();
+			/*
+			 * check the size of abt.img before rebooting the device
+			 * if it is greater than 292 MB, reboot
+			 */
+			File checkImgExists = new File(img_destination+"/abt.img");
+			if (checkImgExists.exists()){
+				long fileSizeInMB = checkImgExists.length()/(1024 * 1024);      		
+        		if (fileSizeInMB >= 292) {
+        			
+        			reboot();
+        		
+        		}else{
+        			String[] command = {"busybox rm -r "+img_destination+"/abt.img"};
+                    RunAsRoot(command);
+        			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+    		        builder.setMessage("Failed to download complete abt.img, exiting the application")
+    		                .setCancelable(false)
+    		                .setPositiveButton("Ok",
+    		                        new DialogInterface.OnClickListener() {
+    		                            public void onClick(DialogInterface dialog, int id) {
+    		                                finish();
+    		                                android.os.Process
+    		                                        .killProcess(android.os.Process.myPid());
+    		                            }
+    		                        });
+    		                
+    		                
+    		        AlertDialog alert = builder.create();
+    		        alert.show();
+        		}
 			}
 			else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -791,5 +905,33 @@ public class MainActivity extends Activity {
 	        alert.show();
 	       }
 	
-	
+	 
+	 /**
+	  * @return Number of Mega bytes available on dir
+	  */
+	 public static long getAvailableSpaceInMB(String dir){
+		 final long SIZE_KB = 1024L;
+	     final long SIZE_MB = SIZE_KB * SIZE_KB;
+	     long availableSpace = -1L;
+	     StatFs stat = new StatFs(dir);
+	     availableSpace = (long) stat.getAvailableBlocks() * (long) stat.getBlockSize();
+	     return availableSpace/SIZE_MB;
+	 }
+	 
+	 
+	 /**
+	     * @return Number of bytes available on external storage extSD
+	     
+	    public long getExternalAvailableSpaceInBytes() {
+	        long availableSpace = -1L;
+	        try {
+	            StatFs stat = new StatFs("mnt/extsd");
+	            availableSpace = (long) stat.getAvailableBlocks() * (long) stat.getBlockSize();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+
+	        return availableSpace;
+	    }
+	   */ 
 }
