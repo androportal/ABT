@@ -1,50 +1,53 @@
 Transaction management
 ======================
 
+* This chapter includes layout and code logic of ``record/search/edit/clone`` transaction.
 
-Transaction management
-++++++++++++++++++++++
+* We have ``two`` tabs ie. Create voucher and Search/edit/clone voucher.
 
-	- For recording/editing voucher we have two tabs ie. Create voucher and Search/edit voucher.
-	
-	* These two tabs are included in a path ``src/com.example.gkaakash/transaction_tab.java`` .
+Tab host
+++++++++
 
-	+ Its activiy is explained below along with code. 
+* layout for hosting these two tabs is included in `res/layout/tab.xml <account_management.html#tab-host-for-create-edit-account>`_
 
-	* **File src/com/example/gkaakash/transaction_tab.java**
+* The associated activity is ``src/com.example.gkaakash/transaction_tab.java`` .
 
-	+ The activity contains the essential and required import like
+* The activiy is explained below along with code. 
 
-		::
+**File src/com/example/gkaakash/transaction_tab.java**
 
-			import android.app.AlertDialog;
-			import android.app.TabActivity;
-			import android.content.Context;
-			import android.content.DialogInterface;
-			import android.content.Intent;
-			import android.graphics.Color;
-			import android.os.Bundle;
-			import android.view.View;
-			import android.view.Window;
-			import android.view.WindowManager;
-			import android.view.View.OnClickListener;
-			import android.widget.Button;
-			import android.widget.EditText;
-			import android.widget.TabHost;
-			import android.widget.TabHost.OnTabChangeListener;
-			import android.widget.TabHost.TabSpec;
-			import android.widget.TextView;
-			import android.widget.Toast;
+* The activity contains the essential and required import like
 
-	* The activity intializes all the essential parameters and variables.
+	.. code-block:: java
 
-	* onCreate method creates two Tabspec and include them in Tabhost.
+		import android.app.AlertDialog;
+		import android.app.TabActivity;
+		import android.content.Context;
+		import android.content.DialogInterface;
+		import android.content.Intent;
+		import android.graphics.Color;
+		import android.os.Bundle;
+		import android.view.View;
+		import android.view.Window;
+		import android.view.WindowManager;
+		import android.view.View.OnClickListener;
+		import android.widget.Button;
+		import android.widget.EditText;
+		import android.widget.TabHost;
+		import android.widget.TabHost.OnTabChangeListener;
+		import android.widget.TabHost.TabSpec;
+		import android.widget.TextView;
+		import android.widget.Toast;
 
-	* It sets Create voucher as bydefault tab.
+* The activity intializes all the essential parameters and variables.
 
-		::
+* onCreate method creates two Tabspec and include them in Tabhost.
 
-			public class transaction_tab extends TabActivity {
+* It sets Create voucher as bydefault tab.
+
+	.. code-block:: java
+
+		public class transaction_tab extends TabActivity {
 	
 			static TextView tab1 = null;
 			static TextView tab2 = null;
@@ -56,17 +59,20 @@ Transaction management
 		   	static TabHost tabHost;
 		   	static String tabname;
 		   	EditText etRefNumber;
+		   	
 			  public void onCreate(Bundle savedInstanceState) {
 				super.onCreate(savedInstanceState);
 				requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 				setContentView(R.layout.tab);
+				
 				//tab name flag
 				nameflag=MainActivity.nameflag;
 				name=SearchVoucher.name;
 				//Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
 			       
 				edittabflag=createVoucher.edittabflag;
-			      //customizing title bar
+				
+			      	//customizing title bar
 				getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.voucher_title);
 				final TextView label = (TextView) findViewById(R.id.tvVoucherTitle);
 				String vouchertypeflag = voucherMenu.vouchertypeflag;
@@ -74,12 +80,12 @@ Transaction management
 				final Button home = (Button) findViewById(R.id.btnhome);
 				home.setOnClickListener(new OnClickListener() {
 
-						@Override
-						public void onClick(View arg0) {
-							Intent intent = new Intent(context, menu.class);
-							// To pass on the value to the next page
-							startActivity(intent);
-							}
+					@Override
+					public void onClick(View arg0) {
+						Intent intent = new Intent(context, menu.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}
 				});
 			
 				tabHost = getTabHost();
@@ -97,7 +103,8 @@ Transaction management
 				}else {//setting tab name while creating account
 					tab1.setText("Create voucher");
 					tabname=(String) tab1.getText();
-					} 
+				} 
+				
 				createspec.setIndicator(tab1);//assigning TextView to tab Indicator
 				Intent create = new Intent(this, createVoucher.class);
 				create.putExtra("flag", vouchertypeflag);
@@ -121,342 +128,345 @@ Transaction management
 				tabHost.setCurrentTab(0);//setting tab1 on load
 			 }
 	
-			}
+		}
 
-	 **File  res/layout/create_voucher.xml**
+Create voucher(transaction)
++++++++++++++++++++++++++++
 
-		::
+**File  res/layout/create_voucher.xml**
 
-			<?xml version="1.0" encoding="utf-8"?>
+	.. code-block:: xml
+
+		<?xml version="1.0" encoding="utf-8"?>
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		 android:layout_width="fill_parent" 
+		 android:layout_height="fill_parent"
+		 android:orientation="vertical"
+		 android:weightSum="100"
+		 android:background="@drawable/dark_gray_background">
+		 
+		    <LinearLayout
+			   android:orientation="horizontal"
+			   android:layout_width="400dp"
+			   android:layout_height="3dp"
+			   android:paddingLeft="20dp"
+			   android:paddingRight="20dp"
+			   android:background="#60AFFE"/>
+		   
+		    <LinearLayout
+			   android:orientation="horizontal"
+			   android:layout_width="match_parent"
+			   android:layout_height="3dp"
+			   android:paddingLeft="20dp"
+			   android:paddingRight="20dp"
+			   android:background="#60AFFE"/>
+		    
+		<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:layout_weight="80"
+		    android:background="@drawable/dark_gray_background" >
 			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			 android:layout_width="fill_parent" 
-			 android:layout_height="fill_parent"
-			 android:orientation="vertical"
-			 android:weightSum="100"
-			 android:background="@drawable/dark_gray_background">
-			 
-			    <LinearLayout
-				   android:orientation="horizontal"
-				   android:layout_width="400dp"
-				   android:layout_height="3dp"
-				   android:paddingLeft="20dp"
-				   android:paddingRight="20dp"
-				   android:background="#60AFFE"/>
-			   
-			    <LinearLayout
-				   android:orientation="horizontal"
-				   android:layout_width="match_parent"
-				   android:layout_height="3dp"
-				   android:paddingLeft="20dp"
-				   android:paddingRight="20dp"
-				   android:background="#60AFFE"/>
-			    
-			<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-			    android:layout_width="fill_parent"
-			    android:layout_height="fill_parent"
-			    android:layout_weight="80"
-			    android:background="@drawable/dark_gray_background" >
-				<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				    android:orientation="vertical"
+			    android:orientation="vertical"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:paddingTop="5dp" >
+		 
+				<TableLayout
+				    xmlns:android="http://schemas.android.com/apk/res/android"
 				    android:layout_width="match_parent"
 				    android:layout_height="wrap_content"
-				    android:paddingTop="5dp" >
-			 
-					<TableLayout
-					    xmlns:android="http://schemas.android.com/apk/res/android"
-					    android:layout_width="match_parent"
-					    android:layout_height="wrap_content"
-					    android:orientation="vertical"
-					    android:paddingLeft="20dp"
-					    android:paddingRight="20dp"
-					    android:stretchColumns="7" >
-
-					    <TableRow
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content" >
-
-						   	
-					    <Spinner
-						android:id="@+id/sDrCr"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:entries="@array/SearchBy_arrays"
-						android:prompt="@string/Search_prompt" />
-						
-					    <TextView
-						android:id="@+id/accountName"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="        Account name"
-						android:textSize="14dp"
-						android:textColor="#FFFFFF" />
-
-					    <Spinner
-						android:id="@+id/getAccountByRule"
-						android:layout_width="259px"
-						android:layout_height="wrap_content"
-						android:entries="@array/accountName_arrays"
-						android:prompt="@string/accountName_prompt" />
-			    
-					    <TextView
-						android:id="@+id/amount"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="        Amount"
-						android:textSize="14dp"
-						android:textColor="#FFFFFF" />
-					    
-					     <TextView
-						android:id="@+id/rupeeSym"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="@string/Rs"
-						android:textColor="#FFFFFF"
-						android:textSize="19dp"
-						android:paddingRight="5dp"
-						android:paddingLeft="10dp"/>
-					     
-			    
-						  <EditText
-						android:id="@+id/etDrCrAmount"
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:layout_weight="2"
-						android:inputType="numberDecimal"
-						android:text="0.00         " >
-
-					  <requestFocus />
-						  </EditText>
-						   
-						 <Button
-						    android:id="@+id/add"
-						    android:layout_weight="0.3"
-						    android:text=" +  " />
-			   
-					    </TableRow>
-					</TableLayout>
-		
-					<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				    android:id="@+id/Vouchertable"
 				    android:orientation="vertical"
-				    android:layout_width="fill_parent"
-				    android:layout_height="fill_parent" 
-		    		    android:stretchColumns="7" 
-		    		    android:paddingLeft="20dp"
-		    		    android:paddingRight="20dp"
-		    		    android:paddingBottom="5dp"
-			    		/>
-		
-					<LinearLayout 
-				    android:orientation="horizontal"
-				    android:layout_width="match_parent"
-				    android:layout_height="1dp"
 				    android:paddingLeft="20dp"
 				    android:paddingRight="20dp"
-				    android:weightSum="100" 
-				    android:background="@android:color/darker_gray">
-		
-		
-		
-					</LinearLayout>
+				    android:stretchColumns="7" >
 
-				<ListView
-				android:id="@+id/voucher_list"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content">
-				</ListView>
-	
-				<LinearLayout 
-				    android:orientation="horizontal"
-				    android:layout_width="match_parent"
-				    android:layout_height="0.01dp"
-				    android:paddingLeft="20dp"
-				    android:paddingRight="20dp"
-				    android:background="@android:color/darker_gray"/>
-	
-				<ListView
-				android:id="@+id/voucher_list4"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content">
-				</ListView>
-	
-				<LinearLayout 
-				    android:orientation="horizontal"
-				    android:layout_width="match_parent"
-				    android:layout_height="0.01dp"
-				    android:paddingLeft="20dp"
-				    android:paddingRight="20dp"
-				    android:background="@android:color/darker_gray"/>
-	
-				<LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:weightSum="100"
-				android:paddingTop="3dp"
-				android:paddingRight="20dp"
-				android:gravity="left">
-				<TextView
-				    android:id="@+id/tvRefNumber"
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:text="Voucher reference number"
-				    android:layout_weight="70"
-				    android:textSize="14dp"
-				    android:paddingLeft="20dp"
-				    android:textColor="#FFFFFF"/>
-	
-				<EditText
-					android:id="@+id/etRefNumber"
-					android:layout_width="305dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="30"
-					android:hint="Tap to enter reference number" 
-					android:paddingTop="2dp"/>
-				</LinearLayout>
-	
-				<LinearLayout 
-					android:orientation="horizontal"
+				    <TableRow
 					android:layout_width="match_parent"
-					android:layout_height="0.01dp"
-					android:paddingLeft="20dp"
-					android:paddingRight="20dp"
-					android:background="@android:color/darker_gray"/>
-	
-				<LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:weightSum="100"
-				android:paddingTop="3dp"
-				android:paddingRight="20dp"
-				android:gravity="left">
-				<TextView
-					android:id="@+id/tvVoucherNarration"
+					android:layout_height="wrap_content" >
+
+					   	
+				    <Spinner
+					android:id="@+id/sDrCr"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:text="Voucher narration"
-					android:layout_weight="70"
-					android:textSize="14dp"
-					android:paddingLeft="20dp"
-					android:textColor="#FFFFFF"/>
-	
-				<EditText
-					android:id="@+id/etVoucherNarration"
-					android:layout_width="283dp"
+					android:entries="@array/SearchBy_arrays"
+					android:prompt="@string/Search_prompt" />
+					
+				    <TextView
+					android:id="@+id/accountName"
+					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_weight="30"
-					android:hint="Tap to enter voucher narration" 
-					android:paddingTop="2dp"
-					android:inputType="textCapSentences"/>
-				</LinearLayout>
+					android:text="        Account name"
+					android:textSize="14dp"
+					android:textColor="#FFFFFF" />
+
+				    <Spinner
+					android:id="@+id/getAccountByRule"
+					android:layout_width="259px"
+					android:layout_height="wrap_content"
+					android:entries="@array/accountName_arrays"
+					android:prompt="@string/accountName_prompt" />
+		    
+				    <TextView
+					android:id="@+id/amount"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="        Amount"
+					android:textSize="14dp"
+					android:textColor="#FFFFFF" />
+				    
+				     <TextView
+					android:id="@+id/rupeeSym"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/Rs"
+					android:textColor="#FFFFFF"
+					android:textSize="19dp"
+					android:paddingRight="5dp"
+					android:paddingLeft="10dp"/>
+				     
+		    
+					  <EditText
+					android:id="@+id/etDrCrAmount"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="2"
+					android:inputType="numberDecimal"
+					android:text="0.00         " >
+
+				  <requestFocus />
+					  </EditText>
+					   
+					 <Button
+					    android:id="@+id/add"
+					    android:layout_weight="0.3"
+					    android:text=" +  " />
+		   
+				    </TableRow>
+				</TableLayout>
+	
+				<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:id="@+id/Vouchertable"
+			    android:orientation="vertical"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent" 
+	    		    android:stretchColumns="7" 
+	    		    android:paddingLeft="20dp"
+	    		    android:paddingRight="20dp"
+	    		    android:paddingBottom="5dp"
+		    		/>
+	
+				<LinearLayout 
+			    android:orientation="horizontal"
+			    android:layout_width="match_parent"
+			    android:layout_height="1dp"
+			    android:paddingLeft="20dp"
+			    android:paddingRight="20dp"
+			    android:weightSum="100" 
+			    android:background="@android:color/darker_gray">
+	
+	
 	
 				</LinearLayout>
-			</ScrollView>
 
+			<ListView
+			android:id="@+id/voucher_list"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+			</ListView>
+
+			<LinearLayout 
+			    android:orientation="horizontal"
+			    android:layout_width="match_parent"
+			    android:layout_height="0.01dp"
+			    android:paddingLeft="20dp"
+			    android:paddingRight="20dp"
+			    android:background="@android:color/darker_gray"/>
+
+			<ListView
+			android:id="@+id/voucher_list4"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+			</ListView>
+
+			<LinearLayout 
+			    android:orientation="horizontal"
+			    android:layout_width="match_parent"
+			    android:layout_height="0.01dp"
+			    android:paddingLeft="20dp"
+			    android:paddingRight="20dp"
+			    android:background="@android:color/darker_gray"/>
 
 			<LinearLayout
-				android:layout_width="fill_parent"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:weightSum="100"
+			android:paddingTop="3dp"
+			android:paddingRight="20dp"
+			android:gravity="left">
+			<TextView
+			    android:id="@+id/tvRefNumber"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="Voucher reference number"
+			    android:layout_weight="70"
+			    android:textSize="14dp"
+			    android:paddingLeft="20dp"
+			    android:textColor="#FFFFFF"/>
+
+			<EditText
+				android:id="@+id/etRefNumber"
+				android:layout_width="305dp"
 				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:layout_weight="20"
-				android:weightSum="100"
-				android:layout_alignParentBottom="true"
-				android:background="@drawable/blackbutton" >
-
-				<Button
-				    android:id="@+id/btnSaveVoucher"
-				    android:layout_width="wrap_content"
-				    android:layout_height="match_parent"
-				    android:layout_gravity="center_vertical"
-				    android:layout_weight="50"
-				    android:text="Save"
-				    android:textSize="20dp" />
-		
-				<Button
-				    android:id="@+id/btnResetVoucher"
-				    android:layout_width="wrap_content"
-				    android:layout_height="match_parent"
-				    android:layout_gravity="center_vertical"
-				    android:layout_weight="50"
-				    android:text="Reset"
-				    android:textSize="20dp" />
-
-			    </LinearLayout>
+				android:layout_weight="30"
+				android:hint="Tap to enter reference number" 
+				android:paddingTop="2dp"/>
 			</LinearLayout>
+
+			<LinearLayout 
+				android:orientation="horizontal"
+				android:layout_width="match_parent"
+				android:layout_height="0.01dp"
+				android:paddingLeft="20dp"
+				android:paddingRight="20dp"
+				android:background="@android:color/darker_gray"/>
+
+			<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:weightSum="100"
+			android:paddingTop="3dp"
+			android:paddingRight="20dp"
+			android:gravity="left">
+			<TextView
+				android:id="@+id/tvVoucherNarration"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Voucher narration"
+				android:layout_weight="70"
+				android:textSize="14dp"
+				android:paddingLeft="20dp"
+				android:textColor="#FFFFFF"/>
+
+			<EditText
+				android:id="@+id/etVoucherNarration"
+				android:layout_width="283dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="30"
+				android:hint="Tap to enter voucher narration" 
+				android:paddingTop="2dp"
+				android:inputType="textCapSentences"/>
+			</LinearLayout>
+
+			</LinearLayout>
+		</ScrollView>
+
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_weight="20"
+			android:weightSum="100"
+			android:layout_alignParentBottom="true"
+			android:background="@drawable/blackbutton" >
+
+			<Button
+			    android:id="@+id/btnSaveVoucher"
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:layout_gravity="center_vertical"
+			    android:layout_weight="50"
+			    android:text="Save"
+			    android:textSize="20dp" />
+	
+			<Button
+			    android:id="@+id/btnResetVoucher"
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:layout_gravity="center_vertical"
+			    android:layout_weight="50"
+			    android:text="Reset"
+			    android:textSize="20dp" />
+
+		    </LinearLayout>
+		</LinearLayout>
 
 .. image:: images/create_voucher.png
 	   :name: ABT main page
 	   :align: center
 
-* **File src/com/example/gkaakash/createVoucher.java**
+**File src/com/example/gkaakash/createVoucher.java**
 
-	*  Create voucher layout includes fields such as Account type, Account name, Amount, Voucher date, 
-           Project name,Reference No., and Narration(filling naration is not mandatory).
+* Create voucher layout includes fields such as Account type(Dr/Cr), Account name, Amount, Voucher date, 
+  Project name,Reference No., and Narration(filling naration is not mandatory).
 
-	* Values are sent to database using Save option.
+* Values are sent to database using ``Save`` option.
 
-	* All the fields are cleared using Reset option.
+* All the fields are cleared using ``Reset`` option.
 
-	* Its activity is explained below along with code.
+* Its activity is explained below along with code.
 
-	* The activity contains the essential and required import like
+* The activity contains the essential and required import like
 
-		::
+	.. code-block:: java
 		
-			import java.math.RoundingMode;
-			import java.text.DecimalFormat;
-			import java.text.SimpleDateFormat;
-			import java.util.ArrayList;
-			import java.util.Calendar;
-			import java.util.Date;
-			import java.util.HashMap;
-			import java.util.List;
-			import android.R.color;
-			import com.gkaakash.controller.*;
-			import android.app.Activity;
-			import android.app.AlertDialog;
-			import android.app.DatePickerDialog;
-			import android.app.Dialog;
-			import android.content.Context;
-			import android.content.DialogInterface;
-			import android.content.Intent;
-			import android.graphics.Color;
-			import android.os.Bundle;
-			import android.text.InputType;
-			import android.text.method.KeyListener;
-			import android.text.style.ClickableSpan;
-			import android.view.KeyEvent;
-			import android.view.View;
-			import android.view.View.OnClickListener;
-			import android.view.View.OnFocusChangeListener;
-			import android.view.ViewGroup;
-			import android.view.ViewGroup.LayoutParams;
-			import android.widget.AdapterView;
-			import android.widget.AdapterView.OnItemSelectedListener;
-			import android.widget.ArrayAdapter;
-			import android.widget.Button;
-			import android.widget.DatePicker;
-			import android.widget.EditText;
-			import android.widget.ListView;
-			import android.widget.SimpleAdapter;
-			import android.widget.Spinner;
-			import android.widget.TabHost;
-			import android.widget.TableLayout;
-			import android.widget.TableRow;
-			import android.widget.TextView;
-			import android.widget.AdapterView.OnItemClickListener;
-			import android.widget.Toast;
-			import android.view.View.OnKeyListener;
-			import android.view.inputmethod.InputMethodManager;
+		import java.math.RoundingMode;
+		import java.text.DecimalFormat;
+		import java.text.SimpleDateFormat;
+		import java.util.ArrayList;
+		import java.util.Calendar;
+		import java.util.Date;
+		import java.util.HashMap;
+		import java.util.List;
+		import android.R.color;
+		import com.gkaakash.controller.*;
+		import android.app.Activity;
+		import android.app.AlertDialog;
+		import android.app.DatePickerDialog;
+		import android.app.Dialog;
+		import android.content.Context;
+		import android.content.DialogInterface;
+		import android.content.Intent;
+		import android.graphics.Color;
+		import android.os.Bundle;
+		import android.text.InputType;
+		import android.text.method.KeyListener;
+		import android.text.style.ClickableSpan;
+		import android.view.KeyEvent;
+		import android.view.View;
+		import android.view.View.OnClickListener;
+		import android.view.View.OnFocusChangeListener;
+		import android.view.ViewGroup;
+		import android.view.ViewGroup.LayoutParams;
+		import android.widget.AdapterView;
+		import android.widget.AdapterView.OnItemSelectedListener;
+		import android.widget.ArrayAdapter;
+		import android.widget.Button;
+		import android.widget.DatePicker;
+		import android.widget.EditText;
+		import android.widget.ListView;
+		import android.widget.SimpleAdapter;
+		import android.widget.Spinner;
+		import android.widget.TabHost;
+		import android.widget.TableLayout;
+		import android.widget.TableRow;
+		import android.widget.TextView;
+		import android.widget.AdapterView.OnItemClickListener;
+		import android.widget.Toast;
+		import android.view.View.OnKeyListener;
+		import android.view.inputmethod.InputMethodManager;
 	
-	* The activity intializes all the essential parameters and variables.
+* The activity intializes all the essential parameters and variables.
 
-	* onCreate method loads all the methods required.
+* onCreate method loads all the methods required.
 
-		::
+	.. code-block:: java
 
-			public class createVoucher extends Activity {
+		public class createVoucher extends Activity {
 			TableLayout list;
 			int rowsSoFar = 0, tableRowCount;
 			String amount, financialFromDate, financialToDate, drcramount, vouchertypeflag;
@@ -625,7 +635,7 @@ Transaction management
 					   AlertDialog alert = builder.create();
 					   alert.show();	
 			     		}
-				 //add all onclick events in this method
+				//add all onclick events in this method
 			     	OnClickListener();
 			
 				//on dr/cr item selected from dropdown...
@@ -635,103 +645,103 @@ Transaction management
 				OnAmountFocusChangeListener(); 
 		   	 }
 
-	* This methods manages all the activity at the time of focus change(from one edittext to another).
+* This methods manages all the activity at the time of ``focus`` change(from one amount edittext to reference number edittext).
 
-		::
+	.. code-block:: java
 
-			private void OnAmountFocusChangeListener() {
+		private void OnAmountFocusChangeListener() {
 		    	/*
 		    	 * onfocuschange of amount edittext move focus to reference number
 		    	 */
 		    	tableRowCount = list.getChildCount();
-				for(int i=0;i<(tableRowCount);i++){
-					View row = list.getChildAt(i);
-					//amount edittext
-					final EditText e = (EditText)((ViewGroup) row).getChildAt(5);
+			for(int i=0;i<(tableRowCount);i++){
+				View row = list.getChildAt(i);
+				//amount edittext
+				final EditText e = (EditText)((ViewGroup) row).getChildAt(5);
+		
+				e.setOnFocusChangeListener(new OnFocusChangeListener() {
 			
-					e.setOnFocusChangeListener(new OnFocusChangeListener() {
+					@Override
+					public void onFocusChange(View v, boolean hasFocus) {
 				
-						@Override
-						public void onFocusChange(View v, boolean hasFocus) {
-					
-							etRefNumber = (EditText)findViewById(R.id.etRefNumber);
-							e.setNextFocusDownId(etRefNumber.getId());
-						}
-					});
-				}
-			 }
+						etRefNumber = (EditText)findViewById(R.id.etRefNumber);
+						e.setNextFocusDownId(etRefNumber.getId());
+					}
+				});
+			}
+		}
 
-	* This methods checks whether the amount in the amount field is tallied or not, if not it throws an error message.
+* This methods checks whether the amount in the amount field is tallied or not, if not it throws an error message.
 
-	* If amount field is left unfilled it automatially updates that field with the value "0.00".
+* Even if amount field is left unfilled it automatially updates totalDr/totalCr field with the value "0.00".
 
-		::
+	.. code-block:: java
 
-			public void testAmountTally() {
-		    	/*
-		    	 * this method calculate toatalDr and totalCr
-		    	 */
+		public void testAmountTally() {
+	    	/*
+	    	 * this method calculate toatalDr and totalCr
+	    	 */
 		    	totalDr = 0;
 		    	totalCr = 0;
 		    	//System.out.println("m in..........");
-				//selected dr/cr and amount of the first row
+			//selected dr/cr and amount of the first row
 		    	
-				String Dr_Cr = DrCr.getSelectedItem().toString();
-		
-				//System.out.println("sasa:"+Dr_Cr);
-		
-				String drcramountFirstRow = firstRowamount.getText().toString();
-				if(drcramountFirstRow.length()<1)
+			String Dr_Cr = DrCr.getSelectedItem().toString();
+	
+			//System.out.println("sasa:"+Dr_Cr);
+	
+			String drcramountFirstRow = firstRowamount.getText().toString();
+			if(drcramountFirstRow.length()<1)
 			{
-					drcramountFirstRow="0.00";
+				drcramountFirstRow="0.00";
 			}
-				drcrAmountFirstRow = Float.parseFloat(drcramountFirstRow);
+			drcrAmountFirstRow = Float.parseFloat(drcramountFirstRow);
 		
-				if("Dr".equals(Dr_Cr)){
-					totalDr = totalDr + drcrAmountFirstRow;
-				}
-				else if("Cr".equals(Dr_Cr)){
-					totalCr = totalCr + drcrAmountFirstRow;
-				}
-		
-				//selected dr/cr and amount of the remaining rows
-		
-				tableRowCount = list.getChildCount();
-		
-				for(int i=0;i<(tableRowCount);i++){
-					View row = list.getChildAt(i);
-					//dr cr spinner
-					Spinner s = (Spinner)((ViewGroup) row).getChildAt(0);
-					String drcr = s.getSelectedItem().toString();
-					//System.out.println("ssdsdSSS:"+drcr);
-			
-					//amount edittext
-					EditText e = (EditText)((ViewGroup) row).getChildAt(5);
-					drcramount = e.getText().toString();
-			
-					if(drcramount.length()<1)
-			    {
-				drcramount="0.00";
-			    }
-					drcrAmount = Float.parseFloat(drcramount);
-			
-					if("Dr".equals(drcr)){
-						totalDr = totalDr + drcrAmount;
-					}
-					else if("Cr".equals(drcr)){
-						totalCr = totalCr + drcrAmount;
-					}
-				}
-		
+			if("Dr".equals(Dr_Cr)){
+				totalDr = totalDr + drcrAmountFirstRow;
 			}
-
-	* This method sets the second row of the table.
-
-	* It fills the dropdown of second and first row of table with respective values according to the account type.
-
-		::
+			else if("Cr".equals(Dr_Cr)){
+				totalCr = totalCr + drcrAmountFirstRow;
+			}
 		
-			private void setFirstAndSecondRow() {
+			//selected dr/cr and amount of the remaining rows
+	
+			tableRowCount = list.getChildCount();
+	
+			for(int i=0;i<(tableRowCount);i++){
+				View row = list.getChildAt(i);
+				//dr cr spinner
+				Spinner s = (Spinner)((ViewGroup) row).getChildAt(0);
+				String drcr = s.getSelectedItem().toString();
+				//System.out.println("ssdsdSSS:"+drcr);
+		
+				//amount edittext
+				EditText e = (EditText)((ViewGroup) row).getChildAt(5);
+				drcramount = e.getText().toString();
+		
+				if(drcramount.length()<1)
+			    	{
+					drcramount="0.00";
+			    	}
+				drcrAmount = Float.parseFloat(drcramount);
+		
+				if("Dr".equals(drcr)){
+					totalDr = totalDr + drcrAmount;
+				}
+				else if("Cr".equals(drcr)){
+					totalCr = totalCr + drcrAmount;
+				}
+			}
+		
+		}
+
+* This method sets the first and second row of the table.
+
+* It fills the dropdown of second and first row of table with respective values according to the account type.
+
+	.. code-block:: java
+		
+		private void setFirstAndSecondRow() {
 			/*this onload function takes the account name list 
 			 * from voucherMenu.java depending upon getAccountByRule
 			 * sets first row account name spinner
@@ -742,28 +752,33 @@ Transaction management
 		
 				//set first row account name spinner
 		
-		    	//set resource layout of spinner to that adapter
+		    		//set resource layout of spinner to that adapter
 				if(searchFlag==false){
 					dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, accnames);
 					dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-					account.setAdapter(dataAdapter);
+					//account is the spinner of account name of first row
+					account.setAdapter(dataAdapter); 
+					
 					//add second row
 					addButton();
 			
-					dr_cr.clear();
+					//dr_cr is the spinner of account type(Dr/Cr) of first row
+					dr_cr.clear(); 
 					dr_cr.add("Dr");
-			    	dr_cr.add("Cr");
-			    	da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
+			    		dr_cr.add("Cr"); 
+			    		da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
 			  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				sp1.setAdapter(da1);
-				sp1.setSelection(1);
+			  	   	
+			  	   	//sp1 is the spinner of account type(Dr/Cr) of second row
+					sp1.setAdapter(da1);
+					sp1.setSelection(1);
 			
-					//set adaptor with account name list in second row spinner
-			    	actionButton.setAdapter(dataAdapter);
+					//set adaptor with account name list in second row spinner actionButton
+			    		actionButton.setAdapter(dataAdapter);
 			    	
 				}else {//for setting second row for editing
 					dr_cr.clear();
-					//for setting 1st row's 2nd spinner
+					//for setting 1st row's account name spinner
 					Fsecond_spinner = accdetailsList.get(0).get(0);
 					//setting adapter
 					dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, accnames);
@@ -775,36 +790,37 @@ Transaction management
 					//add second row
 					addButton();
 			
-			    	dr_cr.add("Dr");
-			    	dr_cr.add("Cr");
+			    		dr_cr.add("Dr");
+			    		dr_cr.add("Cr");
 			    	
-			    	//for setting 1st spinner of 1st and 2nd row 
-			    	Sacctype=accdetailsList.get(1).get(1);
-			    	Facctype=accdetailsList.get(0).get(1);
-			    	da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
-			  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			     	SacctypePosition=da1.getPosition(Sacctype);
-			     	FacctypePosition=da1.getPosition(Facctype);
-			     	sp1.setAdapter(da1);
-				sp1.setSelection(SacctypePosition);//setting spinner selection acc to obtained value
-				DrCr.setAdapter(da1);
-				DrCr.setSelection(FacctypePosition);//setting spinner selection acc to obtained value
+				    	//for setting Dr/Cr spinner of 1st and 2nd row 
+				    	Sacctype=accdetailsList.get(1).get(1);
+				    	Facctype=accdetailsList.get(0).get(1);
+				    	da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
+				  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				     	SacctypePosition=da1.getPosition(Sacctype);
+				     	FacctypePosition=da1.getPosition(Facctype);
+				     	sp1.setAdapter(da1);
+					sp1.setSelection(SacctypePosition);//setting spinner selection acc to obtained value
+					DrCr.setAdapter(da1);
+					DrCr.setSelection(FacctypePosition);//setting spinner selection acc to obtained value
 			
-		       		//for filling 2nd row amount
-				et.setText(accdetailsList.get(1).get(2));
+			       		//for filling 2nd row amount
+					et.setText(accdetailsList.get(1).get(2));
 			
-					//for setting 2nd row's 2nd spinner
-			    	Ssecond_spinner = accdetailsList.get(1).get(0);
-			     	SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
-			     	actionButton.setAdapter(dataAdapter);
-			    	actionButton.setSelection(SaccnamePosition);//setting spinner selection acc to obtained value
+					//for setting 2nd row's account name spinner
+				    	Ssecond_spinner = accdetailsList.get(1).get(0);
+				     	SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
+				     	actionButton.setAdapter(dataAdapter);
+				    	actionButton.setSelection(SaccnamePosition);//setting spinner selection acc to obtained value
 			    	
-				tableRowCount = list.getChildCount();
+					tableRowCount = list.getChildCount();
 			
-					//if row count of 2nd table(list) is more than 1 code bellow will be executed
+					//if row count of 2nd table(list) is more than 1, code below will be executed
 			
 					if(accdetailsList.size()>2){
 						for(int i=2;i<accdetailsList.size();i++){
+							//add new row
 							addButton();
 							et.setText(accdetailsList.get(i).get(2));
 				
@@ -833,14 +849,18 @@ Transaction management
 				if(searchFlag==false){
 					//set first row 
 					dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, DrAccountlist);
-			    	//set resource layout of spinner to that adapter
-			    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			    		
+			    		//set resource layout of spinner to that adapter
+			    		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 					account.setAdapter(dataAdapter);
+					
 					//add second row
 					addButton();
+					
 					dr_cr.clear();
 					dr_cr.add("Dr");
 					dr_cr.add("Cr");
+					
 					ArrayAdapter<String> da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
 					da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 					sp1.setAdapter(da1);
@@ -856,77 +876,77 @@ Transaction management
 					//add second row
 					addButton();
 					dr_cr.clear();
-			    	dr_cr.add("Dr");
-			    	dr_cr.add("Cr");
-			    	Sacctype=accdetailsList.get(1).get(1);
+			    		dr_cr.add("Dr");
+			    		dr_cr.add("Cr");
+			    		Sacctype=accdetailsList.get(1).get(1);
 			    
-			    	Facctype=accdetailsList.get(0).get(1);
-			    	da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
+			    		Facctype=accdetailsList.get(0).get(1);
+			    		da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
 			  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			     	SacctypePosition=da1.getPosition(Sacctype);
-			     	FacctypePosition=da1.getPosition(Facctype);
-			     	sp1.setAdapter(da1);
-				sp1.setSelection(SacctypePosition);
-				DrCr.setAdapter(da1);
-				DrCr.setSelection(FacctypePosition);
+				     	SacctypePosition=da1.getPosition(Sacctype);
+				     	FacctypePosition=da1.getPosition(Facctype);
+				     	sp1.setAdapter(da1);
+					sp1.setSelection(SacctypePosition);
+					DrCr.setAdapter(da1);
+					DrCr.setSelection(FacctypePosition);
 			
-				if("Dr".equals(Facctype)){//if acctype is DR
-					dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, DrAccountlist);
-				}else {//if acctype is CR
-					dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, CrAccountlist);
-					}
-				Fsecond_spinner = accdetailsList.get(0).get(0);
-					dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-					FaccnamePosition = dataAdapter.getPosition(Fsecond_spinner);
-					account.setAdapter(dataAdapter);
-					account.setSelection(FaccnamePosition);
-			
-			
-				et.setText(accdetailsList.get(1).get(2));
+					if("Dr".equals(Facctype)){//if acctype is DR
+						dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, DrAccountlist);
+					}else {//if acctype is CR
+						dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, CrAccountlist);
+						}
+					Fsecond_spinner = accdetailsList.get(0).get(0);
+						dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+						FaccnamePosition = dataAdapter.getPosition(Fsecond_spinner);
+						account.setAdapter(dataAdapter);
+						account.setSelection(FaccnamePosition);
 			
 			
-				if("Dr".equals(Sacctype)){
-					dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, DrAccountlist);
-				}else {
-					dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, CrAccountlist);
-					}
+					et.setText(accdetailsList.get(1).get(2));
 			
-			    	Ssecond_spinner = accdetailsList.get(1).get(0);
-			    	System.out.println("sdss:"+Ssecond_spinner);
-			     	SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
-			     	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			     	actionButton.setAdapter(dataAdapter);
-			    	actionButton.setSelection(SaccnamePosition);
-			  	   	
-				tableRowCount = list.getChildCount();
-					if(accdetailsList.size()>2){
-						for(int i=2;i<accdetailsList.size();i++){
-						addButton();
-						et.setText(accdetailsList.get(i).get(2));
-				
 			
-						if("Dr".equals(Sacctype)){
+					if("Dr".equals(Sacctype)){
 						dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, DrAccountlist);
 					}else {
 						dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, CrAccountlist);
-						}
-				
-				
-						Ssecond_spinner = accdetailsList.get(i).get(0);
-						//System.out.println("ashagdSec:"+Ssecond_spinner+"");
+					}
+			
+				    	Ssecond_spinner = accdetailsList.get(1).get(0);
+				    	System.out.println("sdss:"+Ssecond_spinner);
 				     	SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
 				     	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				     	actionButton.setAdapter(dataAdapter);
 				    	actionButton.setSelection(SaccnamePosition);
-				    	dr_cr.clear();
-				    	dr_cr.add("Dr");
-				    	dr_cr.add("Cr");
-				    	Sacctype=accdetailsList.get(i).get(1);
-				    	da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
-				  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				     	SacctypePosition=da1.getPosition(Sacctype);
-				     	sp1.setAdapter(da1);
-					sp1.setSelection(SacctypePosition);
+			  	   	
+					tableRowCount = list.getChildCount();
+					
+					if(accdetailsList.size()>2){
+						for(int i=2;i<accdetailsList.size();i++){
+							addButton();
+							et.setText(accdetailsList.get(i).get(2));
+				
+			
+							if("Dr".equals(Sacctype)){
+							dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, DrAccountlist);
+							}else {
+								dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, CrAccountlist);
+							}
+				
+							Ssecond_spinner = accdetailsList.get(i).get(0);
+							//System.out.println("ashagdSec:"+Ssecond_spinner+"");
+						     	SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
+						     	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+						     	actionButton.setAdapter(dataAdapter);
+						    	actionButton.setSelection(SaccnamePosition);
+						    	dr_cr.clear();
+						    	dr_cr.add("Dr");
+						    	dr_cr.add("Cr");
+						    	Sacctype=accdetailsList.get(i).get(1);
+						    	da1 = new ArrayAdapter<String>(createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
+						  	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+						     	SacctypePosition=da1.getPosition(Sacctype);
+						     	sp1.setAdapter(da1);
+							sp1.setSelection(SacctypePosition);
 				
 						}	
 					}
@@ -935,14 +955,14 @@ Transaction management
 			}
 		 }
 
-	* The below method fills the drop down of account names when respective account type is selected.
+* The below method fills the drop down of account names when respective account type is selected.
 
-		::
+	.. code-block:: java
 
-			private void OnDrCrItemSelectedListener() {
-			/*
-			 * to set account names in dropdown when Dr/Cr changed
-			 */
+		private void OnDrCrItemSelectedListener() {
+		/*
+		 * to set account names in dropdown when Dr/Cr changed
+		 */
 			//for first row
 	       		 DrCr.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -965,6 +985,7 @@ Transaction management
 				// ignore this method!!! :)
 			}
 			});
+			
 			//for remaining rows
 			sp1.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -991,18 +1012,18 @@ Transaction management
 			});
 		 }
 
-	* The below method populates drop down of account name by rule.
+* The below method populates drop down of account name by rule.
 
-	* For example if transaction type is contra, this method filters the account names that comes under contra
-      	  and fill them in the drop down.  
+* For example if transaction type is contra, this method filters the account names that comes under contra
+  and fill them in the drop down.
 
-		::
+	.. code-block:: java	
 
-			private void getAccountsByRule(Object[] DrCrFlag) {
-			/*
-			 * get account name list depending upon voucher type and 
-			 * dr/cr flag (standard accounting rule)
-			 */
+		private void getAccountsByRule(Object[] DrCrFlag) {
+		/*
+		 * get account name list depending upon voucher type and 
+		 * dr/cr flag (standard accounting rule)
+		 */
 			if("Contra".equals(vouchertypeflag)){
 				voucherAccounts = (Object[]) transaction.getContraAccounts(client_id);
 			}
@@ -1051,29 +1072,29 @@ Transaction management
 		    	//set resource layout of spinner to that adapter
 		    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			    
-			}
+		}
 
-	* The below method manages the activity when plus button is clicked,by adding one row.
+* The below method manages the activity when plus button is clicked, for adding one row.
 
-	* It takes values filled in the fields and calls setTransaction for saving transation.  
+* It takes values filled in the fields and calls setTransaction for saving transation.  
 
-	* After saving transaction it resets all the fields.
+* After saving transaction it resets all the fields.
 
-		::
+	.. code-block:: java
 
-			private void OnClickListener() { 
-			/*
-			 * on click method for add, save and reset button
-			 * 1. add: Every time the "+" button is clicked, add a new row to the table
-			 * 2. save: takes all necessary field values and calls transaction.setTransaction
-			 * 			for adding transaction and resets all fileds after adding transaction
-			 * 3. reset: resets all fields
-			 */
-		
+		private void OnClickListener() { 
+		/*
+		 * on click method for add, save and reset button
+		 * 1. add: Every time the "+" button is clicked, add a new row to the table
+		 * 2. save: takes all necessary field values and calls transaction.setTransaction
+		 * 			for adding transaction and resets all fileds after adding transaction
+		 * 3. reset: resets all fields
+		 */
+	
 			/*==============================================================================
 	    		 * Every time the "+" button is clicked, add a new row to the table 
 	    		 */
-			Button addButton = (Button) findViewById( R.id.add );
+			 Button addButton = (Button) findViewById( R.id.add );
 	       		 addButton.setOnClickListener( new OnClickListener() {
 				public void onClick(View view) { 
 					testAmountTally();
@@ -1087,42 +1108,42 @@ Transaction management
 					}
 					else{
 						for(int i=0;i<(tableRowCount);i++){
-		                View row = list.getChildAt(i);
+		                			View row = list.getChildAt(i);
 		               
-		                //amount edittext
-		                EditText e = (EditText)((ViewGroup) row).getChildAt(5);
-		                drcramount = e.getText().toString();
-		                if(drcramount.length()<1)
-		                {
-		                    drcramount="0.00";
-		                }
-		                amountdrcr = Float.parseFloat(drcramount);
-		                
-		                if(amountdrcr<=0){
-		                	addRowFlag = false;
-		                    break;
-		                }
-		                else{
-		                	addRowFlag = true;
-		                }
-		            }
+		                			//amount edittext
+						EditText e = (EditText)((ViewGroup) row).getChildAt(5);
+						drcramount = e.getText().toString();
+						if(drcramount.length()<1)
+						{
+						    drcramount="0.00";
+						}
+						amountdrcr = Float.parseFloat(drcramount);
+						
+						if(amountdrcr<=0){
+							addRowFlag = false;
+						    break;
+						}
+						else{
+							addRowFlag = true;
+						}
+		            		}
 					
-				if(addRowFlag == true){
-					//add new row
-					addButton();
-					ArrayAdapter<String> da1 = new ArrayAdapter<String>(
-					createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
-			  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				sp1.setAdapter(da1);
-			      
-				//set totalDr and totalCr in textview
-				String tvTotalDr = Float.toString(totalDr);
-				//tvTotalDebit.setText("Total Debit: "+tvTotalDr+"0");
+					if(addRowFlag == true){
+						//add new row
+						addButton();
+						ArrayAdapter<String> da1 = new ArrayAdapter<String>(
+						createVoucher.this, android.R.layout.simple_spinner_item,dr_cr);
+				  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+						sp1.setAdapter(da1);
+					      
+						//set totalDr and totalCr in textview
+						String tvTotalDr = Float.toString(totalDr);
+						//tvTotalDebit.setText("Total Debit: "+tvTotalDr+"0");
 				
-				String tvTotalCr = Float.toString(totalCr);
-				//tvTotalCredit.setText("Total Credit: "+tvTotalCr+"0");
+						String tvTotalCr = Float.toString(totalCr);
+						//tvTotalCredit.setText("Total Credit: "+tvTotalCr+"0");
 				
-				DrCr.setOnItemSelectedListener(new OnItemSelectedListener() {
+						DrCr.setOnItemSelectedListener(new OnItemSelectedListener() {
 					
 						@Override
 						public void onItemSelected(AdapterView<?> parent,
@@ -1140,9 +1161,9 @@ Transaction management
 						public void onNothingSelected(AdapterView<?> arg0) {
 							// ignore this method!!! :)
 						}
-					});
+						});
 				
-				sp1.setOnItemSelectedListener(new OnItemSelectedListener() {
+						sp1.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 						@Override
 						public void onItemSelected(AdapterView<?> parent, 
@@ -1165,7 +1186,7 @@ Transaction management
 					});
 				
 				
-			      //set Dr/Cr selected in dropdown according to the condition and set amount in new row
+			      		//set Dr/Cr selected in dropdown according to the condition and set amount in new row
 					if(totalDr > totalCr){
 						diffbal = totalDr-totalCr;
 						et.setText(String.format("%.2f",diffbal ));
@@ -1491,21 +1512,21 @@ Transaction management
 				});
 			}
 
-	* This method populates Project names in the project name drop down. 
+* This method populates Project names in the project name drop down. 
 
-	* It sets ``No Project`` as project, bydefault. 
+* It sets ``No Project``, bydefault. 
 
-	* If any other Project name is selected from the dropdown, it updates the bydefault Project name.
+* If any other Project name is selected from the dropdown, it updates the bydefault Project name.
 
-		::
+	.. code-block:: java
 
-			private void setProject() {
-			/*
-			 * set 'No Project' in the subtitle on load and when item is clicked,
-			 * populates the list of project names present in database
-			 * when item(project name) is selected,
-			 * sets selected name in the subtitle
-			 */
+		private void setProject() {
+		/*
+		 * set 'No Project' in the subtitle on load and when item is clicked,
+		 * populates the list of project names present in database
+		 * when item(project name) is selected,
+		 * sets selected name in the subtitle
+		 */
 	    	
 			String[] abc = new String[] {"rowid", "col_1"};
 			int[] pqr = new int[] { R.id.tvRowTitle1, R.id.tvSubItem1};
@@ -1562,25 +1583,25 @@ Transaction management
 					
 					
 						//creating a dialog box for popup
-					AlertDialog.Builder builder = new AlertDialog.Builder(context);
-					//setting title
-					builder.setTitle("Select project");
-					//adding allProjectNames
-					builder.setItems(allProjectNames, new DialogInterface.OnClickListener() {
+						AlertDialog.Builder builder = new AlertDialog.Builder(context);
+						//setting title
+						builder.setTitle("Select project");
+						//adding allProjectNames
+						builder.setItems(allProjectNames, new DialogInterface.OnClickListener() {
 						
-							@Override
-							public void onClick(DialogInterface dialog, int pos) {
-								// set project name in project field
+								@Override
+								public void onClick(DialogInterface dialog, int pos) {
+									// set project name in project field
 
-									projectName.setText(allProjectNames[pos]);
-									vproject = allProjectNames[pos].toString();
+										projectName.setText(allProjectNames[pos]);
+										vproject = allProjectNames[pos].toString();
 							
 							
-							}
-						});
-					//building a complete dialog
-						dialog=builder.create();
-						dialog.show();
+								}
+							});
+						//building a complete dialog
+							dialog=builder.create();
+							dialog.show();
 					
 					}
 				}
@@ -1588,20 +1609,20 @@ Transaction management
 			});
 			}
 
-	* This method sets financial date as Voucher date,if no transaction is recorded before. 
+* This method sets financial date as Voucher date, if no transaction is recorded before. 
 
-	* If any transaction is previously recorded,it sets the Voucher date of the
-          previous transaction of the respective Voucher type as current Voucher date.
+* If any transaction is previously recorded,it sets the Voucher date of the
+  previous transaction of the respective Voucher type as current Voucher date.
 
-	* If the date is changed, it updates the bydefault date or previous date with the new date.  
+* If the date is changed, it updates the bydefault date or previous date with the new date.  
 
-		::
+	.. code-block:: java
 
-			private void setVoucherDate() {
-			/*
-			 * set the financial year from date in the subtitle and when date is changed by user,
-			 * sets date in the subtitle
-			 */
+		private void setVoucherDate() {
+		/*
+		 * set the financial year from date in the subtitle and when date is changed by user,
+		 * sets date in the subtitle
+		 */
 			String fromday,frommonth,fromyear,LastFromDate;
 			if(searchFlag==true){
 				//will get executed while clonning and editing
@@ -1621,7 +1642,6 @@ Transaction management
 			   	fromyear = dateParts[2];
 			}
 		   	financialToDate = Startup.getFinancialToDate();
-		   	
 		   	
 	    		year = Integer.parseInt(fromyear);
 			month = Integer.parseInt(frommonth);
@@ -1655,8 +1675,8 @@ Transaction management
 				}
 			});
 			}
-		    //build dialog
-		    @Override
+		    	//build dialog
+		    	@Override
 			protected Dialog onCreateDialog(int id) {
 				switch (id) {
 				case VOUCHER_DATE_DIALOG_ID:
@@ -1668,75 +1688,75 @@ Transaction management
 			}
 	
 			private DatePickerDialog.OnDateSetListener fromdatePickerListener 
-		    = new DatePickerDialog.OnDateSetListener() {
+		    		= new DatePickerDialog.OnDateSetListener() {
 
 				// when dialog box is closed, below method will be called.
 				public void onDateSet(DatePicker view, int selectedYear,
 					int selectedMonth, int selectedDay) {
-				year = selectedYear;
-				month = selectedMonth;
-				day = selectedDay;
+					year = selectedYear;
+					month = selectedMonth;
+					day = selectedDay;
 		
-				try {
-					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-				Date date1 = sdf.parse(financialFromDate);
-				Date date2 = sdf.parse(financialToDate);
-				Date date3 = sdf.parse(mFormat.format(Double.valueOf(day))+"-"
-				+mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(month))))+ 1))+"-"
-				+mFormat.format(Double.valueOf(year)));
-				Calendar cal1 = Calendar.getInstance(); //financial from date
-				Calendar cal2 = Calendar.getInstance(); //financial to date
-				Calendar cal3 = Calendar.getInstance(); //voucher date
+					try {
+						SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+						Date date1 = sdf.parse(financialFromDate);
+						Date date2 = sdf.parse(financialToDate);
+						Date date3 = sdf.parse(mFormat.format(Double.valueOf(day))+"-"
+						+mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(month))))+ 1))+"-"
+						+mFormat.format(Double.valueOf(year)));
+						Calendar cal1 = Calendar.getInstance(); //financial from date
+						Calendar cal2 = Calendar.getInstance(); //financial to date
+						Calendar cal3 = Calendar.getInstance(); //voucher date
 			
-				//24-10-2012 23-10-2013 23-10-2012
+						//24-10-2012 23-10-2013 23-10-2012
 
 			
-				cal1.setTime(date1);
-				cal2.setTime(date2);
-				cal3.setTime(date3);
-				/*
-				System.out.println(financialFromDate+financialToDate+mFormat.format(Double.valueOf(day))+"-"
-		   		+mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(month))))+ 1))+"-"
-				+mFormat.format(Double.valueOf(year)));
-				*/
+						cal1.setTime(date1);
+						cal2.setTime(date2);
+						cal3.setTime(date3);
+						/*
+						System.out.println(financialFromDate+financialToDate+mFormat.format(Double.valueOf(day))+"-"
+				   		+mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(month))))+ 1))+"-"
+						+mFormat.format(Double.valueOf(year)));
+						*/
 			
-				if((cal3.after(cal1) && cal3.before(cal2)) || cal3.equals(cal1) || cal3.equals(cal2)){
-					voucherDate =  (TextView)findViewById(R.id.tvSubItem1); 
+						if((cal3.after(cal1) && cal3.before(cal2)) || cal3.equals(cal1) || cal3.equals(cal2)){
+							voucherDate =  (TextView)findViewById(R.id.tvSubItem1); 
 				
-					// set selected date into textview
-					voucherDate.setText(new StringBuilder()
-					.append(mFormat.format(Double.valueOf(day))).append("-")
-					.append(mFormat.format(Double.valueOf
-					(Integer.parseInt((mFormat.format(Double.valueOf(month))))+ 1)))
-					.append("-").append(year));	
-					vDate = mFormat.format(Double.valueOf(day))+"-"
-							+(mFormat.format(Double.valueOf
-							(Integer.parseInt((mFormat.format(Double.valueOf(month))))+ 1)))+"-"
-							+year;
-				}
-				else{
-					String message = "Please enter proper voucher date";
-						toastValidationMessage(message);
-				}
+							// set selected date into textview
+							voucherDate.setText(new StringBuilder()
+							.append(mFormat.format(Double.valueOf(day))).append("-")
+							.append(mFormat.format(Double.valueOf
+							(Integer.parseInt((mFormat.format(Double.valueOf(month))))+ 1)))
+							.append("-").append(year));	
+							vDate = mFormat.format(Double.valueOf(day))+"-"
+									+(mFormat.format(Double.valueOf
+									(Integer.parseInt((mFormat.format(Double.valueOf(month))))+ 1)))+"-"
+									+year;
+						}
+						else{
+							String message = "Please enter proper voucher date";
+								toastValidationMessage(message);
+						}
 			
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
 		
 				}
 			};
 
-	* The below class provides funtionality to remove row.
+* The below class provides funtionality to remove row by clicking '-' button.
 
-	* The method inside the class ie.addButton() allow to add row if required.
+* The method inside the class ie.addButton() allow to add row if required.
 
-		::
+	.. code-block:: java
 
-			/***
-			* Gets all the information necessary to delete itself from the constructor.
-			* Deletes itself when the button is pressed.
-			*/
-			private static class RowRemover implements OnClickListener {
+		/***
+		* Gets all the information necessary to delete itself from the constructor.
+		* Deletes itself when the button is pressed.
+		*/
+		private static class RowRemover implements OnClickListener {
 			private TableLayout list;
 			private TableRow rowToBeRemoved;
 
@@ -1756,12 +1776,12 @@ Transaction management
 				list.removeView( rowToBeRemoved );
 			    }
 			}
-			}
+		}
 
-			public void addButton() {
-			/*
-			 * this method add the transaction row to the table
-			 */
+		public void addButton() {
+		/*
+		 * this method add the transaction row to the table
+		 */
 			newRow = new TableRow( list.getContext() );
 			newRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
 			//newRow.addView(child, width, height)
@@ -1816,17 +1836,17 @@ Transaction management
 			newRow.addView( removeSelfButton );
 			list.addView(newRow);
 			OnAmountFocusChangeListener();
-			}
+		}
 
-	* The below method bulids an alert dialog for displaying message.
+* The below method bulids an alert dialog for displaying message.
 
-		::
+	.. code-block:: java
 
-			public void toastValidationMessage(String message) {
-			/*
-			* call this method for alert messages
-			* input: a message Strig to be display on alert
-			*/
+		public void toastValidationMessage(String message) {
+		/*
+		* call this method for alert messages
+		* input: a message Strig to be display on alert
+		*/
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
 			builder.setMessage(message)
 			.setCancelable(false)
@@ -1839,117 +1859,121 @@ Transaction management
 
 			AlertDialog alert = builder.create();
 			alert.show();	
-			} 
+		} 
 
-	* The below method manages the activity when android back button is pressed.
+* The below method manages the activity when android back button is pressed.
 
-		::
+	.. code-block:: java
 
 			public void onBackPressed() {
-		    	 MainActivity.searchFlag=false;
-		    	 MainActivity.nameflag=false;
-		    	
-		    	Intent intent = new Intent(getApplicationContext(), voucherMenu.class);
-				 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				 startActivity(intent);
+			    	MainActivity.searchFlag=false;
+			    	MainActivity.nameflag=false;
+			    	
+				Intent intent = new Intent(getApplicationContext(), voucherMenu.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		 		startActivity(intent);
 			}
-		        }
+			
+Search/Edit/Clone/Delete Voucher
+++++++++++++++++++++++++++++++++
 
-	  **File  res/layout/search_voucher.xml**
+**File  res/layout/search_voucher.xml**
 		
-		::
+* This file includes a tablelayout.
 
-			<?xml version="1.0" encoding="utf-8"?>
-			<LinearLayout 
-			    android:id="@+id/LinearLayout01"
-			    android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
+	.. code-block:: xml
+
+		<?xml version="1.0" encoding="utf-8"?>
+		<LinearLayout 
+		    android:id="@+id/LinearLayout01"
+		    android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+		    xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:orientation="vertical"
+		    android:background="@drawable/dark_gray_background">
+
+		    <LinearLayout
+			   android:orientation="horizontal"
+			   android:layout_width="400dp"
+			   android:layout_height="3dp"
+			   android:layout_gravity="right"
+			   android:paddingLeft="20dp"
+			   android:paddingRight="20dp"
+			   android:background="#60AFFE"/>
+		   
+		    <LinearLayout
+			   android:orientation="horizontal"
+			   android:layout_width="match_parent"
+			   android:layout_height="3dp"
+			   android:paddingLeft="20dp"
+			   android:paddingRight="20dp"
+			   android:background="#60AFFE"/>
+
+		    <LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" 
+			android:paddingBottom="3dp"
+			android:paddingTop="3dp">
+
+			<TextView
+			    android:id="@+id/tvVFromdate"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="1"
+			    android:paddingLeft="10dp"
+			    android:textSize="15dp"
+			    android:textColor="#FFFFFF"/>
+
+			<Button
+			    android:id="@+id/btnSearchVoucher"
+			    style="?android:attr/buttonStyleSmall"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:background="@drawable/ic_action_search"/>
+
+			<TextView
+			    android:id="@+id/tvVTodate"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="1"
+			    android:gravity="right"
+			    android:paddingRight="10dp"
+			    android:textSize="15dp"
+			    android:textColor="#FFFFFF"/>
+
+		    </LinearLayout>
+		    
+		    
+		    <LinearLayout
 			    xmlns:android="http://schemas.android.com/apk/res/android"
-			    android:orientation="vertical"
-			    android:background="@drawable/dark_gray_background">
-
-			    <LinearLayout
-				   android:orientation="horizontal"
-				   android:layout_width="400dp"
-				   android:layout_height="3dp"
-				   android:layout_gravity="right"
-				   android:paddingLeft="20dp"
-				   android:paddingRight="20dp"
-				   android:background="#60AFFE"/>
-			   
-			    <LinearLayout
-				   android:orientation="horizontal"
-				   android:layout_width="match_parent"
-				   android:layout_height="3dp"
-				   android:paddingLeft="20dp"
-				   android:paddingRight="20dp"
-				   android:background="#60AFFE"/>
-
-			    <LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content" 
-				android:paddingBottom="3dp"
-				android:paddingTop="3dp">
-
-				<TextView
-				    android:id="@+id/tvVFromdate"
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:layout_weight="1"
-				    android:paddingLeft="10dp"
-				    android:textSize="15dp"
-				    android:textColor="#FFFFFF"/>
-
-				<Button
-				    android:id="@+id/btnSearchVoucher"
-				    style="?android:attr/buttonStyleSmall"
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:background="@drawable/ic_action_search"/>
-
-				<TextView
-				    android:id="@+id/tvVTodate"
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:layout_weight="1"
-				    android:gravity="right"
-				    android:paddingRight="10dp"
-				    android:textSize="15dp"
-				    android:textColor="#FFFFFF"/>
-
-			    </LinearLayout>
+			    android:id="@+id/layout_root"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="10dp" >
+				 <HorizontalScrollView 
+		       			android:layout_height="fill_parent"
+			    	android:layout_width="fill_parent"
+			    	android:fillViewport="true">
 			    
-			    
-			    <LinearLayout
-				    xmlns:android="http://schemas.android.com/apk/res/android"
-				    android:id="@+id/layout_root"
-				    android:layout_width="fill_parent"
-				    android:layout_height="fill_parent"
-				    android:paddingLeft="10dp"
-				    android:paddingRight="10dp"
-				    android:paddingBottom="10dp" >
-					 <HorizontalScrollView 
-			       			android:layout_height="fill_parent"
-				    	android:layout_width="fill_parent"
-				    	android:fillViewport="true">
-				    
-				      <ScrollView
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:fillViewport="true">
-					<TableLayout
-				    android:layout_width="wrap_content"
-				    android:layout_height="0dp"
-				    android:stretchColumns=",1,2,3,4"
-				    android:id="@+id/maintable"
-				    android:background="#696565" >
-				       </TableLayout>
-				
-				    </ScrollView>
-				    </HorizontalScrollView>
-				 </LinearLayout>
+			      <ScrollView
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:fillViewport="true">
+				<TableLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="0dp"
+			    android:stretchColumns=",1,2,3,4"
+			    android:id="@+id/maintable"
+			    android:background="#696565" >
+			       </TableLayout>
+			
+			    </ScrollView>
+			    </HorizontalScrollView>
+			 </LinearLayout>
 
-			</LinearLayout>
+		</LinearLayout>
 
 .. image:: images/search_voucher.png
 	   :name: ABT main page
@@ -1957,59 +1981,61 @@ Transaction management
 
 * **File src/com/example/gkaakash/SearchVoucher.java**
 
-	* The activity contains the essential and required import like
+* It searches all vouchers of selected voucher type and sets it in a tablelayout.
 
-		::
+* The activity contains the essential and required import like
 
-			import java.math.RoundingMode;
-			import java.text.DecimalFormat;
-			import java.text.SimpleDateFormat;
-			import java.util.ArrayList;
-			import java.util.Arrays;
-			import java.util.Calendar;
-			import java.util.Date;
-			import java.util.regex.Matcher;
-			import java.util.regex.Pattern;
-			import com.example.gkaakash.R.layout;
-			import com.gkaakash.controller.Startup;
-			import com.gkaakash.controller.Transaction;
-			import android.app.Activity;
-			import android.app.AlertDialog;
-			import android.app.Dialog;
-			import android.app.ActionBar.LayoutParams;
-			import android.content.Context;
-			import android.content.DialogInterface;
-			import android.content.Intent;
-			import android.graphics.Color;
-			import android.os.Bundle;
-			import android.text.Layout;
-			import android.text.SpannableString;
-			import android.view.Gravity;
-			import android.view.LayoutInflater;
-			import android.view.View;
-			import android.view.ViewGroup;
-			import android.view.WindowManager;
-			import android.view.View.OnClickListener;
-			import android.widget.AdapterView;
-			import android.widget.AdapterView.OnItemSelectedListener;
-			import android.widget.Button;
-			import android.widget.DatePicker;
-			import android.widget.EditText;
-			import android.widget.LinearLayout;
-			import android.widget.Spinner;
-			import android.widget.TabHost;
-			import android.widget.TableLayout;
-			import android.widget.TableRow;
-			import android.widget.TextView;
-			import android.widget.Toast;
+	.. code-block:: java
 
-	* The activity intializes all the essential parameters and variables.
+		import java.math.RoundingMode;
+		import java.text.DecimalFormat;
+		import java.text.SimpleDateFormat;
+		import java.util.ArrayList;
+		import java.util.Arrays;
+		import java.util.Calendar;
+		import java.util.Date;
+		import java.util.regex.Matcher;
+		import java.util.regex.Pattern;
+		import com.example.gkaakash.R.layout;
+		import com.gkaakash.controller.Startup;
+		import com.gkaakash.controller.Transaction;
+		import android.app.Activity;
+		import android.app.AlertDialog;
+		import android.app.Dialog;
+		import android.app.ActionBar.LayoutParams;
+		import android.content.Context;
+		import android.content.DialogInterface;
+		import android.content.Intent;
+		import android.graphics.Color;
+		import android.os.Bundle;
+		import android.text.Layout;
+		import android.text.SpannableString;
+		import android.view.Gravity;
+		import android.view.LayoutInflater;
+		import android.view.View;
+		import android.view.ViewGroup;
+		import android.view.WindowManager;
+		import android.view.View.OnClickListener;
+		import android.widget.AdapterView;
+		import android.widget.AdapterView.OnItemSelectedListener;
+		import android.widget.Button;
+		import android.widget.DatePicker;
+		import android.widget.EditText;
+		import android.widget.LinearLayout;
+		import android.widget.Spinner;
+		import android.widget.TabHost;
+		import android.widget.TableLayout;
+		import android.widget.TableRow;
+		import android.widget.TextView;
+		import android.widget.Toast;
 
-	* OnCreate method calls all required methods at load time.
+* The activity intializes all the essential parameters and variables.
 
-		::
+* OnCreate method calls all required methods at load time.
 
-			public class SearchVoucher extends Activity {
+	.. code-block:: java
+
+		public class SearchVoucher extends Activity {
 			int textlength=0;
 			Context context = SearchVoucher.this;
 			AlertDialog dialog;
@@ -2046,31 +2072,31 @@ Transaction management
 				transaction = new Transaction();
 		
 				//for two digit format date for dd and mm
-					mFormat= new DecimalFormat("00");
-					mFormat.setRoundingMode(RoundingMode.DOWN);
-		
-					financialFromDate =Startup.getfinancialFromDate(); 
-					financialToDate = Startup.getFinancialToDate();
-		
-					TextView tvVFromdate = (TextView) findViewById( R.id.tvVFromdate );
-				    TextView tvVTodate = (TextView) findViewById( R.id.tvVTodate );
+				mFormat= new DecimalFormat("00");
+				mFormat.setRoundingMode(RoundingMode.DOWN);
+	
+				financialFromDate =Startup.getfinancialFromDate(); 
+				financialToDate = Startup.getFinancialToDate();
+	
+				TextView tvVFromdate = (TextView) findViewById( R.id.tvVFromdate );
+				TextView tvVTodate = (TextView) findViewById( R.id.tvVTodate );
 				      
-				    tvVFromdate.setText("Financial from date: " +financialFromDate);
-				    tvVTodate.setText("Financial to date: " +financialToDate);
+				tvVFromdate.setText("Financial from date: " +financialFromDate);
+				tvVTodate.setText("Financial to date: " +financialToDate);
 				    
-					vouchertypeflag = voucherMenu.vouchertypeflag;
+				vouchertypeflag = voucherMenu.vouchertypeflag;
 				    
-					try {
-						 setOnSearchButtonClick();
+				try {
+					setOnSearchButtonClick();
 				
-						 Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
-						 getallvouchers(params);
+					Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
+					getallvouchers(params);
 			
 						 
-					} catch (Exception e) {
+				} catch (Exception e) {
 			
-						AlertDialog.Builder builder = new AlertDialog.Builder(SearchVoucher.this);
-					   builder.setMessage("Please try again")
+					AlertDialog.Builder builder = new AlertDialog.Builder(SearchVoucher.this);
+					builder.setMessage("Please try again")
 						   .setCancelable(false)
 						   .setPositiveButton("Ok",
 							   new DialogInterface.OnClickListener() {
@@ -2081,275 +2107,387 @@ Transaction management
 						   
 					   AlertDialog alert = builder.create();
 					   alert.show();
-					}
-		
-			       
-		
 				}
+			}
 
-	* The below method manages all the activity when Search button is clicked.
+* The below method manages all the activity when ``Search`` button is clicked.
 
-	* We can search voucher in three ways:Search by Reference No., Date ,Narration.
+* We can search voucher in three ways: Search by ``Reference No.``, ``Date`` , ``Narration``.
 
-		::
+* When search button is clicked, it builds a ``alert dialog`` which includes above 3 options for searching voucher.
 
-			private void setOnSearchButtonClick() {
+* Once it is selected and given required values, it searches for the respective voucher/vouchers and sets it in a ``tablelayout``.
+
+* The layout for building customised alert dialog is included in ``layout/search_voucher_by.xml``.
+
+**File res/layout/search_voucher_by.xml**
+
+	.. code-block:: xml
+
+		 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent" >
+		    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation="vertical"
+			android:id="@+id/layout_root" >
+		    
+			<Spinner
+			    android:id="@+id/sSearchVoucherBy"
+			    android:layout_width="260dp"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center"
+			    android:entries="@array/searchVoucherBy"
+			    android:prompt="@string/searchVoucherBy" />
+
+			<EditText
+			    android:id="@+id/searchByVCode"
+			    android:layout_width="260dp"
+			    android:layout_height="wrap_content"
+			    android:ems="10"
+			    android:hint="Tap to enter voucher code"
+			    android:layout_gravity="center"
+			    android:visibility="invisible" >
+			    <requestFocus />
+			</EditText>
 		
+			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent" 
+				android:orientation="horizontal"
+			 	android:id="@+id/timeInterval" 
+			 	android:visibility="invisible"
+			 	android:baselineAligned="false">
+		
+			 
+			 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent" 
+				android:orientation="vertical"
+			 	android:layout_gravity="left"
+			  	android:layout_weight="50" >
+		
+			 <TextView
+			    android:id="@+id/tvsetFromdate"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center"
+			    android:text="From-date"
+			    android:textColor="#FFFFFF"
+			    android:textSize="20dp" />
+
+			 <DatePicker
+			     android:id="@+id/dpSearchVoucherFromdate"
+			     android:layout_width="wrap_content"
+			     android:layout_height="wrap_content"
+			     android:layout_gravity="center" />
+
+			</LinearLayout>
+		
+		
+			 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent" 
+				android:orientation="vertical"
+			 	android:layout_weight="50" >
+			 
+		
+			<TextView
+			    android:id="@+id/tvsetT0date"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center"
+			    android:text="To-date"
+			    android:textColor="#FFFFFF"
+			    android:textSize="20dp" />
+
+			<DatePicker
+			    android:id="@+id/dpSearchVoucherTodate"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center" />
+			</LinearLayout>
+		
+			 </LinearLayout>
+		
+			<EditText
+			    android:id="@+id/searchByNarration"
+			    android:layout_width="260dp"
+			    android:layout_height="wrap_content"
+			    android:ems="10"
+			    android:hint="Tap to enter narration"
+			    android:layout_gravity="center"
+			    android:visibility="invisible" >
+			    <requestFocus />
+			</EditText>
+		    </LinearLayout>
+		  </ScrollView>
+
+.. image:: images/search_voucher_by.png
+	   :name: ABT main page
+           :align: center
+
+* The associated java code for search voucher activity in src/com/example/gkaakash/SearchVoucher.java is as below,
+
+	.. code-block:: java
+
+		private void setOnSearchButtonClick() {
 		
 			Button btnSearchVoucher = (Button)findViewById(R.id.btnSearchVoucher);
 			btnSearchVoucher.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-			View layout = inflater.inflate(R.layout.search_voucher_by, (ViewGroup) findViewById(R.id.timeInterval));
-			//Building DatepPcker dialog
-			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			builder.setView(layout);
-			builder.setTitle("Search voucher by,");
+				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+				View layout = inflater.inflate(R.layout.search_voucher_by, (ViewGroup) findViewById(R.id.timeInterval));
+				//Building DatepPcker dialog
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setView(layout);
+				builder.setTitle("Search voucher by,");
 
-			 	   	
-		   	String dateParts[] = financialFromDate.split("-");
-		   	String setfromday  = dateParts[0];
-		   	String setfrommonth = dateParts[1];
-		   	String setfromyear = dateParts[2];
-		   	
-		   	
-		   	String dateParts1[] = financialToDate.split("-");
-		   	String settoday  = dateParts1[0];
-		   	String settomonth = dateParts1[1];
-		   	String settoyear = dateParts1[2];
+				 	   	
+			   	String dateParts[] = financialFromDate.split("-");
+			   	String setfromday  = dateParts[0];
+			   	String setfrommonth = dateParts[1];
+			   	String setfromyear = dateParts[2];
+			   	
+			   	
+			   	String dateParts1[] = financialToDate.split("-");
+			   	String settoday  = dateParts1[0];
+			   	String settomonth = dateParts1[1];
+			   	String settoyear = dateParts1[2];
 
-		   	DatePicker SearchVoucherFromdate = (DatePicker) layout.findViewById(R.id.dpSearchVoucherFromdate);
-		   	SearchVoucherFromdate.init(Integer.parseInt(setfromyear),(Integer.parseInt(setfrommonth)-1),Integer.parseInt(setfromday), null);
-		   	
-		   	DatePicker SearchVoucherTodate = (DatePicker) layout.findViewById(R.id.dpSearchVoucherTodate);
-		   	SearchVoucherTodate.init(Integer.parseInt(settoyear),(Integer.parseInt(settomonth)-1),Integer.parseInt(settoday), null);
-		   	
-			final EditText etVoucherCode = (EditText)layout.findViewById(R.id.searchByVCode);
-			etVoucherCode.setVisibility(EditText.GONE);
+			   	DatePicker SearchVoucherFromdate = (DatePicker) layout.findViewById(R.id.dpSearchVoucherFromdate);
+			   	SearchVoucherFromdate.init(Integer.parseInt(setfromyear),(Integer.parseInt(setfrommonth)-1),Integer.parseInt(setfromday), null);
+			   	
+			   	DatePicker SearchVoucherTodate = (DatePicker) layout.findViewById(R.id.dpSearchVoucherTodate);
+			   	SearchVoucherTodate.init(Integer.parseInt(settoyear),(Integer.parseInt(settomonth)-1),Integer.parseInt(settoday), null);
+			   	
+				final EditText etVoucherCode = (EditText)layout.findViewById(R.id.searchByVCode);
+				etVoucherCode.setVisibility(EditText.GONE);
 
-			final EditText etNarration = (EditText)layout.findViewById(R.id.searchByNarration);
-			etNarration.setVisibility(EditText.GONE);
+				final EditText etNarration = (EditText)layout.findViewById(R.id.searchByNarration);
+				etNarration.setVisibility(EditText.GONE);
 
-			final LinearLayout timeInterval = (LinearLayout)layout.findViewById(R.id.timeInterval);
-			timeInterval.setVisibility(LinearLayout.GONE);
+				final LinearLayout timeInterval = (LinearLayout)layout.findViewById(R.id.timeInterval);
+				timeInterval.setVisibility(LinearLayout.GONE);
 
-			final Spinner searchBy = (Spinner) layout.findViewById(R.id.sSearchVoucherBy);
-			searchBy.setOnItemSelectedListener(new OnItemSelectedListener() {
+				final Spinner searchBy = (Spinner) layout.findViewById(R.id.sSearchVoucherBy);
+				searchBy.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
-					if(position == 0){
-						etNarration.setVisibility(EditText.GONE);
-						timeInterval.setVisibility(LinearLayout.GONE);
-						etVoucherCode.setVisibility(EditText.VISIBLE);
-					}
-					if(position == 1){
-						etVoucherCode.setVisibility(EditText.GONE);
-						etNarration.setVisibility(EditText.GONE);
-						timeInterval.setVisibility(LinearLayout.VISIBLE);
-					}
-					if(position == 2){
-						etVoucherCode.setVisibility(EditText.GONE);
-						timeInterval.setVisibility(LinearLayout.GONE);
-						etNarration.setVisibility(EditText.VISIBLE);
-					}
+					@Override
+					public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
+						if(position == 0){
+							etNarration.setVisibility(EditText.GONE);
+							timeInterval.setVisibility(LinearLayout.GONE);
+							etVoucherCode.setVisibility(EditText.VISIBLE);
+						}
+						if(position == 1){
+							etVoucherCode.setVisibility(EditText.GONE);
+							etNarration.setVisibility(EditText.GONE);
+							timeInterval.setVisibility(LinearLayout.VISIBLE);
+						}
+						if(position == 2){
+							etVoucherCode.setVisibility(EditText.GONE);
+							timeInterval.setVisibility(LinearLayout.GONE);
+							etNarration.setVisibility(EditText.VISIBLE);
+						}
 		
-				}
+					}
 
-				@Override
-				public void onNothingSelected(AdapterView<?> arg0) {
-					// TODO Auto-generated method stub
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+						// TODO Auto-generated method stub
 		
-				}
-			});
-			 
-			builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
+					}
+				});
+				 
+				builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 
-				@Override
-				public void onClick(DialogInterface arg0, int arg1) {
-					int pos = searchBy.getSelectedItemPosition();
-				   	
-				   	if(pos == 0){
-				   		searchByRefNumber = etVoucherCode.getText().toString();
-				   		if(searchByRefNumber.length() < 1){
-						toastValidationMessage("Please enter voucher reference number");
-				   		}
-				   		else{
-				   			searchVoucherBy = 1; //by reference no
-				   			Object[] params = new Object[]{1,searchByRefNumber,financialFromDate,financialToDate,""};
-				   			getallvouchers(params);
-				   			
-				   		}
-				   	}
-				   	else if(pos == 1){
-				   		final   DatePicker dpSearchVoucherFromdate = (DatePicker) dialog.findViewById(R.id.dpSearchVoucherFromdate);
-					   	int SearchVoucherFromDay = dpSearchVoucherFromdate.getDayOfMonth();
-					   	int SearchVoucherFromMonth = dpSearchVoucherFromdate.getMonth();
-					   	int SearchVoucherFromYear = dpSearchVoucherFromdate.getYear();
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						int pos = searchBy.getSelectedItemPosition();
 					   	
-					   	String SearchVoucherFromdate = mFormat.format(Double.valueOf(SearchVoucherFromDay))+ "-" 
-					   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(SearchVoucherFromMonth))))+ 1))) + "-" 
-					   	+ SearchVoucherFromYear;
-					   	
-					   	final   DatePicker dpSearchVoucherTodate = (DatePicker) dialog.findViewById(R.id.dpSearchVoucherTodate);
-					   	int SearchVoucherToDay = dpSearchVoucherTodate.getDayOfMonth();
-					   	int SearchVoucherToMonth = dpSearchVoucherTodate.getMonth();
-					   	int SearchVoucherToYear = dpSearchVoucherTodate.getYear();
-					   	
-					   	String SearchVoucherTodate = mFormat.format(Double.valueOf(SearchVoucherToDay))+ "-" 
-					   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(SearchVoucherToMonth))))+ 1))) + "-" 
-					   	+ SearchVoucherToYear;
-					   	
-					   	try {
-					   		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-						Date date1 = sdf.parse(financialFromDate);
-						Date date2 = sdf.parse(financialToDate);
-						Date date3 = sdf.parse(SearchVoucherFromdate);
-						Date date4 = sdf.parse(SearchVoucherTodate);
-						/*
-						System.out.println("all dates are...........");
-						System.out.println(financialFromDate+"---"+financialToDate+"---"+SearchVoucherFromdate+"---"+SearchVoucherTodate);
-						*/
-						Calendar cal1 = Calendar.getInstance(); //financial from date
-						Calendar cal2 = Calendar.getInstance(); //financial to date
-						Calendar cal3 = Calendar.getInstance(); //from date
-						Calendar cal4 = Calendar.getInstance(); //to date
-						cal1.setTime(date1);
-						cal2.setTime(date2);
-						cal3.setTime(date3);
-						cal4.setTime(date4);  
+					   	if(pos == 0){
+					   		searchByRefNumber = etVoucherCode.getText().toString();
+					   		if(searchByRefNumber.length() < 1){
+								toastValidationMessage("Please enter voucher reference number");
+					   		}
+					   		else{
+					   			searchVoucherBy = 1; //by reference no
+					   			Object[] params = new Object[]{1,searchByRefNumber,financialFromDate,financialToDate,""};
+						   		getallvouchers(params);
+					   			
+					   		}
+					   	}
+					   	else if(pos == 1){
+					   		final   DatePicker dpSearchVoucherFromdate = (DatePicker) dialog.findViewById(R.id.dpSearchVoucherFromdate);
+						   	int SearchVoucherFromDay = dpSearchVoucherFromdate.getDayOfMonth();
+						   	int SearchVoucherFromMonth = dpSearchVoucherFromdate.getMonth();
+						   	int SearchVoucherFromYear = dpSearchVoucherFromdate.getYear();
+						   	
+						   	String SearchVoucherFromdate = mFormat.format(Double.valueOf(SearchVoucherFromDay))+ "-" 
+						   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(SearchVoucherFromMonth))))+ 1))) + "-" 
+						   	+ SearchVoucherFromYear;
+						   	
+						   	final   DatePicker dpSearchVoucherTodate = (DatePicker) dialog.findViewById(R.id.dpSearchVoucherTodate);
+						   	int SearchVoucherToDay = dpSearchVoucherTodate.getDayOfMonth();
+						   	int SearchVoucherToMonth = dpSearchVoucherTodate.getMonth();
+						   	int SearchVoucherToYear = dpSearchVoucherTodate.getYear();
+						   	
+						   	String SearchVoucherTodate = mFormat.format(Double.valueOf(SearchVoucherToDay))+ "-" 
+						   	+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(SearchVoucherToMonth))))+ 1))) + "-" 
+						   	+ SearchVoucherToYear;
+						   	
+						   	try {
+						   		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+								Date date1 = sdf.parse(financialFromDate);
+								Date date2 = sdf.parse(financialToDate);
+								Date date3 = sdf.parse(SearchVoucherFromdate);
+								Date date4 = sdf.parse(SearchVoucherTodate);
+								/*
+								System.out.println("all dates are...........");
+								System.out.println(financialFromDate+"---"+financialToDate+"---"+SearchVoucherFromdate+"---"+SearchVoucherTodate);
+								*/
+								Calendar cal1 = Calendar.getInstance(); //financial from date
+								Calendar cal2 = Calendar.getInstance(); //financial to date
+								Calendar cal3 = Calendar.getInstance(); //from date
+								Calendar cal4 = Calendar.getInstance(); //to date
+								cal1.setTime(date1);
+								cal2.setTime(date2);
+								cal3.setTime(date3);
+								cal4.setTime(date4);  
 				
-						if(((cal3.after(cal1)&&(cal3.before(cal2))) || (cal3.equals(cal1) || (cal3.equals(cal2)))) 
-								&& ((cal4.after(cal1) && (cal4.before(cal2))) || (cal4.equals(cal2)) || (cal4.equals(cal1)))){
-							searchVoucherBy = 2; // by date
-							Object[] params = new Object[]{2,"",SearchVoucherFromdate,SearchVoucherTodate,""};
-							getallvouchers(params);
-						}
-						else{
-							toastValidationMessage("Please enter proper date");
-						}
-						} catch (Exception e) {
-							// TODO: handle exception
-						}
-					   	
-				   	}
-				   	else if(pos == 2){
-				   		searchByNarration = etNarration.getText().toString();
-						if(searchByNarration.length() < 1){
-						toastValidationMessage("Please enter narration");
-						}
-						else{
-							searchVoucherBy = 3; //by narration
-							Object[] params = new Object[]{3,"",financialFromDate,financialToDate,searchByNarration};
-							getallvouchers(params);
-						}
-				   	}
+								if(((cal3.after(cal1)&&(cal3.before(cal2))) || (cal3.equals(cal1) || (cal3.equals(cal2)))) 
+										&& ((cal4.after(cal1) && (cal4.before(cal2))) || (cal4.equals(cal2)) || (cal4.equals(cal1)))){
+									searchVoucherBy = 2; // by date
+									Object[] params = new Object[]{2,"",SearchVoucherFromdate,SearchVoucherTodate,""};
+									getallvouchers(params);
+								}
+								else{
+									toastValidationMessage("Please enter proper date");
+								}
+							} catch (Exception e) {
+								// TODO: handle exception
+							}
+						   	
+					   	}
+					   	else if(pos == 2){
+					   		searchByNarration = etNarration.getText().toString();
+							if(searchByNarration.length() < 1){
+								toastValidationMessage("Please enter narration");
+							}
+							else{
+								searchVoucherBy = 3; //by narration
+								Object[] params = new Object[]{3,"",financialFromDate,financialToDate,searchByNarration};
+								getallvouchers(params);
+							}
+					   	}
 		
-				}
+					}
 
 	
-			});
+				});
 
-			builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
+				builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
 	
-				}	
-			});
-			dialog=builder.create();
-			dialog.show();
-			WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-			//customizing the width and location of the dialog on screen 
-			lp.copyFrom(dialog.getWindow().getAttributes());
-			lp.width = 700;
-			dialog.getWindow().setAttributes(lp);
+					}	
+				});
+				dialog=builder.create();
+				dialog.show();
+				WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+				//customizing the width and location of the dialog on screen 
+				lp.copyFrom(dialog.getWindow().getAttributes());
+				lp.width = 700;
+				dialog.getWindow().setAttributes(lp);
 
 			}
 		      });
 		      }
-		       addTable(); }
+		     	addTable(); 
+		}
 
-	* The below method sets all data in a tabular format using for loop.
+* The below method sets all data in a tabular format using for loop.
 
-	* It calls another method ``addHeader()`` for setting table header for the table. 
+* It calls another method ``addHeader()`` for setting table header for the table. 
 
-		::
+	.. code-block:: java
 
-			public void addTable() {
+		public void addTable() {
 		
 			if(searchedVoucherGrid.size()>1){
 				addHeader();
 			}
 	
 			/** Create a TableRow dynamically **/
-		    for(int i=0;i<searchedVoucherGrid.size();i++){
-		    ArrayList<String> columnValue = new ArrayList<String>();
-		    columnValue.addAll(searchedVoucherGrid.get(i));
-		    tr = new TableRow(SearchVoucher.this);
-		   
-		    for(int j=0;j<columnValue.size();j++){
-		        /** Creating a TextView to add to the row **/
-		        addRow(columnValue.get(j),i);  ////
-		       // System.out.println("rowid"+i);
-		        label.setBackgroundColor(Color.BLACK);
-		        /*
-		         * set center aligned gravity for amount and for others set center gravity
-		         */
-		        if(j==6){
-		        	
-		  	label.setGravity(Gravity.RIGHT);
-		            
-		            if(columnValue.get(j).length() > 0){
-		            	
-		            	colValue=columnValue.get(j);
-		            	if(!"".equals(colValue)){
-		            		System.out.println("m in ");
-		            		if(!"0.00".equals(colValue)){
-		            			// for checking multiple \n and pattern matching
-		            			Pattern pattern = Pattern.compile("\\n");
-		            			Matcher matcher = pattern.matcher(colValue);
-		            			boolean found = matcher.find();
-		            			System.out.println("value:"+found);
-		            			if(found==false){
-		            				double amount = Double.parseDouble(colValue);	
-		            				label.setText(formatter.format(amount));
-		            			}else {
-		            				label.setText(colValue);
+			    for(int i=0;i<searchedVoucherGrid.size();i++){
+			    ArrayList<String> columnValue = new ArrayList<String>();
+			    columnValue.addAll(searchedVoucherGrid.get(i));
+			    tr = new TableRow(SearchVoucher.this);
+			   
+			    for(int j=0;j<columnValue.size();j++){
+				/** Creating a TextView to add to the row **/
+				addRow(columnValue.get(j),i);  ////
+			       	// System.out.println("rowid"+i);
+				label.setBackgroundColor(Color.BLACK);
+				/*
+				 * set center aligned gravity for amount and for others set center gravity
+				 */
+				if(j==6){
+					
+			  		label.setGravity(Gravity.RIGHT);
+				    
+				    	if(columnValue.get(j).length() > 0){
+				    	
+				    		colValue=columnValue.get(j);
+				    		if(!"".equals(colValue)){
+				    			System.out.println("m in ");
+				    			if(!"0.00".equals(colValue)){
+					    			// for checking multiple \n and pattern matching
+					    			Pattern pattern = Pattern.compile("\\n");
+					    			Matcher matcher = pattern.matcher(colValue);
+					    			boolean found = matcher.find();
+					    			System.out.println("value:"+found);
+					    			if(found==false){
+					    				double amount = Double.parseDouble(colValue);	
+					    				label.setText(formatter.format(amount));
+					    			}else {
+					    				label.setText(colValue);
+								}
+				    			}else {
+				    				label.setText(colValue);
+							}
 						}
-		            			
-		            		}else {
-		            			label.setText(colValue);
 					}
-		            	}
-		            }
+				
+				}
+				else{
+				    label.setGravity(Gravity.CENTER);
+				}
 		        
-		        }
-		        else{
-		            label.setGravity(Gravity.CENTER);
-		        }
-		        
-		    }
+		    	}
 		   
-		    // Add the TableRow to the TableLayout
-		    vouchertable.addView(tr, new TableLayout.LayoutParams(
-		            LayoutParams.FILL_PARENT,
-		            LayoutParams.WRAP_CONTENT));
+			    // Add the TableRow to the TableLayout
+			    vouchertable.addView(tr, new TableLayout.LayoutParams(
+				    LayoutParams.FILL_PARENT,
+				    LayoutParams.WRAP_CONTENT));
+			}
 		}
-		}
 
-	* The below methed sets header for the table.
+* The below methed sets header for the table.
 
-		::
+	.. code-block:: java
 
-			/*
-			* add column heads to the table
-			*/
-			public void addHeader() {
+		/*
+		* add column heads to the table
+		*/
+		public void addHeader() {
 
-				 /** Create a TableRow dynamically **/
-				final SpannableString rsSymbol = new SpannableString(SearchVoucher.this.getText(R.string.Rs)); 
+			/** Create a TableRow dynamically **/
+			final SpannableString rsSymbol = new SpannableString(SearchVoucher.this.getText(R.string.Rs)); 
 			String[] ColumnNameList = new String[] { "V. No.","Reference No","Date","Voucher Type","Account Name","Particular",rsSymbol+"Amount","Narration"};
 
 			tr = new TableRow(SearchVoucher.this);
@@ -2369,18 +2507,27 @@ Transaction management
 				LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT));
 
-			}
+		}
 
-	* The below method add row to the table and make that clickable.
+* The below method add row to the table and make that clickable.
 
-	* It add functionailty to edit/clone/delete Voucher.
+* On table row click, it builds the ``alert dialog`` which includes 3 options : ``Edit``, ``Clone`` and ``Delete`` voucher.
 
-		::
+	- **Edit**: Except ``Reference No.``, all other fields are editable.
+	
+	- **Clone**: It ``duplicates`` information on an existing transaction, to create a new one without having to enter all the fields.
+	
+	- **Delete**: To ``delete`` the transaction.
+		
 
-			/*
-			 * this function add the value to the row
-			 */
-			public void addRow(String string,final int i) {
+* On selecting any of these options, we have added the respection actions.
+
+	.. code-block:: java
+
+		/*
+		 * this function add the value to the row
+		 */
+		public void addRow(String string,final int i) {
 			     tr.setClickable(true);
 		
 			     tr.setOnClickListener(new OnClickListener() {
@@ -2389,7 +2536,7 @@ Transaction management
 					public void onClick(View v) {
 						 
 					 try {
-						 final CharSequence[] items = { "Edit voucher", "Clone voucher","Delete voucher"};
+						final CharSequence[] items = { "Edit voucher", "Clone voucher","Delete voucher"};
 							//creating a dialog box for popup
 						AlertDialog.Builder builder = new AlertDialog.Builder(SearchVoucher.this);
 							//setting title
@@ -2442,7 +2589,7 @@ Transaction management
 								deleteVoucher = (Boolean) transaction.deleteVoucher(params,client_id);
 						
 								Object[] allvouchersparams = new Object[]{2,"",financialFromDate,financialToDate,""};
-							    getallvouchers(allvouchersparams);
+							    	getallvouchers(allvouchersparams);
 							    
 								toastValidationMessage("Voucher deleted successfully");
 							}
@@ -2490,27 +2637,27 @@ Transaction management
 				tr.addView((View)Ll); // Adding textView to tablerow.
 			}
 
-	* The below method gets all data from the database.
+* The below method gets all data from the database.
 
-	* This method calls addtable() method to show all the data retrived from database.
+* This method calls ``addtable()`` method to show all the data retrived from database.
 
-		::
+	.. code-block:: java
 
-			 public void getallvouchers(Object[] params){
+		public void getallvouchers(Object[] params){
 		
 			Object[] searchedVoucher = (Object[])transaction.searchVoucher(params,client_id);
 			searchedVoucherGrid = new ArrayList<ArrayList<String>>();
 			for(Object voucherRow : searchedVoucher){
 				Object[] v = (Object[]) voucherRow;
-		    searchedVoucherList = new ArrayList<String>();
-		    for(int i=0;i<v.length;i++){
+		    		searchedVoucherList = new ArrayList<String>();
+		    		for(int i=0;i<v.length;i++){
 		    	
-		    	if(((String) v[3].toString()).equalsIgnoreCase(vouchertypeflag)){
-		    		searchedVoucherList.add((String) v[i].toString());
-		    	}
+		    			if(((String) v[3].toString()).equalsIgnoreCase(vouchertypeflag)){
+		    				searchedVoucherList.add((String) v[i].toString());
+		    			}
 		    	
-		    }
-		    searchedVoucherGrid.add(searchedVoucherList);
+		    		}
+		    		searchedVoucherGrid.add(searchedVoucherList);
 			}
 		
 		
@@ -2518,21 +2665,21 @@ Transaction management
 			vouchertable.removeAllViews();
 		       
 			addTable();
-			}
+		}
 
-	* The resume method will be called when there is sudden change in activity such as tab change.
+* The ``resume`` method will be called when there is sudden change in activity such as tab change.
 
-		::
+	.. code-block:: java
 
-			 /*
-			 * (non-Javadoc)
-			 * @see android.app.Activity#onResume()
-			 * to execute code when tab is changed because 
-			 * when the tab is clicked onResume is called for that activity
-			 */
-			@Override
-			protected void onResume() {
-				super.onResume();
+		 /*
+		 * (non-Javadoc)
+		 * @see android.app.Activity#onResume()
+		 * to execute code when tab is changed because 
+		 * when the tab is clicked onResume is called for that activity
+		 */
+		@Override
+		protected void onResume() {
+			super.onResume();
 			if(searchVoucherBy == 1){ // by reference number
 				Object[] params = new Object[]{1,searchByRefNumber,financialFromDate,financialToDate,""};
 					getallvouchers(params);
@@ -2545,4 +2692,4 @@ Transaction management
 				Object[] params = new Object[]{3,"",financialFromDate,financialToDate,searchByNarration};
 					getallvouchers(params);
 			}	
-			}
+		}

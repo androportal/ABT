@@ -1012,12 +1012,90 @@ Create account
 			etOpBal.setText("0.00");
 		    }
 
-Edit account
-++++++++++++
+Search/Edit account
++++++++++++++++++++
+	
+**File  res/layout/edit_acc_tab.xml**	
+
+* This file includes layout design for search account.
+		
+	.. code-block:: xml
+	
+		<?xml version="1.0" encoding="utf-8"?>
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:id="@+id/LinearLayout01"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:orientation="vertical"
+		    android:background="@drawable/dark_gray_background" >
+
+		    <LinearLayout
+			   android:orientation="horizontal"
+			   android:layout_width="400dp"
+			   android:layout_height="3dp"
+			   android:layout_gravity="right"
+			   android:paddingLeft="20dp"
+			   android:paddingRight="20dp"
+			   android:background="#60AFFE"/>
+		   
+		    <LinearLayout
+			   android:orientation="horizontal"
+			   android:layout_width="match_parent"
+			   android:layout_height="3dp"
+			   android:paddingLeft="20dp"
+			   android:paddingRight="20dp"
+			   android:background="#60AFFE"/>
+		    
+		    
+		    <LinearLayout 
+		    	android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+		    	android:orientation="horizontal"
+		    	android:paddingLeft="10dp"
+			android:paddingRight="10dp">
+		     
+			<Spinner
+			android:id="@+id/sSearchAccountBy"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:layout_weight="1"
+			android:entries="@array/searchAccountBy_arrays"
+			android:prompt="@string/searchAccountBy_prompt" />
+		
+				<EditText
+				    android:id="@+id/etSearch"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:hint="Search by name"
+				    android:layout_weight="2"/>
+
+			</LinearLayout>
+	
+		    
+		<ListView 
+		    android:id="@+id/ltAccname"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:paddingLeft="10dp"
+			android:paddingRight="10dp">
+		</ListView>
+		</LinearLayout>
+
+.. image:: images/search_account.png
+	   :name: ABT main page
+	   :align: center
+
+* **Note:** If ``manual account code`` was checked in Preferences, It will show one more option for searching account, i.e search by ``account code``.
+
+.. image:: images/search_acc.png
+	   :name: ABT main page
+	   :align: center
+
 
 **File  res/layout/edit_account.xml**
 
-* This file includes layout design for search/edit account.
+* On clicking list items from above listview, load edit_account.xml which includes view of edit account alert dialog.
+
 	.. code-block:: xml
 
 		   <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -1158,8 +1236,6 @@ Edit account
 				android:layout_height="wrap_content"
 				android:textColor="#000000"
 				android:textSize="17dp"/>
-			    
-			    
 
 			</LinearLayout>
 			</ScrollView>
@@ -1168,7 +1244,9 @@ Edit account
 	   :name: ABT main page
 	   :align: center
 
-* The associated activity to search/edit account is ``edit_account.java``.
+
+
+* The associated activity to search and edit account is ``edit_account.java``.
 
 **File src/com/example/gkaakash/edit_account.java**
 

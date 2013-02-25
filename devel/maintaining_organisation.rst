@@ -619,6 +619,147 @@ Create new organisation
 	    	}
 
 
+* method to take ItemSelectedListner interface as a argument  
+
+	.. code-block:: java	
+		
+		void addListenerOnItem(){
+			//Attach a listener to the Organisation Type Spinner
+			orgType.setOnItemSelectedListener(new OnItemSelectedListener() {
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View v, int position,long id){
+					//Retrieving the selected org type from the Spinner and assigning it to a variable 
+					selectedOrgType = parent.getItemAtPosition(position).toString();
+					orgTypeFlag = selectedOrgType;
+			
+				}
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+			
+					}
+
+			});// End of orgType.setOnItemSelectedListener
+
+		}// End of addListenerOnItem()
+		
+* creating an interface to pass on the activity to next page to fill organisation details.
+
+* Add validation for organisation exist.
+
+	.. code-block:: java	
+	
+		private void addListeneronNextButton() {
+		
+			final Context context = this;
+			//Request a reference to the button from the activity by calling “findViewById” 
+			//and assign the retrieved button to an instance variable
+			btnNext = (Button) findViewById(R.id.btnNext);
+			orgType = (Spinner) findViewById(R.id.sOrgType);
+			tvDisplayFromDate = (TextView) findViewById(R.id.tvFromDate);
+			tvDisplayToDate = (TextView) findViewById(R.id.tvToDate);
+			orgName = (EditText) findViewById(R.id.etOrgName);
+			
+			//Create a class implementing “OnClickListener” and set it as the on click listener for the button "Next"
+			btnNext.setOnClickListener(new OnClickListener() {
+	 
+				@Override
+				public void onClick(View arg0) {
+				
+					organisationName = orgName.getText().toString();
+					fromdate = tvDisplayFromDate.getText().toString();
+					todate = tvDisplayToDate.getText().toString();
+					try{
+						// call the getOrganisationName method from startup
+			    			orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
+				
+						for(Object org : orgNameList){
+							if(organisationName.equals(org)){
+								orgExistFlag = false;
+						
+							//call getFinancialYear method from startup.java 
+						    	//it will give you financialYear list according to orgname
+						    	financialyearList = startup.getFinancialYear(organisationName);
+						    	
+						    	for(Object fy : financialyearList)
+						    	{
+						    		Object[] y = (Object[]) fy;
+						    		// concatination From and To date 
+						    		String fromDate=y[0].toString();
+						    		String toDate=y[1].toString();
+						    		
+						    		if(fromDate.equals(fromdate) && toDate.equals(todate)){
+						    			orgExistFlag = true;
+						    			break;
+						    		}
+						    		
+						    	}
+						}
+					}
+			    	
+					if("".equals(organisationName)){
+						toastValidationMessage("Please enter the organisation name");
+					}
+					else if(orgExistFlag == true){
+						toastValidationMessage("Organisation name "+organisationName+" with this financial year exist");
+						orgExistFlag = false;
+						}
+					else{
+						//To pass on the activity to the next page
+						MainActivity.editDetails=false;
+						Intent intent = new Intent(context, orgDetails.class);
+					    	startActivity(intent); 
+					}
+				}catch(Exception e)
+				{
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		        		builder.setMessage("Please check server connection")
+				        .setCancelable(false)
+				        .setPositiveButton("Ok",
+				                new DialogInterface.OnClickListener() {
+				                     public void onClick(DialogInterface dialog, int id) {
+				                    	Intent intent = new Intent(context, MainActivity.class);
+				    				    startActivity(intent); 
+				                    }
+				                });
+		               
+					AlertDialog alert = builder.create();
+					alert.show();    
+						}
+					}
+				}); //End of btnNext.setOnClickListener
+ 
+			}// End of addListeneronNextButton()
+		
+* On back pressed clear the history and get back to the welcome page.
+
+	.. code-block:: java
+			
+		public void onBackPressed() {
+			Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+		}
+	
+* create a sample alert dialog which can be used all over the page to display validation messages.
+	
+	.. code-block:: java
+	
+		public void toastValidationMessage(String message) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setMessage(message)
+		        .setCancelable(false)
+		        .setPositiveButton("Ok",
+		                new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int id) {
+		                    	
+		                    }
+		                });
+		        
+			AlertDialog alert = builder.create();
+			alert.show();
+		} 
+
+
 Select existing organisation
 ++++++++++++++++++++++++++++
 

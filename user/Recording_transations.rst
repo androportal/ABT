@@ -59,7 +59,10 @@ Search/Edit/Clone/Delete Transaction
   #. Press ``Search`` button (see fig ) to search transaction by ``Voucher reference No.,Date and Narration`` 
      and press ``View`` to view transactions.
 
-	<image>
+
+	.. image:: images/search_voucher_by.png
+		   :name: ABT main page
+		   :align: center
 
   #. Click table ``row`` to Edit/Clone/Delete the transactions.
 
