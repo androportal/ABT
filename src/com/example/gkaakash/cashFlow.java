@@ -1,7 +1,12 @@
 package com.example.gkaakash;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +18,7 @@ import android.app.ActionBar.LayoutParams;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -27,9 +33,11 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
+import com.gkaakash.controller.PdfGenaretor;
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
+import com.itextpdf.text.DocumentException;
+
 
 public class cashFlow extends Activity{
     private Report report;
@@ -39,9 +47,11 @@ public class cashFlow extends Activity{
     TableRow tr;
     TextView label;
     ArrayList<String> cashFlowResultList;
-    ArrayList<ArrayList<String>> cashFlowGrid;
+    ArrayList<ArrayList> cashFlowGrid;
+    ArrayList<ArrayList> cashFlow1,cashFlow2;
+    Date date;
     String[] ColumnNameList;
-    String getSelectedOrgType;
+    String getSelectedOrgType,financialFromDate,financialToDate,fromDateString,toDateString;
     TextView Netdifference ;
     Boolean updown=false;
     Boolean alertdialog = false;
@@ -51,7 +61,8 @@ public class cashFlow extends Activity{
     TableLayout floating_heading_table1, floating_heading_table2;
     LinearLayout Ll;
     ScrollView sv;
-    
+    String 	OrgPeriod,balancePeriod,sFilename,OrgName,result;
+	String[] pdf_params; 
     public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -84,10 +95,10 @@ public class cashFlow extends Activity{
         	/*
         	 * get financial from and to date from startup page
         	 */
-        	String financialFromDate =Startup.getfinancialFromDate();
-        	String financialToDate=Startup.getFinancialToDate();
-        	String fromDateString = reportMenu.givenfromDateString;
-        	String toDateString = reportMenu.givenToDateString;
+        	financialFromDate =Startup.getfinancialFromDate();
+        	financialToDate=Startup.getFinancialToDate();
+        	fromDateString = reportMenu.givenfromDateString;
+        	toDateString = reportMenu.givenToDateString;
    
         	/*
         	 * set financial from date and to date in textview
@@ -111,7 +122,7 @@ public class cashFlow extends Activity{
        	
         		Object[] c = (Object[]) cf;
         		count = count + 1;
-        		cashFlowGrid = new ArrayList<ArrayList<String>>();
+        		cashFlowGrid = new ArrayList<ArrayList>();
         		if(count !=3)   
         		{
         			for(Object cf1 : c){
@@ -127,26 +138,33 @@ public class cashFlow extends Activity{
         				cashFlowGrid.add(cashFlowResultList);
         			}
         		}
-        		// System.out.println("i am cash flow "+count+cashFlowGrid);
-          
         		if(count == 1){
         			addTable(cashFlowtable1);
+        			cashFlow1 = cashFlowGrid;
         		}
         		if(count == 2){
         			addTable(cashFlowtable2);
+        			cashFlow2 = cashFlowGrid;
         		}
         		if(count == 3)
         		{
         			final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs)); 
-        			Netdifference.setText("Net Flow: "+rsSymbol+" "+c[0].toString());
+        			result = "Net Flow: "+rsSymbol+" "+c[0].toString();
+        			Netdifference.setText(result);
            
         		}
         	}
-  
+        	 if(reportmenuflag==true){ 
+  	    		OrgName = createOrg.organisationName;
+             }
+             else {
+          	    OrgName= selectOrg.selectedOrgName;
+             }
         	final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
             tvReportTitle.setText("Menu >> "+"Report >> "+"Cash Flow");
             final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
             btnSaveRecon.setVisibility(Button.GONE);
+            final Button btnPdf = (Button)findViewById(R.id.btnPdf);
             final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
             btnScrollDown.setOnClickListener(new OnClickListener() {
  	
@@ -163,6 +181,69 @@ public class cashFlow extends Activity{
             		}
             	}
             });
+            
+            date= new Date();
+			String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+			OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
+			balancePeriod = fromDateString+" to "+toDateString;
+			sFilename = "CashFlow"+"_"+date_format;
+			pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Flow",balancePeriod,"",result};
+			btnPdf.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(cashFlow.this);
+					   builder.setMessage("Do you want to create PDF")
+					           .setCancelable(false)
+					           .setPositiveButton("Yes",
+					                   new DialogInterface.OnClickListener() {
+					                       public void onClick(DialogInterface dialog, int id) {
+					                    	   	PdfGenaretor pdfgen = new PdfGenaretor();
+					       						try {
+					       							pdfgen.generateBalancePDFFile(cashFlow1,cashFlow2,pdf_params);
+					       	    					
+					       	    			        AlertDialog.Builder builder1 = new AlertDialog.Builder(cashFlow.this );
+					       	    			        builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+sFilename);
+					       	    			        AlertDialog alert1 = builder1.create();
+					       	    			        alert1.show();
+					       	    			        alert1.setCancelable(true);
+					       	    			        alert1.setCanceledOnTouchOutside(true);
+												} catch (DocumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+					                       } 
+					                   })
+					               .setNegativeButton("No", new DialogInterface.OnClickListener() {
+							       public void onClick(DialogInterface dialog, int id) {
+							         
+							       }
+							   });
+					   AlertDialog alert = builder.create();
+	                   alert.show();
+				}
+			});
+            btnPdf.setOnClickListener(new OnClickListener() {
+    			
+    			@Override
+    			public void onClick(View v) {
+    				// TODO Auto-generated method stub
+    				try {
+    					PdfGenaretor pdfgen = new PdfGenaretor();
+    					pdfgen.generateBalancePDFFile(cashFlow1,cashFlow2,pdf_params);
+    					
+    			        AlertDialog.Builder builder1 = new AlertDialog.Builder(cashFlow.this );
+    			        builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+sFilename);
+    			        AlertDialog alert1 = builder1.create();
+    			        alert1.show();
+    			        alert1.setCancelable(true);
+    			        alert1.setCanceledOnTouchOutside(true);
+    				} catch (DocumentException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    			}
+    		});
             animated_dialog();
             //floatingHeader();
         } catch (Exception e) {
@@ -224,21 +305,7 @@ public class cashFlow extends Activity{
     						LayoutParams.FILL_PARENT,
     						LayoutParams.MATCH_PARENT));
 				
-    				//ledgertable.removeViewAt(0);
-    				/*
-					cashFlowtable1.getChildAt(0).setVisibility(View.INVISIBLE);
-				
-					View firstrow = cashFlowtable1.getChildAt(0);
-					for(int k=0;k<ColumnNameList.length;k++){
-						LinearLayout l = (LinearLayout)((ViewGroup) firstrow).getChildAt(k);
-						TextView tv = (TextView) l.getChildAt(0);
-		            	tv.setHeight(0);
-		            
-		            	l.getLayoutParams().height = 0;
-					}
-    				 */
-    				//ledgertable.getChildAt(0).setLayoutParams(new TableLayout.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, 0));
-			
+    				
     				//================================================================
 				
     				tr = new TableRow(cashFlow.this);
@@ -259,20 +326,7 @@ public class cashFlow extends Activity{
     						LayoutParams.FILL_PARENT,
     						LayoutParams.MATCH_PARENT));
 				
-    				//ledgertable.removeViewAt(0);
-    				/*
-					cashFlowtable2.getChildAt(0).setVisibility(View.INVISIBLE);
-				
-					View firstrow2 = cashFlowtable2.getChildAt(0);
-					for(int k=0;k<ColumnNameList1.length;k++){
-						LinearLayout l = (LinearLayout)((ViewGroup) firstrow2).getChildAt(k);
-						TextView tv = (TextView) l.getChildAt(0);
-		            	tv.setHeight(0);
-		            
-		            	l.getLayoutParams().height = 0;
-		            
-					}
-    				 */
+    			
     			}
     			oneTouch ++;
 			
@@ -448,5 +502,4 @@ public class cashFlow extends Activity{
         Ll.addView(label,params);
         tr.addView((View)Ll); // Adding textView to tablerow.
     }
-
 }

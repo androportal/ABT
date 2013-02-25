@@ -1,7 +1,9 @@
 package com.example.gkaakash;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,8 +32,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gkaakash.controller.PdfGenaretor;
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
+import com.itextpdf.text.DocumentException;
 
 public class projectStatement extends Activity{
     private Report report;
@@ -40,7 +44,7 @@ public class projectStatement extends Activity{
     TableLayout projectStatementTable;
     TableRow tr;
     TextView label;
-    ArrayList<ArrayList<String>> projectStatementGrid;
+    ArrayList<ArrayList> projectStatementGrid;
     ArrayList<String> projectStatementResultList;
     String ToDateString;
     Boolean updown=false;
@@ -53,7 +57,10 @@ public class projectStatement extends Activity{
     TableLayout floating_heading_table;
     LinearLayout Ll;
     ScrollView sv;
-    
+    Float result;
+    String financialFromDate,projectName;
+   	String financialToDate,OrgName,date_format,OrgPeriod ,Period,sFilename;
+    String[] pdf_params;
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -72,16 +79,26 @@ public class projectStatement extends Activity{
         	/*
         	 * get financial from and to date from startup page
         	 */
-        	String financialFromDate =Startup.getfinancialFromDate();
-        	String financialToDate=Startup.getFinancialToDate();
+        	financialFromDate =Startup.getfinancialFromDate();
+        	financialToDate=Startup.getFinancialToDate();
         	ToDateString = reportMenu.givenToDateString;
    
-        	String projectName = reportMenu.selectedProject;
+        	projectName = reportMenu.selectedProject;
    
         	if(!projectName.equalsIgnoreCase("No Project")){
         		TextView tvProjectName = (TextView) findViewById( R.id.tvProjectName );
         		tvProjectName.setText("Project name: " +projectName);
-        	}
+         		
+            }
+        	  if(reportmenuflag==true){
+         	    	
+  	    		OrgName = createOrg.organisationName;
+  	    		
+             }
+             else {
+          	    OrgName= selectOrg.selectedOrgName;
+           
+             }
         	/*
         	 * set financial from date and to date in textview
         	 */
@@ -93,7 +110,7 @@ public class projectStatement extends Activity{
         	Object[] params = new Object[]{projectName, financialFromDate,financialFromDate,ToDateString};
         	projectStatementResult = (Object[]) report.getProjectStatementReport(params,client_id);
       
-        	projectStatementGrid = new ArrayList<ArrayList<String>>();
+        	projectStatementGrid = new ArrayList<ArrayList>();
         	for(Object tb : projectStatementResult)
         	{
         		Object[] t = (Object[]) tb;
@@ -112,6 +129,7 @@ public class projectStatement extends Activity{
         	tvReportTitle.setText("Menu >> "+"Report >> "+"Project Statement");
         	final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
         	btnSaveRecon.setVisibility(Button.GONE);
+        	 final TextView btnPdf = (TextView)findViewById(R.id.btnPdf);
         	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
         	btnScrollDown.setOnClickListener(new OnClickListener() {
         		@Override
@@ -129,6 +147,49 @@ public class projectStatement extends Activity{
 		           }
         		}
         	});
+        	 Date date= new Date();
+	   		     String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+				 OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
+	             Period = financialFromDate+" to "+ToDateString;
+	             String project = projectName.replace(" ","");
+				 sFilename = "ProjeST"+"_"+project+"_"+date_format;
+		         pdf_params = new String[]{"ProjeST",sFilename,OrgName,OrgPeriod,"Project Statement",Period,projectName,String.format("%.2f", Math.abs(result))};
+        	btnPdf.setOnClickListener(new OnClickListener() {
+    			
+    			@Override
+    			public void onClick(View v) {
+    				AlertDialog.Builder builder = new AlertDialog.Builder(projectStatement.this);
+    				   builder.setMessage("Do you want to create PDF")
+    				           .setCancelable(false)
+    				           .setPositiveButton("Yes",
+    				                   new DialogInterface.OnClickListener() {
+    				                       public void onClick(DialogInterface dialog, int id) {
+    				                    	   	PdfGenaretor pdfgen = new PdfGenaretor();
+    				       						try {
+    				       							
+    				       	 	 					pdfgen.generatePDFFile(projectStatementGrid,pdf_params);
+    				       	 	 			        AlertDialog.Builder builder1 = new AlertDialog.Builder(projectStatement.this);
+    				       	 	 			        builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+sFilename);
+    				       	 	 			        AlertDialog alert1 = builder1.create();
+    				       	 	 			        alert1.show();
+    				       	 	 			        alert1.setCancelable(true);
+    				       	 	 			        alert1.setCanceledOnTouchOutside(true);
+    											} catch (DocumentException e) {
+    												// TODO Auto-generated catch block
+    												e.printStackTrace();
+    											}
+    				                       } 
+    				                   })
+    				               .setNegativeButton("No", new DialogInterface.OnClickListener() {
+    						       public void onClick(DialogInterface dialog, int id) {
+    						         
+    						       }
+    						   });
+    				   AlertDialog alert = builder.create();
+                       alert.show();
+    			}
+    		});
+        	
         	animated_dialog();
         	floatingHeader();
         
@@ -317,7 +378,7 @@ public class projectStatement extends Activity{
          * display the difference between total dr and total cr
          */
         ArrayList<String> lastrow=projectStatementGrid.get(projectStatementGrid.size()-1);
-        Float result=Float.parseFloat(lastrow.get(4))-Float.parseFloat(lastrow.get(3));
+        result=Float.parseFloat(lastrow.get(4))-Float.parseFloat(lastrow.get(3));
         TextView difference = (TextView) findViewById(R.id.tvdifference);
         
         final SpannableString rsSymbol = new SpannableString(projectStatement.this.getText(R.string.Rs));

@@ -1,12 +1,28 @@
 package com.example.gkaakash;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.gkaakash.controller.PdfGenaretor;
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import android.animation.ObjectAnimator;
 import android.app.ActionBar.LayoutParams;
@@ -15,6 +31,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.View;
@@ -31,24 +48,28 @@ import android.widget.Toast;
 public class balanceSheet extends Activity{
    
     static Integer client_id;
+    static String result;
     private Report report;
-    private Object[] balancesheetresult;
+     Object[] balancesheetresult;
     String financialFromDate,financialToDate,accountName,projectName,fromDate,toDate,balancetype;
     TableRow tr;
-    private ArrayList<ArrayList<String>> BalanceSheetGrid;
-    private ArrayList<String> balancesheetresultList;
+    Date date;
+    static ArrayList<ArrayList> BalanceSheetGrid;
+    ArrayList<ArrayList> BalanceGrid1,BalanceGrid2,BalanceGrid;
+    static ArrayList<String> balancesheetresultList;
     private TableLayout balanceSheetTable1; 
     private TableLayout balanceSheetTable2;
     private View label;
     private ArrayList<String> TotalAmountList;
     private TextView balDiff;
     String balanceToDateString;
-    String getSelectedOrgType;
+    String getSelectedOrgType,OrgName, OrgPeriod,balancePeriod,sFilename ;
+    String[]pdf_params;
     private String balancefromDateString;
     Boolean updown=false;
     ScrollView sv;
     DecimalFormat formatter = new DecimalFormat("#,##,##,###.00");
-    String colValue;
+    String colValue,balType;
     Boolean alertdialog = false;
     ObjectAnimator animation2;
     boolean reportmenuflag;
@@ -65,16 +86,25 @@ public class balanceSheet extends Activity{
     		{
     			setContentView(R.layout.balance_sheet_table);
     			sv = (ScrollView)findViewById(R.id.ScrollBalanceSheet);
+    			balType="Conv_bal";
     		}
-    		else
+    		else  
     		{
     			setContentView(R.layout.vertical_balance_sheet_table);
     			sv = (ScrollView)findViewById(R.id.ScrollVertiBalanceSheet);
+    			balType="Sources_bal";
     		}
-       
+    		 if(reportmenuflag==true){ 
+    	   	    	
+ 	    		OrgName = createOrg.organisationName;
+ 	    		
+            }
+            else {
+         	    OrgName= selectOrg.selectedOrgName;
+          
+            }
     		//customizing title bar
     		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
-      
     		report = new Report();
     		client_id= Startup.getClient_id();
     		financialFromDate =Startup.getfinancialFromDate();
@@ -87,6 +117,7 @@ public class balanceSheet extends Activity{
     		balDiff = (TextView) findViewById(R.id.tvdifference);
    	
     		getSelectedOrgType = reportMenu.orgtype;
+			
     		/*
     		 * set financial from date and to date in textview
     		 */
@@ -97,6 +128,7 @@ public class balanceSheet extends Activity{
     		tvReportTitle.setText("Menu >> "+"Report >> "+balancetype);
     		final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
     		btnSaveRecon.setVisibility(Button.GONE);
+    		final Button btnPdf = (Button)findViewById(R.id.btnPdf);
     		final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
     		btnScrollDown.setOnClickListener(new OnClickListener() {
     			@Override
@@ -112,18 +144,19 @@ public class balanceSheet extends Activity{
     				}
     			}
     		});
+    		
     		animated_dialog();
     		//tvfinancialFromDate.setText("Financial from : " +financialFromDate);
     		tvfinancialToDate.setText("Period : "+financialFromDate+" to "+balanceToDateString);
     		Object[] params = new Object[]{financialFromDate,financialFromDate,balanceToDateString,"balancesheet",getSelectedOrgType,balancetype};
     		balancesheetresult = (Object[]) report.getBalancesheetDisplay(params,client_id);
-    		//balancesheetresult is 3 dimensional list 
+    		//balance sheet result is 3 dimensional list 
     		int count = 0;
        
     		for(Object tb : balancesheetresult){
     			Object[] t = (Object[]) tb;
     			count = count + 1;
-    			BalanceSheetGrid = new ArrayList<ArrayList<String>>();
+    			BalanceSheetGrid = new ArrayList<ArrayList>();
     			if(count !=3)   
     			{
     				for(Object tb1 : t){
@@ -133,7 +166,9 @@ public class balanceSheet extends Activity{
     						balancesheetresultList.add((String) t1[j].toString());
     					}	
     					BalanceSheetGrid.add(balancesheetresultList);
+    					
     				} 
+    				
     			}
          
     			if (count == 3)
@@ -141,15 +176,63 @@ public class balanceSheet extends Activity{
          
     				final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs)); 
     				//System.out.println("diff"+t[0].toString());
-    				balDiff.setText("Difference in Opening Balances: "+rsSymbol+" "+t[0].toString());
+    				result = "Difference in Opening Balances: "+rsSymbol+" "+t[0].toString();
+    				balDiff.setText(result);
     			}
     			if(count == 1){
     				addTable(balanceSheetTable1);
+    				BalanceGrid1 =BalanceSheetGrid;
     			}
     			else if(count == 2){
     				addTable(balanceSheetTable2);
+    				BalanceGrid2 =BalanceSheetGrid;
     			}
-    		}
+    		}  
+    		date= new Date();
+			String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+			OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
+			balancePeriod = financialFromDate+" to "+balanceToDateString;
+			sFilename = balType+"_"+date_format;
+			pdf_params = new String[]{balType,sFilename,OrgName,OrgPeriod,balancetype,balancePeriod,"",result};
+			btnPdf.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(balanceSheet.this);
+					   builder.setMessage("Do you want to create PDF")
+					           .setCancelable(false)
+					           .setPositiveButton("Yes",
+					                   new DialogInterface.OnClickListener() {
+					                       public void onClick(DialogInterface dialog, int id) {
+					                    	   	PdfGenaretor pdfgen = new PdfGenaretor();
+					                    	   	try {
+					            					
+					            					pdfgen.generateBalancePDFFile(BalanceGrid1,BalanceGrid2,pdf_params);
+					            					//generatePDFFile(BalanceSheetGrid,pdf_params);
+					            					
+					            					//generatePDFFile("balnce.pdf",pdf_params);
+					            			        AlertDialog.Builder builder1 = new AlertDialog.Builder(balanceSheet.this );
+					            			        builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+sFilename);
+					            			        AlertDialog alert1 = builder1.create();
+					            			        alert1.show();
+					            			        alert1.setCancelable(true);
+					            			        alert1.setCanceledOnTouchOutside(true);
+					            				} catch (DocumentException e) {
+					            					// TODO Auto-generated catch block
+					            					e.printStackTrace();
+					            				}
+					                       } 
+					                   })
+					               .setNegativeButton("No", new DialogInterface.OnClickListener() {
+							       public void onClick(DialogInterface dialog, int id) {
+							         
+							       }
+							   });
+					   AlertDialog alert = builder.create();
+	                   alert.show();
+				}
+			});
+    		
     	} catch (Exception e) {
     		AlertDialog.Builder builder = new AlertDialog.Builder(balanceSheet.this);
 
@@ -254,10 +337,12 @@ public class balanceSheet extends Activity{
     private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color,Boolean headerFlag) {
     	for(int j=0;j<columnValue.size();j++)
     	{
+    		System.out.println("hello :"+BalanceSheetGrid.size());
+    		
     		/** Creating a TextView to add to the row **/
     		if(headerFlag == true)
     		{
-    			if(j == 1 || j == 2 || j == 3){ //amount column
+    			if(j == 1 || j == 2 || j == 3||j==4){ //amount column
     				//For adding rupee symbol
     				final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs));
     				addRow(rsSymbol+" "+columnValue.get(j));
@@ -439,10 +524,9 @@ public class balanceSheet extends Activity{
     			if(j==4)
     			{//for amount coloumn
     				if(columnValue.get(4).toString().equalsIgnoreCase("Amount"))
-               {
+    				{
     					((TextView)label).setGravity(Gravity.CENTER);
-       
-               }
+    				}
     				else
     				{
     					((TextView)label).setGravity(Gravity.RIGHT);
@@ -491,5 +575,5 @@ public class balanceSheet extends Activity{
     	Ll.addView(label,params);
     	tr.addView((View)Ll); // Adding textView to tablerow.
     }
-   
+  
 }

@@ -56,8 +56,8 @@ public class createOrg extends MainActivity {
 		
 		help_flag = new File("/data/data/com.example.gkaakash/files/help_flag.txt");
 		if(!help_flag.exists()){
-			MainActivity.no_dailog = true; //comment this line if running this app on emulator
-			MainActivity.help_dialog.dismiss(); //comment this line if running this app on emulator
+			//MainActivity.no_dailog = true; //comment this line if running this app on emulator
+			//MainActivity.help_dialog.dismiss(); //comment this line if running this app on emulator
 		}
 		
 		

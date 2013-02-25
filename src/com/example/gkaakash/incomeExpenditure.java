@@ -1,7 +1,9 @@
 package com.example.gkaakash;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,8 +27,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.gkaakash.controller.PdfGenaretor;
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
+import com.itextpdf.text.DocumentException;
 
 public class incomeExpenditure extends Activity{
     private Report report;
@@ -36,7 +40,8 @@ public class incomeExpenditure extends Activity{
     TableRow tr;
     TextView label;
     ArrayList<String> IEResultList;
-    ArrayList<ArrayList<String>> IEGrid;
+    ArrayList<ArrayList> IEGrid;
+    ArrayList<ArrayList> IEGrid1,IEGrid2;
     String[] ColumnNameList;
     String getSelectedOrgType;
     String IEToDateString;
@@ -46,7 +51,8 @@ public class incomeExpenditure extends Activity{
  	Boolean alertdialog = false;
     ObjectAnimator animation2;
     boolean reportmenuflag;
-    
+    String financialToDate,financialFromDate,OrgName,date_format,OrgPeriod ,TrialPeriod,sFilename,Reporttypeflag;
+    String[] pdf_params;
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -61,8 +67,8 @@ public class incomeExpenditure extends Activity{
         	/*
         	 * get financial from and to date from startup page
         	 */
-        	String financialFromDate =Startup.getfinancialFromDate();
-        	String financialToDate=Startup.getFinancialToDate();
+        	financialFromDate =Startup.getfinancialFromDate();
+        	financialToDate=Startup.getFinancialToDate();
    
         	/*
         	 * get given to date from previous page
@@ -98,7 +104,7 @@ public class incomeExpenditure extends Activity{
        	
         		Object[] t = (Object[]) tb;
         		count = count + 1;
-        		IEGrid = new ArrayList<ArrayList<String>>();
+        		IEGrid = new ArrayList<ArrayList>();
            
         		for(Object tb1 : t){
            	
@@ -117,18 +123,37 @@ public class incomeExpenditure extends Activity{
         		 */
         		if(count == 1){
         			addTable(IEtable1);
+        			IEGrid1=IEGrid;
         		}
         		else if(count == 2){
         			addTable(IEtable2);
+        			IEGrid2=IEGrid;
         		}
            
         	}
-        	String Reporttypeflag = reportMenu.reportTypeFlag;
+        	
+		   
+        	 Date date= new Date();
+	   		 date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+	         OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
+	         TrialPeriod = financialFromDate+" to "+IEToDateString;
+	        // trialBalGrid = new ArrayList<ArrayList>();
+        	Reporttypeflag = reportMenu.reportTypeFlag;
         	final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
             tvReportTitle.setText("Menu >> "+"Report >> "+Reporttypeflag);
             final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
             btnSaveRecon.setVisibility(Button.GONE);
+            final Button btnPdf = (Button)findViewById(R.id.btnPdf);
             final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+            if(reportmenuflag==true){
+    	    	
+	    		OrgName = createOrg.organisationName;
+	    		
+           }
+           else {
+        	    OrgName= selectOrg.selectedOrgName;
+         
+           }
             btnScrollDown.setOnClickListener(new OnClickListener() {
  	
             	@Override
@@ -146,7 +171,51 @@ public class incomeExpenditure extends Activity{
             		}
             	}
             });
-       
+            if(Reporttypeflag.equalsIgnoreCase("Income and Expenditure"))
+			{
+					sFilename = "IE"+"_"+date_format;
+		        	pdf_params = new String[]{"I&E",sFilename,OrgName,OrgPeriod,Reporttypeflag,TrialPeriod,"",""};
+			}else
+		    {
+					sFilename = "PL"+"_"+date_format;
+		        	pdf_params = new String[]{"P&L",sFilename,OrgName,OrgPeriod,Reporttypeflag,TrialPeriod,"",""};
+		    }
+            btnPdf.setOnClickListener(new OnClickListener() {
+    			
+    			@Override
+    			public void onClick(View v) {
+    				AlertDialog.Builder builder = new AlertDialog.Builder(incomeExpenditure.this);
+    				   builder.setMessage("Do you want to create PDF")
+    				           .setCancelable(false)
+    				           .setPositiveButton("Yes",
+    				                   new DialogInterface.OnClickListener() {
+    				                       public void onClick(DialogInterface dialog, int id) {
+    				                    	   	PdfGenaretor pdfgen = new PdfGenaretor();
+    				       						try {
+    				       						
+    				       		 					pdfgen.generateBalancePDFFile(IEGrid1,IEGrid2,pdf_params);
+    				       		 			        AlertDialog.Builder builder1 = new AlertDialog.Builder(incomeExpenditure.this);
+    				       		 			        builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+sFilename);
+    				       		 			        AlertDialog alert1 = builder1.create();
+    				       		 			        alert1.show();
+    				       		 			        alert1.setCancelable(true);
+    				       		 			        alert1.setCanceledOnTouchOutside(true);
+    											} catch (DocumentException e) {
+    												// TODO Auto-generated catch block
+    												e.printStackTrace();
+    											}
+    				                       } 
+    				                   })
+    				               .setNegativeButton("No", new DialogInterface.OnClickListener() {
+    						       public void onClick(DialogInterface dialog, int id) {
+    						         
+    						       }
+    						   });
+    				   AlertDialog alert = builder.create();
+                       alert.show();
+    			}
+    		});
+           
             animated_diolog();
         } catch (Exception e) {
         	//System.out.println("I am an error"+e);
@@ -194,8 +263,6 @@ public class incomeExpenditure extends Activity{
                         else {
                         	tvOrgNameAlert.setText(selectOrg.selectedOrgName);
                         }
-                        
-                        
                         TextView tvOrgTypeAlert = (TextView)findViewById(R.id.tvOrgTypeAlert);
                         tvOrgTypeAlert.setText(reportMenu.orgtype);
                         

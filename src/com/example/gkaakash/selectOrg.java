@@ -40,7 +40,7 @@ public class selectOrg extends Activity{
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.select_org);
     	
-    	MainActivity.no_dailog = true; //comment this line if running this app on emulator
+    	//MainActivity.no_dailog = true; //comment this line if running this app on emulator
     	
     	// set flag to true , if we are in existing organisation
     	//existingOrgFlag="true";

@@ -1,7 +1,9 @@
 package com.example.gkaakash;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,8 +33,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gkaakash.controller.PdfGenaretor;
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
+import com.itextpdf.text.DocumentException;
 
 public class trialBalance extends Activity{
     private Report report;
@@ -41,7 +45,7 @@ public class trialBalance extends Activity{
     TableLayout trialBaltable;
     TableRow tr;
     TextView label;
-    ArrayList<ArrayList<String>> trialBalGrid;
+    ArrayList<ArrayList> trialBalGrid;
     ArrayList<String> trialBalanceResultList;
     String trialbalancetype;
     String[] ColumnNameList;
@@ -51,12 +55,15 @@ public class trialBalance extends Activity{
    	String colValue;
    	Boolean alertdialog = false;
     ObjectAnimator animation2;
+    Float result;
     boolean reportmenuflag;
     int oneTouch = 1;
     TableLayout floating_heading_table;
     LinearLayout Ll;
     ScrollView sv;
-    
+    String financialFromDate,trialbalType;
+	String financialToDate,OrgName,date_format,OrgPeriod ,TrialPeriod,sFilename;
+    String[] pdf_params;
     public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -71,13 +78,21 @@ public class trialBalance extends Activity{
 	    	floating_heading_table = (TableLayout)findViewById(R.id.floating_heading_table);
 	    	floating_heading_table.setVisibility(TableLayout.GONE);
 	    	sv = (ScrollView)findViewById(R.id.ScrollTrial);
-		   
+	    	 if(reportmenuflag==true){
+	    	    	
+		    		OrgName = createOrg.organisationName;
+		    		
+	           }
+	           else {
+	        	    OrgName= selectOrg.selectedOrgName;
+	         
+	           }
 		   
 	    	/*
 	    	 * get financial from and to date from startup page
 	    	 */
-	    	String financialFromDate =Startup.getfinancialFromDate();
-	    	String financialToDate=Startup.getFinancialToDate();
+	    	financialFromDate =Startup.getfinancialFromDate();
+	    	financialToDate=Startup.getFinancialToDate();
 	    	trialToDateString = reportMenu.givenToDateString;
 	    	// String trialFromoDateString = reportMenu.givenfromDateString;
 	    	trialbalancetype=reportMenu.trialbalancetype;
@@ -98,13 +113,19 @@ public class trialBalance extends Activity{
 	    	//System.out.println("Trial Balance Type: "+trialbalancetype);
 	    	if("Net Trial Balance".equals(trialbalancetype)){
 	    		trialBalanceResult = (Object[]) report.getTrialBalance(params,client_id);
+	    		trialbalType = "NetT";
 	    	}else if ("Gross Trial Balance".equals(trialbalancetype)) {
 	    		trialBalanceResult = (Object[]) report.getGrossTrialBalance(params,client_id);
+	    		trialbalType = "GrossT";
 	    	}else if ("Extended Trial Balance".equals(trialbalancetype)) {
 	    		trialBalanceResult = (Object[]) report.getExtendedTrialBalance(params,client_id);
+	    		trialbalType = "ExtendedT";
 	    	}
-		      
-	    	trialBalGrid = new ArrayList<ArrayList<String>>();
+	    	 Date date= new Date();
+	   		 date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+	         OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
+	         TrialPeriod = financialFromDate+" to "+trialToDateString;
+	         trialBalGrid = new ArrayList<ArrayList>();
 	    	for(Object tb : trialBalanceResult)
 	    	{
 	    		Object[] t = (Object[]) tb;
@@ -123,6 +144,7 @@ public class trialBalance extends Activity{
 	    	tvReportTitle.setText("Menu >> "+"Report >> "+trialbalancetype);
 	    	final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
 	    	btnSaveRecon.setVisibility(Button.GONE);
+	    	final Button btnPdf = (Button)findViewById(R.id.btnPdf);
 	    	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
 	    	btnScrollDown.setOnClickListener(new OnClickListener() {
 	    		@Override
@@ -138,7 +160,45 @@ public class trialBalance extends Activity{
 		           }
 				}
 	        });
-	        
+	    	sFilename = trialbalType+"_"+date_format;
+			pdf_params = new String[]{trialbalType,sFilename,OrgName,OrgPeriod,trialbalancetype,TrialPeriod,"",String.format("%.2f", Math.abs(result))};
+					
+	    	 btnPdf.setOnClickListener(new OnClickListener() {
+	 			
+	 			@Override
+	 			public void onClick(View v) {
+	 				AlertDialog.Builder builder = new AlertDialog.Builder(trialBalance.this);
+	 				   builder.setMessage("Do you want to create PDF")
+	 				           .setCancelable(false)
+	 				           .setPositiveButton("Yes",
+	 				                   new DialogInterface.OnClickListener() {
+	 				                       public void onClick(DialogInterface dialog, int id) {
+	 				                    	   	PdfGenaretor pdfgen = new PdfGenaretor();
+	 				       						try {
+	 				       						
+	 				   	 					pdfgen.generatePDFFile(trialBalGrid,pdf_params);
+	 				   	 			        AlertDialog.Builder builder1 = new AlertDialog.Builder(trialBalance.this);
+	 				   	 			        builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+sFilename);
+	 				   	 			        AlertDialog alert1 = builder1.create();
+	 				   	 			        alert1.show();
+	 				   	 			        alert1.setCancelable(true);
+	 				   	 			        alert1.setCanceledOnTouchOutside(true);
+	 											} catch (DocumentException e) {
+	 												// TODO Auto-generated catch block
+	 												e.printStackTrace();
+	 											}
+	 				                       } 
+	 				                   })
+	 				               .setNegativeButton("No", new DialogInterface.OnClickListener() {
+	 						       public void onClick(DialogInterface dialog, int id) {
+	 						         
+	 						       }
+	 						   });
+	 				   AlertDialog alert = builder.create();
+	                    alert.show();
+	 			}
+	 		});
+	    	
 	       animated_dialog();
 	       floatingHeader();
 	    } catch (Exception e) {
@@ -184,7 +244,7 @@ public class trialBalance extends Activity{
 	                	ColumnNameList = new String[] { "Sr. no.","Account name","Group name",rsSymbol+" Total debit",rsSymbol+" Total credit"};	
 	                }else if ("Extended Trial Balance".equals(trialbalancetype)) {
 	                	ColumnNameList = new String[] { "Sr. no.","Account name"," Group name ",rsSymbol+" Opening  Balance ",rsSymbol+" Total  debit  transaction ",rsSymbol+" Total  credit  transaction ",rsSymbol+" Debit  balance ",rsSymbol+" Credit  balance "};	
-	                }
+	                }  
 	                   
                     tr = new TableRow(trialBalance.this);
                    
@@ -196,12 +256,12 @@ public class trialBalance extends Activity{
                         LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(k);
 			            label.setWidth(l.getWidth());
                     }
-                   
+                     
                      // Add the TableRow to the TableLayout
                     floating_heading_table.addView(tr, new TableLayout.LayoutParams(
                             LayoutParams.FILL_PARENT,
                             LayoutParams.WRAP_CONTENT));
-					
+					  
 					//ledgertable.removeViewAt(0);
 					trialBaltable.getChildAt(0).setVisibility(View.INVISIBLE);
 					
@@ -223,7 +283,6 @@ public class trialBalance extends Activity{
 		});
 		
 	}
-
 	private void animated_dialog() {
 		try {
             final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
@@ -251,8 +310,6 @@ public class trialBalance extends Activity{
                            else {
                                tvOrgNameAlert.setText(selectOrg.selectedOrgName);
                            }
-                        
-                        
                         TextView tvOrgTypeAlert = (TextView)findViewById(R.id.tvOrgTypeAlert);
                         tvOrgTypeAlert.setText(reportMenu.orgtype);
                         
@@ -294,8 +351,6 @@ public class trialBalance extends Activity{
                 /*
                  * set right aligned gravity for amount and for others set center gravity
                  */
-                
-                
                 if(!"Extended Trial Balance".equals(trialbalancetype)){
                 	if(j==3 || j==4){
                 		label.setGravity(Gravity.RIGHT);
@@ -386,15 +441,12 @@ public class trialBalance extends Activity{
         final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs));
         ArrayList<String> lastrow=trialBalGrid.get(trialBalGrid.size()-1);
         if(!"Extended Trial Balance".equals(trialbalancetype)){
-        	Float result=Float.parseFloat(lastrow.get(4))-Float.parseFloat(lastrow.get(3));
+        	result=Float.parseFloat(lastrow.get(4))-Float.parseFloat(lastrow.get(3));
             difference.setText("Difference in Opening Balances: "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
         }else {
-        	Float result=Float.parseFloat(lastrow.get(7))-Float.parseFloat(lastrow.get(6));
+        	result=Float.parseFloat(lastrow.get(7))-Float.parseFloat(lastrow.get(6));
         	difference.setText("Difference in Opening Balances: "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
         }
-       
-        
-        
     }
 
     /*
@@ -427,8 +479,6 @@ public class trialBalance extends Activity{
                 LayoutParams.FILL_PARENT,
                 LayoutParams.WRAP_CONTENT));
     }
-    
-    
     /*
      * this function add the value to the row
      */
@@ -446,9 +496,6 @@ public class trialBalance extends Activity{
         params.setMargins(1, 1, 1, 1);
         Ll.addView(label,params);
         tr.addView((View)Ll); // Adding textView to tablerow.
-        
-        
-       
     }
 
 }

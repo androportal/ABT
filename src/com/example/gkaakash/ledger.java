@@ -1,13 +1,36 @@
 package com.example.gkaakash;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.gkaakash.controller.PdfGenaretor;
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import android.animation.ObjectAnimator;
 import android.app.ActionBar.LayoutParams;
@@ -17,6 +40,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.SpannableString;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -37,65 +61,94 @@ import android.widget.Toast;
 public class ledger extends Activity{
     TableLayout ledgertable;
     TableRow tr;
-    TextView label,tvaccontName,tvfinancialFromDate,tvfinancialToDate;
-    ArrayList<ArrayList> ledgerGrid;
+    TextView label,tvaccontName,tvfinancialFromDate,tvfinancialToDate,infoTxtCredits;
+    static ArrayList<ArrayList> ledgerGrid;
     static Object[] ledgerResult;
     static Integer client_id;
     private Report report;
     ArrayList<String> ledgerResultList;
     private ArrayList accountlist;
+	String[] pdf_params;
     Boolean updown=false;
     boolean checked;
     DecimalFormat formatter = new DecimalFormat("#,##,##,###.00");
-    String colValue;
+    String colValue,financialFromDate,financialToDate;
     Boolean alertdialog = false;
     ObjectAnimator animation2;
     boolean reportmenuflag;
     int oneTouch = 1;
+    String OrgName;
     TableLayout floating_heading_table;
     LinearLayout Ll;
     ScrollView sv;
-     
+    Object[] ledger_params;
+    static String[] ColumnNameList;
+    String accountName,projectName,fromDate,toDate;
+    Font smallBold,smallNormal,bigBold;
+    String OrgPeriod,LedgerPeriod ;
+    String Ledger_project,sFilename;
     public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
        setContentView(R.layout.ledger_table);
-       
+      
        report = new Report();
        client_id= Startup.getClient_id();
        reportmenuflag = MainActivity.reportmenuflag;
        //customizing title bar
        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
-      
+       smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 10);
+	   smallBold.setStyle(Font.UNDERLINE);
+	   smallBold.setStyle(Font.BOLD);
+	   bigBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,Font.BOLD);
+	   smallNormal= new Font(Font.FontFamily.TIMES_ROMAN, 10,Font.NORMAL);    
        try {
     	   floating_heading_table = (TableLayout)findViewById(R.id.floating_heading_table);
     	   floating_heading_table.setVisibility(TableLayout.GONE);
     	   sv = (ScrollView)findViewById(R.id.ScrollLedger);
     	   
-           String financialFromDate =Startup.getfinancialFromDate();
-           String financialToDate=Startup.getFinancialToDate();
-           String accountName = reportMenu.selectedAccount;
-           String projectName = reportMenu.selectedProject;
+    	   financialFromDate =Startup.getfinancialFromDate();
+           financialToDate=Startup.getFinancialToDate();
+           accountName = reportMenu.selectedAccount;
+           projectName = reportMenu.selectedProject;
            checked = reportMenu.cheched;
-           String fromDate = reportMenu.givenfromDateString;
-           String toDate = reportMenu.givenToDateString;
+           fromDate = reportMenu.givenfromDateString;
+           toDate = reportMenu.givenToDateString;
        
            tvaccontName = (TextView) findViewById( R.id.tvaccountName );
            tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
-          
            tvaccontName.setText("Account name: "+accountName);
-           //tvfinancialFromDate.setText("Financial from: " +fromDate);
-           //tvfinancialToDate.setText("Financial to: " +toDate);
            tvfinancialToDate.setText("Period : "+fromDate+" to "+toDate);   
-           
+          
            if(!projectName.equalsIgnoreCase("No Project")){
 		   		TextView tvProjectName = (TextView) findViewById( R.id.tvProjectName );
 		   		tvProjectName.setText("Project name: " +projectName);
+		   		Ledger_project = "for the "+projectName+" project";
+           }
+           else
+           {
+        	   Ledger_project = "No Project";
            }
            //System.out.println("ledger with project"+accountName+financialFromDate+fromDate+toDate+projectName);
-           Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,projectName};
-           ledgerResult = (Object[]) report.getLedger(params,client_id);
-           
+           ledger_params = new Object[]{accountName,financialFromDate,fromDate,toDate,projectName};
+           ledgerResult = (Object[]) report.getLedger(ledger_params,client_id);
+          
+           if(reportmenuflag==true){
+   	    	
+	    		OrgName = createOrg.organisationName;
+	    		
+           }
+           else {
+        	    OrgName= selectOrg.selectedOrgName;
+         
+           }
+           Date date= new Date();
+   		   String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+           OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
+           LedgerPeriod = fromDate+" to "+toDate;
+           String account = accountName.replace(" ","");
+   	 	   sFilename = "L"+"_"+account+"_"+date_format;
+           pdf_params = new String[]{"L",sFilename,OrgName,OrgPeriod,"Ledger for: "+accountName,LedgerPeriod,"Project: "+Ledger_project,};
            ledgerGrid = new ArrayList<ArrayList>();
            for(Object tb : ledgerResult) 
            {
@@ -108,7 +161,7 @@ public class ledger extends Activity{
         			   if(checked == true){
         				   ledgerResultList.add((String) t[i].toString());
         			   }
-        			   
+        			    
         		   }else{
         			   ledgerResultList.add((String) t[i].toString());
         		   }
@@ -124,6 +177,8 @@ public class ledger extends Activity{
            tvReportTitle.setText("Menu >> "+"Report >> "+"Ledger");
            final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
            btnSaveRecon.setVisibility(Button.GONE);
+           final Button btnPdf = (Button)findViewById(R.id.btnPdf);
+          // btnSaveRecon.setVisibility(Button.GONE);
            final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
            btnScrollDown.setOnClickListener(new OnClickListener() {
  	
@@ -141,10 +196,45 @@ public class ledger extends Activity{
         		   }
         	   }
            });
-            
+         
+         btnPdf.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(ledger.this);
+				   builder.setMessage("Do you want to create PDF")
+				           .setCancelable(false)
+				           .setPositiveButton("Yes",
+				                   new DialogInterface.OnClickListener() {
+				                       public void onClick(DialogInterface dialog, int id) {
+				                    	   	PdfGenaretor pdfgen = new PdfGenaretor();
+				       						try {
+												pdfgen.generatePDFFile(ledgerGrid,pdf_params);
+												AlertDialog.Builder builder1 = new AlertDialog.Builder(ledger.this);
+					       						builder1.setMessage("PDF genration completed ..see /mnt/sdcard/"+sFilename);
+					       						AlertDialog alert1 = builder1.create();
+					       						alert1.show();
+					       						alert1.setCancelable(true);
+					       						alert1.setCanceledOnTouchOutside(true);
+											} catch (DocumentException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+				                       } 
+				                   })
+				               .setNegativeButton("No", new DialogInterface.OnClickListener() {
+						       public void onClick(DialogInterface dialog, int id) {
+						         
+						       }
+						   });
+				   AlertDialog alert = builder.create();
+                   alert.show();
+			}
+		});
            animated_dialog();
            floatingHeader();
-            
+           
+          
        } catch (Exception e) {
     	   AlertDialog.Builder builder = new AlertDialog.Builder(ledger.this);
     	   builder.setMessage("Please try again")
@@ -281,7 +371,6 @@ public class ledger extends Activity{
             // TODO: handle exception
         }
 	}
-
 	
 	private void addTable() {
 		addHeader();
@@ -292,10 +381,17 @@ public class ledger extends Activity{
             ArrayList<String> columnValue = new ArrayList<String>();
             columnValue.addAll(ledgerGrid.get(i));
             tr = new TableRow(this);
-           
+            Integer lastIndex = ledgerGrid.size()-1;
             for(int j=0;j<columnValue.size();j++){
-            	addRow(columnValue.get(j));   
-            	label.setBackgroundColor(Color.BLACK);
+            	addRow(columnValue.get(j)); 
+            	 if((i+1)%2==0)
+             		label.setBackgroundColor(Color.parseColor("#474335"));
+             	else
+             		label.setBackgroundColor(Color.BLACK);
+            	if (lastIndex.equals(i)) {
+            		label.setBackgroundColor(Color.parseColor("#348017"));
+				}
+            		
             	if(j == 3 || j == 4){
             		label.setGravity(Gravity.RIGHT);
                     
@@ -334,14 +430,16 @@ public class ledger extends Activity{
                     LayoutParams.MATCH_PARENT));
            
         } 
+     
+	
     }
-
+	
 	
     void addHeader(){
     	//For adding rupee symbol
     	final SpannableString rsSymbol = new SpannableString(ledger.this.getText(R.string.Rs));
         /** Create a TableRow dynamically **/
-        String[] ColumnNameList = new String[] {"Date","Particulars","Reference no.",rsSymbol+" Debit",rsSymbol+" Credit","Narration"};
+        ColumnNameList = new String[] {"Date","Particulars","Reference no.",rsSymbol+" Debit",rsSymbol+" Credit","Narration"};
        
         tr = new TableRow(this);
         
@@ -389,4 +487,5 @@ public class ledger extends Activity{
     }
 
    
+  
 }

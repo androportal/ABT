@@ -316,7 +316,7 @@ public class bankReconciliation extends Activity{
 							if(rowArray.size() >0){
 								report.deleteClearedRecon(rowArray, client_id);
 							}
-							
+							  
 						}
 						/*
 						 * add all cleared rows to the new Array

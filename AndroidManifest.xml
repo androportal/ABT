@@ -28,7 +28,7 @@
             android:label="Create new organisation"
             android:name=".createOrg"
             android:screenOrientation="landscape" >
-        </activity>
+        </activity> 
         <activity
             android:label="Organisation details"
             android:name=".orgDetails"
