@@ -183,5 +183,5 @@ layout and classes
 	   master_menu
 	   account_management
 	   transaction_management
-
+	   reports
 

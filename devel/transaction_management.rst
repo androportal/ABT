@@ -3,10 +3,405 @@ Transaction management
 
 * This chapter includes layout and code logic of ``record/search/edit/clone`` transaction.
 
-* We have ``two`` tabs ie. Create voucher and Search/edit/clone voucher.
+Voucher menu
+++++++++++++
+
+* On clicking ``Transaction`` menu from master menu, we get the list of all voucher types. 
+
+* The layout of list items is included in ``res/layout/transaction.xml``.
+
+**File res/layout/transaction.xml**
+
+	.. code-block:: xml
+		
+		<?xml version="1.0" encoding="utf-8"?>
+		<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:id="@+id/transactions"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:padding="20dp"
+		    android:textSize="20sp"
+		    android:textColor="#FFFFFF" >
+		</TextView>
+
+.. image:: images/voucher_type.png
+	   :name: ABT main page
+	   :align: center
+
+* The associated activity to display voucher types in a listview is,
+
+**File src/com/example/gkaakash/voucherMenu.java**
+
+* The activity is explained below along with code.
+
+* It contains the essential and required import like
+
+* This activity also includes the setOnItemClickListener for list items.
+
+	.. code-block:: java
+	
+		package com.example.gkaakash;
+
+		import java.util.ArrayList;
+		import java.util.List; 
+		import com.gkaakash.controller.Startup;
+		import com.gkaakash.controller.Transaction;
+		import android.app.AlertDialog;
+		import android.app.ListActivity;
+		import android.content.Context;
+		import android.content.DialogInterface;
+		import android.content.Intent;
+		import android.graphics.Color;
+		import android.os.Bundle;
+		import android.view.View;
+		import android.widget.AdapterView;
+		import android.widget.ArrayAdapter;
+		import android.widget.ListView;
+		import android.widget.AdapterView.OnItemClickListener;
+
+* The activity intializes all the essential parameters and variables.
+
+* onCreate method creates two Tabspec and include them in Tabhost.
+
+	.. code-block:: java
+	
+		public class voucherMenu extends ListActivity {
+			//adding voucher list items
+			String[] voucherType = new String[] { "Contra","Journal","Payment","Receipt","Credit note","Debit note","Sales","Sales return","Purchase","Purchase return" };
+			final Context context = this;
+			static String vouchertypeflag;
+			static Object[] voucherAccounts;
+			static Integer client_id;
+			private Transaction transaction;
+			static List<String> Accountlist;
+			static ArrayList<String> DrAccountlist;
+			static ArrayList<String> CrAccountlist;
+			static boolean flag;
+	
+			@Override
+			public void onCreate(Bundle savedInstanceState) {
+				super.onCreate(savedInstanceState);
+				transaction = new Transaction();
+		       		client_id= Startup.getClient_id();
+				flag = true;
+				
+				//calling transactions.xml page and setting list items in listview
+				setListAdapter(new ArrayAdapter<String>(this, R.layout.transactions,voucherType));
+		
+				//setting title
+				setTitle("Menu >> Transaction");
+				
+				//getting the list view and setting background
+				final ListView listView = getListView();
+				listView.setTextFilterEnabled(true);
+				listView.setBackgroundColor(R.drawable.dark_gray_background);
+				listView.setCacheColorHint(Color.TRANSPARENT);
+
+* When voucher list items are clicked, code for respective actions goes here,
+
+	.. code-block:: java
+
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Object[] params = new Object[]{"Dr"};
+				
+				//for "Contra" voucher
+				if(position == 0)
+				{
+					vouchertypeflag  = parent.getItemAtPosition(position).toString();
+					getAccountsByRule(params);
+					if(Accountlist.size() < 2){
+						toastValidationMessage();
+					}
+					else{
+						MainActivity.searchFlag=false;
+						Intent intent = new Intent(context, transaction_tab.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}
+					
+				}
+				//Journal
+				if(position == 1)
+				{
+					vouchertypeflag  = parent.getItemAtPosition(position).toString();
+					
+					getAccountsByRule(params);
+					if(Accountlist.size() < 2){
+						toastValidationMessage();
+					}
+					else{
+						Intent intent = new Intent(context, transaction_tab.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}
+				}
+				//payment
+				if(position == 2)
+				{
+					vouchertypeflag  = parent.getItemAtPosition(position).toString();
+					
+					getAccountsByRule(params);
+					DrAccountlist = new ArrayList<String>();
+					DrAccountlist.addAll(Accountlist);
+					
+					Object[] params1 = new Object[]{"Cr"};
+					getAccountsByRule(params1);
+					CrAccountlist = new ArrayList<String>();
+					CrAccountlist.addAll(Accountlist);
+					
+					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
+						toastValidationMessage();
+					}
+					else{
+						Intent intent = new Intent(context, transaction_tab.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}
+				}
+				//receipt
+				if(position == 3)
+				{
+					vouchertypeflag  = parent.getItemAtPosition(position).toString();
+					
+					getAccountsByRule(params);
+					DrAccountlist = new ArrayList<String>();
+					DrAccountlist.addAll(Accountlist);
+					
+					Object[] params1 = new Object[]{"Cr"};
+					getAccountsByRule(params1);
+					CrAccountlist = new ArrayList<String>();
+					CrAccountlist.addAll(Accountlist);
+					
+					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
+						toastValidationMessage();
+					}
+					else{
+						Intent intent = new Intent(context, transaction_tab.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}
+				}
+				//credit note
+				if(position == 4)
+				{
+					vouchertypeflag  = parent.getItemAtPosition(position).toString();
+					
+					getAccountsByRule(params);
+					DrAccountlist = new ArrayList<String>();
+					DrAccountlist.addAll(Accountlist);
+					
+					Object[] params1 = new Object[]{"Cr"};
+					getAccountsByRule(params1);
+					CrAccountlist = new ArrayList<String>();
+					CrAccountlist.addAll(Accountlist);
+					
+					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
+						toastValidationMessage();
+					}
+					else{
+						Intent intent = new Intent(context, transaction_tab.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}
+				}
+				//debit note
+				if(position == 5)
+				{
+					vouchertypeflag  = parent.getItemAtPosition(position).toString();
+					
+					getAccountsByRule(params);
+					DrAccountlist = new ArrayList<String>();
+					DrAccountlist.addAll(Accountlist);
+					
+					Object[] params1 = new Object[]{"Cr"};
+					getAccountsByRule(params1);
+					CrAccountlist = new ArrayList<String>();
+					CrAccountlist.addAll(Accountlist);
+					
+					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
+						toastValidationMessage();
+					}
+					else{
+						Intent intent = new Intent(context, transaction_tab.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}
+				}
+				//sales
+				if(position == 6)
+				{
+					vouchertypeflag  = parent.getItemAtPosition(position).toString();
+					
+					getAccountsByRule(params);
+					DrAccountlist = new ArrayList<String>();
+					DrAccountlist.addAll(Accountlist);
+					
+					Object[] params1 = new Object[]{"Cr"};
+					getAccountsByRule(params1);
+					CrAccountlist = new ArrayList<String>();
+					CrAccountlist.addAll(Accountlist);
+					
+					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
+						toastValidationMessage();
+					}
+					else{
+						Intent intent = new Intent(context, transaction_tab.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}
+				}
+				//sales return
+				if(position == 7)
+				{
+					vouchertypeflag  = parent.getItemAtPosition(position).toString();
+					
+					getAccountsByRule(params);
+					DrAccountlist = new ArrayList<String>();
+					DrAccountlist.addAll(Accountlist);
+					
+					Object[] params1 = new Object[]{"Cr"};
+					getAccountsByRule(params1);
+					CrAccountlist = new ArrayList<String>();
+					CrAccountlist.addAll(Accountlist);
+					
+					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
+						toastValidationMessage();
+					}
+					else{
+						Intent intent = new Intent(context, transaction_tab.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}
+				}
+				//purchase
+				if(position == 8)
+				{
+					vouchertypeflag  = parent.getItemAtPosition(position).toString();
+					
+					getAccountsByRule(params);
+					DrAccountlist = new ArrayList<String>();
+					DrAccountlist.addAll(Accountlist);
+					
+					Object[] params1 = new Object[]{"Cr"};
+					getAccountsByRule(params1);
+					CrAccountlist = new ArrayList<String>();
+					CrAccountlist.addAll(Accountlist);
+					
+					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
+						toastValidationMessage();
+					}
+					else{
+						Intent intent = new Intent(context, transaction_tab.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}
+				}
+				//purchase return
+				if(position == 9)
+				{
+					vouchertypeflag  = parent.getItemAtPosition(position).toString();
+					
+					getAccountsByRule(params);
+					DrAccountlist = new ArrayList<String>();
+					DrAccountlist.addAll(Accountlist);
+					
+					Object[] params1 = new Object[]{"Cr"};
+					getAccountsByRule(params1);
+					CrAccountlist = new ArrayList<String>();
+					CrAccountlist.addAll(Accountlist);
+					
+					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
+						toastValidationMessage();
+					}
+					else{
+						Intent intent = new Intent(context, transaction_tab.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}
+				}
+			}
+			
+* The below method bulids an alert dialog for displaying message.
+
+	.. code-block:: java
+
+		public void toastValidationMessage(String message) {
+		/*
+		* call this method for alert messages
+		* input: a message Strig to be display on alert
+		*/
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setMessage(message)
+			.setCancelable(false)
+			.setPositiveButton("Ok",
+			new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int id) {
+			    	
+			    }
+			});
+
+			AlertDialog alert = builder.create();
+			alert.show();	
+		} 
+		
+* The below method generates the list of account name by voucher rule.
+
+* For example if transaction type is contra, this method filters the account names that comes under contra.
+
+	.. code-block:: java
+
+		private void getAccountsByRule(Object[] DrCrFlag) {
+			if("Contra".equals(vouchertypeflag)){
+				voucherAccounts = (Object[]) transaction.getContraAccounts(client_id);
+			}
+			else if("Journal".equals(vouchertypeflag)){
+				voucherAccounts = (Object[]) transaction.getJournalAccounts(client_id);
+			}
+			else if("Receipt".equals(vouchertypeflag)){
+			
+				voucherAccounts = (Object[]) transaction.getReceivableAccounts(DrCrFlag,client_id);
+			}
+			else if("Payment".equals(vouchertypeflag)){
+			
+				voucherAccounts = (Object[]) transaction.getPaymentAccounts(DrCrFlag,client_id);
+			}
+			else if("Debit Note".equalsIgnoreCase(vouchertypeflag)){
+			
+				voucherAccounts = (Object[]) transaction.getDebitNoteAccounts(DrCrFlag,client_id);
+			}
+			else if("Credit Note".equalsIgnoreCase(vouchertypeflag)){
+			
+				voucherAccounts = (Object[]) transaction.getCreditNoteAccounts(DrCrFlag,client_id);
+			}
+			else if("Sales".equals(vouchertypeflag)){
+			
+				voucherAccounts = (Object[]) transaction.getSalesAccounts(DrCrFlag,client_id);
+			}
+			else if("Purchase".equals(vouchertypeflag)){
+			
+				voucherAccounts = (Object[]) transaction.getPurchaseAccounts(DrCrFlag,client_id);
+			}
+			else if("Sales Return".equalsIgnoreCase(vouchertypeflag)){
+			
+				voucherAccounts = (Object[]) transaction.getSalesReturnAccounts(DrCrFlag,client_id);
+			}
+			else if("Purchase Return".equalsIgnoreCase(vouchertypeflag)){
+			
+				voucherAccounts = (Object[]) transaction.getPurchaseReturnAccounts(DrCrFlag,client_id);
+			}
+			Accountlist = new ArrayList<String>();
+			for(Object ac : voucherAccounts)
+			{	
+				Accountlist.add((String) ac);
+			}	
+		
+		}
 
 Tab host
 ++++++++
+* On clicking the voucher type from listview, a new screen appears which includes ``two`` tabs, ie. ``Create`` voucher and ``Search/edit/clone`` voucher.
 
 * layout for hosting these two tabs is included in `res/layout/tab.xml <account_management.html#tab-host-for-create-edit-account>`_
 
