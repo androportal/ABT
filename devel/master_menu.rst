@@ -258,11 +258,148 @@ Master menu
 
 			}
 
-* Below section of code creates the ``alert dialog`` for ``Bank Reconciliation`` Index.
+* Below section of code creates the ``alert dialog`` for ``Bank Reconciliation`` Index which will look like this,
 
-* The alert dialog contains ``accout name`` dropdown for which reconciliation to be done, two datepickers for ``from date`` and ``to date``, two checkboxes for ``narration`` and ``cleared transations`` and the ``view`` button.
+.. image:: images/bank_reco_before.png
+	   :name: ABT main page
+	   :align: center 
 
-* Initially get all accout names from the database in list format.
+* The associated layout is included in ``res/layout/bank_recon_index.xml``.
+
+**File res/layout/bank_recon_index.xml**
+
+	.. code-block:: xml
+	
+		 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent" >
+		    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" 
+			android:orientation="vertical"
+			 android:id="@+id/layout_root" >
+			 
+			 <TextView
+			     android:layout_width="wrap_content"
+			     android:layout_height="wrap_content"
+			     android:layout_gravity="center"
+			     android:text="Account name"
+			     android:textColor="#FFFFFF"
+			     android:textSize="20dp" />
+
+			<Spinner
+			    android:id="@+id/sBankAccounts"
+			    android:layout_width="254dp"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center"
+			    android:entries="@array/accountName_arrays"
+			    android:prompt="@string/accountName_prompt" />
+		
+		
+			   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" 
+			android:orientation="horizontal"
+			 android:id="@+id/layout_root" >
+		
+			 
+			 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" 
+			android:orientation="vertical"
+			 android:id="@+id/layout_root"
+			 android:layout_gravity="left"
+			  android:layout_weight="50" >
+		
+			 <TextView
+			     android:id="@+id/tvsetFromdate"
+			     android:layout_width="wrap_content"
+			     android:layout_height="wrap_content"
+			     android:layout_gravity="center"
+			     android:text="From"
+			     android:textColor="#FFFFFF"
+			     android:textSize="20dp" />
+
+			 <DatePicker
+			     android:id="@+id/dpsetReconFromdate"
+			     android:layout_width="wrap_content"
+			     android:layout_height="wrap_content"
+			     android:layout_gravity="center" />
+
+			</LinearLayout>
+		
+		
+			 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" 
+			android:orientation="vertical"
+			 android:id="@+id/layout_root"
+			 android:layout_weight="50" >
+			 
+			<TextView
+			    android:id="@+id/tvsetT0date"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center"
+			    android:text="To"
+			    android:textColor="#FFFFFF"
+			    android:textSize="20dp" />
+
+			<DatePicker
+			    android:id="@+id/dpsetReconT0date"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center" />
+			</LinearLayout>
+		
+			 </LinearLayout>
+			 
+			   <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				    		android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_gravity="center">
+
+				<TableRow>
+				    <CheckBox
+					android:id="@+id/cbClearedTransaction"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="0.3" 
+					android:layout_marginRight="30dp"/>
+				    
+				    <TextView
+					android:layout_width="wrap_content"
+					android:layout_weight="1.7"
+					android:text="with cleared transactions"
+					android:textColor="#FFFFFF"
+					android:textSize="20dp" />
+				</TableRow>
+		
+				<TableRow>
+				    <CheckBox
+					android:id="@+id/cbReconNarration"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="0.3" 
+					android:layout_marginRight="30dp"/>
+				    
+				    <TextView
+					android:layout_width="wrap_content"
+					android:layout_weight="1.7"
+					android:text="with narration"
+					android:textColor="#FFFFFF"
+					android:textSize="20dp" />
+				</TableRow>
+				</TableLayout>
+
+		    </LinearLayout>
+		    </ScrollView>
+
+* Above alert dialog contains ``account name`` dropdown for which reconciliation to be done, two datepickers for ``from date`` and ``to date``, two checkboxes for ``narration`` and ``cleared transations`` and the ``view`` button.
+
+* and the associated java code to build above dialog is given below,
+
+* Initially get all account names from the database in list format.
 
 * Check the ``length`` of the account name list. if list length is equal to ``0``, it throws validation message else places it in a account name dropdown.
 

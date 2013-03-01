@@ -166,22 +166,23 @@ you should be aware of a few directories and files in the Android project:
 
 
 
-layout and classes
-------------------
+layout and activities
+---------------------
 
 * The project was entiltled as Aakash Business Tool (ABT).
 * The package name : com.example.gkaakash
 * In the android project mainly the editing part was in layout,Activity(java class) and in AndroidManifest.xml
 
 + **Designing the layout for the application**
-
-	.. toctree::
-	   :numbered:
 	   
-	   install_ABT
-	   maintaining_organisation
-	   master_menu
-	   account_management
-	   transaction_management
-	   reports
+.. toctree::
+   :numbered:   
+	
+   install_ABT
+   maintaining_organisation
+   master_menu
+   account_management
+   transaction_management
+   reports
+   bank_reconciliation
 
