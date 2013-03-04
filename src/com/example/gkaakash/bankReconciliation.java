@@ -9,8 +9,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.gkaakash.controller.PdfGenaretor;
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
+import com.itextpdf.text.DocumentException;
 
 import android.R.integer;
 import android.app.ActionBar.LayoutParams;
@@ -70,7 +72,8 @@ public class bankReconciliation extends Activity{
 	String result;
 	String[] dateParts;
 	Boolean updown=false;
-	 
+	String getSelectedOrgType,OrgName, OrgPeriod,BankReconcilPeriod,sFilename ;
+	String[]pdf_params; 
      
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -115,13 +118,21 @@ public class bankReconciliation extends Activity{
               
 		   	Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,"No Project"};
 		   	Object[] flag = new Object[]{cleared_tran_flag};
-           
+		    if(MainActivity.reportmenuflag==true){ 
+	   	    	
+ 	    		OrgName = createOrg.organisationName;
+            }
+            else {
+         	    OrgName= selectOrg.selectedOrgName;
+          
+            }
 		   	setTableAndStatement(params,flag);
             
 		   	setbankRecon();
            
 		   	final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
 		   	btnSaveRecon.setVisibility(Button.VISIBLE);
+		   	final Button btnPdf = (Button)findViewById(R.id.btnPdf);
 		   	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
            	btnScrollDown.setOnClickListener(new OnClickListener() {
 			
@@ -140,6 +151,53 @@ public class bankReconciliation extends Activity{
 	                }
            		}
            	});
+           	Date date= new Date();
+			String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+			OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
+			BankReconcilPeriod = fromDate+" to "+toDate;
+			String account = accountName.replace(" ","");
+	   	 	sFilename = "BankRec"+"_"+account+"_"+date_format;
+			
+			pdf_params = new String[]{"BankRec",sFilename,OrgName,OrgPeriod,"Bank Reconciliation for "+account,BankReconcilPeriod,"",result};
+			btnPdf.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(bankReconciliation.this);
+					   builder.setMessage("Do you want to create PDF")
+					           .setCancelable(false)
+					           .setPositiveButton("Yes",
+					                   new DialogInterface.OnClickListener() {
+					                       public void onClick(DialogInterface dialog, int id) {
+					                    	   	PdfGenaretor pdfgen = new PdfGenaretor();
+					                    	   	try {
+					            					
+					            					pdfgen.generateBalancePDFFile(bankReconGrid,statementGrid,pdf_params);
+					            					//generatePDFFile(BalanceSheetGrid,pdf_params);
+					            					
+					            					//generatePDFFile("balnce.pdf",pdf_params);
+					            			        AlertDialog.Builder builder1 = new AlertDialog.Builder(bankReconciliation.this );
+					            			        builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+sFilename);
+					            			        AlertDialog alert1 = builder1.create();
+					            			        alert1.show();
+					            			        alert1.setCancelable(true);
+					            			        alert1.setCanceledOnTouchOutside(true);
+					            				} catch (DocumentException e) {
+					            					// TODO Auto-generated catch block
+					            					e.printStackTrace();
+					            				}
+					                       } 
+					                   })
+					               .setNegativeButton("No", new DialogInterface.OnClickListener() {
+							       public void onClick(DialogInterface dialog, int id) {
+							         
+							       }
+							   });
+					   AlertDialog alert = builder.create();
+	                   alert.show();
+				}
+			});
+    		
             
 		} catch (Exception e) {
 			toastValidationMessage("Please try again");

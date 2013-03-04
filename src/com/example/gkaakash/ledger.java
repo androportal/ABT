@@ -237,7 +237,7 @@ public class ledger extends Activity{
           
        } catch (Exception e) {
     	   AlertDialog.Builder builder = new AlertDialog.Builder(ledger.this);
-    	   builder.setMessage("Please try again")
+    	   builder.setMessage("Please try again")	
                    .setCancelable(false)
                    .setPositiveButton("Ok",
                            new DialogInterface.OnClickListener() {
