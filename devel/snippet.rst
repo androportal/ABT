@@ -180,9 +180,11 @@ layout and activities
 	
    install_ABT
    maintaining_organisation
+   preferences
    master_menu
    account_management
    transaction_management
    reports
    bank_reconciliation
+   
 

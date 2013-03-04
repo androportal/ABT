@@ -21,6 +21,10 @@ Master menu
 		    android:textColor="#FFFFFF">
 		</TextView>
 
+.. image:: images/master_menu.png
+	   :name: ABT main page
+	   :align: center
+
 * Its activity is explained below, along with the code.
 
 **File src/com/example/gkaakash/menu.java**
@@ -208,7 +212,7 @@ Master menu
 
 	.. code-block:: java
 
-			//for "adding project", adding popup menu ...
+			//for "edit organisation" and "adding project", adding popup menu ...
 			if(position == 3)
 			{                	
 				final CharSequence[] items = { "Edit organisation details", "Add/Edit/Delete project" };
@@ -394,6 +398,10 @@ Master menu
 
 		    </LinearLayout>
 		    </ScrollView>
+
+.. image:: images/bank_reco_before.png
+	   :name: ABT main page
+	   :align: center
 
 * Above alert dialog contains ``account name`` dropdown for which reconciliation to be done, two datepickers for ``from date`` and ``to date``, two checkboxes for ``narration`` and ``cleared transations`` and the ``view`` button.
 

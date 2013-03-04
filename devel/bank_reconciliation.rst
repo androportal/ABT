@@ -11,6 +11,12 @@ Bank Reconciliation
 
 **File res/layout/bank_recon_table.xml**
 
+* This layout contains a ``tablelayout`` with vertical and horizontal scroll.
+
+* ``account name`` and ``period`` at the top of the screen.
+
+* ``Save`` button located on the ``title bar``, at the left side of the ``scroll`` up/down button which is aligned at the extreme right side of the title bar.
+
 	.. code-block:: xml
 	
 		<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -277,6 +283,8 @@ Bank Reconciliation
 					   	final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
 					   	btnSaveRecon.setVisibility(Button.VISIBLE);
 					   	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+					   	
+					   	// to scroll the table up/down...
 				   		btnScrollDown.setOnClickListener(new OnClickListener() {
 			
 				   		@Override
@@ -303,7 +311,7 @@ Bank Reconciliation
 
 * get all the cleared and uncleared transactions from database for the given account, from date and to date along with bank reconciliation statement.
 
-* add header and transaction rows in the first table and bank reconciliation statemnt in the second table.
+* add header and transaction rows in the first table and bank reconciliation statement in the second table.
 
 	.. code-block:: java
 
@@ -377,7 +385,15 @@ Bank Reconciliation
 		}
 		
 		
-* Below method allows to clear transactions and unclear the cleared transactions
+* User can ``reconcile`` transactions ie. to set a clearance date and unclear the cleared transactions.
+
+* To save the changes in database, we have added OnClickListener for ``Save`` button. 
+
+* Below method will read table rows, transactions with clearance date will be stored in a list and transactions without clearance date will be stored in another list.
+
+* then send these lists to the backend and update the table.
+
+
 
 	.. code-block:: java
 	
@@ -707,7 +723,10 @@ Bank Reconciliation
 
 * Make the column ``clearance date`` editable, so that to set the clearance date in the textview.
 
-* It also includes code for adding few options on clicking clearance date column
+* It also includes code for adding few options on clicking clearance date column such as, set a ``new date``, ``previous date`` or ``clear date`` (only applicable if date is specified before).
+
+	.. code-block:: java
+	 
 		void addRow(String param, final int i, final int j, final int flag){
 			label = new TextView(this);
 			label.setText(param);
