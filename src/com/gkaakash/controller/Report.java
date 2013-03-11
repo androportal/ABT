@@ -22,6 +22,7 @@ public class Report {
 	private Object[] getLedgerForBankRecon;
 	private String setBankReconciliationResult;
 	private Boolean result;
+	private Object[] calculateBalance;
 	
 	/***
 	 * Default constructor
@@ -262,6 +263,21 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 		return result;
 	}
 	
+	
+	public Object calculateBalance(Object[] params,Object client_id) {
+		
+		try { 
+			
+			 System.out.println("data:"+params[0]+""+params[1]+""+params[2]+""+params[3]);
+			System.out.println("nnn:"+client_id);
+			calculateBalance = (Object[])conn.getClient().call("reports.calculateBalance",params,client_id);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return calculateBalance;
+	}
 	
 	
 }

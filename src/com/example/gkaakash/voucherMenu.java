@@ -32,6 +32,7 @@ public class voucherMenu extends ListActivity {
 	static ArrayList<String> DrAccountlist;
 	static ArrayList<String> CrAccountlist;
 	static boolean flag;
+	static module m;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class voucherMenu extends ListActivity {
 		
 		//setting title
 		setTitle("Menu >> Transaction");
-		
+		m=new module();
 		//getting the list view and setting background
 		final ListView listView = getListView();
 		listView.setTextFilterEnabled(true);
@@ -55,279 +56,102 @@ public class voucherMenu extends ListActivity {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				
 				Object[] params = new Object[]{"Dr"};
-				//for "Contra" voucher
-				if(position == 0)
-				{
-					vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					getAccountsByRule(params);
-					if(Accountlist.size() < 2){
-						toastValidationMessage();
-					}
-					else{
-						MainActivity.searchFlag=false;
-						Intent intent = new Intent(context, transaction_tab.class);
-						// To pass on the value to the next page
-						startActivity(intent);
-					}
-					
-				}
-				if(position == 1)
-				{
-					vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					
-					getAccountsByRule(params);
-					if(Accountlist.size() < 2){
-						toastValidationMessage();
-					}
-					else{
-						Intent intent = new Intent(context, transaction_tab.class);
-						// To pass on the value to the next page
-						startActivity(intent);
-					}
-				}
-				if(position == 2)
-				{
-					vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					
-					getAccountsByRule(params);
-					DrAccountlist = new ArrayList<String>();
-					DrAccountlist.addAll(Accountlist);
-					
-					Object[] params1 = new Object[]{"Cr"};
-					getAccountsByRule(params1);
-					CrAccountlist = new ArrayList<String>();
-					CrAccountlist.addAll(Accountlist);
-					
-					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						toastValidationMessage();
-					}
-					else{
-						Intent intent = new Intent(context, transaction_tab.class);
-						// To pass on the value to the next page
-						startActivity(intent);
-					}
-				}
-				if(position == 3)
-				{
-					vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					
-					getAccountsByRule(params);
-					DrAccountlist = new ArrayList<String>();
-					DrAccountlist.addAll(Accountlist);
-					
-					Object[] params1 = new Object[]{"Cr"};
-					getAccountsByRule(params1);
-					CrAccountlist = new ArrayList<String>();
-					CrAccountlist.addAll(Accountlist);
-					
-					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						toastValidationMessage();
-					}
-					else{
-						Intent intent = new Intent(context, transaction_tab.class);
-						// To pass on the value to the next page
-						startActivity(intent);
-					}
-				}
-				if(position == 4)
-				{
-					vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					
-					getAccountsByRule(params);
-					DrAccountlist = new ArrayList<String>();
-					DrAccountlist.addAll(Accountlist);
-					
-					Object[] params1 = new Object[]{"Cr"};
-					getAccountsByRule(params1);
-					CrAccountlist = new ArrayList<String>();
-					CrAccountlist.addAll(Accountlist);
-					
-					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						toastValidationMessage();
-					}
-					else{
-						Intent intent = new Intent(context, transaction_tab.class);
-						// To pass on the value to the next page
-						startActivity(intent);
-					}
-				}
-				if(position == 5)
-				{
-					vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					
-					getAccountsByRule(params);
-					DrAccountlist = new ArrayList<String>();
-					DrAccountlist.addAll(Accountlist);
-					
-					Object[] params1 = new Object[]{"Cr"};
-					getAccountsByRule(params1);
-					CrAccountlist = new ArrayList<String>();
-					CrAccountlist.addAll(Accountlist);
-					
-					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						toastValidationMessage();
-					}
-					else{
-						Intent intent = new Intent(context, transaction_tab.class);
-						// To pass on the value to the next page
-						startActivity(intent);
-					}
-				}
-				if(position == 6)
-				{
-					vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					
-					getAccountsByRule(params);
-					DrAccountlist = new ArrayList<String>();
-					DrAccountlist.addAll(Accountlist);
-					
-					Object[] params1 = new Object[]{"Cr"};
-					getAccountsByRule(params1);
-					CrAccountlist = new ArrayList<String>();
-					CrAccountlist.addAll(Accountlist);
-					
-					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						toastValidationMessage();
-					}
-					else{
-						Intent intent = new Intent(context, transaction_tab.class);
-						// To pass on the value to the next page
-						startActivity(intent);
-					}
-				}
-				if(position == 7)
-				{
-					vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					
-					getAccountsByRule(params);
-					DrAccountlist = new ArrayList<String>();
-					DrAccountlist.addAll(Accountlist);
-					
-					Object[] params1 = new Object[]{"Cr"};
-					getAccountsByRule(params1);
-					CrAccountlist = new ArrayList<String>();
-					CrAccountlist.addAll(Accountlist);
-					
-					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						toastValidationMessage();
-					}
-					else{
-						Intent intent = new Intent(context, transaction_tab.class);
-						// To pass on the value to the next page
-						startActivity(intent);
-					}
-				}
-				if(position == 8)
-				{
-					vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					
-					getAccountsByRule(params);
-					DrAccountlist = new ArrayList<String>();
-					DrAccountlist.addAll(Accountlist);
-					
-					Object[] params1 = new Object[]{"Cr"};
-					getAccountsByRule(params1);
-					CrAccountlist = new ArrayList<String>();
-					CrAccountlist.addAll(Accountlist);
-					
-					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						toastValidationMessage();
-					}
-					else{
-						Intent intent = new Intent(context, transaction_tab.class);
-						// To pass on the value to the next page
-						startActivity(intent);
-					}
-				}
-				if(position == 9)
-				{
-					vouchertypeflag  = parent.getItemAtPosition(position).toString();
-					
-					getAccountsByRule(params);
-					DrAccountlist = new ArrayList<String>();
-					DrAccountlist.addAll(Accountlist);
-					
-					Object[] params1 = new Object[]{"Cr"};
-					getAccountsByRule(params1);
-					CrAccountlist = new ArrayList<String>();
-					CrAccountlist.addAll(Accountlist);
-					
-					if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-						toastValidationMessage();
-					}
-					else{
-						Intent intent = new Intent(context, transaction_tab.class);
-						// To pass on the value to the next page
-						startActivity(intent);
-					}
-				}
+				Accountlist = new ArrayList<String>();
+				String vtf = parent.getItemAtPosition(position).toString(); //voucher type flag:vtf
+				IntentToVoucher(vtf,params);	
 				
 			}
-
-			public void toastValidationMessage() {
-				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		        builder.setMessage("At lease 2 accounts require to enter transaction, please create account!")
-		                .setCancelable(false)
-		                .setPositiveButton("Ok",
-		                        new DialogInterface.OnClickListener() {
-		                            public void onClick(DialogInterface dialog, int id) {
-		                            	
-		                            }
-		                        });
-		                
-		        AlertDialog alert = builder.create();
-		        alert.show();
-				
-			} 
 		});
 	}
 	
-	private void getAccountsByRule(Object[] DrCrFlag) {
-		if("Contra".equals(vouchertypeflag)){
-			voucherAccounts = (Object[]) transaction.getContraAccounts(client_id);
-		}
-		else if("Journal".equals(vouchertypeflag)){
-			voucherAccounts = (Object[]) transaction.getJournalAccounts(client_id);
-		}
-		else if("Receipt".equals(vouchertypeflag)){
+	
+	void IntentToVoucher(String vtf, Object[] params) {
+		//for "Contra" voucher
+		if(vtf.equalsIgnoreCase("Contra"))
+		{
+			contraJournal(vtf, params);
 			
-			voucherAccounts = (Object[]) transaction.getReceivableAccounts(DrCrFlag,client_id);
 		}
-		else if("Payment".equals(vouchertypeflag)){
+		if(vtf.equalsIgnoreCase("Journal"))
+		{
 			
-			voucherAccounts = (Object[]) transaction.getPaymentAccounts(DrCrFlag,client_id);
+			contraJournal(vtf, params);
 		}
-		else if("Debit Note".equalsIgnoreCase(vouchertypeflag)){
+		if(vtf.equalsIgnoreCase("Payment"))
+		{
 			
-			voucherAccounts = (Object[]) transaction.getDebitNoteAccounts(DrCrFlag,client_id);
+			exceptContraJournal(vtf, params);
 		}
-		else if("Credit Note".equalsIgnoreCase(vouchertypeflag)){
+		if(vtf.equalsIgnoreCase("Receipt"))
+		{
+			exceptContraJournal(vtf, params);
+		}
+		if(vtf.equalsIgnoreCase("Credit Note"))
+		{
+			exceptContraJournal(vtf, params);
+		}
+		if(vtf.equalsIgnoreCase("Debit Note"))
+		{
+			exceptContraJournal(vtf, params);
+		}
+		if(vtf.equalsIgnoreCase("Sales"))
+		{
+			exceptContraJournal(vtf, params);
+		}
+		if(vtf.equalsIgnoreCase("Sales Return"))
+		{
+			exceptContraJournal(vtf, params);
+		}
+		if(vtf.equalsIgnoreCase("Purchase"))
+		{
+			exceptContraJournal(vtf, params);
 			
-			voucherAccounts = (Object[]) transaction.getCreditNoteAccounts(DrCrFlag,client_id);
 		}
-		else if("Sales".equals(vouchertypeflag)){
-			
-			voucherAccounts = (Object[]) transaction.getSalesAccounts(DrCrFlag,client_id);
+		if(vtf.equalsIgnoreCase("Purchase Return"))
+		{
+			exceptContraJournal(vtf, params);
 		}
-		else if("Purchase".equals(vouchertypeflag)){
-			
-			voucherAccounts = (Object[]) transaction.getPurchaseAccounts(DrCrFlag,client_id);
-		}
-		else if("Sales Return".equalsIgnoreCase(vouchertypeflag)){
-			
-			voucherAccounts = (Object[]) transaction.getSalesReturnAccounts(DrCrFlag,client_id);
-		}
-		else if("Purchase Return".equalsIgnoreCase(vouchertypeflag)){
-			
-			voucherAccounts = (Object[]) transaction.getPurchaseReturnAccounts(DrCrFlag,client_id);
-		}
-		Accountlist = new ArrayList<String>();
-		for(Object ac : voucherAccounts)
-		{	
-			Accountlist.add((String) ac);
-		}	
 		
 	}
 
+	 void exceptContraJournal(String vtf, Object[] params) {
+		vouchertypeflag  = vtf;				
+		m.getAccountsByRule(params,vouchertypeflag, context);
+		DrAccountlist = new ArrayList<String>();
+		DrAccountlist.addAll(Accountlist);
+		
+		CrAccountlist = new ArrayList<String>();
+		CrAccountlist.addAll(Accountlist);
+		
+		if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
+			m.toastValidationMessage(voucherMenu.this);
+		}
+		else{
+			Intent intent = new Intent(context, transaction_tab.class);
+			// To pass on the value to the next page
+			startActivity(intent);
+		}
+		
+	}
+
+	 void contraJournal(String vtf, Object[] params) {
+		vouchertypeflag  = vtf;
+		m.getAccountsByRule(params, vouchertypeflag, context);
+		
+		Accountlist = module.Accountlist;
+		if(Accountlist.size() < 2){
+			m.toastValidationMessage(voucherMenu.this);
+		}
+		else{
+			
+			Intent intent = new Intent(context, transaction_tab.class);
+			// To pass on the value to the next page
+			startActivity(intent);
+		}
+		
+	}
+	
+	
 }
