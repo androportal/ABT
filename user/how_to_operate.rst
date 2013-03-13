@@ -2,7 +2,7 @@ How to Operate
 ============
 
 .. toctree::
-   :numbered:
+   :maxdepth: 5
    
    maintaining_organisation 
    Master_menu

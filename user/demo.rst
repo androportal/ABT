@@ -1,5 +1,5 @@
-demo
-=====
+Demo
+====
 
 .. toctree::
    :numbered:

@@ -513,6 +513,332 @@ Master menu
 
 * Below section of code builds ``Help`` dialog for the application.
 
+* The corresponding layout to build help dialog is as below,
+
+**File res/layout/help_popup.xml**
+
+	.. code-block:: xml
+	
+		<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent">
+		<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="match_parent"
+		    android:layout_height="fill_parent" >
+		
+		    <LinearLayout
+			android:layout_width="fill_parent"
+
+			android:layout_height="fill_parent"
+			android:orientation="vertical"
+			android:id="@+id/layout_root" >
+
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF" 
+			    android:textSize="16dp"
+			    android:text="@string/help_para1"/>
+		
+			<ImageView
+			   android:focusable="false"
+			   android:layout_width="320dp"
+			   android:layout_height="190dp"
+			   android:layout_gravity="center"
+			   android:background="@drawable/home_page"/>
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="@string/help_para2" />
+		
+			<ImageView
+			   android:focusable="false"
+			   android:layout_width="320dp"
+			   android:layout_height="190dp"
+			   android:layout_gravity="center"
+			   android:background="@drawable/create_org"/>
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="@string/help_para3" />
+
+			<ImageView
+			   android:focusable="false"
+			   android:layout_width="320dp"
+			   android:layout_height="190dp"
+			   android:layout_gravity="center"
+			   android:background="@drawable/select_org"/>
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="@string/help_para4" />
+		
+			<ImageView
+			   android:focusable="false"
+			   android:layout_width="320dp"
+			   android:layout_height="190dp"
+			   android:layout_gravity="center"
+			   android:background="@drawable/org_details"/>
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="@string/help_para5" />
+		
+			<ImageView
+			   android:focusable="false"
+			   android:layout_width="320dp"
+			   android:layout_height="190dp"
+			   android:layout_gravity="center"
+			   android:background="@drawable/pref"/>
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="@string/help_para6" />
+		
+			<ImageView
+			   android:focusable="false"
+			   android:layout_width="320dp"
+			   android:layout_height="190dp"
+			   android:layout_gravity="center"
+			   android:background="@drawable/create_account"/>
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="@string/help_para7" />
+		
+			<ImageView
+			   android:focusable="false"
+			   android:layout_width="320dp"
+			   android:layout_height="190dp"
+			   android:layout_gravity="center"
+			   android:background="@drawable/master_menu"/>
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="@string/help_para8" />
+		
+			<ImageView
+			   android:focusable="false"
+			   android:layout_width="320dp"
+			   android:layout_height="190dp"
+			   android:layout_gravity="center"
+			   android:background="@drawable/create_vouvher"/>
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center"
+
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="Figure [a]" />
+		
+		       
+			<ImageView
+			   android:focusable="false"
+
+			   android:layout_width="wrap_content"
+			   android:layout_height="wrap_content"
+			   android:layout_gravity="center"
+			   android:background="@drawable/index"/>
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center"
+
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="Figure [b]" />
+		
+			 <ImageView
+			   android:focusable="false"
+			   android:layout_width="320dp"
+			   android:layout_height="190dp"
+			   android:layout_gravity="center"
+			   android:background="@drawable/serach_voucher"/>
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center"
+
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="Figure [c]" />
+		
+			<ImageView
+			   android:focusable="false"
+
+			   android:layout_width="wrap_content"
+			   android:layout_height="wrap_content"
+			   android:layout_gravity="center"
+			   android:background="@drawable/ic_action_search"/>
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center"
+
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="Figure [d]" />
+		
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="@string/help_para9" />
+		
+			<ImageView
+			   android:focusable="false"
+			   android:layout_width="320dp"
+			   android:layout_height="190dp"
+			   android:layout_gravity="center"
+			   android:background="@drawable/ledger"/>
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center"
+
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="Figure [e]" />
+		
+			<ImageView
+			   android:focusable="false"
+			   android:layout_width="320dp"
+			   android:layout_height="190dp"
+			   android:layout_gravity="center"
+			   android:background="@drawable/trial_balance"/>
+		
+			<TextView
+
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center"
+
+			    android:paddingLeft="10dp"
+			    android:paddingRight="10dp"
+			    android:paddingBottom="15dp"
+			    android:singleLine="false"
+			    android:textColor="#FFFFFF"
+			    android:textSize="16dp"
+			    android:text="Figure [f]" />
+		
+		       
+		
+		    </LinearLayout>
+		</ScrollView>
+		<CheckBox
+			    android:id="@+id/cbHelp"
+			    android:layout_width="196dp"
+			    android:layout_height="wrap_content"
+			    android:text="Don&apos;t Ask Me Later" 
+			    android:layout_alignParentBottom="true"
+			    />
+		</RelativeLayout>
+
+.. image:: images/help.png
+	   :name: ABT main page
+	   :align: center
+
+* With reference to above dialog, the associated java code to build the help dialog is as follows,
+
 	.. code-block:: java
 
 		//for help
@@ -539,9 +865,15 @@ Master menu
 			help_dialog.setCancelable(true);
 		}
 
-* It builds ``About`` page dialog.
+* Lets builds ``About`` page dialog.
 
-.. code-block:: java
+.. image:: images/about.png
+	   :name: ABT main page
+	   :align: center
+
+* Associated java code is as follows,
+
+	.. code-block:: java
 
 		//for about
 		if(position == 6){
@@ -576,9 +908,9 @@ Master menu
 			lp.width = 600;
 
 			about_dialog.getWindow().setAttributes(lp);
-		}
-	    } 
-	});
-     }
+			}
+		    } 
+		});
+	     }
 
 

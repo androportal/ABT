@@ -782,7 +782,7 @@ Create new organisation
 	PAN no. 		
 	======================  =================
 	
-* These fields are included in * The layout of list items is included in ``res/layout/org_details.xml``.
+* These fields are included in ``res/layout/org_details.xml``.
 
 **File res/layout/org_details.xml**
 

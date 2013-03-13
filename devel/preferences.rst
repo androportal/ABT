@@ -625,7 +625,7 @@ Edit organisation details
 
 * On clicking this option, It will take us to the edit organisation detail page.
 
-* This page will display all the fields which are filled before and unfilled fields.
+* This page will display previously saved organisation information.
 
 * User can edit these fields if required.
 
