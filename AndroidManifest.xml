@@ -160,6 +160,12 @@
       		android:name=".addProject"
       		android:screenOrientation="landscape" >
        </activity>
+       
+       <activity
+      		android:label="ABT Help"
+      		android:name=".Help"
+      		android:screenOrientation="landscape" >
+       </activity>
     </application>
     
 

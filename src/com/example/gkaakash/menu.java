@@ -326,7 +326,7 @@ public class menu extends ListActivity{
                 
                 //for help
                 if(position == 5){
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                	/*LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                     final View layout = inflater.inflate(R.layout.help_popup,
                             (ViewGroup) findViewById(R.id.layout_root));
             
@@ -343,7 +343,11 @@ public class menu extends ListActivity{
                     lp.copyFrom(help_dialog.getWindow().getAttributes());
                     lp.width = 700;
                     help_dialog.getWindow().setAttributes(lp);
-                    help_dialog.setCancelable(true);
+                    help_dialog.setCancelable(true);*/
+                    
+                    Intent intent = new Intent(context, Help.class);
+					// To pass on the value to the next page
+					startActivity(intent);
                 }
                 
                 //for about
