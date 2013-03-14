@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class voucherMenu extends ListActivity {
@@ -119,6 +120,7 @@ public class voucherMenu extends ListActivity {
 	 void exceptContraJournal(String vtf, Object[] params) {
 		vouchertypeflag  = vtf;				
 		m.getAccountsByRule(params,vouchertypeflag, context);
+		Accountlist = module.Accountlist;
 		DrAccountlist = new ArrayList<String>();
 		DrAccountlist.addAll(Accountlist);
 		
