@@ -62,7 +62,8 @@ public class Help extends Activity {
 		});
 
 		// address of html file in ch root
-		engine.loadUrl("file:///data/local/abt/var/www/html/doc/_build/html/index.html");
+		//engine.loadUrl("http://10.102.152.127/html/doc/_build/html/index.html"); //uncomment for remote server
+		engine.loadUrl("file:///data/local/abt/var/www/html/doc/_build/html/index.html"); //comment for remote server
 		// enabling all pop ups in web view
 		engine.setWebChromeClient(new WebChromeClient()
 

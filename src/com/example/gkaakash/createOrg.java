@@ -52,12 +52,15 @@ public class createOrg extends MainActivity {
 		super.onCreate(savedInstanceState);
 		//Calling create_org.xml
 		setContentView(R.layout.create_org);
-		client_id= Startup.getClient_id();
 		
 		help_flag = new File("/data/data/com.example.gkaakash/files/help_flag.txt");
 		if(!help_flag.exists()){
-			MainActivity.no_dailog = true; //comment this line if running this app on emulator
-			MainActivity.help_dialog.dismiss(); //comment this line if running this app on emulator
+			/*
+			 * comment below lines if running this app on emulator and 
+			 * also if running on device using remote server ie. when installer is not in use.
+			 */
+			MainActivity.no_dailog = true; 
+			MainActivity.help_dialog.dismiss();
 		}
 		
 		

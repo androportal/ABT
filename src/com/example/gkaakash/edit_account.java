@@ -122,6 +122,7 @@ private void editAccount() {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view,final int position, long id) {
+			
 			final CharSequence[] items = { "Edit account", "Delete account" };
 			//creating a dialog box for popup
 	        AlertDialog.Builder builder = new AlertDialog.Builder(edit_account.this);
@@ -130,10 +131,40 @@ private void editAccount() {
 	        //adding items
 	        builder.setItems(items, new DialogInterface.OnClickListener() {
 	        public void onClick(DialogInterface which, int pos) {
+	        	if(accCodeCheckFlag.equals("automatic")){
+	        		  flag = 1;
+	        	  }
+	        	  Object[] params1 = new Object[]{List.getItemAtPosition(position).toString(),flag,pos};
+	        	  System.out.println(List.getItemAtPosition(position));
+	    		  final String accountDeleteValue =  (String) account.deleteAccount(params1,client_id);
+	    		  String message = "";
+	    		  System.out.println("value"+accountDeleteValue);
+	    		  
+	    		  if("account deleted".equals(accountDeleteValue)){
+	  			  message = "Account '"+List.getItemAtPosition(position).toString()+"' has been deleted successfully";
+	  		  }
+	    		  else if("account can be edited".equals(accountDeleteValue)){
+	  			  message = "edit";
+	  		  }
+	  		  else if("has both opening balance and trasaction".equals(accountDeleteValue)){
+	  			  message = "' has both opening balance and transaction, it can't be";
+	  		  }
+	  		  else if("has opening balance".equals(accountDeleteValue)){
+	  			  message = "' has opening balance, it can't be";
+	  		  }
+	  		  else if("has transaction".equals(accountDeleteValue)){
+	  			  message = "' has transaction, it can't be";
+	  		  }
+	    		  
+	    		  final String msg = message;
+	        	
+	        	
+	        	
 	        	//code for the actions to be performed on clicking popup item goes here ...
 	            switch (pos) {
 	                case 0:
                 			{
+                				
                 			//Toast.makeText(edit_account.this,"Clicked on:"+items[pos],Toast.LENGTH_SHORT).show();
                       		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                       	    View layout = inflater.inflate(R.layout.edit_account, (ViewGroup) findViewById(R.id.layout_root));
@@ -171,6 +202,8 @@ private void editAccount() {
 	              	        	accountDetailList.add(a.toString());
 	              	          
 	              	        }
+	              	        
+	              	      
               	            //account name
               	            final Button bEditAccountName = (Button)layout.findViewById(R.id.bEditAccountName);
               	            final TextView tvEditAccountName = (TextView) layout.findViewById(R.id.tvEditAccountName);
@@ -199,6 +232,8 @@ private void editAccount() {
 	            	        etEditOpBal.setVisibility(EditText.GONE);
 	            	        
 	            	        
+	            	        
+	            	        
 	            	        if("Direct Income".equals(accountDetailList.get(1).toString()) 
 									|| "Direct Expense".equals(accountDetailList.get(1).toString()) 
 									|| "Indirect Income".equals(accountDetailList.get(1).toString()) 
@@ -220,6 +255,23 @@ private void editAccount() {
 		              	        });   
 	            	        }
 	            	        
+	            	        String dialog_button = "Save";
+	            	        /*
+	            	         * if account has opening balance or transaction or both it can not be deleted
+	            	         * so make textview non-editable and edit button invisible
+	            	         * and set warning at the top
+	            	         */
+	            	        if(!"edit".equals(msg)){
+	              				tvEditAccountName.setClickable(false);
+	              				tvEditOpBal.setClickable(false);
+	              				bEditAccountName.setVisibility(Button.GONE);
+	              				bEditOpBal.setVisibility(Button.GONE);
+	              				dialog_button = "Ok";
+	              				TextView tvwarning = (TextView) layout.findViewById(R.id.tvwarning);
+	              				tvwarning.setVisibility(TextView.VISIBLE);
+	              				tvwarning.setText("Account '"+oldAccountName+msg+" edited.");
+	          				}
+	            	        
 	            	        
               	            //set account code
               	            final TextView tvEditAccountCode = (TextView) layout.findViewById(R.id.tvEditAccountCode);
@@ -234,7 +286,7 @@ private void editAccount() {
               	            tvEditSubgroupName.setText(accountDetailList.get(2).toString());
               	            
                       	            
-              	            builder.setPositiveButton("Save", new OnClickListener() {
+              	            builder.setPositiveButton(dialog_button, new OnClickListener() {
 								
 								public void onClick(DialogInterface dialog, int which) {
 									
@@ -292,46 +344,49 @@ private void editAccount() {
 		                                
 		                                }else
 		                                {
-		                                	Object[] params;
-											if("Direct Income".equals(accountDetailList.get(1).toString()) 
-													|| "Direct Expense".equals(accountDetailList.get(1).toString()) 
-													|| "Indirect Income".equals(accountDetailList.get(1).toString()) 
-													||  "Indirect Expense".equals(accountDetailList.get(1).toString())){
-												params = new Object[]{newAccountName,accountcode,groupname};
-		                      	    			
-											}
-											else{
-												params = new Object[]{newAccountName,accountcode,groupname,newOpBal};
-											}
-											account.editAccount(params,client_id);
-											
-											//set alert messages after account edit
-											if(!newAccountName.equalsIgnoreCase(oldAccountName) &&
-													!newOpBal.equals(oldOpBal)){
-												
-												String message = "Account name has been changed from '"+
-														oldAccountName+"' to '"+ newAccountName+
-														"' and opening balance has been changed from '"+ 
-														oldOpBal + "' to '"+ newOpBal+"'";
-												toastValidationMessage(message);
-											}
-											else if(!newAccountName.equalsIgnoreCase(oldAccountName)){
-												String message = "Account name has been changed from '"+
-														oldAccountName+"' to '"+ newAccountName+"'";
-												toastValidationMessage(message);
-											}
-											else if(!newOpBal.equals(oldOpBal)){
-												String message = "Opening balance has been changed from '"+
-														oldOpBal+"' to '"+ newOpBal+"'";
-												toastValidationMessage(message);
-											}
-											else{
-												String message = "No changes made";
-												toastValidationMessage(message);
-											}
-											
-											setaccountlist();
-		                                	
+			                        		  
+			                        			  Object[] params;
+													if("Direct Income".equals(accountDetailList.get(1).toString()) 
+															|| "Direct Expense".equals(accountDetailList.get(1).toString()) 
+															|| "Indirect Income".equals(accountDetailList.get(1).toString()) 
+															||  "Indirect Expense".equals(accountDetailList.get(1).toString())){
+														params = new Object[]{newAccountName,accountcode,groupname};
+				                      	    			
+													} 
+													else{
+														params = new Object[]{newAccountName,accountcode,groupname,newOpBal};
+													}
+													account.editAccount(params,client_id);
+													
+													//set alert messages after account edit
+													if(!newAccountName.equalsIgnoreCase(oldAccountName) &&
+															!newOpBal.equals(oldOpBal)){
+														
+														String message = "Account name has been changed from '"+
+																oldAccountName+"' to '"+ newAccountName+
+																"' and opening balance has been changed from '"+ 
+																oldOpBal + "' to '"+ newOpBal+"'";
+														toastValidationMessage(message);
+													}
+													else if(!newAccountName.equalsIgnoreCase(oldAccountName)){
+														String message = "Account name has been changed from '"+
+																oldAccountName+"' to '"+ newAccountName+"'";
+														toastValidationMessage(message);
+													}
+													else if(!newOpBal.equals(oldOpBal)){
+														String message = "Opening balance has been changed from '"+
+																oldOpBal+"' to '"+ newOpBal+"'";
+														toastValidationMessage(message);
+													}
+													else{
+														if("edit".equals(msg)){
+															String message = "No changes made";
+															toastValidationMessage(message);
+								          				}
+													}
+													
+													setaccountlist();
+			                        			  
 		                                }
 											
 									}
@@ -360,32 +415,14 @@ private void editAccount() {
                 		break;
 	                case 1:
 	                              {
-	                            	  if(accCodeCheckFlag.equals("automatic")){
-	                            		  flag = 1;
-	                            	  }
-	                            	  Object[] params = new Object[]{List.getItemAtPosition(position).toString(),flag};
-	                            	  System.out.println(List.getItemAtPosition(position));
-	                        		  String accountDeleteValue =  (String) account.deleteAccount(params,client_id);
+	                            	  
 	                        		  System.out.println("value"+accountDeleteValue);
 	                        		  if("account deleted".equals(accountDeleteValue)){
-	                        			  String message = "Account '"+List.getItemAtPosition(position).toString()+"' has been deleted successfully";
-	                        			  toastValidationMessage(message);
+	                        			  toastValidationMessage(msg);
 	                        			  setaccountlist();
 	                        		  }
-	                        		  else if("has both opening balance and trasaction".equals(accountDeleteValue)){
-	                        			  String message = "Account '"+List.getItemAtPosition(position).toString()
-	                        					  			+"' has both opening balance and transaction, it can not be deleted";
-	                        			  toastValidationMessage(message); 
-	                        		  }
-	                        		  else if("has opening balance".equals(accountDeleteValue)){
-	                        			  String message = "Account '"+List.getItemAtPosition(position).toString()
-	              					  			+"' has opening balance, it can not be deleted";
-	                        			  toastValidationMessage(message);
-	                        		  }
-	                        		  else if("has transaction".equals(accountDeleteValue)){
-	                        			  String message = "Account '"+List.getItemAtPosition(position).toString()
-	                					  					+"' has transaction, it can not be deleted";
-	                          			  toastValidationMessage(message);
+	                        		  else {
+	                          			  toastValidationMessage("Account '"+List.getItemAtPosition(position).toString()+msg+" deleted.");
 	                        		  }
 	                      }break;
 	            }

@@ -955,8 +955,9 @@ public class createVoucher extends Activity {
 			testAmountTally();
 			
 			String refNumber = etRefNumber.getText().toString();
+			String strnarration = etnarration.getText().toString();
 			
-			if(totalDr == totalCr && !"".equals(refNumber)){
+			if(totalDr == totalCr && !"".equals(refNumber) && !"".equals(strnarration)){
 				if(totalDr == 0){
 					toastValidationMessage("Please enter amount");
 				}
@@ -1156,6 +1157,9 @@ public class createVoucher extends Activity {
 			}
 			else if("".equals(refNumber)){
 				toastValidationMessage("Please enter voucher reference number");
+			}
+			else if ("".equals(strnarration)) {
+				toastValidationMessage("Please enter narration");
 			}
 		}
 

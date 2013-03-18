@@ -627,6 +627,8 @@ public class ledger extends Activity {
 	void exceptContraJournal(String vtf, Object[] params) {
 		vouchertypeflag = vtf;
 		m.getAccountsByRule(params, vouchertypeflag, context);
+		Accountlist = module.Accountlist;
+		
 		DrAccountlist = new ArrayList<String>();
 		DrAccountlist.addAll(Accountlist);
 
