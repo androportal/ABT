@@ -20,7 +20,7 @@ public class Report {
 	private Object[] cashFlowStatement;
 	private Object[] getBalancesheetDisplay;
 	private Object[] getLedgerForBankRecon;
-	private String setBankReconciliationResult;
+	private String setBankReconciliationResult,rollover;
 	private Boolean result;
 	private Object[] calculateBalance;
 	
@@ -275,9 +275,22 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 		} catch (XMLRPCException e) {
 			
 			e.printStackTrace();
-		}
+		} 
 		return calculateBalance;
 	}
 	
-	
+	public String rollOver(Object[] params,Object client_id) {
+		
+		try { 
+			
+			System.out.println("data:"+params[0]+""+params[1]+""+params[2]+""+params[3]);
+			rollover = (String) conn.getClient().call("rollover",params,client_id);
+			//System.out.println("data:"+params[0]+""+params[1]+""+params[2]+""+params[3]);
+			System.out.println("nnn:"+rollover);
+		} catch (XMLRPCException e) {
+			System.out.println("nnn:"+rollover);
+			e.printStackTrace();
+		}
+		return rollover;
+	}
 }

@@ -40,24 +40,22 @@ public class Account {
 	}
 	/***
 	 * setAccount method to save account call xmlrpc_setAccount from xmlrpc_account.py
-	 * @param params will contain accCodeCheckFlag,selGrpName,selSubGrpName,new subgrp name,account name,account code, and opening balance
+	 * @param params will contain accCodeCheckFlag,selGrpName,selSubGrpName,new subgroup name,account name,account code, and opening balance
 	 * @param client_id
 	 * @return string
 	 */
 	public String setAccount(Object[] params,Object client_id) {
 		
-		try {
+		try {      
 			
 			if("manually".equals(params[0]))
 			{
-			 	accparams = new Object[]{params[1],params[2],params[3],params[4],params[0],params[6],params[6],params[5]};
+			 	accparams = new Object[]{params[1],params[2],params[3],params[4],params[0],params[6],params[5]};
 			}	
 			else{
-				accparams = new Object[]{params[1],params[2],params[3],params[4],params[0],params[6],params[6],""};
+				accparams = new Object[]{params[1],params[2],params[3],params[4],params[0],params[6],""};
 			}
-				
 			setaccount = (String)conn.getClient().call("account.setAccount",accparams,client_id);	
-			
 			
 		} catch (XMLRPCException e) {
 			

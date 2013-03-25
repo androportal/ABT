@@ -15,6 +15,7 @@ import java.util.List;
 import com.gkaakash.controller.Account;
 import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Preferences;
+import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
 
 import android.R.drawable;
@@ -68,6 +69,7 @@ public class menu extends ListActivity{
     private Account account;
     private Preferences preferences;
     private Organisation organisation;
+    private Report report;
     AlertDialog help_dialog;
     static String financialFromDate;
 	static String financialToDate;
@@ -79,13 +81,14 @@ public class menu extends ListActivity{
 	static boolean cleared_tran_flag;
 	static boolean narration_flag;
 	static ArrayList<String> accdetailsList;
+	boolean reportmenuflag;
     static String orgtype;
-    String orgname;
+    String OrgName;
     
     //adding list items to the newly created menu list
     String[] menuOptions = new String[] { "Create account", "Transaction", "Reports",
-            "Preferences","Bank Reconciliation","Help","About" };
-
+            "Preferences","Bank Reconciliation","RollOver","Help","About" };
+  
     /*
     //adding options to the options menu
     @Override
@@ -95,7 +98,7 @@ public class menu extends ListActivity{
     menu.add(group1Id, FinishAlertDialog help_dialog;, Finish, "Finish");
     return super.onCreateOptionsMenu(menu); 
     }
-    
+     
     //code for the actions to be performed on clicking options menu goes here ...
      @Override
      public boolean onOptionsItemSelected(MenuItem item) {
@@ -116,12 +119,13 @@ public class menu extends ListActivity{
          startActivity(intent); 
      }
      
-    //on load...
+    //on load...getfinancialFromDate
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         account = new Account();
         preferences = new Preferences();
         organisation = new Organisation();
+        report = new Report();
         client_id= Startup.getClient_id();
         
         //get financial from and to date, split and store day, month and year in seperate variable
@@ -140,6 +144,20 @@ public class menu extends ListActivity{
 	   	//for two digit format date for dd and mm
 	  	mFormat= new DecimalFormat("00");
 	  	mFormat.setRoundingMode(RoundingMode.DOWN);
+	  	
+	    reportmenuflag = MainActivity.reportmenuflag;
+	    if (reportmenuflag == true) {
+
+			OrgName = createOrg.organisationName;
+			orgtype=createOrg.orgTypeFlag;
+
+		} else {
+			OrgName = selectOrg.selectedOrgName;
+			Object[] params = new Object[]{OrgName};
+	        orgtype = (String) organisation.getorgTypeByname(params, client_id);
+
+		}
+	    
         
         //calling menu.xml and adding menu list into the page
         setListAdapter(new ArrayAdapter<String>(this, R.layout.menu,menuOptions));
@@ -228,7 +246,7 @@ public class menu extends ListActivity{
                 	dialog.show();
      	
                 }
-                //bank reconcilition
+                //bank reconcilation 
                 if(position == 4){
                 	
                 	//call the getAllBankAccounts method to get all bank account names
@@ -323,9 +341,64 @@ public class menu extends ListActivity{
 					}
 					
                 }
+                // for rollOver
+                if(position == 5) 
+                {
+                	LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+					View layout = inflater.inflate(R.layout.roll_over, (ViewGroup) findViewById(R.id.layout_root));
+					//Building DatepPcker dialog
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					builder.setView(layout);
+					builder.setTitle("RollOver");	
+					
+					final DatePicker rollover_todate = (DatePicker) layout.findViewById(R.id.dpRollT0date); 
+					rollover_todate.init((Integer.parseInt(toyear)+1),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
+					
+					
+					builder.setPositiveButton("rollover",new  DialogInterface.OnClickListener(){ 
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+							
+						   validateDate(null, rollover_todate, "rollover");
+							
+						   if(validateDateFlag){
+							    Object[] rollover_params = new Object[]{OrgName,financialFromDate,financialToDate,givenToDateString,orgtype};
+						   		final String rollover =  report.rollOver(rollover_params, client_id);
+						   		
+						   		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+						        builder.setMessage("RollOver is done completely!!! You can proceed for  "+rollover+" to "+givenToDateString+" year")
+						                .setCancelable(false)
+						                .setPositiveButton("Ok",
+						                        new DialogInterface.OnClickListener() {
+						                            public void onClick(DialogInterface dialog, int id) {
+						                            	Intent intent = new Intent(context, selectOrg.class);
+														// To pass on the value to the next page
+														startActivity(intent);
+														
+						                            }
+						                        });
+						                
+						        AlertDialog alert = builder.create();
+						        alert.show();
+						   		
+							}
+							
+						}          
+						
+					});
+					builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							
+						}
+					});
+					dialog=builder.create();
+	        		dialog.show();
+                 
+                }
                 
                 //for help
-                if(position == 5){
+                if(position == 6){
                 	/*LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                     final View layout = inflater.inflate(R.layout.help_popup,
                             (ViewGroup) findViewById(R.id.layout_root));
@@ -351,7 +424,7 @@ public class menu extends ListActivity{
                 }
                 
                 //for about
-                if(position == 6){
+                if(position == 7){
                     AlertDialog about_dialog;
                     final SpannableString s = 
                             new SpannableString(context.getText(R.string.about_para));
@@ -442,7 +515,19 @@ public class menu extends ListActivity{
 	        		validateDateFlag = false;
 	        	}
 	    	}
-	    	else {
+	    	else if("rollover".equals(flag)) // check for the roll over flag
+	    	{   // if yes, then selected To-date must be after financial-todate and not equal financial-todate
+	    		if(cal4.after(cal2)&& !cal4.equals(cal2)) 
+	    		{
+	    			validateDateFlag = true;
+	    		}
+	    		else
+	    		{
+	    			String message = "Please enter proper date";
+	        		toastValidationMessage(message);
+	    			validateDateFlag = false;
+	    		}
+	    	}else{
 	    		if((cal4.after(cal1) && cal4.before(cal2)) || cal4.equals(cal1) || cal4.equals(cal2) ){
 					
 	    			validateDateFlag = true;

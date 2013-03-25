@@ -82,7 +82,7 @@ public class reportMenu extends ListActivity{
 	         orgname=selectOrg.selectedOrgName;
 	         //System.out.println("org name in selett "+orgname);
 	         Object[] params = new Object[]{orgname};
-	         orgtype = (String) organisation.getorgTypeByname(params, client_id);;
+	         orgtype = (String) organisation.getorgTypeByname(params, client_id);
 	         //System.out.println("org type in select"+orgtype);
        	}
         if("NGO".equals(orgtype))

@@ -11,7 +11,7 @@ public class CoreConnection {
 	 * default constructor  
 	 * connect to server
 	 * create xml_rpc client
-	*/
+	*/ 
 	public CoreConnection()  { 
 		try {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -52,14 +52,10 @@ public class CoreConnection {
 	 * setter method , can set url
 	 * @param url
 	 */
-
-	
 	public void setUrl(URL url) {
 		this.url = url;
 	}
-	
-	
-	
+	 
 }
 
 
