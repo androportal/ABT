@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ActionBar.LayoutParams;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -64,6 +65,7 @@ public class trialBalance extends Activity{
     String financialFromDate,trialbalType;
 	String financialToDate,OrgName,date_format,OrgPeriod ,TrialPeriod,sFilename;
     String[] pdf_params;
+    static String acc_name;
     public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -78,15 +80,14 @@ public class trialBalance extends Activity{
 	    	floating_heading_table = (TableLayout)findViewById(R.id.floating_heading_table);
 	    	floating_heading_table.setVisibility(TableLayout.GONE);
 	    	sv = (ScrollView)findViewById(R.id.ScrollTrial);
-	    	 if(reportmenuflag==true){
-	    	    	
-		    		OrgName = createOrg.organisationName;
-		    		
-	           }
-	           else {
-	        	    OrgName= selectOrg.selectedOrgName;
-	         
-	           }
+			if (reportmenuflag == true) {
+
+				OrgName = createOrg.organisationName;
+
+			} else {
+				OrgName = selectOrg.selectedOrgName;
+
+			}
 		   
 	    	/*
 	    	 * get financial from and to date from startup page
@@ -205,7 +206,7 @@ public class trialBalance extends Activity{
 		   	//System.out.println("m in exte err"+e);
 		   	AlertDialog.Builder builder = new AlertDialog.Builder(trialBalance.this);
 		   	
-		   	builder.setMessage("Please try again")
+		   	builder.setMessage("Please try again"+e.getLocalizedMessage())
 	                  .setCancelable(false)
 	                  .setPositiveButton("Ok",
 	                          new DialogInterface.OnClickListener() {
@@ -250,11 +251,12 @@ public class trialBalance extends Activity{
                    
                     for(int k=0;k<ColumnNameList.length;k++){
                         /** Creating a TextView to add to the row **/
-                        addRow(ColumnNameList[k]);
+                        addRow(ColumnNameList[k],k);
                         label.setBackgroundColor(Color.parseColor("#348017"));
                         label.setGravity(Gravity.CENTER);
                         LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(k);
 			            label.setWidth(l.getWidth());
+			            tr.setClickable(false);
                     }
                      
                      // Add the TableRow to the TableLayout
@@ -346,7 +348,7 @@ public class trialBalance extends Activity{
            
             for(int j=0;j<columnValue.size();j++){
                 /** Creating a TextView to add to the row **/
-                addRow(columnValue.get(j));   
+                addRow(columnValue.get(j),i);   
                 label.setBackgroundColor(Color.BLACK);
                 /*
                  * set right aligned gravity for amount and for others set center gravity
@@ -358,16 +360,16 @@ public class trialBalance extends Activity{
                         if(columnValue.get(j).length() > 0){
                            	colValue=columnValue.get(j);
 	                        if(!"".equals(colValue)){
-		                        System.out.println("m in ");
+		                      //  System.out.println("m in ");
 		                        if(!"0.00".equals(colValue)){
 		                        	// for checking multiple \n and pattern matching
 			                        Pattern pattern = Pattern.compile("\\n");
 			                        Matcher matcher = pattern.matcher(colValue);
 			                        boolean found = matcher.find();
-			                        System.out.println("value:"+found);
+			                       // System.out.println("value:"+found);
 			                        if(found==false){
 				                        double amount = Double.parseDouble(colValue);	
-				                        System.out.println("A:"+amount);
+				                     //   System.out.println("A:"+amount);
 				                        label.setText(formatter.format(amount));
 			                        }else {
 			                        	label.setText(colValue);
@@ -393,13 +395,13 @@ public class trialBalance extends Activity{
 			                        Pattern pattern = Pattern.compile("\\n");
 			                        Matcher matcher = pattern.matcher(colValue);
 			                        boolean found = matcher.find();
-			                        System.out.println("value:"+found);
+			                      //  System.out.println("value:"+found);
 			                        if(j==3){
 			                            if(found==false){
 				                            String colValue1 = colValue.substring(0, colValue.length()-4);
 				                            String last_four_Char=colValue.substring(colValue.length() - 4); 
-				                            System.out.println("lst:"+last_four_Char);
-	                                        System.out.println("after cuting:"+colValue1);
+				                           // System.out.println("lst:"+last_four_Char);
+	                                        //System.out.println("after cuting:"+colValue1);
 	                                        double amount = Double.parseDouble(colValue1);
 	                                        label.setText(formatter.format(amount)+last_four_Char);
 			                            }else {
@@ -469,7 +471,7 @@ public class trialBalance extends Activity{
        
         for(int k=0;k<ColumnNameList.length;k++){
             /** Creating a TextView to add to the row **/
-            addRow(ColumnNameList[k]);
+            addRow(ColumnNameList[k],k);
             label.setBackgroundColor(Color.parseColor("#348017"));
             label.setGravity(Gravity.CENTER);
         }
@@ -482,7 +484,23 @@ public class trialBalance extends Activity{
     /*
      * this function add the value to the row
      */
-    void addRow(String param){
+	void addRow(String param, final int i) {
+		tr.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+//				Toast.makeText(trialBalance.this,
+//						"Hii" + trialBalGrid.get(i).get(1), Toast.LENGTH_SHORT)
+//						.show();
+				acc_name = trialBalGrid.get(i).get(1).toString();
+				Intent intent = new Intent(getApplicationContext(),
+						ledger.class);
+				intent.putExtra("flag", "from_trialBal");
+				startActivity(intent);
+
+			}
+    	});
         label = new TextView(this);
         label.setText(param);
         label.setTextSize(18);

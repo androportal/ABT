@@ -12,6 +12,7 @@ import java.util.List;
 import com.gkaakash.controller.PdfGenaretor;
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
+import com.gkaakash.controller.Transaction;
 import com.itextpdf.text.DocumentException;
 
 import android.R.integer;
@@ -20,7 +21,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -74,13 +77,25 @@ public class bankReconciliation extends Activity{
 	Boolean updown=false;
 	String getSelectedOrgType,OrgName, OrgPeriod,BankReconcilPeriod,sFilename ;
 	String[]pdf_params; 
+	final Context context = this;
+	static String vouchertypeflag;
+	static Object[] voucherAccounts;
+	private Transaction transaction;
+	static List<String> Accountlist;
+	static ArrayList<String> DrAccountlist;
+	static ArrayList<String> CrAccountlist;
+	static module m;
+	ArrayList<String> columnValue;
+	static String code;
+	static String name;
      
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
     	setContentView(R.layout.bank_recon_table);
        
-    	report = new Report();
+    	report = new Report(); 
+    	transaction = new Transaction();
     	client_id= Startup.getClient_id();
        
     	//customizing title bar
@@ -103,29 +118,29 @@ public class bankReconciliation extends Activity{
            
 		   	financialToDate=Startup.getFinancialToDate();
 		   	accountName = menu.selectedAccount;
-		   	fromDate = menu.givenfromDateString;
-		   	toDate = menu.givenToDateString;
-		   	cleared_tran_flag = menu.cleared_tran_flag; 
-		   	narration_flag = menu.narration_flag;
-       
-		   	tvaccontName = (TextView) findViewById( R.id.tvReconAccName );
-		   	tvfinancialFromDate = (TextView) findViewById( R.id.tvfinancialFromDate );
-		   	tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
-          
-            
-		   	tvaccontName.setText("Account name: "+accountName);
-		   	tvfinancialToDate.setText("Period : "+fromDate+" to "+toDate);
-              
-		   	Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,"No Project"};
-		   	Object[] flag = new Object[]{cleared_tran_flag};
-		    if(MainActivity.reportmenuflag==true){ 
-	   	    	
- 	    		OrgName = createOrg.organisationName;
-            }
-            else {
-         	    OrgName= selectOrg.selectedOrgName;
-          
-            }
+		  
+			fromDate = menu.givenfromDateString;
+			toDate = menu.givenToDateString;
+			cleared_tran_flag = menu.cleared_tran_flag;
+			narration_flag = menu.narration_flag;
+			tvaccontName = (TextView) findViewById(R.id.tvReconAccName);
+			tvfinancialFromDate = (TextView) findViewById(R.id.tvfinancialFromDate);
+			tvfinancialToDate = (TextView) findViewById(R.id.tvfinancialToDate);
+
+			tvaccontName.setText("Account name: " + accountName);
+			tvfinancialToDate.setText("Period : " + fromDate + " to " + toDate);
+
+			Object[] params = new Object[] { accountName, financialFromDate,
+					fromDate, toDate, "No Project" };
+			Object[] flag = new Object[] { cleared_tran_flag };
+			if (MainActivity.reportmenuflag == true) {
+
+				OrgName = createOrg.organisationName;
+
+			} else {
+				OrgName = selectOrg.selectedOrgName;
+
+			}
 		   	setTableAndStatement(params,flag);
             
 		   	setbankRecon();
@@ -222,6 +237,8 @@ public class bankReconciliation extends Activity{
           * because last 6 rows are bank recon statement, 
           * we are not adding these rows in table for now 
          */
+        
+        
          for(int k = 0; k < (bankReconResult.length-6); k++)
          {
              Object[] t = (Object[]) bankReconResult[k];
@@ -267,8 +284,7 @@ public class bankReconciliation extends Activity{
              bankReconResultList = new ArrayList<String>();
              for(int i=0;i<(t.length);i++)
              {
-            	 bankReconResultList.add((String) t[i].toString());
-             	
+            	 bankReconResultList.add((String) t[i].toString());  	 
              }
              statementGrid.add(bankReconResultList);
          }
@@ -277,7 +293,7 @@ public class bankReconciliation extends Activity{
          statementtable.removeAllViews();
          addTable(statementtable, "statement");
 	}
-
+ 
     
 	/*
 	 * this method allows to clear transactions and unclear the cleared transactions
@@ -428,6 +444,7 @@ public class bankReconciliation extends Activity{
 	            ArrayList<String> columnValue = new ArrayList<String>();
 	            
 	            tr = new TableRow(this);
+	            Integer lastIndex = bankReconGrid.size() - 1;
 	            //for last row(total debit and total credit)
 	            if(i==bankReconGrid.size()-1){
 	            	if(bankReconGrid.size() > 1){
@@ -436,19 +453,24 @@ public class bankReconciliation extends Activity{
 		                    /** Creating a TextView to add to the row **/
 		            		addRow(columnValue.get(k),k,k,0);
 		                    params.height = 45;
-		                        
+		                         
 		                    //hide vouchercode column
 		                    if(k==0){
 		                    	Ll.setVisibility(LinearLayout.GONE);//voucher code
 		                    }
-		                        
+		                         
 		                    if(k == 4 || k == 5){// dr and cr amount
 		                    	label.setGravity(Gravity.CENTER|Gravity.RIGHT);
 				            	}
-		                    else
+		                    else 
 		                    {
 		                    	label.setGravity(Gravity.CENTER);
 		                    }  
+		                    
+		                    if (lastIndex.equals(i)) {
+		    					tr.setClickable(false);
+		    					
+		    				}
 		            	}
 		            	//add empty field for narration
 		            	if(narration_flag==true){
@@ -592,6 +614,7 @@ public class bankReconciliation extends Activity{
         	addRow(ColumnNameList[k],k,k,0);
         	label.setBackgroundColor(Color.parseColor("#348017"));
         	label.setGravity(Gravity.CENTER);
+        	tr.setClickable(false);
         	params.height = LayoutParams.WRAP_CONTENT;
         	//hide vouchercode column
         	if(k==0){
@@ -604,12 +627,52 @@ public class bankReconciliation extends Activity{
         bankRecontable.addView(tr, new TableLayout.LayoutParams(
                 LayoutParams.FILL_PARENT,
                 LayoutParams.MATCH_PARENT));
-       
+        
     }
    
     
     
     void addRow(String param, final int i, final int j, final int flag){
+    	
+    	
+    	tr.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				MainActivity.nameflag = true;
+				name = "Voucher details";
+				MainActivity.searchFlag = true;
+			m = new module();
+			//Toast.makeText(bankReconciliation.this, "hi:"+bankReconGrid.get(i).get(0), Toast.LENGTH_SHORT).show();
+			Object[] params = new Object[] { "Dr" };
+		
+			code = bankReconGrid.get(i).get(0).toString();
+			
+			Object[] params1 = new Object[] { code };
+
+			Object[] VoucherMaster = (Object[]) transaction
+					.getVoucherMaster(params1, client_id);
+			// System.out.println("i am new object"+VoucherMaster);
+
+			ArrayList otherdetailsrow = new ArrayList();
+			for (Object row1 : VoucherMaster) {
+				Object a = (Object) row1;
+				otherdetailsrow.add(a.toString());// getting vouchermaster
+													// details
+
+			}
+			String vtf=otherdetailsrow.get(2).toString();
+			System.out.println("type:"+vtf);
+			IntentToVoucher(vtf,params);
+			Intent intent = new Intent(bankReconciliation.this, transaction_tab.class);
+			intent.putExtra("flag", "from_bankrecon");
+			// To pass on the value to the next page
+			startActivity(intent);
+			// Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+			}
+		});
+    	
+    	
         label = new TextView(this);
         label.setText(param);
         label.setTextSize(18);
@@ -973,6 +1036,91 @@ public class bankReconciliation extends Activity{
         
     }
     
+    void IntentToVoucher(String vtf, Object[] params) {
+		// for "Contra" voucher
+		if (vtf.equalsIgnoreCase("Contra")) {
+			contraJournal(vtf, params);
+
+		}
+		if (vtf.equalsIgnoreCase("Journal")) {
+
+			contraJournal(vtf, params);
+		}
+		if (vtf.equalsIgnoreCase("Payment")) {
+
+			exceptContraJournal(vtf, params);
+		}
+		if (vtf.equalsIgnoreCase("Receipt")) {
+			exceptContraJournal(vtf, params);
+		}
+		if (vtf.equalsIgnoreCase("Credit Note")) {
+			exceptContraJournal(vtf, params);
+		}
+		if (vtf.equalsIgnoreCase("Debit Note")) {
+			exceptContraJournal(vtf, params);
+		}
+		if (vtf.equalsIgnoreCase("Sales")) {
+			exceptContraJournal(vtf, params);
+		}
+		if (vtf.equalsIgnoreCase("Sales Return")) {
+			exceptContraJournal(vtf, params);
+		}
+		if (vtf.equalsIgnoreCase("Purchase")) {
+			exceptContraJournal(vtf, params);
+
+		}
+		if (vtf.equalsIgnoreCase("Purchase Return")) {
+			exceptContraJournal(vtf, params);
+		}
+
+	}
+
+	void exceptContraJournal(String vtf, Object[] params) {
+		vouchertypeflag  = vtf;				
+		
+		DrAccountlist = new ArrayList<String>();
+		Object[] paramDr = new Object[]{"Dr"};
+		m.getAccountsByRule(paramDr,vouchertypeflag, context);
+		Accountlist = module.Accountlist;
+		DrAccountlist.addAll(Accountlist);
+		
+		CrAccountlist = new ArrayList<String>();
+		Object[] paramCr = new Object[]{"Cr"};
+		m.getAccountsByRule(paramCr,vouchertypeflag, context);
+		Accountlist = module.Accountlist;
+		CrAccountlist.addAll(Accountlist);
+		System.out.println(vouchertypeflag);
+		System.out.println("CList:"+CrAccountlist);
+		
+		
+		if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
+			m.toastValidationMessage(bankReconciliation.this);
+		}
+		else{
+			Intent intent = new Intent(context, transaction_tab.class);
+			// To pass on the value to the next page
+			startActivity(intent);
+		}
+		
+
+	}
+
+	void contraJournal(String vtf, Object[] params) {
+		vouchertypeflag = vtf;
+		m.getAccountsByRule(params, vouchertypeflag, context);
+
+		Accountlist = module.Accountlist;
+		if (Accountlist.size() < 2) {
+			m.toastValidationMessage(bankReconciliation.this);
+		} else {
+			Intent intent = new Intent(context, transaction_tab.class);
+			// To pass on the value to the next page
+			startActivity(intent);
+		}
+ 
+	}
+    
+    
     /*
      * add bank reconciliation  statement rows in the second table
      */
@@ -1079,4 +1227,10 @@ public class bankReconciliation extends Activity{
 	       AlertDialog alert = builder.create();
 	       alert.show();	
 		} 
+    public void onBackPressed() {
+    	MainActivity.nameflag=false;
+    	Intent intent = new Intent(getApplicationContext(), menu.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+ }
 }

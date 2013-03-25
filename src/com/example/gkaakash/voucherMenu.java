@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class voucherMenu extends ListActivity {
@@ -119,13 +118,21 @@ public class voucherMenu extends ListActivity {
 
 	 void exceptContraJournal(String vtf, Object[] params) {
 		vouchertypeflag  = vtf;				
-		m.getAccountsByRule(params,vouchertypeflag, context);
-		Accountlist = module.Accountlist;
+		
 		DrAccountlist = new ArrayList<String>();
+		Object[] paramDr = new Object[]{"Dr"};
+		m.getAccountsByRule(paramDr,vouchertypeflag, context);
+		Accountlist = module.Accountlist;
 		DrAccountlist.addAll(Accountlist);
 		
 		CrAccountlist = new ArrayList<String>();
+		Object[] paramCr = new Object[]{"Cr"};
+		m.getAccountsByRule(paramCr,vouchertypeflag, context);
+		Accountlist = module.Accountlist;
 		CrAccountlist.addAll(Accountlist);
+		System.out.println(vouchertypeflag);
+		System.out.println("CList:"+CrAccountlist);
+		
 		
 		if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
 			m.toastValidationMessage(voucherMenu.this);

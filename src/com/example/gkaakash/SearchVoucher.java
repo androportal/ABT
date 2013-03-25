@@ -546,6 +546,7 @@ public class SearchVoucher extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		
 		if(searchVoucherBy == 1){ // by reference number
 			Object[] params = new Object[]{1,searchByRefNumber,financialFromDate,financialToDate,""};
 			getallvouchers(params);

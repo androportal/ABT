@@ -47,7 +47,6 @@ public class transaction_tab extends TabActivity {
 		}
 		else{    		
 			from_report_flag = extras.getString("flag");
-			name=ledger.name;
 		}
 
 		//tab name flag
@@ -62,8 +61,14 @@ public class transaction_tab extends TabActivity {
 			vouchertypeflag =  voucherMenu.vouchertypeflag;
 		} else if(from_report_flag.equalsIgnoreCase("from_ledger")){
 			vouchertypeflag =  ledger.vouchertypeflag;
+			name=ledger.name;
+		}else if(from_report_flag.equalsIgnoreCase("from_bankrecon")){
+			vouchertypeflag =  bankReconciliation.vouchertypeflag;
+			//System.out.println("v_type:"+vouchertypeflag);
+			name=bankReconciliation.name;
 
-		} 
+		}  
+		
 		label.setText("Menu >> Transaction >> " + vouchertypeflag);
 		final Button home = (Button) findViewById(R.id.btnhome);
 		home.setOnClickListener(new OnClickListener() {
@@ -90,10 +95,13 @@ public class transaction_tab extends TabActivity {
 		tab1.setTextColor(Color.WHITE);
 
 		if(nameflag==true){//setting tab name while editing and cloning
-			tab1.setText(name); 
+			tab1.setText(name);
+			//System.out.println("name:"+name);
+			System.out.println("In if");
 		}else {//setting tab name while creating account
 			tab1.setText("Create voucher");
 			tabname=(String) tab1.getText();
+			//System.out.println("In else");
 		} 
 		createspec.setIndicator(tab1);//assigning TextView to tab Indicator
 		Intent create = new Intent(this, createVoucher.class);

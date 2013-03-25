@@ -39,7 +39,7 @@ public class reportMenu extends ListActivity{
 	//adding report list items
 	
 	final Context context = this;
-	AlertDialog dialog;
+	static AlertDialog dialog;
 	DecimalFormat mFormat;
 	static String financialFromDate;
 	static String financialToDate;
@@ -82,7 +82,7 @@ public class reportMenu extends ListActivity{
 	         orgname=selectOrg.selectedOrgName;
 	         //System.out.println("org name in selett "+orgname);
 	         Object[] params = new Object[]{orgname};
-	         orgtype = (String) organisation.getorgTypeByname(params, client_id);
+	         orgtype = (String) organisation.getorgTypeByname(params, client_id);;
 	         //System.out.println("org type in select"+orgtype);
        	}
         if("NGO".equals(orgtype))

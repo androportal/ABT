@@ -104,6 +104,7 @@ public class ledger extends Activity {
 	static module m;
 	ArrayList<String> columnValue;
 	static String code;
+	static String get_extra_flag;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -129,11 +130,38 @@ public class ledger extends Activity {
 
 			financialFromDate = Startup.getfinancialFromDate();
 			financialToDate = Startup.getFinancialToDate();
-			accountName = reportMenu.selectedAccount;
-			projectName = reportMenu.selectedProject;
-			checked = reportMenu.cheched;
-			fromDate = reportMenu.givenfromDateString;
-			toDate = reportMenu.givenToDateString;
+			
+			
+		 	Bundle extras = getIntent().getExtras();
+	       	if (extras == null) {
+	       	}
+	       	else{ 
+	       		
+	       		get_extra_flag = extras.getString("flag");
+	       	
+	       	} 
+			 System.out.println("content:"+get_extra_flag);
+
+			if(get_extra_flag==null){
+				
+				accountName = reportMenu.selectedAccount;
+				projectName = reportMenu.selectedProject;
+				checked = reportMenu.cheched;
+				fromDate = reportMenu.givenfromDateString;
+				toDate = reportMenu.givenToDateString;	
+				 
+			}else if(get_extra_flag.equalsIgnoreCase("from_trialBal")) {
+				accountName = trialBalance.acc_name;
+				other_details();
+				System.out.println("m in extra");
+				
+			}
+			else if(get_extra_flag.equalsIgnoreCase("from_projStatement")) {
+				accountName = projectStatement.acc_name1;
+				other_details();
+				System.out.println("m in extra1");
+			}
+			
 
 			tvaccontName = (TextView) findViewById(R.id.tvaccountName);
 			tvfinancialToDate = (TextView) findViewById(R.id.tvfinancialToDate);
@@ -146,7 +174,7 @@ public class ledger extends Activity {
 				Ledger_project = "for the " + projectName + " project";
 			} else {
 				Ledger_project = "No Project";
-			}
+			} 
 			// System.out.println("ledger with project"+accountName+financialFromDate+fromDate+toDate+projectName);
 			ledger_params = new Object[] { accountName, financialFromDate,
 					fromDate, toDate, projectName };
@@ -292,6 +320,15 @@ public class ledger extends Activity {
 		}
 	}
 
+	private void other_details() {
+		projectName = "No Project";
+		checked =true; 
+		fromDate = financialFromDate;
+		toDate = financialToDate;
+		
+		
+	}
+
 	private void floatingHeader() {
 		ledgertable.setOnTouchListener(new OnTouchListener() {
 
@@ -300,7 +337,7 @@ public class ledger extends Activity {
 
 				if (oneTouch == 1) {
 					floating_heading_table.setVisibility(TableLayout.VISIBLE);
-
+					
 					// System.out.println("we are in if");
 
 					int rowcount = ledgertable.getChildCount();
@@ -328,7 +365,7 @@ public class ledger extends Activity {
 						addRow(ColumnNameList[k], k);
 						label.setBackgroundColor(Color.parseColor("#348017"));
 						label.setGravity(Gravity.CENTER);
-
+						tr.setClickable(false);
 						LinearLayout l = (LinearLayout) ((ViewGroup) row)
 								.getChildAt(k);
 						label.setWidth(l.getWidth());
@@ -424,15 +461,35 @@ public class ledger extends Activity {
 			columnValue = new ArrayList<String>();
 			columnValue.addAll(ledgerGrid.get(i));
 			tr = new TableRow(this);
-			Integer lastIndex = ledgerGrid.size() - 1;
+			Integer lastIndex = ledgerGrid.size() - 1; 
+			Boolean click = true;
+            if("Opening Balance b/f".equalsIgnoreCase(columnValue.get(1).toString())){
+                  //  System.out.println("we are in new if");
+                    click = false;
+            }
 			for (int j = 0; j < columnValue.size(); j++) {
 				addRow(columnValue.get(j), i);
+				
+				if(click == false){
+					tr.setClickable(false);
+				}
+				else{
+					tr.setClickable(true);
+				}
+
+				
+				System.out.println("llll:"+columnValue.get(1));
+				 
 				if ((i + 1) % 2 == 0)
 					label.setBackgroundColor(Color.parseColor("#474335"));
 				else
 					label.setBackgroundColor(Color.BLACK);
 				Integer secondlastRow = lastIndex - 1;
 				Integer thirdlastRow = lastIndex - 2;
+				
+				
+				
+				
 				if (secondlastRow.equals(i) || thirdlastRow.equals(i)) {
 					tr.setClickable(false);
 
@@ -440,8 +497,11 @@ public class ledger extends Activity {
 				if (lastIndex.equals(i)) {
 					tr.setClickable(false);
 					label.setBackgroundColor(Color.parseColor("#348017"));
-				}
+				} 
 
+				
+				
+				
 				if (j == 3 || j == 4) {
 					label.setGravity(Gravity.RIGHT);
 
@@ -513,7 +573,7 @@ public class ledger extends Activity {
 	}
 
 	void addRow(String param, final int i) {
-		tr.setClickable(true);
+		
 		tr.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -523,12 +583,14 @@ public class ledger extends Activity {
 				name = "Voucher details";
 
 				MainActivity.searchFlag = true;
+				
 				m = new module();
 				Object[] params = new Object[] { "Dr" };
 				Accountlist = new ArrayList<String>();
-
+				
 				code = ledgerGrid_with_voucherCode.get(i).get(6).toString();
-
+				String abc=ledgerGrid.get(i).get(1).toString();
+ 
 				Object[] params1 = new Object[] { code };
 
 				Object[] VoucherMaster = (Object[]) transaction
@@ -539,23 +601,14 @@ public class ledger extends Activity {
 				for (Object row1 : VoucherMaster) {
 					Object a = (Object) row1;
 					otherdetailsrow.add(a.toString());// getting vouchermaster
-														// details
+						 								// details
+					}
 
-				}
-
-				// Toast.makeText(context,
-				// "i am type "+otherdetailsrow.get(2).toString(),
-				// Toast.LENGTH_SHORT).show();
 				String vtf = otherdetailsrow.get(2).toString();
 
 				IntentToVoucher(vtf, params);
-				// Toast.makeText(ledger.this,"voc_list:"+
-				// ledgerGrid_with_voucherCode.get(i),
-				// Toast.LENGTH_SHORT).show();
-				// Toast.makeText(ledger.this,"voc:"+
-				// ledgerGrid_with_voucherCode.get(i).get(6),
-				// Toast.LENGTH_SHORT).show();
-
+				
+				
 				Intent intent = new Intent(ledger.this, transaction_tab.class);
 				intent.putExtra("flag", "from_ledger");
 				// To pass on the value to the next page
@@ -625,24 +678,32 @@ public class ledger extends Activity {
 	}
 
 	void exceptContraJournal(String vtf, Object[] params) {
-		vouchertypeflag = vtf;
-		m.getAccountsByRule(params, vouchertypeflag, context);
-		Accountlist = module.Accountlist;
+		vouchertypeflag  = vtf;				
 		
 		DrAccountlist = new ArrayList<String>();
+		Object[] paramDr = new Object[]{"Dr"};
+		m.getAccountsByRule(paramDr,vouchertypeflag, context);
+		Accountlist = module.Accountlist;
 		DrAccountlist.addAll(Accountlist);
-
+		
 		CrAccountlist = new ArrayList<String>();
+		Object[] paramCr = new Object[]{"Cr"};
+		m.getAccountsByRule(paramCr,vouchertypeflag, context);
+		Accountlist = module.Accountlist;
 		CrAccountlist.addAll(Accountlist);
-
-		if (DrAccountlist.size() < 1 || CrAccountlist.size() < 1) {
+		System.out.println(vouchertypeflag);
+		System.out.println("CList:"+CrAccountlist);
+		
+		
+		if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
 			m.toastValidationMessage(ledger.this);
-		} else {
+		}
+		else{
 			Intent intent = new Intent(context, transaction_tab.class);
 			// To pass on the value to the next page
 			startActivity(intent);
 		}
-
+		
 	}
 
 	void contraJournal(String vtf, Object[] params) {
@@ -659,12 +720,27 @@ public class ledger extends Activity {
 		}
  
 	}
-	
+	 
 	 public void onBackPressed() {
-	    	MainActivity.nameflag=false;
-	    	Intent intent = new Intent(getApplicationContext(), reportMenu.class);
-    		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    		startActivity(intent);
+		 if(get_extra_flag== null){
+			 
+			 MainActivity.nameflag=false;
+			 Intent intent = new Intent(getApplicationContext(), reportMenu.class);
+			 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			 startActivity(intent);
+			 
+		 }else if (get_extra_flag.equalsIgnoreCase("from_trialBal")) {
+			  get_extra_flag=null;//so that on backpress it will to reportmenu page 
+			 Intent intent = new Intent(getApplicationContext(), trialBalance.class);
+			 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			 startActivity(intent);
+		 }else if (get_extra_flag.equalsIgnoreCase("from_projStatement")) {
+			  get_extra_flag=null;//so that on backpress it will to reportmenu page 
+			 Intent intent = new Intent(getApplicationContext(), projectStatement.class);
+			 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			 startActivity(intent);
+		 }
+	    	
 	 }
 
 }

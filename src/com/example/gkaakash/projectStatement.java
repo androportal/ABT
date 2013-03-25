@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ActionBar.LayoutParams; 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -29,7 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.TextView; 
 import android.widget.Toast;
 
 import com.gkaakash.controller.PdfGenaretor;
@@ -61,6 +62,7 @@ public class projectStatement extends Activity{
     String financialFromDate,projectName;
    	String financialToDate,OrgName,date_format,OrgPeriod ,Period,sFilename;
     String[] pdf_params;
+    static String acc_name1;
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -122,6 +124,7 @@ public class projectStatement extends Activity{
         		}
         		projectStatementGrid.add(projectStatementResultList);
         	}
+        	System.out.println("grid:"+projectStatementGrid);
         	projectStatementTable = (TableLayout)findViewById(R.id.maintable);
         	addTable();
         
@@ -232,7 +235,7 @@ public class projectStatement extends Activity{
 			        
 			        for(int k=0;k<ColumnNameList.length;k++){
 			            /** Creating a TextView to add to the row **/
-			            addRow(ColumnNameList[k]);
+			            addRow(ColumnNameList[k],k);
 			            label.setBackgroundColor(Color.parseColor("#348017"));
 			            label.setGravity(Gravity.CENTER);
 			            LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(k);
@@ -333,7 +336,7 @@ public class projectStatement extends Activity{
            
             for(int j=0;j<columnValue.size();j++){
                 /** Creating a TextView to add to the row **/
-                addRow(columnValue.get(j));   
+                addRow(columnValue.get(j),i);   
                 label.setBackgroundColor(Color.BLACK);
                 /*
                  * set right aligned gravity for amount and for others set center gravity
@@ -399,7 +402,7 @@ public class projectStatement extends Activity{
        
         for(int k=0;k<ColumnNameList.length;k++){
             /** Creating a TextView to add to the row **/
-            addRow(ColumnNameList[k]);
+            addRow(ColumnNameList[k],k);
             label.setBackgroundColor(Color.parseColor("#348017"));
             label.setGravity(Gravity.CENTER);
         }
@@ -414,7 +417,33 @@ public class projectStatement extends Activity{
     /*
      * this function add the value to the row
      */
-    void addRow(String param){
+    void addRow(String param,final int i){
+//    	Toast.makeText(projectStatement.this,
+//				"Hii" + projectStatementGrid.get(i).get(1), Toast.LENGTH_SHORT)
+//				.show();
+//		 acc_name1 = projectStatementGrid.get(i).get(1).toString();
+//		Intent intent = new Intent(getApplicationContext(),
+//				ledger.class);
+//		intent.putExtra("flag", "from_projStatement");
+//		startActivity(intent);
+    	
+    	tr.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+//				Toast.makeText(projectStatement.this,
+//						"Hii" , Toast.LENGTH_SHORT)
+//						.show();
+				 acc_name1 = projectStatementGrid.get(i).get(1).toString();
+					Intent intent = new Intent(getApplicationContext(),
+							ledger.class);
+					intent.putExtra("flag", "from_projStatement");
+					startActivity(intent);
+
+			}
+    	});
+    	
         label = new TextView(this);
         label.setText(param);
         label.setTextSize(18);
