@@ -342,60 +342,95 @@ public class menu extends ListActivity{
 					
                 }
                 // for rollOver
-                if(position == 5) 
-                {
-                	LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-					View layout = inflater.inflate(R.layout.roll_over, (ViewGroup) findViewById(R.id.layout_root));
-					//Building DatepPcker dialog
-					AlertDialog.Builder builder = new AlertDialog.Builder(context);
-					builder.setView(layout);
-					builder.setTitle("RollOver");	
-					
-					final DatePicker rollover_todate = (DatePicker) layout.findViewById(R.id.dpRollT0date); 
-					rollover_todate.init((Integer.parseInt(toyear)+1),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
-					
-					
-					builder.setPositiveButton("rollover",new  DialogInterface.OnClickListener(){ 
-						@Override
-						public void onClick(DialogInterface arg0, int arg1) {
-							
-						   validateDate(null, rollover_todate, "rollover");
-							
-						   if(validateDateFlag){
-							    Object[] rollover_params = new Object[]{OrgName,financialFromDate,financialToDate,givenToDateString,orgtype};
-						   		final String rollover =  report.rollOver(rollover_params, client_id);
-						   		
-						   		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-						        builder.setMessage("RollOver is done completely!!! You can proceed for  "+rollover+" to "+givenToDateString+" year")
-						                .setCancelable(false)
-						                .setPositiveButton("Ok",
-						                        new DialogInterface.OnClickListener() {
-						                            public void onClick(DialogInterface dialog, int id) {
-						                            	Intent intent = new Intent(context, selectOrg.class);
-														// To pass on the value to the next page
-														startActivity(intent);
-														
-						                            }
-						                        });
-						                
-						        AlertDialog alert = builder.create();
-						        alert.show();
-						   		
-							}
-							
-						}          
-						
-					});
-					builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							
-						}
-					});
-					dialog=builder.create();
-	        		dialog.show();
-                 
-                }
+				if (position == 5) {
+					Object[] rollover_exist_params = new Object[] { OrgName,financialFromDate, financialToDate };
+					String existRollOver = report.existRollOver(rollover_exist_params);
+					if (existRollOver.equalsIgnoreCase("rollover_notexist")) {
+						LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+						View layout = inflater.inflate(R.layout.roll_over,(ViewGroup) findViewById(R.id.layout_root));
+						// Building DatepPcker dialog
+						AlertDialog.Builder builder = new AlertDialog.Builder(context);
+						builder.setView(layout);
+						builder.setTitle("RollOver");
+
+						final DatePicker rollover_todate = (DatePicker) layout.findViewById(R.id.dpRollT0date);
+						rollover_todate.init((Integer.parseInt(toyear) + 1),(Integer.parseInt(tomonth) - 1),Integer.parseInt(today), null);
+
+						builder.setPositiveButton("rollover",
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface arg0,int arg1) {
+
+										validateDate(null, rollover_todate,"rollover");
+
+										if (validateDateFlag) {
+											Object[] rollover_params = new Object[] {OrgName, financialFromDate,financialToDate,
+													givenToDateString, orgtype };
+											final String rollover = report.rollOver(rollover_params,client_id);
+
+											AlertDialog.Builder builder = new AlertDialog.Builder(context);
+											builder.setMessage(
+													"RollOver is done completely!!! You can proceed for  "
+															+ rollover + " to "
+															+ givenToDateString
+															+ " year")
+													.setCancelable(false)
+													.setPositiveButton(
+															"Ok",new DialogInterface.OnClickListener() {
+																public void onClick(DialogInterface dialog,int id) {
+																	Intent intent = new Intent(context,selectOrg.class);
+																	// To pass
+																	// on the
+																	// value to
+																	// the next
+																	// page
+																	startActivity(intent);
+
+																}
+															});
+
+											AlertDialog alert = builder.create();
+											alert.show();
+
+										}
+
+									}
+
+								});
+						builder.setNegativeButton("Cancel",
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+
+									}
+								});
+						dialog = builder.create();
+						dialog.show();
+					} else {
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								context);
+						builder.setMessage("Sorry!! Rollover has already done")
+								.setCancelable(false)
+								.setPositiveButton("Ok",
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,int id) {
+												Intent intent = new Intent(context, menu.class);
+												// To pass on the value to the
+												// next page
+												startActivity(intent);
+
+											}
+										});
+
+						AlertDialog alert = builder.create();
+						alert.show();
+						dialog = builder.create();
+						dialog.show();
+					}
+
+				}
                 
                 //for help
                 if(position == 6){

@@ -15,7 +15,7 @@
 ** multiple dr cr, recongrid is incorrect in bank recon
     ***    needed to add preticularRow in [ ] in update bank recon
     ***    title for trial balance types and  balance sheet type
-    ***    when account name is edited, it is affecting bankrecon table
+ 
 
 ** floating header
    *** search voucher

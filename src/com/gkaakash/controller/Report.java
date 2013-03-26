@@ -20,7 +20,7 @@ public class Report {
 	private Object[] cashFlowStatement;
 	private Object[] getBalancesheetDisplay;
 	private Object[] getLedgerForBankRecon;
-	private String setBankReconciliationResult,rollover;
+	private String setBankReconciliationResult,rollover,existrollover;
 	private Boolean result;
 	private Object[] calculateBalance;
 	
@@ -278,19 +278,39 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 		} 
 		return calculateBalance;
 	}
-	
+	/***
+	 * This function will call the rollover xmlrpc from rpc_main of ABTcore
+	 * @param params contain [orgname,financial-from,financial-to,newfinancial-to,orgtype]
+	 * @param client_id
+	 * @return String newfinancialfrom date 
+	 */
 	public String rollOver(Object[] params,Object client_id) {
 		
 		try { 
-			
-			System.out.println("data:"+params[0]+""+params[1]+""+params[2]+""+params[3]);
 			rollover = (String) conn.getClient().call("rollover",params,client_id);
-			//System.out.println("data:"+params[0]+""+params[1]+""+params[2]+""+params[3]);
-			System.out.println("nnn:"+rollover);
+			
 		} catch (XMLRPCException e) {
-			System.out.println("nnn:"+rollover);
+			
 			e.printStackTrace();
 		}
-		return rollover;
+		return rollover; 
+	}
+	/***
+	 * This function will check for rollover is already done or not
+	 * for given organisation
+	 * @param params contain [orgname,financial-from, financial-to]
+	 * @return String rollover_exist or rollover_otnexist
+	 */
+	public String existRollOver(Object[] params) {
+		
+		try { 
+			
+			existrollover = (String) conn.getClient().call("existRollOver",params);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return existrollover;
 	}
 }
