@@ -408,7 +408,7 @@ private void editAccount() {
               	              WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
               	            //customizing the width and location of the dialog on screen 
               	            lp.copyFrom(dialog.getWindow().getAttributes());
-              	            lp.height = 600;
+              	            //lp.height = 600;
               	            lp.width = 400;
               	            dialog.getWindow().setAttributes(lp);						
 	                      }

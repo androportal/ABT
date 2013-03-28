@@ -1,24 +1,20 @@
 package com.example.gkaakash;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import android.R.color;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ActionBar.LayoutParams;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -33,6 +29,8 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.gkaakash.controller.PdfGenaretor;
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
@@ -63,6 +61,8 @@ public class cashFlow extends Activity{
     ScrollView sv;
     String 	OrgPeriod,balancePeriod,sFilename,OrgName,result;
 	String[] pdf_params; 
+	static String acc_name; 
+	
     public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -95,6 +95,7 @@ public class cashFlow extends Activity{
         	/*
         	 * get financial from and to date from startup page
         	 */
+        	
         	financialFromDate =Startup.getfinancialFromDate();
         	financialToDate=Startup.getFinancialToDate();
         	fromDateString = reportMenu.givenfromDateString;
@@ -103,6 +104,7 @@ public class cashFlow extends Activity{
         	/*
         	 * set financial from date and to date in textview
         	 */
+        	
         	TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
         	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
      
@@ -262,78 +264,6 @@ public class cashFlow extends Activity{
         	AlertDialog alert = builder.create();
         	alert.show();	}
     	}
-   
- 
-    private void floatingHeader() {
-    	cashFlowtable1.setOnTouchListener(new OnTouchListener() {
-		
-    		@Override
-    		public boolean onTouch(View v, MotionEvent event) {
-			
-    			if(oneTouch == 1){
-    				floating_heading_table1.setVisibility(TableLayout.VISIBLE);
-    				floating_heading_table2.setVisibility(TableLayout.VISIBLE);
-				
-    				//System.out.println("we are in if");
-				
-    				int rowcount = cashFlowtable1.getChildCount();    
-    				View row = cashFlowtable1.getChildAt(rowcount-1);
-                
-    				int rowcount1 = cashFlowtable2.getChildCount();    
-    				View row1 = cashFlowtable2.getChildAt(rowcount1-1);
-				
-    				final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs));
-    				/** Create a TableRow dynamically **/
-    				String[] ColumnNameList = new String[] {"Account name",rsSymbol+" Amount(Inflow)"};
-    				String[] ColumnNameList1 = new String[] {"Account name",rsSymbol+" Amount(Outflow)"};
-		        
-    				tr = new TableRow(cashFlow.this);
-		        
-    				for(int k=0;k<ColumnNameList.length;k++){
-    					/** Creating a TextView to add to the row **/
-    					addRow(ColumnNameList[k]);
-    					label.setBackgroundColor(Color.parseColor("#348017"));
-    					label.setGravity(Gravity.CENTER);
-		            
-    					LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(k);
-    					label.setWidth(l.getWidth());
-    					//System.out.println("size is"+l.getWidth());
-    				}
-		        
-    				// Add the TableRow to the TableLayout
-    				floating_heading_table1.addView(tr, new TableLayout.LayoutParams(
-    						LayoutParams.FILL_PARENT,
-    						LayoutParams.MATCH_PARENT));
-				
-    				
-    				//================================================================
-				
-    				tr = new TableRow(cashFlow.this);
-		        
-    				for(int k=0;k<ColumnNameList1.length;k++){
-    					/** Creating a TextView to add to the row **/
-    					addRow(ColumnNameList1[k]);
-    					label.setBackgroundColor(Color.parseColor("#348017"));
-    					label.setGravity(Gravity.CENTER);
-    					
-    					LinearLayout l = (LinearLayout)((ViewGroup) row1).getChildAt(k);
-    					label.setWidth(l.getWidth());
-    					//System.out.println("size is"+l.getWidth());
-    				}
-		        
-    				// Add the TableRow to the TableLayout
-    				floating_heading_table2.addView(tr, new TableLayout.LayoutParams(
-    						LayoutParams.FILL_PARENT,
-    						LayoutParams.MATCH_PARENT));
-				
-    			
-    			}
-    			oneTouch ++;
-			
-    			return false;
-    		}
-    	});
-    }
 
 
     private void animated_dialog() {
@@ -415,8 +345,8 @@ public class cashFlow extends Activity{
     }  
     
     /*
-     * 1. set the green background color for heading and black for remaining rows
-     * 2. set right aligned gravity for amount and center aligned for other values
+     * 1. set the green background colour for heading and black for remaining rows
+     * 2. set right aligned gravity for amount and centre aligned for other values
      * 3. set rupee symbol for amount
      */
     private void setRowColorSymbolGravity(ArrayList<String> columnValue, int color, Boolean headerFlag) {
@@ -426,13 +356,13 @@ public class cashFlow extends Activity{
     			if(j == 1){ //amount column
     				//For adding rupee symbol
     				final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs));
-    				addRow(rsSymbol+" "+columnValue.get(j));   
+    				addRow(rsSymbol+" "+columnValue.get(j),j);   
     			}else{
-    				addRow(columnValue.get(j));   
+    				addRow(columnValue.get(j),j);   
     			}
     		}
     		else{
-    			addRow(columnValue.get(j));   
+    			addRow(columnValue.get(j),j);   
     		}
     		label.setBackgroundColor(color);
             String amount = columnValue.get(1).toString();
@@ -483,23 +413,87 @@ public class cashFlow extends Activity{
             }
         }
     }
-
+ 
     /*
      * this function add the value to the row
      */
-    void addRow(String param){
-        label = new TextView(this);
-        label.setText(param);
-        label.setTextSize(18);
-        label.setTextColor(Color.WHITE);
-        label.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT));
-        label.setPadding(2, 2, 2, 2);
-        LinearLayout Ll = new LinearLayout(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT);
-        params.setMargins(1, 1, 1, 1);
-        Ll.addView(label,params);
-        tr.addView((View)Ll); // Adding textView to tablerow.
-    }
+	void addRow(String param, final int i) {
+		drillDown();
+		label = new TextView(this);
+		label.setText(param);
+		label.setTextSize(18);
+		label.setTextColor(Color.WHITE);
+		label.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT));
+		label.setPadding(2, 2, 2, 2);
+		LinearLayout Ll = new LinearLayout(this);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		params.setMargins(1, 1, 1, 1);
+		Ll.addView(label, params);
+		tr.addView((View) Ll); // Adding textView to tablerow.
+	}
+    
+	/*
+     * this method is used to add the drill down functionality on clicking the table row.
+     * basically we want account name value from selected row.
+     * In cash flow report we have two tables, so get the value of account name textview from selected table.
+     */
+	private void drillDown() {
+		int count = cashFlowtable1.getChildCount();
+		for (int i = 0; i < count; i++) {
+			final View row = cashFlowtable1.getChildAt(i);
+			LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(1);
+			final TextView tv = (TextView) l.getChildAt(0);
+			row.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+
+					LinearLayout l = (LinearLayout) ((ViewGroup) row)
+							.getChildAt(0);
+					final TextView tv = (TextView) l.getChildAt(0);
+					checkForAccountName(tv.getText().toString());
+				}
+			});
+		}
+
+		int count1 = cashFlowtable2.getChildCount();
+		for (int i = 0; i < count1; i++) {
+			final View row = cashFlowtable2.getChildAt(i);
+
+			row.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+
+					LinearLayout l = (LinearLayout) ((ViewGroup) row)
+							.getChildAt(0);
+					final TextView tv = (TextView) l.getChildAt(0);
+					checkForAccountName(tv.getText().toString());
+					}
+			});
+		}
+
+	}
+	
+	/*
+     * below method helps to find out the selected string is account name or not.
+     * check for empty string, string "Total" and header column "account name".
+     */
+	private void checkForAccountName(String accname) {
+    	if(!(accname.equalsIgnoreCase("") || 
+    							accname.equalsIgnoreCase("Total") ||
+    							accname.equalsIgnoreCase("Account Name"))){
+    		//Toast.makeText(balanceSheet.this, "account name", Toast.LENGTH_SHORT).show();
+    		acc_name = accname;
+			Intent intent = new Intent(getApplicationContext(),
+					ledger.class);
+			intent.putExtra("flag", "from_cashflow");
+			startActivity(intent);
+    	}
+		
+	}
+    
+    
 }

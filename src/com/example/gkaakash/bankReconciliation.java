@@ -26,15 +26,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.SpannableString;
+import android.text.TextWatcher;
 import android.text.InputFilter.LengthFilter;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -88,6 +92,8 @@ public class bankReconciliation extends Activity{
 	ArrayList<String> columnValue;
 	static String code;
 	static String name;
+	int oneTouch = 1;
+	TableLayout floating_heading_table;
      
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -105,6 +111,9 @@ public class bankReconciliation extends Activity{
       	mFormat= new DecimalFormat("00");
 		mFormat.setRoundingMode(RoundingMode.DOWN);
       
+		floating_heading_table = (TableLayout) findViewById(R.id.floating_heading_table);
+		floating_heading_table.setVisibility(TableLayout.GONE);
+		
 		try {
 			financialFromDate =Startup.getfinancialFromDate();
 			String dateParts[] = financialFromDate.split("-");
@@ -212,12 +221,161 @@ public class bankReconciliation extends Activity{
 	                   alert.show();
 				}
 			});
-    		
+			floatingHeader();
+			matchHeaderWithMemoColumn();
             
 		} catch (Exception e) {
 			toastValidationMessage("Please try again");
 		}
     }
+    
+    /*
+     * this method matches the memo column width to the floating header row memo
+     * when edittext memo column width is greater than its previous size,
+     * get the width of memo and set it to the header memo column.
+     * so that header will get expanded along with the table.
+     */
+    private void matchHeaderWithMemoColumn() {
+    	System.out.println("ontouch"+oneTouch);
+    	int rowcount = bankRecontable.getChildCount();
+    	System.out.println("roco"+rowcount);
+		for(int i=1;i<rowcount-1;i++){
+				View row = bankRecontable.getChildAt(i);
+				System.out.println(i);
+				final EditText etmemo= (EditText)((ViewGroup) row).getChildAt(7); //memo
+				
+				etmemo.addTextChangedListener(new TextWatcher() {
+					
+					@Override
+					public void onTextChanged(CharSequence s, int start, int before, int count) {
+						// TODO Auto-generated method stub
+						etmemo.setSingleLine(true);
+						if(oneTouch > 1){
+						
+							int width = etmemo.getWidth();
+							System.out.println("widht"+width);
+							try {
+								View header_row = floating_heading_table.getChildAt(0);
+								System.out.println("header row" + header_row);
+								LinearLayout l = (LinearLayout) ((ViewGroup) header_row)
+											.getChildAt(7);
+								TextView tv = (TextView) l.getChildAt(0);
+								tv.setWidth(width);
+								
+							} catch (Exception e) {
+								toastValidationMessage("error"+e.getMessage().toString());
+							}
+						
+						}
+						
+					}
+					
+					@Override
+					public void beforeTextChanged(CharSequence s, int start, int count,
+							int after) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void afterTextChanged(Editable s) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+			
+		}
+		
+	}
+
+
+    /*
+     * this method adds the floating header to the table on touching it.
+     * In this case, we have a main table which includes table rows and a header at the load time.
+     * and another table(for floating header) is invisible at load time which is located at the top of main table.
+     * on the very first touch of the main table, we will add floating header columns and
+     * make it visible.
+     * at the same time we will set width 0 for the main table header to avoid
+     * double headers at the same time.
+     */
+	private void floatingHeader() {
+		bankRecontable.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+
+				/*
+				 * ontouch is the very first tableview touch 
+				 */
+				if (oneTouch == 1) {
+					floating_heading_table.setVisibility(TableLayout.VISIBLE);
+
+					// System.out.println("we are in if");
+
+					int rowcount = bankRecontable.getChildCount();
+					View row = bankRecontable.getChildAt(rowcount - 1);
+
+					final SpannableString rsSymbol = new SpannableString(
+							bankReconciliation.this.getText(R.string.Rs));
+					/** Create a TableRow dynamically **/
+					if(narration_flag){
+			        	ColumnNameList = new String[] {"voucher code","Date","Particulars","Reference no.",
+			        			rsSymbol+" Debit",rsSymbol+" Credit","Clearance date","Memo","Narration"};
+			        }
+			        else{
+			        	ColumnNameList = new String[] {"voucher code","Date","Particulars","Reference no.",
+			        			rsSymbol+" Debit",rsSymbol+" Credit","Clearance date","Memo"};
+			        }
+
+					tr = new TableRow(bankReconciliation.this);
+
+					for (int k = 0; k < ColumnNameList.length; k++) {
+						/** Creating a TextView to add to the row **/
+						addRow(ColumnNameList[k],k,k, 0);
+						label.setBackgroundColor(Color.parseColor("#348017"));
+						label.setGravity(Gravity.CENTER);
+
+						LinearLayout l = (LinearLayout) ((ViewGroup) row)
+								.getChildAt(k);
+						System.out.println("width"+l.getWidth());
+						Ll.setMinimumWidth(l.getWidth());
+						if(k==0){
+			        		Ll.setVisibility(LinearLayout.GONE);//voucher code
+			        	}
+						params.height = LayoutParams.WRAP_CONTENT;
+						tr.setClickable(false);
+						// System.out.println("size is"+l.getWidth());
+					}
+
+					// Add the TableRow to the TableLayout
+					floating_heading_table.addView(tr,
+							new TableLayout.LayoutParams(
+									LayoutParams.FILL_PARENT,
+									LayoutParams.WRAP_CONTENT));
+					// ledgertable.removeViewAt(0);
+					bankRecontable.getChildAt(0).setVisibility(View.INVISIBLE);
+
+					View firstrow = bankRecontable.getChildAt(0);
+					for (int k = 0; k < ColumnNameList.length; k++) {
+						LinearLayout l = (LinearLayout) ((ViewGroup) firstrow)
+								.getChildAt(k);
+						TextView tv = (TextView) l.getChildAt(0);
+						tv.setHeight(0);
+
+						l.getLayoutParams().height = 0;
+					}
+					// ledgertable.getChildAt(0).setLayoutParams(new
+					// TableLayout.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+					// 0));
+
+				}
+				oneTouch++;
+
+				return false;
+			}
+		});
+	}
+    
    
     /*
      * get all the cleared and uncleared transactions from database for the given account,
@@ -420,6 +578,10 @@ public class bankReconciliation extends Activity{
 				Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,"No Project"};
 		        Object[] clear_flag = new Object[]{cleared_tran_flag};
 		        setTableAndStatement(params,clear_flag);
+		        
+		        if(floating_heading_table.getVisibility() == View.VISIBLE){
+		        	bankRecontable.getChildAt(0).setVisibility(View.GONE);
+		        }
 		        
 				toastValidationMessage("Changes saved successfully");
 			}//end of onclick
@@ -633,7 +795,6 @@ public class bankReconciliation extends Activity{
     
     
     void addRow(String param, final int i, final int j, final int flag){
-    	
     	
     	tr.setOnClickListener(new OnClickListener() {
 			

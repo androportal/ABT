@@ -161,6 +161,16 @@ public class ledger extends Activity {
 				other_details();
 				System.out.println("m in extra1");
 			}
+			else if(get_extra_flag.equalsIgnoreCase("from_cashflow")) {
+				accountName = cashFlow.acc_name;
+				other_details();
+				System.out.println("m in extra1");
+			}
+			else if(get_extra_flag.equalsIgnoreCase("from_balanceSheet")) {
+				accountName = balanceSheet.acc_name1;
+				other_details();
+				System.out.println("m in extra1");
+			}
 			
 
 			tvaccontName = (TextView) findViewById(R.id.tvaccountName);
@@ -329,6 +339,15 @@ public class ledger extends Activity {
 		
 	}
 
+	/*
+     * this method adds the floating header to the table on touching it.
+     * In this case, we have a main table which includes table rows and a header at the load time.
+     * and another table(for floating header) is invisible at load time which is located at the top of main table.
+     * on the very first touch of the main table, we will add floating header columns and
+     * make it visible.
+     * at the same time we will set width 0 for the main table header to avoid
+     * double headers at the same time.
+     */
 	private void floatingHeader() {
 		ledgertable.setOnTouchListener(new OnTouchListener() {
 
@@ -737,6 +756,18 @@ public class ledger extends Activity {
 		 }else if (get_extra_flag.equalsIgnoreCase("from_projStatement")) {
 			  get_extra_flag=null;//so that on backpress it will to reportmenu page 
 			 Intent intent = new Intent(getApplicationContext(), projectStatement.class);
+			 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			 startActivity(intent);
+		 }
+		 else if (get_extra_flag.equalsIgnoreCase("from_cashflow")) {
+			  get_extra_flag=null;//so that on backpress it will to reportmenu page 
+			 Intent intent = new Intent(getApplicationContext(), cashFlow.class);
+			 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			 startActivity(intent);
+		 }
+		 else if (get_extra_flag.equalsIgnoreCase("from_balanceSheet")) {
+			  get_extra_flag=null;//so that on backpress it will to reportmenu page 
+			 Intent intent = new Intent(getApplicationContext(), balanceSheet.class);
 			 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			 startActivity(intent);
 		 }

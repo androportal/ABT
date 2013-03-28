@@ -50,11 +50,11 @@ import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
 
 public class createVoucher extends Activity {
-	TableLayout list;
+	TableLayout table;
 	int rowsSoFar = 0;
 	static int tableRowCount;
 	String amount, financialFromDate, financialToDate, drcramount,
-			vouchertypeflag;
+	vouchertypeflag;
 	AlertDialog dialog;
 	final Context context = this;
 	TextView voucherDate, tvTotalDebit, tvTotalCredit, projectName;
@@ -72,13 +72,13 @@ public class createVoucher extends Activity {
 	static Integer editVoucher;
 	static ArrayAdapter<String> dataAdapter;
 	protected String selDrCr;
-	Spinner account, actionButton, DrCr, sp1;
+	Spinner account, second_table_accountname_spinner, DrCr, second_table_drcr_spinner;
 	TableRow newRow;
 	ArrayList<ArrayList> paramsMaster;
 	float totalDr, totalCr;
 	static String vDate, vproject;
 	DecimalFormat mFormat;
-	EditText etnarration, et, et1;
+	EditText etnarration, second_table_amount_et, second_table_closingbal_et;
 	static EditText firstRowamount;
 	static EditText etRefNumber;
 	private Object diffbal;
@@ -94,7 +94,7 @@ public class createVoucher extends Activity {
 	static ArrayList<ArrayList<String>> accdetailsList;
 	String Fsecond_spinner, Ssecond_spinner, Sacctype, Facctype;
 	static int FaccnamePosition, SaccnamePosition, SacctypePosition,
-			FacctypePosition;
+	FacctypePosition;
 	String vouchercode;
 	static Boolean cloneflag;
 	boolean nameflag;
@@ -178,7 +178,7 @@ public class createVoucher extends Activity {
 			etnarration = (EditText) findViewById(R.id.etVoucherNarration);
 			account = (Spinner) findViewById(R.id.getAccountByRule);
 			DrCr = (Spinner) findViewById(R.id.sDrCr);
-			list = (TableLayout) findViewById(R.id.Vouchertable);
+			table = (TableLayout) findViewById(R.id.Vouchertable);
 			if (searchFlag == false) {
 				// for setting voucher reference number
 				etRefNumber = (EditText) findViewById(R.id.etRefNumber);
@@ -221,7 +221,7 @@ public class createVoucher extends Activity {
 				for (Object row1 : VoucherMaster) {
 					Object a = (Object) row1;
 					otherdetailsrow.add(a.toString());// getting vouchermaster
-														// details
+					// details
 				}
 
 				String refno = (String) otherdetailsrow.get(0);
@@ -243,7 +243,7 @@ public class createVoucher extends Activity {
 					accdetails = new ArrayList<String>();
 					for (int i = 0; i < a2.length; i++) {
 						accdetails.add((String) a2[i].toString());// getting
-																	// voucherdetails
+						// voucherdetails
 					}
 					accdetailsList.add(accdetails);
 				}
@@ -258,7 +258,7 @@ public class createVoucher extends Activity {
 			// two digit date format for dd and mm
 			mFormat = new DecimalFormat("00");
 			mFormat.setRoundingMode(RoundingMode.DOWN);
-			list = (TableLayout) findViewById(R.id.Vouchertable);
+			table = (TableLayout) findViewById(R.id.Vouchertable);
 
 			account.setMinimumWidth(283);
 
@@ -291,17 +291,17 @@ public class createVoucher extends Activity {
 				projetct_name.setOnItemClickListener(null);
 				etVouchercode.setEnabled(false);
 
-				tableRowCount = list.getChildCount();
+				tableRowCount = table.getChildCount();
 
 				for (int i = 0; i < (tableRowCount); i++) {
-					View row = list.getChildAt(i);
+					View row = table.getChildAt(i);
 
-					sp1 = (Spinner) ((ViewGroup) row).getChildAt(0);
-					sp1.setClickable(false);
-					actionButton = (Spinner) ((ViewGroup) row).getChildAt(2);
-					actionButton.setClickable(false);
-					et = (EditText) ((ViewGroup) row).getChildAt(6);
-					et.setEnabled(false);
+					second_table_drcr_spinner = (Spinner) ((ViewGroup) row).getChildAt(0);
+					second_table_drcr_spinner.setClickable(false);
+					second_table_accountname_spinner = (Spinner) ((ViewGroup) row).getChildAt(2);
+					second_table_accountname_spinner.setClickable(false);
+					second_table_amount_et = (EditText) ((ViewGroup) row).getChildAt(6);
+					second_table_amount_et.setEnabled(false);
 					removeSelfButton = (Button) ((ViewGroup) row).getChildAt(7);
 					removeSelfButton.setClickable(false);
 
@@ -311,14 +311,14 @@ public class createVoucher extends Activity {
 		} catch (Exception ex) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
 			builder.setMessage("Please try again" + ex.getMessage())
-					.setCancelable(false)
-					.setPositiveButton("Ok",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
+			.setCancelable(false)
+			.setPositiveButton("Ok",
+					new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,
+						int id) {
 
-								}
-							});
+				}
+			});
 
 			AlertDialog alert = builder.create();
 			alert.show();
@@ -338,10 +338,10 @@ public class createVoucher extends Activity {
 		/*
 		 * onfocuschange of amount edittext move focus to reference number
 		 */
-		tableRowCount = list.getChildCount();
+		tableRowCount = table.getChildCount();
 
 		for (int i = 0; i < (tableRowCount); i++) {
-			View row = list.getChildAt(i);
+			View row = table.getChildAt(i);
 			// amount edittext
 			e = (EditText) ((ViewGroup) row).getChildAt(6);
 
@@ -359,12 +359,12 @@ public class createVoucher extends Activity {
 		firstRowamount.setOnFocusChangeListener(new OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasfocus) {
-				int tableRowCount1 = list.getChildCount();
+				int tableRowCount1 = table.getChildCount();
 
 				if (tableRowCount1 == 1) {
 					// Toast.makeText(createVoucher.this,
 					// "default:"+tableRowCount1, Toast.LENGTH_SHORT).show();
-					View row = list.getChildAt(0);
+					View row = table.getChildAt(0);
 					// amount edittext
 					e = (EditText) ((ViewGroup) row).getChildAt(6);
 					// Toast.makeText(createVoucher.this,
@@ -384,34 +384,34 @@ public class createVoucher extends Activity {
 
 			@Override
 			public void onFocusChange(View arg0, boolean hasfocus) {
-				int tableRowCount1 = list.getChildCount();
+				int tableRowCount1 = table.getChildCount();
 
 				if (closing_bal.hasFocus() == true) {
 					if (tableRowCount1 == 1) {
-						View row = list.getChildAt(0);
+						View row = table.getChildAt(0);
 						// amount edittext
 						e = (EditText) ((ViewGroup) row).getChildAt(6);
 						// Toast.makeText(createVoucher.this,
 						// "amount:"+firstRowamount.getText(),
 						// Toast.LENGTH_SHORT).show();
 						e.setText(firstRowamount.getText());
-						String selection = DrCr.getSelectedItem().toString();
-						// Toast.makeText(createVoucher.this, "sele:"+selection,
-						// Toast.LENGTH_SHORT).show();
-						dr_cr.clear();
-						dr_cr.add("Dr");
-						dr_cr.add("Cr");
-						ArrayAdapter<String> da12 = new ArrayAdapter<String>(
-								createVoucher.this,
-								android.R.layout.simple_spinner_item, dr_cr);
-						da12.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-						sp1.setAdapter(da12);
-						if (selection == "Dr") {
-
-							sp1.setSelection(1);
-						} else {
-							sp1.setSelection(0);
-						}
+						//						String selection = DrCr.getSelectedItem().toString();
+						//						// Toast.makeText(createVoucher.this, "sele:"+selection,
+						//						// Toast.LENGTH_SHORT).show();
+						//						dr_cr.clear();
+						//						dr_cr.add("Dr");
+						//						dr_cr.add("Cr");
+						//						ArrayAdapter<String> da12 = new ArrayAdapter<String>(
+						//								createVoucher.this,
+						//								android.R.layout.simple_spinner_item, dr_cr);
+						//						da12.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+						//						second_table_drcr_spinner.setAdapter(da12);
+						//						if (selection == "Dr") {
+						//
+						//							second_table_drcr_spinner.setSelection(1);
+						//						} else {
+						//							second_table_drcr_spinner.setSelection(0);
+						//						}
 					}
 				}
 
@@ -473,10 +473,10 @@ public class createVoucher extends Activity {
 
 		// selected dr/cr and amount of the remaining rows
 
-		tableRowCount = list.getChildCount();
+		tableRowCount = table.getChildCount();
 
 		for (int i = 0; i < (tableRowCount); i++) {
-			View row = list.getChildAt(i);
+			View row = table.getChildAt(i);
 			// dr cr spinner
 			Spinner s = (Spinner) ((ViewGroup) row).getChildAt(0);
 			String drcr = s.getSelectedItem().toString();
@@ -526,7 +526,7 @@ public class createVoucher extends Activity {
 				dataAdapter = new ArrayAdapter<String>(this,
 						android.R.layout.simple_spinner_item, accnames);
 				dataAdapter
-						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				account.setAdapter(dataAdapter);
 				// add second row
 				addButton();
@@ -537,11 +537,11 @@ public class createVoucher extends Activity {
 				da1 = new ArrayAdapter<String>(createVoucher.this,
 						android.R.layout.simple_spinner_item, dr_cr);
 				da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				sp1.setAdapter(da1);
-				sp1.setSelection(1);
+				second_table_drcr_spinner.setAdapter(da1);
+				second_table_drcr_spinner.setSelection(1);
 
 				// set adaptor with account name list in second row spinner
-				actionButton.setAdapter(dataAdapter);
+				second_table_accountname_spinner.setAdapter(dataAdapter);
 
 			} else {// for setting second row for editing
 				dr_cr.clear();
@@ -553,14 +553,14 @@ public class createVoucher extends Activity {
 						android.R.layout.simple_spinner_item, accnames);
 
 				dataAdapter
-						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				FaccnamePosition = dataAdapter.getPosition(Fsecond_spinner);
 				account.setAdapter(dataAdapter);
 				account.setSelection(FaccnamePosition);
 
 				// add second row
 				addButton();
- 
+
 				dr_cr.add("Dr");
 				dr_cr.add("Cr");
 
@@ -572,48 +572,48 @@ public class createVoucher extends Activity {
 				da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				SacctypePosition = da1.getPosition(Sacctype);
 				FacctypePosition = da1.getPosition(Facctype);
-				sp1.setAdapter(da1);
-				sp1.setSelection(SacctypePosition);// setting spinner selection
-													// acc to obtained value
+				second_table_drcr_spinner.setAdapter(da1);
+				second_table_drcr_spinner.setSelection(SacctypePosition);// setting spinner selection
+				// acc to obtained value
 				DrCr.setAdapter(da1);
 				DrCr.setSelection(FacctypePosition);// setting spinner selection
-													// acc to obtained value
+				// acc to obtained value
 
 				// for filling 2nd row amount
-				et.setText(accdetailsList.get(1).get(2));
+				second_table_amount_et.setText(accdetailsList.get(1).get(2));
 
 				// for setting 2nd row's 2nd spinner
 				Ssecond_spinner = accdetailsList.get(1).get(0);
 				SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
-				actionButton.setAdapter(dataAdapter);
-				actionButton.setSelection(SaccnamePosition);// setting spinner
-															// selection acc to
-															// obtained value
+				second_table_accountname_spinner.setAdapter(dataAdapter);
+				second_table_accountname_spinner.setSelection(SaccnamePosition);// setting spinner
+				// selection acc to
+				// obtained value
 
-				tableRowCount = list.getChildCount();
+				tableRowCount = table.getChildCount();
 
 				// if row count of 2nd table(list) is more than 1 code bellow
 				// will be executed
- 
+
 				if (accdetailsList.size() > 2) {
 					for (int i = 2; i < accdetailsList.size(); i++) {
 						addButton();
-						et.setText(accdetailsList.get(i).get(2)); 
-						
+						second_table_amount_et.setText(accdetailsList.get(i).get(2)); 
+
 
 						Ssecond_spinner = accdetailsList.get(i).get(0);
 						SaccnamePosition = dataAdapter
 								.getPosition(Ssecond_spinner);
-						actionButton.setAdapter(dataAdapter);
-						actionButton.setSelection(SaccnamePosition);
+						second_table_accountname_spinner.setAdapter(dataAdapter);
+						second_table_accountname_spinner.setSelection(SaccnamePosition);
 
 						Sacctype = accdetailsList.get(i).get(1);
 						da1 = new ArrayAdapter<String>(createVoucher.this,
 								android.R.layout.simple_spinner_item, dr_cr);
 						da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 						SacctypePosition = da1.getPosition(Sacctype);
-						sp1.setAdapter(da1);
-						sp1.setSelection(SacctypePosition);
+						second_table_drcr_spinner.setAdapter(da1);
+						second_table_drcr_spinner.setSelection(SacctypePosition);
 
 					}
 				}
@@ -636,7 +636,7 @@ public class createVoucher extends Activity {
 						android.R.layout.simple_spinner_item, DrAccountlist);
 				// set resource layout of spinner to that adapter
 				dataAdapter
-						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				account.setAdapter(dataAdapter);
 				// add second row
 				addButton();
@@ -647,17 +647,17 @@ public class createVoucher extends Activity {
 						createVoucher.this,
 						android.R.layout.simple_spinner_item, dr_cr);
 				da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				sp1.setAdapter(da1);
-				sp1.setSelection(1);
+				second_table_drcr_spinner.setAdapter(da1);
+				second_table_drcr_spinner.setSelection(1);
 
 				// set adaptor with account name list in second row spinner
 				dataAdapter = new ArrayAdapter<String>(this,
 						android.R.layout.simple_spinner_item, CrAccountlist);
 				// set resource layout of spinner to that adapter
 				dataAdapter
-						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				// set adaptor with account name list in spinner
-				actionButton.setAdapter(dataAdapter);
+				second_table_accountname_spinner.setAdapter(dataAdapter);
 			} else {
 				// add second row
 				addButton();
@@ -666,17 +666,17 @@ public class createVoucher extends Activity {
 				dr_cr.add("Cr");
 				Sacctype = accdetailsList.get(1).get(1);
 				System.out.println("Sacctype:"+Sacctype);
-				
+
 				System.out.println();
-				
+
 				Facctype = accdetailsList.get(0).get(1);
 				da1 = new ArrayAdapter<String>(createVoucher.this,
 						android.R.layout.simple_spinner_item, dr_cr);
 				da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				SacctypePosition = da1.getPosition(Sacctype);
 				FacctypePosition = da1.getPosition(Facctype);
-				sp1.setAdapter(da1);
-				sp1.setSelection(SacctypePosition);
+				second_table_drcr_spinner.setAdapter(da1);
+				second_table_drcr_spinner.setSelection(SacctypePosition);
 				DrCr.setAdapter(da1);
 				DrCr.setSelection(FacctypePosition);
 
@@ -689,12 +689,12 @@ public class createVoucher extends Activity {
 				}
 				Fsecond_spinner = accdetailsList.get(0).get(0);
 				dataAdapter
-						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				FaccnamePosition = dataAdapter.getPosition(Fsecond_spinner);
 				account.setAdapter(dataAdapter);
 				account.setSelection(FaccnamePosition);
 
-				et.setText(accdetailsList.get(1).get(2));
+				second_table_amount_et.setText(accdetailsList.get(1).get(2));
 
 				if ("Dr".equals(Sacctype)) {
 					dataAdapter = new ArrayAdapter<String>(this,
@@ -712,15 +712,15 @@ public class createVoucher extends Activity {
 				SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
 				System.out.println("pos:"+SaccnamePosition);
 				dataAdapter
-						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				actionButton.setAdapter(dataAdapter);
-				actionButton.setSelection(SaccnamePosition);
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				second_table_accountname_spinner.setAdapter(dataAdapter);
+				second_table_accountname_spinner.setSelection(SaccnamePosition);
 
-				tableRowCount = list.getChildCount();
+				tableRowCount = table.getChildCount();
 				if (accdetailsList.size() > 2) {
 					for (int i = 2; i < accdetailsList.size(); i++) {
 						addButton();
-						et.setText(accdetailsList.get(i).get(2));
+						second_table_amount_et.setText(accdetailsList.get(i).get(2));
 
 						if ("Dr".equals(Sacctype)) {
 							dataAdapter = new ArrayAdapter<String>(this,
@@ -737,9 +737,9 @@ public class createVoucher extends Activity {
 						SaccnamePosition = dataAdapter
 								.getPosition(Ssecond_spinner);
 						dataAdapter
-								.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-						actionButton.setAdapter(dataAdapter);
-						actionButton.setSelection(SaccnamePosition);
+						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+						second_table_accountname_spinner.setAdapter(dataAdapter);
+						second_table_accountname_spinner.setSelection(SaccnamePosition);
 						dr_cr.clear();
 						dr_cr.add("Dr");
 						dr_cr.add("Cr");
@@ -748,8 +748,8 @@ public class createVoucher extends Activity {
 								android.R.layout.simple_spinner_item, dr_cr);
 						da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 						SacctypePosition = da1.getPosition(Sacctype);
-						sp1.setAdapter(da1);
-						sp1.setSelection(SacctypePosition);
+						second_table_drcr_spinner.setAdapter(da1);
+						second_table_drcr_spinner.setSelection(SacctypePosition);
 					}
 				}
 			}
@@ -787,7 +787,7 @@ public class createVoucher extends Activity {
 			}
 		});
 		// for remaining rows
-		sp1.setOnItemSelectedListener(new OnItemSelectedListener() {
+		second_table_drcr_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View v,
@@ -801,7 +801,7 @@ public class createVoucher extends Activity {
 						module.getAccountsByRule(params, vouchertypeflag,
 								context);
 						dataAdapter = module.dataAdapter;
-						actionButton.setAdapter(dataAdapter);
+						second_table_accountname_spinner.setAdapter(dataAdapter);
 					}
 				}
 			}
@@ -842,7 +842,7 @@ public class createVoucher extends Activity {
 			}
 		});
 
-		actionButton.setOnItemSelectedListener(new OnItemSelectedListener() {
+		second_table_accountname_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View v,
@@ -899,7 +899,7 @@ public class createVoucher extends Activity {
 					toastValidationMessage("No row can be added,Please fill the existing row");
 				} else {
 					for (int i = 0; i < (tableRowCount); i++) {
-						View row = list.getChildAt(i);
+						View row = table.getChildAt(i);
 
 						// amount edittext
 						EditText e = (EditText) ((ViewGroup) row).getChildAt(6);
@@ -924,7 +924,7 @@ public class createVoucher extends Activity {
 								createVoucher.this,
 								android.R.layout.simple_spinner_item, dr_cr);
 						da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-						sp1.setAdapter(da1);
+						second_table_drcr_spinner.setAdapter(da1);
 
 						// set totalDr and totalCr in textview
 						String tvTotalDr = Float.toString(totalDr);
@@ -957,7 +957,7 @@ public class createVoucher extends Activity {
 							}
 						});
 
-						sp1.setOnItemSelectedListener(new OnItemSelectedListener() {
+						second_table_drcr_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 							@Override
 							public void onItemSelected(AdapterView<?> parent,
@@ -971,7 +971,7 @@ public class createVoucher extends Activity {
 									module.getAccountsByRule(params,
 											vouchertypeflag, context);
 									dataAdapter = module.dataAdapter;
-									actionButton.setAdapter(dataAdapter);
+									second_table_accountname_spinner.setAdapter(dataAdapter);
 								}
 
 							}
@@ -987,15 +987,15 @@ public class createVoucher extends Activity {
 						// condition and set amount in new row
 						if (totalDr > totalCr) {
 							diffbal = totalDr - totalCr;
-							et.setText(String.format("%.2f", diffbal));
+							second_table_amount_et.setText(String.format("%.2f", diffbal));
 							// set 'Cr' selected in Dr/Cr dropdown
-							sp1.setSelection(1);
+							second_table_drcr_spinner.setSelection(1);
 
 						} else {
 							diffbal = totalCr - totalDr;
-							et.setText(String.format("%.2f", diffbal));
+							second_table_amount_et.setText(String.format("%.2f", diffbal));
 							// set 'Dr' selected in Dr/Cr dropdown
-							sp1.setSelection(0);
+							second_table_drcr_spinner.setSelection(0);
 
 						}
 
@@ -1021,8 +1021,9 @@ public class createVoucher extends Activity {
 				testAmountTally();
 
 				String refNumber = etRefNumber.getText().toString();
+				String strnarration = etnarration.getText().toString(); 
 
-				if (totalDr == totalCr && !"".equals(refNumber)) {
+				if(totalDr == totalCr && !"".equals(refNumber) && !"".equals(strnarration)){ 
 					if (totalDr == 0) {
 						toastValidationMessage("Please enter amount");
 					} else {
@@ -1052,13 +1053,13 @@ public class createVoucher extends Activity {
 								paramFirstRow.add(firstRowAmount);
 								paramFirstRow.add("0");
 								paramsMaster
-										.add((ArrayList<String>) paramFirstRow);
+								.add((ArrayList<String>) paramFirstRow);
 							} else {
 								paramFirstRow.add(fistRowAccountName);
 								paramFirstRow.add("0");
 								paramFirstRow.add(firstRowAmount);
 								paramsMaster
-										.add((ArrayList<String>) paramFirstRow);
+								.add((ArrayList<String>) paramFirstRow);
 							}
 						} else if (cloneflag == true) {// for cloning account
 							paramFirstRow.add(fistRowDrCr);
@@ -1068,12 +1069,12 @@ public class createVoucher extends Activity {
 						}
 
 						// remaining rows
-						int tableRowCount = list.getChildCount();
+						int tableRowCount = table.getChildCount();
 
 						for (int i = 0; i < (tableRowCount); i++) {
 							List<String> paramRow = new ArrayList<String>();
 
-							View row = list.getChildAt(i);
+							View row = table.getChildAt(i);
 							// drcr flag
 							Spinner rowDrCr = (Spinner) ((ViewGroup) row)
 									.getChildAt(0);
@@ -1097,22 +1098,22 @@ public class createVoucher extends Activity {
 								paramRow.add(rowAmount);
 								paramsMaster.add((ArrayList<String>) paramRow);
 							} else if (cloneflag == false) {// for editing
-															// account
+								// account
 								if ("Dr".equals(drcrFlag)) {
 									paramRow.add(accountName);
 									paramRow.add(rowAmount);
 									paramRow.add("0");
 									paramsMaster
-											.add((ArrayList<String>) paramRow);
+									.add((ArrayList<String>) paramRow);
 								} else {
 									paramRow.add(accountName);
 									paramRow.add("0");
 									paramRow.add(rowAmount);
 									paramsMaster
-											.add((ArrayList<String>) paramRow);
+									.add((ArrayList<String>) paramRow);
 								}
 							} else if (cloneflag == true) {// for clonning
-															// account
+								// account
 								paramRow.add(drcrFlag);
 								paramRow.add(accountName);
 								paramRow.add(rowAmount);
@@ -1147,10 +1148,10 @@ public class createVoucher extends Activity {
 
 							if ("".equals(narration)) {
 								narration = ""; // need to find solution for
-												// null
+								// null
 							}
 							if (searchFlag == false) {// for saving accounts
-														// details
+								// details
 								Object[] params_master = new Object[] {
 										refNumber, vDate, vouchertypeflag,
 										vproject, narration };
@@ -1162,7 +1163,7 @@ public class createVoucher extends Activity {
 								searchFlag = false;
 								edittabflag = false;
 							} else if (cloneflag == false) {// for saving edited
-															// account details
+								// account details
 
 								Object[] params_master = new Object[] {
 										vouchercode, vDate, vproject, narration };
@@ -1173,16 +1174,16 @@ public class createVoucher extends Activity {
 								edittabflag = true;
 								MainActivity.nameflag = false;
 								transaction_tab.tabHost.setCurrentTab(1);// for
-																			// changing
-																			// the
-																			// tab
+								// changing
+								// the
+								// tab
 								String tabname1 = transaction_tab.tabname;
 								transaction_tab.tab1.setText(tabname1);// for
-																		// changing
-																		// tab
-																		// name
+								// changing
+								// tab
+								// name
 							} else if (cloneflag == true) {// for saving cloned
-															// details
+								// details
 								Object[] params_master = new Object[] {
 										refNumber, vDate, vouchertypeflag,
 										vproject, narration };
@@ -1193,8 +1194,8 @@ public class createVoucher extends Activity {
 								// for not getting reseted
 								searchFlag = true;
 								edittabflag = false;// this flag is seted for
-													// changing tab name on tab
-													// change
+								// changing tab name on tab
+								// change
 							}
 
 							AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -1234,9 +1235,9 @@ public class createVoucher extends Activity {
 								account.setSelection(0);
 								firstRowamount.setText("0.00");
 								closing_bal.setText("0.00");
-								et1.setText("0.00");
+								second_table_closingbal_et.setText("0.00");
 
-								list.removeAllViews();
+								table.removeAllViews();
 								setFirstAndSecondRow();
 							}
 
@@ -1250,6 +1251,9 @@ public class createVoucher extends Activity {
 				} else if ("".equals(refNumber)) {
 					toastValidationMessage("Please enter voucher reference number");
 				}
+				else if ("".equals(strnarration)) {
+					toastValidationMessage("Please enter narration");
+				} 
 			}
 
 		});
@@ -1266,60 +1270,60 @@ public class createVoucher extends Activity {
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				builder.setMessage("Are you sure, you want reset all fields? ")
-						.setCancelable(false)
-						.setPositiveButton("Yes",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
+				.setCancelable(false)
+				.setPositiveButton("Yes",
+						new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,
+							int id) {
 
-										name = "Create voucher";
-										// Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
-										if ("Create voucher".equals(name)) {
-											etRefNumber.setEnabled(true);
-										}
-										etRefNumber = (EditText) findViewById(R.id.etRefNumber);
-										String reff_no = transaction
-												.getLastReferenceNumber(
-														new Object[] { vouchertypeflag },
-														client_id);
-										etRefNumber.setText(reff_no.toString());
-										etnarration = (EditText) findViewById(R.id.etVoucherNarration);
-										etnarration.setText("");
+						name = "Create voucher";
+						// Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
+						if ("Create voucher".equals(name)) {
+							etRefNumber.setEnabled(true);
+						}
+						etRefNumber = (EditText) findViewById(R.id.etRefNumber);
+						String reff_no = transaction
+								.getLastReferenceNumber(
+										new Object[] { vouchertypeflag },
+										client_id);
+						etRefNumber.setText(reff_no.toString());
+						etnarration = (EditText) findViewById(R.id.etVoucherNarration);
+						etnarration.setText("");
 
-										TextView tvproject = (TextView) projetct_name
-												.findViewById(R.id.tvSubItem1);
-										tvproject.setText("No Project");
+						TextView tvproject = (TextView) projetct_name
+								.findViewById(R.id.tvSubItem1);
+						tvproject.setText("No Project");
 
-										DrCr = (Spinner) findViewById(R.id.sDrCr);
-										DrCr.setSelection(0);
+						DrCr = (Spinner) findViewById(R.id.sDrCr);
+						DrCr.setSelection(0);
 
-										account = (Spinner) findViewById(R.id.getAccountByRule);
-										account.setSelection(0);
+						account = (Spinner) findViewById(R.id.getAccountByRule);
+						account.setSelection(0);
 
-										firstRowamount.setText("0.00");
-										closing_bal.setText("0.00");
-										et1.setText("0.00");
-										searchFlag = false;
-										cloneflag = true;
-										setVoucherDate();
+						firstRowamount.setText("0.00");
+						closing_bal.setText("0.00");
+						second_table_closingbal_et.setText("0.00");
+						searchFlag = false;
+						cloneflag = true;
+						setVoucherDate();
 
-										// add a keylistener to keep track user
-										// input
+						// add a keylistener to keep track user
+						// input
 
-										list.removeAllViews();
-										setFirstAndSecondRow();
-										String tabname1 = transaction_tab.tabname;
-										transaction_tab.tab1.setText(tabname1);
+						table.removeAllViews();
+						setFirstAndSecondRow();
+						String tabname1 = transaction_tab.tabname;
+						transaction_tab.tab1.setText(tabname1);
 
-									}
-								})
-						.setNegativeButton("No",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-										dialog.cancel();
-									}
-								});
+					}
+				})
+				.setNegativeButton("No",
+						new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,
+							int id) {
+						dialog.cancel();
+					}
+				});
 				AlertDialog alert = builder.create();
 				alert.show();
 			}
@@ -1336,7 +1340,7 @@ public class createVoucher extends Activity {
 		String[] abc = new String[] { "rowid", "col_1" };
 		int[] pqr = new int[] { R.id.tvRowTitle1, R.id.tvSubItem1 };
 		if (searchFlag == true) {// this code will be executed while
-									// cloning,editing
+			// cloning,editing
 			List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("rowid", "" + "Select project");
@@ -1377,8 +1381,8 @@ public class createVoucher extends Activity {
 					for (Object pn : projectnames) {
 						Object[] p = (Object[]) pn;
 						projectnamelist.add((String) p[1]); // p[0] is project
-															// code & p[1] is
-															// projectname
+						// code & p[1] is
+						// projectname
 					}
 
 					/*
@@ -1399,16 +1403,16 @@ public class createVoucher extends Activity {
 					builder.setItems(allProjectNames,
 							new DialogInterface.OnClickListener() {
 
-								@Override
-								public void onClick(DialogInterface dialog,
-										int pos) {
-									// set project name in project field
+						@Override
+						public void onClick(DialogInterface dialog,
+								int pos) {
+							// set project name in project field
 
-									projectName.setText(allProjectNames[pos]);
-									vproject = allProjectNames[pos].toString();
+							projectName.setText(allProjectNames[pos]);
+							vproject = allProjectNames[pos].toString();
 
-								}
-							});
+						}
+					});
 					// building a complete dialog
 					dialog = builder.create();
 					dialog.show();
@@ -1506,7 +1510,7 @@ public class createVoucher extends Activity {
 								+ mFormat.format(Double.valueOf(Integer
 										.parseInt((mFormat.format(Double
 												.valueOf(month)))) + 1)) + "-"
-								+ mFormat.format(Double.valueOf(year)));
+												+ mFormat.format(Double.valueOf(year)));
 				Calendar cal1 = Calendar.getInstance(); // financial from date
 				Calendar cal2 = Calendar.getInstance(); // financial to date
 				Calendar cal3 = Calendar.getInstance(); // voucher date
@@ -1530,18 +1534,18 @@ public class createVoucher extends Activity {
 
 					// set selected date into textview
 					voucherDate.setText(new StringBuilder()
-							.append(mFormat.format(Double.valueOf(day)))
-							.append("-")
-							.append(mFormat.format(Double.valueOf(Integer
-									.parseInt((mFormat.format(Double
-											.valueOf(month)))) + 1)))
-							.append("-").append(year));
+					.append(mFormat.format(Double.valueOf(day)))
+					.append("-")
+					.append(mFormat.format(Double.valueOf(Integer
+							.parseInt((mFormat.format(Double
+									.valueOf(month)))) + 1)))
+									.append("-").append(year));
 					vDate = mFormat.format(Double.valueOf(day))
 							+ "-"
 							+ (mFormat.format(Double.valueOf(Integer
 									.parseInt((mFormat.format(Double
 											.valueOf(month)))) + 1))) + "-"
-							+ year;
+											+ year;
 				} else {
 					toastValidationMessage("Please enter proper voucher date");
 				}
@@ -1558,33 +1562,33 @@ public class createVoucher extends Activity {
 	 * Deletes itself when the button is pressed.
 	 */
 	private static class RowRemover implements OnClickListener {
-		private TableLayout list;
+		private TableLayout table;
 		private TableRow rowToBeRemoved;
 
 		/***
-		 * @param list
-		 *            The list that the button belongs to
+		 * @param table
+		 *            The table that the button belongs to
 		 * @param row
 		 *            The row that the button belongs to
 		 */
-		public RowRemover(TableLayout list, TableRow row) {
-			this.list = list;
+		public RowRemover(TableLayout table, TableRow row) {
+			this.table = table;
 			this.rowToBeRemoved = row;
 
 		}
 
 		public void onClick(View view) {
-			int tableRowCount = list.getChildCount();
+			int tableRowCount = table.getChildCount();
 			// System.out.println("count in minus:"+tableRowCount);
 			if (tableRowCount == 1) {
 
 			} else if (tableRowCount == 2) {
-				list.removeView(rowToBeRemoved);
+				table.removeView(rowToBeRemoved);
 				closing_bal.setFocusableInTouchMode(true);
 				closing_bal.requestFocus();
 
 			} else {
-				list.removeView(rowToBeRemoved);
+				table.removeView(rowToBeRemoved);
 				e.setFocusableInTouchMode(true);
 				e.requestFocus();
 
@@ -1596,12 +1600,12 @@ public class createVoucher extends Activity {
 		/*
 		 * tableRowCount this method add the transaction row to the table
 		 */
-		newRow = new TableRow(list.getContext());
+		newRow = new TableRow(table.getContext());
 		newRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT));
 		// newRow.addView(child, width, height)
 
-		sp1 = new Spinner(newRow.getContext());
+		second_table_drcr_spinner = new Spinner(newRow.getContext());
 
 		TextView tv = new TextView(newRow.getContext());
 		tv.setText("        Account Name");
@@ -1609,8 +1613,8 @@ public class createVoucher extends Activity {
 		tv.setTextColor(Color.WHITE);
 		tv.setVisibility(TextView.GONE);
 
-		actionButton = new Spinner(newRow.getContext());
-		actionButton.setMinimumWidth(259);// for emulator keep 283
+		second_table_accountname_spinner = new Spinner(newRow.getContext());
+		second_table_accountname_spinner.setMinimumWidth(259);// for emulator keep 283
 
 		OnDrCrItemSelectedListener();
 
@@ -1628,35 +1632,35 @@ public class createVoucher extends Activity {
 		tv2.setVisibility(TextView.GONE);
 
 		// tv1.setWidth(100);
-		et = new EditText(newRow.getContext());
-		et.setText("0.00");
-		et.setInputType(InputType.TYPE_CLASS_NUMBER
+		second_table_amount_et = new EditText(newRow.getContext());
+		second_table_amount_et.setText("0.00");
+		second_table_amount_et.setInputType(InputType.TYPE_CLASS_NUMBER
 				| InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
-		et1 = new EditText(newRow.getContext());
-		et1.setText("0.00");
-		et1.setInputType(InputType.TYPE_CLASS_NUMBER
+		second_table_closingbal_et = new EditText(newRow.getContext());
+		second_table_closingbal_et.setText("0.00");
+		second_table_closingbal_et.setInputType(InputType.TYPE_CLASS_NUMBER
 				| InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
-		et1.setEnabled(false);
+		second_table_closingbal_et.setEnabled(false);
 
-		// actionButton.setText( "Action: " + ++rowsSoFar );
+		// second_table_accountname_spinner.setText( "Action: " + ++rowsSoFar );
 		removeSelfButton = new Button(newRow.getContext());
-		removeSelfButton.setText("     -      "); // for tablet ***** add space
+		removeSelfButton.setText("      -      "); // for tablet ***** add space
 
 		// pass on all the information necessary for deletion
-		removeSelfButton.setOnClickListener(new RowRemover(list, newRow));
+		removeSelfButton.setOnClickListener(new RowRemover(table, newRow));
 
-		newRow.addView(sp1, 200, 50);
+		newRow.addView(second_table_drcr_spinner, 100, 50);
 		newRow.addView(tv);
-		newRow.addView(actionButton, 259, 50);
+		newRow.addView(second_table_accountname_spinner, 259, 50);
 		newRow.addView(tv1);
 		newRow.addView(tv2);
 
-		newRow.addView(et1, 230, 50);
-		newRow.addView(et, 230, 50);
+		newRow.addView(second_table_closingbal_et, 160, 50);
+		newRow.addView(second_table_amount_et, 180, 50);
 		newRow.addView(removeSelfButton);
-		list.addView(newRow);
+		table.addView(newRow);
 		OnAmountFocusChangeListener();
 	}
 
@@ -1667,11 +1671,11 @@ public class createVoucher extends Activity {
 		 */
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setMessage(message).setCancelable(false)
-				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
+		.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
 
-					}
-				});
+			}
+		});
 
 		AlertDialog alert = builder.create();
 		alert.show();

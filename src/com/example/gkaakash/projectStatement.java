@@ -212,7 +212,15 @@ public class projectStatement extends Activity{
         	alert.show();	}
     }
    
-    
+    /*
+     * this method adds the floating header to the table on touching it.
+     * In this case, we have a main table which includes table rows and a header at the load time.
+     * and another table(for floating header) is invisible at load time which is located at the top of main table.
+     * on the very first touch of the main table, we will add floating header columns and
+     * make it visible.
+     * at the same time we will set width 0 for the main table header to avoid
+     * double headers at the same time.
+     */
     private void floatingHeader() {
     	projectStatementTable.setOnTouchListener(new OnTouchListener() {
 			
@@ -418,29 +426,21 @@ public class projectStatement extends Activity{
      * this function add the value to the row
      */
     void addRow(String param,final int i){
-//    	Toast.makeText(projectStatement.this,
-//				"Hii" + projectStatementGrid.get(i).get(1), Toast.LENGTH_SHORT)
-//				.show();
-//		 acc_name1 = projectStatementGrid.get(i).get(1).toString();
-//		Intent intent = new Intent(getApplicationContext(),
-//				ledger.class);
-//		intent.putExtra("flag", "from_projStatement");
-//		startActivity(intent);
-    	
     	tr.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
-//				Toast.makeText(projectStatement.this,
-//						"Hii" , Toast.LENGTH_SHORT)
-//						.show();
-				 acc_name1 = projectStatementGrid.get(i).get(1).toString();
+				String accname = projectStatementGrid.get(i).get(1).toString();
+				
+				if(!(accname.equalsIgnoreCase("") ||
+						accname.equalsIgnoreCase("Account Name"))){
+					acc_name1 = accname;
 					Intent intent = new Intent(getApplicationContext(),
 							ledger.class);
 					intent.putExtra("flag", "from_projStatement");
 					startActivity(intent);
-
+				}
 			}
     	});
     	

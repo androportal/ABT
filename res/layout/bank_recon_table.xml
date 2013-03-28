@@ -1,9 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/Scroll"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/dark_gray_background">
+
    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -50,7 +45,7 @@
               android:textSize="18dp" />
           
         </LinearLayout>
-  
+
          <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/layout_root"
@@ -61,18 +56,29 @@
               	android:layout_height="fill_parent"
           		android:layout_width="fill_parent"
             	android:fillViewport="true">
+            	
+                 <LinearLayout 
+                    android:layout_height="fill_parent"
+            		android:layout_width="fill_parent"
+            		android:orientation="vertical">
+            		
+                    <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1,2,3,4,5"
+                    android:id="@+id/floating_heading_table"
+                    android:background="#696565" 
+                    android:visibility="invisible">
+                </TableLayout>
+                 
               <ScrollView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:fillViewport="true"
+	            android:id="@+id/Scroll"
 	            android:scrollbarFadeDuration="0"
 	            android:scrollbarAlwaysDrawVerticalTrack="true" 
 	            android:scrollbarAlwaysDrawHorizontalTrack="true">
-
-            	<LinearLayout
-       				android:layout_width="wrap_content"
-            		android:layout_height="0dp"
-            		android:orientation="vertical">
             		
 		            <LinearLayout
 		                android:layout_width="wrap_content"
@@ -98,19 +104,16 @@
 				            android:layout_height="wrap_content"
 				            android:stretchColumns="*"
 				            android:background="#696565"
-				            android:layout_weight="1" />
+				            android:layout_weight="1"
+				            android:layout_gravity="center_horizontal" />
                
                 	</LinearLayout>
                 
-                </LinearLayout>
+                
             </ScrollView>
+            </LinearLayout>
             </HorizontalScrollView>
          </LinearLayout>  
-       
          
        
     </LinearLayout>
-
-   
-
-</ScrollView>

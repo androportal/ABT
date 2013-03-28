@@ -50,14 +50,12 @@
 		        android:paddingBottom="10dp" 
 		        android:paddingTop="5dp">
 			    
-		      
-		        
 			    <TextView
 			        android:id="@+id/account_type"
 			        android:layout_width="100dp"
 			        android:layout_height="wrap_content"
 			        android:layout_gravity="center"
-			        android:text="     Account type"
+			        android:text="Account type"
 			        android:textColor="#FFFFFF"
 			        android:textSize="16dp" />
 			    
@@ -66,7 +64,7 @@
 			        android:layout_width="260dp"
 			        android:layout_height="wrap_content"
 			        android:layout_gravity="center"
-			        android:text="   Account name"
+			        android:text="Account name"
 			        android:textColor="#FFFFFF"
 			        android:textSize="16dp" />
 			    
@@ -74,7 +72,7 @@
 			        android:id="@+id/amount"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:text="             Closing balance"
+			        android:text="     Closing balance"
 			        android:textColor="#FFFFFF"
 			        android:textSize="16dp" />
 			    
@@ -82,7 +80,14 @@
 			        android:id="@+id/closing_balance"
 			        android:layout_width="250dp"
 			        android:layout_height="wrap_content"
-			        android:text="                Amount"
+			        android:text="Amount"
+			        android:textColor="#FFFFFF"
+			        android:textSize="16dp" />
+			    
+			    <TextView
+			        android:layout_width="200dp"
+			        android:layout_height="wrap_content"
+			        android:text="add button"
 			        android:textColor="#FFFFFF"
 			        android:textSize="16dp" />
 
@@ -91,13 +96,10 @@
 		    <TableRow
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content" >
-			
-		        
-		        
 
 		   	<Spinner
 		   	    android:id="@+id/sDrCr"
-		   	    android:layout_width="200dp"
+		   	    android:layout_width="50dp"
 		   	    android:layout_height="wrap_content"
 		   	    android:entries="@array/SearchBy_arrays"
 		   	    android:paddingRight="50dp" />
@@ -106,14 +108,14 @@
 		        android:id="@+id/accountName"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="        Account name"
+		        android:text="Account name"
 		        android:textSize="14dp"
 		        android:textColor="#FFFFFF" 
 		        android:visibility="gone"/>
 
 		    <Spinner
 		        android:id="@+id/getAccountByRule"
-		        android:layout_width="259px"
+		        android:layout_width="259dp"
 		        android:layout_height="wrap_content"
 		        android:entries="@array/accountName_arrays"
 		        android:prompt="@string/accountName_prompt" />
@@ -122,7 +124,7 @@
 		        android:id="@+id/amount"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="        Amount"
+		        android:text="Amount"
 		        android:textSize="14dp"
 		        android:textColor="#FFFFFF" 
 		        android:visibility="gone"/>
@@ -140,10 +142,10 @@
 		     
 			  <EditText
 			      android:id="@+id/Closing_balance"
-			      android:layout_width="230dp"
+			      android:layout_width="160dp"
 			      android:layout_height="wrap_content"
 			      android:inputType="numberDecimal"
-			      android:text="0.00             "
+			      android:text="0.00"
 			      android:enabled="false" >
 				  
 	          <requestFocus />
@@ -151,11 +153,10 @@
 			   
 			   <EditText
 			       android:id="@+id/etDrCrAmount"
-			       android:layout_width="230dp"
+			       android:layout_width="180dp"
 			       android:layout_height="wrap_content"
 			       android:inputType="numberDecimal"
-			       android:text="0.00            " 
-			      >
+			       android:text="0.00" >
 
 	          <requestFocus />
 			  </EditText>

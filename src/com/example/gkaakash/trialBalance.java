@@ -220,7 +220,15 @@ public class trialBalance extends Activity{
 	   	}
     }
    
-    
+    /*
+     * this method adds the floating header to the table on touching it.
+     * In this case, we have a main table which includes table rows and a header at the load time.
+     * and another table(for floating header) is invisible at load time which is located at the top of main table.
+     * on the very first touch of the main table, we will add floating header columns and
+     * make it visible.
+     * at the same time we will set width 0 for the main table header to avoid
+     * double headers at the same time.
+     */
     private void floatingHeader() {
     		trialBaltable.setOnTouchListener(new OnTouchListener() {
 			
@@ -471,9 +479,10 @@ public class trialBalance extends Activity{
        
         for(int k=0;k<ColumnNameList.length;k++){
             /** Creating a TextView to add to the row **/
-            addRow(ColumnNameList[k],k);
+            addRow(ColumnNameList[k],0);
             label.setBackgroundColor(Color.parseColor("#348017"));
             label.setGravity(Gravity.CENTER);
+            tr.setClickable(false);
         }
        
          // Add the TableRow to the TableLayout
@@ -489,16 +498,14 @@ public class trialBalance extends Activity{
 
 			@Override
 			public void onClick(View v) {
-
-//				Toast.makeText(trialBalance.this,
-//						"Hii" + trialBalGrid.get(i).get(1), Toast.LENGTH_SHORT)
-//						.show();
-				acc_name = trialBalGrid.get(i).get(1).toString();
-				Intent intent = new Intent(getApplicationContext(),
-						ledger.class);
-				intent.putExtra("flag", "from_trialBal");
-				startActivity(intent);
-
+				String accname = trialBalGrid.get(i).get(1).toString();
+				//System.out.println("name is"+accname);
+				if(!(accname.equalsIgnoreCase("") || accname.equalsIgnoreCase("Account Name"))){
+					acc_name = accname;
+					Intent intent = new Intent(getApplicationContext(),ledger.class);
+					intent.putExtra("flag", "from_trialBal");
+					startActivity(intent); 
+				}
 			}
     	});
         label = new TextView(this);

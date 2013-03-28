@@ -29,12 +29,16 @@ import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.renderscript.RSRuntimeException;
+import android.renderscript.Sampler.Value;
 import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -50,8 +54,9 @@ public class balanceSheet extends Activity{
     static Integer client_id;
     static String result;
     private Report report;
-     Object[] balancesheetresult;
-    String financialFromDate,financialToDate,accountName,projectName,fromDate,toDate,balancetype;
+    Object[] balancesheetresult;
+    String financialToDate,accountName,projectName,fromDate,toDate;
+    static String balancetype, financialFromDate, balanceToDateString, getSelectedOrgType;
     TableRow tr;
     Date date;
     static ArrayList<ArrayList> BalanceSheetGrid;
@@ -62,8 +67,7 @@ public class balanceSheet extends Activity{
     private View label;
     private ArrayList<String> TotalAmountList;
     private TextView balDiff;
-    String balanceToDateString;
-    String getSelectedOrgType,OrgName, OrgPeriod,balancePeriod,sFilename ;
+    String OrgName, OrgPeriod,balancePeriod,sFilename ;
     String[]pdf_params;
     private String balancefromDateString;
     Boolean updown=false;
@@ -73,7 +77,7 @@ public class balanceSheet extends Activity{
     Boolean alertdialog = false;
     ObjectAnimator animation2;
     boolean reportmenuflag;
-    
+    static String acc_name1;
     
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -232,7 +236,7 @@ public class balanceSheet extends Activity{
 	                   alert.show();
 				}
 			});
-    		
+    		drillDown();
     	} catch (Exception e) {
     		AlertDialog.Builder builder = new AlertDialog.Builder(balanceSheet.this);
 
@@ -248,6 +252,76 @@ public class balanceSheet extends Activity{
     		AlertDialog alert = builder.create();
     		alert.show();	}
     }
+    
+    
+    /*
+     * this method is used to add the drill down functionality on clicking the table row.
+     * basically we want account name value from selected row.
+     * In balancesheet we have two tables, so get the value of account name textview from selected table.
+     */
+    private void drillDown() {
+		int count = balanceSheetTable1.getChildCount();
+		for (int i = 0; i < count; i++) {
+			final View row = balanceSheetTable1.getChildAt(i);
+			row.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(0);
+					final TextView tv = (TextView) l.getChildAt(0);
+					//Toast.makeText(balanceSheet.this, tv.getText().toString(), Toast.LENGTH_SHORT).show();
+					checkForAccountName(tv.getText().toString());
+				}
+
+				
+			});
+		}
+		
+		int count1 = balanceSheetTable2.getChildCount();
+		for (int i = 0; i < count1; i++) {
+			final View row = balanceSheetTable2.getChildAt(i);
+			row.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(0);
+					final TextView tv = (TextView) l.getChildAt(0);
+					//Toast.makeText(balanceSheet.this, tv.getText().toString(), Toast.LENGTH_SHORT).show();
+					checkForAccountName(tv.getText().toString());
+				}
+			});
+		}
+		
+	}
+
+    /*
+     * below method helps to find out the selected string is account name or not.
+     * initially need to check if string is in uppercase, because all the group name and non-account strings are sent 
+     * in uppercase from back-end.
+     * then, check for special syntax like /:'&-+^ as non-account strings can contain any of these special syntax.
+     * and at last check for empty string and header column values.
+     */
+    private void checkForAccountName(String accname) {
+    	Pattern pattern = Pattern.compile("^[A-Z]+$");//for checking whether the string is in uppercase 
+    	Matcher matcher = pattern.matcher((accname.replaceAll("\\s","")).replaceAll("[/:'&-+^]*", ""));
+    	boolean found = matcher.find();
+    	System.out.println("value:"+found);
+    	if(found == false && !(accname.equalsIgnoreCase("") || 
+    							accname.equalsIgnoreCase("Total") ||
+    							accname.equalsIgnoreCase("Particulars")||
+    							accname.equalsIgnoreCase("Property & Assets") ||
+    							accname.equalsIgnoreCase("Corpus & Liabilities"))){
+    		//Toast.makeText(balanceSheet.this, "account name", Toast.LENGTH_SHORT).show();
+			acc_name1 = accname;
+			Intent intent = new Intent(getApplicationContext(),
+					ledger.class);
+			intent.putExtra("flag", "from_balanceSheet");
+			startActivity(intent);
+    	}
+		
+	}
     
     
     private void animated_dialog() {
@@ -437,13 +511,13 @@ public class balanceSheet extends Activity{
     				if(name.equals("CORPUS")
     						||name.equals("CAPITAL") 
     						||name.equals("RESERVES")
-    						||name.equals("LOANS(Liability)")
+    						||name.equalsIgnoreCase("LOANS(Liability)")
     						||name.equals("CURRENT LIABILITIES")
     						||name.equals("FIXED ASSETS")
     						||name.equals("CURRENT ASSETS")
-    						||name.equals("LOANS(Asset)")
+    						||name.equalsIgnoreCase("LOANS(Asset)")
     						||name.equals("INVESTMENTS")
-    						||name.equals("MISCELLANEOUS EXPENSES(ASSET)"))
+    						||name.equalsIgnoreCase("MISCELLANEOUS EXPENSES(ASSET)"))
     				{
     					((TextView)label).setGravity(Gravity.LEFT);
     				}
