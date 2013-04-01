@@ -26,7 +26,9 @@ import android.text.Layout;
 import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
@@ -72,6 +74,9 @@ public class SearchVoucher extends Activity {
 	static String searchByRefNumber;
 	DecimalFormat formatter = new DecimalFormat("#,##,##,###.00");
 	String colValue;
+	int oneTouch = 1;
+	TableLayout floating_heading_table;
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -85,6 +90,12 @@ public class SearchVoucher extends Activity {
 		//for two digit format date for dd and mm
 		mFormat= new DecimalFormat("00");
 		mFormat.setRoundingMode(RoundingMode.DOWN);
+		
+		
+		vouchertable = (TableLayout)findViewById(R.id.maintable);
+		floating_heading_table = (TableLayout) findViewById(R.id.floating_heading_table);
+		floating_heading_table.setVisibility(TableLayout.GONE);
+
 
 		financialFromDate =Startup.getfinancialFromDate(); 
 		financialToDate = Startup.getFinancialToDate();
@@ -106,6 +117,7 @@ public class SearchVoucher extends Activity {
 
 			Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
 			getallvouchers(params);
+			floatingHeader();
 
 
 		} catch (Exception e) {
@@ -123,6 +135,81 @@ public class SearchVoucher extends Activity {
 			AlertDialog alert = builder.create();
 			alert.show();
 		}
+	}
+
+	private void floatingHeader() {
+		 System.out.println("we are in floating function");
+		 
+		 vouchertable.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+                if (oneTouch == 1) {
+                    floating_heading_table.setVisibility(TableLayout.VISIBLE);
+
+                    // System.out.println("we are in if");
+
+                    int rowcount = vouchertable.getChildCount();
+                    View row = vouchertable.getChildAt(rowcount - 1);
+
+                    final SpannableString rsSymbol = new SpannableString(
+                            SearchVoucher.this.getText(R.string.Rs));
+                    /** Create a TableRow dynamically **/
+                    String[] ColumnNameList = new String[] { "V. No.","Reference No","Date","Voucher Type","Account Name","Particular",rsSymbol+"Amount","Narration"};
+
+
+                    tr = new TableRow(SearchVoucher.this);
+
+                    for (int k = 0; k < ColumnNameList.length; k++) {
+                        /** Creating a TextView to add to the row **/
+                        addRow(ColumnNameList[k], k);
+                        label.setBackgroundColor(Color.parseColor("#348017"));
+                        label.setGravity(Gravity.CENTER);
+
+                        LinearLayout l = (LinearLayout) ((ViewGroup) row)
+                                .getChildAt(k);
+                        label.setWidth(l.getWidth());
+                        tr.setClickable(false);
+                        params.height = LayoutParams.WRAP_CONTENT;
+                        // System.out.println("size is"+l.getWidth());
+                    }
+
+                    // Add the TableRow to the TableLayout
+                    floating_heading_table.addView(tr,
+                            new TableLayout.LayoutParams(
+                                    LayoutParams.FILL_PARENT,
+                                    LayoutParams.WRAP_CONTENT));
+                    // ledgertable.removeViewAt(0);
+                    vouchertable.getChildAt(0).setVisibility(View.INVISIBLE);
+
+                    View firstrow = vouchertable.getChildAt(0);
+                    for (int k = 0; k < ColumnNameList.length; k++) {
+                        LinearLayout l = (LinearLayout) ((ViewGroup) firstrow)
+                                .getChildAt(k);
+                        TextView tv = (TextView) l.getChildAt(0);
+                        tv.setHeight(0);
+
+                        l.getLayoutParams().height = 0;
+                    }
+                    // ledgertable.getChildAt(0).setLayoutParams(new
+                    // TableLayout.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    // 0));
+
+                }
+                oneTouch++;
+                
+                /*
+                 * make table rows clikable now
+                 */
+                int count = vouchertable.getChildCount();
+                for (int i = 0; i < count; i++) {
+                    TableRow row = (TableRow) vouchertable.getChildAt(i);
+                    row.setClickable(true);    
+                }
+                return false;
+			}
+		});
+	       
 	}
 
 	private void setOnSearchButtonClick() {
@@ -301,9 +388,10 @@ public class SearchVoucher extends Activity {
 
 	public void addTable() {
 
-		if(searchedVoucherGrid.size()>0){
-			addHeader();
-		}
+		if(searchedVoucherGrid.size() > 0){
+            addHeader();
+        }
+
 
 
 		/** Create a TableRow dynamically **/
@@ -314,7 +402,10 @@ public class SearchVoucher extends Activity {
 
 			for(int j=0;j<columnValue.size();j++){
 				/** Creating a TextView to add to the row **/
-				addRow(columnValue.get(j),i);  ////
+				addRow(columnValue.get(j),i); 
+				if(oneTouch == 1){
+                    tr.setClickable(false);
+                }
 				// System.out.println("rowid"+i);
 				label.setBackgroundColor(Color.BLACK);
 				/*
@@ -529,12 +620,18 @@ public class SearchVoucher extends Activity {
 				}
 
 			}
+			if(searchedVoucherList.size() != 0){
+				searchedVoucherGrid.add(searchedVoucherList);
+			}
 			searchedVoucherGrid.add(searchedVoucherList);
 		}
-		vouchertable = (TableLayout)findViewById(R.id.maintable);
 		vouchertable.removeAllViews();
-
-		addTable();
+        System.out.println("grid in resume"+searchedVoucherGrid);
+        if(searchedVoucherGrid.size() > 0){
+                addTable();
+        }else{
+                floating_heading_table.removeAllViews();
+        }
 	}
 
 	/*
@@ -546,19 +643,35 @@ public class SearchVoucher extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
-		if(searchVoucherBy == 1){ // by reference number
-			Object[] params = new Object[]{1,searchByRefNumber,financialFromDate,financialToDate,""};
-			getallvouchers(params);
-		}
-		else if(searchVoucherBy == 2){ // by date
-			Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
-			getallvouchers(params);
-		}
-		else if(searchVoucherBy == 3){ // narration
-			Object[] params = new Object[]{3,"",financialFromDate,financialToDate,searchByNarration};
-			getallvouchers(params);
-		}
+        if(searchVoucherBy == 1){ // by reference number
+                Object[] params = new Object[]{1,searchByRefNumber,financialFromDate,financialToDate,""};
+                getallvouchers(params);
+        }
+        else if(searchVoucherBy == 2){ // by date
+                Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
+                getallvouchers(params);
+        }
+        else if(searchVoucherBy == 3){ // narration
+                Object[] params = new Object[]{3,"",financialFromDate,financialToDate,searchByNarration};
+                getallvouchers(params);
+        }
+
+        /*
+         * hide header row from voucher table if floating header is present
+         */
+        if(searchedVoucherGrid.size() > 0){
+        if(oneTouch > 1){
+                View firstrow = vouchertable.getChildAt(0);
+                for (int k = 0; k < 8; k++) {
+                        LinearLayout l = (LinearLayout) ((ViewGroup) firstrow)
+                                        .getChildAt(k);
+                        TextView tv = (TextView) l.getChildAt(0);
+                        tv.setHeight(0);
+
+                        l.getLayoutParams().height = 0;
+                }
+        }
+        }
 
 	}
 

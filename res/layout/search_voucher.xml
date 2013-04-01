@@ -67,24 +67,40 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp" >
-        	 <HorizontalScrollView 
-       			android:layout_height="fill_parent"
-            	android:layout_width="fill_parent"
-            	android:fillViewport="true">
-            
-              <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        	  <HorizontalScrollView 
+                android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
             android:fillViewport="true">
-                <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:stretchColumns=",1,2,3,4"
-            android:id="@+id/maintable"
-            android:background="#696565" >
-               </TableLayout>
                 
+                <LinearLayout 
+                    android:layout_height="fill_parent"
+            		android:layout_width="fill_parent"
+            		android:orientation="vertical">
+            		
+                    <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1,2,3,4,5"
+                    android:id="@+id/floating_heading_table"
+                    android:background="#696565" 
+                    android:visibility="invisible">
+                </TableLayout>
+                
+              <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ScrollLedger"
+            android:fillViewport="true">
+            
+                <TableLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:stretchColumns="0,1,2,3,4,5"
+                    android:id="@+id/maintable"
+                    android:background="#696565">
+                </TableLayout>
             </ScrollView>
+       		</LinearLayout>
             </HorizontalScrollView>
          </LinearLayout>
 

@@ -202,38 +202,8 @@ public class balanceSheet extends Activity{
 				
 				@Override
 				public void onClick(View v) {
-					AlertDialog.Builder builder = new AlertDialog.Builder(balanceSheet.this);
-					   builder.setMessage("Do you want to create PDF")
-					           .setCancelable(false)
-					           .setPositiveButton("Yes",
-					                   new DialogInterface.OnClickListener() {
-					                       public void onClick(DialogInterface dialog, int id) {
-					                    	   	PdfGenaretor pdfgen = new PdfGenaretor();
-					                    	   	try {
-					            					
-					            					pdfgen.generateBalancePDFFile(BalanceGrid1,BalanceGrid2,pdf_params);
-					            					//generatePDFFile(BalanceSheetGrid,pdf_params);
-					            					
-					            					//generatePDFFile("balnce.pdf",pdf_params);
-					            			        AlertDialog.Builder builder1 = new AlertDialog.Builder(balanceSheet.this );
-					            			        builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+sFilename);
-					            			        AlertDialog alert1 = builder1.create();
-					            			        alert1.show();
-					            			        alert1.setCancelable(true);
-					            			        alert1.setCanceledOnTouchOutside(true);
-					            				} catch (DocumentException e) {
-					            					// TODO Auto-generated catch block
-					            					e.printStackTrace();
-					            				}
-					                       } 
-					                   })
-					               .setNegativeButton("No", new DialogInterface.OnClickListener() {
-							       public void onClick(DialogInterface dialog, int id) {
-							         
-							       }
-							   });
-					   AlertDialog alert = builder.create();
-	                   alert.show();
+					module m=new module();
+					m.generate_pdf1(balanceSheet.this, pdf_params,sFilename,BalanceGrid1,BalanceGrid2);
 				}
 			});
     		drillDown();
