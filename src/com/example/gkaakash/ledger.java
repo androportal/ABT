@@ -2,6 +2,7 @@ package com.example.gkaakash;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -14,7 +15,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import com.gkaakash.controller.PdfGenaretor;
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
@@ -47,6 +47,8 @@ import android.os.Environment;
 import android.text.SpannableString;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,7 +108,35 @@ public class ledger extends Activity {
 	ArrayList<String> columnValue;
 	static String code;
 	static String get_extra_flag;
-
+	String msg;
+//	private int group1Id = 1;
+//	int PDF = Menu.FIRST;
+//	int CSV=Menu.FIRST+1;
+//	
+//	
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//
+//		menu.add(group1Id, PDF, PDF, "PDF");
+//		menu.add(group1Id, CSV, CSV, "CSV");
+//		return super.onCreateOptionsMenu(menu);
+//	}
+//
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		switch (item.getItemId()) {
+//		case 1:			
+//			m.generate_pdf(ledger.this, pdf_params, sFilename, ledgerGrid);
+//			return true;
+//
+//		case 2:
+//			m.csv_writer(ledgerGrid);
+//			Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show();
+//			return true;
+//		}
+//		return super.onOptionsItemSelected(item);
+//	}
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -115,6 +145,8 @@ public class ledger extends Activity {
 		report = new Report();
 		transaction = new Transaction();
 		client_id = Startup.getClient_id();
+		m=new module();
+		msg="At lease 2 accounts require to enter transaction, please create account!";
 		reportmenuflag = MainActivity.reportmenuflag;
 		// customizing title bar
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
@@ -124,6 +156,7 @@ public class ledger extends Activity {
 		smallBold.setStyle(Font.BOLD);
 		bigBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 		smallNormal = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL);
+		
 		try {
 			floating_heading_table = (TableLayout) findViewById(R.id.floating_heading_table);
 			floating_heading_table.setVisibility(TableLayout.GONE);
@@ -238,10 +271,12 @@ public class ledger extends Activity {
 				}
 
 				ledgerGrid.add(ledgerResultList);
-			}
+			} 
 
 			ledgertable = (TableLayout) findViewById(R.id.maintable);
 			addTable();
+			   
+          
 
 			final TextView tvReportTitle = (TextView) findViewById(R.id.tvReportTitle);
 			tvReportTitle.setText("Menu >> " + "Report >> " + "Ledger");
@@ -273,10 +308,12 @@ public class ledger extends Activity {
 				public void onClick(View v) {
 					module m=new module();
 					m.generate_pdf(ledger.this, pdf_params,sFilename,ledgerGrid);
-				
+					m.csv_writer(ledgerGrid);
+					
+					
 				}
 			});
-			animated_dialog();
+			animated_dialog(); 
 			floatingHeader();
 
 		} catch (Exception e) {
@@ -443,7 +480,7 @@ public class ledger extends Activity {
 		// System.out.println("ledgerGrid."+ledgerGrid);
 
 		/** Create a TableRow dynamically **/
-		for (int i = 0; i < ledgerGrid.size(); i++) {
+		for (int i = 0; i < ledgerGrid.size(); i++) {		
 			columnValue = new ArrayList<String>();
 			columnValue.addAll(ledgerGrid.get(i));
 			tr = new TableRow(this);
@@ -682,7 +719,7 @@ public class ledger extends Activity {
 		
 		
 		if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-			m.toastValidationMessage(ledger.this);
+			m.toastValidationMessage(ledger.this,msg);
 		}
 		else{
 			Intent intent = new Intent(context, transaction_tab.class);
@@ -698,7 +735,7 @@ public class ledger extends Activity {
 
 		Accountlist = module.Accountlist;
 		if (Accountlist.size() < 2) {
-			m.toastValidationMessage(ledger.this);
+			m.toastValidationMessage(ledger.this,msg);
 		} else {
 			Intent intent = new Intent(context, transaction_tab.class);
 			// To pass on the value to the next page

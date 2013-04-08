@@ -17,6 +17,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +64,36 @@ public class cashFlow extends Activity{
     String 	OrgPeriod,balancePeriod,sFilename,OrgName,result;
 	String[] pdf_params; 
 	static String acc_name; 
+	private int group1Id = 1;
+	int PDF = Menu.FIRST;
+	int CSV = Menu.FIRST + 1;
+	module m;
+		
+		
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		menu.add(group1Id, PDF, PDF, "PDF");
+		menu.add(group1Id, CSV, CSV, "CSV");
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case 1:
+			m.generate_pdf1(cashFlow.this, pdf_params, sFilename, cashFlow1,
+					cashFlow2);
+			return true;
+
+		case 2:
+			m.csv_writer1(cashFlow1, cashFlow2);
+			m.toastValidationMessage(cashFlow.this, "CSV exported");
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	    
 	
     public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -69,7 +101,7 @@ public class cashFlow extends Activity{
         setContentView(R.layout.cash_flow_table);
         report = new Report();
         client_id= Startup.getClient_id();
-   
+        m=new module();
         //customizing title bar
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
    

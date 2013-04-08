@@ -8,7 +8,7 @@ public class CoreConnection {
 	private URL url;
 	private XMLRPCClient client; 
 	/***
-	 * default constructor  
+	 * default constructor   
 	 * connect to server
 	 * create xml_rpc client
 	*/ 

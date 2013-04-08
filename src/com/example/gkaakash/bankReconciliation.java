@@ -92,6 +92,7 @@ public class bankReconciliation extends Activity{
 	ArrayList<String> columnValue;
 	static String code;
 	static String name;
+	String msg;
 	int oneTouch = 1;
 	TableLayout floating_heading_table;
      
@@ -103,7 +104,8 @@ public class bankReconciliation extends Activity{
     	report = new Report(); 
     	transaction = new Transaction();
     	client_id= Startup.getClient_id();
-       
+    	m= new module();
+    	msg="At lease 2 accounts require to enter transaction, please create account!";
     	//customizing title bar
     	getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
        
@@ -1255,7 +1257,7 @@ public class bankReconciliation extends Activity{
 		
 		
 		if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-			m.toastValidationMessage(bankReconciliation.this);
+			m.toastValidationMessage(bankReconciliation.this,msg);
 		}
 		else{
 			Intent intent = new Intent(context, transaction_tab.class);
@@ -1272,7 +1274,7 @@ public class bankReconciliation extends Activity{
 
 		Accountlist = module.Accountlist;
 		if (Accountlist.size() < 2) {
-			m.toastValidationMessage(bankReconciliation.this);
+			m.toastValidationMessage(bankReconciliation.this,msg);
 		} else {
 			Intent intent = new Intent(context, transaction_tab.class);
 			// To pass on the value to the next page

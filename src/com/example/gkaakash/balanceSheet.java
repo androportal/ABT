@@ -37,6 +37,8 @@ import android.renderscript.RSRuntimeException;
 import android.renderscript.Sampler.Value;
 import android.text.SpannableString;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -59,7 +61,7 @@ public class balanceSheet extends Activity{
     static String balancetype, financialFromDate, balanceToDateString, getSelectedOrgType;
     TableRow tr;
     Date date;
-    static ArrayList<ArrayList> BalanceSheetGrid;
+    static ArrayList<ArrayList> BalanceSheetGrid,finalGrid_forXls;
     ArrayList<ArrayList> BalanceGrid1,BalanceGrid2,BalanceGrid;
     static ArrayList<String> balancesheetresultList;
     private TableLayout balanceSheetTable1; 
@@ -78,6 +80,35 @@ public class balanceSheet extends Activity{
     ObjectAnimator animation2;
     boolean reportmenuflag;
     static String acc_name1;
+    private int group1Id = 1;
+	int PDF = Menu.FIRST;
+	int CSV=Menu.FIRST+1;
+	module m;
+	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		menu.add(group1Id, PDF, PDF, "PDF");
+		menu.add(group1Id, CSV, CSV, "CSV");
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case 1:			
+			m.generate_pdf1(balanceSheet.this, pdf_params, sFilename, BalanceGrid1,BalanceGrid2);
+			return true;
+
+		case 2:
+			m.csv_writer1(BalanceGrid1,BalanceGrid2);
+			m.toastValidationMessage(balanceSheet.this, "CSV exported");
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+    
     
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -111,6 +142,7 @@ public class balanceSheet extends Activity{
     		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
     		report = new Report();
     		client_id= Startup.getClient_id();
+    		m=new module();
     		financialFromDate =Startup.getfinancialFromDate();
     		financialToDate=Startup.getFinancialToDate();
     		// balancefromDateString = reportMenu.givenfromDateString;
@@ -156,11 +188,12 @@ public class balanceSheet extends Activity{
     		balancesheetresult = (Object[]) report.getBalancesheetDisplay(params,client_id);
     		//balance sheet result is 3 dimensional list 
     		int count = 0;
-       
+    		finalGrid_forXls = new ArrayList<ArrayList>();
     		for(Object tb : balancesheetresult){
     			Object[] t = (Object[]) tb;
     			count = count + 1;
     			BalanceSheetGrid = new ArrayList<ArrayList>();
+    			
     			if(count !=3)   
     			{
     				for(Object tb1 : t){
@@ -191,7 +224,8 @@ public class balanceSheet extends Activity{
     				addTable(balanceSheetTable2);
     				BalanceGrid2 =BalanceSheetGrid;
     			}
-    		}  
+    		}    
+    		
     		date= new Date();
 			String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
 			OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
@@ -202,8 +236,15 @@ public class balanceSheet extends Activity{
 				
 				@Override
 				public void onClick(View v) {
+					finalGrid_forXls.add(BalanceGrid1);
+		    		finalGrid_forXls.add(BalanceGrid2);
+		    		System.out.println("child:"+finalGrid_forXls.size());
+		    		 
+		    		
+		    		
 					module m=new module();
 					m.generate_pdf1(balanceSheet.this, pdf_params,sFilename,BalanceGrid1,BalanceGrid2);
+					m.csv_writer1(BalanceGrid1,BalanceGrid2);
 				}
 			});
     		drillDown();

@@ -7,6 +7,7 @@ import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.Transaction;
 
+import android.R.string;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
@@ -33,6 +34,7 @@ public class voucherMenu extends ListActivity {
 	static ArrayList<String> CrAccountlist;
 	static boolean flag;
 	static module m;
+	String msg;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class voucherMenu extends ListActivity {
 		//setting title
 		setTitle("Menu >> Transaction");
 		m=new module();
+		msg="At lease 2 accounts require to enter transaction, please create account!";
 		//getting the list view and setting background
 		final ListView listView = getListView();
 		listView.setTextFilterEnabled(true);
@@ -135,7 +138,7 @@ public class voucherMenu extends ListActivity {
 		
 		
 		if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-			m.toastValidationMessage(voucherMenu.this);
+			m.toastValidationMessage(voucherMenu.this,msg);
 		}
 		else{
 			Intent intent = new Intent(context, transaction_tab.class);
@@ -151,7 +154,7 @@ public class voucherMenu extends ListActivity {
 		
 		Accountlist = module.Accountlist;
 		if(Accountlist.size() < 2){
-			m.toastValidationMessage(voucherMenu.this);
+			m.toastValidationMessage(voucherMenu.this,msg);
 		}
 		else{
 			

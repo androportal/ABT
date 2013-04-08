@@ -1,11 +1,15 @@
 package com.example.gkaakash;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.widget.ArrayAdapter;
 
 import com.gkaakash.controller.PdfGenaretor;
@@ -16,7 +20,7 @@ import com.itextpdf.text.DocumentException;
 public class module {
 	static Integer client_id;
 	private Transaction transaction;
-	static String vouchertypeflag;
+	static String vouchertypeflag; 
 	static Object[] voucherAccounts;
 	static List<String> Accountlist;
 	static ArrayAdapter<String> dataAdapter;
@@ -78,9 +82,9 @@ public class module {
     	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	}
 	
-	 void toastValidationMessage(Context c) {
+	 void toastValidationMessage(Context c,String msg) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(c);
-        builder.setMessage("At lease 2 accounts require to enter transaction, please create account!")
+        builder.setMessage(msg)
                 .setCancelable(false)
                 .setPositiveButton("Ok",
                         new DialogInterface.OnClickListener() {
@@ -88,7 +92,7 @@ public class module {
                             	
                             }
                         });
-                
+                 
         AlertDialog alert = builder.create();
         alert.show();
 	 }
@@ -116,8 +120,7 @@ public class module {
 									alert1.setCancelable(true);
 									alert1.setCanceledOnTouchOutside(true);
 								} catch (DocumentException e) {
-									// TODO Auto-generated catch
-									// block
+									
 									e.printStackTrace();
 								}
 							}
@@ -172,5 +175,66 @@ public class module {
 						});
 		AlertDialog alert = builder.create();
 		alert.show();
+	}
+	
+	
+	void csv_writer(ArrayList<ArrayList> Grid){
+		try {
+			FileWriter fw = new FileWriter("/mnt/sdcard/abt.csv");
+
+			for (int i = 0; i < Grid.size(); i++) {
+				for (int j = 0; j < Grid.get(i).size(); j++) {
+					// First column
+					fw.append(Grid.get(i).get(j).toString());
+					fw.append(',');
+				}
+				fw.append('\n');
+			}
+			fw.flush();
+			fw.close();
+
+		} catch (Exception e) {
+			System.out.println("error:" + e.getMessage());
+		}
+
+	}
+	
+	void csv_writer1(ArrayList<ArrayList> Grid,ArrayList<ArrayList> Grid1){
+		try {
+			FileWriter fw = new FileWriter("/mnt/sdcard/abt.csv");
+
+//			SpannableString spanString = new SpannableString(Grid.get(0).toString());
+//			spanString.setSpan(new StyleSpan(Typeface.BOLD), 0, spanString.length(), 0); 
+//			System.out.println("spanString:"+spanString);
+//			System.out.println("Grid:"+Grid.get(0));
+			
+			
+			for (int i = 0; i < Grid.size(); i++) {
+				for (int j = 0; j < Grid.get(i).size(); j++) {
+					
+					fw.append(Grid.get(i).get(j).toString());
+					fw.append(',');
+				}
+				fw.append('\n');
+			}
+			fw.flush();
+
+			fw.append('\n');
+
+			for (int i = 0; i < Grid1.size(); i++) {
+				for (int j = 0; j < Grid1.get(i).size(); j++) {
+					
+					fw.append(Grid1.get(i).get(j).toString());
+					fw.append(',');
+				}
+				fw.append('\n');
+
+			}
+			fw.flush();
+			fw.close();
+
+		} catch (Exception e) {
+			System.out.println("error:" + e.getMessage());
+		}
 	}
 }

@@ -17,6 +17,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -53,12 +55,44 @@ public class incomeExpenditure extends Activity{
     boolean reportmenuflag;
     String financialToDate,financialFromDate,OrgName,date_format,OrgPeriod ,TrialPeriod,sFilename,Reporttypeflag;
     String[] pdf_params;
+    private int group1Id = 1;
+	int PDF = Menu.FIRST;
+	int CSV = Menu.FIRST + 1;
+	module m;
+		
+		
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		menu.add(group1Id, PDF, PDF, "PDF");
+		menu.add(group1Id, CSV, CSV, "CSV");
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case 1:
+			m.generate_pdf1(incomeExpenditure.this, pdf_params, sFilename, IEGrid1,
+					IEGrid2);
+			return true;
+
+		case 2:  
+			m.csv_writer1(IEGrid1, IEGrid2);
+			m.toastValidationMessage(incomeExpenditure.this, "CSV exported");
+
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	 
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.income_expenditure_table);
         report = new Report();
         client_id= Startup.getClient_id();
+        m=new module();
    
         //customizing title bar
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
