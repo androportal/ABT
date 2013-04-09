@@ -48,14 +48,6 @@
             android:layout_weight="5"
             android:gravity="right" 
             android:paddingLeft="10dp">
-			 <Button
-                android:id="@+id/btnPdf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/pdf"
-                android:textColor="#FFFFFF"
-                 />
             
         </LinearLayout>
         <LinearLayout

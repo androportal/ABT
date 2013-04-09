@@ -19,6 +19,8 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +48,7 @@ public class trialBalance extends Activity{
     TableLayout trialBaltable;
     TableRow tr;
     TextView label;
-    ArrayList<ArrayList> trialBalGrid;
+    ArrayList<ArrayList> trialBalGrid,trialBalGrid_with_header;
     ArrayList<String> trialBalanceResultList;
     String trialbalancetype;
     String[] ColumnNameList;
@@ -66,12 +68,44 @@ public class trialBalance extends Activity{
 	String financialToDate,OrgName,date_format,OrgPeriod ,TrialPeriod,sFilename;
     String[] pdf_params;
     static String acc_name;
+    ArrayList<String> stringList;
+    private int group1Id = 1;
+   	int PDF = Menu.FIRST;
+   	int CSV=Menu.FIRST+1;
+   	module m;
+   	
+   	
+   	@Override
+   	public boolean onCreateOptionsMenu(Menu menu) {
+
+   		menu.add(group1Id, PDF, PDF, "Export as PDF");
+   		menu.add(group1Id, CSV, CSV, "Export as CSV");
+   		return super.onCreateOptionsMenu(menu);
+   	}
+
+   	@Override
+   	public boolean onOptionsItemSelected(MenuItem item) {
+   		switch (item.getItemId()) {
+   		case 1:			
+   			m.generate_pdf(trialBalance.this, pdf_params, sFilename, trialBalGrid);
+   			return true;
+
+   		case 2:
+   			m.csv_writer(trialBalGrid_with_header,sFilename);
+   			m.toastValidationMessage(trialBalance.this, "CSV exported");
+   			return true;
+   		}
+   		return super.onOptionsItemSelected(item);
+   	}
+       
+    
     public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 	    setContentView(R.layout.trial_table);
 	    report = new Report();
 	    client_id= Startup.getClient_id();
+		 m=new module();
 	    reportmenuflag = MainActivity.reportmenuflag;
 	    //customizing title bar
 	    getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
@@ -127,6 +161,7 @@ public class trialBalance extends Activity{
 	         OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
 	         TrialPeriod = financialFromDate+" to "+trialToDateString;
 	         trialBalGrid = new ArrayList<ArrayList>();
+	         trialBalGrid_with_header = new ArrayList<ArrayList>();
 	    	for(Object tb : trialBalanceResult)
 	    	{
 	    		Object[] t = (Object[]) tb;
@@ -137,7 +172,8 @@ public class trialBalance extends Activity{
 	              
 	    		}
 	    		trialBalGrid.add(trialBalanceResultList);
-	    	}
+	    	} 
+	    	System.out.println("grid1:"+trialBalGrid);
 	    	trialBaltable = (TableLayout)findViewById(R.id.maintable);
 	    	addTable();
 	        
@@ -145,7 +181,7 @@ public class trialBalance extends Activity{
 	    	tvReportTitle.setText("Menu >> "+"Report >> "+trialbalancetype);
 	    	final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
 	    	btnSaveRecon.setVisibility(Button.GONE);
-	    	final Button btnPdf = (Button)findViewById(R.id.btnPdf);
+	    	 
 	    	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
 	    	btnScrollDown.setOnClickListener(new OnClickListener() {
 	    		@Override
@@ -157,21 +193,14 @@ public class trialBalance extends Activity{
 		           }else {
 		                sv.fullScroll(ScrollView.FOCUS_UP); 
 		                btnScrollDown.setBackgroundResource(R.drawable.down);
-		                updown=false;
+		                updown=false; 
 		           }
 				}
 	        });
 	    	sFilename = trialbalType+"_"+date_format;
 			pdf_params = new String[]{trialbalType,sFilename,OrgName,OrgPeriod,trialbalancetype,TrialPeriod,"",String.format("%.2f", Math.abs(result))};
 					
-	    	 btnPdf.setOnClickListener(new OnClickListener() {
-	 			
-	 			@Override
-	 			public void onClick(View v) {
-	 				module m=new module();
-					m.generate_pdf(trialBalance.this, pdf_params,sFilename,trialBalGrid);
-	 			}
-	 		});
+	    	
 	    	
 	       animated_dialog();
 	       floatingHeader();
@@ -458,6 +487,14 @@ public class trialBalance extends Activity{
             tr.setClickable(false);
         }
        
+        
+		stringList = new ArrayList<String>();
+		for (String s : ColumnNameList) {
+			stringList.add(s);
+		}
+		trialBalGrid_with_header.add(stringList);
+		trialBalGrid_with_header.addAll(trialBalGrid);
+		
          // Add the TableRow to the TableLayout
         trialBaltable.addView(tr, new TableLayout.LayoutParams(
                 LayoutParams.FILL_PARENT,

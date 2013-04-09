@@ -89,7 +89,7 @@ public class MainActivity extends Activity {
             help_option_menu_flag = 1;
             //if running this app on emulator, comment the below line
             help_popup();
-        } 
+        }
         return super.onOptionsItemSelected(item);
     }//if running this app on emulator, comment the below line
           

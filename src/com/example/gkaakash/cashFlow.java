@@ -73,8 +73,8 @@ public class cashFlow extends Activity{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		menu.add(group1Id, PDF, PDF, "PDF");
-		menu.add(group1Id, CSV, CSV, "CSV");
+		menu.add(group1Id, PDF, PDF, "Export as PDF");
+   		menu.add(group1Id, CSV, CSV, "Export as CSV");
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -87,7 +87,7 @@ public class cashFlow extends Activity{
 			return true;
 
 		case 2:
-			m.csv_writer1(cashFlow1, cashFlow2);
+			m.csv_writer1(cashFlow1, cashFlow2,sFilename);
 			m.toastValidationMessage(cashFlow.this, "CSV exported");
 			return true;
 		}
@@ -198,7 +198,7 @@ public class cashFlow extends Activity{
             tvReportTitle.setText("Menu >> "+"Report >> "+"Cash Flow");
             final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
             btnSaveRecon.setVisibility(Button.GONE);
-            final Button btnPdf = (Button)findViewById(R.id.btnPdf);
+       
             final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
             btnScrollDown.setOnClickListener(new OnClickListener() {
  	
@@ -222,14 +222,7 @@ public class cashFlow extends Activity{
 			balancePeriod = fromDateString+" to "+toDateString;
 			sFilename = "CashFlow"+"_"+date_format;
 			pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Flow",balancePeriod,"",result};
-			btnPdf.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					module m=new module();
-					m.generate_pdf1(cashFlow.this, pdf_params,sFilename,cashFlow1,cashFlow2);
-				}
-			});
+			
             animated_dialog();
             //floatingHeader();
         } catch (Exception e) {

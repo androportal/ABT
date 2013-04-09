@@ -26,19 +26,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.SpannableString;
-import android.text.TextWatcher;
 import android.text.InputFilter.LengthFilter;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -92,9 +90,33 @@ public class bankReconciliation extends Activity{
 	ArrayList<String> columnValue;
 	static String code;
 	static String name;
-	String msg;
-	int oneTouch = 1;
-	TableLayout floating_heading_table;
+	private int group1Id = 1;
+	int PDF = Menu.FIRST;
+	int CSV = Menu.FIRST + 1;
+		
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		menu.add(group1Id, PDF, PDF, "Export as PDF");
+   		menu.add(group1Id, CSV, CSV, "Export as CSV");
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case 1:
+			m.generate_pdf1(bankReconciliation.this, pdf_params, sFilename, bankReconGrid,
+					statementGrid);
+			return true;
+
+		case 2:
+			m.csv_writer1(bankReconGrid, statementGrid,sFilename);
+			m.toastValidationMessage(bankReconciliation.this, "CSV exported");
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
      
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -104,8 +126,8 @@ public class bankReconciliation extends Activity{
     	report = new Report(); 
     	transaction = new Transaction();
     	client_id= Startup.getClient_id();
-    	m= new module();
-    	msg="At lease 2 accounts require to enter transaction, please create account!";
+    	m = new module();
+       
     	//customizing title bar
     	getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
        
@@ -113,9 +135,6 @@ public class bankReconciliation extends Activity{
       	mFormat= new DecimalFormat("00");
 		mFormat.setRoundingMode(RoundingMode.DOWN);
       
-		floating_heading_table = (TableLayout) findViewById(R.id.floating_heading_table);
-		floating_heading_table.setVisibility(TableLayout.GONE);
-		
 		try {
 			financialFromDate =Startup.getfinancialFromDate();
 			String dateParts[] = financialFromDate.split("-");
@@ -158,7 +177,7 @@ public class bankReconciliation extends Activity{
            
 		   	final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
 		   	btnSaveRecon.setVisibility(Button.VISIBLE);
-		   	final Button btnPdf = (Button)findViewById(R.id.btnPdf);
+		
 		   	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
            	btnScrollDown.setOnClickListener(new OnClickListener() {
 			
@@ -185,199 +204,13 @@ public class bankReconciliation extends Activity{
 	   	 	sFilename = "BankRec"+"_"+account+"_"+date_format;
 			
 			pdf_params = new String[]{"BankRec",sFilename,OrgName,OrgPeriod,"Bank Reconciliation for "+account,BankReconcilPeriod,"",result};
-			btnPdf.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					AlertDialog.Builder builder = new AlertDialog.Builder(bankReconciliation.this);
-					   builder.setMessage("Do you want to create PDF")
-					           .setCancelable(false)
-					           .setPositiveButton("Yes",
-					                   new DialogInterface.OnClickListener() {
-					                       public void onClick(DialogInterface dialog, int id) {
-					                    	   	PdfGenaretor pdfgen = new PdfGenaretor();
-					                    	   	try {
-					            					
-					            					pdfgen.generateBalancePDFFile(bankReconGrid,statementGrid,pdf_params);
-					            					//generatePDFFile(BalanceSheetGrid,pdf_params);
-					            					
-					            					//generatePDFFile("balnce.pdf",pdf_params);
-					            			        AlertDialog.Builder builder1 = new AlertDialog.Builder(bankReconciliation.this );
-					            			        builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+sFilename);
-					            			        AlertDialog alert1 = builder1.create();
-					            			        alert1.show();
-					            			        alert1.setCancelable(true);
-					            			        alert1.setCanceledOnTouchOutside(true);
-					            				} catch (DocumentException e) {
-					            					// TODO Auto-generated catch block
-					            					e.printStackTrace();
-					            				}
-					                       } 
-					                   })
-					               .setNegativeButton("No", new DialogInterface.OnClickListener() {
-							       public void onClick(DialogInterface dialog, int id) {
-							         
-							       }
-							   });
-					   AlertDialog alert = builder.create();
-	                   alert.show();
-				}
-			});
-			floatingHeader();
-			matchHeaderWithMemoColumn();
+
+    		
             
 		} catch (Exception e) {
 			toastValidationMessage("Please try again");
 		}
     }
-    
-    /*
-     * this method matches the memo column width to the floating header row memo
-     * when edittext memo column width is greater than its previous size,
-     * get the width of memo and set it to the header memo column.
-     * so that header will get expanded along with the table.
-     */
-    private void matchHeaderWithMemoColumn() {
-    	System.out.println("ontouch"+oneTouch);
-    	int rowcount = bankRecontable.getChildCount();
-    	System.out.println("roco"+rowcount);
-		for(int i=1;i<rowcount-1;i++){
-				View row = bankRecontable.getChildAt(i);
-				System.out.println(i);
-				final EditText etmemo= (EditText)((ViewGroup) row).getChildAt(7); //memo
-				
-				etmemo.addTextChangedListener(new TextWatcher() {
-					
-					@Override
-					public void onTextChanged(CharSequence s, int start, int before, int count) {
-						// TODO Auto-generated method stub
-						etmemo.setSingleLine(true);
-						if(oneTouch > 1){
-						
-							int width = etmemo.getWidth();
-							System.out.println("widht"+width);
-							try {
-								View header_row = floating_heading_table.getChildAt(0);
-								System.out.println("header row" + header_row);
-								LinearLayout l = (LinearLayout) ((ViewGroup) header_row)
-											.getChildAt(7);
-								TextView tv = (TextView) l.getChildAt(0);
-								tv.setWidth(width);
-								
-							} catch (Exception e) {
-								toastValidationMessage("error"+e.getMessage().toString());
-							}
-						
-						}
-						
-					}
-					
-					@Override
-					public void beforeTextChanged(CharSequence s, int start, int count,
-							int after) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void afterTextChanged(Editable s) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
-			
-		}
-		
-	}
-
-
-    /*
-     * this method adds the floating header to the table on touching it.
-     * In this case, we have a main table which includes table rows and a header at the load time.
-     * and another table(for floating header) is invisible at load time which is located at the top of main table.
-     * on the very first touch of the main table, we will add floating header columns and
-     * make it visible.
-     * at the same time we will set width 0 for the main table header to avoid
-     * double headers at the same time.
-     */
-	private void floatingHeader() {
-		bankRecontable.setOnTouchListener(new OnTouchListener() {
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-
-				/*
-				 * ontouch is the very first tableview touch 
-				 */
-				if (oneTouch == 1) {
-					floating_heading_table.setVisibility(TableLayout.VISIBLE);
-
-					// System.out.println("we are in if");
-
-					int rowcount = bankRecontable.getChildCount();
-					View row = bankRecontable.getChildAt(rowcount - 1);
-
-					final SpannableString rsSymbol = new SpannableString(
-							bankReconciliation.this.getText(R.string.Rs));
-					/** Create a TableRow dynamically **/
-					if(narration_flag){
-			        	ColumnNameList = new String[] {"voucher code","Date","Particulars","Reference no.",
-			        			rsSymbol+" Debit",rsSymbol+" Credit","Clearance date","Memo","Narration"};
-			        }
-			        else{
-			        	ColumnNameList = new String[] {"voucher code","Date","Particulars","Reference no.",
-			        			rsSymbol+" Debit",rsSymbol+" Credit","Clearance date","Memo"};
-			        }
-
-					tr = new TableRow(bankReconciliation.this);
-
-					for (int k = 0; k < ColumnNameList.length; k++) {
-						/** Creating a TextView to add to the row **/
-						addRow(ColumnNameList[k],k,k, 0);
-						label.setBackgroundColor(Color.parseColor("#348017"));
-						label.setGravity(Gravity.CENTER);
-
-						LinearLayout l = (LinearLayout) ((ViewGroup) row)
-								.getChildAt(k);
-						System.out.println("width"+l.getWidth());
-						Ll.setMinimumWidth(l.getWidth());
-						if(k==0){
-			        		Ll.setVisibility(LinearLayout.GONE);//voucher code
-			        	}
-						params.height = LayoutParams.WRAP_CONTENT;
-						tr.setClickable(false);
-						// System.out.println("size is"+l.getWidth());
-					}
-
-					// Add the TableRow to the TableLayout
-					floating_heading_table.addView(tr,
-							new TableLayout.LayoutParams(
-									LayoutParams.FILL_PARENT,
-									LayoutParams.WRAP_CONTENT));
-					// ledgertable.removeViewAt(0);
-					bankRecontable.getChildAt(0).setVisibility(View.INVISIBLE);
-
-					View firstrow = bankRecontable.getChildAt(0);
-					for (int k = 0; k < ColumnNameList.length; k++) {
-						LinearLayout l = (LinearLayout) ((ViewGroup) firstrow)
-								.getChildAt(k);
-						TextView tv = (TextView) l.getChildAt(0);
-						tv.setHeight(0);
-
-						l.getLayoutParams().height = 0;
-					}
-					// ledgertable.getChildAt(0).setLayoutParams(new
-					// TableLayout.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-					// 0));
-
-				}
-				oneTouch++;
-
-				return false;
-			}
-		});
-	}
-    
    
     /*
      * get all the cleared and uncleared transactions from database for the given account,
@@ -580,10 +413,6 @@ public class bankReconciliation extends Activity{
 				Object[] params = new Object[]{accountName,financialFromDate,fromDate,toDate,"No Project"};
 		        Object[] clear_flag = new Object[]{cleared_tran_flag};
 		        setTableAndStatement(params,clear_flag);
-		        
-		        if(floating_heading_table.getVisibility() == View.VISIBLE){
-		        	bankRecontable.getChildAt(0).setVisibility(View.GONE);
-		        }
 		        
 				toastValidationMessage("Changes saved successfully");
 			}//end of onclick
@@ -798,6 +627,7 @@ public class bankReconciliation extends Activity{
     
     void addRow(String param, final int i, final int j, final int flag){
     	
+    	
     	tr.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -805,8 +635,8 @@ public class bankReconciliation extends Activity{
 				MainActivity.nameflag = true;
 				name = "Voucher details";
 				MainActivity.searchFlag = true;
-			m = new module();
-			//Toast.makeText(bankReconciliation.this, "hi:"+bankReconGrid.get(i).get(0), Toast.LENGTH_SHORT).show();
+			
+			Toast.makeText(bankReconciliation.this, "hi:"+bankReconGrid.get(i).get(0), Toast.LENGTH_SHORT).show();
 			Object[] params = new Object[] { "Dr" };
 		
 			code = bankReconGrid.get(i).get(0).toString();
@@ -1252,12 +1082,12 @@ public class bankReconciliation extends Activity{
 		m.getAccountsByRule(paramCr,vouchertypeflag, context);
 		Accountlist = module.Accountlist;
 		CrAccountlist.addAll(Accountlist);
-		System.out.println(vouchertypeflag);
+		System.out.println(vouchertypeflag); 
 		System.out.println("CList:"+CrAccountlist);
 		
 		
 		if(DrAccountlist.size() < 1 || CrAccountlist.size() < 1){
-			m.toastValidationMessage(bankReconciliation.this,msg);
+			m.toastValidationMessage(bankReconciliation.this,"At lease 2 accounts require to enter transaction, please create account!");
 		}
 		else{
 			Intent intent = new Intent(context, transaction_tab.class);
@@ -1274,7 +1104,7 @@ public class bankReconciliation extends Activity{
 
 		Accountlist = module.Accountlist;
 		if (Accountlist.size() < 2) {
-			m.toastValidationMessage(bankReconciliation.this,msg);
+			m.toastValidationMessage(bankReconciliation.this,"At lease 2 accounts require to enter transaction, please create account!");
 		} else {
 			Intent intent = new Intent(context, transaction_tab.class);
 			// To pass on the value to the next page

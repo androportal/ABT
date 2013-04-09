@@ -148,17 +148,16 @@ public class module {
 									DialogInterface dialog, int id) {
 								PdfGenaretor pdfgen = new PdfGenaretor();
 								try {
-									pdfgen.generatePDFFile(
-											Grid, params);
-									AlertDialog.Builder builder1 = new AlertDialog.Builder(
-											c);
-									builder1.setMessage("PDF genration completed ..see /mnt/sdcard/"
-											+ sFilename);
-									AlertDialog alert1 = builder1
-											.create();
-									alert1.show();
-									alert1.setCancelable(true);
-									alert1.setCanceledOnTouchOutside(true);
+									pdfgen.generateBalancePDFFile(Grid,Grid1,params);
+	            					//generatePDFFile(BalanceSheetGrid,pdf_params);
+	            					
+	            					//generatePDFFile("balnce.pdf",pdf_params); 
+	            			        AlertDialog.Builder builder1 = new AlertDialog.Builder(c);
+	            			        builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+sFilename);
+	            			        AlertDialog alert1 = builder1.create();
+	            			        alert1.show();
+	            			        alert1.setCancelable(true);
+	            			        alert1.setCanceledOnTouchOutside(true);
 								} catch (DocumentException e) {
 									// TODO Auto-generated catch
 									// block
@@ -175,12 +174,34 @@ public class module {
 						});
 		AlertDialog alert = builder.create();
 		alert.show();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	
-	void csv_writer(ArrayList<ArrayList> Grid){
+	void csv_writer(ArrayList<ArrayList> Grid,String sFilename){
 		try {
-			FileWriter fw = new FileWriter("/mnt/sdcard/abt.csv");
+			
+			FileWriter fw = new FileWriter("/mnt/sdcard/"+sFilename+".csv");
 
 			for (int i = 0; i < Grid.size(); i++) {
 				for (int j = 0; j < Grid.get(i).size(); j++) {
@@ -199,15 +220,9 @@ public class module {
 
 	}
 	
-	void csv_writer1(ArrayList<ArrayList> Grid,ArrayList<ArrayList> Grid1){
+	void csv_writer1(ArrayList<ArrayList> Grid,ArrayList<ArrayList> Grid1,String sFilename){
 		try {
-			FileWriter fw = new FileWriter("/mnt/sdcard/abt.csv");
-
-//			SpannableString spanString = new SpannableString(Grid.get(0).toString());
-//			spanString.setSpan(new StyleSpan(Typeface.BOLD), 0, spanString.length(), 0); 
-//			System.out.println("spanString:"+spanString);
-//			System.out.println("Grid:"+Grid.get(0));
-			
+			FileWriter fw = new FileWriter("/mnt/sdcard/"+sFilename+".csv");
 			
 			for (int i = 0; i < Grid.size(); i++) {
 				for (int j = 0; j < Grid.get(i).size(); j++) {

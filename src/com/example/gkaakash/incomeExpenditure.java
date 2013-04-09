@@ -63,9 +63,8 @@ public class incomeExpenditure extends Activity{
 		
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
-		menu.add(group1Id, PDF, PDF, "PDF");
-		menu.add(group1Id, CSV, CSV, "CSV");
+		menu.add(group1Id, PDF, PDF, "Export as PDF");
+   		menu.add(group1Id, CSV, CSV, "Export as CSV");
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -77,8 +76,8 @@ public class incomeExpenditure extends Activity{
 					IEGrid2);
 			return true;
 
-		case 2:  
-			m.csv_writer1(IEGrid1, IEGrid2);
+		case 2:
+			m.csv_writer1(IEGrid1, IEGrid2,sFilename);
 			m.toastValidationMessage(incomeExpenditure.this, "CSV exported");
 
 			return true;
@@ -177,7 +176,7 @@ public class incomeExpenditure extends Activity{
             tvReportTitle.setText("Menu >> "+"Report >> "+Reporttypeflag);
             final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
             btnSaveRecon.setVisibility(Button.GONE);
-            final Button btnPdf = (Button)findViewById(R.id.btnPdf);
+           
             final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
             if(reportmenuflag==true){
     	    	
@@ -214,15 +213,7 @@ public class incomeExpenditure extends Activity{
 					sFilename = "PL"+"_"+date_format;
 		        	pdf_params = new String[]{"P&L",sFilename,OrgName,OrgPeriod,Reporttypeflag,TrialPeriod,"",""};
 		    }
-            btnPdf.setOnClickListener(new OnClickListener() {
-    			
-    			@Override
-    			public void onClick(View v) {
-    				module m=new module();
-					m.generate_pdf1(incomeExpenditure.this, pdf_params,sFilename,IEGrid1,IEGrid2);
-
-    			}
-    		});
+         
            
             animated_diolog();
         } catch (Exception e) {

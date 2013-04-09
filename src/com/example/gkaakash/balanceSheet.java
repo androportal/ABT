@@ -89,8 +89,8 @@ public class balanceSheet extends Activity{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		menu.add(group1Id, PDF, PDF, "PDF");
-		menu.add(group1Id, CSV, CSV, "CSV");
+		menu.add(group1Id, PDF, PDF, "Export as PDF");
+   		menu.add(group1Id, CSV, CSV, "Export as CSV");
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -102,7 +102,7 @@ public class balanceSheet extends Activity{
 			return true;
 
 		case 2:
-			m.csv_writer1(BalanceGrid1,BalanceGrid2);
+			m.csv_writer1(BalanceGrid1,BalanceGrid2,sFilename);
 			m.toastValidationMessage(balanceSheet.this, "CSV exported");
 			return true;
 		}
@@ -164,7 +164,7 @@ public class balanceSheet extends Activity{
     		tvReportTitle.setText("Menu >> "+"Report >> "+balancetype);
     		final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
     		btnSaveRecon.setVisibility(Button.GONE);
-    		final Button btnPdf = (Button)findViewById(R.id.btnPdf);
+    		
     		final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
     		btnScrollDown.setOnClickListener(new OnClickListener() {
     			@Override
@@ -232,21 +232,7 @@ public class balanceSheet extends Activity{
 			balancePeriod = financialFromDate+" to "+balanceToDateString;
 			sFilename = balType+"_"+date_format;
 			pdf_params = new String[]{balType,sFilename,OrgName,OrgPeriod,balancetype,balancePeriod,"",result};
-			btnPdf.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					finalGrid_forXls.add(BalanceGrid1);
-		    		finalGrid_forXls.add(BalanceGrid2);
-		    		System.out.println("child:"+finalGrid_forXls.size());
-		    		 
-		    		
-		    		
-					module m=new module();
-					m.generate_pdf1(balanceSheet.this, pdf_params,sFilename,BalanceGrid1,BalanceGrid2);
-					m.csv_writer1(BalanceGrid1,BalanceGrid2);
-				}
-			});
+			
     		drillDown();
     	} catch (Exception e) {
     		AlertDialog.Builder builder = new AlertDialog.Builder(balanceSheet.this);
@@ -259,7 +245,7 @@ public class balanceSheet extends Activity{
 
                               }
                           });
-
+ 
     		AlertDialog alert = builder.create();
     		alert.show();	}
     }

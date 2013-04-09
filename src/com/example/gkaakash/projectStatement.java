@@ -4,10 +4,8 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,6 +16,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,18 +25,13 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView; 
-import android.widget.Toast;
-
-import com.gkaakash.controller.PdfGenaretor;
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
-import com.itextpdf.text.DocumentException;
 
 public class projectStatement extends Activity{
     private Report report;
@@ -45,7 +40,7 @@ public class projectStatement extends Activity{
     TableLayout projectStatementTable;
     TableRow tr;
     TextView label;
-    ArrayList<ArrayList> projectStatementGrid;
+    ArrayList<ArrayList> projectStatementGrid,projectStatementGrid_with_header;
     ArrayList<String> projectStatementResultList;
     String ToDateString;
     Boolean updown=false;
@@ -63,12 +58,45 @@ public class projectStatement extends Activity{
    	String financialToDate,OrgName,date_format,OrgPeriod ,Period,sFilename;
     String[] pdf_params;
     static String acc_name1;
+    ArrayList<String> stringList;
+    private int group1Id = 1;
+   	int PDF = Menu.FIRST;
+   	int CSV=Menu.FIRST+1;
+   	module m;
+   	
+   	
+   	@Override
+   	public boolean onCreateOptionsMenu(Menu menu) {
+
+   		menu.add(group1Id, PDF, PDF, "Export as PDF");
+   		menu.add(group1Id, CSV, CSV, "Export as CSV");
+   		return super.onCreateOptionsMenu(menu);
+   	}
+
+   	@Override
+   	public boolean onOptionsItemSelected(MenuItem item) {
+   		switch (item.getItemId()) {
+   		case 1:			
+   			m.generate_pdf(projectStatement.this, pdf_params, sFilename, projectStatementGrid);
+   			return true;
+
+   		case 2:
+   			m.csv_writer(projectStatementGrid_with_header,sFilename);
+   			m.toastValidationMessage(projectStatement.this, "CSV exported");
+   			return true;
+   		}
+   		return super.onOptionsItemSelected(item);
+   	}
+    
+    
+    
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.project_statement_table);
         report = new Report();
         client_id= Startup.getClient_id();
+        m=new module();
    
         reportmenuflag=MainActivity.reportmenuflag;
         //customizing title bar
@@ -113,6 +141,8 @@ public class projectStatement extends Activity{
         	projectStatementResult = (Object[]) report.getProjectStatementReport(params,client_id);
       
         	projectStatementGrid = new ArrayList<ArrayList>();
+        	projectStatementGrid_with_header = new ArrayList<ArrayList>();
+        	
         	for(Object tb : projectStatementResult)
         	{
         		Object[] t = (Object[]) tb;
@@ -132,7 +162,7 @@ public class projectStatement extends Activity{
         	tvReportTitle.setText("Menu >> "+"Report >> "+"Project Statement");
         	final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
         	btnSaveRecon.setVisibility(Button.GONE);
-        	 final TextView btnPdf = (TextView)findViewById(R.id.btnPdf);
+        	 
         	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
         	btnScrollDown.setOnClickListener(new OnClickListener() {
         		@Override
@@ -157,20 +187,12 @@ public class projectStatement extends Activity{
 	             String project = projectName.replace(" ","");
 				 sFilename = "ProjeST"+"_"+project+"_"+date_format;
 		         pdf_params = new String[]{"ProjeST",sFilename,OrgName,OrgPeriod,"Project Statement",Period,projectName,String.format("%.2f", Math.abs(result))};
-        	btnPdf.setOnClickListener(new OnClickListener() {
-    			
-    			@Override
-    			public void onClick(View v) {
-    				module m=new module();
-					m.generate_pdf(projectStatement.this, pdf_params,sFilename,projectStatementGrid);
-    			}
-    		});
+        	
         	
         	animated_dialog();
         	floatingHeader();
         
         } catch (Exception e) {
-        	//System.out.println("error:"+e);
         	AlertDialog.Builder builder = new AlertDialog.Builder(projectStatement.this);
         	builder.setMessage("Please try again")
                   .setCancelable(false)
@@ -388,6 +410,14 @@ public class projectStatement extends Activity{
             label.setGravity(Gravity.CENTER);
         }
        
+       stringList = new ArrayList<String>();
+	    for (String s : ColumnNameList) { 
+	    	
+	        stringList.add(s);
+	    }
+	    projectStatementGrid_with_header.add(stringList);
+	    projectStatementGrid_with_header.addAll(projectStatementGrid);
+	    
         // Add the TableRow to the TableLayout
         projectStatementTable.addView(tr, new TableLayout.LayoutParams(
                 LayoutParams.FILL_PARENT,
