@@ -48,7 +48,7 @@ public class preferences extends Activity {
     protected ArrayList<String>[] projectnamelist;
     private Organisation organisation;
     boolean projectExistsFlag = false;
-    
+    module m;
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +58,7 @@ public class preferences extends Activity {
         organisation = new Organisation();
        	client_id= Startup.getClient_id();
         etProject = (EditText) findViewById(R.id.etProject);
+        m= new module();
         
         //for visibility of account tab layout
         MainActivity.tabFlag = false;
@@ -228,7 +229,7 @@ public class preferences extends Activity {
     					
     					if(flag == true){
     						String message = "Project names can not be same";
-    						toastValidationMessage(message);
+    						m.toastValidationMessage(preferences.this,message);
     					}
     					else{
 	    					for(int i=0;i<finalProjlist.size();i++){
@@ -249,11 +250,12 @@ public class preferences extends Activity {
 	    					
 	    					 if(refNoflag.equals("optional")&& etProject.length()<1){
 	    						 String message = "Please enter project name";
-	    						 toastValidationMessage(message);
+	    						 m.toastValidationMessage(preferences.this,message);
 	                         }
 	                         else if(projectExistsFlag == true){
 	                        	 String message = "Project "+nameExists+" already exists";
-	                        	 toastValidationMessage(message);
+	                        	 m.toastValidationMessage(preferences.this, message);
+	                        	
 	                         }
 	                         else
 	                          {
@@ -283,21 +285,7 @@ public class preferences extends Activity {
 
                     }
 
-                    public void toastValidationMessage(String message) {
-                		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setMessage(message)
-                                .setCancelable(false)
-                                .setPositiveButton("Ok",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                            	
-                                            }
-                                        });
-                                
-                        AlertDialog alert = builder.create();
-                        alert.show();
-                		
-                	} 
+                    
                 });
         btnQuit =(Button) findViewById(R.id.btnQuit);
         btnQuit.setOnClickListener(new OnClickListener() {

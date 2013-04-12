@@ -205,20 +205,7 @@ public class trialBalance extends Activity{
 	       animated_dialog();
 	       floatingHeader();
 	    } catch (Exception e) {
-		   	//System.out.println("m in exte err"+e);
-		   	AlertDialog.Builder builder = new AlertDialog.Builder(trialBalance.this);
-		   	
-		   	builder.setMessage("Please try again"+e.getLocalizedMessage())
-	                  .setCancelable(false)
-	                  .setPositiveButton("Ok",
-	                          new DialogInterface.OnClickListener() {
-	                              public void onClick(DialogInterface dialog, int id) {
-	                             
-	                              }
-	                          });
-	                  
-		   	AlertDialog alert = builder.create();
-		   	alert.show();	
+		   	m.toastValidationMessage(trialBalance.this, "Please try again");
 	   	}
     }
    

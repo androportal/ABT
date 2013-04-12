@@ -68,6 +68,7 @@ public class MainActivity extends Activity {
     File checkTarExtsd;
     File help_flag;
     static boolean no_dailog=false;
+    module m;
      
     
     @Override
@@ -101,6 +102,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         //create object of Startup to access connection
         startup = new Startup();
+        m=new module();
         // call the getOrganisationName method from startup
         orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
         //Request a reference to the button from the activity by calling “findViewById”
@@ -181,18 +183,7 @@ public class MainActivity extends Activity {
         		}
         		}catch(Exception e)
         		{
-        			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        			builder.setMessage("Please check server connection")
-                        .setCancelable(false)
-                        .setPositiveButton("Ok",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                       //do nothing
-                                    }
-                                });
-                       
-	                AlertDialog alert = builder.create();
-	                alert.show();    
+        			m.toastValidationMessage(context, "Please check server connection");
         		}
         }// end of onClick
         });// end of select_org.setOnClickListener

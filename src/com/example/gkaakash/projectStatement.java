@@ -193,18 +193,8 @@ public class projectStatement extends Activity{
         	floatingHeader();
         
         } catch (Exception e) {
-        	AlertDialog.Builder builder = new AlertDialog.Builder(projectStatement.this);
-        	builder.setMessage("Please try again")
-                  .setCancelable(false)
-                  .setPositiveButton("Ok",
-                          new DialogInterface.OnClickListener() {
-                              public void onClick(DialogInterface dialog, int id) {
-                             
-                              }
-                          });
-                  
-        	AlertDialog alert = builder.create();
-        	alert.show();	}
+        	m.toastValidationMessage(projectStatement.this, "Please try again");
+        	}
     }
    
     /*

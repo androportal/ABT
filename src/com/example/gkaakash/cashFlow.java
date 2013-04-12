@@ -225,22 +225,10 @@ public class cashFlow extends Activity{
 			
             animated_dialog();
             //floatingHeader();
-        } catch (Exception e) {
-        	//System.out.println("I am an error"+e);
-        	AlertDialog.Builder builder = new AlertDialog.Builder(cashFlow.this);
-   	
-        	builder.setMessage("Please try again")
-                  .setCancelable(false)
-                  .setPositiveButton("Ok",
-                          new DialogInterface.OnClickListener() {
-                              public void onClick(DialogInterface dialog, int id) {
-                             
-                              }
-                          });
-                  
-        	AlertDialog alert = builder.create();
-        	alert.show();	}
-    	}
+		} catch (Exception e) {
+			m.toastValidationMessage(cashFlow.this, "Please try again");
+		}
+	}
 
 
     private void animated_dialog() {

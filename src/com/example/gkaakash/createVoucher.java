@@ -105,12 +105,13 @@ public class createVoucher extends Activity {
 	static EditText closing_bal;
 	boolean voucher_code_flag;
 	String from_report_flag;
-	module module;
+	module m;
 	Button addButton;
 	Button removeSelfButton;
 	Button btnResetVoucher;
 	Button btnSaveVoucher;
 	String from_trial;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -122,7 +123,7 @@ public class createVoucher extends Activity {
 		reports = new Report();
 		client_id = Startup.getClient_id();
 
-		module = new module();
+		m = new module();
 
 		firstRowamount = (EditText) findViewById(R.id.etDrCrAmount);
 		etVouchercode = (EditText) findViewById(R.id.etVouchercode);
@@ -309,19 +310,7 @@ public class createVoucher extends Activity {
 			}
 
 		} catch (Exception ex) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			builder.setMessage("Please try again" + ex.getMessage())
-			.setCancelable(false)
-			.setPositiveButton("Ok",
-					new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog,
-						int id) {
-
-				}
-			});
-
-			AlertDialog alert = builder.create();
-			alert.show();
+			m.toastValidationMessage(context, "Please try again"); 
 		}
 		// add all onclick events in this method
 		OnClickListener();
@@ -770,7 +759,7 @@ public class createVoucher extends Activity {
 				selDrCr = parent.getItemAtPosition(position).toString();
 				if (selDrCr != null) {
 					Object[] params = new Object[] { selDrCr };
-					module.getAccountsByRule(params, vouchertypeflag, context);
+					m.getAccountsByRule(params, vouchertypeflag, context);
 					dataAdapter = module.dataAdapter;
 					accnames = module.Accountlist;
 					// System.out.println("dateadapter"+dataAdapter+"list"+accnames+"flag"+searchFlag);
@@ -798,7 +787,7 @@ public class createVoucher extends Activity {
 					if (searchFlag == false) {
 						Object[] params = new Object[] { a };
 
-						module.getAccountsByRule(params, vouchertypeflag,
+						m.getAccountsByRule(params, vouchertypeflag,
 								context);
 						dataAdapter = module.dataAdapter;
 						second_table_accountname_spinner.setAdapter(dataAdapter);
@@ -893,10 +882,10 @@ public class createVoucher extends Activity {
 				testAmountTally();
 				if (totalDr == totalCr) {
 					if (from_report_flag == null) {
-						toastValidationMessage("Debit and Credit amount is tally");
+						m.toastValidationMessage(context,"Debit and Credit amount is tally");
 					}
 				} else if (drcrAmountFirstRow <= 0 || drcrAmount <= 0) {
-					toastValidationMessage("No row can be added,Please fill the existing row");
+					m.toastValidationMessage(context,"No row can be added,Please fill the existing row");
 				} else {
 					for (int i = 0; i < (tableRowCount); i++) {
 						View row = table.getChildAt(i);
@@ -944,7 +933,7 @@ public class createVoucher extends Activity {
 								if (selDrCr != null) {
 									Object[] params = new Object[] { selDrCr };
 
-									module.getAccountsByRule(params,
+									m.getAccountsByRule(params,
 											vouchertypeflag, context);
 									dataAdapter = module.dataAdapter;
 									account.setAdapter(dataAdapter);
@@ -968,7 +957,7 @@ public class createVoucher extends Activity {
 								if (a != null) {
 									Object[] params = new Object[] { a };
 
-									module.getAccountsByRule(params,
+									m.getAccountsByRule(params,
 											vouchertypeflag, context);
 									dataAdapter = module.dataAdapter;
 									second_table_accountname_spinner.setAdapter(dataAdapter);
@@ -1000,7 +989,7 @@ public class createVoucher extends Activity {
 						}
 
 					} else {
-						toastValidationMessage("No row can be added,Please fill the existing row");
+						m.toastValidationMessage(context,"No row can be added,Please fill the existing row");
 					}
 				}
 			}
@@ -1025,7 +1014,7 @@ public class createVoucher extends Activity {
 
 				if(totalDr == totalCr && !"".equals(refNumber) && !"".equals(strnarration)){ 
 					if (totalDr == 0) {
-						toastValidationMessage("Please enter amount");
+						m.toastValidationMessage(context,"Please enter amount");
 					} else {
 						// main list
 						paramsMaster = new ArrayList<ArrayList>();
@@ -1242,17 +1231,17 @@ public class createVoucher extends Activity {
 							}
 
 						} else {
-							toastValidationMessage("Account name can not be repeated, please select another account name");
+							m.toastValidationMessage(context,"Account name can not be repeated, please select another account name");
 						}
 					}
 
 				} else if (totalDr != totalCr) {
-					toastValidationMessage("Debit and Credit amount is not tally");
+					m.toastValidationMessage(context,"Debit and Credit amount is not tally");
 				} else if ("".equals(refNumber)) {
-					toastValidationMessage("Please enter voucher reference number");
+					m.toastValidationMessage(context,"Please enter voucher reference number");
 				}
 				else if ("".equals(strnarration)) {
-					toastValidationMessage("Please enter narration");
+					m.toastValidationMessage(context,"Please enter narration");
 				} 
 			}
 
@@ -1547,7 +1536,7 @@ public class createVoucher extends Activity {
 											.valueOf(month)))) + 1))) + "-"
 											+ year;
 				} else {
-					toastValidationMessage("Please enter proper voucher date");
+					m.toastValidationMessage(context,"Please enter proper voucher date");
 				}
 
 			} catch (Exception e) {
@@ -1664,22 +1653,7 @@ public class createVoucher extends Activity {
 		OnAmountFocusChangeListener();
 	}
 
-	public void toastValidationMessage(String message) {
-		/*
-		 * call this method for alert messages input: a message Strig to be
-		 * display on alert
-		 */
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setMessage(message).setCancelable(false)
-		.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-
-			}
-		});
-
-		AlertDialog alert = builder.create();
-		alert.show();
-	}
+	
 
 	public void onBackPressed() {
 		MainActivity.searchFlag = false;

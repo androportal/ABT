@@ -46,12 +46,14 @@ public class createOrg extends MainActivity {
 	Object[] financialyearList;
 	boolean orgExistFlag;
 	static Integer client_id;
+	module m;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//Calling create_org.xml
 		setContentView(R.layout.create_org);
+		m=new module();
 		
 		help_flag = new File("/data/data/com.example.gkaakash/files/help_flag.txt");
 		if(!help_flag.exists()){
@@ -226,7 +228,7 @@ public class createOrg extends MainActivity {
 					    		tvDisplayToDate.setText(strDateTime);
 					    	}
 					    	else{
-				        		toastValidationMessage("Please enter proper date");
+				        		m.toastValidationMessage(createOrg.this,"Please enter proper date");
 					    	}
 					} catch (Exception e) {
 						// TODO: handle exception
@@ -310,10 +312,10 @@ public class createOrg extends MainActivity {
 				}
 		    	
 				if("".equals(organisationName)){
-					toastValidationMessage("Please enter the organisation name");
+					m.toastValidationMessage(createOrg.this,"Please enter the organisation name");
 				}
 				else if(orgExistFlag == true){
-					toastValidationMessage("Organisation name "+organisationName+" with this financial year exist");
+					m.toastValidationMessage(createOrg.this,"Organisation name "+organisationName+" with this financial year exist");
 					orgExistFlag = false;
 					}
 				else{
@@ -324,19 +326,7 @@ public class createOrg extends MainActivity {
 				}
 			}catch(Exception e)
 			{
-				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Please check server connection")
-                        .setCancelable(false)
-                        .setPositiveButton("Ok",
-                                new DialogInterface.OnClickListener() {
-                                     public void onClick(DialogInterface dialog, int id) {
-                                    	Intent intent = new Intent(context, MainActivity.class);
-                    				    startActivity(intent); 
-                                    }
-                                });
-                       
-                AlertDialog alert = builder.create();
-                alert.show();    
+				m.toastValidationMessage(createOrg.this, "Please try again");  
 			}
 			}
 		}); //End of btnNext.setOnClickListener
@@ -350,21 +340,7 @@ public class createOrg extends MainActivity {
 		 startActivity(intent);
 	}
 	
-	public void toastValidationMessage(String message) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(message)
-                .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            	
-                            }
-                        });
-                
-        AlertDialog alert = builder.create();
-        alert.show();
-		
-	} 
+
 	
 	/*
 	public boolean onKeyLongPress(int keyCode, KeyEvent event) {

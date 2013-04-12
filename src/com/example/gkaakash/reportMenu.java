@@ -60,6 +60,7 @@ public class reportMenu extends ListActivity{
 	String orgname;
 	static String reportTypeFlag;
 	static String balancetype;
+	module m;
 	
 	
 	@Override
@@ -68,6 +69,7 @@ public class reportMenu extends ListActivity{
 		
 		account = new Account();
 		organisation = new Organisation();
+		m= new module();
 		
        	client_id= Startup.getClient_id();
        	
@@ -141,7 +143,7 @@ public class reportMenu extends ListActivity{
 					
 					if(accountnamelist.size() <= 0){
 						String message = "Ledger cannot be displayed, Please create account!";
-						toastValidationMessage(message);
+						m.toastValidationMessage(reportMenu.this,message);
 					}
 					else{
 						//call the getAllProjects method to get all projects
@@ -516,7 +518,7 @@ public class reportMenu extends ListActivity{
 	        	}
 	        	else{
 	        		String message = "Please enter proper date";
-	        		toastValidationMessage(message);
+	        		m.toastValidationMessage(reportMenu.this,message);
 	        		validateDateFlag = false;
 	        	}
 	    	}
@@ -527,7 +529,7 @@ public class reportMenu extends ListActivity{
 	        	}
 	        	else{
 	        		String message = "Please enter proper date";
-	        		toastValidationMessage(message);
+	        		m.toastValidationMessage(reportMenu.this,message);
 	        		validateDateFlag = false;
 	        	}
 	    	}
@@ -540,19 +542,5 @@ public class reportMenu extends ListActivity{
 	} 
 	
 	
-	public void toastValidationMessage(String message) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(message)
-                .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            	
-                            }
-                        });
-                
-        AlertDialog alert = builder.create();
-        alert.show();
-		
-	} 
+	
 }

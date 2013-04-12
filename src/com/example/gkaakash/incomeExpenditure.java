@@ -217,20 +217,7 @@ public class incomeExpenditure extends Activity{
            
             animated_diolog();
         } catch (Exception e) {
-        	//System.out.println("I am an error"+e);
-        	AlertDialog.Builder builder = new AlertDialog.Builder(incomeExpenditure.this);
-   	
-        	builder.setMessage("Please try again")
-                  .setCancelable(false)
-                  .setPositiveButton("Ok",
-                          new DialogInterface.OnClickListener() {
-                              public void onClick(DialogInterface dialog, int id) {
-                             
-                              }
-                          });
-                  
-        	AlertDialog alert = builder.create();
-        	alert.show();	
+        	m.toastValidationMessage(incomeExpenditure.this, "Please try again"); 
         }
     }
    

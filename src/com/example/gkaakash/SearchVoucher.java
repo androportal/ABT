@@ -76,6 +76,7 @@ public class SearchVoucher extends Activity {
 	String colValue;
 	int oneTouch = 1;
 	TableLayout floating_heading_table;
+	module m;
 
 
 	@Override
@@ -85,6 +86,7 @@ public class SearchVoucher extends Activity {
 
 		client_id = Startup.getClient_id();
 		transaction = new Transaction();
+		m= new module();
 
 
 		//for two digit format date for dd and mm
@@ -121,19 +123,7 @@ public class SearchVoucher extends Activity {
 
 
 		} catch (Exception e) {
-
-			AlertDialog.Builder builder = new AlertDialog.Builder(SearchVoucher.this);
-			builder.setMessage("Please try again")
-			.setCancelable(false)
-			.setPositiveButton("Ok",
-					new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-
-				}
-			});
-
-			AlertDialog alert = builder.create();
-			alert.show();
+			m.toastValidationMessage(context, "Please try again");
 		}
 	}
 
@@ -291,7 +281,7 @@ public class SearchVoucher extends Activity {
 						if(pos == 0){
 							searchByRefNumber = etVoucherCode.getText().toString();
 							if(searchByRefNumber.length() < 1){
-								toastValidationMessage("Please enter voucher reference number");
+								m.toastValidationMessage(context,"Please enter voucher reference number");
 							}
 							else{
 								searchVoucherBy = 1; //by reference no
@@ -345,7 +335,7 @@ public class SearchVoucher extends Activity {
 									getallvouchers(params);
 								}
 								else{
-									toastValidationMessage("Please enter proper date");
+									m.toastValidationMessage(context,"Please enter proper date");
 								}
 							} catch (Exception e) {
 								// TODO: handle exception
@@ -355,7 +345,7 @@ public class SearchVoucher extends Activity {
 						else if(pos == 2){
 							searchByNarration = etNarration.getText().toString();
 							if(searchByNarration.length() < 1){
-								toastValidationMessage("Please enter narration");
+								m.toastValidationMessage(context,"Please enter narration");
 							}
 							else{
 								searchVoucherBy = 3; //by narration
@@ -559,7 +549,7 @@ public class SearchVoucher extends Activity {
 										Object[] allvouchersparams = new Object[]{2,"",financialFromDate,financialToDate,""};
 										getallvouchers(allvouchersparams);
 
-										toastValidationMessage("Voucher deleted successfully");
+										m.toastValidationMessage(context,"Voucher deleted successfully");
 									}
 								})
 								.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -674,21 +664,7 @@ public class SearchVoucher extends Activity {
 	}
 
 
-	public void toastValidationMessage(String message) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setMessage(message)
-		.setCancelable(false)
-		.setPositiveButton("Ok",
-				new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-
-			}
-		});
-
-		AlertDialog alert = builder.create();
-		alert.show();
-
-	} 
+	
 
 
 	public void onBackPressed() {

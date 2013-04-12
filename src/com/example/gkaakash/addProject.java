@@ -54,6 +54,7 @@ public class addProject extends MainActivity {
 	protected ArrayList<String>[] projectnamelist;
 	boolean projectExistsFlag = false;
 	private boolean setProject;
+	module m;
 
 	// on load...
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class addProject extends MainActivity {
 		ltProjectNames = (ListView) findViewById(R.id.ltProjectNames);
 		ltProjectNames.setCacheColorHint(color.transparent);
 		ltProjectNames.setTextFilterEnabled(true);
+		m=new module();
 
 		// get all project names in list view on load
 		projectnames = (Object[]) organisation.getAllProjects(client_id);
@@ -142,13 +144,13 @@ public class addProject extends MainActivity {
 									}
 
 									if (new_project_name.length() < 1) {
-										toastValidationMessage("Please enter project name");
+										m.toastValidationMessage(addProject.this,"Please enter project name");
 									}
 									if (new_project_name
 											.equalsIgnoreCase(old_projectname)) {
-										toastValidationMessage("No changes made");
+										m.toastValidationMessage(addProject.this,"No changes made");
 									} else if (projectExistsFlag == true) {
-										toastValidationMessage("Project '"
+										m.toastValidationMessage(addProject.this,"Project '"
 												+ new_project_name
 												+ "' already exists");
 									} else {
@@ -165,7 +167,7 @@ public class addProject extends MainActivity {
 										projectnames = (Object[]) organisation
 												.getAllProjects(client_id);
 										getResultList(projectnames);
-										toastValidationMessage("Project name has been changed from '"
+										m.toastValidationMessage(addProject.this,"Project name has been changed from '"
 												+ old_projectname
 												+ "' to '"
 												+ new_project_name
@@ -198,13 +200,13 @@ public class addProject extends MainActivity {
 							String edited = (String) preferences
 									.deleteProjectName(params, client_id);
 							if (edited.equalsIgnoreCase("project deleted")) {
-								toastValidationMessage("Project '" + proj
+								m.toastValidationMessage(addProject.this,"Project '" + proj
 										+ "' deleted successfully");
 								projectnames = (Object[]) organisation
 										.getAllProjects(client_id);
 								getResultList(projectnames);
 							} else {
-								toastValidationMessage("Project '"
+								m.toastValidationMessage(addProject.this,"Project '"
 										+ proj
 										+ "' can't be deleted, it has transactions");
 							}
@@ -314,7 +316,7 @@ public class addProject extends MainActivity {
 						}
 
 						if (flag == true) {
-							toastValidationMessage("Project names can not be same");
+							m.toastValidationMessage(addProject.this,"Project names can not be same");
 						} else {
 							for (int i = 0; i < finalProjlist.size(); i++) {
 								for (int j = 0; j < projectnamelist
@@ -337,9 +339,9 @@ public class addProject extends MainActivity {
 							}
 
 							if (etProject.length() < 1) {
-								toastValidationMessage("Please enter project name");
+								m.toastValidationMessage(addProject.this,"Please enter project name");
 							} else if (projectExistsFlag == true) {
-								toastValidationMessage("Project '"
+								m.toastValidationMessage(addProject.this,"Project '"
 										+ nameExists
 										+ "' already exists");
 							} else {
@@ -347,7 +349,7 @@ public class addProject extends MainActivity {
 										finalProjlist, client_id);
 								// To pass on the activity to the next
 								// page
-								toastValidationMessage("Project added successfully");
+								m.toastValidationMessage(addProject.this,"Project added successfully");
 								// get all project names in list view on
 								// load
 								projectnames = (Object[]) organisation
@@ -451,19 +453,7 @@ public class addProject extends MainActivity {
 
 	}
 
-	public void toastValidationMessage(String message) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setMessage(message).setCancelable(false)
-		.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-
-			}
-		});
-
-		AlertDialog alert = builder.create();
-		alert.show();
-
-	}
+	
 
 	@Override
 	public void onBackPressed() {

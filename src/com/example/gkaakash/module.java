@@ -149,9 +149,6 @@ public class module {
 								PdfGenaretor pdfgen = new PdfGenaretor();
 								try {
 									pdfgen.generateBalancePDFFile(Grid,Grid1,params);
-	            					//generatePDFFile(BalanceSheetGrid,pdf_params);
-	            					
-	            					//generatePDFFile("balnce.pdf",pdf_params); 
 	            			        AlertDialog.Builder builder1 = new AlertDialog.Builder(c);
 	            			        builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+sFilename);
 	            			        AlertDialog alert1 = builder1.create();
@@ -175,26 +172,6 @@ public class module {
 		AlertDialog alert = builder.create();
 		alert.show();
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 	
 	
@@ -205,7 +182,7 @@ public class module {
 
 			for (int i = 0; i < Grid.size(); i++) {
 				for (int j = 0; j < Grid.get(i).size(); j++) {
-					// First column
+					
 					fw.append(Grid.get(i).get(j).toString());
 					fw.append(',');
 				}

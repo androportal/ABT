@@ -84,6 +84,7 @@ public class menu extends ListActivity{
 	boolean reportmenuflag;
     static String orgtype;
     String OrgName;
+    module m;
     
     //adding list items to the newly created menu list
     String[] menuOptions = new String[] { "Create account", "Transaction", "Reports",
@@ -127,6 +128,7 @@ public class menu extends ListActivity{
         organisation = new Organisation();
         report = new Report();
         client_id= Startup.getClient_id();
+        m= new module();
         
         //get financial from and to date, split and store day, month and year in seperate variable
        	financialFromDate =Startup.getfinancialFromDate();  	   	
@@ -260,7 +262,7 @@ public class menu extends ListActivity{
 					
 					if(accountnamelist.size() <= 0){
 						String message = "Bank reconciliation statement cannot be displayed, Please create bank account!";
-						toastValidationMessage(message);
+						m.toastValidationMessage(menu.this,message);
 						}
 					else{
                 	
@@ -546,7 +548,7 @@ public class menu extends ListActivity{
 	        	}
 	        	else{
 	        		String message = "Please enter proper date";
-	        		toastValidationMessage(message);
+	        		m.toastValidationMessage(menu.this,message);
 	        		validateDateFlag = false;
 	        	}
 	    	}
@@ -559,7 +561,7 @@ public class menu extends ListActivity{
 	    		else
 	    		{
 	    			String message = "Please enter proper date";
-	        		toastValidationMessage(message);
+	        		m.toastValidationMessage(menu.this,message);
 	    			validateDateFlag = false;
 	    		}
 	    	}else{
@@ -569,7 +571,7 @@ public class menu extends ListActivity{
 	        	}
 	        	else{
 	        		String message = "Please enter proper date";
-	        		toastValidationMessage(message);
+	        		m.toastValidationMessage(menu.this,message);
 	        		validateDateFlag = false;
 	        	}
 	    	}
@@ -580,21 +582,7 @@ public class menu extends ListActivity{
 		return validateDateFlag;
 	}
     
-    public void toastValidationMessage(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(message)
-                .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                
-                            }
-                        });
-                
-        AlertDialog alert = builder.create();
-        alert.show();
-        
-    } 
+   
    
     
 }

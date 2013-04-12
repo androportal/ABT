@@ -63,13 +63,15 @@ public class createAccount<group> extends Activity{
     String sub_grp_name;
     private String subgroup_exist;
     private String accountcode_exist;
-    protected String accountname_exist;    
+    protected String accountname_exist;   
+    module m;
         
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Calling create_account.xml
         setContentView(R.layout.create_account);
+        m=new module();
         
         try {
             //for visibility of account tab layout
@@ -121,18 +123,7 @@ public class createAccount<group> extends Activity{
             
             getExistingGroupNames();
         } catch (Exception e) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-               builder.setMessage("Please try again")
-                       .setCancelable(false)
-                       .setPositiveButton("Ok",
-                               new DialogInterface.OnClickListener() {
-                                   public void onClick(DialogInterface dialog, int id) {
-                                       
-                                   }
-                               });
-                       
-               AlertDialog alert = builder.create();
-               alert.show();
+           m.toastValidationMessage(context, "Please try again");
         }
         
         addListeneronButton();
@@ -365,12 +356,12 @@ public class createAccount<group> extends Activity{
                 // check for blank fields
                 if("Create New Sub-Group".equals(selSubGrpName)&&newsubgrpname.length()<1||("manually".equals(accCodeCheckFlag)&& accountcode.length()<1))
                 {
-                    alertBlankField();
+                    m.toastValidationMessage(context, "Please fill textfield");
                     
                 }else if((accountname.length()<1)||(openingbalance.length()<1))
                 {
                 
-                    alertBlankField();
+                	 m.toastValidationMessage(context, "Please fill textfield");
                     
                 }
                 else if("Create New Sub-Group".equals(selSubGrpName)&&newsubgrpname.length()>=1)
@@ -378,19 +369,19 @@ public class createAccount<group> extends Activity{
                     subgroup_exist = group.subgroupExists(new Object[]{newsubgrpname},client_id);
                     if (subgroup_exist.equals("1"))
                     {
-                        alertSubGroupExist();
+                       m.toastValidationMessage(context, "Subgroup "+sub_grp_name+" already exist");
                     }else if(accountname.length()>=1)
                     {
                             accountname_exist = account.checkAccountName(new Object[]{accountname,accCodeCheckFlag,groupChar},client_id);
                             if (accountname_exist.equals("exist"))
                             {
-                                alertAccountExist();
+                               m.toastValidationMessage(context, "Account "+accountname+" already exist");
                             }else if("manually".equals(accCodeCheckFlag)&&accountcode.length()>=1)
                             {
                                 accountcode_exist = account.checkAccountCode(new Object[]{accountcode},client_id);
                                 if (accountcode_exist.equals("1"))
                                 {
-                                    alertAccountCodeExist();
+                                  m.toastValidationMessage(context, "Acountcode "+accountcode+" already exist");
                                 
                                 }else
                                 {    
@@ -414,13 +405,14 @@ public class createAccount<group> extends Activity{
                             accountname_exist = account.checkAccountName(new Object[]{accountname,accCodeCheckFlag,groupChar},client_id);
                             if (accountname_exist.equals("exist"))
                             {
-                                alertAccountExist();
+                            	  m.toastValidationMessage(context, "Account "+accountname+" already exist");
                             }else if("manually".equals(accCodeCheckFlag)&&accountcode.length()>=1)
                             {
                                 accountcode_exist = account.checkAccountCode(new Object[]{accountcode},client_id);
                                 if (accountcode_exist.equals("1"))
                                 {
-                                    alertAccountCodeExist();
+                                	 m.toastValidationMessage(context, "Acountcode "+accountcode+" already exist");
+                                     
                                     
                                 }else
                                 {
@@ -455,7 +447,7 @@ public class createAccount<group> extends Activity{
                     accountcode = account.checkAccountName(new Object[]{accountname,accCodeCheckFlag,groupChar},client_id);
                     if(accountcode.equals("exist"))
                     {
-                        alertAccountExist();
+                    	  m.toastValidationMessage(context, "Account "+accountname+" already exist");
                     }else{
                         etaccCode.setText(accountcode);
                         }
@@ -479,7 +471,7 @@ public class createAccount<group> extends Activity{
                             subgroup_exist = group.subgroupExists(new Object[]{sub_grp_name},client_id);
                             if (subgroup_exist.equals("1"))
                             {
-                                alertSubGroupExist();
+                            	 m.toastValidationMessage(context, "Subgroup "+sub_grp_name+" already exist");
                             }
                         }
                 }
@@ -498,7 +490,7 @@ public class createAccount<group> extends Activity{
                                 accountcode_exist = account.checkAccountCode(new Object[]{account_code},client_id);
                                 if (accountcode_exist.equals("1"))
                                 {
-                                    alertAccountCodeExist();
+                                	m.toastValidationMessage(context, "Acountcode "+accountcode+" already exist");
                                     etaccCode.setText(account_code);
                                 }
                             
@@ -527,85 +519,6 @@ public class createAccount<group> extends Activity{
             startActivity(intent);
         }
     }
-    
-    
-    // method for blank fields
-    public void alertBlankField()
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("Please fill textfield")
-                .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                
-                            }
-                        });
-                
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-    
-    
-    public void alertAccountExist()
-    {
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setMessage("Account "+accountname+" already exist")
-		        .setCancelable(false)
-		        .setPositiveButton("Ok",
-		                new DialogInterface.OnClickListener() {
-		                    public void onClick(DialogInterface dialog, int id) {
-		                         
-		                        etAccName.setText("");
-		                        etAccName.requestFocus();
-		                    }
-		                });
-		        
-		AlertDialog alert = builder.create();
-		alert.show();
-            
-            
-        
-    }
-    public void alertAccountCodeExist()
-    {
-    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-    builder.setMessage("Acountcode "+accountcode+" already exist")
-        .setCancelable(false)
-        .setPositiveButton("Ok",
-            new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                     
-                    etaccCode.setText("");
-                    etaccCode.requestFocus();
-                }
-            });
-    
-    AlertDialog alert = builder.create();
-    alert.show();
-    }
-    
-    
-    public void alertSubGroupExist()
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("Subgroup "+sub_grp_name+" already exist")
-                .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                 
-                                etSubGrp.setText("");
-                                etSubGrp.requestFocus();
-                            }
-                        });
-                
-        AlertDialog alert = builder.create();
-        alert.show();
-        //Toast.makeText(context,sub_grp_name+" already exist",Toast.LENGTH_LONG).show();
-        
-    }
-    
     
     public void SaveAccount(){
         Object[] params = new Object[]{accCodeCheckFlag,selGrpName,selSubGrpName,newsubgrpname,accountname,accountcode,openingbalance}; 

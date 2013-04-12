@@ -208,7 +208,7 @@ public class bankReconciliation extends Activity{
     		
             
 		} catch (Exception e) {
-			toastValidationMessage("Please try again");
+			m.toastValidationMessage(bankReconciliation.this,"Please try again");
 		}
     }
    
@@ -414,7 +414,7 @@ public class bankReconciliation extends Activity{
 		        Object[] clear_flag = new Object[]{cleared_tran_flag};
 		        setTableAndStatement(params,clear_flag);
 		        
-				toastValidationMessage("Changes saved successfully");
+				m.toastValidationMessage(bankReconciliation.this,"Changes saved successfully");
 			}//end of onclick
 		}); 
 	}//end of function setbankrecon
@@ -852,7 +852,7 @@ public class bankReconciliation extends Activity{
                                                     }
                                                 }
                                                 else{
-                                                    toastValidationMessage("Please enter proper date");
+                                                    m.toastValidationMessage(bankReconciliation.this,"Please enter proper date");
                                                 }
                                               
                                             } catch (Exception e) {
@@ -899,7 +899,7 @@ public class bankReconciliation extends Activity{
                                                 tvdate.setText(Cdate1);
                                             }
 										} catch (Exception e) {
-											toastValidationMessage("Please try again");
+											m.toastValidationMessage(bankReconciliation.this,"Please try again");
 										}
                                 }
                             }                           
@@ -994,7 +994,7 @@ public class bankReconciliation extends Activity{
                         				}
                         			}
                         			else{
-                        				toastValidationMessage("Please enter proper date");
+                        				m.toastValidationMessage(bankReconciliation.this,"Please enter proper date");
                         			}
                                
                         		} catch (Exception e) {
@@ -1192,7 +1192,7 @@ public class bankReconciliation extends Activity{
     				}
 	        	}
 	        	else{
-					toastValidationMessage("Please enter proper voucher date");
+					m.toastValidationMessage(bankReconciliation.this,"Please enter proper voucher date");
 	        	}
 	        	
 			} catch (Exception e) {
@@ -1202,24 +1202,7 @@ public class bankReconciliation extends Activity{
     };
 
     
-    /*
-     * call this method for alert messages
-     * input: a message Strig to be display on alert
-     */
-    public void toastValidationMessage(String message) {
-		   AlertDialog.Builder builder = new AlertDialog.Builder(bankReconciliation.this);
-	       builder.setMessage(message)
-	               .setCancelable(false)
-	               .setPositiveButton("Ok",
-	                       new DialogInterface.OnClickListener() {
-	                           public void onClick(DialogInterface dialog, int id) {
-	                           	
-	                           }
-	                       });
-	               
-	       AlertDialog alert = builder.create();
-	       alert.show();	
-		} 
+   
     public void onBackPressed() {
     	MainActivity.nameflag=false;
     	Intent intent = new Intent(getApplicationContext(), menu.class);

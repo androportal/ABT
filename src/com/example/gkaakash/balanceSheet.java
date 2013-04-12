@@ -235,19 +235,8 @@ public class balanceSheet extends Activity{
 			
     		drillDown();
     	} catch (Exception e) {
-    		AlertDialog.Builder builder = new AlertDialog.Builder(balanceSheet.this);
-
-    		builder.setMessage("Please try again")
-                  .setCancelable(false)
-                  .setPositiveButton("Ok",
-                          new DialogInterface.OnClickListener() {
-                              public void onClick(DialogInterface dialog, int id) {
-
-                              }
-                          });
- 
-    		AlertDialog alert = builder.create();
-    		alert.show();	}
+    		m.toastValidationMessage(balanceSheet.this,"Please try again");
+    	}
     }
     
     

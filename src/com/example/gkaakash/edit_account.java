@@ -45,6 +45,7 @@ public class edit_account extends Activity{
     static Object[] accountDetail;
     ArrayList accountDetailList;
     static int flag = 1;
+    module m;
    
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,7 @@ public class edit_account extends Activity{
         
         account = new Account();
         client_id = Startup.getClient_id();
+        m = new module();
         
         List = (ListView) findViewById(R.id.ltAccname);
         List.setCacheColorHint(color.transparent);
@@ -322,17 +324,17 @@ private void editAccount() {
 									if((newAccountName.length()<1)&&("".equals(newOpBal)))
 									{
 										String message = "Please fill field";
-										toastValidationMessage(message);
+										m.toastValidationMessage(edit_account.this,message);
 									   
 					                }
 									else if("".equals(newOpBal))
 									{
 										String message = "Please fill amount field";
-										toastValidationMessage(message);
+										m.toastValidationMessage(edit_account.this,message);
 									}
 									else if((newAccountName.length()<1)){
 										String message = "Please fill accountname field";
-										toastValidationMessage(message);
+										m.toastValidationMessage(edit_account.this,message);
 									}
 									if((newAccountName.length()>=1)&&(!"".equals(newOpBal)))
 									{ 
@@ -340,7 +342,7 @@ private void editAccount() {
 		                                if (!newAccountName.equalsIgnoreCase(oldAccountName)&&accountcode_exist.equals("exist"))
 		                                {
 		                                	String message = "Account '"+ newAccountName+"' already exist";
-											toastValidationMessage(message);
+											m.toastValidationMessage(edit_account.this,message);
 		                                
 		                                }else
 		                                {
@@ -366,22 +368,22 @@ private void editAccount() {
 																oldAccountName+"' to '"+ newAccountName+
 																"' and opening balance has been changed from '"+ 
 																oldOpBal + "' to '"+ newOpBal+"'";
-														toastValidationMessage(message);
+														m.toastValidationMessage(edit_account.this,message);
 													}
 													else if(!newAccountName.equalsIgnoreCase(oldAccountName)){
 														String message = "Account name has been changed from '"+
 																oldAccountName+"' to '"+ newAccountName+"'";
-														toastValidationMessage(message);
+														m.toastValidationMessage(edit_account.this,message);
 													}
 													else if(!newOpBal.equals(oldOpBal)){
 														String message = "Opening balance has been changed from '"+
 																oldOpBal+"' to '"+ newOpBal+"'";
-														toastValidationMessage(message);
+														m.toastValidationMessage(edit_account.this,message);
 													}
 													else{
 														if("edit".equals(msg)){
 															String message = "No changes made";
-															toastValidationMessage(message);
+															m.toastValidationMessage(edit_account.this,message);
 								          				}
 													}
 													
@@ -418,11 +420,11 @@ private void editAccount() {
 	                            	  
 	                        		  System.out.println("value"+accountDeleteValue);
 	                        		  if("account deleted".equals(accountDeleteValue)){
-	                        			  toastValidationMessage(msg);
+	                        			  m.toastValidationMessage(edit_account.this,msg);
 	                        			  setaccountlist();
 	                        		  }
 	                        		  else {
-	                          			  toastValidationMessage("Account '"+List.getItemAtPosition(position).toString()+msg+" deleted.");
+	                          			  m.toastValidationMessage(edit_account.this,"Account '"+List.getItemAtPosition(position).toString()+msg+" deleted.");
 	                        		  }
 	                      }break;
 	            }
@@ -527,23 +529,5 @@ private void editAccount() {
     }
     
     
-    /*
-     * call this method for alert messages
-     * input: a message Strig to be display on alert
-     */
-    public void toastValidationMessage(String message) {
-    	AlertDialog.Builder builder = new AlertDialog.Builder(edit_account.this);
-	    builder.setMessage(message)
-	           .setCancelable(false)
-               .setPositiveButton("Ok",
-                       new DialogInterface.OnClickListener() {
-                           public void onClick(DialogInterface dialog, int id) {
-                           	
-                           }
-                       });
-	               
-	     AlertDialog alert = builder.create();
-	     alert.show();
-		
-	} 
+   
 }

@@ -73,6 +73,7 @@ import android.widget.Toast;
 		String orgcode;
 		String reg_date,fcra_date;
 		static String orgtype;
+		module m;
 		
 		
 		//adding options to the options menu
@@ -104,6 +105,7 @@ import android.widget.Toast;
 			// creating instance of startup to get the connection
 			startup = new Startup();
 			org = new Organisation();
+			m= new module();
 		
 			editDetailsflag = MainActivity.editDetails;
 			btnorgDetailSave = (Button) findViewById(R.id.btnOrgDetailSave);
@@ -523,7 +525,7 @@ import android.widget.Toast;
 						etPan};
 				client_id = startup.login(deployparams);
 				save_edit = (String)org.updateOrg(orgparams, client_id);
-				toastValidationMessage("Organisation details edited successfully");
+				m.toastValidationMessage(orgDetails.this,"Organisation details edited successfully");
 				
 			}
 		           
@@ -547,22 +549,7 @@ import android.widget.Toast;
 		}
 	
 	
-	public void toastValidationMessage(String message) {
-		
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(message) 
-                .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                
-                            }
-                        });
-                
-        AlertDialog alert = builder.create();
-        alert.show();
-        
-    } 
+
 	
 	
 	public void onBackPressed() {
