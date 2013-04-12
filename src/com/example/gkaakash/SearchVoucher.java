@@ -117,7 +117,7 @@ public class SearchVoucher extends Activity {
 
 			Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
 			getallvouchers(params);
-			floatingHeader();
+			//floatingHeader();
 
 
 		} catch (Exception e) {
@@ -403,9 +403,9 @@ public class SearchVoucher extends Activity {
 			for(int j=0;j<columnValue.size();j++){
 				/** Creating a TextView to add to the row **/
 				addRow(columnValue.get(j),i); 
-				if(oneTouch == 1){
-                    tr.setClickable(false);
-                }
+//				if(oneTouch == 1){
+//                    tr.setClickable(false);
+//                }
 				// System.out.println("rowid"+i);
 				label.setBackgroundColor(Color.BLACK);
 				/*
@@ -623,14 +623,12 @@ public class SearchVoucher extends Activity {
 			if(searchedVoucherList.size() != 0){
 				searchedVoucherGrid.add(searchedVoucherList);
 			}
-			searchedVoucherGrid.add(searchedVoucherList);
+			
 		}
 		vouchertable.removeAllViews();
         System.out.println("grid in resume"+searchedVoucherGrid);
         if(searchedVoucherGrid.size() > 0){
                 addTable();
-        }else{
-                floating_heading_table.removeAllViews();
         }
 	}
 
@@ -659,19 +657,19 @@ public class SearchVoucher extends Activity {
         /*
          * hide header row from voucher table if floating header is present
          */
-        if(searchedVoucherGrid.size() > 0){
-        if(oneTouch > 1){
-                View firstrow = vouchertable.getChildAt(0);
-                for (int k = 0; k < 8; k++) {
-                        LinearLayout l = (LinearLayout) ((ViewGroup) firstrow)
-                                        .getChildAt(k);
-                        TextView tv = (TextView) l.getChildAt(0);
-                        tv.setHeight(0);
-
-                        l.getLayoutParams().height = 0;
-                }
-        }
-        }
+//        if(searchedVoucherGrid.size() > 0){
+//        if(oneTouch > 1){
+//                View firstrow = vouchertable.getChildAt(0);
+//                for (int k = 0; k < 8; k++) {
+//                        LinearLayout l = (LinearLayout) ((ViewGroup) firstrow)
+//                                        .getChildAt(k);
+//                        TextView tv = (TextView) l.getChildAt(0);
+//                        tv.setHeight(0);
+//
+//                        l.getLayoutParams().height = 0;
+//                }
+//        }
+//        }
 
 	}
 

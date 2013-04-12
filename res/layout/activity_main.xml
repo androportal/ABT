@@ -34,14 +34,15 @@
                 android:orientation="vertical"
                 android:paddingBottom="50dp"
                 android:paddingRight="70dp"
-                android:paddingTop="51dp" >
+                android:paddingTop="65dp" >
 
+           
             <Button
                 android:id="@+id/bcreateOrg"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_gravity="top"
-                android:background="@drawable/button_yellow"
+                style="@style/DefaultButton"
                 android:clickable="true"
                 android:gravity="center"
                 android:text="@string/createOrgButton"
@@ -60,7 +61,7 @@
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
-                android:background="@drawable/button_yellow"
+                style="@style/DefaultButton"
                 android:clickable="true"
                 android:gravity="center"
                 android:text="@string/selectOrgButton"
@@ -73,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|right"
                 android:paddingRight="40dp"
-                android:paddingTop="72dp"
+                android:paddingTop="60dp"
                 android:text="IIT Bombay"
                 android:textColor="#FFFFFF" />
 

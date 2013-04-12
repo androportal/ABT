@@ -9,4 +9,7 @@
        <item name="android:textColor">#FFFFFF</item>
     </style>
 	
+	<style name="DefaultButton">
+        <item name="android:background">@drawable/default_button_selector</item>
+    </style>
 </resources>
