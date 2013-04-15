@@ -510,20 +510,21 @@ import android.widget.Toast;
 		        progressBar.show();*/ 
 		      //list of input parameters type of Object 
 		deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
-			
+	
+		client_id = Startup.getClient_id();	
 			if(editDetailsflag==false){
 				orgparams = new Object[]{getOrgName,getSelectedOrgType,selectedCounrty,selectedStateName,
 						selectedCityName,getAddr,getPin,eGetTelNo,eGetFaxNO,etGetWeb,eGetEmail,
 						etPan,etMVATno,etServiceTaxno,etRegNo,
 						RegDate,etFcraNo,FcraDate }; 
 				//call method deploy from startup.java 
-				client_id = startup.deploy(deployparams);
+				//client_id = startup.deploy(deployparams);
 				setOrgDetails = org.setOrganisation(orgparams,client_id);
 			}else {
 				orgparams = new Object[]{orgcode,getAddr,selectedCounrty,selectedStateName,selectedCityName,getPin, 
 						eGetTelNo,eGetFaxNO,eGetEmail,etGetWeb,etMVATno,etServiceTaxno,etRegNo,RegDate,etFcraNo,FcraDate ,
 						etPan};
-				client_id = startup.login(deployparams);
+				//client_id = startup.login(deployparams);
 				save_edit = (String)org.updateOrg(orgparams, client_id);
 				m.toastValidationMessage(orgDetails.this,"Organisation details edited successfully");
 				

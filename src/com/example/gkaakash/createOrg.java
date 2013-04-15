@@ -7,35 +7,48 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import com.gkaakash.controller.Startup;
+import com.gkaakash.controller.User;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaRouter.UserRouteInfo;
+import android.opengl.Visibility;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.style.BulletSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
  
 
 public class createOrg extends MainActivity {
 	//Declaring variables
-	TextView tvDisplayFromDate, tvDisplayToDate;
-	Button btnChangeFromDate, btnChangeToDate, btnNext;
+	TextView tvDisplayFromDate, tvDisplayToDate,tvwarning,tvLoginWarning,tvSignUp,tvuserrole;
+	Button btnChangeFromDate, btnChangeToDate, btnCreate,btnLogin,btnNext;
 	static int year, month, day, toYear, toMonth, toDay;
 	static final int FROM_DATE_DIALOG_ID = 0;
 	static final int TO_DATE_DIALOG_ID = 1;
 	Spinner orgType; 
+	RadioButton rb_admin,rb_guest,radioButtonValue;
+    RadioGroup radioUserGroup,radioGender,radioUserAdminGroup;
 	String org;
 	static String organisationName,orgTypeFlag,selectedOrgType,todate;
-	static String fromdate;
+	static String fromdate,user_role;
 	AlertDialog dialog;
 	final Calendar c = Calendar.getInstance();
 	final Context context = this;
@@ -44,16 +57,22 @@ public class createOrg extends MainActivity {
 	DecimalFormat mFormat;
 	private Object[] orgNameList;
 	Object[] financialyearList;
-	boolean orgExistFlag;
+	boolean orgExistFlag,createorgflag;
 	static Integer client_id;
-	module m;
-	
+	int genderid;
+	static String firstname,lastname,username ,password ,confpassword,loginPassword;
+	String loginUsername,login_user,login_password;
+	private EditText eloginPassword ,eFirstName ,eLastName,eUserName ,ePassword , eConfPassword;
+	private EditText eloginUsername;
+	boolean adminflag=false;
+	User user;
+	private module module;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//Calling create_org.xml
 		setContentView(R.layout.create_org);
-		m=new module();
 		
 		help_flag = new File("/data/data/com.example.gkaakash/files/help_flag.txt");
 		if(!help_flag.exists()){
@@ -77,10 +96,11 @@ public class createOrg extends MainActivity {
 		 * allows the user to select financial year start date and to date
 		 */
 		addListeneronDateButton();
-		//creating interface to pass on the activity to next page
-		addListeneronNextButton();
+		addListeneronCreateButton();
 		orgType = (Spinner) findViewById(R.id.sOrgType);
 		org  = (String) orgType.getSelectedItem();
+		user = new User();
+		module = new module();
 		//creating interface to listen activity on Item 
 		addListenerOnItem();
 	}
@@ -228,7 +248,7 @@ public class createOrg extends MainActivity {
 					    		tvDisplayToDate.setText(strDateTime);
 					    	}
 					    	else{
-				        		m.toastValidationMessage(createOrg.this,"Please enter proper date");
+				        		toastValidationMessage("Please enter proper date");
 					    	}
 					} catch (Exception e) {
 						// TODO: handle exception
@@ -264,18 +284,21 @@ public class createOrg extends MainActivity {
 	
 	}// End of addListenerOnItem()
 	
-	
-	private void addListeneronNextButton() {
+
+	private void addListeneronCreateButton() {
 		final Context context = this;
 		//Request a reference to the button from the activity by calling “findViewById” 
 		//and assign the retrieved button to an instance variable
-		btnNext = (Button) findViewById(R.id.btnNext);
+		btnCreate = (Button) findViewById(R.id.btnCreate);
+		//btnLogin = (Button) findViewById(R.id.btnLogin);
+		//btnNext = (Button) findViewById(R.id.btnNext);
 		orgType = (Spinner) findViewById(R.id.sOrgType);
 		tvDisplayFromDate = (TextView) findViewById(R.id.tvFromDate);
 		tvDisplayToDate = (TextView) findViewById(R.id.tvToDate);
 		orgName = (EditText) findViewById(R.id.etOrgName);
+		
 		//Create a class implementing “OnClickListener” and set it as the on click listener for the button "Next"
-		btnNext.setOnClickListener(new OnClickListener() {
+		btnCreate.setOnClickListener(new OnClickListener() {
  
 			@Override
 			public void onClick(View arg0) {
@@ -283,6 +306,7 @@ public class createOrg extends MainActivity {
 				organisationName = orgName.getText().toString();
 				fromdate = tvDisplayFromDate.getText().toString();
 				todate = tvDisplayToDate.getText().toString();
+				
 				try{
 				// call the getOrganisationName method from startup
 		    	orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
@@ -312,27 +336,241 @@ public class createOrg extends MainActivity {
 				}
 		    	
 				if("".equals(organisationName)){
-					m.toastValidationMessage(createOrg.this,"Please enter the organisation name");
+					toastValidationMessage("Please enter the organisation name");
 				}
 				else if(orgExistFlag == true){
-					m.toastValidationMessage(createOrg.this,"Organisation name "+organisationName+" with this financial year exist");
+					toastValidationMessage("Organisation name "+organisationName+" with this financial year exist");
 					orgExistFlag = false;
 					}
 				else{
 					//To pass on the activity to the next page
 					MainActivity.editDetails=false;
-					Intent intent = new Intent(context, orgDetails.class);
-				    startActivity(intent); 
+					deployparams = new Object[]{organisationName,fromdate,todate,orgTypeFlag}; // parameters pass to core_engine xml_rpc functions
+					client_id = startup.deploy(deployparams);
+					
+					
+					/* Inflater for LogIn Page after Organisation Deployment*/
+					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+					final View layout = inflater.inflate(R.layout.login, (ViewGroup) findViewById(R.id.layout_login));
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					builder.setView(layout);
+					builder.setTitle(organisationName+" have been created successfully");
+					builder.setMessage("Log In For Financial Year "+fromdate+" to "+todate);
+					radioUserGroup = (RadioGroup)layout.findViewById(R.id.radioUser);
+					tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
+					rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
+				    rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
+				    tvuserrole = (TextView) layout.findViewById(R.id.tvUserRole);
+				    rb_guest.setChecked(false);
+					addListenerOnRadioButton(layout);
+					// radio buttons for select existing organisation 
+					//radioUserAdminGroup = (RadioGroup)layout.findViewById(R.id.radioAdminUser);
+					//radioUserAdminGroup.setVisibility(View.GONE);
+					
+					Button login =  (Button) layout.findViewById(R.id.btnLogin);
+					
+					login.setOnClickListener(new View.OnClickListener(){
+				        public void onClick(View v) {
+				        	
+				        	
+				        	eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
+							eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
+							tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
+							
+				        	  login_user = eloginUsername.getText().toString();
+							  login_password = eloginPassword.getText().toString();
+								 Object[] params = new Object[]{login_user,login_password,user_role};
+							         
+								  if(module.isEmpty(params))
+							        {
+							        	String message = "please fill blank field";
+							        	tvLoginWarning.setText(message);
+							        	
+							        }else
+							        {
+							        	if(user_role.equals("guest"))
+							        	{
+								        	if ((login_user=="Guest"&&login_user=="Guest"))
+											{
+								        		Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
+												Intent intent = new Intent(context,orgDetails.class);
+								                startActivity(intent);
+											}else
+												{
+												String message = "Username and Password is incorrect";
+												tvLoginWarning.setText(message);
+											
+												}		
+							        	}
+											
+										if(user_role.equals("admin") ){
+								        	boolean is_user_exist = user.isUserExist(params, client_id);
+								        	Toast.makeText(createOrg.this,"exist "+is_user_exist, Toast.LENGTH_SHORT).show();
+										
+											if(is_user_exist==true)
+											{	
+												//dialog.cancel();
+												Intent intent = new Intent(context,orgDetails.class);
+								                startActivity(intent);
+											}else
+											{
+												String message = "Username and Password is incorrect";
+												tvLoginWarning.setText(message);
+		
+											}					        	 
+							        }
+							        }
+				           
+				        }
+				    });
+					
+					dialog = builder.create();
+					dialog.show();
+					dialog.setCanceledOnTouchOutside(false);
+					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+					//customizing the width and location of the dialog on screen 
+					lp.copyFrom(dialog.getWindow().getAttributes());
+					lp.width = 700;
+					dialog.getWindow().setAttributes(lp);
+					
 				}
 			}catch(Exception e)
 			{
-				m.toastValidationMessage(createOrg.this, "Please try again");  
+				String message = "Please check server connection";
+			    toastValidationMessage(message);
 			}
 			}
-		}); //End of btnNext.setOnClickListener
- 
-	}// End of addListeneronNextButton()
+		}); //End of btnCreate.setOnClickListener
+		
+	}
 	
+	public void addListenerOnRadioButton(final View layout) {
+		
+	
+		radioUserGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(RadioGroup rg, int selectedId) {
+				// TODO Auto-generated method stub
+				if(adminflag==false){
+					rb_admin.setChecked(false);
+					
+				}
+				selectedId = rg.getCheckedRadioButtonId();
+				radioButtonValue = (RadioButton)layout.findViewById(selectedId);
+				user_role = (String) radioButtonValue.getText();
+				
+				//Toast.makeText(createOrg.this,"hello"+user_role, Toast.LENGTH_SHORT).show();
+				//Toast.makeText(createOrg.this,"isChecked();"+rb_admin.isChecked(), Toast.LENGTH_SHORT).show();
+				eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
+				eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
+			
+				//Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
+				if(user_role.equals("admin"))
+				{
+					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+					final View layout = inflater.inflate(R.layout.sign_up, (ViewGroup) findViewById(R.id.layout_signup));
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				
+					builder.setView(layout);
+					builder.setTitle("Sign Up");
+					builder.setCancelable(true);
+					Button done =  (Button) layout.findViewById(R.id.btnSignUp);
+					Button cancel =  (Button) layout.findViewById(R.id.btnCancel);
+					done.setOnClickListener(new View.OnClickListener(){
+					        private RadioButton rbgender;
+							private String gender;
+
+							public void onClick(View v) {
+					        	 	
+					        	 	radioGender =(RadioGroup) layout.findViewById(R.id.radioGender);
+								    
+							        eFirstName =(EditText) layout.findViewById(R.id.eFirstName);
+							        eLastName =(EditText)layout.findViewById(R.id.eLastName);
+							        eUserName =(EditText) layout.findViewById(R.id.eUserName);
+							        ePassword =(EditText)layout.findViewById(R.id.ePassword);
+							        eConfPassword =(EditText) layout.findViewById(R.id.eConfPassword);
+							        tvwarning =(TextView) layout.findViewById(R.id.tvWarning);
+							        
+							        genderid = radioGender.getCheckedRadioButtonId();
+							        rbgender =(RadioButton)layout.findViewById(genderid);
+							        gender = rbgender.getText().toString();
+							        firstname = eFirstName.getText().toString();
+							        lastname = eLastName.getText().toString();
+							        username = eUserName.getText().toString();
+							        password = ePassword.getText().toString();
+							        confpassword= eConfPassword.getText().toString();
+							       
+							        
+							        Object[] params = new Object[]{firstname,lastname,username,password,gender,user_role};
+							        //Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
+							        if(module.isEmpty(params)||module.isEmpty(new Object[]{confpassword}))
+							        {
+							        	String message = "please fill blank field";
+							        	tvwarning.setText(message);
+							        	Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
+							        	// dialog.getLayoutInflater();
+							        }else if(!password.equals(confpassword))
+							        {
+							        	//Toast.makeText(createOrg.this,"password check", Toast.LENGTH_SHORT).show();
+							        	String message = "Please enter correct password";
+							        	tvwarning.setText(message);
+							        }else
+							        {
+							        	Toast.makeText(createOrg.this,"else", Toast.LENGTH_SHORT).show();
+							        	 boolean unique = user.isUserUnique(new Object[]{username},client_id);
+							        	// Toast.makeText(createOrg.this,"user"+unique, Toast.LENGTH_SHORT).show();
+							        	 if(unique==true)
+							        	 {	 String setuser = user.setUser(params, client_id);
+								        	 String message = "Sign up successfully";
+								        	 rb_guest.setVisibility(View.GONE);
+									    	 rb_admin.setVisibility(View.GONE);
+									    	 tvuserrole.setVisibility(View.GONE);
+								        	 adminflag = true;  
+								        	 eloginUsername.setText(username);
+								        	 eloginPassword.setText("");
+								        	 tvSignUp.setText("Signup Successfully As A Admin...!!! Please Log In");
+								        	 dialog.dismiss();
+							        	 }
+							        	 else{
+							        		 	String message = "User already exist";
+									        	tvwarning.setText(message);
+							        	 }
+								        	 
+							        	
+							        } 
+							      
+					        }
+					    });
+
+						cancel.setOnClickListener(new View.OnClickListener(){
+					        public void onClick(View v) {
+					        	adminflag = false;
+					       
+					        	dialog.dismiss();
+					        
+								
+					        }
+					    });
+					
+					dialog = builder.create();
+					dialog.show();
+					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+					//customizing the width and location of the dialog on screen 
+					lp.copyFrom(dialog.getWindow().getAttributes());
+					lp.width = 800;
+					dialog.getWindow().setAttributes(lp);
+					
+					
+				}else
+				{
+					eloginPassword.setText("guest");
+					eloginUsername.setText("guest");
+					
+				}
+				
+			   
+			}
+		});
+	  }
 	
 	public void onBackPressed() {
 		 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -340,7 +578,21 @@ public class createOrg extends MainActivity {
 		 startActivity(intent);
 	}
 	
-
+	public void toastValidationMessage(String message) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            	
+                            }
+                        });
+                
+        AlertDialog alert = builder.create();
+        alert.show();
+		
+	} 
 	
 	/*
 	public boolean onKeyLongPress(int keyCode, KeyEvent event) {
@@ -370,5 +622,7 @@ public class createOrg extends MainActivity {
 	    }
 	    return super.onKeyLongPress(keyCode, event);
 	}*/
+	
+	
 
 }// End of Class

@@ -24,6 +24,7 @@ public class module {
 	static Object[] voucherAccounts;
 	static List<String> Accountlist;
 	static ArrayAdapter<String> dataAdapter;
+	boolean validateflag;
 	
 	void getAccountsByRule(Object[] DrCrFlag, String vouchertypeflag2, Context context) {
 		transaction = new Transaction();
@@ -228,5 +229,22 @@ public class module {
 		} catch (Exception e) {
 			System.out.println("error:" + e.getMessage());
 		}
+	}
+	public boolean isEmpty(Object[] params)
+	{
+		for(Object signup : params)
+		{
+			if(signup.equals(""))
+			{
+				validateflag = true;
+				break;
+			}else
+			{
+				validateflag = false;
+			}
+			
+		}
+		return validateflag;
+		
 	}
 }

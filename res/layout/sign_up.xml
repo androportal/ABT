@@ -1,0 +1,205 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_signup"
+    android:layout_width="fill_parent"
+    android:layout_height="459dp"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp"
+    android:paddingTop="20dp" >
+           
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="top"
+                 android:paddingRight="100dp" >
+            	
+               <TableLayout
+                   android:layout_width="fill_parent"
+                   android:layout_height="450dp" >
+		
+					<TextView
+				    android:id="@+id/tvWarning"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:textAppearance="?android:attr/textAppearanceLarge"
+				    android:textColor="#F90000"
+				    android:textSize="20dp"
+				    android:paddingLeft="150dp"
+				    android:layout_gravity="center" />
+			
+
+			
+	    		<TableRow>
+
+				<TextView
+				    android:id="@+id/tFirstName"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="your firstname"
+				    android:textAppearance="?android:attr/textAppearanceLarge"
+				    android:textColor="#FFFFFF"
+				    android:textSize="20dp" />
+
+		        <EditText
+            android:id="@+id/eFirstName"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter Your First Name"
+            android:inputType="textPersonName" />
+			</TableRow>
+			<TableRow>
+
+				<TextView
+				    android:id="@+id/tLastName"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="your lastname"
+				    android:textAppearance="?android:attr/textAppearanceLarge"
+				    android:textColor="#FFFFFF"
+				    android:textSize="20dp" />
+
+		        <EditText
+            android:id="@+id/eLastName"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter Your Last Name"
+            android:inputType="textPersonName" />
+			</TableRow>
+			<TableRow>
+
+				<TextView
+				    android:id="@+id/tUserName"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="your username"
+				    android:textAppearance="?android:attr/textAppearanceLarge"
+				    android:textColor="#FFFFFF"
+				    android:textSize="20dp" />
+
+		         <EditText
+            android:id="@+id/eUserName"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter Your User Name"
+            android:inputType="textPersonName" />
+			</TableRow>
+			<TableRow>
+
+				<TextView
+				    android:id="@+id/tPassword"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="create a password"
+				    android:textAppearance="?android:attr/textAppearanceLarge"
+				    android:textColor="#FFFFFF"
+				    android:textSize="20dp" />
+
+		        <EditText
+		            android:id="@+id/ePassword"
+		            android:layout_width="300dp"
+		            android:layout_height="wrap_content"
+		            android:ems="10"
+		            android:hint="Enter a password"
+		            android:inputType="textPersonName" />
+			</TableRow>
+			<TableRow>
+
+				<TextView
+				    android:id="@+id/tConfPassword"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="confirm your password"
+				    android:textAppearance="?android:attr/textAppearanceLarge"
+				    android:textColor="#FFFFFF"
+				    android:textSize="20dp" />
+
+		        <EditText
+		            android:id="@+id/eConfPassword"
+		            android:layout_width="300dp"
+		            android:layout_height="wrap_content"
+		            android:ems="10"
+		            android:hint="Enter confirm password"
+		            android:inputType="textPassword" />
+			</TableRow>
+			
+          
+		    <TableRow>
+		        <TextView
+				    android:id="@+id/tUserName"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="Select gender"
+				    android:textAppearance="?android:attr/textAppearanceLarge"
+				    android:textColor="#FFFFFF"
+				    android:textSize="20dp" />
+		        
+			 	<RadioGroup
+		        android:id="@+id/radioGender"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" 
+		        android:orientation="horizontal">
+		 
+				 <RadioButton
+		                android:id="@+id/rbMale"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		        		android:paddingRight="20dp"
+		                android:text="Male"
+		                android:checked="true" />
+		
+		          <RadioButton
+		              android:id="@+id/rbFemale"
+		              android:layout_width="wrap_content"
+		              android:layout_height="wrap_content"
+		              android:paddingRight="20dp"
+		              android:text="Female" 
+		              />
+		          
+		          <RadioButton
+		              android:id="@+id/rbOther"
+		              android:layout_width="wrap_content"
+		              android:layout_height="wrap_content"
+		              android:paddingRight="20dp"
+		              android:text="Other" 
+		              />
+			  </RadioGroup>
+ 	  		</TableRow>
+      
+			<TableRow>
+			     <Button
+       				 android:id="@+id/btnSignUp"
+        			 android:layout_width="wrap_content"
+        			 android:layout_height="wrap_content"
+        			 android:text="Done"
+        			 android:textSize="20dp" />
+                 <Button
+       				 android:id="@+id/btnCancel"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"
+       		 		android:text="Cancel"
+        			android:textSize="20dp" />
+            </TableRow>
+       	 	</TableLayout> 
+       	 	
+               
+       	 	
+          </LinearLayout>
+
+         
+</LinearLayout>
+</ScrollView>

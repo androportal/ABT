@@ -142,7 +142,7 @@
         android:background="@drawable/blackbutton" >
 
         <Button
-            android:id="@+id/btnNext"
+            android:id="@+id/btnCreate"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"

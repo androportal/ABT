@@ -70,29 +70,20 @@
            </LinearLayout>
 
             
-            <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="20">
+             <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:layout_weight="20">
 
         <Button
-            android:id="@+id/btnDeleteOrg"
+            android:id="@+id/btnSelLogIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="0.90"
-            android:text="Delete organisation"
+            android:text="Login"
             android:textSize="20dp" />
-        
-        <Button
-            android:id="@+id/bProceed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.96"
-            android:text="  Proceed >>"
-            android:textSize="20dp" 
-            android:layout_gravity="center_vertical"/>
 
 </LinearLayout>
        </LinearLayout>
