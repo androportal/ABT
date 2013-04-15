@@ -495,9 +495,18 @@ public class trialBalance extends Activity{
 
 			@Override
 			public void onClick(View v) {
+				
 				String accname = trialBalGrid.get(i).get(1).toString();
 				//System.out.println("name is"+accname);
 				if(!(accname.equalsIgnoreCase("") || accname.equalsIgnoreCase("Account Name"))){
+					//change the row color(black/gray to orange) when clicked
+					View row = trialBaltable.getChildAt(i+1);
+					for (int j = 0; j < ColumnNameList.length; j++) {
+						LinearLayout l = (LinearLayout) ((ViewGroup) row)
+								.getChildAt(j);
+						TextView t = (TextView) l.getChildAt(0);
+						t.setBackgroundColor(Color.parseColor("#FBB117"));
+					}
 					acc_name = accname;
 					Intent intent = new Intent(getApplicationContext(),ledger.class);
 					intent.putExtra("flag", "from_trialBal");

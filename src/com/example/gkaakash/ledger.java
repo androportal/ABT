@@ -110,10 +110,10 @@ public class ledger extends Activity {
 	static String get_extra_flag;
 	String msg;
 	ArrayList<String> stringList;
-	 private int group1Id = 1;
-	 int PDF = Menu.FIRST;
-	 int CSV=Menu.FIRST+1;
-	
+	private int group1Id = 1;
+	int PDF = Menu.FIRST;
+	int CSV=Menu.FIRST+1;
+	int len;
 	
 	 @Override
 	 public boolean onCreateOptionsMenu(Menu menu) {
@@ -554,7 +554,7 @@ public class ledger extends Activity {
 
 		tr = new TableRow(this);
 
-		int len;
+		
 		if (checked == true) {
 			len = ColumnNameList.length;
 		} else {
@@ -591,6 +591,17 @@ public class ledger extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
+				//change the row color(black/gray to orange) when clicked
+				View row = ledgertable.getChildAt(i+1);
+				
+				for (int j = 0; j < len; j++) {
+					LinearLayout l = (LinearLayout) ((ViewGroup) row)
+							.getChildAt(j);
+					TextView t = (TextView) l.getChildAt(0);
+					t.setBackgroundColor(Color.parseColor("#FBB117"));
+				}
+				
+				
 				MainActivity.nameflag = true;
 
 				name = "Voucher details";

@@ -632,38 +632,62 @@ public class bankReconciliation extends Activity{
 			
 			@Override
 			public void onClick(View arg0) {
-				MainActivity.nameflag = true;
-				name = "Voucher details";
-				MainActivity.searchFlag = true;
-			
-			Toast.makeText(bankReconciliation.this, "hi:"+bankReconGrid.get(i).get(0), Toast.LENGTH_SHORT).show();
-			Object[] params = new Object[] { "Dr" };
-		
-			code = bankReconGrid.get(i).get(0).toString();
-			
-			Object[] params1 = new Object[] { code };
+				
+				String accname = bankReconGrid.get(i).get(1).toString();
+				
+				if(!(accname.equalsIgnoreCase("") ||
+						accname.equalsIgnoreCase("Particular"))){
+				
+					//change the row color(black/gray to orange) when clicked
+					View row = bankRecontable.getChildAt(i+1);
+					for (int j = 0; j < 7; j++) {
+						LinearLayout l = (LinearLayout) ((ViewGroup) row)
+								.getChildAt(j);
+						TextView t = (TextView) l.getChildAt(0);
+						t.setBackgroundColor(Color.parseColor("#FBB117"));
+					}		
+					
+					if(ColumnNameList.length == 9){
+						
+						LinearLayout l = (LinearLayout) ((ViewGroup) row)
+								.getChildAt(8);
+						TextView t = (TextView) l.getChildAt(0);
+						t.setBackgroundColor(Color.parseColor("#FBB117"));
+					}
+				
+					MainActivity.nameflag = true;
+					name = "Voucher details";
+					MainActivity.searchFlag = true;
 
-			Object[] VoucherMaster = (Object[]) transaction
-					.getVoucherMaster(params1, client_id);
-			// System.out.println("i am new object"+VoucherMaster);
+					//Toast.makeText(bankReconciliation.this, "hi:"+bankReconGrid.get(i).get(0), Toast.LENGTH_SHORT).show();
+					Object[] params = new Object[] { "Dr" };
 
-			ArrayList otherdetailsrow = new ArrayList();
-			for (Object row1 : VoucherMaster) {
-				Object a = (Object) row1;
-				otherdetailsrow.add(a.toString());// getting vouchermaster
-													// details
+					code = bankReconGrid.get(i).get(0).toString();
 
+					Object[] params1 = new Object[] { code };
+
+					Object[] VoucherMaster = (Object[]) transaction
+							.getVoucherMaster(params1, client_id);
+					// System.out.println("i am new object"+VoucherMaster);
+
+					ArrayList otherdetailsrow = new ArrayList();
+					for (Object row1 : VoucherMaster) {
+						Object a = (Object) row1;
+						otherdetailsrow.add(a.toString());// getting vouchermaster
+						// details
+
+					}
+					String vtf=otherdetailsrow.get(2).toString();
+					System.out.println("type:"+vtf);
+					IntentToVoucher(vtf,params);
+					Intent intent = new Intent(bankReconciliation.this, transaction_tab.class);
+					intent.putExtra("flag", "from_bankrecon");
+					// To pass on the value to the next page
+					startActivity(intent);
+					// Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+				}
 			}
-			String vtf=otherdetailsrow.get(2).toString();
-			System.out.println("type:"+vtf);
-			IntentToVoucher(vtf,params);
-			Intent intent = new Intent(bankReconciliation.this, transaction_tab.class);
-			intent.putExtra("flag", "from_bankrecon");
-			// To pass on the value to the next page
-			startActivity(intent);
-			// Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
-			}
-		});
+			});
     	
     	
         label = new TextView(this);

@@ -694,7 +694,7 @@ public class createVoucher extends Activity {
 					System.out.println("m in drcr rrrr");
 					//System.out.println("cr list:"+Cr);
 				}
-				Toast.makeText(context, "data:"+accdetailsList, Toast.LENGTH_SHORT).show();
+				//Toast.makeText(context, "data:"+accdetailsList, Toast.LENGTH_SHORT).show();
 				System.out.println("data1:"+accdetailsList);
 				Ssecond_spinner = accdetailsList.get(1).get(0);
 				System.out.println("sdss:"+Ssecond_spinner);

@@ -253,11 +253,11 @@ public class balanceSheet extends Activity{
 				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
+					
 					LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(0);
 					final TextView tv = (TextView) l.getChildAt(0);
 					//Toast.makeText(balanceSheet.this, tv.getText().toString(), Toast.LENGTH_SHORT).show();
-					checkForAccountName(tv.getText().toString());
+					checkForAccountName(tv.getText().toString(), row);
 				}
 
 				
@@ -271,11 +271,11 @@ public class balanceSheet extends Activity{
 				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
+					
 					LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(0);
 					final TextView tv = (TextView) l.getChildAt(0);
 					//Toast.makeText(balanceSheet.this, tv.getText().toString(), Toast.LENGTH_SHORT).show();
-					checkForAccountName(tv.getText().toString());
+					checkForAccountName(tv.getText().toString(), row);
 				}
 			});
 		}
@@ -289,7 +289,7 @@ public class balanceSheet extends Activity{
      * then, check for special syntax like /:'&-+^ as non-account strings can contain any of these special syntax.
      * and at last check for empty string and header column values.
      */
-    private void checkForAccountName(String accname) {
+    private void checkForAccountName(String accname, View row) {
     	Pattern pattern = Pattern.compile("^[A-Z]+$");//for checking whether the string is in uppercase 
     	Matcher matcher = pattern.matcher((accname.replaceAll("\\s","")).replaceAll("[/:'&-+^]*", ""));
     	boolean found = matcher.find();
@@ -300,6 +300,20 @@ public class balanceSheet extends Activity{
     							accname.equalsIgnoreCase("Property & Assets") ||
     							accname.equalsIgnoreCase("Corpus & Liabilities"))){
     		//Toast.makeText(balanceSheet.this, "account name", Toast.LENGTH_SHORT).show();
+    		//change the row color(black/gray to orange) when clicked
+    		int len;
+    		if(balType.equalsIgnoreCase("Conv_bal")){
+    			len = 4;
+    		}else{
+    			len = 5;
+    		}
+			for (int j = 0; j < len; j++) {
+				LinearLayout l = (LinearLayout) ((ViewGroup) row)
+						.getChildAt(j);
+				TextView t = (TextView) l.getChildAt(0);
+				t.setBackgroundColor(Color.parseColor("#FBB117"));
+			}
+    		//intent to ledger
 			acc_name1 = accname;
 			Intent intent = new Intent(getApplicationContext(),
 					ledger.class);

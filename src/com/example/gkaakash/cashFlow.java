@@ -408,8 +408,7 @@ public class cashFlow extends Activity{
 		int count = cashFlowtable1.getChildCount();
 		for (int i = 0; i < count; i++) {
 			final View row = cashFlowtable1.getChildAt(i);
-			LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(1);
-			final TextView tv = (TextView) l.getChildAt(0);
+			
 			row.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -418,7 +417,7 @@ public class cashFlow extends Activity{
 					LinearLayout l = (LinearLayout) ((ViewGroup) row)
 							.getChildAt(0);
 					final TextView tv = (TextView) l.getChildAt(0);
-					checkForAccountName(tv.getText().toString());
+					checkForAccountName(tv.getText().toString(), row);
 				}
 			});
 		}
@@ -435,7 +434,7 @@ public class cashFlow extends Activity{
 					LinearLayout l = (LinearLayout) ((ViewGroup) row)
 							.getChildAt(0);
 					final TextView tv = (TextView) l.getChildAt(0);
-					checkForAccountName(tv.getText().toString());
+					checkForAccountName(tv.getText().toString(), row);
 					}
 			});
 		}
@@ -446,11 +445,19 @@ public class cashFlow extends Activity{
      * below method helps to find out the selected string is account name or not.
      * check for empty string, string "Total" and header column "account name".
      */
-	private void checkForAccountName(String accname) {
+	private void checkForAccountName(String accname, View row) {
     	if(!(accname.equalsIgnoreCase("") || 
     							accname.equalsIgnoreCase("Total") ||
     							accname.equalsIgnoreCase("Account Name"))){
     		//Toast.makeText(balanceSheet.this, "account name", Toast.LENGTH_SHORT).show();
+    		//change the row color(black/gray to orange) when clicked
+    		
+			for (int j = 0; j < 2; j++) {
+				LinearLayout l = (LinearLayout) ((ViewGroup) row)
+						.getChildAt(j);
+				TextView t = (TextView) l.getChildAt(0);
+				t.setBackgroundColor(Color.parseColor("#FBB117"));
+			}
     		acc_name = accname;
 			Intent intent = new Intent(getApplicationContext(),
 					ledger.class);

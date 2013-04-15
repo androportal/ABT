@@ -63,7 +63,7 @@ public class projectStatement extends Activity{
    	int PDF = Menu.FIRST;
    	int CSV=Menu.FIRST+1;
    	module m;
-   	
+   	String[] ColumnNameList;
    	
    	@Override
    	public boolean onCreateOptionsMenu(Menu menu) {
@@ -234,7 +234,7 @@ public class projectStatement extends Activity{
 			            LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(k);
 			            label.setWidth(l.getWidth());
 			        }
-			        
+			        tr.setClickable(false);
 			         // Add the TableRow to the TableLayout
 			        floating_heading_table.addView(tr, new TableLayout.LayoutParams(
 			                LayoutParams.FILL_PARENT,
@@ -389,25 +389,27 @@ public class projectStatement extends Activity{
     	//For adding rupee symbol
         final SpannableString rsSymbol = new SpannableString(projectStatement.this.getText(R.string.Rs)); 
         /** Create a TableRow dynamically **/
-        String[] ColumnNameList = new String[] { "Sr. no.","Account name","Group name",rsSymbol+" Total debit",rsSymbol+" Total credit"};
+        ColumnNameList = new String[] { "Sr. no.","Account name","Group name",rsSymbol+" Total debit",rsSymbol+" Total credit"};
        
         tr = new TableRow(this);
-       
+        
         for(int k=0;k<ColumnNameList.length;k++){
             /** Creating a TextView to add to the row **/
             addRow(ColumnNameList[k],k);
             label.setBackgroundColor(Color.parseColor("#348017"));
             label.setGravity(Gravity.CENTER);
+            label.setClickable(false);
         }
        
-       stringList = new ArrayList<String>();
+        //to convert string array to arary of array for csv file format
+        stringList = new ArrayList<String>();
 	    for (String s : ColumnNameList) { 
 	    	
 	        stringList.add(s);
 	    }
 	    projectStatementGrid_with_header.add(stringList);
 	    projectStatementGrid_with_header.addAll(projectStatementGrid);
-	    
+	    tr.setClickable(false);
         // Add the TableRow to the TableLayout
         projectStatementTable.addView(tr, new TableLayout.LayoutParams(
                 LayoutParams.FILL_PARENT,
@@ -422,12 +424,21 @@ public class projectStatement extends Activity{
     	tr.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
-
+			public void onClick(View v) {				
+				
 				String accname = projectStatementGrid.get(i).get(1).toString();
 				
 				if(!(accname.equalsIgnoreCase("") ||
 						accname.equalsIgnoreCase("Account Name"))){
+					//change the row color(black/gray to orange) when clicked
+					View row = projectStatementTable.getChildAt(i+1);
+					for (int j = 0; j < ColumnNameList.length; j++) {
+						LinearLayout l = (LinearLayout) ((ViewGroup) row)
+								.getChildAt(j);
+						TextView t = (TextView) l.getChildAt(0);
+						t.setBackgroundColor(Color.parseColor("#FBB117"));
+					}					
+					
 					acc_name1 = accname;
 					Intent intent = new Intent(getApplicationContext(),
 							ledger.class);
