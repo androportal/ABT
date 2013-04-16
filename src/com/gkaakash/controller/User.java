@@ -10,6 +10,7 @@ public class User {
 	private CoreConnection conn;
 	String setuser;
 	boolean isuserexist,isuserunique,isadmin;
+	Object[] getUserRole;
 	
 	public User() {
 		conn = new CoreConnection();
@@ -50,18 +51,27 @@ public class User {
 		return isuserunique;
 	}
 	
-		public boolean isAdmin(Object client_id)
-		{
-			try {
-				isadmin = (Boolean) conn.getClient().call("user.isAdmin",client_id);
-			} catch (XMLRPCException e) {
-				
-				e.printStackTrace();
-			}
-			return isadmin;
-		}
+	public boolean isAdmin(Object client_id)
+	{
+		try {
+			isadmin = (Boolean) conn.getClient().call("user.isAdmin",client_id);
+		} catch (XMLRPCException e) {
 			
-		
+			e.printStackTrace();
+		}
+		return isadmin;
+	}
+			
+	public Object[] getUserRole(Object[] params,Object client_id)
+	{
+		try {
+			getUserRole = (Object[]) conn.getClient().call("user.getUserRole",params,client_id);
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return getUserRole;
+	}	
 		
 	
 }

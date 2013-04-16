@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -124,11 +125,6 @@ public class selectOrg extends Activity{
 				builder.setTitle("Log In to "+selectedOrgName);
 				builder.setMessage("Log In For Financial Year "+fromDate+" to "+toDate);
 				radioUserGroup = (RadioGroup)layout.findViewById(R.id.radioUser);
-				//radioUserAdminGroup = (RadioGroup)layout.findViewById(R.id.radioAdminUser);
-
-				//Toast.makeText(createOrg.this,"exist "+is_user_exist, Toast.LENGTH_SHORT).show();
-
-				//tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
 				rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
 				rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
 				rb_manager =(RadioButton) layout.findViewById(R.id.rbManager);
@@ -136,27 +132,22 @@ public class selectOrg extends Activity{
 				eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
 				eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
 				tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
-				Button login =  (Button) layout.findViewById(R.id.btnLogin);
 				rb_manager.setVisibility(View.VISIBLE);
 				rb_operator.setVisibility(View.VISIBLE);
-				int selcetdRadoiId = radioUserGroup.getCheckedRadioButtonId();
-				RadioButton selctedradio =(RadioButton) layout.findViewById(selcetdRadoiId);
-				user_role = selctedradio.getText().toString();
-				if(user_role.equals("guest"))
-				{
-					eloginUsername.setText("guest");
-					eloginPassword.setText("guest");
-				}
-				if(rb_admin.isChecked()){
-					Toast.makeText(selectOrg.this,"admin checked", Toast.LENGTH_SHORT).show();
-				}
+
+				Button login =  (Button) layout.findViewById(R.id.btnLogin);
+
+				//radioUserAdminGroup = (RadioGroup)layout.findViewById(R.id.radioAdminUser);
+				addRadioListnerOnItem(layout);
+				//Toast.makeText(createOrg.this,"exist "+is_user_exist, Toast.LENGTH_SHORT).show();
 				login.setOnClickListener(new View.OnClickListener(){
+					
 					public void onClick(View v) {
 						login_user = eloginUsername.getText().toString();
 						login_password = eloginPassword.getText().toString();
-						
+
 						Toast.makeText(selectOrg.this,user_role, Toast.LENGTH_SHORT).show();
-					
+
 						boolean isadmin = user.isAdmin(client_id);
 						Object[] params = new Object[]{login_user,login_password,user_role};
 						if(!module.isEmpty(params)){
@@ -167,13 +158,13 @@ public class selectOrg extends Activity{
 								if(is_user_exist==true)
 								{
 									//To pass on the activity to the next page  
-										Intent intent = new Intent(context,menu.class); 
-										startActivity(intent); 
-								
-									
+									Intent intent = new Intent(context,menu.class); 
+									startActivity(intent); 
+
+
 								}else{
 									if(user_role.equals("guest")){
-										tvLoginWarning.setText("Authentication Failed!! Please Choose correct role " );
+										tvLoginWarning.setText("Authentication Failed!!");
 									}else
 									{
 										tvLoginWarning.setText("Please enter correct username and password or choose proper role");
@@ -184,7 +175,7 @@ public class selectOrg extends Activity{
 									tvLoginWarning.setText("Authentication Failed!! Please Choose correct role " );
 								}else
 								{
-									
+
 									//To pass on the activity to the next page  
 									Intent intent = new Intent(context,menu.class);
 									startActivity(intent); 
@@ -206,7 +197,7 @@ public class selectOrg extends Activity{
 				WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 				//customizing the width and location of the dialog on screen 
 				lp.copyFrom(dialog.getWindow().getAttributes());
-				lp.width = 800;
+				lp.width = 750;
 				dialog.getWindow().setAttributes(lp);
 			}
 
@@ -325,4 +316,34 @@ public class selectOrg extends Activity{
 			}
 		});
 	} // end of addListenerOnItem()
+
+	// add Checked change listner on radioGroup 
+	public void addRadioListnerOnItem(final View layout)
+	{
+		radioUserGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			public void onCheckedChanged(RadioGroup rg, int selctedId) {
+
+				//int selcetdRadoiId = radioUserGroup.getCheckedRadioButtonId();
+				RadioButton selctedradio =(RadioButton) layout.findViewById(selctedId);
+				user_role = selctedradio.getText().toString();
+				if(user_role.equals("guest"))
+				{
+					eloginUsername.setText("guest");
+					eloginPassword.setText("guest");
+				}
+				if(rb_admin.isChecked()){
+					eloginUsername.setText("");
+					eloginPassword.setText("");
+					Toast.makeText(selectOrg.this,"admin checked", Toast.LENGTH_SHORT).show();
+				}
+				
+
+			}
+
+
+
+		});
+	}
+
 }// End of Class 

@@ -34,7 +34,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
- 
+
 
 public class createOrg extends MainActivity {
 	//Declaring variables
@@ -45,7 +45,7 @@ public class createOrg extends MainActivity {
 	static final int TO_DATE_DIALOG_ID = 1;
 	Spinner orgType; 
 	RadioButton rb_admin,rb_guest,radioButtonValue;
-    RadioGroup radioUserGroup,radioGender,radioUserAdminGroup;
+	RadioGroup radioUserGroup,radioGender,radioUserAdminGroup;
 	String org;
 	static String organisationName,orgTypeFlag,selectedOrgType,todate;
 	static String fromdate,user_role;
@@ -73,7 +73,7 @@ public class createOrg extends MainActivity {
 		super.onCreate(savedInstanceState);
 		//Calling create_org.xml
 		setContentView(R.layout.create_org);
-		
+
 		help_flag = new File("/data/data/com.example.gkaakash/files/help_flag.txt");
 		if(!help_flag.exists()){
 			/*
@@ -83,12 +83,12 @@ public class createOrg extends MainActivity {
 			MainActivity.no_dailog = true; 
 			MainActivity.help_dialog.dismiss();
 		}
-		
-		
+
+
 		//for two digit format date for dd and mm
 		mFormat= new DecimalFormat("00");
 		mFormat.setRoundingMode(RoundingMode.DOWN);
-		
+
 		//Declaring new method for setting date into "from date" and "to date" textview
 		setDateOnLoad();
 		/*
@@ -108,36 +108,36 @@ public class createOrg extends MainActivity {
 	private void setDateOnLoad() {
 		tvDisplayFromDate = (TextView) findViewById(R.id.tvFromDate);
 		tvDisplayToDate = (TextView) findViewById(R.id.tvToDate);
-		
+
 		/*
 		 * set "from date" and "to date" textView
 		 * for creating calendar object and linking with its 'getInstance' method, 
 		 * for getting a default instance of this class for general use
 		 */
-		
+
 		year = c.get(Calendar.YEAR);
 		month = 3; //month = april
 		day = 1;
-		
+
 		//set from date: day=01, month=April, year=current year
 		tvDisplayFromDate.setText(new StringBuilder()
 		.append(mFormat.format(Double.valueOf(1))).append("-")
 		.append(mFormat.format(Double.valueOf(4))).append("-")
 		.append(year));
-		
+
 		//Add one year to current date time
 		c.add(Calendar.YEAR,1);
 		toYear = c.get(Calendar.YEAR);
 		toMonth = 2;
 		toDay = 31;
-		
+
 		//set to date: day=31, month=March, year=current year+1
 		tvDisplayToDate.setText(new StringBuilder()
 		.append(mFormat.format(Double.valueOf(31))).append("-")
 		.append(mFormat.format(Double.valueOf(3))).append("-")
 		.append(toYear));
-		
-		
+
+
 	}
 
 	private void addListeneronDateButton() {
@@ -161,45 +161,45 @@ public class createOrg extends MainActivity {
 				//Building DatepPcker dialog
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				builder.setView(layout);
-	            builder.setTitle("Set from date");
-	            final DatePicker dp = (DatePicker)layout.findViewById(R.id.datePicker1);
-	            dp.init(year,month,day, null);
-	            
-	            builder.setPositiveButton("Set",new  DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface arg0, int arg1) {
-					 year = dp.getYear();
-					 month = dp.getMonth();
-					 day =  dp.getDayOfMonth();
-					 String strDateTime = mFormat.format(Double.valueOf(day)) + "-" 
-					 + (mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(month))))+ 1))) + "-" 
-					 + year;
-					 //set date in from date textview
-					 tvDisplayFromDate.setText(strDateTime);
-					 
-					 //setting selected date into calender's object
-					 c.set(year, month, day);
-					 //add one year
-					 c.add(Calendar.YEAR, +1);
-					 //subtracting one day
-					 c.add(Calendar.DAY_OF_MONTH, -1);
-					 
-					 toYear = c.get(Calendar.YEAR);
-					 toMonth = c.get(Calendar.MONTH);
-					 toDay = c.get(Calendar.DAY_OF_MONTH);
-					 
-					//set date in to date textview
-					 tvDisplayToDate.setText(new StringBuilder()
-					 .append(mFormat.format(Double.valueOf(toDay)))
-					 .append("-").append(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(toMonth+1)))))))
-					 .append("-").append(toYear));
-				}
+				builder.setTitle("Set from date");
+				final DatePicker dp = (DatePicker)layout.findViewById(R.id.datePicker1);
+				dp.init(year,month,day, null);
+
+				builder.setPositiveButton("Set",new  DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						year = dp.getYear();
+						month = dp.getMonth();
+						day =  dp.getDayOfMonth();
+						String strDateTime = mFormat.format(Double.valueOf(day)) + "-" 
+								+ (mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(month))))+ 1))) + "-" 
+								+ year;
+						//set date in from date textview
+						tvDisplayFromDate.setText(strDateTime);
+
+						//setting selected date into calender's object
+						c.set(year, month, day);
+						//add one year
+						c.add(Calendar.YEAR, +1);
+						//subtracting one day
+						c.add(Calendar.DAY_OF_MONTH, -1);
+
+						toYear = c.get(Calendar.YEAR);
+						toMonth = c.get(Calendar.MONTH);
+						toDay = c.get(Calendar.DAY_OF_MONTH);
+
+						//set date in to date textview
+						tvDisplayToDate.setText(new StringBuilder()
+						.append(mFormat.format(Double.valueOf(toDay)))
+						.append("-").append(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(toMonth+1)))))))
+						.append("-").append(toYear));
+					}
 				}); 
-                dialog=builder.create();
-        		dialog.show();
+				dialog=builder.create();
+				dialog.show();
 			}	
 		});
-		
+
 		/*
 		 * when button clicked, user can change the 'to date' from datepicker,
 		 * it will set the selected date in 'to date' textview, if to date is greater than from date
@@ -214,56 +214,56 @@ public class createOrg extends MainActivity {
 				//Building DatepPicker dialog
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				builder.setView(layout);
-	            builder.setTitle("Set to date");
-	            
-	            final   DatePicker dp = (DatePicker) layout.findViewById(R.id.datePicker1);
-	            dp.init(toYear,toMonth,toDay, null);
-	            
-	            builder.setPositiveButton("Set",new  DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface arg0, int arg1) {
-					 
-					int Year = dp.getYear();
-					int Month = dp.getMonth();
-					int Day =  dp.getDayOfMonth();
-					 
-					 try {
-						 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				builder.setTitle("Set to date");
+
+				final   DatePicker dp = (DatePicker) layout.findViewById(R.id.datePicker1);
+				dp.init(toYear,toMonth,toDay, null);
+
+				builder.setPositiveButton("Set",new  DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+
+						int Year = dp.getYear();
+						int Month = dp.getMonth();
+						int Day =  dp.getDayOfMonth();
+
+						try {
+							SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 							Date date1 = sdf.parse(day+"-"+month+"-"+year); //from date
-					    	Date date2 = sdf.parse(Day+"-"+Month+"-"+Year); //to date
-							
-					    	Calendar cal1 = Calendar.getInstance(); 
-					    	Calendar cal2 = Calendar.getInstance(); 
-					    	
-					    	cal1.setTime(date1);
-					    	cal2.setTime(date2);
-					    	
-					    	if(cal2.after(cal1)){
-					    		toYear = Year;
+							Date date2 = sdf.parse(Day+"-"+Month+"-"+Year); //to date
+
+							Calendar cal1 = Calendar.getInstance(); 
+							Calendar cal2 = Calendar.getInstance(); 
+
+							cal1.setTime(date1);
+							cal2.setTime(date2);
+
+							if(cal2.after(cal1)){
+								toYear = Year;
 								toMonth = Month;
 								toDay =  Day;
 								String strDateTime = mFormat.format(Double.valueOf(toDay)) + "-" 
-								 + (mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(toMonth))))+ 1))) + "-" 
-								 + toYear;
-					    		tvDisplayToDate.setText(strDateTime);
-					    	}
-					    	else{
-				        		toastValidationMessage("Please enter proper date");
-					    	}
-					} catch (Exception e) {
-						// TODO: handle exception
+										+ (mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(toMonth))))+ 1))) + "-" 
+										+ toYear;
+								tvDisplayToDate.setText(strDateTime);
+							}
+							else{
+								toastValidationMessage("Please enter proper date");
+							}
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+
+
 					}
-					 
-					 
-				}
 				}); 
-                dialog=builder.create();
-        		dialog.show();
+				dialog=builder.create();
+				dialog.show();
 			}	
 		});
 	}
-	
-	
+
+
 	// method to take ItemSelectedListner interface as a argument  
 	void addListenerOnItem(){
 		//Attach a listener to the Organisation Type Spinner
@@ -273,17 +273,17 @@ public class createOrg extends MainActivity {
 				//Retrieving the selected org type from the Spinner and assigning it to a variable 
 				selectedOrgType = parent.getItemAtPosition(position).toString();
 				orgTypeFlag = selectedOrgType;
-				
+
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				
-				}
+
+			}
 
 		});// End of orgType.setOnItemSelectedListener
-	
+
 	}// End of addListenerOnItem()
-	
+
 
 	private void addListeneronCreateButton() {
 		final Context context = this;
@@ -296,261 +296,261 @@ public class createOrg extends MainActivity {
 		tvDisplayFromDate = (TextView) findViewById(R.id.tvFromDate);
 		tvDisplayToDate = (TextView) findViewById(R.id.tvToDate);
 		orgName = (EditText) findViewById(R.id.etOrgName);
-		
+
 		//Create a class implementing “OnClickListener” and set it as the on click listener for the button "Next"
 		btnCreate.setOnClickListener(new OnClickListener() {
- 
+
 			@Override
 			public void onClick(View arg0) {
-				
+
 				organisationName = orgName.getText().toString();
 				fromdate = tvDisplayFromDate.getText().toString();
 				todate = tvDisplayToDate.getText().toString();
-				
+
 				try{
-				// call the getOrganisationName method from startup
-		    	orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
-				
-				for(Object org : orgNameList){
-					if(organisationName.equals(org)){
+					// call the getOrganisationName method from startup
+					orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
+
+					for(Object org : orgNameList){
+						if(organisationName.equals(org)){
+							orgExistFlag = false;
+
+							//call getFinancialYear method from startup.java 
+							//it will give you financialYear list according to orgname
+							financialyearList = startup.getFinancialYear(organisationName);
+
+							for(Object fy : financialyearList)
+							{
+								Object[] y = (Object[]) fy;
+								// concatination From and To date 
+								String fromDate=y[0].toString();
+								String toDate=y[1].toString();
+
+								if(fromDate.equals(fromdate) && toDate.equals(todate)){
+									orgExistFlag = true;
+									break;
+								}
+
+							}
+						}
+					}
+
+					if("".equals(organisationName)){
+						toastValidationMessage("Please enter the organisation name");
+					}
+					else if(orgExistFlag == true)
+					{
+						toastValidationMessage("Organisation name "+organisationName+" with this financial year exist");
 						orgExistFlag = false;
-						
-						//call getFinancialYear method from startup.java 
-				    	//it will give you financialYear list according to orgname
-				    	financialyearList = startup.getFinancialYear(organisationName);
-				    	
-				    	for(Object fy : financialyearList)
-				    	{
-				    		Object[] y = (Object[]) fy;
-				    		// concatination From and To date 
-				    		String fromDate=y[0].toString();
-				    		String toDate=y[1].toString();
-				    		
-				    		if(fromDate.equals(fromdate) && toDate.equals(todate)){
-				    			orgExistFlag = true;
-				    			break;
-				    		}
-				    		
-				    	}
 					}
-				}
-		    	
-				if("".equals(organisationName)){
-					toastValidationMessage("Please enter the organisation name");
-				}
-				else if(orgExistFlag == true){
-					toastValidationMessage("Organisation name "+organisationName+" with this financial year exist");
-					orgExistFlag = false;
+					else{ 
+						//To pass on the activity to the next page
+						MainActivity.editDetails=false;
+						deployparams = new Object[]{organisationName,fromdate,todate,orgTypeFlag}; // parameters pass to core_engine xml_rpc functions
+						client_id = startup.deploy(deployparams);
+
+						/* Inflater for LogIn Page after Organisation Deployment*/
+						LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+						final View layout = inflater.inflate(R.layout.login, (ViewGroup) findViewById(R.id.layout_login));
+						AlertDialog.Builder builder = new AlertDialog.Builder(context);
+						builder.setView(layout);
+						builder.setTitle(organisationName+" have been created successfully");
+						builder.setMessage("Log In For Financial Year "+fromdate+" to "+todate);
+			
+						radioUserGroup = (RadioGroup)layout.findViewById(R.id.radioUser);
+						tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
+						rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
+						rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
+						tvuserrole = (TextView) layout.findViewById(R.id.tvUserRole);
+						rb_guest.setChecked(false);
+						//call radio button listener method to do event on radio button Checked
+						addListenerOnRadioButton(layout);
+						Button login =  (Button) layout.findViewById(R.id.btnLogin);
+
+						login.setOnClickListener(new View.OnClickListener(){
+							public void onClick(View v) {
+
+								eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
+								eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
+								tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
+								login_user = eloginUsername.getText().toString();
+								login_password = eloginPassword.getText().toString();
+								Object[] params = new Object[]{login_user,login_password,user_role};
+
+								if(module.isEmpty(params))
+								{
+									String message = "please fill blank field";
+									tvLoginWarning.setText(message);
+
+								}else
+								{
+									Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
+									if(user_role.equals("guest"))
+									{
+										Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
+										Toast.makeText(createOrg.this,"exist "+login_user, Toast.LENGTH_SHORT).show();
+										Toast.makeText(createOrg.this,"exist "+login_password, Toast.LENGTH_SHORT).show();
+										if ((login_user.equals("guest"))&&(login_password.equals("guest")))
+										{
+											Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
+											Intent intent = new Intent(context,orgDetails.class);
+											startActivity(intent);
+										}else
+										{
+											String message = "Username and Password is incorrect";
+											tvLoginWarning.setText(message);
+
+										}		
+									}
+
+									if(user_role.equals("admin") ){
+										boolean is_user_exist = user.isUserExist(params, client_id);
+										Toast.makeText(createOrg.this,"exist "+is_user_exist, Toast.LENGTH_SHORT).show();
+
+										if(is_user_exist==true)
+										{	
+											//dialog.cancel();
+											Intent intent = new Intent(context,orgDetails.class);
+											startActivity(intent);
+										}else
+										{
+											String message = "Username and Password is incorrect";
+											tvLoginWarning.setText(message);
+
+										}					        	 
+									}
+								}
+
+							}
+						});
+
+						dialog = builder.create();
+						dialog.show();
+						dialog.setCanceledOnTouchOutside(false);
+						WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+						//customizing the width and location of the dialog on screen 
+						lp.copyFrom(dialog.getWindow().getAttributes());
+						lp.width = 750;
+						dialog.getWindow().setAttributes(lp);
+
 					}
-				else{
-					//To pass on the activity to the next page
-					MainActivity.editDetails=false;
-					deployparams = new Object[]{organisationName,fromdate,todate,orgTypeFlag}; // parameters pass to core_engine xml_rpc functions
-					client_id = startup.deploy(deployparams);
-					
-					
-					/* Inflater for LogIn Page after Organisation Deployment*/
-					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-					final View layout = inflater.inflate(R.layout.login, (ViewGroup) findViewById(R.id.layout_login));
-					AlertDialog.Builder builder = new AlertDialog.Builder(context);
-					builder.setView(layout);
-					builder.setTitle(organisationName+" have been created successfully");
-					builder.setMessage("Log In For Financial Year "+fromdate+" to "+todate);
-					radioUserGroup = (RadioGroup)layout.findViewById(R.id.radioUser);
-					tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
-					rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
-				    rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
-				    tvuserrole = (TextView) layout.findViewById(R.id.tvUserRole);
-				    rb_guest.setChecked(false);
-					addListenerOnRadioButton(layout);
-					// radio buttons for select existing organisation 
-					//radioUserAdminGroup = (RadioGroup)layout.findViewById(R.id.radioAdminUser);
-					//radioUserAdminGroup.setVisibility(View.GONE);
-					
-					Button login =  (Button) layout.findViewById(R.id.btnLogin);
-					
-					login.setOnClickListener(new View.OnClickListener(){
-				        public void onClick(View v) {
-				        	
-				        	
-				        	eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
-							eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
-							tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
-							
-				        	  login_user = eloginUsername.getText().toString();
-							  login_password = eloginPassword.getText().toString();
-								 Object[] params = new Object[]{login_user,login_password,user_role};
-							         
-								  if(module.isEmpty(params))
-							        {
-							        	String message = "please fill blank field";
-							        	tvLoginWarning.setText(message);
-							        	
-							        }else
-							        {
-							        	if(user_role.equals("guest"))
-							        	{
-								        	if ((login_user=="Guest"&&login_user=="Guest"))
-											{
-								        		Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
-												Intent intent = new Intent(context,orgDetails.class);
-								                startActivity(intent);
-											}else
-												{
-												String message = "Username and Password is incorrect";
-												tvLoginWarning.setText(message);
-											
-												}		
-							        	}
-											
-										if(user_role.equals("admin") ){
-								        	boolean is_user_exist = user.isUserExist(params, client_id);
-								        	Toast.makeText(createOrg.this,"exist "+is_user_exist, Toast.LENGTH_SHORT).show();
-										
-											if(is_user_exist==true)
-											{	
-												//dialog.cancel();
-												Intent intent = new Intent(context,orgDetails.class);
-								                startActivity(intent);
-											}else
-											{
-												String message = "Username and Password is incorrect";
-												tvLoginWarning.setText(message);
-		
-											}					        	 
-							        }
-							        }
-				           
-				        }
-				    });
-					
-					dialog = builder.create();
-					dialog.show();
-					dialog.setCanceledOnTouchOutside(false);
-					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-					//customizing the width and location of the dialog on screen 
-					lp.copyFrom(dialog.getWindow().getAttributes());
-					lp.width = 700;
-					dialog.getWindow().setAttributes(lp);
-					
+				}catch(Exception e)
+				{
+					String message = "Please check server connection";
+					toastValidationMessage(message);
 				}
-			}catch(Exception e)
-			{
-				String message = "Please check server connection";
-			    toastValidationMessage(message);
-			}
 			}
 		}); //End of btnCreate.setOnClickListener
-		
+
 	}
-	
+
 	public void addListenerOnRadioButton(final View layout) {
 		
-	
 		radioUserGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
 			public void onCheckedChanged(RadioGroup rg, int selectedId) {
-				// TODO Auto-generated method stub
+
 				if(adminflag==false){
 					rb_admin.setChecked(false);
-					
 				}
 				selectedId = rg.getCheckedRadioButtonId();
 				radioButtonValue = (RadioButton)layout.findViewById(selectedId);
 				user_role = (String) radioButtonValue.getText();
-				
+
 				//Toast.makeText(createOrg.this,"hello"+user_role, Toast.LENGTH_SHORT).show();
 				//Toast.makeText(createOrg.this,"isChecked();"+rb_admin.isChecked(), Toast.LENGTH_SHORT).show();
 				eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
 				eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
-			
+
 				//Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
 				if(user_role.equals("admin"))
 				{
 					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 					final View layout = inflater.inflate(R.layout.sign_up, (ViewGroup) findViewById(R.id.layout_signup));
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
-				
+
 					builder.setView(layout);
 					builder.setTitle("Sign Up");
 					builder.setCancelable(true);
 					Button done =  (Button) layout.findViewById(R.id.btnSignUp);
 					Button cancel =  (Button) layout.findViewById(R.id.btnCancel);
+					// call setOnClickListner on s
 					done.setOnClickListener(new View.OnClickListener(){
-					        private RadioButton rbgender;
-							private String gender;
+						private RadioButton rbgender;
+						private String gender;
 
-							public void onClick(View v) {
-					        	 	
-					        	 	radioGender =(RadioGroup) layout.findViewById(R.id.radioGender);
-								    
-							        eFirstName =(EditText) layout.findViewById(R.id.eFirstName);
-							        eLastName =(EditText)layout.findViewById(R.id.eLastName);
-							        eUserName =(EditText) layout.findViewById(R.id.eUserName);
-							        ePassword =(EditText)layout.findViewById(R.id.ePassword);
-							        eConfPassword =(EditText) layout.findViewById(R.id.eConfPassword);
-							        tvwarning =(TextView) layout.findViewById(R.id.tvWarning);
-							        
-							        genderid = radioGender.getCheckedRadioButtonId();
-							        rbgender =(RadioButton)layout.findViewById(genderid);
-							        gender = rbgender.getText().toString();
-							        firstname = eFirstName.getText().toString();
-							        lastname = eLastName.getText().toString();
-							        username = eUserName.getText().toString();
-							        password = ePassword.getText().toString();
-							        confpassword= eConfPassword.getText().toString();
-							       
-							        
-							        Object[] params = new Object[]{firstname,lastname,username,password,gender,user_role};
-							        //Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
-							        if(module.isEmpty(params)||module.isEmpty(new Object[]{confpassword}))
-							        {
-							        	String message = "please fill blank field";
-							        	tvwarning.setText(message);
-							        	Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
-							        	// dialog.getLayoutInflater();
-							        }else if(!password.equals(confpassword))
-							        {
-							        	//Toast.makeText(createOrg.this,"password check", Toast.LENGTH_SHORT).show();
-							        	String message = "Please enter correct password";
-							        	tvwarning.setText(message);
-							        }else
-							        {
-							        	Toast.makeText(createOrg.this,"else", Toast.LENGTH_SHORT).show();
-							        	 boolean unique = user.isUserUnique(new Object[]{username},client_id);
-							        	// Toast.makeText(createOrg.this,"user"+unique, Toast.LENGTH_SHORT).show();
-							        	 if(unique==true)
-							        	 {	 String setuser = user.setUser(params, client_id);
-								        	 String message = "Sign up successfully";
-								        	 rb_guest.setVisibility(View.GONE);
-									    	 rb_admin.setVisibility(View.GONE);
-									    	 tvuserrole.setVisibility(View.GONE);
-								        	 adminflag = true;  
-								        	 eloginUsername.setText(username);
-								        	 eloginPassword.setText("");
-								        	 tvSignUp.setText("Signup Successfully As A Admin...!!! Please Log In");
-								        	 dialog.dismiss();
-							        	 }
-							        	 else{
-							        		 	String message = "User already exist";
-									        	tvwarning.setText(message);
-							        	 }
-								        	 
-							        	
-							        } 
-							      
-					        }
-					    });
+						public void onClick(View v) {
 
-						cancel.setOnClickListener(new View.OnClickListener(){
-					        public void onClick(View v) {
-					        	adminflag = false;
-					       
-					        	dialog.dismiss();
-					        
-								
-					        }
-					    });
-					
+							radioGender =(RadioGroup) layout.findViewById(R.id.radioGender);
+
+							eFirstName =(EditText) layout.findViewById(R.id.eFirstName);
+							eLastName =(EditText)layout.findViewById(R.id.eLastName);
+							eUserName =(EditText) layout.findViewById(R.id.eUserName);
+							ePassword =(EditText)layout.findViewById(R.id.ePassword);
+							eConfPassword =(EditText) layout.findViewById(R.id.eConfPassword);
+							tvwarning =(TextView) layout.findViewById(R.id.tvWarning);
+
+							genderid = radioGender.getCheckedRadioButtonId();
+							rbgender =(RadioButton)layout.findViewById(genderid);
+							gender = rbgender.getText().toString();
+							firstname = eFirstName.getText().toString();
+							lastname = eLastName.getText().toString();
+							username = eUserName.getText().toString();
+							password = ePassword.getText().toString();
+							confpassword= eConfPassword.getText().toString();
+
+
+							Object[] params = new Object[]{firstname,lastname,username,password,gender,user_role};
+							//Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
+							if(module.isEmpty(params)||module.isEmpty(new Object[]{confpassword}))
+							{
+								String message = "please fill blank field";
+								tvwarning.setText(message);
+								Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
+								// dialog.getLayoutInflater();
+							}else if(!password.equals(confpassword))
+							{
+								//Toast.makeText(createOrg.this,"password check", Toast.LENGTH_SHORT).show();
+								String message = "Please enter correct password";
+								tvwarning.setText(message);
+							}else
+							{
+								Toast.makeText(createOrg.this,"else", Toast.LENGTH_SHORT).show();
+								boolean unique = user.isUserUnique(new Object[]{username},client_id);
+								// Toast.makeText(createOrg.this,"user"+unique, Toast.LENGTH_SHORT).show();
+								if(unique==true)
+								{	 String setuser = user.setUser(params, client_id);
+								String message = "Sign up successfully";
+								rb_guest.setVisibility(View.GONE);
+								rb_admin.setVisibility(View.GONE);
+								tvuserrole.setVisibility(View.GONE);
+								adminflag = true;  
+								eloginUsername.setText(username);
+								eloginPassword.setText("");
+								tvSignUp.setText("Signup Successfully As A Admin...!!! Please Log In");
+								dialog.dismiss();
+								}
+								else{
+									String message = "User already exist";
+									tvwarning.setText(message);
+								}
+
+
+							} 
+
+						}
+					});
+
+					cancel.setOnClickListener(new View.OnClickListener(){
+						public void onClick(View v) {
+							adminflag = false;
+
+							dialog.dismiss();
+
+
+						}
+					});
+
 					dialog = builder.create();
 					dialog.show();
 					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -558,71 +558,39 @@ public class createOrg extends MainActivity {
 					lp.copyFrom(dialog.getWindow().getAttributes());
 					lp.width = 800;
 					dialog.getWindow().setAttributes(lp);
-					
-					
+
+
 				}else
 				{
 					eloginPassword.setText("guest");
 					eloginUsername.setText("guest");
-					
+
 				}
-				
-			   
-			}
-		});
-	  }
-	
+			}// end of onCheckedChanged() method of setOnCheckedChangeListener()
+		}); // end of setOnCheckedChangeListener
+	}// end of addListenerOnRadioButton()
+
 	public void onBackPressed() {
-		 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-		 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		 startActivity(intent);
+		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
 	}
-	
+
 	public void toastValidationMessage(String message) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(message)
-                .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            	
-                            }
-                        });
-                
-        AlertDialog alert = builder.create();
-        alert.show();
-		
-	} 
-	
-	/*
-	public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-	    if (keyCode == KeyEvent.KEYCODE_BACK) 
-	    {
-	    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Are you sure you want to exit?")
-			.setCancelable(false)
-			.setPositiveButton("Yes",
-			new DialogInterface.OnClickListener() {
+		builder.setMessage(message)
+		.setCancelable(false)
+		.setPositiveButton("Ok",
+				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				Object[] params = new Object[]{client_id}; // parameters pass to core_engine xml_rpc functions
-				//call method closeConnection from startup.java 
-				startup.closeConnection(params);
-		        
-			}
-			})
-			.setNegativeButton("No", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.cancel();
-			}
-			});
-			AlertDialog alert = builder.create();
-			alert.show();
-			return true;
-	    	
-	    }
-	    return super.onKeyLongPress(keyCode, event);
-	}*/
-	
-	
 
+			}
+		});
+
+		AlertDialog alert = builder.create();
+		alert.show();
+
+	} 
+
+	
 }// End of Class

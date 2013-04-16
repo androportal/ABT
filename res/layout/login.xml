@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center_vertical"
@@ -13,58 +13,52 @@
     android:gravity="center"
     android:orientation="vertical" 
     android:id="@+id/layout_login">
-	  <LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
- 		android:layout_gravity="top"
- 		android:paddingBottom="20dp"
-        android:paddingRight="120dp">
-          
-      <TableLayout 
-        		android:layout_width="fill_parent"
-				android:layout_height="wrap_content">
-		
-          <TextView
+    
+	
+        
+	      <TextView
 				    android:id="@+id/tvLoginWarning"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:textAppearance="?android:attr/textAppearanceLarge"
 				    android:textColor="#F90000"
 				    android:textSize="20dp"
-				    android:paddingRight="120dp"
-				    android:paddingLeft="120dp"
-				    android:layout_gravity="center" />
-            <TextView
+				   
+				    />
+	      <TextView
 				    android:id="@+id/tvSignUp"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:textAppearance="?android:attr/textAppearanceLarge"
 				    android:textColor="#00FF00"
-				    android:paddingLeft="80dp"
-				    android:textSize="20dp"
+				    android:textSize="10dp"
 				  
 				   /> 
-
+        
+      
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center" >
-
+ 
                 <TextView
                     android:id="@+id/tvUserRole"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10dp"
+                    android:textSize="@dimen/padding_large"
                     android:text="Choose role"
+                    android:paddingRight="100dp"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#FFFFFF"
+                 
 					/>
 
                 <RadioGroup
                     android:id="@+id/radioUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                   >
 
                     <RadioButton
                         android:id="@+id/rbAdmin"
@@ -79,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:paddingRight="10dp"
                         android:text="guest" 
-                        android:checked="true"/>
+                       />
 
                     <RadioButton
                         android:id="@+id/rbManager"
@@ -98,11 +92,7 @@
                         android:visibility="gone"/>
                 </RadioGroup>
             </TableRow>
- 	  		
-       </TableLayout>
-    </LinearLayout>  
-           
-			
+ 	
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -145,7 +135,7 @@
 		    android:id="@+id/tLoginPassword"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:paddingRight="108dp"
+		    android:paddingRight="100dp"
 		    android:text="Password"
 		    android:textAppearance="?android:attr/textAppearanceLarge"
 		    android:textColor="#FFFFFF"
@@ -176,4 +166,4 @@
         android:textSize="20dp" />
 	
 </LinearLayout>
-</LinearLayout>
+</ScrollView>
