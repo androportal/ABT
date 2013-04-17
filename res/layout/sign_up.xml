@@ -135,7 +135,46 @@
 		            android:hint="Enter confirm password"
 		            android:inputType="textPassword" />
 			</TableRow>
-			
+			<TableRow>
+
+				<TextView
+				    android:id="@+id/tMobileNo"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="Enter your mobile-no"
+				    android:textAppearance="?android:attr/textAppearanceLarge"
+				    android:textColor="#FFFFFF"
+				    android:textSize="20dp" />
+
+		        <EditText
+		            android:id="@+id/eMobileNo"
+		            android:layout_width="300dp"
+		            android:layout_height="wrap_content"
+		            android:ems="10"
+		            android:hint="Enter mobile no"
+		            android:inputType="number"/> 
+			</TableRow>
+			<TableRow>
+
+				<TextView
+				    android:id="@+id/tEmailId"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="enter your email-id"
+				    android:textAppearance="?android:attr/textAppearanceLarge"
+				    android:textColor="#FFFFFF"
+				    android:textSize="20dp" />
+
+		        <EditText
+		            android:id="@+id/eEmailId"
+		            android:layout_width="300dp"
+		            android:layout_height="wrap_content"
+		            android:ems="10"
+		            android:hint="Enter email-id"
+		            android:inputType="textEmailAddress" />
+			</TableRow>
           
 		    <TableRow>
 		        <TextView
@@ -160,7 +199,7 @@
 		                android:layout_height="wrap_content"
 		        		android:paddingRight="20dp"
 		                android:text="Male"
-		                android:checked="true" />
+		                android:checked="true" />  
 		
 		          <RadioButton
 		              android:id="@+id/rbFemale"

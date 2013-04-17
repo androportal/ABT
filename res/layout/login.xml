@@ -106,7 +106,8 @@
             android:text="User Name"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/padding_large" />
+            android:textSize="@dimen/padding_large"
+           />
 
         <EditText
             android:id="@+id/eLoginUser"

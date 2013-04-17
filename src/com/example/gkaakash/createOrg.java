@@ -60,10 +60,10 @@ public class createOrg extends MainActivity {
 	boolean orgExistFlag,createorgflag;
 	static Integer client_id;
 	int genderid;
-	static String firstname,lastname,username ,password ,confpassword,loginPassword;
+	static String firstname,lastname,username ,password ,confpassword,loginPassword,mobileno,emailid ;
 	String loginUsername,login_user,login_password;
 	private EditText eloginPassword ,eFirstName ,eLastName,eUserName ,ePassword , eConfPassword;
-	private EditText eloginUsername;
+	private EditText eloginUsername,eMobileNo,eEmailId;
 	boolean adminflag=false;
 	User user;
 	private module module;
@@ -373,53 +373,60 @@ public class createOrg extends MainActivity {
 								eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
 								eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
 								tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
-								login_user = eloginUsername.getText().toString();
-								login_password = eloginPassword.getText().toString();
-								Object[] params = new Object[]{login_user,login_password,user_role};
+								if(rb_admin.isChecked()||rb_guest.isChecked()){
+									login_user = eloginUsername.getText().toString();
+									login_password = eloginPassword.getText().toString();
+									Object[] params = new Object[]{login_user,login_password,user_role};
 
-								if(module.isEmpty(params))
-								{
-									String message = "please fill blank field";
-									tvLoginWarning.setText(message);
+									if(module.isEmpty(params))
+									{
+										String message = "please fill blank field";
+										tvLoginWarning.setText(message);
 
-								}else
-								{
-									Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
-									if(user_role.equals("guest"))
+									}else
 									{
 										Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
-										Toast.makeText(createOrg.this,"exist "+login_user, Toast.LENGTH_SHORT).show();
-										Toast.makeText(createOrg.this,"exist "+login_password, Toast.LENGTH_SHORT).show();
-										if ((login_user.equals("guest"))&&(login_password.equals("guest")))
+										if(user_role.equals("guest"))
 										{
 											Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
-											Intent intent = new Intent(context,orgDetails.class);
-											startActivity(intent);
-										}else
-										{
-											String message = "Username and Password is incorrect";
-											tvLoginWarning.setText(message);
+											Toast.makeText(createOrg.this,"exist "+login_user, Toast.LENGTH_SHORT).show();
+											Toast.makeText(createOrg.this,"exist "+login_password, Toast.LENGTH_SHORT).show();
+											if ((login_user.equals("guest"))&&(login_password.equals("guest")))
+											{
+												Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
+												Intent intent = new Intent(context,orgDetails.class);
+												startActivity(intent);
+											}else
+											{
+												String message = "Username and Password is incorrect";
+												tvLoginWarning.setText(message);
 
-										}		
-									}
+											}		
+										}
 
-									if(user_role.equals("admin") ){
-										boolean is_user_exist = user.isUserExist(params, client_id);
-										Toast.makeText(createOrg.this,"exist "+is_user_exist, Toast.LENGTH_SHORT).show();
+										if(user_role.equals("admin") ){
+											boolean is_user_exist = user.isUserExist(params, client_id);
+											Toast.makeText(createOrg.this,"exist "+is_user_exist, Toast.LENGTH_SHORT).show();
 
-										if(is_user_exist==true)
-										{	
-											//dialog.cancel();
-											Intent intent = new Intent(context,orgDetails.class);
-											startActivity(intent);
-										}else
-										{
-											String message = "Username and Password is incorrect";
-											tvLoginWarning.setText(message);
+											if(is_user_exist==true)
+											{	
+												//dialog.cancel();
+												Intent intent = new Intent(context,orgDetails.class);
+												startActivity(intent);
+											}else
+											{
+												String message = "Username and Password is incorrect";
+												tvLoginWarning.setText(message);
 
-										}					        	 
+											}					        	 
+										}
 									}
 								}
+								else{
+									String message = "Please select your role";
+									tvLoginWarning.setText(message);
+								}
+							
 
 							}
 						});
@@ -488,20 +495,24 @@ public class createOrg extends MainActivity {
 							eUserName =(EditText) layout.findViewById(R.id.eUserName);
 							ePassword =(EditText)layout.findViewById(R.id.ePassword);
 							eConfPassword =(EditText) layout.findViewById(R.id.eConfPassword);
+							eMobileNo = (EditText) layout.findViewById(R.id.eMobileNo);
+							eEmailId = (EditText) layout.findViewById(R.id.eEmailId);
 							tvwarning =(TextView) layout.findViewById(R.id.tvWarning);
 
 							genderid = radioGender.getCheckedRadioButtonId();
 							rbgender =(RadioButton)layout.findViewById(genderid);
 							gender = rbgender.getText().toString();
-							firstname = eFirstName.getText().toString();
+							firstname = eFirstName.getText().toString(); 
 							lastname = eLastName.getText().toString();
 							username = eUserName.getText().toString();
 							password = ePassword.getText().toString();
 							confpassword= eConfPassword.getText().toString();
+							mobileno = eMobileNo.getText().toString();
+							emailid = eEmailId.getText().toString(); 
+   
 
-
-							Object[] params = new Object[]{firstname,lastname,username,password,gender,user_role};
-							//Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
+							Object[] params = new Object[]{firstname,lastname,username,password,gender,user_role,mobileno,emailid};
+							Toast.makeText(createOrg.this,emailid, Toast.LENGTH_SHORT).show();
 							if(module.isEmpty(params)||module.isEmpty(new Object[]{confpassword}))
 							{
 								String message = "please fill blank field";
@@ -515,12 +526,13 @@ public class createOrg extends MainActivity {
 								tvwarning.setText(message);
 							}else
 							{
-								Toast.makeText(createOrg.this,"else", Toast.LENGTH_SHORT).show();
+								//Toast.makeText(createOrg.this,"else", Toast.LENGTH_SHORT).show();
 								boolean unique = user.isUserUnique(new Object[]{username},client_id);
 								// Toast.makeText(createOrg.this,"user"+unique, Toast.LENGTH_SHORT).show();
 								if(unique==true)
-								{	 String setuser = user.setUser(params, client_id);
-								String message = "Sign up successfully";
+								{	 
+									String setuser = user.setUser(params, client_id);
+								//String message = "Sign up successfully";
 								rb_guest.setVisibility(View.GONE);
 								rb_admin.setVisibility(View.GONE);
 								tvuserrole.setVisibility(View.GONE);
