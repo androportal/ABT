@@ -1,7 +1,3 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_signup"
@@ -9,19 +5,37 @@
     android:layout_height="459dp"
     android:gravity="center_vertical"
     android:orientation="vertical"
-    android:paddingLeft="40dp"
-    android:paddingRight="40dp"
-    android:paddingTop="20dp" >
-           
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_gravity="top"
-                 android:paddingRight="100dp" >
+    android:weightSum="100">
             	
+    	<TextView
+		    android:id="@+id/tvalertHead1"
+		    android:layout_width="match_parent"
+		    android:layout_height="40dp"
+		    android:textColor="#FFFFFF"
+		    android:textSize="20dp"
+		    android:gravity="left"
+		    android:layout_gravity="center_vertical"
+		    android:paddingLeft="20dp"
+		    android:shadowColor="#000000"
+		    android:shadowDx="-1"
+           	android:shadowDy="-1"
+         	android:shadowRadius="1"
+		    android:background="#F2C60E"
+		    android:layout_weight="20"/>
+    
+    	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    		android:layout_width="match_parent"
+    		android:layout_height="match_parent"
+    		android:background="#FFFFFF"
+    		android:paddingLeft="20dp"
+    		android:paddingRight="20dp"
+    		android:paddingTop="5dp"
+    		android:layout_gravity="center_horizontal"
+    		android:layout_weight="80" >
                <TableLayout
                    android:layout_width="fill_parent"
-                   android:layout_height="450dp" >
+                   android:layout_height="450dp" 
+                   >
 		
 					<TextView
 				    android:id="@+id/tvWarning"
@@ -31,69 +45,30 @@
 				    android:textColor="#F90000"
 				    android:textSize="20dp"
 				    android:paddingLeft="150dp"
-				    android:layout_gravity="center" />
+				    android:layout_gravity="center"
+				    android:visibility="gone" />
 			
-
-			
-	    		<TableRow>
-
-				<TextView
-				    android:id="@+id/tFirstName"
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:paddingRight="100dp"
-				    android:text="your firstname"
-				    android:textAppearance="?android:attr/textAppearanceLarge"
-				    android:textColor="#FFFFFF"
-				    android:textSize="20dp" />
-
-		        <EditText
-            android:id="@+id/eFirstName"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter Your First Name"
-            android:inputType="textPersonName" />
-			</TableRow>
 			<TableRow>
-
-				<TextView
-				    android:id="@+id/tLastName"
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:paddingRight="100dp"
-				    android:text="your lastname"
-				    android:textAppearance="?android:attr/textAppearanceLarge"
-				    android:textColor="#FFFFFF"
-				    android:textSize="20dp" />
-
-		        <EditText
-            android:id="@+id/eLastName"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter Your Last Name"
-            android:inputType="textPersonName" />
-			</TableRow>
-			<TableRow>
-
 				<TextView
 				    android:id="@+id/tUserName"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
-				    android:text="your username"
+				    android:text="Username"
 				    android:textAppearance="?android:attr/textAppearanceLarge"
-				    android:textColor="#FFFFFF"
-				    android:textSize="20dp" />
+				    android:textColor="#000000"
+				    android:textSize="20dp"
+				    android:layout_weight="1"
+				    android:gravity="left" />
 
 		         <EditText
-            android:id="@+id/eUserName"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter Your User Name"
-            android:inputType="textPersonName" />
+		            android:id="@+id/eUserName"
+		            android:layout_width="300dp"
+		            android:layout_height="wrap_content"
+		            android:ems="10"
+		            android:hint="Enter username"
+		            android:inputType="textPersonName"
+		            android:layout_weight="1" />
 			</TableRow>
 			<TableRow>
 
@@ -104,8 +79,10 @@
 				    android:paddingRight="100dp"
 				    android:text="create a password"
 				    android:textAppearance="?android:attr/textAppearanceLarge"
-				    android:textColor="#FFFFFF"
-				    android:textSize="20dp" />
+				    android:textColor="#000000"
+				    android:textSize="20dp"
+				    android:layout_weight="1"
+				    android:gravity="left" />
 
 		        <EditText
 		            android:id="@+id/ePassword"
@@ -113,67 +90,75 @@
 		            android:layout_height="wrap_content"
 		            android:ems="10"
 		            android:hint="Enter a password"
-		            android:inputType="textPersonName" />
+		            android:inputType="textPassword"
+		            android:layout_weight="1" />
 			</TableRow>
 			<TableRow>
 
 				<TextView
-				    android:id="@+id/tConfPassword"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
-				    android:text="confirm your password"
+				    android:text="Confirm password"
 				    android:textAppearance="?android:attr/textAppearanceLarge"
-				    android:textColor="#FFFFFF"
-				    android:textSize="20dp" />
+				    android:textColor="#000000"
+				    android:textSize="20dp"
+				    android:layout_weight="1"
+				    android:gravity="left" />
 
 		        <EditText
 		            android:id="@+id/eConfPassword"
 		            android:layout_width="300dp"
 		            android:layout_height="wrap_content"
 		            android:ems="10"
-		            android:hint="Enter confirm password"
-		            android:inputType="textPassword" />
+		            android:hint="Enter a password"
+		            android:inputType="textPassword"
+		            android:layout_weight="1" />
 			</TableRow>
+			
 			<TableRow>
 
 				<TextView
-				    android:id="@+id/tMobileNo"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
-				    android:text="Enter your mobile-no"
+				    android:text="Select security question"
 				    android:textAppearance="?android:attr/textAppearanceLarge"
-				    android:textColor="#FFFFFF"
-				    android:textSize="20dp" />
+				    android:textColor="#000000"
+				    android:textSize="20dp"
+				    android:layout_weight="1"
+				    android:gravity="left" />
 
-		        <EditText
-		            android:id="@+id/eMobileNo"
-		            android:layout_width="300dp"
-		            android:layout_height="wrap_content"
-		            android:ems="10"
-		            android:hint="Enter mobile no"
-		            android:inputType="number"/> 
+				<Spinner
+				    android:id="@+id/sQuestions"
+				    android:layout_width="300dp"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="1"
+				    android:entries="@array/ques_prompt"
+                	android:prompt="@string/questions" />
+ 
 			</TableRow>
 			<TableRow>
-
+			    
 				<TextView
-				    android:id="@+id/tEmailId"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
-				    android:text="enter your email-id"
+				    android:text="Enter answer"
 				    android:textAppearance="?android:attr/textAppearanceLarge"
-				    android:textColor="#FFFFFF"
-				    android:textSize="20dp" />
+				    android:textColor="#000000"
+				    android:textSize="20dp"
+				    android:layout_weight="1"
+				    android:gravity="left" />
 
 		        <EditText
-		            android:id="@+id/eEmailId"
+		            android:id="@+id/eAnswer"
 		            android:layout_width="300dp"
 		            android:layout_height="wrap_content"
 		            android:ems="10"
-		            android:hint="Enter email-id"
-		            android:inputType="textEmailAddress" />
+		            android:hint="Enter answer"
+		            android:inputType="textEmailAddress"
+		            android:layout_weight="1"/>
 			</TableRow>
           
 		    <TableRow>
@@ -184,14 +169,17 @@
 				    android:paddingRight="100dp"
 				    android:text="Select gender"
 				    android:textAppearance="?android:attr/textAppearanceLarge"
-				    android:textColor="#FFFFFF"
-				    android:textSize="20dp" />
+				    android:textColor="#000000"
+				    android:textSize="20dp"
+				    android:layout_weight="1"
+				    android:gravity="left" />
 		        
 			 	<RadioGroup
-		        android:id="@+id/radioGender"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content" 
-		        android:orientation="horizontal">
+			        android:id="@+id/radioGender"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content" 
+			        android:orientation="horizontal"
+			        android:layout_weight="1">
 		 
 				 <RadioButton
 		                android:id="@+id/rbMale"
@@ -199,6 +187,7 @@
 		                android:layout_height="wrap_content"
 		        		android:paddingRight="20dp"
 		                android:text="Male"
+		               	android:textColor="#000000"
 		                android:checked="true" />  
 		
 		          <RadioButton
@@ -206,6 +195,7 @@
 		              android:layout_width="wrap_content"
 		              android:layout_height="wrap_content"
 		              android:paddingRight="20dp"
+		              android:textColor="#000000"
 		              android:text="Female" 
 		              />
 		          
@@ -214,31 +204,40 @@
 		              android:layout_width="wrap_content"
 		              android:layout_height="wrap_content"
 		              android:paddingRight="20dp"
+		              android:textColor="#000000"
 		              android:text="Other" 
 		              />
 			  </RadioGroup>
  	  		</TableRow>
-      
-			<TableRow>
+      		</TableLayout> 
+       	 	</ScrollView>
+			<LinearLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="match_parent"
+			    android:layout_alignParentBottom="true"
+			    android:orientation="horizontal"
+			    android:gravity="center"
+			    android:layout_gravity="center_vertical"
+			    android:layout_weight="10"
+			    android:background="#FFFFFF">
 			     <Button
        				 android:id="@+id/btnSignUp"
         			 android:layout_width="wrap_content"
-        			 android:layout_height="wrap_content"
+        			 android:layout_height="match_parent"
         			 android:text="Done"
-        			 android:textSize="20dp" />
+        			 android:layout_weight="1"
+        			 android:textSize="20dp"
+        			 android:gravity="center"
+        			 android:layout_gravity="center_vertical" />
                  <Button
        				 android:id="@+id/btnCancel"
         			android:layout_width="wrap_content"
-        			android:layout_height="wrap_content"
+        			android:layout_height="match_parent"
        		 		android:text="Cancel"
-        			android:textSize="20dp" />
-            </TableRow>
-       	 	</TableLayout> 
+        			android:textSize="20dp" 
+        			android:layout_weight="1"
+        			android:gravity="center"
+        			android:layout_gravity="center_vertical"/>
+            </LinearLayout>>
        	 	
-               
-       	 	
-          </LinearLayout>
-
-         
 </LinearLayout>
-</ScrollView>

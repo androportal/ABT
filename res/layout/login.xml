@@ -3,53 +3,58 @@
     android:layout_height="fill_parent"
     android:gravity="center_vertical"
     android:orientation="vertical"
-    android:background="@android:color/darker_gray" 
+    android:background="@android:color/white" 
     android:id="@+id/layout">
 
 <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dark_gray_background"
     android:gravity="center"
     android:orientation="vertical" 
     android:id="@+id/layout_login">
     
-	
-        
-	      <TextView
-				    android:id="@+id/tvLoginWarning"
-				    android:layout_width="wrap_content"
+			<TextView
+				    android:id="@+id/tvalertHead1"
+				    android:layout_width="match_parent"
 				    android:layout_height="wrap_content"
-				    android:textAppearance="?android:attr/textAppearanceLarge"
-				    android:textColor="#F90000"
+				    android:textColor="#FFFFFF"
 				    android:textSize="20dp"
-				   
-				    />
-	      <TextView
-				    android:id="@+id/tvSignUp"
-				    android:layout_width="wrap_content"
+				    android:gravity="center_horizontal"
+				    android:shadowColor="#000000"
+				    android:shadowDx="-1"
+                  	android:shadowDy="-1"
+                  	android:shadowRadius="1"
+				    android:background="#F2C60E"/>
+			<TextView
+				    android:id="@+id/tvalertHead2"
+				    android:layout_width="match_parent"
 				    android:layout_height="wrap_content"
-				    android:textAppearance="?android:attr/textAppearanceLarge"
-				    android:textColor="#00FF00"
-				    android:textSize="10dp"
-				  
-				   /> 
+				    android:textColor="#FFFFFF"
+				    android:textSize="20dp"
+				    android:shadowColor="#000000"
+				    android:shadowDx="-1"
+                	android:shadowDy="-1"
+                	android:shadowRadius="1"
+				    android:gravity="center_horizontal"
+				    android:background="#F2C60E"/>
         
       
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center" >
+                android:gravity="center" 
+                android:background="#F2F2F2">
  
                 <TextView
                     android:id="@+id/tvUserRole"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/padding_large"
-                    android:text="Choose role"
-                    android:paddingRight="100dp"
+                    android:text="Please select role to continue login:"
+                    android:paddingRight="10dp"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textColor="#0B2161"
                  
 					/>
 
@@ -65,14 +70,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingRight="10dp"
-                        android:text="admin" />
+                        android:text="admin"
+                        android:textColor="#000000" />
 
                     <RadioButton
                         android:id="@+id/rbGuest"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingRight="10dp"
-                        android:text="guest" 
+                        android:text="guest"
+                        android:textColor="#000000" 
                        />
 
                     <RadioButton
@@ -81,7 +88,8 @@
                         android:layout_height="wrap_content"
                         android:paddingRight="10dp"
                         android:text="manager" 
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:textColor="#000000"/>
 
                     <RadioButton
                         android:id="@+id/rbOperator"
@@ -89,14 +97,33 @@
                         android:layout_height="wrap_content"
                         android:paddingRight="10dp"
                         android:text="operator" 
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:textColor="#000000"/>
                 </RadioGroup>
             </TableRow>
  	
+            <TextView
+				    android:id="@+id/tvLoginWarning"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:textAppearance="?android:attr/textAppearanceSmall"
+				    android:textColor="#F90000"
+				   
+				    />
+	      <TextView
+				    android:id="@+id/tvSignUp"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:textAppearance="?android:attr/textAppearanceSmall"
+				    android:textColor="#00FF00"
+				  
+				   /> 
+            
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center" >
+        android:gravity="center"
+        android:paddingTop="5dp">
 
         <TextView
             android:id="@+id/tLoginUser"
@@ -105,17 +132,16 @@
             android:paddingRight="100dp"
             android:text="User Name"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/padding_large"
-           />
+            android:textColor="#000000"
+            android:textSize="@dimen/padding_large" />
 
         <EditText
             android:id="@+id/eLoginUser"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:hint="Enter user name"
-            android:inputType="textPersonName" >
+            android:inputType="textPersonName" 
+            android:layout_gravity="center_vertical">
 
             <requestFocus />
         </EditText>
@@ -123,8 +149,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp" >
+        android:layout_height="wrap_content">
 
         <TableLayout 
         		android:layout_width="fill_parent"
@@ -137,18 +162,18 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:paddingRight="100dp"
-		    android:text="Password"
+		    android:text="Password  "
 		    android:textAppearance="?android:attr/textAppearanceLarge"
-		    android:textColor="#FFFFFF"
+		    android:textColor="#000000"
 		    android:textSize="@dimen/padding_large" />
 
         <EditText
             android:id="@+id/eLoginPassword"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:hint="Enter password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:layout_gravity="center_vertical" />
 
 		</TableRow>
 		

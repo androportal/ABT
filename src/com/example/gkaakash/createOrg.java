@@ -17,6 +17,7 @@ import android.media.MediaRouter.UserRouteInfo;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.style.BulletSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,13 +38,13 @@ import android.widget.Toast;
 
 
 public class createOrg extends MainActivity {
-	//Declaring variables
+	//Declaring variables 
 	TextView tvDisplayFromDate, tvDisplayToDate,tvwarning,tvLoginWarning,tvSignUp,tvuserrole;
 	Button btnChangeFromDate, btnChangeToDate, btnCreate,btnLogin,btnNext;
 	static int year, month, day, toYear, toMonth, toDay;
 	static final int FROM_DATE_DIALOG_ID = 0;
 	static final int TO_DATE_DIALOG_ID = 1;
-	Spinner orgType; 
+	Spinner orgType, sQuestions; 
 	RadioButton rb_admin,rb_guest,radioButtonValue;
 	RadioGroup radioUserGroup,radioGender,radioUserAdminGroup;
 	String org;
@@ -59,12 +60,12 @@ public class createOrg extends MainActivity {
 	Object[] financialyearList;
 	boolean orgExistFlag,createorgflag;
 	static Integer client_id;
-	int genderid;
-	static String firstname,lastname,username ,password ,confpassword,loginPassword,mobileno,emailid ;
+	int genderid, selectedQuestion;
+	static String answer,lastname,username ,password ,confpassword,loginPassword;
 	String loginUsername,login_user,login_password;
-	private EditText eloginPassword ,eFirstName ,eLastName,eUserName ,ePassword , eConfPassword;
-	private EditText eloginUsername,eMobileNo,eEmailId;
-	boolean adminflag=false;
+	private EditText eloginPassword ,eUserName ,ePassword , eConfPassword, eAnswer;
+	private EditText eloginUsername;
+	boolean adminflag=false, fromadmin= false;
 	User user;
 	private module module;
 
@@ -354,11 +355,17 @@ public class createOrg extends MainActivity {
 						final View layout = inflater.inflate(R.layout.login, (ViewGroup) findViewById(R.id.layout_login));
 						AlertDialog.Builder builder = new AlertDialog.Builder(context);
 						builder.setView(layout);
-						builder.setTitle(organisationName+" have been created successfully");
-						builder.setMessage("Log In For Financial Year "+fromdate+" to "+todate);
+						TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
+						tvalertHead1.setText(Html.fromHtml("Organisation <b>"+organisationName+"</b> have been created successfully"));
+						TextView tvalertHead2 =(TextView) layout.findViewById(R.id.tvalertHead2);
+						tvalertHead2.setText(Html.fromHtml("Financial Year: <b>"+fromdate+"</b> to <b>"+todate+"</b>"));
+			
+						tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
+						tvLoginWarning.setVisibility(TextView.GONE);
 			
 						radioUserGroup = (RadioGroup)layout.findViewById(R.id.radioUser);
 						tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
+						tvSignUp.setVisibility(TextView.GONE);
 						rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
 						rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
 						tvuserrole = (TextView) layout.findViewById(R.id.tvUserRole);
@@ -369,18 +376,21 @@ public class createOrg extends MainActivity {
 
 						login.setOnClickListener(new View.OnClickListener(){
 							public void onClick(View v) {
-
+								
 								eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
 								eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
-								tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
-								if(rb_admin.isChecked()||rb_guest.isChecked()){
+								
+								if(fromadmin == true || rb_admin.isChecked()||rb_guest.isChecked()){
+									tvLoginWarning.setVisibility(TextView.GONE);
 									login_user = eloginUsername.getText().toString();
 									login_password = eloginPassword.getText().toString();
 									Object[] params = new Object[]{login_user,login_password,user_role};
-
+									System.out.println("we are in login");
 									if(module.isEmpty(params))
 									{
-										String message = "please fill blank field";
+										String message = "Please fill blank field";
+										tvSignUp.setVisibility(TextView.GONE);
+										tvLoginWarning.setVisibility(TextView.VISIBLE);
 										tvLoginWarning.setText(message);
 
 									}else
@@ -399,6 +409,8 @@ public class createOrg extends MainActivity {
 											}else
 											{
 												String message = "Username and Password is incorrect";
+												tvSignUp.setVisibility(TextView.GONE);
+												tvLoginWarning.setVisibility(TextView.VISIBLE);
 												tvLoginWarning.setText(message);
 
 											}		
@@ -416,6 +428,8 @@ public class createOrg extends MainActivity {
 											}else
 											{
 												String message = "Username and Password is incorrect";
+												tvSignUp.setVisibility(TextView.GONE);
+												tvLoginWarning.setVisibility(TextView.VISIBLE);
 												tvLoginWarning.setText(message);
 
 											}					        	 
@@ -424,6 +438,8 @@ public class createOrg extends MainActivity {
 								}
 								else{
 									String message = "Please select your role";
+									tvSignUp.setVisibility(TextView.GONE);
+									tvLoginWarning.setVisibility(TextView.VISIBLE);
 									tvLoginWarning.setText(message);
 								}
 							
@@ -477,7 +493,8 @@ public class createOrg extends MainActivity {
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
 					builder.setView(layout);
-					builder.setTitle("Sign Up");
+					TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
+					tvalertHead1.setText("Sign Up");
 					builder.setCancelable(true);
 					Button done =  (Button) layout.findViewById(R.id.btnSignUp);
 					Button cancel =  (Button) layout.findViewById(R.id.btnCancel);
@@ -490,39 +507,40 @@ public class createOrg extends MainActivity {
 
 							radioGender =(RadioGroup) layout.findViewById(R.id.radioGender);
 
-							eFirstName =(EditText) layout.findViewById(R.id.eFirstName);
-							eLastName =(EditText)layout.findViewById(R.id.eLastName);
 							eUserName =(EditText) layout.findViewById(R.id.eUserName);
 							ePassword =(EditText)layout.findViewById(R.id.ePassword);
 							eConfPassword =(EditText) layout.findViewById(R.id.eConfPassword);
-							eMobileNo = (EditText) layout.findViewById(R.id.eMobileNo);
-							eEmailId = (EditText) layout.findViewById(R.id.eEmailId);
+							sQuestions = (Spinner) layout.findViewById(R.id.sQuestions);
+							eAnswer = (EditText) layout.findViewById(R.id.eAnswer);
 							tvwarning =(TextView) layout.findViewById(R.id.tvWarning);
-
+							
 							genderid = radioGender.getCheckedRadioButtonId();
 							rbgender =(RadioButton)layout.findViewById(genderid);
 							gender = rbgender.getText().toString();
-							firstname = eFirstName.getText().toString(); 
-							lastname = eLastName.getText().toString();
+						 	answer = eAnswer.getText().toString(); 
 							username = eUserName.getText().toString();
 							password = ePassword.getText().toString();
 							confpassword= eConfPassword.getText().toString();
-							mobileno = eMobileNo.getText().toString();
-							emailid = eEmailId.getText().toString(); 
+							selectedQuestion = sQuestions.getSelectedItemPosition();
    
-
-							Object[] params = new Object[]{firstname,lastname,username,password,gender,user_role,mobileno,emailid};
-							Toast.makeText(createOrg.this,emailid, Toast.LENGTH_SHORT).show();
+							//System.out.println("we are in signup");
+							Object[] params = new Object[]{username,password,gender,user_role,selectedQuestion, answer};
+							//Toast.makeText(createOrg.this,selectedQuestion, Toast.LENGTH_SHORT).show();
+							System.out.println("we are in signup1"+username+password+gender+user_role+selectedQuestion+answer);
 							if(module.isEmpty(params)||module.isEmpty(new Object[]{confpassword}))
 							{
 								String message = "please fill blank field";
+								tvwarning.setVisibility(TextView.VISIBLE);
 								tvwarning.setText(message);
 								Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
 								// dialog.getLayoutInflater();
 							}else if(!password.equals(confpassword))
 							{
 								//Toast.makeText(createOrg.this,"password check", Toast.LENGTH_SHORT).show();
+								ePassword.setText("");
+								eConfPassword.setText("");
 								String message = "Please enter correct password";
+								tvwarning.setVisibility(TextView.VISIBLE);
 								tvwarning.setText(message);
 							}else
 							{
@@ -536,10 +554,14 @@ public class createOrg extends MainActivity {
 								rb_guest.setVisibility(View.GONE);
 								rb_admin.setVisibility(View.GONE);
 								tvuserrole.setVisibility(View.GONE);
+								
 								adminflag = true;  
 								eloginUsername.setText(username);
 								eloginPassword.setText("");
-								tvSignUp.setText("Signup Successfully As A Admin...!!! Please Log In");
+								tvLoginWarning.setVisibility(TextView.GONE);
+								tvSignUp.setVisibility(TextView.VISIBLE);
+								tvSignUp.setText("Signed up successfully as a Admin, Please Log In!!!");
+								fromadmin = true;
 								dialog.dismiss();
 								}
 								else{
@@ -556,7 +578,9 @@ public class createOrg extends MainActivity {
 					cancel.setOnClickListener(new View.OnClickListener(){
 						public void onClick(View v) {
 							adminflag = false;
-
+							tvLoginWarning.setVisibility(TextView.GONE);
+							eloginUsername.setText("");
+							eloginPassword.setText("");
 							dialog.dismiss();
 
 
@@ -574,6 +598,7 @@ public class createOrg extends MainActivity {
 
 				}else
 				{
+					tvLoginWarning.setVisibility(TextView.GONE);
 					eloginPassword.setText("guest");
 					eloginUsername.setText("guest");
 

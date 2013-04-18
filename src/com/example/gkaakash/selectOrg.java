@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,8 +123,11 @@ public class selectOrg extends Activity{
 				final View layout = inflater.inflate(R.layout.login, (ViewGroup) findViewById(R.id.layout_login));
 				final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				builder.setView(layout);
-				builder.setTitle("Log In to "+selectedOrgName);
-				builder.setMessage("Log In For Financial Year "+fromDate+" to "+toDate);
+				TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
+				tvalertHead1.setText(Html.fromHtml("Log In to <b>"+selectedOrgName+"</b>"));
+				TextView tvalertHead2 =(TextView) layout.findViewById(R.id.tvalertHead2);
+				tvalertHead2.setText(Html.fromHtml("Financial Year: <b>"+fromDate+"</b> to <b>"+toDate+"</b>"));
+				
 				radioUserGroup = (RadioGroup)layout.findViewById(R.id.radioUser);
 				rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
 				rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
@@ -132,6 +136,11 @@ public class selectOrg extends Activity{
 				eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
 				eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
 				tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
+				tvLoginWarning.setVisibility(TextView.GONE);
+				
+				tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
+				tvSignUp.setVisibility(TextView.GONE);
+				
 				rb_manager.setVisibility(View.VISIBLE);
 				rb_operator.setVisibility(View.VISIBLE);
 
@@ -164,25 +173,31 @@ public class selectOrg extends Activity{
 
 								}else{
 									if(user_role.equals("guest")){
+										tvLoginWarning.setVisibility(TextView.VISIBLE);
 										tvLoginWarning.setText("Authentication Failed!!");
 									}else
 									{
+										tvLoginWarning.setVisibility(TextView.VISIBLE);
 										tvLoginWarning.setText("Please enter correct username and password or choose proper role");
 									}
 								}
 							}else{
-								if(!user_role.equals("guest")){
-									tvLoginWarning.setText("Authentication Failed!! Please Choose correct role " );
-								}else
+								
+								if ((login_user.equals("guest"))&&(login_password.equals("guest")))
 								{
-
 									//To pass on the activity to the next page  
 									Intent intent = new Intent(context,menu.class);
 									startActivity(intent); 
-								}
+								}else
+								{
+									tvLoginWarning.setVisibility(TextView.VISIBLE);
+									tvLoginWarning.setText("Username and Password is incorrect");
+
+								}		
 							}
 						}
 						else{
+							tvLoginWarning.setVisibility(TextView.VISIBLE);
 							tvLoginWarning.setText("Please fill empty field");
 						}
 						// tvuserrole = (TextView) layout.findViewById(R.id.tvUserRole);
@@ -323,7 +338,7 @@ public class selectOrg extends Activity{
 		radioUserGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			public void onCheckedChanged(RadioGroup rg, int selctedId) {
-
+				tvLoginWarning.setVisibility(TextView.GONE);
 				//int selcetdRadoiId = radioUserGroup.getCheckedRadioButtonId();
 				RadioButton selctedradio =(RadioButton) layout.findViewById(selctedId);
 				user_role = selctedradio.getText().toString();

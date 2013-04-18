@@ -203,7 +203,7 @@ public class trialBalance extends Activity{
 	    	
 	    	
 	       animated_dialog();
-	       floatingHeader();
+	       //floatingHeader();
 	    } catch (Exception e) {
 		   	m.toastValidationMessage(trialBalance.this, "Please try again");
 	   	}
@@ -219,10 +219,10 @@ public class trialBalance extends Activity{
      * double headers at the same time.
      */
     private void floatingHeader() {
-    		trialBaltable.setOnTouchListener(new OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
+//    		tr.setOnTouchListener(new OnTouchListener() {
+//			
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
 				
 				if(oneTouch == 1){
 					floating_heading_table.setVisibility(TableLayout.VISIBLE);
@@ -277,10 +277,10 @@ public class trialBalance extends Activity{
 				}
 				oneTouch ++;
 				
-				return false;
-			}
-		});
-		
+//				return false;
+//			}
+//		});
+//		
 	}
 	private void animated_dialog() {
 		try {
@@ -514,6 +514,7 @@ public class trialBalance extends Activity{
 				}
 			}
     	});
+		
         label = new TextView(this);
         label.setText(param);
         label.setTextSize(18);
@@ -521,6 +522,16 @@ public class trialBalance extends Activity{
         label.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT));
         label.setPadding(2, 2, 2, 2);
+        label.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				Toast.makeText(trialBalance.this, "i am nre touch"+i, Toast.LENGTH_SHORT).show();
+				floatingHeader();
+				return false;
+			}
+		});
         LinearLayout Ll = new LinearLayout(this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);
@@ -528,5 +539,4 @@ public class trialBalance extends Activity{
         Ll.addView(label,params);
         tr.addView((View)Ll); // Adding textView to tablerow.
     }
-
 }

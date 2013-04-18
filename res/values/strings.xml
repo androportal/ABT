@@ -146,4 +146,19 @@
         \nCopyright © 2012, IIT Bombay 
    </string>
    <string name="Rs">\u20B9</string>  
+   
+   <string name="questions">Select question</string>
+    <string-array name="ques_prompt">
+        <item>what is your favourite authors name?</item>
+       	<item>What is the country of your ultimate dream vacation?</item>
+        <item>What was your favorite sport in high school?</item>
+        <item>What is the name of your hometown newspaper?</item>
+       	<item>What is the largest amount of money you have lent that was never paid back?</item>
+        <item>Who has been the kindest to you in your life?</item>
+        <item>When were you born?</item>
+        <item>Where is your work place?</item>
+        <item>What is your worst boss name?</item>
+    </string-array>
     </resources>
+	
+    
