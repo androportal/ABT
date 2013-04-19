@@ -53,8 +53,9 @@ public class selectOrg extends Activity{
 	private EditText eloginUsername;
 	static String user_role;
 	String loginUsername,login_user,login_password;
-	TextView tvwarning,tvLoginWarning,tvSignUp,tvuserrole;
-	private module module;
+	TextView tvwarning,tvLoginWarning,tvSignUp,tvuserrole,link;
+	private module m;
+	
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,7 +68,7 @@ public class selectOrg extends Activity{
 		// call startup to get client connection 
 		startup = new Startup();
 		user= new User();
-		module = new module();
+		m = new module();
 		getOrgNames = (Spinner) findViewById(R.id.sGetOrgNames);
 		getFinancialyear = (Spinner) findViewById(R.id.sGetFinancialYear);
 		getOrgNames.setMinimumWidth(100);
@@ -136,6 +137,8 @@ public class selectOrg extends Activity{
 				eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
 				eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
 				tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
+				link =(TextView) layout.findViewById(R.id.tvlink);
+
 				tvLoginWarning.setVisibility(TextView.GONE);
 				
 				tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
@@ -143,6 +146,61 @@ public class selectOrg extends Activity{
 				
 				rb_manager.setVisibility(View.VISIBLE);
 				rb_operator.setVisibility(View.VISIBLE);
+				
+				link.setOnClickListener(new OnClickListener() { 
+					
+					@Override 
+					public void onClick(View arg0) { 
+					 
+						
+						LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+						final View layout = inflater.inflate(R.layout.forgot_password, null);
+						final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+						builder.setView(layout);
+						final EditText answer =(EditText) layout.findViewById(R.id.etAnswer);
+						TextView header =(TextView) layout.findViewById(R.id.tvheader);
+						final Spinner Question =(Spinner) layout.findViewById(R.id.SpQuestions);
+						
+						header.setText("Answer the security question to get access");
+						Button Ok =(Button) layout.findViewById(R.id.btnOK);
+						Button Cancel =(Button) layout.findViewById(R.id.btnCancel);
+						Cancel.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View arg0) {
+								dialog.cancel();
+							}
+						});
+						
+						Ok.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View arg0) {
+							
+							int position = Question.getSelectedItemPosition();
+							String ans =answer.getText().toString();
+							TextView errormsg =(TextView) layout.findViewById(R.id.tverror_msg);
+							Boolean result = user.AdminForgotPassword(new Object[]{position,ans,"admin"},client_id);
+							//System.out.println("result:"+result);
+							if(result==true){
+								Intent intent = new Intent(context,menu.class); 
+								startActivity(intent); 
+							}else if ("".equals(ans)) {
+								errormsg.setVisibility(View.VISIBLE);
+								errormsg.setText("Please fill the field!");
+							}else {
+								errormsg.setVisibility(View.VISIBLE);
+								errormsg.setText("Invalid input,please try again!");
+								answer.setText("");
+							}
+							}
+						});
+
+						dialog = builder.create();
+						dialog.show();
+
+					}
+				});
 
 				Button login =  (Button) layout.findViewById(R.id.btnLogin);
 
@@ -159,7 +217,7 @@ public class selectOrg extends Activity{
 
 						boolean isadmin = user.isAdmin(client_id);
 						Object[] params = new Object[]{login_user,login_password,user_role};
-						if(!module.isEmpty(params)){
+						if(!m.isEmpty(params)){
 							if(isadmin==true)
 							{
 
@@ -350,10 +408,13 @@ public class selectOrg extends Activity{
 				if(rb_admin.isChecked()){
 					eloginUsername.setText("");
 					eloginPassword.setText("");
+					link.setVisibility(View.VISIBLE);
 					Toast.makeText(selectOrg.this,"admin checked", Toast.LENGTH_SHORT).show();
+				}else {
+					link.setVisibility(View.INVISIBLE);
 				}
 				
-
+ 
 			}
 
 

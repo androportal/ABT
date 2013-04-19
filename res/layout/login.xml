@@ -24,7 +24,8 @@
 				    android:shadowDx="-1"
                   	android:shadowDy="-1"
                   	android:shadowRadius="1"
-				    android:background="#F2C60E"/>
+				    android:background="#F2C60E"
+				    android:text="hiii"/>
 			<TextView
 				    android:id="@+id/tvalertHead2"
 				    android:layout_width="match_parent"
@@ -190,6 +191,17 @@
         android:gravity="center"
         android:text="Log In"
         android:textSize="20dp" />
+    
+     <TextView
+         android:id="@+id/tvlink"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:linksClickable="true"
+         android:text="Forgot password"
+         android:textAppearance="?android:attr/textAppearanceLarge"
+         android:textColor="#008000"
+         android:textSize="20dp"
+        android:visibility="invisible"/>
 	
 </LinearLayout>
 </ScrollView>

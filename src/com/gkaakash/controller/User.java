@@ -9,7 +9,7 @@ import com.gkaakash.coreconnection.CoreConnection;
 public class User {
 	private CoreConnection conn;
 	String setuser;
-	boolean isuserexist,isuserunique,isadmin;
+	boolean isuserexist,isuserunique,isadmin,AdminForgotPassword;
 	Object[] getUserRole;
 	
 	/**
@@ -107,5 +107,16 @@ public class User {
 		return getUserRole;
 	}	
 		
+	public boolean AdminForgotPassword(Object[] params,Object client_id)
+	{
+		try {
+			AdminForgotPassword = (Boolean)conn.getClient().call("user.AdminForgotPassword",params,client_id);
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace(); 
+		}
+		System.out.println("AdminForgotPassword: "+AdminForgotPassword);
+		return AdminForgotPassword;
+	}
 	
 }

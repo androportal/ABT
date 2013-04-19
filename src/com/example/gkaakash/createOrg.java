@@ -83,7 +83,7 @@ public class createOrg extends MainActivity {
 			 */
 			MainActivity.no_dailog = true; 
 			MainActivity.help_dialog.dismiss();
-		}
+		} 
 
 
 		//for two digit format date for dd and mm
