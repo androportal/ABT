@@ -65,7 +65,7 @@ public class createOrg extends MainActivity {
 	String loginUsername,login_user,login_password;
 	private EditText eloginPassword ,eUserName ,ePassword , eConfPassword, eAnswer;
 	private EditText eloginUsername;
-	boolean adminflag=false, fromadmin= false;
+	boolean adminflag=false;
 	User user;
 	private module module;
 
@@ -380,7 +380,7 @@ public class createOrg extends MainActivity {
 								eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
 								eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
 								
-								if(fromadmin == true || rb_admin.isChecked()||rb_guest.isChecked()){
+								if(adminflag == true || rb_admin.isChecked()||rb_guest.isChecked()){
 									tvLoginWarning.setVisibility(TextView.GONE);
 									login_user = eloginUsername.getText().toString();
 									login_password = eloginPassword.getText().toString();
@@ -395,7 +395,7 @@ public class createOrg extends MainActivity {
 
 									}else
 									{
-										Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
+										//Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
 										if(user_role.equals("guest"))
 										{
 											Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
@@ -418,7 +418,7 @@ public class createOrg extends MainActivity {
 
 										if(user_role.equals("admin") ){
 											boolean is_user_exist = user.isUserExist(params, client_id);
-											Toast.makeText(createOrg.this,"exist "+is_user_exist, Toast.LENGTH_SHORT).show();
+											//Toast.makeText(createOrg.this,"exist "+is_user_exist, Toast.LENGTH_SHORT).show();
 
 											if(is_user_exist==true)
 											{	
@@ -532,7 +532,7 @@ public class createOrg extends MainActivity {
 								String message = "please fill blank field";
 								tvwarning.setVisibility(TextView.VISIBLE);
 								tvwarning.setText(message);
-								Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
+								//Toast.makeText(createOrg.this,user_role, Toast.LENGTH_SHORT).show();
 								// dialog.getLayoutInflater();
 							}else if(!password.equals(confpassword))
 							{
@@ -561,7 +561,7 @@ public class createOrg extends MainActivity {
 								tvLoginWarning.setVisibility(TextView.GONE);
 								tvSignUp.setVisibility(TextView.VISIBLE);
 								tvSignUp.setText("Signed up successfully as a Admin, Please Log In!!!");
-								fromadmin = true;
+								
 								dialog.dismiss();
 								}
 								else{

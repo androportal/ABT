@@ -82,14 +82,12 @@ public class menu extends ListActivity{
 	static boolean narration_flag;
 	static ArrayList<String> accdetailsList;
 	boolean reportmenuflag;
-    static String orgtype;
+    static String orgtype,userrole;
     String OrgName;
     module m;
+    String[] menuOptions;
     
-    //adding list items to the newly created menu list
-    String[] menuOptions = new String[] { "Create account", "Transaction", "Reports",
-            "Preferences","Bank Reconciliation","RollOver","Help","About" };
-  
+   
     /*
     //adding options to the options menu
     @Override
@@ -129,6 +127,8 @@ public class menu extends ListActivity{
         report = new Report();
         client_id= Startup.getClient_id();
         m= new module();
+        reportmenuflag = MainActivity.reportmenuflag;
+      
         
         //get financial from and to date, split and store day, month and year in seperate variable
        	financialFromDate =Startup.getfinancialFromDate();  	   	
@@ -147,19 +147,31 @@ public class menu extends ListActivity{
 	  	mFormat= new DecimalFormat("00");
 	  	mFormat.setRoundingMode(RoundingMode.DOWN);
 	  	
-	    reportmenuflag = MainActivity.reportmenuflag;
+	   
 	    if (reportmenuflag == true) {
 
 			OrgName = createOrg.organisationName;
 			orgtype=createOrg.orgTypeFlag;
+			userrole = createOrg.user_role;
 
 		} else {
 			OrgName = selectOrg.selectedOrgName;
+			userrole = selectOrg.user_role;
 			Object[] params = new Object[]{OrgName};
 	        orgtype = (String) organisation.getorgTypeByname(params, client_id);
 
 		}
-	    
+	    if(userrole.equals("guest"))
+        {
+        	  //adding list items to the newly created menu list
+        	menuOptions = new String[] { "Create account", "Transaction", "Reports",
+                    "Preferences","Bank Reconciliation","RollOver","Help","About" };
+        }else{
+        //adding list items to the newly created menu list
+            menuOptions = new String[] { "Create account", "Transaction", "Reports",
+                    "Preferences","Bank Reconciliation","RollOver","User Settings","Help","About" };
+            
+        }
         
         //calling menu.xml and adding menu list into the page
         setListAdapter(new ArrayAdapter<String>(this, R.layout.menu,menuOptions));
@@ -433,28 +445,12 @@ public class menu extends ListActivity{
 					}
 
 				}
-                
+               if(userrole.equals("guest")||userrole.equals("guest")) 
+               {
                 //for help
                 if(position == 6){
-                	/*LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                    final View layout = inflater.inflate(R.layout.help_popup,
-                            (ViewGroup) findViewById(R.id.layout_root));
-            
-                    // builder
-                    AlertDialog.Builder builder = new AlertDialog.Builder(menu.this);
-                    builder.setView(layout);
-                    builder.setTitle("Help");
-                    CheckBox cbHelp = (CheckBox)layout.findViewById(R.id.cbHelp);
-                    cbHelp.setVisibility(CheckBox.GONE);
-                    help_dialog = builder.create();
-                    help_dialog.show();
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    // customizing the width and location of the dialog on screen
-                    lp.copyFrom(help_dialog.getWindow().getAttributes());
-                    lp.width = 700;
-                    help_dialog.getWindow().setAttributes(lp);
-                    help_dialog.setCancelable(true);*/
-                    
+                	
+                	
                     Intent intent = new Intent(context, Help.class);
 					// To pass on the value to the next page
 					startActivity(intent);
@@ -494,7 +490,107 @@ public class menu extends ListActivity{
                             
                             about_dialog.getWindow().setAttributes(lp);
                 }
-            } 
+            } else{
+            	
+            	  //for user settings
+                if(position == 6){
+                	
+                	Toast.makeText(menu.this,"user setting", Toast.LENGTH_SHORT).show();
+                	Intent intent = new Intent(context, userSetting.class);
+					// To pass on the value to the next page
+					startActivity(intent);
+                	/*final CharSequence[] items = { "add user", "" };
+                	//creating a dialog box for popup
+                	AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                	//setting title
+                	builder.setTitle("Select preference");
+                	//adding items
+                	builder.setItems(items, new DialogInterface.OnClickListener() {
+                		public void onClick(DialogInterface dialog1, int pos) {
+                			//code for the actions to be performed on clicking popup item goes here ...
+                			switch (pos) {
+     	      	        case 0:
+     	      	        {
+     	      	        	
+     	      	        	MainActivity.editDetails=true;
+     	      	        	Object[] editDetails = (Object[])organisation.getOrganisation(client_id);
+     	      	        	accdetailsList = new ArrayList<String>();
+     	      	        	for(Object row2 : editDetails){
+     	      	        		Object[] a2=(Object[])row2;
+     	      	        		ArrayList<String> accdetails = new ArrayList<String>();
+     	                        for(int i=0;i<a2.length;i++){
+     	                        	accdetails.add((String) a2[i].toString());
+     	                        }
+     	                        accdetailsList.addAll(accdetails);
+     	      	        	}
+     	                             
+     	      	        	//System.out.println("details:"+accdetailsList);
+     	                           
+     	      	        	Intent intent = new Intent(context, orgDetails.class);
+     	      	        	// To pass on the value to the next page
+     	      	        	startActivity(intent);
+     	      	        }break;
+     	      	        case 1:
+     	      	        {
+     	      	        	Intent intent = new Intent(context, addProject.class);
+     	      	        	// To pass on the value to the next page
+     	      	        	startActivity(intent);
+     	      	        	
+     	      	        }break;
+                			}
+                		}
+                	});
+                	//building a complete dialog
+                	dialog=builder.create();
+                	dialog.show();*/
+     	
+                    
+                }
+            	
+            	  //for help
+               /* if(position == 7){
+                	
+                    Intent intent = new Intent(context, Help.class);
+					// To pass on the value to the next page
+					startActivity(intent);
+                }*/
+                
+                //for about
+                if(position == 8){
+                    AlertDialog about_dialog;
+                    final SpannableString s = 
+                            new SpannableString(context.getText(R.string.about_para));
+                            Linkify.addLinks(s, Linkify.WEB_URLS);
+                            
+
+                            // Building DatepPcker dialog
+                            AlertDialog.Builder builder = new AlertDialog.Builder(
+                                    context);
+                            builder.setTitle("Aakash Business Tool");
+                            builder.setMessage( s );
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // TODO Auto-generated method stub
+                                    
+                                }
+                              
+                            });
+                            
+                            about_dialog = builder.create();
+                            about_dialog.show();
+                            
+                            ((TextView)about_dialog.findViewById(android.R.id.message))
+                            .setMovementMethod(LinkMovementMethod.getInstance());
+                            
+                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                            // customizing the width and location of the dialog on screen
+                            lp.copyFrom(about_dialog.getWindow().getAttributes());
+                            lp.width = 600;
+                            
+                            about_dialog.getWindow().setAttributes(lp);
+            }
+            }
+            }
         });
     }
      

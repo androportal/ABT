@@ -172,6 +172,21 @@
       		android:name=".rollOver"
       		android:screenOrientation="landscape" >
        </activity>
+       <activity
+      		android:label="UserSetting"
+      		android:name=".userSetting"
+      		android:screenOrientation="landscape" >
+       </activity>
+       <activity
+      		android:label="addUser"
+      		android:name=".addUser"
+      		android:screenOrientation="landscape" >
+       </activity>
+       <activity
+      		android:label="editUser"
+      		android:name=".editUser"
+      		android:screenOrientation="landscape" >
+       </activity>
     </application>
     
 

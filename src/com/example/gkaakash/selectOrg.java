@@ -213,7 +213,7 @@ public class selectOrg extends Activity{
 						login_user = eloginUsername.getText().toString();
 						login_password = eloginPassword.getText().toString();
 
-						Toast.makeText(selectOrg.this,user_role, Toast.LENGTH_SHORT).show();
+						//Toast.makeText(selectOrg.this,user_role, Toast.LENGTH_SHORT).show();
 
 						boolean isadmin = user.isAdmin(client_id);
 						Object[] params = new Object[]{login_user,login_password,user_role};

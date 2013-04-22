@@ -1,3 +1,13 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_width="fill_parent" 
+ android:layout_height="fill_parent"
+ android:orientation="vertical"
+ android:weightSum="100">
+    	<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" 
+ android:layout_height="fill_parent"
+ android:layout_weight="90">
+   
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_signup"
@@ -34,8 +44,7 @@
     		android:layout_weight="80" >
                <TableLayout
                    android:layout_width="fill_parent"
-                   android:layout_height="450dp" 
-                   >
+                   android:layout_height="450dp" >
 		
 					<TextView
 				    android:id="@+id/tvWarning"
@@ -47,6 +56,48 @@
 				    android:paddingLeft="150dp"
 				    android:layout_gravity="center"
 				    android:visibility="gone" />
+					
+			  <TableRow
+			      android:id="@+id/trUserRole"
+			      android:visibility="gone">
+		        <TextView
+				    android:id="@+id/tRole"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:paddingRight="100dp"
+				    android:text="Choose user role"
+				    android:textAppearance="?android:attr/textAppearanceLarge"
+				    android:textColor="#000000"
+				    android:textSize="20dp"
+				    android:layout_weight="1"
+				    android:gravity="left" />
+		        
+			 	<RadioGroup
+			        android:id="@+id/radioRole"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content" 
+			        android:orientation="horizontal"
+			        android:layout_weight="1">
+		 
+				 <RadioButton
+		                android:id="@+id/rbAdmin"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		        		android:paddingRight="20dp"
+		                android:text="manager"
+		               	android:textColor="#000000"
+		                android:checked="true" />  
+		
+		          <RadioButton
+		              android:id="@+id/rbFemale"
+		              android:layout_width="wrap_content"
+		              android:layout_height="wrap_content"
+		              android:paddingRight="20dp"
+		              android:textColor="#000000"
+		              android:text="operator" />
+		        
+			  </RadioGroup>
+ 	  		</TableRow>
 			
 			<TableRow>
 				<TextView
@@ -116,7 +167,8 @@
 		            android:layout_weight="1" />
 			</TableRow>
 			
-			<TableRow>
+			<TableRow
+			     android:id="@+id/trQuestion">
 
 				<TextView
 				    android:layout_width="wrap_content"
@@ -138,7 +190,8 @@
                 	android:prompt="@string/questions" />
  
 			</TableRow>
-			<TableRow>
+			<TableRow
+			     android:id="@+id/trAnswer">
 			    
 				<TextView
 				    android:layout_width="wrap_content"
@@ -163,7 +216,7 @@
           
 		    <TableRow>
 		        <TextView
-				    android:id="@+id/tUserName"
+				    android:id="@+id/tGender"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
@@ -209,35 +262,42 @@
 		              />
 			  </RadioGroup>
  	  		</TableRow>
-      		</TableLayout> 
-       	 	</ScrollView>
-			<LinearLayout
-			    android:layout_width="fill_parent"
-			    android:layout_height="match_parent"
-			    android:layout_alignParentBottom="true"
-			    android:orientation="horizontal"
-			    android:gravity="center"
-			    android:layout_gravity="center_vertical"
-			    android:layout_weight="10"
-			    android:background="#FFFFFF">
-			     <Button
-       				 android:id="@+id/btnSignUp"
-        			 android:layout_width="wrap_content"
-        			 android:layout_height="match_parent"
-        			 android:text="Done"
-        			 android:layout_weight="1"
-        			 android:textSize="20dp"
-        			 android:gravity="center"
-        			 android:layout_gravity="center_vertical" />
-                 <Button
-       				 android:id="@+id/btnCancel"
-        			android:layout_width="wrap_content"
-        			android:layout_height="match_parent"
-       		 		android:text="Cancel"
-        			android:textSize="20dp" 
-        			android:layout_weight="1"
-        			android:gravity="center"
-        			android:layout_gravity="center_vertical"/>
-            </LinearLayout>>
-       	 	
+      	</TableLayout> 
+      </ScrollView>
+     
 </LinearLayout>
+
+
+</ScrollView>
+ <LinearLayout
+			     android:layout_width="fill_parent"
+			     android:layout_height="wrap_content"
+			     android:layout_gravity="center_vertical"
+			     android:background="#FFFFFF"
+			     android:gravity="center"
+			     android:orientation="horizontal" 
+			     android:layout_alignParentBottom="true"
+			     android:layout_weight="7" >
+
+                 <Button
+                     android:id="@+id/btnSignUp"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:text="Done"
+                     android:layout_weight="1"
+                     android:textSize="20sp"
+                     android:gravity="center"
+                     android:layout_alignParentBottom="true"
+                     android:layout_gravity="center_vertical" />
+                 <Button
+                    android:id="@+id/btnCancel"  
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Cancel"
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+ </LinearLayout>
