@@ -9,8 +9,8 @@ import com.gkaakash.coreconnection.CoreConnection;
 public class User {
 	private CoreConnection conn;
 	String setuser;
-	boolean isuserexist,isuserunique,isadmin,AdminForgotPassword;
-	Object[] getUserRole;
+	boolean isuserexist,isuserunique,isadmin,AdminForgotPassword,changePassword;
+	Object[] getUserRole,getUserNemeOfOperatorRole,getUserNemeOfManagerRole;
 	
 	/**
 	 * default constructor   
@@ -115,8 +115,48 @@ public class User {
 			
 			e.printStackTrace(); 
 		}
-		System.out.println("AdminForgotPassword: "+AdminForgotPassword);
+		
 		return AdminForgotPassword;
 	}
+	/***
+	 * This method facilitate user to change password
+	 * @param params will contain usename,oldpassword,newpassword,userole
+	 * @param client_id
+	 * @return boolean
+	 */
+	public boolean changePassword(Object[] params,Object client_id)
+	{
+		try{
+			changePassword = (Boolean)conn.getClient().call("user.changePassword",params,client_id);
+		}catch(XMLRPCException e)
+		{
+			e.printStackTrace();
+		}
+		return changePassword;
+		
+	}
+	public Object[] getUserNemeOfManagerRole(Object client_id)
+	{
+		try{
+			getUserNemeOfManagerRole = (Object[])conn.getClient().call("user.getUserNemeOfManagerRole",client_id);
+		}catch(XMLRPCException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return getUserNemeOfManagerRole;
+		
+	}
 	
+	public Object[] getUserNemeOfOperatorRole(Object client_id)
+	{
+		try{
+			getUserNemeOfOperatorRole = (Object[])conn.getClient().call("user.getUserNemeOfOperatorRole",client_id);
+		}catch(XMLRPCException e)
+		{
+			e.printStackTrace();
+		}
+		return getUserNemeOfOperatorRole;
+		
+	}
 }

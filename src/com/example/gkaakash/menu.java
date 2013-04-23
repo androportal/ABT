@@ -52,6 +52,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -91,7 +92,10 @@ public class menu extends ListActivity{
     String[] menuOptions;
     static String rollover;
     private User user;
-    RadioButton rbmanager;
+    RadioButton rbmanager,rbRoleChecked ;
+	RadioButton rbGenderChecked;
+    String gender;
+    RadioGroup  radiogender ,radiorole ;
     
     
    
@@ -557,28 +561,47 @@ public class menu extends ListActivity{
 								final EditText eusername = (EditText) layout.findViewById(R.id.eUserName);
 								final EditText epassword = (EditText) layout.findViewById(R.id.ePassword);
 								final EditText econfpassword = (EditText) layout.findViewById(R.id.eConfPassword);
-								RadioGroup radiogender = (RadioGroup) layout.findViewById(R.id.radioGender);
-								RadioGroup radiorole = (RadioGroup) layout.findViewById(R.id.radioRole);
+								radiogender = (RadioGroup) layout.findViewById(R.id.radioGender);
+								radiorole = (RadioGroup) layout.findViewById(R.id.radioRole);
 								TableRow radiouserole = (TableRow) layout.findViewById(R.id.trUserRole);
 								final TextView tvwarning = (TextView)layout.findViewById(R.id.tvWarning);
 								TextView tvmessage = (TextView) layout.findViewById(R.id.tvSignUp);
-								int rbRoleCheckedId = radiorole.getCheckedRadioButtonId();
-								final RadioButton rbRoleChecked = (RadioButton) layout.findViewById(rbRoleCheckedId);
-								int rbGenderCheckedId = radiogender.getCheckedRadioButtonId();
-								final RadioButton rbGenderChecked = (RadioButton) layout.findViewById(rbGenderCheckedId);
-								
+								//int rbRoleCheckedId = radiorole.getCheckedRadioButtonId();
+							    //rbRoleChecked = (RadioButton) layout.findViewById(rbRoleCheckedId);
+								//int rbGenderCheckedId = radiogender.getCheckedRadioButtonId();
+								//rbGenderChecked = (RadioButton) layout.findViewById(rbGenderCheckedId);
+								radiorole.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+									public void onCheckedChanged(RadioGroup rg, int selctedId) {
+										
+										rbRoleChecked = (RadioButton)layout.findViewById(selctedId);
+										userrole = rbRoleChecked.getText().toString();
+										
+									}
+								});
+								radiogender.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+									public void onCheckedChanged(RadioGroup rg, int selctedId) {
+										
+										rbGenderChecked = (RadioButton)layout.findViewById(selctedId);
+										gender = rbGenderChecked.getText().toString();
+										
+									}
+								});
+							
 								btndone.setOnClickListener(new OnClickListener() {
 									
 									@Override
 									public void onClick(View arg0) {
+										
 										addOnClickListnereOnButton();
 									}
 									private void addOnClickListnereOnButton() {
-										String gender = rbGenderChecked.getText().toString();
+										//String gender = rbGenderChecked.getText().toString();
 										String username = eusername.getText().toString();
 										String password = epassword.getText().toString();
 										String confpassword = econfpassword.getText().toString();
-										userrole = rbRoleChecked.getText().toString();
+										//userrole = rbRoleChecked.getText().toString();
 										tvwarning.setVisibility(TextView.GONE);
 										Object[] params = new Object[]{username,password,gender,userrole,"null","null"};
 
@@ -630,6 +653,10 @@ public class menu extends ListActivity{
 										econfpassword.setText("");
 										
 									}
+									
+									// add Checked change listner on radioGroup 
+		
+
 								});
 
 								dialog = builder.create();
