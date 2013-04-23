@@ -17,6 +17,7 @@ import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Preferences;
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
+import com.gkaakash.controller.User;
 
 import android.R.drawable;
 import android.app.AlertDialog;
@@ -49,6 +50,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -83,9 +86,13 @@ public class menu extends ListActivity{
 	static ArrayList<String> accdetailsList;
 	boolean reportmenuflag;
     static String orgtype,userrole;
-    String OrgName;
+    static String OrgName;
     module m;
     String[] menuOptions;
+    static String rollover;
+    private User user;
+    RadioButton rbmanager;
+    
     
    
     /*
@@ -128,6 +135,12 @@ public class menu extends ListActivity{
         client_id= Startup.getClient_id();
         m= new module();
         reportmenuflag = MainActivity.reportmenuflag;
+        
+		// create instance of user class to call setUser method
+		user = new User();
+		// get the client_id from startup
+		
+		
       
         
         //get financial from and to date, split and store day, month and year in seperate variable
@@ -169,7 +182,7 @@ public class menu extends ListActivity{
         }else{
         //adding list items to the newly created menu list
             menuOptions = new String[] { "Create account", "Transaction", "Reports",
-                    "Preferences","Bank Reconciliation","RollOver","User Settings","Help","About" };
+                    "Preferences","Bank Reconciliation","RollOver","Settings","Help","About" };
             
         }
         
@@ -380,7 +393,7 @@ public class menu extends ListActivity{
 										if (validateDateFlag) {
 											Object[] rollover_params = new Object[] {OrgName, financialFromDate,financialToDate,
 													givenToDateString, orgtype };
-											final String rollover = report.rollOver(rollover_params,client_id);
+											rollover = report.rollOver(rollover_params,client_id);
 
 											AlertDialog.Builder builder = new AlertDialog.Builder(context);
 											builder.setMessage(
@@ -398,6 +411,7 @@ public class menu extends ListActivity{
 																	// value to
 																	// the next
 																	// page
+																	intent.putExtra("flag", "from_menu");
 																	startActivity(intent);
 
 																}
@@ -433,6 +447,7 @@ public class menu extends ListActivity{
 												Intent intent = new Intent(context, menu.class);
 												// To pass on the value to the
 												// next page
+												intent.putExtra("flag", "from_menu");
 												startActivity(intent);
 
 											}
@@ -492,13 +507,144 @@ public class menu extends ListActivity{
                 }
             } else{
             	
-            	  //for user settings
+            	  //for settings
                 if(position == 6){
                 	
-                	Toast.makeText(menu.this,"user setting", Toast.LENGTH_SHORT).show();
-                	Intent intent = new Intent(context, userSetting.class);
-					// To pass on the value to the next page
-					startActivity(intent);
+					final CharSequence[] items = { "Edit Username/Password", "Add user"};
+					//creating a dialog box for popup
+					AlertDialog.Builder builder = new AlertDialog.Builder(menu.this);
+					//setting title
+					builder.setTitle("User settings");
+					//adding items
+					builder.setItems(items, new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog,
+								int pos) {
+							if(pos == 0){
+								
+							}
+							if(pos==1){
+								
+								
+								LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+								final View layout = inflater.inflate(R.layout.sign_up, null);
+								final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+								builder.setView(layout);
+								builder.setTitle("Add role");
+								// get the id of signup.xml header 
+								TextView tvheader = (TextView) layout.findViewById(R.id.tvalertHead1);
+								tvheader.setVisibility(View.GONE); // set visibility gone of header 
+								// get the id of table row of user role and visible it
+								TableRow truserrole = (TableRow) layout.findViewById(R.id.trUserRole);
+								truserrole.setVisibility(View.VISIBLE);
+								if(menu.userrole.equals("manager"))
+								{
+									// get only operator visible to manager 
+									rbmanager = (RadioButton) layout.findViewById(R.id.rbManager);
+									rbmanager.setVisibility(View.GONE);
+								}
+								// get the id of cancel button and change the text to Reset
+								Button btncancel = (Button) layout.findViewById(R.id.btnCancel);
+								btncancel.setText("Reset");
+								// get the id of question row and answer row and invisible it
+								TableRow transwer = (TableRow) layout.findViewById(R.id.trAnswer);
+								TableRow trquestion = (TableRow) layout.findViewById(R.id.trQuestion);
+								transwer.setVisibility(View.GONE);
+								trquestion.setVisibility(View.GONE);
+								// get all widget id's to use 
+								Button btndone = (Button) layout.findViewById(R.id.btnSignUp);
+								final EditText eusername = (EditText) layout.findViewById(R.id.eUserName);
+								final EditText epassword = (EditText) layout.findViewById(R.id.ePassword);
+								final EditText econfpassword = (EditText) layout.findViewById(R.id.eConfPassword);
+								RadioGroup radiogender = (RadioGroup) layout.findViewById(R.id.radioGender);
+								RadioGroup radiorole = (RadioGroup) layout.findViewById(R.id.radioRole);
+								TableRow radiouserole = (TableRow) layout.findViewById(R.id.trUserRole);
+								final TextView tvwarning = (TextView)layout.findViewById(R.id.tvWarning);
+								TextView tvmessage = (TextView) layout.findViewById(R.id.tvSignUp);
+								int rbRoleCheckedId = radiorole.getCheckedRadioButtonId();
+								final RadioButton rbRoleChecked = (RadioButton) layout.findViewById(rbRoleCheckedId);
+								int rbGenderCheckedId = radiogender.getCheckedRadioButtonId();
+								final RadioButton rbGenderChecked = (RadioButton) layout.findViewById(rbGenderCheckedId);
+								
+								btndone.setOnClickListener(new OnClickListener() {
+									
+									@Override
+									public void onClick(View arg0) {
+										addOnClickListnereOnButton();
+									}
+									private void addOnClickListnereOnButton() {
+										String gender = rbGenderChecked.getText().toString();
+										String username = eusername.getText().toString();
+										String password = epassword.getText().toString();
+										String confpassword = econfpassword.getText().toString();
+										userrole = rbRoleChecked.getText().toString();
+										tvwarning.setVisibility(TextView.GONE);
+										Object[] params = new Object[]{username,password,gender,userrole,"null","null"};
+
+										if(m.isEmpty(params)||m.isEmpty(new Object[]{confpassword}))
+										{
+											String message = "please fill blank field";
+											tvwarning.setVisibility(TextView.VISIBLE);
+											tvwarning.setText(message);
+
+										}else if(!password.equals(confpassword))
+										{
+											epassword.setText("");
+											econfpassword.setText("");
+											String message = "Please enter correct password";
+											tvwarning.setVisibility(TextView.VISIBLE);
+											tvwarning.setText(message);
+										}else   
+										{
+											boolean unique = user.isUserUnique(new Object[]{username},client_id);
+											if(unique==true)
+											{	 
+												String setuser = user.setUser(params, client_id);
+												m.toastValidationMessage(context, username+" added successfully as "+userrole);
+												if(menu.userrole.equals("manager"))
+												{
+													Toast.makeText(context, "manager", Toast.LENGTH_SHORT).show();
+													Intent intent = new Intent(context, User_table.class);
+													// To pass on the value to the next page
+													startActivity(intent);
+												}else {
+													Toast.makeText(context, "opertor", Toast.LENGTH_SHORT).show();
+												}
+												reset();
+											}
+											else
+											{
+												eusername.setText("");
+												String message = "username is already exist";
+												tvwarning.setVisibility(TextView.VISIBLE);
+												tvwarning.setText(message);
+											}
+										} 
+										
+									}
+
+									private void reset() {
+										eusername.setText("");
+										epassword.setText("");
+										econfpassword.setText("");
+										
+									}
+								});
+
+								dialog = builder.create();
+								((Dialog) dialog).show();
+							}
+
+						}				        	
+					});
+					dialog=builder.create();
+					((Dialog) dialog).show();
+					
+                	
+                	
+                	
+                	
                 	/*final CharSequence[] items = { "add user", "" };
                 	//creating a dialog box for popup
                 	AlertDialog.Builder builder = new AlertDialog.Builder(context);

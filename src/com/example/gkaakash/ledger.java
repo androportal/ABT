@@ -273,7 +273,7 @@ public class ledger extends Activity {
 			}
 
 			ledgertable = (TableLayout) findViewById(R.id.maintable);
-			addTable();
+			addTable();//////
 
 			final TextView tvReportTitle = (TextView) findViewById(R.id.tvReportTitle);
 			tvReportTitle.setText("Menu >> " + "Report >> " + "Ledger");

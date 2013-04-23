@@ -179,7 +179,7 @@
        </activity>
        <activity
       		android:label="addUser"
-      		android:name=".addUser"
+      		android:name="com.example.gkaakash.User_table"
       		android:screenOrientation="landscape" >
        </activity>
        <activity

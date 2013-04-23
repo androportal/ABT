@@ -44,7 +44,7 @@ public class userSetting extends TabActivity{
 	        //accCodeCheckFlag = preferences.getPreferences(new Object[]{2},client_id);
 	        //for visibility of account tab layout 
 			MainActivity.tabFlag = true;
-	        Intent add = new Intent(this,addUser.class);
+	        Intent add = new Intent(this,User_table.class);
 	        // flag for finish button of account page 
 	        //create.putExtra("finish_flag","menu");
 	        createspec.setContent(add);

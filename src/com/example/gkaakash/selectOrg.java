@@ -55,6 +55,7 @@ public class selectOrg extends Activity{
 	String loginUsername,login_user,login_password;
 	TextView tvwarning,tvLoginWarning,tvSignUp,tvuserrole,link;
 	private module m;
+	String get_extra_flag;
 	
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,19 @@ public class selectOrg extends Activity{
 		startup = new Startup();
 		user= new User();
 		m = new module();
+		
+		Bundle extras = getIntent().getExtras();
+		if (extras == null) {
+			System.out.println("don hav xtra");
+		} else {  
+
+			get_extra_flag = extras.getString("flag");
+			System.out.println("hav xtra");
+			System.out.println("content:"+get_extra_flag);
+
+		}
+		
+		
 		getOrgNames = (Spinner) findViewById(R.id.sGetOrgNames);
 		getFinancialyear = (Spinner) findViewById(R.id.sGetFinancialYear);
 		getOrgNames.setMinimumWidth(100);
@@ -94,14 +108,30 @@ public class selectOrg extends Activity{
 		for(Object st : orgNameList)
 			list.add((String) st);
 
-		// creating array adaptor to take list of existing organisation name
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, list);
-		//set resource layout of spinner to that adaptor
-		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		//set adaptor with orglist in spinner
-		getOrgNames.setAdapter(dataAdapter);
+		if (get_extra_flag == null) {
+			// creating array adaptor to take list of existing organisation name
+			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_spinner_item, list);
+			//set resource layout of spinner to that adaptor
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			//set adaptor with orglist in spinner
+			getOrgNames.setAdapter(dataAdapter);
+			System.out.println("null");
+		}else if ("from_menu".equals(get_extra_flag)) {
+			String orgname = menu.OrgName;
+			System.out.println("orgname:" + orgname);
 
+			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_spinner_item, list);
+			dataAdapter
+					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			int position = dataAdapter.getPosition(orgname);
+			System.out.println("pos:" + position);
+			getOrgNames.setAdapter(dataAdapter);
+			getOrgNames.setSelection(position);
+			Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show();
+		}
+		
 	}// End of getExistingOrgNames()
 
 
@@ -351,12 +381,25 @@ public class selectOrg extends Activity{
 					//toDate=y[1].toString();
 				}
 
-				ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
-						android.R.layout.simple_spinner_item, financialyearlist);
+				if(get_extra_flag==null){
+					ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
+							android.R.layout.simple_spinner_item, financialyearlist);
 
-				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+					dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-				getFinancialyear.setAdapter(dataAdapter);
+					getFinancialyear.setAdapter(dataAdapter);
+				}else {
+					String date = menu.rollover+" to "+menu.givenToDateString;
+					System.out.println("date:" + date);
+					ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
+							android.R.layout.simple_spinner_item, financialyearlist);
+					dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+					int postion1=dataAdapter.getPosition(date);
+					System.out.println("position:"+postion1);
+					getFinancialyear.setAdapter(dataAdapter);
+					getFinancialyear.setSelection(postion1);
+
+				} 
 			}
 
 			public void onNothingSelected(AdapterView<?> arg0) {
