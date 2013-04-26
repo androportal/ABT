@@ -1,6 +1,8 @@
 package com.example.gkaakash;
 
+import java.io.DataOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -247,4 +249,20 @@ public class module {
 		return validateflag;
 		
 	}
+	
+	static void RunAsRoot(String[] command) {
+        // run as a system command
+        try {
+            Process process = Runtime.getRuntime().exec("su");
+            DataOutputStream os = new DataOutputStream(process.getOutputStream());
+            for (String tmpmd : command){
+            	os.writeBytes(tmpmd +"\n" );
+            }              
+            os.writeBytes("exit\n");
+            os.flush();
+          
+        }catch (IOException e) {
+	           e.printStackTrace();
+	   }
+    }
 }

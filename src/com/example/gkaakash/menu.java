@@ -92,7 +92,7 @@ public class menu extends ListActivity{
     String[] menuOptions;
     static String rollover;
     private User user;
-    RadioButton rbmanager,rbRoleChecked ;
+    RadioButton rbmanager,rbRoleChecked,rboperator;
 	RadioButton rbGenderChecked;
     String gender;
     RadioGroup  radiogender ,radiorole ;
@@ -182,11 +182,11 @@ public class menu extends ListActivity{
         {
         	  //adding list items to the newly created menu list
         	menuOptions = new String[] { "Create account", "Transaction", "Reports",
-                    "Preferences","Bank Reconciliation","RollOver","Help","About" };
+                    "Preferences","Bank Reconciliation","RollOver","Export Organisation","Help","About" };
         }else{
         //adding list items to the newly created menu list
             menuOptions = new String[] { "Create account", "Transaction", "Reports",
-                    "Preferences","Bank Reconciliation","RollOver","Settings","Help","About" };
+                    "Preferences","Bank Reconciliation","RollOver","Export Organisation","Settings","Help","About" };
             
         }
         
@@ -464,10 +464,22 @@ public class menu extends ListActivity{
 					}
 
 				}
+				
+				//export organisation
+				if(position == 6){
+					Object[] export = new Object[] {OrgName, financialFromDate,financialToDate};
+					//call back-end to export organisation 
+					String encrypted_db = organisation.Export(export,client_id);
+					Toast.makeText(menu.this, encrypted_db, Toast.LENGTH_SHORT).show();
+					//copy export dir from /opt/abt/ to sdcard
+			        String[] command = {"rm -r /mnt/sdcard/export", "busybox cp /data/local/abt/opt/abt/export/ /mnt/sdcard/ -R"};
+		            module.RunAsRoot(command);
+		            m.toastValidationMessage(context, "organisation "+OrgName+" has been exported to /mnt/sdcard/export/");
+				}
                if(userrole.equals("guest")||userrole.equals("guest")) 
                {
                 //for help
-                if(position == 6){
+                if(position == 7){
                 	
                 	
                     Intent intent = new Intent(context, Help.class);
@@ -476,7 +488,7 @@ public class menu extends ListActivity{
                 }
                 
                 //for about
-                if(position == 7){
+                if(position == 8){
                     AlertDialog about_dialog;
                     final SpannableString s = 
                             new SpannableString(context.getText(R.string.about_para));
@@ -512,7 +524,7 @@ public class menu extends ListActivity{
             } else{
             	
             	  //for settings
-                if(position == 6){
+                if(position == 7){
                 	
 					final CharSequence[] items = { "Edit Username/Password", "Add user"};
 					//creating a dialog box for popup
@@ -547,6 +559,9 @@ public class menu extends ListActivity{
 									// get only operator visible to manager 
 									rbmanager = (RadioButton) layout.findViewById(R.id.rbManager);
 									rbmanager.setVisibility(View.GONE);
+									// get only operator visible to manager 
+									rboperator = (RadioButton) layout.findViewById(R.id.rbOperator);
+									rboperator.setChecked(true);
 								}
 								// get the id of cancel button and change the text to Reset
 								Button btncancel = (Button) layout.findViewById(R.id.btnCancel);
@@ -566,16 +581,16 @@ public class menu extends ListActivity{
 								TableRow radiouserole = (TableRow) layout.findViewById(R.id.trUserRole);
 								final TextView tvwarning = (TextView)layout.findViewById(R.id.tvWarning);
 								TextView tvmessage = (TextView) layout.findViewById(R.id.tvSignUp);
-								//int rbRoleCheckedId = radiorole.getCheckedRadioButtonId();
-							    //rbRoleChecked = (RadioButton) layout.findViewById(rbRoleCheckedId);
-								//int rbGenderCheckedId = radiogender.getCheckedRadioButtonId();
-								//rbGenderChecked = (RadioButton) layout.findViewById(rbGenderCheckedId);
+								int rbRoleCheckedId = radiorole.getCheckedRadioButtonId();
+							    rbRoleChecked = (RadioButton) layout.findViewById(rbRoleCheckedId);
+								int rbGenderCheckedId = radiogender.getCheckedRadioButtonId();
+								rbGenderChecked = (RadioButton) layout.findViewById(rbGenderCheckedId);
 								radiorole.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 									public void onCheckedChanged(RadioGroup rg, int selctedId) {
 										
 										rbRoleChecked = (RadioButton)layout.findViewById(selctedId);
-										userrole = rbRoleChecked.getText().toString();
+										//userrole = rbRoleChecked.getText().toString();
 										
 									}
 								});
@@ -584,7 +599,7 @@ public class menu extends ListActivity{
 									public void onCheckedChanged(RadioGroup rg, int selctedId) {
 										
 										rbGenderChecked = (RadioButton)layout.findViewById(selctedId);
-										gender = rbGenderChecked.getText().toString();
+										//gender = rbGenderChecked.getText().toString();
 										
 									}
 								});
@@ -597,11 +612,11 @@ public class menu extends ListActivity{
 										addOnClickListnereOnButton();
 									}
 									private void addOnClickListnereOnButton() {
-										//String gender = rbGenderChecked.getText().toString();
+										gender = rbGenderChecked.getText().toString();
 										String username = eusername.getText().toString();
 										String password = epassword.getText().toString();
 										String confpassword = econfpassword.getText().toString();
-										//userrole = rbRoleChecked.getText().toString();
+										userrole = rbRoleChecked.getText().toString();
 										tvwarning.setVisibility(TextView.GONE);
 										Object[] params = new Object[]{username,password,gender,userrole,"null","null"};
 
@@ -721,7 +736,7 @@ public class menu extends ListActivity{
                 }
             	
             	  //for help
-               /* if(position == 7){
+               /* if(position == 8){
                 	
                     Intent intent = new Intent(context, Help.class);
 					// To pass on the value to the next page
@@ -729,7 +744,7 @@ public class menu extends ListActivity{
                 }*/
                 
                 //for about
-                if(position == 8){
+                if(position == 9){
                     AlertDialog about_dialog;
                     final SpannableString s = 
                             new SpannableString(context.getText(R.string.about_para));
