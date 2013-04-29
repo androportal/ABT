@@ -93,9 +93,10 @@ public class menu extends ListActivity{
     static String rollover;
     private User user;
     RadioButton rbmanager,rbRoleChecked,rboperator;
-	RadioButton rbGenderChecked;
-    String gender;
+	RadioButton rbGenderChecked,rbMale;
+    String gender,username,password,confpassword;
     RadioGroup  radiogender ,radiorole ;
+    EditText eusername,epassword,econfpassword;
     
     
    
@@ -231,7 +232,7 @@ public class menu extends ListActivity{
                 //for "adding project", adding popup menu ...
                 if(position == 3)
                 {                	
-                	final CharSequence[] items = { "Edit organisation details", "Add/Edit/Delete project" };
+                	final CharSequence[] items = { "Edit/Delete organisation", "Add/Edit/Delete project" };
                 	//creating a dialog box for popup
                 	AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 	//setting title
@@ -573,14 +574,15 @@ public class menu extends ListActivity{
 								trquestion.setVisibility(View.GONE);
 								// get all widget id's to use 
 								Button btndone = (Button) layout.findViewById(R.id.btnSignUp);
-								final EditText eusername = (EditText) layout.findViewById(R.id.eUserName);
-								final EditText epassword = (EditText) layout.findViewById(R.id.ePassword);
-								final EditText econfpassword = (EditText) layout.findViewById(R.id.eConfPassword);
+								eusername = (EditText) layout.findViewById(R.id.eUserName);
+								epassword = (EditText) layout.findViewById(R.id.ePassword);
+							    econfpassword = (EditText) layout.findViewById(R.id.eConfPassword);
 								radiogender = (RadioGroup) layout.findViewById(R.id.radioGender);
 								radiorole = (RadioGroup) layout.findViewById(R.id.radioRole);
 								TableRow radiouserole = (TableRow) layout.findViewById(R.id.trUserRole);
 								final TextView tvwarning = (TextView)layout.findViewById(R.id.tvWarning);
 								TextView tvmessage = (TextView) layout.findViewById(R.id.tvSignUp);
+							    rbMale = (RadioButton) layout.findViewById(R.id.rbMale);
 								int rbRoleCheckedId = radiorole.getCheckedRadioButtonId();
 							    rbRoleChecked = (RadioButton) layout.findViewById(rbRoleCheckedId);
 								int rbGenderCheckedId = radiogender.getCheckedRadioButtonId();
@@ -613,9 +615,9 @@ public class menu extends ListActivity{
 									}
 									private void addOnClickListnereOnButton() {
 										gender = rbGenderChecked.getText().toString();
-										String username = eusername.getText().toString();
-										String password = epassword.getText().toString();
-										String confpassword = econfpassword.getText().toString();
+										username = eusername.getText().toString();
+										password = epassword.getText().toString();
+										confpassword = econfpassword.getText().toString();
 										userrole = rbRoleChecked.getText().toString();
 										tvwarning.setVisibility(TextView.GONE);
 										Object[] params = new Object[]{username,password,gender,userrole,"null","null"};
@@ -662,87 +664,32 @@ public class menu extends ListActivity{
 										
 									}
 
-									private void reset() {
-										eusername.setText("");
-										epassword.setText("");
-										econfpassword.setText("");
-										
-									}
 									
-									// add Checked change listner on radioGroup 
-		
-
 								});
-
+							
+								btncancel.setOnClickListener(new OnClickListener() {
+									
+									@Override
+									public void onClick(View v) {
+										// TODO Auto-generated method stub
+										reset();
+									}
+								});
 								dialog = builder.create();
 								((Dialog) dialog).show();
 							}
-
+							
 						}				        	
 					});
+					
 					dialog=builder.create();
 					((Dialog) dialog).show();
 					
                 	
-                	
-                	
-                	
-                	/*final CharSequence[] items = { "add user", "" };
-                	//creating a dialog box for popup
-                	AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                	//setting title
-                	builder.setTitle("Select preference");
-                	//adding items
-                	builder.setItems(items, new DialogInterface.OnClickListener() {
-                		public void onClick(DialogInterface dialog1, int pos) {
-                			//code for the actions to be performed on clicking popup item goes here ...
-                			switch (pos) {
-     	      	        case 0:
-     	      	        {
-     	      	        	
-     	      	        	MainActivity.editDetails=true;
-     	      	        	Object[] editDetails = (Object[])organisation.getOrganisation(client_id);
-     	      	        	accdetailsList = new ArrayList<String>();
-     	      	        	for(Object row2 : editDetails){
-     	      	        		Object[] a2=(Object[])row2;
-     	      	        		ArrayList<String> accdetails = new ArrayList<String>();
-     	                        for(int i=0;i<a2.length;i++){
-     	                        	accdetails.add((String) a2[i].toString());
-     	                        }
-     	                        accdetailsList.addAll(accdetails);
-     	      	        	}
-     	                             
-     	      	        	//System.out.println("details:"+accdetailsList);
-     	                           
-     	      	        	Intent intent = new Intent(context, orgDetails.class);
-     	      	        	// To pass on the value to the next page
-     	      	        	startActivity(intent);
-     	      	        }break;
-     	      	        case 1:
-     	      	        {
-     	      	        	Intent intent = new Intent(context, addProject.class);
-     	      	        	// To pass on the value to the next page
-     	      	        	startActivity(intent);
-     	      	        	
-     	      	        }break;
-                			}
-                		}
-                	});
-                	//building a complete dialog
-                	dialog=builder.create();
-                	dialog.show();*/
-     	
-                    
+                	      
                 }
-            	
-            	  //for help
-               /* if(position == 8){
-                	
-                    Intent intent = new Intent(context, Help.class);
-					// To pass on the value to the next page
-					startActivity(intent);
-                }*/
-                
+              
+			
                 //for about
                 if(position == 9){
                     AlertDialog about_dialog;
@@ -782,7 +729,13 @@ public class menu extends ListActivity{
         });
     }
      
-    
+    private void reset() {
+		eusername.setText("");
+		epassword.setText("");
+		econfpassword.setText("");
+		rbMale.setChecked(true);
+		
+	}
     private boolean validateDate(DatePicker fromdate, DatePicker todate, String flag){
     	try {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");

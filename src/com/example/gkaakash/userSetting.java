@@ -55,7 +55,7 @@ public class userSetting extends TabActivity{
 	        tab2 = new TextView(this);
 	        //setting properties in textView
 	        tab2.setGravity(android.view.Gravity.CENTER);
-	        tab2.setTextSize(18.0f);
+	        tab2.setTextSize(18.0f);   
 	        tab2.setHeight(50);
 	        tab2.setTextColor(Color.WHITE);
 	        tab2.setText("Edit/Change password/Delete user");

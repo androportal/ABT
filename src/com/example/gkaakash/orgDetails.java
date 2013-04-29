@@ -14,9 +14,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -25,12 +28,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
  
 	public class orgDetails extends Activity{
 		//Declaring variables 
-		Button btnorgDetailSave, btnRegDate, btnFcraDate,btnSkip;
+		Button btnorgDetailSave, btnRegDate, btnFcraDate,btnSkip,btnDeleteOrg,btnDelete;
 		int year, month, day;
 		static final int REG_DATE_DIALOG_ID = 0;
 		static final int FCRA_DATE_DIALOG_ID = 1;
@@ -65,15 +69,22 @@ import android.widget.Toast;
 		private Organisation org;
 		private boolean setOrgDetails;
 		Boolean editDetailsflag;
-		String save_edit;
+		String save_edit,financialFrom,financialTo;
 		ArrayAdapter<String> dataAdapter;
 		ArrayAdapter<String> dataAdapter1;
 		String setfromday,setfrommonth,setfromyear,setfromday1,setfrommonth1,setfromyear1;
 		ArrayList<String> detailsList_foredit ;
-		String orgcode;
-		String reg_date,fcra_date;
+		String orgcode,message;
+		String reg_date,fcra_date,fromDate,toDate;
 		static String orgtype;
 		module m;
+		Object[] editDetails;
+		static ArrayList<String> OrgdetailsList;
+		TableRow trOrgnisation;
+		Object[] financialyearList;
+		Spinner getFinancialyear;
+		Object[] deleteprgparams;
+		Boolean deleted;
 		
 		
 		//adding options to the options menu
@@ -109,10 +120,11 @@ import android.widget.Toast;
 		
 			editDetailsflag = MainActivity.editDetails;
 			btnorgDetailSave = (Button) findViewById(R.id.btnOrgDetailSave);
+			//btnDeleteOrg = (Button) findViewById(R.id.btnDeleteOrg);
 			getstate = (Spinner) findViewById(R.id.sGetStates);
 			getcity = (Spinner) findViewById(R.id.sGetCity);
 			btnSkip = (Button) findViewById(R.id.btnSkip);
-			btnSkip.setText("Skip");
+			btnDeleteOrg = (Button) findViewById(R.id.btnDeleteOrg);
 			tvRegNum = (TextView) findViewById(R.id.tvRegNum);
 			etRegNum = (EditText) findViewById(R.id.etRegNum);
 			tvRegDate = (TextView) findViewById(R.id.tvRegDate);
@@ -129,15 +141,19 @@ import android.widget.Toast;
 			sGetPostal=(EditText) findViewById(R.id.sGetPostal);
 			eGetFax=(EditText) findViewById(R.id.eGetFax);
 			eGetPhone=(EditText) findViewById(R.id.eGetPhone);
-			    scountry=(Spinner)findViewById(R.id.sGetCountry);
+			scountry=(Spinner)findViewById(R.id.sGetCountry);
 			eGetEmailid=(EditText) findViewById(R.id.eGetEmailid);
 			etPanNo =(EditText) findViewById(R.id.etPanNo);
 		
 			etGetWebSite=(EditText) findViewById(R.id.etGetWebSite);
+			client_id = Startup.getClient_id();	
+			
 		
 			if(editDetailsflag==true){
+				
+				System.out.println("edit details :"+editDetailsflag);
 				detailsList_foredit=menu.accdetailsList;
-				//System.out.println("cuming from menu page:"+menu.orgtype);
+				System.out.println("cuming from menu page:"+detailsList_foredit);
 
 				orgtype=detailsList_foredit.get(1);
 				//System.out.println("OT"+orgtype);
@@ -158,14 +174,40 @@ import android.widget.Toast;
 				etRegNum.setText(detailsList_foredit.get(15)); 
 				etFcraNum.setText(detailsList_foredit.get(17)); 
 				btnRegDate.setText(detailsList_foredit.get(16));
-				System.out.println("Reg Date:"+detailsList_foredit.get(16));
-				reg_date=detailsList_foredit.get(16);
 				btnFcraDate.setText(detailsList_foredit.get(18));
+				if(btnRegDate.getText().equals("")&&btnFcraDate.getText().equals(""))
+				{
+					setCurrentDateOnButton();
+				}
+				reg_date=detailsList_foredit.get(16);
 				fcra_date=detailsList_foredit.get(18);
 				//setting text for skip button 
 				btnSkip.setText("Reset");
+				btnDeleteOrg.setVisibility(View.VISIBLE);
+				getOrgName = menu.OrgName;
+				financialFrom = menu.financialFromDate;
+				financialTo = menu.financialToDate;
 			}
-		 
+			else
+			{
+				editDetails = (Object[])org.getOrganisation(client_id);
+				OrgdetailsList = new ArrayList<String>();
+		       	for(Object row2 : editDetails){
+		       		Object[] a2=(Object[])row2;
+		       		if(a2.length!=0)
+		       		{
+		       			ArrayList<String> accdetails = new ArrayList<String>();
+			             for(int i=0;i<a2.length;i++){
+			             	accdetails.add((String) a2[i].toString());
+			             }
+			             OrgdetailsList.addAll(accdetails);
+		       		}
+		       	} 
+		       	orgcode=OrgdetailsList.get(0);
+		       	getOrgName = createOrg.organisationName;
+		       	financialFrom  = createOrg.fromdate;
+		       	financialTo = createOrg.todate;
+			}
 			// Retrieving the organisation type flag value from the previous page(create organisation page)
 			if(editDetailsflag==false){ 
 				getSelectedOrgType=createOrg.orgTypeFlag;
@@ -213,6 +255,7 @@ import android.widget.Toast;
 			getStates();
 			//creating interface to listen activity on Item 
 			addListenerOnItem();
+			
 		}
 
 
@@ -238,10 +281,7 @@ import android.widget.Toast;
 		//Attach a listener to the click event for the button
 		private void addListenerOnButton() {
 			final Context context = this;
-			// get flag values which is static
-			getOrgName=createOrg.organisationName;
-			//getOrgName =Startup.getOrgansationname();
-			System.out.println("orgname (create org) :"+getOrgName);
+			
 			getFromDate=createOrg.fromdate;
 			getToDate=createOrg.todate;
 			//Create a class implementing “OnClickListener” and set it as the on click listener for the button
@@ -249,12 +289,13 @@ import android.widget.Toast;
 				@Override
 				public void onClick(View v) {
 					if(editDetailsflag==false){
-						savedeatils();
+						Intent intent = new Intent(getApplicationContext(), preferences.class);
+					    startActivity(intent);
 					}else {
 						AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				        builder.setMessage("Are you sure, you want to reset all fields? ")
 				                .setCancelable(false)
-				                .setPositiveButton("Yes",
+				                .setPositiveButton("Yes",  
 				                        new DialogInterface.OnClickListener() {
 				                            public void onClick(DialogInterface dialog, int id) {
 												etGetAddr.setText("");
@@ -289,9 +330,110 @@ import android.widget.Toast;
 			btnorgDetailSave.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					savedeatils();
+						savedeatils();
+					
 				}
 			}); 
+			btnDeleteOrg.setOnClickListener(new OnClickListener() {
+				
+				private TextView tvWarning;
+
+				@Override
+				public void onClick(View arg0) {
+                	LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+					View layout = inflater.inflate(R.layout.import_organisation, (ViewGroup) findViewById(R.id.layout_root));
+					//Building DatepPcker dialog
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					builder.setView(layout);
+					//builder.setTitle("Delete orginsation for given financial year");
+					trOrgnisation = (TableRow) layout.findViewById(R.id.trQuestion);
+					tvWarning = (TextView) layout.findViewById(R.id.tvWarning);
+					trOrgnisation.setVisibility(View.GONE);
+					getFinancialyear = (Spinner)layout.findViewById(R.id.sYear);
+					btnDelete = (Button)layout.findViewById(R.id.btnImport);
+					Button btnCancel = (Button) layout.findViewById(R.id.btnCancel);
+			        TextView tvalertHead1 = (TextView) layout.findViewById(R.id.tvalertHead1);
+			        tvalertHead1.setText("Delete "+getOrgName+" orgnisation for given financial year");
+					btnDelete.setText("Delete");
+					System.out.println("print orgname : "+getOrgName);
+					
+					
+						addListnerOnFinancialSpinner();
+						btnDelete.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View arg0) {
+								
+								
+							if(fromDate.equals(financialFrom)&&toDate.equals(financialTo))
+								{
+									message = "Are you sure you want to permanently delete currently logged in "+getOrgName+" for financialyear "+fromDate+" To "+toDate+"?\n" +
+							        		"your data will be permanetly lost and session will be closed!!!!";
+								}
+								else{
+									message = "Are you sure you want to permanently delete "+getOrgName+" for financialyear "+fromDate+" To "+toDate+"?\n" +
+							        		"It will be permenantly lost !!!!";
+								}
+								//tvalertHead1   
+								
+								AlertDialog.Builder builder = new AlertDialog.Builder(context);
+							        builder.setMessage(message)
+							                .setCancelable(false)
+							                .setPositiveButton("Ok",
+							                        new DialogInterface.OnClickListener() {
+							                            public void onClick(DialogInterface dialog, int id) {
+							                            	//parameters pass to core_engine xml_rpc functions
+							                            	//addListnerOnFinancialSpinner();
+							                            	//System.out.println("dlete params: "+getOrgName+""+fromDate+""+toDate);
+							                				deleteprgparams=new Object[]{getOrgName,fromDate,toDate};
+							                				
+							                				deleted = startup.deleteOrgnisationName(deleteprgparams);
+							                		    
+							                				if(fromDate.equals(financialFrom)&&toDate.equals(financialTo))
+															{
+							                					//To pass on the activity to the next page
+							                					Intent intent = new Intent(context,MainActivity.class);
+							                					startActivity(intent);
+															}else{
+																addListnerOnFinancialSpinner();
+																tvWarning.setVisibility(View.VISIBLE);
+																tvWarning.setText("Deleted "+getOrgName+" for "+fromDate+" to "+toDate);
+															}
+							                				
+							                            }  
+							                        })
+							                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+							                    public void onClick(DialogInterface dialog, int id) {
+							                        dialog.cancel();
+							                        dialog.dismiss();
+							                    }
+							                });
+							        AlertDialog alert = builder.create();
+							        alert.show();
+
+								}
+							
+						});
+						btnCancel.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View arg0) {
+								dialog.cancel();
+								dialog.dismiss();
+								
+							}
+						});
+					
+					dialog=builder.create();
+	        		dialog.show();
+	        		
+	        		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+					//customizing the width and location of the dialog on screen 
+					lp.copyFrom(dialog.getWindow().getAttributes());
+					lp.width = 700;
+					dialog.getWindow().setAttributes(lp);
+				}
+			});
 			btnRegDate.setOnClickListener(new OnClickListener() {
 				@Override	
 				public void onClick(View v) {
@@ -371,7 +513,7 @@ import android.widget.Toast;
 				.append(day).append("-").append(month + 1).append("-")
 				.append(year));
 			}
-		};
+		};  
 		// Method getStates
 		void getStates(){
 			// call the getStates method to get all States
@@ -479,12 +621,65 @@ import android.widget.Toast;
 				}
 			});
 		} // end of addListenerOnItem()
+		
+		public void addListnerOnFinancialSpinner()
+		{
+			financialyearList = startup.getFinancialYear(getOrgName);
+			List<String> financialyearlist = new ArrayList<String>();
+			
+			for(Object fy : financialyearList)
+			{
+				Object[] y = (Object[]) fy;
+				// concatination From and To date 
+				//if(y[0].equals(fromDate)&&y[1].equals(toDate))
+				//{
+					//continue;
+				//}else
+				//{
+				financialyearlist.add(y[0]+" to "+y[1]);
+				//}
+				
+			}
+			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
+					android.R.layout.simple_spinner_item, financialyearlist);
+
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+			getFinancialyear.setAdapter(dataAdapter);
+			getFinancialyear.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+				private String[] finallist;
+
+
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
+					System.out.println("frm date");
+					// TODO Auto-generated method stub
+					String selectedFinancialYear = parent.getItemAtPosition(position).toString();
+					finallist = selectedFinancialYear.toString().split(" to ");
+					System.out.println("frm date"+finallist);
+					fromDate = finallist[0];
+					toDate = finallist[1];
+					System.out.println("frm date"+fromDate+""+toDate);
+
+					//String fromDate = Startup.setOrgansationname((String)fromDate);
+					//Startup.setfinancialFromDate(fromDate);
+					//Startup.setFinancialToDate(toDate);
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+		}
 		/*
 		* get all values and pass to the backend through controller
 		*/
 	private void savedeatils() {
 		// TODO Auto-generated method stub
-		getOrgName = createOrg.organisationName;
+		
 		getFromDate = createOrg.fromdate;
 		getToDate = createOrg.todate;
 		getAddr = etGetAddr.getText().toString();
@@ -500,53 +695,31 @@ import android.widget.Toast;
 		RegDate = btnRegDate.getText().toString();
 		etFcraNo = etFcraNum.getText().toString();
 		FcraDate = btnFcraDate.getText().toString();
-		/*//progress bar moving image to show wait state
-		progressBar = new ProgressDialog(context);
-		        progressBar.setCancelable(false);
-		        progressBar.setMessage("Please Wait, Saving Organisation Details ...");
-		        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		        progressBar.setProgress(0);
-		        progressBar.setMax(1000);
-		        progressBar.show();*/ 
-		      //list of input parameters type of Object 
-		deployparams = new Object[]{getOrgName,getFromDate,getToDate,getSelectedOrgType}; // parameters pass to core_engine xml_rpc functions
-	
-		client_id = Startup.getClient_id();	
-			if(editDetailsflag==false){
-				orgparams = new Object[]{getOrgName,getSelectedOrgType,selectedCounrty,selectedStateName,
-						selectedCityName,getAddr,getPin,eGetTelNo,eGetFaxNO,etGetWeb,eGetEmail,
-						etPan,etMVATno,etServiceTaxno,etRegNo,
-						RegDate,etFcraNo,FcraDate }; 
-				//call method deploy from startup.java 
-				//client_id = startup.deploy(deployparams);
-				setOrgDetails = org.setOrganisation(orgparams,client_id);
-			}else {
-				orgparams = new Object[]{orgcode,getAddr,selectedCounrty,selectedStateName,selectedCityName,getPin, 
+		
+		orgparams = new Object[]{orgcode,getAddr,selectedCounrty,selectedStateName,selectedCityName,getPin, 
 						eGetTelNo,eGetFaxNO,eGetEmail,etGetWeb,etMVATno,etServiceTaxno,etRegNo,RegDate,etFcraNo,FcraDate ,
 						etPan};
-				//client_id = startup.login(deployparams);
-				save_edit = (String)org.updateOrg(orgparams, client_id);
-				m.toastValidationMessage(orgDetails.this,"Organisation details edited successfully");
 				
-			}
-		           
-			if (setOrgDetails==true){
+		save_edit = (String)org.updateOrg(orgparams, client_id);
+		
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		        builder.setMessage("Organisation "+getOrgName+" with details saved successfully") 
-		                .setCancelable(false)
-		                .setPositiveButton("Ok",
-		                        new DialogInterface.OnClickListener() {
-		                            public void onClick(DialogInterface dialog, int id) {
-		                            	 //To pass on the activity to the next page
-		                		        Intent intent = new Intent(context, preferences.class);
-		                		        startActivity(intent); 
-		                            }
-		                        });
-		                
-		        AlertDialog alert = builder.create();
-		        alert.show();
-		        
-		        }
+				builder.setMessage("Organisation "+getOrgName+" with details saved successfully")
+				.setCancelable(false)
+				.setPositiveButton("Ok",
+				new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					if(editDetailsflag==false){
+					//To pass on the activity to the next page
+					Intent intent = new Intent(context, preferences.class);
+					startActivity(intent);
+					}else{
+						
+					}
+				}
+				});
+
+				AlertDialog alert = builder.create();
+				alert.show();
 		}
 	
 	

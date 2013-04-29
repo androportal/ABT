@@ -6,6 +6,8 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.User;
 
@@ -55,6 +57,7 @@ public class createOrg extends MainActivity {
 	final Context context = this;
 	private EditText orgName;
 	Object[] deployparams;
+	private boolean setOrgDetails;
 	DecimalFormat mFormat;
 	private Object[] orgNameList;
 	Object[] financialyearList;
@@ -66,6 +69,8 @@ public class createOrg extends MainActivity {
 	private EditText eloginPassword ,eUserName ,ePassword , eConfPassword, eAnswer;
 	private EditText eloginUsername;
 	boolean adminflag=false;
+	protected Object[] orgparams;
+	private Organisation orgnisation;
 	User user;
 	private module module;
 
@@ -102,8 +107,10 @@ public class createOrg extends MainActivity {
 		org  = (String) orgType.getSelectedItem();
 		user = new User();
 		module = new module();
+		addListeneronCreateButton();
 		//creating interface to listen activity on Item 
 		addListenerOnItem();
+		
 	}
 
 	private void setDateOnLoad() {
@@ -297,7 +304,7 @@ public class createOrg extends MainActivity {
 		tvDisplayFromDate = (TextView) findViewById(R.id.tvFromDate);
 		tvDisplayToDate = (TextView) findViewById(R.id.tvToDate);
 		orgName = (EditText) findViewById(R.id.etOrgName);
-
+		orgnisation= new Organisation();
 		//Create a class implementing “OnClickListener” and set it as the on click listener for the button "Next"
 		btnCreate.setOnClickListener(new OnClickListener() {
 
@@ -349,7 +356,11 @@ public class createOrg extends MainActivity {
 						MainActivity.editDetails=false;
 						deployparams = new Object[]{organisationName,fromdate,todate,orgTypeFlag}; // parameters pass to core_engine xml_rpc functions
 						client_id = startup.deploy(deployparams);
-
+						orgparams = new Object[]{organisationName,orgTypeFlag,"","","","","","","","","","","","","",
+						                                                            "","","" }; 
+						//call method deploy from startup.java 
+							                                              
+					    setOrgDetails = orgnisation.setOrganisation(orgparams,client_id);
 						/* Inflater for LogIn Page after Organisation Deployment*/
 						LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 						final View layout = inflater.inflate(R.layout.login, (ViewGroup) findViewById(R.id.layout_login));
@@ -395,12 +406,10 @@ public class createOrg extends MainActivity {
 
 									}else
 									{
-										//Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
+										
 										if(user_role.equals("guest"))
 										{
-											Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
-											Toast.makeText(createOrg.this,"exist "+login_user, Toast.LENGTH_SHORT).show();
-											Toast.makeText(createOrg.this,"exist "+login_password, Toast.LENGTH_SHORT).show();
+											
 											if ((login_user.equals("guest"))&&(login_password.equals("guest")))
 											{
 												Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();

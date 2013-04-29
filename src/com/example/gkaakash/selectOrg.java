@@ -56,7 +56,7 @@ public class selectOrg extends Activity{
 	TextView tvwarning,tvLoginWarning,tvSignUp,tvuserrole,link;
 	private module m;
 	String get_extra_flag;
-	
+
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,7 +70,7 @@ public class selectOrg extends Activity{
 		startup = new Startup();
 		user= new User();
 		m = new module();
-		
+
 		Bundle extras = getIntent().getExtras();
 		if (extras == null) {
 			System.out.println("don hav xtra");
@@ -81,15 +81,14 @@ public class selectOrg extends Activity{
 			System.out.println("content:"+get_extra_flag);
 
 		}
-		
-		
+
+
 		getOrgNames = (Spinner) findViewById(R.id.sGetOrgNames);
 		getFinancialyear = (Spinner) findViewById(R.id.sGetFinancialYear);
 		getOrgNames.setMinimumWidth(100);
 		getFinancialyear.setMinimumWidth(250);
-		//bProceed = (Button) findViewById(R.id.bProceed);
 		btnSelLogIn = (Button) findViewById(R.id.btnSelLogIn);
-		//btnDeleteOrg = (Button) findViewById(R.id.btnDeleteOrg);
+		
 		getExistingOrgNames();
 		addListenerOnItem();
 		addListenerOnButton();
@@ -116,22 +115,20 @@ public class selectOrg extends Activity{
 			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			//set adaptor with orglist in spinner
 			getOrgNames.setAdapter(dataAdapter);
-			System.out.println("null");
+			
 		}else if ("from_menu".equals(get_extra_flag)) {
 			String orgname = menu.OrgName;
-			System.out.println("orgname:" + orgname);
-
-			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+				ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
 					android.R.layout.simple_spinner_item, list);
 			dataAdapter
-					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			int position = dataAdapter.getPosition(orgname);
-			System.out.println("pos:" + position);
+			
 			getOrgNames.setAdapter(dataAdapter);
 			getOrgNames.setSelection(position);
-			Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show();
 		}
-		
+
 	}// End of getExistingOrgNames()
 
 
@@ -150,6 +147,7 @@ public class selectOrg extends Activity{
 				deployparams=new Object[]{selectedOrgName,fromDate,toDate};
 				//call method login from startup.java 
 				client_id = startup.login(deployparams);
+				final boolean isadmin = user.isAdmin(client_id);
 				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 				final View layout = inflater.inflate(R.layout.login, (ViewGroup) findViewById(R.id.layout_login));
 				final AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -158,7 +156,7 @@ public class selectOrg extends Activity{
 				tvalertHead1.setText(Html.fromHtml("Log In to <b>"+selectedOrgName+"</b>"));
 				TextView tvalertHead2 =(TextView) layout.findViewById(R.id.tvalertHead2);
 				tvalertHead2.setText(Html.fromHtml("Financial Year: <b>"+fromDate+"</b> to <b>"+toDate+"</b>"));
-				
+
 				radioUserGroup = (RadioGroup)layout.findViewById(R.id.radioUser);
 				rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
 				rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
@@ -170,19 +168,29 @@ public class selectOrg extends Activity{
 				link =(TextView) layout.findViewById(R.id.tvlink);
 
 				tvLoginWarning.setVisibility(TextView.GONE);
-				
+
 				tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
 				tvSignUp.setVisibility(TextView.GONE);
+				if(isadmin)
+				{
+					rb_guest.setVisibility(View.GONE);
+					rb_manager.setVisibility(View.VISIBLE);  
+					rb_operator.setVisibility(View.VISIBLE);
+				}
+				else{
+					rb_guest.setVisibility(View.VISIBLE);
 				
-				rb_manager.setVisibility(View.VISIBLE);
-				rb_operator.setVisibility(View.VISIBLE);
-				
-				link.setOnClickListener(new OnClickListener() { 
+					rb_admin.setVisibility(View.GONE);
 					
+				}
+				
+
+				link.setOnClickListener(new OnClickListener() { 
+
 					@Override 
 					public void onClick(View arg0) { 
-					 
-						
+
+
 						LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 						final View layout = inflater.inflate(R.layout.forgot_password, null);
 						final AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -190,39 +198,39 @@ public class selectOrg extends Activity{
 						final EditText answer =(EditText) layout.findViewById(R.id.etAnswer);
 						TextView header =(TextView) layout.findViewById(R.id.tvheader);
 						final Spinner Question =(Spinner) layout.findViewById(R.id.SpQuestions);
-						
+
 						header.setText("Answer the security question to get access");
 						Button Ok =(Button) layout.findViewById(R.id.btnOK);
 						Button Cancel =(Button) layout.findViewById(R.id.btnCancel);
 						Cancel.setOnClickListener(new OnClickListener() {
-							
+
 							@Override
 							public void onClick(View arg0) {
 								dialog.cancel();
 							}
 						});
-						
+
 						Ok.setOnClickListener(new OnClickListener() {
-							
+
 							@Override
 							public void onClick(View arg0) {
-							
-							int position = Question.getSelectedItemPosition();
-							String ans =answer.getText().toString();
-							TextView errormsg =(TextView) layout.findViewById(R.id.tverror_msg);
-							Boolean result = user.AdminForgotPassword(new Object[]{position,ans,"admin"},client_id);
-							//System.out.println("result:"+result);
-							if(result==true){
-								Intent intent = new Intent(context,menu.class); 
-								startActivity(intent); 
-							}else if ("".equals(ans)) {
-								errormsg.setVisibility(View.VISIBLE);
-								errormsg.setText("Please fill the field!");
-							}else {
-								errormsg.setVisibility(View.VISIBLE);
-								errormsg.setText("Invalid input,please try again!");
-								answer.setText("");
-							}
+
+								int position = Question.getSelectedItemPosition();
+								String ans =answer.getText().toString();
+								TextView errormsg =(TextView) layout.findViewById(R.id.tverror_msg);
+								Boolean result = user.AdminForgotPassword(new Object[]{position,ans,"admin"},client_id);
+								
+								if(result==true){
+									Intent intent = new Intent(context,menu.class); 
+									startActivity(intent); 
+								}else if ("".equals(ans)) {
+									errormsg.setVisibility(View.VISIBLE);
+									errormsg.setText("Please fill the field!");
+								}else {
+									errormsg.setVisibility(View.VISIBLE);
+									errormsg.setText("Invalid input,please try again!");
+									answer.setText("");
+								}
 							}
 						});
 
@@ -233,65 +241,62 @@ public class selectOrg extends Activity{
 				});
 
 				Button login =  (Button) layout.findViewById(R.id.btnLogin);
-
-				//radioUserAdminGroup = (RadioGroup)layout.findViewById(R.id.radioAdminUser);
 				addRadioListnerOnItem(layout);
-				//Toast.makeText(createOrg.this,"exist "+is_user_exist, Toast.LENGTH_SHORT).show();
 				login.setOnClickListener(new View.OnClickListener(){
-					
+
 					public void onClick(View v) {
 						login_user = eloginUsername.getText().toString();
 						login_password = eloginPassword.getText().toString();
 
-						//Toast.makeText(selectOrg.this,user_role, Toast.LENGTH_SHORT).show();
-
-						boolean isadmin = user.isAdmin(client_id);
 						Object[] params = new Object[]{login_user,login_password,user_role};
-						if(!m.isEmpty(params)){
-							if(isadmin==true)
-							{
-
-								boolean is_user_exist = user.isUserExist(params, client_id);
-								if(is_user_exist==true)
+					
+							if(!m.isEmpty(params)){
+								if(isadmin==true)
 								{
-									//To pass on the activity to the next page  
-									Intent intent = new Intent(context,menu.class); 
-									startActivity(intent); 
+									if(rb_admin.isChecked()||rb_manager.isChecked()||rb_operator.isChecked())
+									{
+									boolean is_user_exist = user.isUserExist(params, client_id);
+									if(is_user_exist==true)
+									{
+										//To pass on the activity to the next page  
+										Intent intent = new Intent(context,menu.class); 
+										startActivity(intent); 
 
 
-								}else{
-									if(user_role.equals("guest")){
-										tvLoginWarning.setVisibility(TextView.VISIBLE);
-										tvLoginWarning.setText("Authentication Failed!!");
+									}else{
+										
+										
+											tvLoginWarning.setVisibility(TextView.VISIBLE);
+											tvLoginWarning.setText("Please enter correct username and password or choose proper role");
+										
+									}
 									}else
 									{
 										tvLoginWarning.setVisibility(TextView.VISIBLE);
-										tvLoginWarning.setText("Please enter correct username and password or choose proper role");
+										tvLoginWarning.setText("Please select role");
 									}
-								}
-							}else{
-								
-								if ((login_user.equals("guest"))&&(login_password.equals("guest")))
-								{
-									//To pass on the activity to the next page  
-									Intent intent = new Intent(context,menu.class);
-									startActivity(intent); 
-								}else
-								{
-									tvLoginWarning.setVisibility(TextView.VISIBLE);
-									tvLoginWarning.setText("Username and Password is incorrect");
+								}else{
+									
+									if ((login_user.equals("guest"))&&(login_password.equals("guest")))
+									{
+										//To pass on the activity to the next page  
+										Intent intent = new Intent(context,menu.class);
+										startActivity(intent); 
+									}else
+									{
+										tvLoginWarning.setVisibility(TextView.VISIBLE);
+										tvLoginWarning.setText("Username and Password is incorrect");
 
-								}		
+									}		
+								}
+							}
+							else{
+								tvLoginWarning.setVisibility(TextView.VISIBLE);
+								tvLoginWarning.setText("Please fill empty field");
 							}
 						}
-						else{
-							tvLoginWarning.setVisibility(TextView.VISIBLE);
-							tvLoginWarning.setText("Please fill empty field");
-						}
-						// tvuserrole = (TextView) layout.findViewById(R.id.tvUserRole);
-						//System.out.println("login "+ client_id);
 
-					}
+
 				});
 
 				dialog = builder.create();
@@ -306,56 +311,7 @@ public class selectOrg extends Activity{
 
 		});
 
-		/*btnDeleteOrg.setOnClickListener(new OnClickListener() {
-
-			private Object[] deleteprgparams;
-			private Boolean deleted;
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		        builder.setMessage("Are you sure you want to permanetly delete "+selectedOrgName+" for financialyear "+fromDate+" To "+toDate+"?\n" +
-		        		"if you will delete an item , It will be permanetly lost ")
-		                .setCancelable(false)
-		                .setPositiveButton("Delete",
-		                        new DialogInterface.OnClickListener() {
-		                            public void onClick(DialogInterface dialog, int id) {
-		                            	//parameters pass to core_engine xml_rpc functions
-		                				deleteprgparams=new Object[]{selectedOrgName,fromDate,toDate};
-		                				deleted = startup.deleteOrgnisationName(deleteprgparams);
-		                		    	String[] list = new String[]{""};
-		                				getExistingOrgNames();
-		                				addListenerOnItem();
-	                					addListenerOnButton();
-
-		                		    	Object value = getOrgNames.getSelectedItem();
-
-		                				if(value==null)
-		                				{
-		                					System.out.println("in");
-		                					ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
-		                			    			android.R.layout.simple_spinner_item, list);
-
-		                			    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		                					getFinancialyear.setAdapter(dataAdapter);
-		                				}
-
-		                            }
-		                        })
-		                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		                    public void onClick(DialogInterface dialog, int id) {
-		                        dialog.cancel();
-		                    }
-		                });
-		        AlertDialog alert = builder.create();
-		        alert.show();
-
-			}
-
-
-		});*/
-
+	
 	}
 
 	void addListenerOnItem(){
@@ -456,8 +412,8 @@ public class selectOrg extends Activity{
 				}else {
 					link.setVisibility(View.INVISIBLE);
 				}
-				
- 
+
+
 			}
 
 

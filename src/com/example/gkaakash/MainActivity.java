@@ -259,7 +259,7 @@ public class MainActivity extends Activity {
 		if(no_dailog==false){
 			//if running this app on emulator, comment the below line
 			help_popup(); 
-		}
+		}    
 		else{
 			if(checkFlag=="false"){
 				help_dialog.dismiss();
