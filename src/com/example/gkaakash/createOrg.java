@@ -65,7 +65,8 @@ public class createOrg extends MainActivity {
 	static Integer client_id;
 	int genderid, selectedQuestion;
 	static String answer,lastname,username ,password ,confpassword,loginPassword;
-	String loginUsername,login_user,login_password;
+	String loginUsername,login_password;
+	static String login_user;
 	private EditText eloginPassword ,eUserName ,ePassword , eConfPassword, eAnswer;
 	private EditText eloginUsername;
 	boolean adminflag=false;
@@ -79,6 +80,7 @@ public class createOrg extends MainActivity {
 		super.onCreate(savedInstanceState);
 		//Calling create_org.xml
 		setContentView(R.layout.create_org);
+		MainActivity.username_flag=false;
 
 		help_flag = new File("/data/data/com.example.gkaakash/files/help_flag.txt");
 		if(!help_flag.exists()){

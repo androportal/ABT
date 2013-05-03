@@ -9,7 +9,7 @@ import com.gkaakash.coreconnection.CoreConnection;
 public class User {
 	private CoreConnection conn;
 	String setuser;
-	boolean isuserexist,isuserunique,isadmin,AdminForgotPassword,changePassword;
+	boolean isuserexist,isuserunique,isadmin,AdminForgotPassword,changePassword,changeUserName;
 	Object[] getUserRole,getUserNemeOfOperatorRole,getUserNemeOfManagerRole;
 	
 	/**
@@ -172,4 +172,25 @@ public class User {
         }
       
     }
+	
+	 /***
+     * This method facilitate user to change username
+     * @param params will contain old_usename,new_username,password,userrole
+     * @param client_id
+     * @return boolean
+     */
+    public boolean changeUserName(Object[] params,Object client_id)
+    {
+        try{
+            changeUserName = (Boolean)conn.getClient().call("user.changeUserName",params,client_id);
+            System.out.println("change username :"+changeUserName);
+        }catch(XMLRPCException e)
+        {
+            e.printStackTrace();
+        }
+        return changeUserName;
+        
+    }
+	
 }
+

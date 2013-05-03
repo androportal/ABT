@@ -6,12 +6,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
 
 import com.gkaakash.controller.PdfGenaretor;
@@ -27,7 +30,7 @@ public class module {
 	static List<String> Accountlist;
 	static ArrayAdapter<String> dataAdapter;
 	boolean validateflag;
-	
+	static AlertDialog dialog ;
 	void getAccountsByRule(Object[] DrCrFlag, String vouchertypeflag2, Context context) {
 		transaction = new Transaction();
        	client_id= Startup.getClient_id();
@@ -264,5 +267,32 @@ public class module {
         }catch (IOException e) {
 	           e.printStackTrace();
 	   }
+    }
+	
+	public View builder_with_inflater(Context c,String title, int layout1){
+		LayoutInflater inflater = ((Activity)c).getLayoutInflater();
+		View layout = inflater.inflate(layout1, null);
+		final AlertDialog.Builder builder = new AlertDialog.Builder(
+				c);
+		builder.setView(layout);
+		builder.setTitle(title);
+		
+		dialog = builder.create();
+		dialog.show();
+		return layout;
+	}
+
+
+
+    void msg(Context c,String msg){
+    	AlertDialog.Builder builder = new AlertDialog.Builder(
+				c);
+		
+			builder.setMessage(msg);
+		
+		AlertDialog alert = builder.create();
+		alert.setCancelable(true);
+		alert.setCanceledOnTouchOutside(true);
+		alert.show();
     }
 }

@@ -77,6 +77,7 @@ public class MainActivity extends Activity {
 	static boolean no_dailog=false;
 	module m;
 	private AlertDialog dialog;
+	static Boolean username_flag=false;
 
 
 	@Override

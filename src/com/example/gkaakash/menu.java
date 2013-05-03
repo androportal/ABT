@@ -105,6 +105,7 @@ public class menu extends ListActivity{
     EditText eusername,epassword,econfpassword;
     String login_time;
     String logout_time;
+    EditText oldpass,newpass,confirmpass;
    
     /*
     //adding options to the options menu
@@ -616,7 +617,7 @@ public class menu extends ListActivity{
 	}
 
 	protected void settings() {
-    	final CharSequence[] items = { "Edit Username/Password", "Add user"};
+		final CharSequence[] items = { "Edit Username/Password", "Add user"};
 		//creating a dialog box for popup
 		AlertDialog.Builder builder = new AlertDialog.Builder(menu.this);
 		//setting title
@@ -628,151 +629,158 @@ public class menu extends ListActivity{
 			public void onClick(DialogInterface dialog,
 					int pos) {
 				if(pos == 0){
+					final View layout=m.builder_with_inflater(menu.this, "",R.layout.change_password);
 					
-				}
-				if(pos==1){
+					LinearLayout l1=(LinearLayout) layout.findViewById(R.id.changeusername);
+					l1.setVisibility(View.GONE);
+					Button cancel = (Button) layout
+							.findViewById(R.id.btnCancel);
+					TextView header = (TextView) layout.findViewById(R.id.tvheader1);
+					header.setText("Change password");
 					
-					
-					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-					final View layout = inflater.inflate(R.layout.sign_up, null);
-					final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-					builder.setView(layout);
-					builder.setTitle("Add role");
-					// get the id of signup.xml header 
-					TextView tvheader = (TextView) layout.findViewById(R.id.tvalertHead1);
-					tvheader.setVisibility(View.GONE); // set visibility gone of header 
-					// get the id of table row of user role and visible it
-					TableRow truserrole = (TableRow) layout.findViewById(R.id.trUserRole);
-					truserrole.setVisibility(View.VISIBLE);
-					if(menu.userrole.equals("manager"))
-					{
-						// get only operator visible to manager 
-						rbmanager = (RadioButton) layout.findViewById(R.id.rbManager);
-						rbmanager.setVisibility(View.GONE);
-						// get only operator visible to manager 
-						rboperator = (RadioButton) layout.findViewById(R.id.rbOperator);
-						rboperator.setChecked(true);
-					}
-					// get the id of cancel button and change the text to Reset
-					Button btncancel = (Button) layout.findViewById(R.id.btnCancel);
-					btncancel.setText("Reset");
-					// get the id of question row and answer row and invisible it
-					TableRow transwer = (TableRow) layout.findViewById(R.id.trAnswer);
-					TableRow trquestion = (TableRow) layout.findViewById(R.id.trQuestion);
-					transwer.setVisibility(View.GONE);
-					trquestion.setVisibility(View.GONE);
-					// get all widget id's to use 
-					Button btndone = (Button) layout.findViewById(R.id.btnSignUp);
-					eusername = (EditText) layout.findViewById(R.id.eUserName);
-					epassword = (EditText) layout.findViewById(R.id.ePassword);
-				    econfpassword = (EditText) layout.findViewById(R.id.eConfPassword);
-					radiogender = (RadioGroup) layout.findViewById(R.id.radioGender);
-					radiorole = (RadioGroup) layout.findViewById(R.id.radioRole);
-					TableRow radiouserole = (TableRow) layout.findViewById(R.id.trUserRole);
-					final TextView tvwarning = (TextView)layout.findViewById(R.id.tvWarning);
-					TextView tvmessage = (TextView) layout.findViewById(R.id.tvSignUp);
-				    rbMale = (RadioButton) layout.findViewById(R.id.rbMale);
-					int rbRoleCheckedId = radiorole.getCheckedRadioButtonId();
-				    rbRoleChecked = (RadioButton) layout.findViewById(rbRoleCheckedId);
-					int rbGenderCheckedId = radiogender.getCheckedRadioButtonId();
-					rbGenderChecked = (RadioButton) layout.findViewById(rbGenderCheckedId);
-					radiorole.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-						public void onCheckedChanged(RadioGroup rg, int selctedId) {
-							
-							rbRoleChecked = (RadioButton)layout.findViewById(selctedId);
-							//userrole = rbRoleChecked.getText().toString();
-							
-						}
-					});
-					radiogender.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-						public void onCheckedChanged(RadioGroup rg, int selctedId) {
-							
-							rbGenderChecked = (RadioButton)layout.findViewById(selctedId);
-							//gender = rbGenderChecked.getText().toString();
-							
-						}
-					});
-				
-					btndone.setOnClickListener(new OnClickListener() {
+					final TextView error_msg = (TextView) layout.findViewById(R.id.tverror_msg1);
+					cancel.setOnClickListener(new OnClickListener() {
 						
 						@Override
 						public void onClick(View arg0) {
-							
-							addOnClickListnereOnButton();
-						}
-						private void addOnClickListnereOnButton() {
-							gender = rbGenderChecked.getText().toString();
-							username = eusername.getText().toString();
-							password = epassword.getText().toString();
-							confpassword = econfpassword.getText().toString();
-							userrole = rbRoleChecked.getText().toString();
-							tvwarning.setVisibility(TextView.GONE);
-							Object[] params = new Object[]{username,password,gender,userrole,"null","null"};
-
-							if(m.isEmpty(params)||m.isEmpty(new Object[]{confpassword}))
-							{
-								String message = "please fill blank field";
-								tvwarning.setVisibility(TextView.VISIBLE);
-								tvwarning.setText(message);
-
-							}else if(!password.equals(confpassword))
-							{
-								epassword.setText("");
-								econfpassword.setText("");
-								String message = "Please enter correct password";
-								tvwarning.setVisibility(TextView.VISIBLE);
-								tvwarning.setText(message);
-							}else   
-							{
-								boolean unique = user.isUserUnique(new Object[]{username},client_id);
-								if(unique==true)
-								{	 
-									String setuser = user.setUser(params, client_id);
-									m.toastValidationMessage(context, username+" added successfully as "+userrole);
-									if(menu.userrole.equals("manager"))
-									{
-										Toast.makeText(context, "manager", Toast.LENGTH_SHORT).show();
-										Intent intent = new Intent(context, User_table.class);
-										// To pass on the value to the next page
-										startActivity(intent);
-									}else {
-										Toast.makeText(context, "opertor", Toast.LENGTH_SHORT).show();
-									}
-									reset();
-								}
-								else
-								{
-									eusername.setText("");
-									String message = "username is already exist";
-									tvwarning.setVisibility(TextView.VISIBLE);
-									tvwarning.setText(message);
-								}
-							} 
+						m.dialog.cancel();
 							
 						}
-
-						
 					});
-				
-					btncancel.setOnClickListener(new OnClickListener() {
+					
+				   Button save = (Button) layout
+							.findViewById(R.id.btnSave);
+					
+				   
+				   save.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View arg0) {
+						oldpass = (EditText) layout
+								.findViewById(R.id.etOldPass);
+						String old_pass=oldpass.getText().toString(); 
+						System.out.println("oldpass:"+old_pass);
+						newpass = (EditText) layout
+								.findViewById(R.id.etNewPass);
+	 					String new_pass=newpass.getText().toString();
+						System.out.println("newpass:"+new_pass);
 						
-						@Override
-						public void onClick(View v) {
-							// TODO Auto-generated method stub
-							reset();
+						confirmpass = (EditText) layout
+								.findViewById(R.id.etconfirmPass);
+						String confirm_pass=confirmpass.getText().toString();
+						System.out.println("confirm_pass:"+confirm_pass);
+						
+						String username;
+						
+						Toast.makeText(context, "lll:"+MainActivity.username_flag, Toast.LENGTH_SHORT).show();
+						Boolean flag = MainActivity.username_flag;
+						if(flag==true){
+							username=selectOrg.login_user;
+							System.out.println("username1:"+username);
+						
+						}else {
+							username=createOrg.login_user;
+							System.out.println("username2:"+username);
 						}
-					});
-					dialog = builder.create();
-					((Dialog) dialog).show();
+						
+						if(!"".equals(old_pass)&!"".equals(new_pass)&!"".equals(confirm_pass)){
+							if(new_pass.equals(confirm_pass)){
+								
+								Boolean result= user.changePassword(new Object[]{username,old_pass,new_pass,userrole}, client_id);
+								System.out.println("r:"+result);
+								if(result==false){
+									error_msg.setVisibility(TextView.VISIBLE);
+
+									error_msg.setText("Invalid password");
+									oldpass.setText("");
+									newpass.setText("");
+									confirmpass.setText(""); 
+								}else {
+									error_msg.setVisibility(TextView.VISIBLE);
+
+									error_msg.setText( "Password updated successully");
+									m.dialog.cancel();
+									oldpass.setText("");
+									newpass.setText("");
+									confirmpass.setText(""); 
+								}
+							}else {
+								error_msg.setVisibility(TextView.VISIBLE);
+
+								error_msg.setText( "New password and confirm password fields doesnot match!");
+								
+								newpass.setText("");
+								confirmpass.setText(""); 
+							}
+							
+						}else {
+							error_msg.setVisibility(TextView.VISIBLE);
+							error_msg.setText("Fill the empty fields");	
+						}
+					}
+				});
+					
+
 				}
-				
+				if(pos==1){
+					Intent intent = new Intent(context, User_table.class);
+//					// To pass on the value to the next page
+					startActivity(intent);
+
+				}
 			}				        	
 		});
-		
 		dialog=builder.create();
 		((Dialog) dialog).show();
+		
+    	
+    	
+    	
+    	
+    	/*final CharSequence[] items = { "add user", "" };
+    	//creating a dialog box for popup
+    	AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    	//setting title
+    	builder.setTitle("Select preference");
+    	//adding items
+    	builder.setItems(items, new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog1, int pos) {
+    			//code for the actions to be performed on clicking popup item goes here ...
+    			switch (pos) {
+   	        case 0:
+   	        {
+   	        	
+   	        	MainActivity.editDetails=true;
+   	        	Object[] editDetails = (Object[])organisation.getOrganisation(client_id);
+   	        	accdetailsList = new ArrayList<String>();
+   	        	for(Object row2 : editDetails){
+   	        		Object[] a2=(Object[])row2;
+   	        		ArrayList<String> accdetails = new ArrayList<String>();
+                     for(int i=0;i<a2.length;i++){
+                     	accdetails.add((String) a2[i].toString());
+                     }
+                     accdetailsList.addAll(accdetails);
+   	        	}
+                          
+   	        	//System.out.println("details:"+accdetailsList);
+                        
+   	        	Intent intent = new Intent(context, orgDetails.class);
+   	        	// To pass on the value to the next page
+   	        	startActivity(intent);
+   	        }break;
+   	        case 1:
+   	        {
+   	        	Intent intent = new Intent(context, addProject.class);
+   	        	// To pass on the value to the next page
+   	        	startActivity(intent);
+   	        	
+   	        }break;
+    			}
+    		}
+    	});
+    	//building a complete dialog
+    	dialog=builder.create();
+    	dialog.show();*/
 	}
 
 	protected void addPreferences() {
