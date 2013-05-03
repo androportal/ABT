@@ -2,15 +2,19 @@ package com.example.gkaakash;
 
 
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.RoundingMode;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import com.gkaakash.controller.Account;
 import com.gkaakash.controller.Organisation;
@@ -27,7 +31,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.Preference;
 import android.text.InputType;
 import android.text.SpannableString;
@@ -97,7 +103,8 @@ public class menu extends ListActivity{
     String gender,username,password,confpassword;
     RadioGroup  radiogender ,radiorole ;
     EditText eusername,epassword,econfpassword;
-    
+    String login_time;
+    String logout_time;
    
     /*
     //adding options to the options menu
@@ -122,11 +129,44 @@ public class menu extends ListActivity{
     }
     */
     
+    /*
+     * (non-Javadoc)
+     * @see android.app.Activity#onBackPressed()
+     * send the users login and logout timings to the backend
+     * and pass on the activity to the main page
+     */
      @Override
      public void onBackPressed() {
-    	 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-         startActivity(intent); 
+    	 AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setMessage("Do you want to logout?")
+			.setCancelable(false)
+			
+			.setPositiveButton("Yes",
+					new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+					Date date = new Date();
+					logout_time = dateFormat.format(date);
+					//System.out.println("date"+login_time+"and"+logout_time+"  username"+username+"  userrole"+userrole);
+					
+					Object[] params = new Object[]{username,userrole,login_time,logout_time};
+			        user.setLoginLogoutTiming(params, client_id);
+					
+					Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+			        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			        startActivity(intent); 
+				}
+			}).setNegativeButton("NO", 
+					new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					//do nothing
+				}
+			});
+
+			AlertDialog alert = builder.create();
+			alert.show();     
+    	 
+    	 
      }
      
     //on load...getfinancialFromDate
@@ -170,15 +210,25 @@ public class menu extends ListActivity{
 			OrgName = createOrg.organisationName;
 			orgtype=createOrg.orgTypeFlag;
 			userrole = createOrg.user_role;
+			username = createOrg.username;
 
 		} else {
 			OrgName = selectOrg.selectedOrgName;
 			userrole = selectOrg.user_role;
+			username = selectOrg.login_user;
 			Object[] params = new Object[]{OrgName};
 	        orgtype = (String) organisation.getorgTypeByname(params, client_id);
 
 		}
-	    m.toastValidationMessage(context, "hi"+userrole);
+	    
+	    //set the login timing of user in the database
+	    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Date date = new Date();
+		login_time = dateFormat.format(date);
+		
+        user.getUserNemeOfOperatorRole(client_id);
+		
+		
 	    //adding list items to the newly created menu list
 	    if(userrole.equalsIgnoreCase("guest"))
         {
@@ -308,8 +358,8 @@ public class menu extends ListActivity{
 			}
         });
     }
-     
-    protected void bankrecon() {
+
+	protected void bankrecon() {
     	//call the getAllBankAccounts method to get all bank account names
 		Object[] accountnames = (Object[]) account.getAllBankAccounts(client_id);
 		// create new array list of type String to add account names
@@ -496,6 +546,29 @@ public class menu extends ListActivity{
 	}
 
 	protected void export() {
+//		Intent email = new Intent(Intent.ACTION_SEND);
+//        email.putExtra(Intent.EXTRA_EMAIL, new String[]{"holyantony1492@gmail.com"});
+//        //email.putExtra(Intent.EXTRA_CC, new String[]{ to});
+//        //email.putExtra(Intent.EXTRA_BCC, new String[]{to});
+//        email.putExtra(Intent.EXTRA_SUBJECT, "testing email");
+//        email.putExtra(Intent.EXTRA_TEXT, "hello world");
+//
+//        //File root = Environment.getExternalStorageDirectory();
+//        File file = new File("/opt/abt/export/bckp.xml");
+//        if (!file.exists() || !file.canRead()) {
+//            Toast.makeText(this, "Attachment Error", Toast.LENGTH_SHORT).show();
+//            finish();
+//            return;
+//        }
+//        Uri uri = Uri.parse("file://" + file);
+//        email.putExtra(Intent.EXTRA_STREAM, uri);
+//        
+//        
+//        //need this to prompts email client only
+//        email.setType("message/rfc822");
+//        startActivity(Intent.createChooser(email, "Choose an Email client :"));
+		
+		
     	Object[] export = new Object[] {OrgName, financialFromDate,financialToDate};
 		//call back-end to export organisation 
 		String encrypted_db = organisation.Export(export,client_id);

@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.LoginFilter.UsernameFilterGeneric;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,8 @@ public class selectOrg extends Activity{
 	private EditText eloginPassword;
 	private EditText eloginUsername;
 	static String user_role;
-	String loginUsername,login_user,login_password;
+	String loginUsername,login_password;
+	static String login_user;
 	TextView tvwarning,tvLoginWarning,tvSignUp,tvuserrole,link;
 	private module m;
 	String get_extra_flag;
@@ -222,6 +224,7 @@ public class selectOrg extends Activity{
 								
 								if(result==true){
 									Intent intent = new Intent(context,menu.class); 
+									
 									startActivity(intent); 
 								}else if ("".equals(ans)) {
 									errormsg.setVisibility(View.VISIBLE);

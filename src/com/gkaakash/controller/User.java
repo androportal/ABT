@@ -159,4 +159,17 @@ public class User {
 		return getUserNemeOfOperatorRole;
 		
 	}
+	
+	public void setLoginLogoutTiming(Object[] params,Object client_id)
+    {
+        System.out.println("we are about to set time");
+       System.out.println(params+"and"+client_id);
+        try{
+            conn.getClient().call("user.setLoginLogoutTiming",params,client_id);
+        }catch(XMLRPCException e)
+        {
+            e.printStackTrace();
+        }
+      
+    }
 }
