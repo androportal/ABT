@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import android.R.color;
+import android.R.layout;
+
 import com.gkaakash.controller.*;
 
 import android.app.Activity;
@@ -24,6 +26,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.KeyListener;
 import android.text.style.ClickableSpan;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -100,7 +103,7 @@ public class createVoucher extends Activity {
 	boolean nameflag;
 	static boolean edittabflag;
 	String name;
-	static EditText e, e1, etVouchercode;
+	static EditText e, e1;
 	private Report reports;
 	static EditText closing_bal;
 	boolean voucher_code_flag;
@@ -126,11 +129,10 @@ public class createVoucher extends Activity {
 		m = new module();
 
 		firstRowamount = (EditText) findViewById(R.id.etDrCrAmount);
-		etVouchercode = (EditText) findViewById(R.id.etVouchercode);
 		addButton = (Button) findViewById(R.id.add);
 		btnSaveVoucher = (Button) findViewById(R.id.btnSaveVoucher);
 		btnResetVoucher = (Button) findViewById(R.id.btnResetVoucher);
-
+		
 		Bundle extras = getIntent().getExtras();
 		if (extras == null) {
 			// Toast.makeText(context, "i am null", Toast.LENGTH_SHORT).show();
@@ -290,7 +292,6 @@ public class createVoucher extends Activity {
 				btnResetVoucher.setEnabled(false);
 				voucher_date.setOnItemClickListener(null);
 				projetct_name.setOnItemClickListener(null);
-				etVouchercode.setEnabled(false);
 
 				tableRowCount = table.getChildCount();
 

@@ -241,7 +241,7 @@ public class menu extends ListActivity{
                     "Bank Reconciliation", "Preferences","RollOver","Export organisation","Account Settings","Help","About" };
         }else if(userrole.equalsIgnoreCase("manager")){
         	menuOptions = new String[] { "Create account", "Transaction", "Reports",
-                    "Bank Reconciliation","Export organisation","Account Settings","Help","About" };
+                    "Bank Reconciliation","Preferences", "Export organisation","Account Settings","Help","About" };
         }else{//operator
             menuOptions = new String[] { "Create account", "Transaction","Export organisation","Account Settings","Help","About" };
             
@@ -291,14 +291,13 @@ public class menu extends ListActivity{
                     	bankrecon();
     					
                     }
-                    if(userrole.equalsIgnoreCase("guest") || userrole.equalsIgnoreCase("admin")){   
-                    	//for "adding project", adding popup menu ...
-                    	if(position == 4)
-                    	{                	
-                    		addPreferences();
-           	
-                    	}
-                               	
+                    //for "adding project", adding popup menu ...
+                	if(position == 4)
+                	{                	
+                		addPreferences();
+       	
+                	}
+                    if(userrole.equalsIgnoreCase("guest") || userrole.equalsIgnoreCase("admin")){   	
                         // for rollOver
         				if (position == 5) {
         					rollover();
@@ -327,7 +326,7 @@ public class menu extends ListActivity{
         	                }
         				}
                     }else{ //for manager only
-        				exportToAbout(position,4);
+        				exportToAbout(position,5);
                     }
                     
                 }else{//for operator only
