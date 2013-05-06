@@ -345,7 +345,7 @@ public class User_table extends Activity {
 		    
 			fillMaps.add(map);
 		}
-		SimpleAdapter Adapter = new SimpleAdapter(this, fillMaps, R.layout.voucher_child_row,
+		SimpleAdapter Adapter = new SimpleAdapter(this, fillMaps, R.layout.user_child_row,
 				abc, pqr);
 		role_list.setAdapter(Adapter);
 		
