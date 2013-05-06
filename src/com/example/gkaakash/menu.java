@@ -106,6 +106,7 @@ public class menu extends ListActivity{
     String login_time;
     String logout_time;
     EditText oldpass,newpass,confirmpass;
+    CharSequence[] items;
    
     /*
     //adding options to the options menu
@@ -148,7 +149,7 @@ public class menu extends ListActivity{
 					DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 					Date date = new Date();
 					logout_time = dateFormat.format(date);
-					//System.out.println("date"+login_time+"and"+logout_time+"  username"+username+"  userrole"+userrole);
+					System.out.println("date"+login_time+"and"+logout_time+"  username"+username+"  userrole"+userrole);
 					
 					Object[] params = new Object[]{username,userrole,login_time,logout_time};
 			        user.setLoginLogoutTiming(params, client_id);
@@ -617,7 +618,12 @@ public class menu extends ListActivity{
 	}
 
 	protected void settings() {
-		final CharSequence[] items = { "Edit Username/Password", "Add user"};
+		if(userrole.equalsIgnoreCase("operator")){
+			items = new CharSequence[]{ "Edit Username/Password"};
+		}else{
+			items = new CharSequence[]{ "Edit Username/Password", "Add user"};
+		}
+		
 		//creating a dialog box for popup
 		AlertDialog.Builder builder = new AlertDialog.Builder(menu.this);
 		//setting title

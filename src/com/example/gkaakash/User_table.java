@@ -1,8 +1,16 @@
 package com.example.gkaakash;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import com.example.gkaakash.R.string;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.User;
+
+import android.R.color;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ActionBar.LayoutParams;
@@ -19,11 +27,16 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.webkit.WebView.FindListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SimpleAdapter;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -32,22 +45,22 @@ import android.widget.Toast;
 
 public class User_table extends Activity {
 	String[] ColumnNameList;
-	TableRow tr;
-	TextView label, tv, tv1;
-	LinearLayout Ll;
-	TableLayout manager_table, operator_table;
 	private User user;
 	Integer client_id;
 	RadioButton rbmanager, rboperator, rbRoleChecked, rbGenderChecked;
-	ArrayList<String> manager_list, operator_list;
 	RadioGroup radiogender, radiorole;
 	static String userrole;
 	module m;
 	EditText oldpass, newpass, confirmpass;
-	AlertDialog dialog;
 	Context c = User_table.this;
 	View layout;
-
+	ListView role_list;
+	ArrayList<ArrayList> Grid;
+	ArrayList<String> ResultList;
+	RadioGroup radioUserGroup;
+	Object[] role_names;
+	AlertDialog dialog;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		user = new User();
@@ -56,18 +69,47 @@ public class User_table extends Activity {
 
 		// set the layout signup view to this content
 		setContentView(R.layout.user_table);
-		manager_table = (TableLayout) findViewById(R.id.manager_table);
-		operator_table = (TableLayout) findViewById(R.id.operator_table);
-		addTable(manager_table, "");
+		
 
-		addTable(operator_table, "operator");
-
-		if (menu.userrole.equals("manager")) {
-			manager_table.setVisibility(View.GONE);
-		} else {
-			manager_table.setVisibility(View.VISIBLE);
+		if (menu.userrole.equals("manager") || menu.userrole.equals("operator")) {
+			// get the id of table row of user role and visible it
+			TableRow truserrole = (TableRow) findViewById(R.id.trUserRole);
+			truserrole.setVisibility(View.GONE);
+			if(menu.userrole.equals("manager")){
+				role_names = user.getUserNemeOfOperatorRole(client_id);
+				setRoleList();
+			}
+		}else if(menu.userrole.equals("admin")){
+			//set list for manager names
+			role_names = user.getUserNemeOfManagerRole(client_id);
+			setRoleList();
 		}
+		radioUserGroup = (RadioGroup)findViewById(R.id.radioRole);
+		rbmanager = (RadioButton) findViewById(R.id.rbManager);
+		rboperator = (RadioButton) findViewById(R.id.rbOperator);
+		
+		radioUserGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
+			public void onCheckedChanged(RadioGroup rg, int selctedId) {
+			
+				if(rbmanager.isChecked()){
+					role_names = user.getUserNemeOfManagerRole(client_id);
+					setRoleList();
+				}else if(rboperator.isChecked()){
+					role_names = user.getUserNemeOfOperatorRole(client_id);
+					setRoleList();
+				}
+			}
+		});
+		
+		addNewUser();
+		
+		
+	}// end onCreate method
+
+
+	
+	private void addNewUser() {
 		Button add_user = (Button) findViewById(R.id.add_user);
 		add_user.setOnClickListener(new OnClickListener() {
 
@@ -78,7 +120,6 @@ public class User_table extends Activity {
 				final AlertDialog.Builder builder = new AlertDialog.Builder(
 						User_table.this);
 				builder.setView(layout);
-				builder.setTitle("Add role");
 				// get the id of signup.xml header
 				TextView tvheader = (TextView) layout
 						.findViewById(R.id.tvalertHead1);
@@ -101,9 +142,16 @@ public class User_table extends Activity {
 					rboperator.setChecked(true);
 
 				}
-				// get the id of cancel button and change the text to Reset
+				
 				Button btncancel = (Button) layout.findViewById(R.id.btnCancel);
-				btncancel.setText("Reset");
+				btncancel.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						dialog.cancel();
+					}
+				});
 				// get the id of question row and answer row and invisible it
 				TableRow transwer = (TableRow) layout
 						.findViewById(R.id.trAnswer);
@@ -206,12 +254,15 @@ public class User_table extends Activity {
 								tvwarning.setText(username
 										+ " added successfully as " + userrole);
 
-								Intent intent = new Intent(User_table.this,
-										User_table.class);
-								// To pass on the value to the next page
-								startActivity(intent);
-
 								reset();
+								
+								if(rbmanager.isChecked()){
+									role_names = user.getUserNemeOfManagerRole(client_id);
+									setRoleList();
+								}else if(rboperator.isChecked()){
+									role_names = user.getUserNemeOfOperatorRole(client_id);
+									setRoleList();
+								}
 							} else {
 								eusername.setText("");
 								String message = "username is already exist";
@@ -223,148 +274,95 @@ public class User_table extends Activity {
 					}
 
 					private void reset() {
+						RadioButton male = (RadioButton)layout.findViewById(R.id.rbMale);
 						eusername.setText("");
 						epassword.setText("");
 						econfpassword.setText("");
-
+						male.setChecked(true);
 					}
 
 					// add Checked change listner on radioGroup
 
 				});
 
-				AlertDialog dialog = builder.create();
+				dialog = builder.create();
 				dialog.show();
 
 			}
 		});
+	
+	}
 
-	}// end onCreate method
 
-	private void addTable(TableLayout tableID, String flag) {
 
-		Object[] managernames = user.getUserNemeOfManagerRole(client_id);
-		Object[] operatornames = user.getUserNemeOfOperatorRole(client_id);
-		manager_list = new ArrayList<String>();
-		for (Object mnames : managernames) {
-			System.out.println("names:" + mnames.toString());
-			manager_list.add(mnames.toString());
-
-		}
-		System.out.println("list_m" + manager_list);
-		operator_list = new ArrayList<String>();
-		for (Object onames : operatornames) {
-			System.out.println("oprea names:" + onames.toString());
-
-			operator_list.add(onames.toString());
-
-		}
-		System.out.println("list_o" + operator_list);
-		if (!flag.equals("operator")) {
-			addHeader(manager_table);
-			for (int i = 0; i < manager_list.size(); i++) {
-				tr = new TableRow(this);
-				addRow(manager_list.get(i), i);
-
-				manager_table.addView(tr, new TableLayout.LayoutParams(
-						LayoutParams.FILL_PARENT, LayoutParams.MATCH_PARENT));
-				popup();
+	private void setRoleList() {
+		// for setting role list
+		role_list = (ListView) findViewById(R.id.role_list);
+		role_list.setTextFilterEnabled(true);
+		role_list.setCacheColorHint(color.transparent);
+		
+		Grid = new ArrayList<ArrayList>();
+		for(Object tb : role_names)
+    	{
+    		Object[] t = (Object[]) tb;
+    		ResultList = new ArrayList<String>();
+    		for(int i=0;i<t.length;i++){
+           	
+    			ResultList.add((String) t[i].toString());
+              
+    		}
+    		Grid.add(ResultList);
+    	} 
+    	System.out.println("grid1:"+Grid);
+		
+		String[] abc = new String[] { "srno", "username", "login", "logout", "Total" };
+		int[] pqr = new int[] { R.id.tvRowTitle0, R.id.tvRowTitle1, R.id.tvSubItem0, R.id.tvSubItem1, R.id.tvSubItem2 };
+		//System.out.println("grid size"+Grid.get(0).size());
+		List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
+		for (int i = 0; i < Grid.size(); i++) {
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("srno", (i+1)+" ");
+			map.put("username", Grid.get(i).get(0).toString());
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			java.util.Date loginDate = null;
+			java.util.Date logoutDate = null;
+		    try {
+		    	loginDate = formatter.parse(Grid.get(i).get(1).toString());
+		    	logoutDate = formatter.parse(Grid.get(i).get(2).toString());
+		    	System.out.println("utilDate:" + loginDate);
+		    	int diffInDays = (int)( (loginDate.getTime() - logoutDate.getTime()) 
+		                 / (1000 * 60 * 60 * 24) );
+		    	if(loginDate != null && logoutDate != null){
+		    		map.put("login", loginDate.toLocaleString());
+					map.put("logout", logoutDate.toLocaleString());
+					map.put("Total", diffInDays+" days");
+		    	}
+		    	
+			} catch (ParseException e) {
+				
 			}
+		    
+			fillMaps.add(map);
+		}
+		SimpleAdapter Adapter = new SimpleAdapter(this, fillMaps, R.layout.child_row1,
+				abc, pqr);
+		role_list.setAdapter(Adapter);
+		
+		role_list.setOnItemClickListener(new OnItemClickListener() {
 
-		} else {
-			addHeader(operator_table);
-			for (int i = 0; i < operator_list.size(); i++) {
-				tr = new TableRow(this);
-				addRow(operator_list.get(i), i);
-				operator_table.addView(tr, new TableLayout.LayoutParams(
-						LayoutParams.FILL_PARENT, LayoutParams.MATCH_PARENT));
-				popup();
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				TextView username = (TextView)arg1.findViewById(R.id.tvRowTitle1);
+//				TextView login = (TextView)arg1.findViewById(R.id.tvSubItem0);
+//				TextView logout = (TextView)arg1.findViewById(R.id.tvSubItem1);
+//				TextView total = (TextView)arg1.findViewById(R.id.tvSubItem2);
+//				System.out.println(username.getText()+" "+login.getText());
+				dialog_builder(username.getText().toString(), "manager");
 			}
-		}
-
-	}
-
-	void popup() {
-		int count = manager_table.getChildCount();
-		System.out.println("count table 1:" + count);
-		for (int i = 1; i < count; i++) {
-			final View row = manager_table.getChildAt(i);
-
-			row.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-
-					LinearLayout l = (LinearLayout) ((ViewGroup) row)
-							.getChildAt(0);
-					tv = (TextView) l.getChildAt(0);
-					System.out.println(tv.getText());
-					Toast.makeText(User_table.this, "lll:" + tv.getText(),
-							Toast.LENGTH_SHORT).show();
-
-					dialog_builder(tv.getText().toString(), "manager");
-				}
-			});
-		}
-
-		int count1 = operator_table.getChildCount();
-		System.out.println("count table 2:" + count1);
-		for (int i = 1; i < count1; i++) {
-			final View row = operator_table.getChildAt(i);
-
-			row.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-
-					LinearLayout l = (LinearLayout) ((ViewGroup) row)
-							.getChildAt(0);
-					tv1 = (TextView) l.getChildAt(0);
-					System.out.println(tv1.getText());
-					Toast.makeText(User_table.this, "lll:" + tv1.getText(),
-							Toast.LENGTH_SHORT).show();
-
-					dialog_builder(tv1.getText().toString(), "operator");
-				}
-			});
-		}
-	}
-
-	void addHeader(TableLayout table) {
-		ColumnNameList = new String[] { "Username" };
-		tr = new TableRow(this);
-		for (int k = 0; k < ColumnNameList.length; k++) {
-			/** Creating a TextView to add to the row **/
-			addRow(ColumnNameList[k], k);
-			tr.setClickable(false);
-			label.setBackgroundColor(Color.parseColor("#348017"));
-			label.setGravity(Gravity.CENTER);
-			tr.setClickable(false);
-		}
-		table.addView(tr, new TableLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.MATCH_PARENT));
-	}
-
-	private void addRow(String param, int k) {
-
-		label = new TextView(this);
-		label.setText(param);
-		label.setTextColor(Color.WHITE);
-		label.setTextSize(18);
-		// label.setBackgroundColor(Color.);
-		label.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.MATCH_PARENT));
-		label.setBackgroundColor(Color.BLACK);
-		label.setPadding(2, 2, 2, 2);
-
-		Ll = new LinearLayout(this);
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		params.setMargins(1, 1, 1, 1);
-		// Ll.setPadding(10, 5, 5, 5);
-		Ll.addView(label, params);
-		tr.addView((View) Ll);
-
+		});
+		
 	}
 
 	private void dialog_builder(final String username, final String userrole1) {
@@ -396,9 +394,9 @@ public class User_table extends Activity {
 					EditText old_user_name = (EditText) layout1
 							.findViewById(R.id.etOldUsername);
 					if ("manager".equals(userrole1)) {
-						old_user_name.setText(tv.getText());
+						old_user_name.setText(username);
 					} else {
-						old_user_name.setText(tv1.getText());
+						old_user_name.setText(username);
 					}
 
 					Button cancel = (Button) layout1
@@ -449,10 +447,7 @@ public class User_table extends Activity {
 									error_msg
 											.setText("Username updated successully");
 									m.dialog.cancel();
-									manager_table.removeAllViews();
-									operator_table.removeAllViews();
-									addTable(manager_table, "");
-									addTable(operator_table, "operator");
+									
 									olduser_name.setText("");
 									newuser_name.setText("");
 									password.setText("");
@@ -571,6 +566,7 @@ public class User_table extends Activity {
 		((Dialog) dialog).show();
 
 	}
+
 
 	public void onBackPressed() {
 
