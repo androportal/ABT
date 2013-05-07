@@ -20,7 +20,8 @@ public class Report {
 	private Object[] cashFlowStatement;
 	private Object[] getBalancesheetDisplay;
 	private Object[] getLedgerForBankRecon;
-	private String setBankReconciliationResult,rollover,existrollover;
+	private String setBankReconciliationResult,rollover;
+	Boolean existrollover;
 	private Boolean result;
 	private Object[] calculateBalance;
 	
@@ -299,13 +300,13 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 	 * This function will check for rollover is already done or not
 	 * for given organisation
 	 * @param params contain [orgname,financial-from, financial-to]
-	 * @return String rollover_exist or rollover_otnexist
+	 * @return boolean True or False
 	 */
-	public String existRollOver(Object[] params) {
+	public Boolean existRollOver(Object[] params) {
 		
 		try { 
 			
-			existrollover = (String) conn.getClient().call("existRollOver",params);
+			existrollover = (Boolean)conn.getClient().call("existRollOver",params);
 			
 		} catch (XMLRPCException e) {
 			

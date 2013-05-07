@@ -64,7 +64,7 @@ public class edit_account extends Activity{
         
         Preferences preferencObj = new Preferences();
   	    // call getPrefernece to get set preference related to account code flag 
-  	    accCodeCheckFlag = preferencObj.getPreferences(new Object[]{"2"},client_id);
+  	    accCodeCheckFlag = preferencObj.getPreferences(new Object[]{"1"},client_id);
         
   	    //set visibility of spinner
 	  	if (accCodeCheckFlag.equals("automatic")) {

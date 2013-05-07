@@ -3,37 +3,65 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" 
         android:orientation="vertical">
-        
-        	<LinearLayout  
-			    android:layout_width="fill_parent"
-				android:layout_height="50dp"
-				android:minHeight="50dp"
-			    android:orientation="horizontal"
-			    android:paddingLeft="10dp"
-				android:paddingRight="10dp"
-				android:background="@android:color/darker_gray"
-				android:layout_weight="0.1">
-			     
-			        <Button
-			        android:id="@+id/add_project"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content" 
-			        android:text="+"
-			        android:layout_gravity="center_vertical"
-			        android:layout_weight="0.1"
-			        android:gravity="center"/>
-			        
-					<TextView
-					    android:layout_width="wrap_content"
-					    android:layout_height="wrap_content"
-					    android:text="Add project"
-					    android:textColor="#000000"
-					    android:layout_gravity="center_vertical"
-					    android:textSize="17dp"
-					    android:gravity="center"
-					    android:layout_weight="0.9"/>
-			
-				</LinearLayout>
+        	
+        	<LinearLayout
+        	    android:layout_width="fill_parent"
+        	    android:layout_height="wrap_content"
+        	    android:layout_gravity="center_vertical"
+        	    android:background="#F2C60E"
+        	    android:minHeight="50dp"
+        	    android:orientation="horizontal"
+        	    android:paddingLeft="10dp"
+        	    android:paddingRight="10dp" >
+        	    
+				<TableLayout
+				    xmlns:android="http://schemas.android.com/apk/res/android"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content" >
+
+        	    <TextView
+        	        android:id="@+id/tvProWarning"
+        	        android:layout_width="wrap_content"
+        	        android:layout_height="wrap_content"
+        	        android:gravity="center"
+        	        android:textColor="#FF010f"
+        	        android:textSize="17dp"
+        	        android:background="#F2C60E"
+        	        android:visibility="gone" />
+        	   <TableRow 
+        	       android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" 
+                android:background="#F2C60E"
+                android:layout_gravity="center_vertical" >
+        	       
+        	        <TextView
+        	        android:layout_width="wrap_content"
+        	        android:layout_height="wrap_content"
+        	       
+        	        android:text="Enter projectname"
+        	        android:textColor="#000000"
+        	        android:textSize="17dp" />
+
+        	    <EditText
+        	        android:id="@+id/etProjectname"
+        	        android:layout_width="wrap_content"
+        	        android:layout_height="wrap_content"
+        	       
+        	        android:hint="Tap to enter project name"
+        	        android:inputType="textCapWords" />
+
+        	    <Button
+        	        android:id="@+id/add_project"
+        	        android:layout_width="wrap_content"
+        	        android:layout_height="wrap_content"
+        	        android:layout_gravity="center_vertical"
+        	        android:gravity="center"
+        	        android:text="Create" />
+        	   </TableRow>
+        	   
+        	   </TableLayout> 
+        	</LinearLayout>
         
 			<ListView 
 			    android:id="@+id/ltProjectNames"

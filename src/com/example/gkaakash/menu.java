@@ -456,8 +456,8 @@ public class menu extends ListActivity{
 
 	protected void rollover() {
     	Object[] rollover_exist_params = new Object[] { OrgName,financialFromDate, financialToDate };
-		String existRollOver = report.existRollOver(rollover_exist_params);
-		if (existRollOver.equalsIgnoreCase("rollover_notexist")) {
+		Boolean existRollOver = report.existRollOver(rollover_exist_params);
+		if (existRollOver.equals(false)) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 			View layout = inflater.inflate(R.layout.roll_over,(ViewGroup) findViewById(R.id.layout_root));
 			// Building DatepPcker dialog
@@ -468,7 +468,7 @@ public class menu extends ListActivity{
 			final DatePicker rollover_todate = (DatePicker) layout.findViewById(R.id.dpRollT0date);
 			rollover_todate.init((Integer.parseInt(toyear) + 1),(Integer.parseInt(tomonth) - 1),Integer.parseInt(today), null);
 
-			builder.setPositiveButton("rollover",
+			builder.setPositiveButton("Rollover",
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface arg0,int arg1) {

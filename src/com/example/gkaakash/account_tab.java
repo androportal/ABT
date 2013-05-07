@@ -11,18 +11,18 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
+@SuppressWarnings("deprecation")
 public class account_tab extends TabActivity{
-	String accCodeCheckFlag;
+	String accCodeFlag;
 	TextView tab1 = null;
 	TextView tab2 = null;
 	private Integer client_id;
 	private Preferences preferences;
 	
-	 
 	public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.tab);
-	        //accCodeCheckFlag = getIntent().getExtras().getString("flag");
+	        //accCodeFlag = getIntent().getExtras().getString("flag");
 	 
 	        final TabHost tabHost = getTabHost();
 	        //creating TabSpec for create account
@@ -38,8 +38,8 @@ public class account_tab extends TabActivity{
 	        preferences = new Preferences();
 	        // this is client_id get after getConnetion method call for existing organisation 
 	        client_id = Startup.getClient_id();
-	        // call getPreferences to get flag for account code
-	        accCodeCheckFlag = preferences.getPreferences(new Object[]{2},client_id);
+	        // call getPreferences to get flag for account code where flagno is 1
+	        accCodeFlag = preferences.getPreferences(new Object[]{1},client_id);
 	        //for visibility of account tab layout 
 			MainActivity.tabFlag = true;
 	        Intent create = new Intent(this, createAccount.class);

@@ -87,7 +87,16 @@ public class module {
     	//set resource layout of spinner to that adapter
     	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	}
-	
+	 void toastSuccessfulMessage(Context c,String msg) {
+		              AlertDialog.Builder builder = new AlertDialog.Builder(c);
+		              builder.setMessage(msg);
+		           
+		              AlertDialog alert = builder.create();
+		              alert.show();
+		              alert.setCancelable(true);
+		              alert.setCanceledOnTouchOutside(true);
+		       }
+
 	 void toastValidationMessage(Context c,String msg) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setMessage(msg)

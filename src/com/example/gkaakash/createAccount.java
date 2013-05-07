@@ -42,7 +42,7 @@ public class createAccount<group> extends Activity{
     private TextView tvSubGrp;
     private EditText etSubGrp;
     protected String selGrpName;
-    protected String selSubGrpName;
+    String selSubGrpName;
     private EditText etAccName;
     protected String accountname;
     protected String accountcode;
@@ -65,6 +65,8 @@ public class createAccount<group> extends Activity{
     private String accountcode_exist;
     protected String accountname_exist;   
     module m;
+    boolean setGroupFlag = false;
+    String setGroupName ,setSubGroupName;
         
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,7 +110,7 @@ public class createAccount<group> extends Activity{
             etDiffbal = (EditText) findViewById(R.id.etDiffBal);
             
             // call getPrefernece to get set preference related to account code flag   
-            accCodeCheckFlag = preferencObj.getPreferences(new Object[]{"2"},client_id);
+            accCodeCheckFlag = preferencObj.getPreferences(new Object[]{"1"},client_id);
             
             // Setting visibility depending upon account code flag value
             if (accCodeCheckFlag.equals("automatic")) {
@@ -169,7 +171,18 @@ public class createAccount<group> extends Activity{
         //set resource layout of spinner to that adaptor
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //set adaptor with groupname list in spinner
-        sgrpName.setAdapter(dataAdapter);
+      
+       if(setGroupFlag == false)
+       {
+    	   //Toast.makeText(this,"false", Toast.LENGTH_LONG).show();
+        	sgrpName.setAdapter(dataAdapter);
+       }else
+        {
+    	   //Toast.makeText(this,"false", Toast.LENGTH_LONG).show();
+        	int groupnameposition = dataAdapter.getPosition(setGroupName);
+        	sgrpName.setAdapter(dataAdapter);
+        	sgrpName.setSelection(groupnameposition);
+        }
         
     }// End getExistingGroupNames()
     
@@ -186,7 +199,7 @@ public class createAccount<group> extends Activity{
                 tvOpBal = (TextView) findViewById(R.id.tvOpBal);
                 tvOpBalRupeeSymbol = (TextView) findViewById(R.id.tvOpBalRupeeSymbol);
                 etOpBal = (EditText) findViewById(R.id.etOpBal);
-
+                System.out.println("selcted groupname:"+selGrpName);
                 // Comparing the variable value to group name and setting visibility
                 if ("Current Asset".equals(selGrpName)
                         | "Investment".equals(selGrpName)
@@ -278,16 +291,25 @@ public class createAccount<group> extends Activity{
                     Object[] subgroupnames = (Object[])group.getSubGroupsByGroupName(params,client_id);
                     // loop through subgroup names list 
                     for(Object sbgrp : subgroupnames)
-                    
+                    {
                         subgroupnamelist.add((String)sbgrp);
-
+                    }
                     // creating array adaptor to take list of subgroups 
                     ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(context,
                             android.R.layout.simple_spinner_item, subgroupnamelist);
                     // set resource layout of spinner to that adaptor
                     dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    // set Adaptor contain subgroups list to spinner 
-                    ssubGrpName.setAdapter(dataAdapter1);
+                    if(setGroupFlag == false)
+                    {
+                    	ssubGrpName.setAdapter(dataAdapter1);
+                    }else
+                     {
+                    	
+                     	int groupnameposition = dataAdapter1.getPosition(setSubGroupName);
+                     	ssubGrpName.setAdapter(dataAdapter1);
+                     	ssubGrpName.setSelection(groupnameposition);
+                     }
+                
                 }// End of if condition
             }
             
@@ -321,7 +343,7 @@ public class createAccount<group> extends Activity{
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
+                // 
                 
             }
         });
@@ -412,8 +434,6 @@ public class createAccount<group> extends Activity{
                                 if (accountcode_exist.equals("1"))
                                 {
                                 	 m.toastValidationMessage(context, "Acountcode "+accountcode+" already exist");
-                                     
-                                    
                                 }else
                                 {
                                     SaveAccount();
@@ -525,19 +545,20 @@ public class createAccount<group> extends Activity{
         // call the setAccount method and pass the above parameters
         account.setAccount(params,client_id);
         getTotalBalances();
+        setGroupName = selGrpName;
+        setSubGroupName = selSubGrpName;
+        setGroupFlag = true;
         getExistingGroupNames();
         //creating interface to listen activity on Item 
         addListenerOnItem();
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("Account "+accountname+" have been saved successfully");
-        AlertDialog alert = builder.create();
-        alert.show();
-        alert.setCancelable(true);
-        alert.setCanceledOnTouchOutside(true);
-    
+        module m = new module();
+        m.toastSuccessfulMessage(createAccount.this, "Account "+accountname+" have been saved successfully");
+        
         etSubGrp.setText("");
         etAccName.setText("");
         etaccCode.setText("");
         etOpBal.setText("0.00");
+        
+       
     }
 }

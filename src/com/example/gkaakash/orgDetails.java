@@ -624,22 +624,7 @@ import android.widget.Toast;
 		
 		public void addListnerOnFinancialSpinner()
 		{
-			financialyearList = startup.getFinancialYear(getOrgName);
-			List<String> financialyearlist = new ArrayList<String>();
-			
-			for(Object fy : financialyearList)
-			{
-				Object[] y = (Object[]) fy;
-				// concatination From and To date 
-				//if(y[0].equals(fromDate)&&y[1].equals(toDate))
-				//{
-					//continue;
-				//}else
-				//{
-				financialyearlist.add(y[0]+" to "+y[1]);
-				//}
-				
-			}
+			List<String> financialyearlist = getFinancialYearList();
 			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
 					android.R.layout.simple_spinner_item, financialyearlist);
 
@@ -674,6 +659,21 @@ import android.widget.Toast;
 				}
 			});
 		}
+		 public List<String> getFinancialYearList()
+		       {
+		                financialyearList = startup.getFinancialYear(getOrgName);
+		               List<String> financialyearlist = new ArrayList<String>();
+		                
+		                for(Object fy : financialyearList)
+		                {
+		                       Object[] y = (Object[]) fy;
+		                       
+		                       financialyearlist.add(y[0]+" to "+y[1]);
+		                      
+		               }
+		                return financialyearlist;
+		        }
+
 		/*
 		* get all values and pass to the backend through controller
 		*/
