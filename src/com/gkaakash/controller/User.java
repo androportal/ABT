@@ -11,6 +11,7 @@ public class User {
 	String setuser;
 	boolean isuserexist,isuserunique,isadmin,AdminForgotPassword,changePassword,changeUserName;
 	Object[] getUserRole,getUserNemeOfOperatorRole,getUserNemeOfManagerRole;
+	Boolean resetPassword;
 	
 	/**
 	 * default constructor   
@@ -191,6 +192,24 @@ public class User {
         return changeUserName;
         
     }
+    
+    
+    /***
+     * This method used to reset the password
+     * @param user name, new password, user role
+     * @param client_id
+     * @return boolean
+     */
+    public boolean resetPassword(Object[] params,Object client_id)
+	{
+		try{
+			resetPassword = (Boolean)conn.getClient().call("user.resetPassword",params,client_id);
+		}catch(XMLRPCException e)
+		{
+			e.printStackTrace();
+		}
+		return resetPassword;
+	}
 	
 }
 

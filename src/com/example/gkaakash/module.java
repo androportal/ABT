@@ -10,16 +10,23 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.gkaakash.controller.PdfGenaretor;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.Transaction;
+import com.gkaakash.controller.User;
 import com.itextpdf.text.DocumentException;
 
 public class module {
@@ -31,6 +38,9 @@ public class module {
 	static ArrayAdapter<String> dataAdapter;
 	boolean validateflag;
 	static AlertDialog dialog ;
+	boolean resetFlag = false;
+	boolean menu_flag;
+	
 	void getAccountsByRule(Object[] DrCrFlag, String vouchertypeflag2, Context context) {
 		transaction = new Transaction();
        	client_id= Startup.getClient_id();
@@ -303,5 +313,98 @@ public class module {
 		alert.setCancelable(true);
 		alert.setCanceledOnTouchOutside(true);
 		alert.show();
+    }
+    
+    void resetPassword(final Context context, final String username, final String user_role, boolean go_to_menu, final Integer client_id){
+    	final View layout=this.builder_with_inflater(context, "",R.layout.change_password);
+		menu_flag = go_to_menu;
+		LinearLayout l1=(LinearLayout) layout.findViewById(R.id.changeusername);
+		l1.setVisibility(View.GONE);
+		Button cancel = (Button) layout
+				.findViewById(R.id.btnCancel);
+		TextView header = (TextView) layout.findViewById(R.id.tvheader1);
+		header.setText("Please reset your password");
+		
+		TextView tvoldpass = (TextView) layout.findViewById(R.id.tvOldPass);
+		tvoldpass.setVisibility(View.GONE);
+		
+		final EditText oldpass = (EditText) layout
+				.findViewById(R.id.etOldPass);
+		oldpass.setVisibility(View.GONE);
+		
+		final TextView error_msg = (TextView) layout.findViewById(R.id.tverror_msg1);
+		cancel.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				if(menu_flag){
+					dialog.cancel();
+				}else{
+					error_msg.setVisibility(TextView.VISIBLE);
+
+					error_msg.setText("Please reset your password");
+				}
+				
+			}
+		});
+		
+	   Button save = (Button) layout
+				.findViewById(R.id.btnSave);
+		
+	   
+	   save.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View arg0) {
+			
+			EditText newpass = (EditText) layout
+					.findViewById(R.id.etNewPass);
+			String new_pass=newpass.getText().toString();
+			System.out.println("newpass:"+new_pass);
+			
+			EditText confirmpass = (EditText) layout
+					.findViewById(R.id.etconfirmPass);
+			String confirm_pass=confirmpass.getText().toString();
+			System.out.println("confirm_pass:"+confirm_pass);
+			
+			
+			if(!"".equals(new_pass)&!"".equals(confirm_pass)){
+				if(new_pass.equals(confirm_pass)){
+					// create instance of user class to call setUser method
+					User user = new User();
+					System.out.println("we are about to reset"+username+new_pass+user_role);
+					Boolean reset= user.resetPassword(new Object[]{username,new_pass,user_role}, client_id);
+					System.out.println("r:"+reset);
+					
+					if(reset==false){
+						error_msg.setVisibility(TextView.VISIBLE);
+
+						error_msg.setText("User not present");
+						
+						newpass.setText("");
+						confirmpass.setText(""); 
+					}else {
+						error_msg.setVisibility(TextView.VISIBLE);
+
+						error_msg.setText( "Password updated successully");
+						newpass.setText("");
+						confirmpass.setText(""); 
+						menu_flag = true;
+					}
+				}else {
+					error_msg.setVisibility(TextView.VISIBLE);
+
+					error_msg.setText( "New password and confirm password fields doesnot match!");
+					
+					newpass.setText("");
+					confirmpass.setText(""); 
+				}
+				
+			}else {
+				error_msg.setVisibility(TextView.VISIBLE);
+				error_msg.setText("Fill the empty fields");	
+			}
+	}
+	});
     }
 }

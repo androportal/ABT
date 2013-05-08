@@ -107,6 +107,7 @@ public class menu extends ListActivity{
     String logout_time;
     EditText oldpass,newpass,confirmpass;
     CharSequence[] items;
+    boolean reset_password_flag = false;
    
     /*
     //adding options to the options menu
@@ -206,7 +207,7 @@ public class menu extends ListActivity{
 	  	mFormat= new DecimalFormat("00");
 	  	mFormat.setRoundingMode(RoundingMode.DOWN);
 	  	
-	   
+	  	//reportmenuflag will tell you from which page u are came createOrg or selectOtg
 	    if (reportmenuflag == true) {
 
 			OrgName = createOrg.organisationName;
@@ -220,8 +221,11 @@ public class menu extends ListActivity{
 			username = selectOrg.login_user;
 			Object[] params = new Object[]{OrgName};
 	        orgtype = (String) organisation.getorgTypeByname(params, client_id);
-
+	        reset_password_flag = selectOrg.reset_password_flag;
 		}
+	    
+	    reset_password(reset_password_flag);
+	    
 	    
 	    //set the login timing of user in the database
 	    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -359,6 +363,15 @@ public class menu extends ListActivity{
 			}
         });
     }
+
+	private void reset_password(boolean reset_password_flag) {
+		if(reset_password_flag){
+			/* false for u don't want to close the dialog on clicking cancel button
+			 * if u want to close pass true as a param
+			*/
+			m.resetPassword(context,username,userrole,false,client_id);
+		}		
+	}
 
 	protected void bankrecon() {
     	//call the getAllBankAccounts method to get all bank account names
@@ -618,9 +631,9 @@ public class menu extends ListActivity{
 
 	protected void settings() {
 		if(userrole.equalsIgnoreCase("operator")){
-			items = new CharSequence[]{ "Edit Username/Password"};
+			items = new CharSequence[]{ "Change Username","Change Password"};
 		}else{
-			items = new CharSequence[]{ "Edit Username/Password", "Add user"};
+			items = new CharSequence[]{ "Change Username","Change Password", "Add user"};
 		}
 		
 		//creating a dialog box for popup
@@ -634,6 +647,89 @@ public class menu extends ListActivity{
 			public void onClick(DialogInterface dialog,
 					int pos) {
 				if(pos == 0){
+					final View layout1 = m.builder_with_inflater(menu.this, "",
+							R.layout.change_password);
+					LinearLayout l1 = (LinearLayout) layout1
+							.findViewById(R.id.changepassword);
+					l1.setVisibility(View.GONE);
+
+					final TextView error_msg = (TextView) layout1
+							.findViewById(R.id.tverror_msg1);
+					Button save = (Button) layout1.findViewById(R.id.btnSave);
+					TextView header = (TextView) layout1
+							.findViewById(R.id.tvheader1);
+					header.setText("Change username");
+
+					Button cancel = (Button) layout1
+							.findViewById(R.id.btnCancel);
+					cancel.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View arg0) {
+							m.dialog.cancel();
+						}
+					});
+
+					save.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View arg0) {
+
+							
+							EditText olduser_name = (EditText) layout1
+									.findViewById(R.id.etOldUsername);
+							String olduserName = olduser_name.getText()
+									.toString();
+							System.out.println("olduserName:" + olduserName);
+							EditText newuser_name = (EditText) layout1
+									.findViewById(R.id.etNewUsername);
+							String newusername = newuser_name.getText()
+									.toString();
+							System.out.println("new username:" + newusername);
+
+							EditText password = (EditText) layout1
+									.findViewById(R.id.etPassword);
+							String password1 = password.getText().toString();
+							System.out.println("password:" + password1);
+							// System.out.println("username:"+username);
+							// System.out.println("userrole:"+userrole1);
+
+							if (!"".equals(olduserName)
+									& !"".equals(newusername)
+									& !"".equals(password1)) {
+								Boolean username_result = user.changeUserName( 
+										new Object[] { olduserName,
+												newusername, password1,
+												userrole }, client_id);
+								System.out.println("r:" + username_result);
+								if (username_result == true) {
+									error_msg.setVisibility(TextView.VISIBLE);
+									error_msg
+											.setText("Username updated successully");
+									
+									olduser_name.setText("");
+									newuser_name.setText("");
+									password.setText("");
+
+								} else {
+									error_msg.setVisibility(TextView.VISIBLE);
+									error_msg
+											.setText("Invalid username or password");
+									
+									olduser_name.setText("");
+									newuser_name.setText("");
+									password.setText("");
+								}
+							} else {
+								error_msg.setVisibility(TextView.VISIBLE);
+								error_msg.setText("Fill the empty fields");
+
+							}
+						}
+					});
+					
+				}
+				if(pos == 1){
 					final View layout=m.builder_with_inflater(menu.this, "",R.layout.change_password);
 					
 					LinearLayout l1=(LinearLayout) layout.findViewById(R.id.changeusername);
@@ -704,7 +800,6 @@ public class menu extends ListActivity{
 									error_msg.setVisibility(TextView.VISIBLE);
 
 									error_msg.setText( "Password updated successully");
-									m.dialog.cancel();
 									oldpass.setText("");
 									newpass.setText("");
 									confirmpass.setText(""); 
@@ -713,7 +808,6 @@ public class menu extends ListActivity{
 								error_msg.setVisibility(TextView.VISIBLE);
 
 								error_msg.setText( "New password and confirm password fields doesnot match!");
-								
 								newpass.setText("");
 								confirmpass.setText(""); 
 							}
@@ -727,9 +821,8 @@ public class menu extends ListActivity{
 					
 
 				}
-				if(pos==1){
+				if(pos==2){
 					Intent intent = new Intent(context, User_table.class);
-//					// To pass on the value to the next page
 					startActivity(intent);
 
 				}
@@ -737,55 +830,6 @@ public class menu extends ListActivity{
 		});
 		dialog=builder.create();
 		((Dialog) dialog).show();
-		
-    	
-    	
-    	
-    	
-    	/*final CharSequence[] items = { "add user", "" };
-    	//creating a dialog box for popup
-    	AlertDialog.Builder builder = new AlertDialog.Builder(context);
-    	//setting title
-    	builder.setTitle("Select preference");
-    	//adding items
-    	builder.setItems(items, new DialogInterface.OnClickListener() {
-    		public void onClick(DialogInterface dialog1, int pos) {
-    			//code for the actions to be performed on clicking popup item goes here ...
-    			switch (pos) {
-   	        case 0:
-   	        {
-   	        	
-   	        	MainActivity.editDetails=true;
-   	        	Object[] editDetails = (Object[])organisation.getOrganisation(client_id);
-   	        	accdetailsList = new ArrayList<String>();
-   	        	for(Object row2 : editDetails){
-   	        		Object[] a2=(Object[])row2;
-   	        		ArrayList<String> accdetails = new ArrayList<String>();
-                     for(int i=0;i<a2.length;i++){
-                     	accdetails.add((String) a2[i].toString());
-                     }
-                     accdetailsList.addAll(accdetails);
-   	        	}
-                          
-   	        	//System.out.println("details:"+accdetailsList);
-                        
-   	        	Intent intent = new Intent(context, orgDetails.class);
-   	        	// To pass on the value to the next page
-   	        	startActivity(intent);
-   	        }break;
-   	        case 1:
-   	        {
-   	        	Intent intent = new Intent(context, addProject.class);
-   	        	// To pass on the value to the next page
-   	        	startActivity(intent);
-   	        	
-   	        }break;
-    			}
-    		}
-    	});
-    	//building a complete dialog
-    	dialog=builder.create();
-    	dialog.show();*/
 	}
 
 	protected void addPreferences() {

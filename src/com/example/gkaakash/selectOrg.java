@@ -58,6 +58,7 @@ public class selectOrg extends Activity{
 	TextView tvwarning,tvLoginWarning,tvSignUp,tvuserrole,link;
 	private module m;
 	String get_extra_flag;
+	static boolean reset_password_flag = false;
 
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -192,55 +193,71 @@ public class selectOrg extends Activity{
 
 					@Override 
 					public void onClick(View arg0) { 
+						if(!(eloginUsername.getText().toString().equals(""))){
+							Object[] unique = (Object[]) user.getUserRole(new Object[]{eloginUsername.getText().toString()},client_id);
+							if((unique.length != 0) && (unique[0].toString().equalsIgnoreCase("Admin"))){
+								LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+								final View layout = inflater.inflate(R.layout.forgot_password, null);
+								final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+								builder.setView(layout);
+								final EditText answer =(EditText) layout.findViewById(R.id.etAnswer);
+								TextView header =(TextView) layout.findViewById(R.id.tvheader);
+								final Spinner Question =(Spinner) layout.findViewById(R.id.SpQuestions);
 
+								header.setText("Answer the security question to get access");
+								Button Ok =(Button) layout.findViewById(R.id.btnOK);
+								Button Cancel =(Button) layout.findViewById(R.id.btnCancel);
+								Cancel.setOnClickListener(new OnClickListener() {
 
-						LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-						final View layout = inflater.inflate(R.layout.forgot_password, null);
-						final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-						builder.setView(layout);
-						final EditText answer =(EditText) layout.findViewById(R.id.etAnswer);
-						TextView header =(TextView) layout.findViewById(R.id.tvheader);
-						final Spinner Question =(Spinner) layout.findViewById(R.id.SpQuestions);
+									@Override
+									public void onClick(View arg0) {
+										dialog.cancel();
+										tvLoginWarning.setVisibility(View.GONE);
+									}
+								});
 
-						header.setText("Answer the security question to get access");
-						Button Ok =(Button) layout.findViewById(R.id.btnOK);
-						Button Cancel =(Button) layout.findViewById(R.id.btnCancel);
-						Cancel.setOnClickListener(new OnClickListener() {
+								Ok.setOnClickListener(new OnClickListener() {
 
-							@Override
-							public void onClick(View arg0) {
-								dialog.cancel();
+									@Override
+									public void onClick(View arg0) {
+
+										int position = Question.getSelectedItemPosition();
+										String ans =answer.getText().toString();
+										TextView errormsg =(TextView) layout.findViewById(R.id.tverror_msg);
+										Boolean result = user.AdminForgotPassword(new Object[]{position,ans,"admin"},client_id);
+										
+										if(result==true){
+											Intent intent = new Intent(context,menu.class); 
+											reset_password_flag = true;
+											login_user = eloginUsername.getText().toString();
+											startActivity(intent); 
+										}else if ("".equals(ans)) {
+											errormsg.setVisibility(View.VISIBLE);
+											errormsg.setText("Please fill the field!");
+										}else {
+											errormsg.setVisibility(View.VISIBLE);
+											errormsg.setText("Invalid input,please try again!");
+											answer.setText("");
+										}
+									}
+								});
+
+								dialog = builder.create();
+								dialog.show();
+							}else{
+								eloginUsername.setText("");
+								eloginPassword.setText("");
+								tvLoginWarning.setVisibility(View.VISIBLE);
+								tvLoginWarning.setText("User is not present");
 							}
-						});
-
-						Ok.setOnClickListener(new OnClickListener() {
-
-							@Override
-							public void onClick(View arg0) {
-
-								int position = Question.getSelectedItemPosition();
-								String ans =answer.getText().toString();
-								TextView errormsg =(TextView) layout.findViewById(R.id.tverror_msg);
-								Boolean result = user.AdminForgotPassword(new Object[]{position,ans,"admin"},client_id);
-								
-								if(result==true){
-									Intent intent = new Intent(context,menu.class); 
-									
-									startActivity(intent); 
-								}else if ("".equals(ans)) {
-									errormsg.setVisibility(View.VISIBLE);
-									errormsg.setText("Please fill the field!");
-								}else {
-									errormsg.setVisibility(View.VISIBLE);
-									errormsg.setText("Invalid input,please try again!");
-									answer.setText("");
-								}
-							}
-						});
-
-						dialog = builder.create();
-						dialog.show();
-
+							
+							
+						}
+						else{
+							tvLoginWarning.setVisibility(View.VISIBLE);
+							tvLoginWarning.setText("Please enter username");
+						}
+						
 					}
 				});
 
