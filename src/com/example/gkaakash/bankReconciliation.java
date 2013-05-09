@@ -106,12 +106,12 @@ public class bankReconciliation extends Activity{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 1:
-			m.generate_pdf1(bankReconciliation.this, pdf_params, sFilename, bankReconGrid,
+			m.generate_pdf1(bankReconciliation.this, pdf_params,bankReconGrid,
 					statementGrid);
 			return true;
 
 		case 2:
-			m.csv_writer1(bankReconGrid, statementGrid,sFilename);
+			m.csv_writer1(pdf_params,bankReconGrid, statementGrid);
 			m.toastValidationMessage(bankReconciliation.this, "CSV exported");
 			return true;
 		}

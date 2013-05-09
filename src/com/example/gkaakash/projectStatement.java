@@ -77,11 +77,11 @@ public class projectStatement extends Activity{
    	public boolean onOptionsItemSelected(MenuItem item) {
    		switch (item.getItemId()) {
    		case 1:			
-   			m.generate_pdf(projectStatement.this, pdf_params, sFilename, projectStatementGrid);
+   			m.generate_pdf(projectStatement.this, pdf_params,projectStatementGrid);
    			return true;
 
    		case 2:
-   			m.csv_writer(projectStatementGrid_with_header,sFilename);
+   			m.csv_writer(pdf_params,projectStatementGrid_with_header);
    			m.toastValidationMessage(projectStatement.this, "CSV exported");
    			return true;
    		}

@@ -72,12 +72,11 @@ public class incomeExpenditure extends Activity{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 1:
-			m.generate_pdf1(incomeExpenditure.this, pdf_params, sFilename, IEGrid1,
-					IEGrid2);
+			m.generate_pdf1(incomeExpenditure.this, pdf_params, IEGrid1,IEGrid2);
 			return true;
 
 		case 2:
-			m.csv_writer1(IEGrid1, IEGrid2,sFilename);
+			m.csv_writer1(pdf_params,IEGrid1, IEGrid2);
 			m.toastValidationMessage(incomeExpenditure.this, "CSV exported");
 
 			return true;

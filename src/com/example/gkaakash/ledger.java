@@ -127,11 +127,11 @@ public class ledger extends Activity {
 	 public boolean onOptionsItemSelected(MenuItem item) {
 	 switch (item.getItemId()) {
 	 case 1:
-	 m.generate_pdf(ledger.this, pdf_params, sFilename, ledgerGrid);
+	 m.generate_pdf(ledger.this, pdf_params,ledgerGrid);
 	 return true;
 	
 	 case 2:
-	 m.csv_writer(ledgerGrid_with_header,sFilename);
+	 m.csv_writer(pdf_params,ledgerGrid_with_header);
 	 m.toastValidationMessage(ledger.this, "CSV exported");
 	 return true;
 	 }

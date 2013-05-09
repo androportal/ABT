@@ -20,7 +20,7 @@ public class Report {
 	private Object[] cashFlowStatement;
 	private Object[] getBalancesheetDisplay;
 	private Object[] getLedgerForBankRecon;
-	private String setBankReconciliationResult,rollover;
+	private String setBankReconciliationResult,rollover,getClosingBalance;
 	Boolean existrollover;
 	private Boolean result;
 	private Object[] calculateBalance;
@@ -59,20 +59,12 @@ public class Report {
 	public Object getLedger(Object[] params,Object client_id) {
 		
 		try {
-			System.out.println(client_id);
-			System.out.println("we are in ledger");
-			System.out.println(params);
-			ledgerResult = (Object[])conn.getClient().call("reports.getLedger",params,client_id);
-			System.out.println(ledgerResult);
-		} catch (XMLRPCFault e) {
-			try {
 				ledgerResult = (Object[])conn.getClient().call("reports.getLedger",params,client_id);
-			} catch (XMLRPCException e1) {
-				
-				e1.printStackTrace();
-			}
-		}catch (Exception e) {
-			
+		
+		} 
+		catch (XMLRPCException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		return ledgerResult;
@@ -85,13 +77,6 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 			System.out.println(params);
 			grosstrialResult = (Object[])conn.getClient().call("reports.getGrossTrialBalance",params,client_id);
 			
-		} catch (XMLRPCFault e) {
-			try {
-				grosstrialResult = (Object[])conn.getClient().call("reports.getGrossTrialBalance",params,client_id);
-			} catch (XMLRPCException e1) {
-			
-				e1.printStackTrace(); 
-			}
 		}
 		catch (Exception e) { 
 			
@@ -107,14 +92,7 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 			System.out.println(params);
 			extendedtrialResult = (Object[])conn.getClient().call("reports.getExtendedTrialBalance",params,client_id);
 			
-		} catch (XMLRPCFault e) {
-			try {
-				extendedtrialResult = (Object[])conn.getClient().call("reports.getExtendedTrialBalance",params,client_id);
-			} catch (XMLRPCException e1) {
-			
-				e1.printStackTrace(); 
-			}
-		}
+		} 
 		catch (Exception e) { 
 			
 			e.printStackTrace();
@@ -269,15 +247,14 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 		
 		try { 
 			
-			 System.out.println("data:"+params[0]+""+params[1]+""+params[2]+""+params[3]);
-			System.out.println("nnn:"+client_id);
 			calculateBalance = (Object[])conn.getClient().call("reports.calculateBalance",params,client_id);
-			
+			getClosingBalance = calculateBalance[2].toString();
+
 		} catch (XMLRPCException e) {
 			
 			e.printStackTrace();
 		} 
-		return calculateBalance;
+		return getClosingBalance;
 	}
 	/***
 	 * This function will call the rollover xmlrpc from rpc_main of ABTcore

@@ -87,11 +87,11 @@ public class trialBalance extends Activity{
    	public boolean onOptionsItemSelected(MenuItem item) {
    		switch (item.getItemId()) {
    		case 1:			
-   			m.generate_pdf(trialBalance.this, pdf_params, sFilename, trialBalGrid);
+   			m.generate_pdf(trialBalance.this, pdf_params,trialBalGrid);
    			return true;
 
    		case 2:
-   			m.csv_writer(trialBalGrid_with_header,sFilename);
+   			m.csv_writer(pdf_params,trialBalGrid_with_header);
    			m.toastValidationMessage(trialBalance.this, "CSV exported");
    			return true;
    		}

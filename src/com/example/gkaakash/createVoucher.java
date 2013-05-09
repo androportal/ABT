@@ -812,16 +812,9 @@ public class createVoucher extends Activity {
 				String Acc_name = (String) account.getSelectedItem();
 				Object[] params1 = new Object[] { Acc_name, financialFromDate,
 						financialFromDate, financialToDate };
-				Object[] calculateBalance = (Object[]) reports
-						.calculateBalance(params1, client_id);
+				String calculateBalance = (String) reports.calculateBalance(params1, client_id);
+				closing_bal.setText(calculateBalance);
 
-				ArrayList balance = new ArrayList();
-				for (Object row1 : calculateBalance) {
-					Object a = (Object) row1;
-					balance.add(a.toString());// getting vouchermaster details
-				}
-
-				closing_bal.setText(balance.get(2).toString());
 
 			}
 
@@ -842,17 +835,12 @@ public class createVoucher extends Activity {
 				// "account:"+ac,Toast.LENGTH_SHORT).show();
 				Object[] params1 = new Object[] { ac, financialFromDate,
 						financialFromDate, financialToDate };
-				Object[] calculateBalance = (Object[]) reports
-						.calculateBalance(params1, client_id);
-				ArrayList balance1 = new ArrayList();
-				for (Object row1 : calculateBalance) {
-					Object a = (Object) row1;
-					balance1.add(a.toString());// getting vouchermaster details
-				}
-
+				String calculateBalance = (String) reports.calculateBalance(params1, client_id);
+				
 				View v1 = (View) parent.getParent();
 				EditText e3 = (EditText) ((ViewGroup) v1).getChildAt(5);
-				e3.setText(balance1.get(2).toString());
+				//e3.setText(balance1.get(2).toString());
+				e3.setText(calculateBalance);
 
 			}
 

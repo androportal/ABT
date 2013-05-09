@@ -82,12 +82,12 @@ public class cashFlow extends Activity{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 1:
-			m.generate_pdf1(cashFlow.this, pdf_params, sFilename, cashFlow1,
+			m.generate_pdf1(cashFlow.this, pdf_params,cashFlow1,
 					cashFlow2);
 			return true;
 
 		case 2:
-			m.csv_writer1(cashFlow1, cashFlow2,sFilename);
+			m.csv_writer1(pdf_params,cashFlow1, cashFlow2);
 			m.toastValidationMessage(cashFlow.this, "CSV exported");
 			return true;
 		}

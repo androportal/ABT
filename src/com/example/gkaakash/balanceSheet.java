@@ -98,11 +98,11 @@ public class balanceSheet extends Activity{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 1:			
-			m.generate_pdf1(balanceSheet.this, pdf_params, sFilename, BalanceGrid1,BalanceGrid2);
+			m.generate_pdf1(balanceSheet.this, pdf_params, BalanceGrid1,BalanceGrid2);
 			return true;
 
 		case 2:
-			m.csv_writer1(BalanceGrid1,BalanceGrid2,sFilename);
+			m.csv_writer1(pdf_params,BalanceGrid1,BalanceGrid2);
 			m.toastValidationMessage(balanceSheet.this, "CSV exported");
 			return true;
 		}
@@ -210,7 +210,6 @@ public class balanceSheet extends Activity{
          
     			if (count == 3)
     			{
-         
     				final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs)); 
     				//System.out.println("diff"+t[0].toString());
     				result = "Difference in Opening Balances: "+rsSymbol+" "+t[0].toString();

@@ -3,7 +3,9 @@ package com.example.gkaakash;
 import java.io.DataOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -40,7 +42,7 @@ public class module {
 	static AlertDialog dialog ;
 	boolean resetFlag = false;
 	boolean menu_flag;
-	
+	FileWriter fw;
 	void getAccountsByRule(Object[] DrCrFlag, String vouchertypeflag2, Context context) {
 		transaction = new Transaction();
        	client_id= Startup.getClient_id();
@@ -122,7 +124,7 @@ public class module {
         alert.show();
 	 }
 	 
-	void generate_pdf(final Context c,final String[] params,final String sFilename,final ArrayList<ArrayList> Grid){
+	void generate_pdf(final Context c,final String[] params,final ArrayList<ArrayList> Grid){
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				c);
 		builder.setMessage("Do you want to create PDF")
@@ -138,7 +140,7 @@ public class module {
 									AlertDialog.Builder builder1 = new AlertDialog.Builder(
 											c);
 									builder1.setMessage("PDF genration completed ..see /mnt/sdcard/"
-											+ sFilename);
+											+ params[1]);
 									AlertDialog alert1 = builder1
 											.create();
 									alert1.show();
@@ -162,7 +164,7 @@ public class module {
 	}
 	
 	
-	void generate_pdf1(final Context c,final String[] params,final String sFilename,final ArrayList<ArrayList> Grid,final ArrayList<ArrayList> Grid1){
+	void generate_pdf1(final Context c,final String[] params,final ArrayList<ArrayList> Grid,final ArrayList<ArrayList> Grid1){
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				c);
 		builder.setMessage("Do you want to create PDF")
@@ -175,7 +177,7 @@ public class module {
 								try {
 									pdfgen.generateBalancePDFFile(Grid,Grid1,params);
 	            			        AlertDialog.Builder builder1 = new AlertDialog.Builder(c);
-	            			        builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+sFilename);
+	            			        builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+params[1]);
 	            			        AlertDialog alert1 = builder1.create();
 	            			        alert1.show();
 	            			        alert1.setCancelable(true);
@@ -200,11 +202,11 @@ public class module {
 	}
 	
 	
-	void csv_writer(ArrayList<ArrayList> Grid,String sFilename){
+	void csv_writer(String[] params,ArrayList<ArrayList> Grid){
 		try {
 			
-			FileWriter fw = new FileWriter("/mnt/sdcard/"+sFilename+".csv");
-
+			cerateTitle(params);
+			fw.append('\n');
 			for (int i = 0; i < Grid.size(); i++) {
 				for (int j = 0; j < Grid.get(i).size(); j++) {
 					
@@ -212,7 +214,19 @@ public class module {
 					fw.append(',');
 				}
 				fw.append('\n');
+				
 			}
+			/*if(!params[0].equalsIgnoreCase("L")||!params[0].equalsIgnoreCase("I&E")||!params[0].equalsIgnoreCase("P&L"))
+			{String[] params1 = params[7].toString().split(":");
+				System.out.println("print line "+params1[0]+""+params1[1]);
+				fw.append(" ");
+				fw.append(',');
+				fw.append(" ");
+				fw.append(',');  
+				fw.append(params1[0]);
+				fw.append(',');
+				fw.append(params1[1]);
+			}*/
 			fw.flush();
 			fw.close();
 
@@ -222,9 +236,10 @@ public class module {
 
 	}
 	
-	void csv_writer1(ArrayList<ArrayList> Grid,ArrayList<ArrayList> Grid1,String sFilename){
+	void csv_writer1(String[] params,ArrayList<ArrayList> Grid,ArrayList<ArrayList> Grid1){
 		try {
-			FileWriter fw = new FileWriter("/mnt/sdcard/"+sFilename+".csv");
+			cerateTitle(params);
+			fw.append('\n');
 			
 			for (int i = 0; i < Grid.size(); i++) {
 				for (int j = 0; j < Grid.get(i).size(); j++) {
@@ -407,4 +422,41 @@ public class module {
 	}
 	});
     }
+    /***
+   	 * This function is to create title to each pdf    
+   	 * @param pdf_params
+   	 * @throws FileNotFoundException
+   	 * @throws DocumentException
+   	 */
+   	void cerateTitle(String[] params)
+   	{
+   		/* Get the /mnt/sdcard */
+   		
+   		Date date= new Date();
+   		String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+   		/* Create new file with sFilename*/ 
+   		
+   		try {
+   			fw = new FileWriter("/mnt/sdcard/"+params[1]+".csv");
+   			fw.append("Genrated Date:  "+new SimpleDateFormat("EEE d-MMM-yyyy HH:mm:ss").format(date));
+   			fw.append(',');
+   			fw.append("   "+params[2]);
+   			fw.append(',');
+   			fw.append(params[3]);  
+   			fw.append(',');
+   			fw.append(params[4]);
+   			fw.append(',');
+   			fw.append(params[5]);
+   			fw.append(',');
+   			fw.append(params[6]);
+   			fw.append('\n');
+   			
+   			
+   		} catch (IOException e) {
+   			// TODO Auto-generated catch block
+   			e.printStackTrace();
+   		}
+   		
+   	}
+       
 }
