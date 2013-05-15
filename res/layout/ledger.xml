@@ -1,12 +1,27 @@
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_width="fill_parent" 
+ android:layout_height="fill_parent"
+ android:orientation="vertical"
+ android:weightSum="100">
+ 
  <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent" 
+    android:layout_weight="90">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" 
         android:orientation="vertical"
          android:id="@+id/layout_root" >
          
+         <TextView
+             android:id="@+id/tvLedgerWarning"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:textColor="#F90000"
+             android:textSize="20dp"
+             android:visibility="gone" />
          <TextView
              android:id="@+id/tvAccName"
              android:layout_width="wrap_content"
@@ -33,7 +48,7 @@
         
          
          <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent" 
         android:orientation="vertical"
          android:id="@+id/layout_root"
@@ -60,7 +75,7 @@
         
          <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" 
+        android:layout_height="wrap_content" 
         android:orientation="vertical"
          android:id="@+id/layout_root"
          android:layout_weight="50" >
@@ -122,5 +137,39 @@
             android:layout_gravity="center"
             android:prompt="@string/projectName_prompt" />
 
+		
     </LinearLayout>
+    
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/dark_gray_background"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+                 <Button
+                     android:id="@+id/btnView"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:text="View"
+                     android:layout_weight="1"
+                     android:textSize="20sp"
+                     android:gravity="center"
+                     android:layout_alignParentBottom="true"
+                     android:layout_gravity="center_vertical" />
+                 <Button
+                    android:id="@+id/btnCancel"  
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Cancel"
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+            </LinearLayout>

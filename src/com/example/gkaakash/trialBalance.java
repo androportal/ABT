@@ -47,6 +47,7 @@ public class trialBalance extends Activity{
     static Object[] trialBalanceResult;
     TableLayout trialBaltable;
     TableRow tr;
+    SpannableString rsSymbol;
     TextView label;
     ArrayList<ArrayList> trialBalGrid,trialBalGrid_with_header;
     ArrayList<String> trialBalanceResultList;
@@ -107,6 +108,7 @@ public class trialBalance extends Activity{
 	    client_id= Startup.getClient_id();
 		 m=new module();
 	    reportmenuflag = MainActivity.reportmenuflag;
+	    rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs)); 
 	    //customizing title bar
 	    getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
 	   
@@ -136,9 +138,7 @@ public class trialBalance extends Activity{
 		    */
 	    	TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
 	    	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
-		   
-	    	//tvfinancialFromDate.setText("Financial from : " +financialFromDate);
-	    	//tvfinancialToDate.setText("Financial to : " +trialToDateString);
+		  
 	    	tvfinancialToDate.setText("Period : "+financialFromDate+" to "+trialToDateString);   
 	    	/*
 		    * send params to controller report.getTrialBalance to get the result
@@ -158,7 +158,7 @@ public class trialBalance extends Activity{
 	    	}
 	    	 Date date= new Date();
 	   		 date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
-	         OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
+	         OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
 	         TrialPeriod = financialFromDate+" to "+trialToDateString;
 	         trialBalGrid = new ArrayList<ArrayList>();
 	         trialBalGrid_with_header = new ArrayList<ArrayList>();
@@ -198,7 +198,8 @@ public class trialBalance extends Activity{
 				}
 	        });
 	    	sFilename = trialbalType+"_"+date_format;
-			pdf_params = new String[]{trialbalType,sFilename,OrgName,OrgPeriod,trialbalancetype,TrialPeriod,"",String.format("%.2f", Math.abs(result))};
+			pdf_params = new String[]{trialbalType,sFilename,OrgName,OrgPeriod,trialbalancetype,
+					TrialPeriod,"",rsSymbol+String.format("%.2f", Math.abs(result))};
 					
 	    	
 	    	
@@ -232,9 +233,7 @@ public class trialBalance extends Activity{
 					int rowcount = trialBaltable.getChildCount();    
 	                View row = trialBaltable.getChildAt(rowcount-1);
 					
-	                //For adding rupee symbol
-	                final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs)); 
-	               
+	            
 	                    /** Create a TableRow dynamically **/
 	                if ("Net Trial Balance".equals(trialbalancetype)){
 	                	ColumnNameList = new String[] { "Sr. no.","Account name","Group name",rsSymbol+" Debit",rsSymbol+" Credit"};	
@@ -437,7 +436,7 @@ public class trialBalance extends Activity{
          * display the difference between total dr and total cr
          */
         TextView difference = (TextView) findViewById(R.id.tvdifference);
-        final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs));
+       
         ArrayList<String> lastrow=trialBalGrid.get(trialBalGrid.size()-1);
         if(!"Extended Trial Balance".equals(trialbalancetype)){
         	result=Float.parseFloat(lastrow.get(4))-Float.parseFloat(lastrow.get(3));
@@ -453,7 +452,7 @@ public class trialBalance extends Activity{
      */
     void addHeader(){
 	    //For adding rupee symbol
-	    final SpannableString rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs)); 
+	   
 	   
 	        /** Create a TableRow dynamically **/
 	    if ("Net Trial Balance".equals(trialbalancetype)){

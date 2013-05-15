@@ -64,6 +64,7 @@ public class projectStatement extends Activity{
    	int CSV=Menu.FIRST+1;
    	module m;
    	String[] ColumnNameList;
+   	SpannableString rsSymbol ;
    	
    	@Override
    	public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,7 +98,8 @@ public class projectStatement extends Activity{
         report = new Report();
         client_id= Startup.getClient_id();
         m=new module();
-   
+      //For adding rupee symbol
+        rsSymbol = new SpannableString(projectStatement.this.getText(R.string.Rs)); 
         reportmenuflag=MainActivity.reportmenuflag;
         //customizing title bar
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
@@ -105,7 +107,6 @@ public class projectStatement extends Activity{
         try {
         	floating_heading_table = (TableLayout)findViewById(R.id.floating_heading_table);
         	floating_heading_table.setVisibility(TableLayout.GONE);
-	   
         	/*
         	 * get financial from and to date from startup page
         	 */
@@ -182,7 +183,7 @@ public class projectStatement extends Activity{
         	});
         	 Date date= new Date();
 	   		     String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
-				 OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
+				 OrgPeriod = "Financial Year:  "+financialFromDate+" to "+financialToDate;
 	             Period = financialFromDate+" to "+ToDateString;
 	             String project = projectName.replace(" ","");
 				 sFilename = "ProjeST"+"_"+project+"_"+date_format;
@@ -220,7 +221,7 @@ public class projectStatement extends Activity{
 					int rowcount = projectStatementTable.getChildCount();    
 	                View row = projectStatementTable.getChildAt(rowcount-1);
 					
-	                final SpannableString rsSymbol = new SpannableString(projectStatement.this.getText(R.string.Rs)); 
+	               
 	                /** Create a TableRow dynamically **/
 	                String[] ColumnNameList = new String[] { "Sr. no.","Account name","Group name",rsSymbol+" Total debit",rsSymbol+" Total credit"};
 	               
@@ -377,7 +378,7 @@ public class projectStatement extends Activity{
         result=Float.parseFloat(lastrow.get(4))-Float.parseFloat(lastrow.get(3));
         TextView difference = (TextView) findViewById(R.id.tvdifference);
         
-        final SpannableString rsSymbol = new SpannableString(projectStatement.this.getText(R.string.Rs));
+       
         difference.setText("Difference in Opening Balances : "+rsSymbol+" "+(String.format("%.2f", Math.abs(result))));
     }
 
@@ -386,8 +387,7 @@ public class projectStatement extends Activity{
      * add column heads to the table
      */
     void addHeader(){
-    	//For adding rupee symbol
-        final SpannableString rsSymbol = new SpannableString(projectStatement.this.getText(R.string.Rs)); 
+    	
         /** Create a TableRow dynamically **/
         ColumnNameList = new String[] { "Sr. no.","Account name","Group name",rsSymbol+" Total debit",rsSymbol+" Total credit"};
        
@@ -411,8 +411,7 @@ public class projectStatement extends Activity{
 	    projectStatementGrid_with_header.addAll(projectStatementGrid);
 	    tr.setClickable(false);
         // Add the TableRow to the TableLayout
-        projectStatementTable.addView(tr, new TableLayout.LayoutParams(
-                LayoutParams.FILL_PARENT,
+        projectStatementTable.addView(tr, new TableLayout.LayoutParams(LayoutParams.FILL_PARENT,
                 LayoutParams.MATCH_PARENT));
     }
     
@@ -440,8 +439,7 @@ public class projectStatement extends Activity{
 					}					
 					
 					acc_name1 = accname;
-					Intent intent = new Intent(getApplicationContext(),
-							ledger.class);
+					Intent intent = new Intent(getApplicationContext(),ledger.class);
 					intent.putExtra("flag", "from_projStatement");
 					startActivity(intent);
 				}

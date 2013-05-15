@@ -231,7 +231,7 @@ public class ledger extends Activity {
 			Date date = new Date();
 			String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss")
 					.format(date);
-			OrgPeriod = "Financial Year:\n " + financialFromDate + " to "
+			OrgPeriod = "Financial Year: " + financialFromDate + " to "
 					+ financialToDate;
 			LedgerPeriod = fromDate + " to " + toDate;
 			String account = accountName.replace(" ", "");

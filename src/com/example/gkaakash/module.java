@@ -42,6 +42,7 @@ public class module {
 	static AlertDialog dialog ;
 	boolean resetFlag = false;
 	boolean menu_flag;
+	int columnSize;
 	FileWriter fw;
 	void getAccountsByRule(Object[] DrCrFlag, String vouchertypeflag2, Context context) {
 		transaction = new Transaction();
@@ -206,7 +207,8 @@ public class module {
 		try {
 			
 			cerateTitle(params);
-			fw.append('\n');
+			fw.append('\n');columnSize = Grid.get(0).size();
+			columnSize = Grid.get(0).size();
 			for (int i = 0; i < Grid.size(); i++) {
 				for (int j = 0; j < Grid.get(i).size(); j++) {
 					
@@ -216,53 +218,107 @@ public class module {
 				fw.append('\n');
 				
 			}
-			/*if(!params[0].equalsIgnoreCase("L")||!params[0].equalsIgnoreCase("I&E")||!params[0].equalsIgnoreCase("P&L"))
-			{String[] params1 = params[7].toString().split(":");
-				System.out.println("print line "+params1[0]+""+params1[1]);
-				fw.append(" ");
-				fw.append(',');
-				fw.append(" ");
-				fw.append(',');  
-				fw.append(params1[0]);
-				fw.append(',');
-				fw.append(params1[1]);
-			}*/
+			fw.append('\n');
+			if(!params[0].equalsIgnoreCase("L"))
+			{    
+				for (int i = 0; i < columnSize-2; i++) {
+					fw.append(" ");
+					fw.append(',');
+				}
+				fw.append("Difference in Opening Balances:");
+				fw.append(','); 
+				fw.append(params[7]);
+				
+			}
 			fw.flush();
 			fw.close();
 
 		} catch (Exception e) {
 			System.out.println("error:" + e.getMessage());
-		}
+		}   
 
-	}
+	} 
 	
 	void csv_writer1(String[] params,ArrayList<ArrayList> Grid,ArrayList<ArrayList> Grid1){
 		try {
 			cerateTitle(params);
 			fw.append('\n');
 			
+			columnSize = Grid.get(0).size();
 			for (int i = 0; i < Grid.size(); i++) {
+			
 				for (int j = 0; j < Grid.get(i).size(); j++) {
-					
-					fw.append(Grid.get(i).get(j).toString());
+					if(i==0)
+					{
+						if((params[0].equals("Conv_bal")&&j==1||j==2||j==3)||
+								(params[0].equalsIgnoreCase("cash")&&j==1)||
+								(params[0].equalsIgnoreCase("I&E")&&j==2)||
+								(params[0].equalsIgnoreCase("Sources_bal")&&j!=0)||
+								(params[0].equalsIgnoreCase("P&L")&&j==2))// for the values if the list (first,second and third column)
+							
+						{	
+							//System.out.println("in rupes");
+							fw.append(params[8]+""+Grid.get(i).get(j).toString());
+						}else
+						{
+							//System.out.println("in no rupes");
+							fw.append(Grid.get(i).get(j).toString());
+						}
+					}
+					else
+					{
+						fw.append(Grid.get(i).get(j).toString());
+					}
 					fw.append(',');
 				}
 				fw.append('\n');
+				fw.append('\n');
 			}
 			fw.flush();
-
 			fw.append('\n');
-
+			fw.append('\n');
 			for (int i = 0; i < Grid1.size(); i++) {
 				for (int j = 0; j < Grid1.get(i).size(); j++) {
 					
-					fw.append(Grid1.get(i).get(j).toString());
+					if(i==0)
+					{
+						if((params[0].equals("Conv_bal")&&j==1||j==2||j==3)||
+						(params[0].equalsIgnoreCase("cash")&&j==1)||
+						(params[0].equalsIgnoreCase("I&E")&&j==2)||
+						(params[0].equalsIgnoreCase("Sources_bal")&&j!=0)||
+						(params[0].equalsIgnoreCase("P&L")&&j==2))// for the values if the list (first,second and third column)
+						{	
+							fw.append(params[8]+""+Grid1.get(i).get(j).toString());
+						}else    
+						{
+							fw.append(Grid1.get(i).get(j).toString());
+						}
+					}
+					else   
+					{
+							fw.append(Grid1.get(i).get(j).toString());
+					}
 					fw.append(',');
 				}
+				fw.append('\n');
 				fw.append('\n');
 
 			}
 			fw.flush();
+			fw.append('\n');
+			fw.append('\n');
+				String[] params1 = params[7].toString().split(":");
+				System.out.println("print line "+params1[0]+""+params1[1]);
+				for (int i = 0; i < columnSize-2; i++) {
+					fw.append(" ");
+					fw.append(',');
+				}
+				fw.append(params1[0]);
+				fw.append(',');  
+				fw.append(params1[1]);
+				
+				fw.flush();
+
 			fw.close();
 
 		} catch (Exception e) {

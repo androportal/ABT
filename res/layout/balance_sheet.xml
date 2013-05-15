@@ -1,10 +1,26 @@
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent" 
+ 		android:layout_height="fill_parent"
+ 		android:orientation="vertical"
+ 		android:weightSum="100">
+ 		
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_root"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" 
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-         android:id="@+id/layout_root" >
+        android:weightSum="90" >
 
+        <TextView
+             android:id="@+id/tvBalWarning"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:textColor="#F90000"
+             android:textSize="20dp"
+             android:visibility="gone" />
+        
         <TextView
             android:id="@+id/tvsetT0date"
             android:layout_width="wrap_content"
@@ -32,9 +48,41 @@
         <Spinner
             android:id="@+id/sbalanceSheetType"
             android:layout_width="254dp"
-            android:layout_height="wrap_content"
+            android:layout_height="66dp"
             android:layout_gravity="center"
             android:entries="@array/BalanceSheet_arrays"
             android:prompt="@string/BalanceSheet_prompt" />
 
     </LinearLayout>
+
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="58dp"
+	    android:layout_alignParentBottom="true"
+	    android:layout_gravity="center_vertical"
+	    android:background="@drawable/dark_gray_background"
+	    android:gravity="center"
+	    android:orientation="horizontal" >
+
+                 <Button
+                     android:id="@+id/btnView"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:text="View"
+                     android:layout_weight="1"
+                     android:textSize="20sp"
+                     android:gravity="center"
+                     android:layout_alignParentBottom="true"
+                     android:layout_gravity="center_vertical" />
+                 <Button
+                    android:id="@+id/btnCancel"  
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Cancel"
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+</LinearLayout>

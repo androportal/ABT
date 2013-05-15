@@ -59,6 +59,7 @@ public class incomeExpenditure extends Activity{
 	int PDF = Menu.FIRST;
 	int CSV = Menu.FIRST + 1;
 	module m;
+	SpannableString rsSymbol;
 		
 		
 	@Override
@@ -91,7 +92,7 @@ public class incomeExpenditure extends Activity{
         report = new Report();
         client_id= Startup.getClient_id();
         m=new module();
-   
+        rsSymbol = new SpannableString(incomeExpenditure.this.getText(R.string.Rs));
         //customizing title bar
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
    
@@ -167,7 +168,7 @@ public class incomeExpenditure extends Activity{
 		   
         	 Date date= new Date();
 	   		 date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
-	         OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
+	         OrgPeriod = "Financial Year:  "+financialFromDate+" to "+financialToDate;
 	         TrialPeriod = financialFromDate+" to "+IEToDateString;
 	        // trialBalGrid = new ArrayList<ArrayList>();
         	Reporttypeflag = reportMenu.reportTypeFlag;
@@ -206,11 +207,11 @@ public class incomeExpenditure extends Activity{
             if(Reporttypeflag.equalsIgnoreCase("Income and Expenditure"))
 			{
 					sFilename = "IE"+"_"+date_format;
-		        	pdf_params = new String[]{"I&E",sFilename,OrgName,OrgPeriod,Reporttypeflag,TrialPeriod,"",""};
+		        	pdf_params = new String[]{"I&E",sFilename,OrgName,OrgPeriod,Reporttypeflag,TrialPeriod,"","",rsSymbol.toString()};
 			}else
 		    {
 					sFilename = "PL"+"_"+date_format;
-		        	pdf_params = new String[]{"P&L",sFilename,OrgName,OrgPeriod,Reporttypeflag,TrialPeriod,"",""};
+		        	pdf_params = new String[]{"P&L",sFilename,OrgName,OrgPeriod,Reporttypeflag,TrialPeriod,"","",rsSymbol.toString()};
 		    }
          
            
@@ -314,7 +315,7 @@ public class incomeExpenditure extends Activity{
     		if(j==2){//for amount coloumn
     			if(columnValue.get(j).equalsIgnoreCase("Amount")){ // for heading "Amount"
     				//For adding rupee symbol
-    				final SpannableString rsSymbol = new SpannableString(incomeExpenditure.this.getText(R.string.Rs));
+    				
     				addRow(rsSymbol+" "+columnValue.get(j));   
     				label.setBackgroundColor(color);
     				label.setGravity(Gravity.CENTER);

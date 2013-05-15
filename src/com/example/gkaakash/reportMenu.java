@@ -24,10 +24,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ListView;
@@ -61,6 +63,7 @@ public class reportMenu extends ListActivity{
 	static String reportTypeFlag;
 	static String balancetype;
 	module m;
+	TextView tvLedgerWarning;
 	
 	
 	@Override
@@ -179,7 +182,7 @@ public class reportMenu extends ListActivity{
 				  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				  	   	projectNames.setAdapter(da1);
 				  	   	
-				  	   	
+				  	    tvLedgerWarning = (TextView)layout.findViewById(R.id.tvLedgerWarning);
 					   	
 				  	   	final CheckBox cbNarration = (CheckBox)layout.findViewById(R.id.cbNarration);
 				  	   	TextView tvcbNarration= (TextView)layout.findViewById(R.id.tvcbNarration);
@@ -190,7 +193,34 @@ public class reportMenu extends ListActivity{
 					   	final DatePicker LedgerT0date = (DatePicker) layout.findViewById(R.id.dpsetLedgerT0date);
 					   	LedgerT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
 					   	
-						builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
+					   	Button btnView = (Button)layout.findViewById(R.id.btnView);
+					   	Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
+					   	btnView.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View arg0) {
+								selectedAccount = accountNames.getSelectedItem().toString();
+								selectedProject = projectNames.getSelectedItem().toString();
+								cheched = cbNarration.isChecked();
+								validateDate(LedgerFromdate, LedgerT0date, "validatebothFromToDate",tvLedgerWarning);
+								
+								if(validateDateFlag){
+									Intent intent = new Intent(context, ledger.class);
+									// To pass on the value to the next page
+									startActivity(intent);
+								}
+								
+								
+							}
+						});
+					   	btnCancel.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								dialog.dismiss();
+							}
+						});
+						/*builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 
 							@Override
 							public void onClick(DialogInterface arg0, int arg1) {
@@ -198,7 +228,7 @@ public class reportMenu extends ListActivity{
 								selectedAccount = accountNames.getSelectedItem().toString();
 								selectedProject = projectNames.getSelectedItem().toString();
 								cheched = cbNarration.isChecked();
-								validateDate(LedgerFromdate, LedgerT0date, "validatebothFromToDate");
+								validateDate(LedgerFromdate, LedgerT0date, "validatebothFromToDate",tvLedgerWarning);
 								
 								if(validateDateFlag){
 									Intent intent = new Intent(context, ledger.class);
@@ -214,7 +244,7 @@ public class reportMenu extends ListActivity{
 							public void onClick(DialogInterface dialog, int which) {
 							
 							}	
-						});
+						});*/
 						dialog=builder.create();
 						dialog.show();
 						WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -237,19 +267,44 @@ public class reportMenu extends ListActivity{
 					builder.setView(layout);
 					builder.setTitle("Trial Balance");	
 					
-					
+					tvLedgerWarning = (TextView)layout.findViewById(R.id.tvTrialWarning);
+				   	
 					final DatePicker trialtodate = (DatePicker) layout.findViewById(R.id.dpTrialsetT0date);
 					trialtodate.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
 					
 					final Spinner strialBalanceType = (Spinner)layout.findViewById(R.id.strialBalanceType);
 					
-					builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
+					Button btnView = (Button)layout.findViewById(R.id.btnView);
+				   	Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
+				   	btnView.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							trialbalancetype=strialBalanceType.getSelectedItem().toString();
+							
+							validateDate(null, trialtodate, null,tvLedgerWarning);
+							
+						   	if(validateDateFlag){
+								Intent intent = new Intent(context, trialBalance.class);
+								// To pass on the value to the next page
+								startActivity(intent);
+							}
+						}
+					});
+				   	btnCancel.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							dialog.dismiss();
+						}
+					});
+					/*builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 						@Override
 						public void onClick(DialogInterface arg0, int arg1) {
 							
 							trialbalancetype=strialBalanceType.getSelectedItem().toString();
 							
-							validateDate(null, trialtodate, null);
+							validateDate(null, trialtodate, null,tvLedgerWarning);
 							
 						   	if(validateDateFlag){
 								Intent intent = new Intent(context, trialBalance.class);
@@ -265,7 +320,7 @@ public class reportMenu extends ListActivity{
 						public void onClick(DialogInterface dialog, int which) {
 							
 						}
-					});
+					});*/
 					dialog=builder.create();
 	        		dialog.show();
 				}
@@ -280,7 +335,8 @@ public class reportMenu extends ListActivity{
 					builder.setView(layout);
 					builder.setTitle("Project Statement");
 					
-					
+					tvLedgerWarning = (TextView)layout.findViewById(R.id.tvProjStateWarning);
+				   	
 					final DatePicker dpProjectStatementSetT0date = (DatePicker) layout.findViewById(R.id.dpProjectStatementSetT0date);
 					dpProjectStatementSetT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
 					
@@ -301,14 +357,40 @@ public class reportMenu extends ListActivity{
 												android.R.layout.simple_spinner_item,projectnamelist);
 			  	   	da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			  	   	projectNames.setAdapter(da1);
-					
-					builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
+			  	    Button btnView = (Button)layout.findViewById(R.id.btnView);
+				   	Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
+				   	btnView.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							selectedProject = projectNames.getSelectedItem().toString();
+							
+							validateDate(null, dpProjectStatementSetT0date, null,tvLedgerWarning);
+							
+						   	if(validateDateFlag){
+								Intent intent = new Intent(context, projectStatement.class);
+								// To pass on the value to the next page
+								startActivity(intent);
+							}
+							
+						}
+					});
+				   	
+				   	btnCancel.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							dialog.dismiss();
+						}
+					});
+				   	
+					/*builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							selectedProject = projectNames.getSelectedItem().toString();
 							
-							validateDate(null, dpProjectStatementSetT0date, null);
+							validateDate(null, dpProjectStatementSetT0date, null,tvLedgerWarning);
 							
 						   	if(validateDateFlag){
 								Intent intent = new Intent(context, projectStatement.class);
@@ -323,7 +405,8 @@ public class reportMenu extends ListActivity{
 						public void onClick(DialogInterface dialog, int which) {
 							
 						}
-					});
+					});*/
+				   	
 					dialog=builder.create();
 	        		dialog.show();
 	        		
@@ -337,18 +420,42 @@ public class reportMenu extends ListActivity{
 					builder.setView(layout);
 					builder.setTitle("Cash Flow");
 					
+			        tvLedgerWarning = (TextView)layout.findViewById(R.id.tvCashFlowWarning);
+				   	
 					final DatePicker CashFlowFromdate = (DatePicker) layout.findViewById(R.id.dpsetCashFlowFromdate);
 					CashFlowFromdate.init(Integer.parseInt(fromyear),(Integer.parseInt(frommonth)-1),Integer.parseInt(fromday), null);
 				   	
 				   	final DatePicker CashFlowT0date = (DatePicker) layout.findViewById(R.id.dpsetCashFlowT0date);
 				   	CashFlowT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
 					
-					 builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
+				   	Button btnView = (Button)layout.findViewById(R.id.btnView);
+				   	Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
+				   	btnView.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							validateDate(CashFlowFromdate, CashFlowT0date, "validatebothFromToDate",tvLedgerWarning);
+							
+							if(validateDateFlag){
+								Intent intent = new Intent(context, cashFlow.class);
+								// To pass on the value to the next page
+								startActivity(intent);
+							}
+						}
+					});
+				   	btnCancel.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							dialog.dismiss();
+						}
+					});
+					/* builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 		
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							
-							validateDate(CashFlowFromdate, CashFlowT0date, "validatebothFromToDate");
+							validateDate(CashFlowFromdate, CashFlowT0date, "validatebothFromToDate",tvLedgerWarning);
 							
 							if(validateDateFlag){
 								Intent intent = new Intent(context, cashFlow.class);
@@ -363,7 +470,7 @@ public class reportMenu extends ListActivity{
 								
 							}
 							 
-						 });
+						 });*/
 					 dialog=builder.create();
 					 dialog.show();
 					 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -380,6 +487,8 @@ public class reportMenu extends ListActivity{
 					final DatePicker dpBalanceSheetsetT0date = (DatePicker) layout.findViewById(R.id.dpBalanceSheetsetT0date);
 					dpBalanceSheetsetT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
 					
+					tvLedgerWarning = (TextView)layout.findViewById(R.id.tvBalWarning);
+				   	
 					final Spinner sbalanceSheetType = (Spinner)layout.findViewById(R.id.sbalanceSheetType);
 					
 					TextView tvbalanceSheetType = (TextView)layout.findViewById(R.id.tvbalanceSheetType);
@@ -388,14 +497,39 @@ public class reportMenu extends ListActivity{
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setView(layout);
 					builder.setTitle("Balance Sheet");
-					builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
+					
+					Button btnView = (Button)layout.findViewById(R.id.btnView);
+				   	Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
+				   	
+				   	btnView.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							validateDate(null, dpBalanceSheetsetT0date, null,tvLedgerWarning);
+							
+						   	if(validateDateFlag){
+								balancetype=sbalanceSheetType.getSelectedItem().toString();
+								Intent intent = new Intent(context, balanceSheet.class);
+								// To pass on the value to the next page
+								startActivity(intent);
+						   	}
+						}
+					});
+				   	btnCancel.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							dialog.dismiss();
+						}
+					});
+					/*builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 						
 					
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 
-							validateDate(null, dpBalanceSheetsetT0date, null);
+							validateDate(null, dpBalanceSheetsetT0date, null,tvLedgerWarning);
 							
 						   	if(validateDateFlag){
 								balancetype=sbalanceSheetType.getSelectedItem().toString();
@@ -414,7 +548,7 @@ public class reportMenu extends ListActivity{
 							// TODO Auto-generated method stub
 						}
 						
-					});
+					});*/
 					dialog=builder.create();
 	        		dialog.show();
 	        		
@@ -435,15 +569,41 @@ public class reportMenu extends ListActivity{
 						reportTypeFlag = "Profit and Loss";
 					}
 					
+					final TextView tvLedgerWarning = (TextView)layout.findViewById(R.id.tvIEWarning);
 					
 					final DatePicker dpIEPLT0date = (DatePicker) layout.findViewById(R.id.dpIEPLSetT0date);
 					dpIEPLT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
 					
-					builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
+					Button btnView = (Button)layout.findViewById(R.id.btnView);
+				   	Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
+				   	
+				   	btnView.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							validateDate(null, dpIEPLT0date, null,tvLedgerWarning);
+							
+						   	if(validateDateFlag){
+								Intent intent = new Intent(context, incomeExpenditure.class);
+								// To pass on the value to the next page
+								startActivity(intent);
+							}
+							
+						}
+					});
+				   	
+				   	btnCancel.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							dialog.dismiss();
+						}
+					});
+					/*builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							
-							validateDate(null, dpIEPLT0date, null);
+							validateDate(null, dpIEPLT0date, null,tvLedgerWarning);
 							
 						   	if(validateDateFlag){
 								Intent intent = new Intent(context, incomeExpenditure.class);
@@ -459,17 +619,17 @@ public class reportMenu extends ListActivity{
 								
 							}
 							 
-						 });
+						 });*/
 					dialog=builder.create();
 	        		dialog.show();
 	        	//*/
 				}
 			} 
 		});
-	}
+	}  
 	
 	
-	public boolean validateDate(DatePicker fromdate, DatePicker todate, String flag) {
+	public boolean validateDate(DatePicker fromdate, DatePicker todate, String flag,TextView tvWarning) {
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 			Date date1 = sdf.parse(financialFromDate);
@@ -518,7 +678,9 @@ public class reportMenu extends ListActivity{
 	        	}
 	        	else{
 	        		String message = "Please enter proper date";
-	        		m.toastValidationMessage(reportMenu.this,message);
+	        		//m.toastValidationMessage(reportMenu.this,message);
+	        		tvWarning.setVisibility(View.VISIBLE);
+	        		tvWarning.setText(message);
 	        		validateDateFlag = false;
 	        	}
 	    	}
@@ -529,7 +691,9 @@ public class reportMenu extends ListActivity{
 	        	}
 	        	else{
 	        		String message = "Please enter proper date";
-	        		m.toastValidationMessage(reportMenu.this,message);
+	        		//m.toastValidationMessage(reportMenu.this,message);
+	        		tvWarning.setVisibility(View.VISIBLE);
+	        		tvWarning.setText(message);
 	        		validateDateFlag = false;
 	        	}
 	    	}

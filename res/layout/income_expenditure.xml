@@ -1,23 +1,69 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_width="fill_parent" 
+ android:layout_height="fill_parent"
+ android:orientation="vertical"
+ android:weightSum="100">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_root"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/layout_root" 
-        android:orientation="vertical">
-        
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvIEWarning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#F90000"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tvsetT0date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="To"
-            android:textColor="#FFFFFF" 
-            android:textSize="20dp"/>
-        
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+
         <DatePicker
             android:id="@+id/dpIEPLSetT0date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
+       
+
     </LinearLayout>
+
+	 <LinearLayout
+	     android:layout_width="fill_parent"
+	     android:layout_height="58dp"
+	     android:background="@drawable/dark_gray_background"
+	     android:gravity="center"
+	     android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="View"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Cancel"
+                android:textSize="20sp" />
+        </LinearLayout>
+        </LinearLayout>

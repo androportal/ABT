@@ -68,7 +68,7 @@ public class cashFlow extends Activity{
 	int PDF = Menu.FIRST;
 	int CSV = Menu.FIRST + 1;
 	module m;
-		
+	SpannableString rsSymbol;	
 		
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -102,6 +102,7 @@ public class cashFlow extends Activity{
         report = new Report();
         client_id= Startup.getClient_id();
         m=new module();
+        rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs)); 
         //customizing title bar
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
    
@@ -182,7 +183,7 @@ public class cashFlow extends Activity{
         		}
         		if(count == 3)
         		{
-        			final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs)); 
+        			
         			result = "Net Flow: "+rsSymbol+" "+c[0].toString();
         			Netdifference.setText(result);
            
@@ -218,10 +219,10 @@ public class cashFlow extends Activity{
             
             date= new Date();
 			String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
-			OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
+			OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
 			balancePeriod = fromDateString+" to "+toDateString;
 			sFilename = "CashFlow"+"_"+date_format;
-			pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Flow",balancePeriod,"",result};
+			pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Flow",balancePeriod,"",result,rsSymbol.toString()};
 			
             animated_dialog();
             //floatingHeader();
@@ -319,8 +320,7 @@ public class cashFlow extends Activity{
             /** Creating a TextView to add to the row **/
     		if(headerFlag == true){
     			if(j == 1){ //amount column
-    				//For adding rupee symbol
-    				final SpannableString rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs));
+    				
     				addRow(rsSymbol+" "+columnValue.get(j),j);   
     			}else{
     				addRow(columnValue.get(j),j);   

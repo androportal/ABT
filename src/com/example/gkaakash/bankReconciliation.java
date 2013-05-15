@@ -198,7 +198,7 @@ public class bankReconciliation extends Activity{
            	});
            	Date date= new Date();
 			String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
-			OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
+			OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
 			BankReconcilPeriod = fromDate+" to "+toDate;
 			String account = accountName.replace(" ","");
 	   	 	sFilename = "BankRec"+"_"+account+"_"+date_format;

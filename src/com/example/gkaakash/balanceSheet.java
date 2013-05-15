@@ -84,6 +84,7 @@ public class balanceSheet extends Activity{
 	int PDF = Menu.FIRST;
 	int CSV=Menu.FIRST+1;
 	module m;
+	SpannableString rsSymbol;
 	
 	
 	@Override
@@ -132,12 +133,13 @@ public class balanceSheet extends Activity{
     		 if(reportmenuflag==true){ 
     	   	    	
  	    		OrgName = createOrg.organisationName;
- 	    		
             }
             else {
          	    OrgName= selectOrg.selectedOrgName;
           
             }
+    		//For adding rupee symbol   
+			rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs));
     		//customizing title bar
     		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
     		report = new Report();
@@ -210,7 +212,7 @@ public class balanceSheet extends Activity{
          
     			if (count == 3)
     			{
-    				final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs)); 
+    				
     				//System.out.println("diff"+t[0].toString());
     				result = "Difference in Opening Balances: "+rsSymbol+" "+t[0].toString();
     				balDiff.setText(result);
@@ -227,10 +229,10 @@ public class balanceSheet extends Activity{
     		
     		date= new Date();
 			String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
-			OrgPeriod = "Financial Year:\n "+financialFromDate+" to "+financialToDate;
+			OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
 			balancePeriod = financialFromDate+" to "+balanceToDateString;
 			sFilename = balType+"_"+date_format;
-			pdf_params = new String[]{balType,sFilename,OrgName,OrgPeriod,balancetype,balancePeriod,"",result};
+			pdf_params = new String[]{balType,sFilename,OrgName,OrgPeriod,balancetype,balancePeriod,"",result,rsSymbol.toString()};
 			
     		drillDown();
     	} catch (Exception e) {
@@ -416,8 +418,7 @@ public class balanceSheet extends Activity{
     		if(headerFlag == true)
     		{
     			if(j == 1 || j == 2 || j == 3||j==4){ //amount column
-    				//For adding rupee symbol
-    				final SpannableString rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs));
+    			
     				addRow(rsSymbol+" "+columnValue.get(j));
     			}else{
     				addRow(columnValue.get(j));
