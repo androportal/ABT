@@ -13,6 +13,9 @@ import com.example.gkaakash.R.layout;
 import com.gkaakash.controller.Account;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.Transaction;
+
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -77,7 +80,7 @@ public class SearchVoucher extends Activity {
 	int oneTouch = 1;
 	TableLayout floating_heading_table;
 	module m;
-
+	String[] ColumnNameList;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -393,11 +396,10 @@ public class SearchVoucher extends Activity {
 			for(int j=0;j<columnValue.size();j++){
 				/** Creating a TextView to add to the row **/
 				addRow(columnValue.get(j),i); 
-//				if(oneTouch == 1){
-//                    tr.setClickable(false);
-//                }
-				// System.out.println("rowid"+i);
-				label.setBackgroundColor(Color.BLACK);
+				if ((i + 1) % 2 == 0)
+					label.setBackgroundColor(Color.parseColor("#474335"));
+				else
+					label.setBackgroundColor(Color.BLACK);
 				/*
 				 * set center aligned gravity for amount and for others set center gravity
 				 */
@@ -456,7 +458,7 @@ public class SearchVoucher extends Activity {
 
 		/** Create a TableRow dynamically **/
 		final SpannableString rsSymbol = new SpannableString(SearchVoucher.this.getText(R.string.Rs)); 
-		String[] ColumnNameList = new String[] { "V. No.","Reference No","Date","Voucher Type","Account Name","Particular",rsSymbol+"Amount","Narration"};
+		ColumnNameList = new String[] { "V. No.","Reference No","Date","Voucher Type","Account Name","Particular",rsSymbol+"Amount","Narration"};
 
 		tr = new TableRow(SearchVoucher.this);
 
@@ -489,7 +491,17 @@ public class SearchVoucher extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Toast.makeText(SearchVoucher.this, tr.getId(), Toast.LENGTH_SHORT).show(); 
-
+				//fade the row color(black/gray to orange) when clicked
+				View row = vouchertable.getChildAt(i+1);
+				
+				for (int j = 0; j < ColumnNameList.length; j++) {
+					LinearLayout l = (LinearLayout) ((ViewGroup) row)
+							.getChildAt(j);
+					TextView t = (TextView) l.getChildAt(0);
+					ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"), Color.parseColor("#000000"));
+					colorFade.setDuration(100);
+					colorFade.start();
+				}
 
 
 				try {

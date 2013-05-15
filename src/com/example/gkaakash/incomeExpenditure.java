@@ -290,8 +290,14 @@ public class incomeExpenditure extends Activity{
             	setRowColorSymbolGravity(columnValue, Color.parseColor("#348017"));
             }
             else{
+            	int row_color;
+            	if ((i + 1) % 2 == 0)
+            		row_color = Color.parseColor("#474335");
+        		else
+        			row_color = Color.BLACK;
+            	
             	//for remaining rows pass black color code
-            	setRowColorSymbolGravity(columnValue, Color.BLACK);
+               	setRowColorSymbolGravity(columnValue, row_color);
             }
             
             // Add the TableRow to the TableLayout

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -331,7 +333,10 @@ public class projectStatement extends Activity{
             for(int j=0;j<columnValue.size();j++){
                 /** Creating a TextView to add to the row **/
                 addRow(columnValue.get(j),i);   
-                label.setBackgroundColor(Color.BLACK);
+                if ((i + 1) % 2 == 0)
+					label.setBackgroundColor(Color.parseColor("#474335"));
+				else
+					label.setBackgroundColor(Color.BLACK);
                 /*
                  * set right aligned gravity for amount and for others set center gravity
                  */
@@ -435,7 +440,9 @@ public class projectStatement extends Activity{
 						LinearLayout l = (LinearLayout) ((ViewGroup) row)
 								.getChildAt(j);
 						TextView t = (TextView) l.getChildAt(0);
-						t.setBackgroundColor(Color.parseColor("#FBB117"));
+						ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"), Color.parseColor("#000000"));
+						colorFade.setDuration(100);
+						colorFade.start();
 					}					
 					
 					acc_name1 = accname;

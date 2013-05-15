@@ -88,8 +88,8 @@ public class createOrg extends MainActivity {
 			 * comment below lines if running this app on emulator and 
 			 * also if running on device using remote server ie. when installer is not in use.
 			 */
-			MainActivity.no_dailog = true; 
-			MainActivity.help_dialog.dismiss();
+//			MainActivity.no_dailog = true; 
+//			MainActivity.help_dialog.dismiss();
 		} 
 
 

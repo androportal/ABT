@@ -59,7 +59,6 @@ public class createAccount<group> extends Activity{
     static final int ID_SCREENDIALOG = 1;
     private static String groupChar;
     private String account_code;
-    protected static Boolean tabflag;
     String sub_grp_name;
     private String subgroup_exist;
     private String accountcode_exist;
@@ -77,16 +76,9 @@ public class createAccount<group> extends Activity{
         
         try {
             //for visibility of account tab layout
-            tabflag=MainActivity.tabFlag;
+            LinearLayout l0=(LinearLayout)findViewById(R.id.createacc_tab0);  
             LinearLayout l1=(LinearLayout)findViewById(R.id.createacc_tab1);  
             LinearLayout l2=(LinearLayout)findViewById(R.id.createacc_tab2);
-            if(tabflag){
-                l1.setVisibility(LinearLayout.VISIBLE);
-                l2.setVisibility(LinearLayout.VISIBLE);
-            }else {
-                l1.setVisibility(LinearLayout.INVISIBLE);
-                l2.setVisibility(LinearLayout.INVISIBLE);
-            }
             
             // create the object of Group class
             group = new Group();
@@ -527,17 +519,10 @@ public class createAccount<group> extends Activity{
      * depending upon flag go to respective page on back button pressed
      */
     public void onBackPressed() {
-        
-        if(tabflag){
-            Intent intent = new Intent(getApplicationContext(), menu.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
-        else {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(getApplicationContext(), menu.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+       
     }
     
     public void SaveAccount(){

@@ -33,6 +33,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.ActionBar.LayoutParams;
 import android.app.ActionBar.Tab;
@@ -591,14 +592,16 @@ public class ledger extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				//change the row color(black/gray to orange) when clicked
+				//fade the row color(black/gray to orange) when clicked
 				View row = ledgertable.getChildAt(i+1);
 				
 				for (int j = 0; j < len; j++) {
 					LinearLayout l = (LinearLayout) ((ViewGroup) row)
 							.getChildAt(j);
 					TextView t = (TextView) l.getChildAt(0);
-					t.setBackgroundColor(Color.parseColor("#FBB117"));
+					ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"), Color.parseColor("#000000"));
+					colorFade.setDuration(100);
+					colorFade.start();
 				}
 				
 				

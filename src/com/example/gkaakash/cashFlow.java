@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -300,8 +302,14 @@ public class cashFlow extends Activity{
                	setRowColorSymbolGravity(columnValue, Color.parseColor("#348017"), true);
             }
             else{
+            	int row_color;
+            	if ((i + 1) % 2 == 0)
+            		row_color = Color.parseColor("#474335");
+        		else
+        			row_color = Color.BLACK;
+            	
             	//for remaining rows pass black color code
-               	setRowColorSymbolGravity(columnValue, Color.BLACK, false);
+               	setRowColorSymbolGravity(columnValue, row_color, false);
             }
             // Add the TableRow to the TableLayout
             tableID.addView(tr, new TableLayout.LayoutParams(
@@ -456,7 +464,9 @@ public class cashFlow extends Activity{
 				LinearLayout l = (LinearLayout) ((ViewGroup) row)
 						.getChildAt(j);
 				TextView t = (TextView) l.getChildAt(0);
-				t.setBackgroundColor(Color.parseColor("#FBB117"));
+				ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"), Color.parseColor("#000000"));
+				colorFade.setDuration(100);
+				colorFade.start();
 			}
     		acc_name = accname;
 			Intent intent = new Intent(getApplicationContext(),

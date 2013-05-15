@@ -7,15 +7,32 @@
  android:weightSum="100"
  android:background="@drawable/dark_gray_background">
  
-    <LinearLayout
+    <!-- to make the tab like feel -->
+    <LinearLayout  
+		   android:layout_width="match_parent"
+           android:layout_height="wrap_content"
            android:orientation="horizontal"
-           android:layout_width="400dp"
+           android:baselineAligned="false">
+    <LinearLayout
+           android:id="@+id/createacc_tab0"
+           android:layout_width="match_parent"
            android:layout_height="3dp"
            android:paddingLeft="20dp"
            android:paddingRight="20dp"
-           android:background="#60AFFE"/>
-   
+           android:background="#60AFFE"
+           android:layout_weight="1"/>
+    
     <LinearLayout
+           android:id="@+id/createacc_tab1"
+           android:layout_width="match_parent"
+           android:layout_height="3dp"
+           android:paddingLeft="20dp"
+           android:paddingRight="20dp"
+           android:background="#000000"
+           android:layout_weight="1"/>
+   </LinearLayout>
+    <LinearLayout
+            android:id="@+id/createacc_tab2"
            android:orientation="horizontal"
            android:layout_width="match_parent"
            android:layout_height="3dp"

@@ -16,6 +16,8 @@ import com.gkaakash.controller.Transaction;
 import com.itextpdf.text.DocumentException;
 
 import android.R.integer;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -445,6 +447,10 @@ public class bankReconciliation extends Activity{
 		            	for(int k=0;k<columnValue.size();k++){
 		                    /** Creating a TextView to add to the row **/
 		            		addRow(columnValue.get(k),k,k,0);
+		            		if ((i + 1) % 2 == 0)
+		    					label.setBackgroundColor(Color.parseColor("#474335"));
+		    				else
+		    					label.setBackgroundColor(Color.BLACK);
 		                    params.height = 45;
 		                         
 		                    //hide vouchercode column
@@ -485,7 +491,10 @@ public class bankReconciliation extends Activity{
 		            for(int j=0;j<columnValue.size()-2;j++){
 		            	if(j!=0){// 0 is voucher code
 			            	addRow(columnValue.get(j),i,j,1);   
-			                label.setBackgroundColor(Color.BLACK);
+			            	if ((i + 1) % 2 == 0)
+								label.setBackgroundColor(Color.parseColor("#474335"));
+							else
+								label.setBackgroundColor(Color.BLACK);
 			                if(j == 4 || j == 5){// dr and cr amount
 			                    if(columnValue.get(j).trim().length() > 0){
 			                        label.setText(columnValue.get(j)); 
@@ -644,7 +653,9 @@ public class bankReconciliation extends Activity{
 						LinearLayout l = (LinearLayout) ((ViewGroup) row)
 								.getChildAt(j);
 						TextView t = (TextView) l.getChildAt(0);
-						t.setBackgroundColor(Color.parseColor("#FBB117"));
+						ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"), Color.parseColor("#000000"));
+						colorFade.setDuration(100);
+						colorFade.start();
 					}		
 					
 					if(ColumnNameList.length == 9){
@@ -698,7 +709,10 @@ public class bankReconciliation extends Activity{
         //label.setBackgroundColor(Color.);
         label.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.MATCH_PARENT));
-        label.setBackgroundColor(Color.BLACK);
+        if ((i + 1) % 2 == 0)
+			label.setBackgroundColor(Color.parseColor("#474335"));
+		else
+			label.setBackgroundColor(Color.BLACK);
         label.setPadding(2, 2, 2, 2);
         label.setClickable(false);
         
