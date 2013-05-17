@@ -429,7 +429,7 @@ public class selectOrg extends Activity{
 					eloginUsername.setText("");
 					eloginPassword.setText("");
 					link.setVisibility(View.VISIBLE);
-					Toast.makeText(selectOrg.this,"admin checked", Toast.LENGTH_SHORT).show();
+					//Toast.makeText(selectOrg.this,"admin checked", Toast.LENGTH_SHORT).show();
 				}else {
 					link.setVisibility(View.INVISIBLE);
 				}

@@ -124,7 +124,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingTop="5dp">
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/tLoginUser"
@@ -150,7 +150,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp">
 
         <TableLayout 
         		android:layout_width="fill_parent"
@@ -197,11 +198,13 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:linksClickable="true"
-         android:text="Forgot password"
-         android:textAppearance="?android:attr/textAppearanceLarge"
-         android:textColor="#008000"
-         android:textSize="20dp"
-        android:visibility="invisible"/>
+         android:text="@string/forgot_password"
+         android:layout_gravity="right"
+         android:textAppearance="?android:attr/textAppearanceMedium"
+         android:textColor="#0040FF"
+        android:visibility="invisible"
+        android:paddingBottom="10dp"
+        android:paddingRight="10dp"/>
 	
 </LinearLayout>
 </ScrollView>

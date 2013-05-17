@@ -174,7 +174,7 @@ public class User_table extends Activity {
 						.findViewById(R.id.trUserRole);
 				final TextView tvwarning = (TextView) layout
 						.findViewById(R.id.tvWarning);
-				TextView tvmessage = (TextView) layout
+				final TextView tvSignUp = (TextView) layout
 						.findViewById(R.id.tvSignUp);
 				int rbRoleCheckedId = radiorole.getCheckedRadioButtonId();
 				rbRoleChecked = (RadioButton) layout
@@ -225,6 +225,7 @@ public class User_table extends Activity {
 								.toString();
 						userrole = rbRoleChecked.getText().toString();
 						tvwarning.setVisibility(TextView.GONE);
+						tvSignUp.setVisibility(TextView.GONE);
 						Object[] params = new Object[] { username, password,
 								gender, userrole, "null", "null" };
 						System.out.println(username);
@@ -236,6 +237,7 @@ public class User_table extends Activity {
 						if (m.isEmpty(params)
 								|| m.isEmpty(new Object[] { confpassword })) {
 							String message = "please fill blank field";
+							tvSignUp.setVisibility(TextView.GONE);
 							tvwarning.setVisibility(TextView.VISIBLE);
 							tvwarning.setText(message);
 
@@ -243,6 +245,7 @@ public class User_table extends Activity {
 							epassword.setText("");
 							econfpassword.setText("");
 							String message = "Please enter correct password";
+							tvSignUp.setVisibility(TextView.GONE);
 							tvwarning.setVisibility(TextView.VISIBLE);
 							tvwarning.setText(message);
 						} else {
@@ -251,7 +254,10 @@ public class User_table extends Activity {
 							if (unique == true) {
 								String setuser = user
 										.setUser(params, client_id);
-								tvwarning.setText(username
+								tvSignUp.setVisibility(TextView.VISIBLE);
+								tvwarning.setVisibility(TextView.GONE);
+								
+								tvSignUp.setText(username
 										+ " added successfully as " + userrole);
 
 								reset();
@@ -266,6 +272,7 @@ public class User_table extends Activity {
 							} else {
 								eusername.setText("");
 								String message = "username is already exist";
+								tvSignUp.setVisibility(TextView.GONE);
 								tvwarning.setVisibility(TextView.VISIBLE);
 								tvwarning.setText(message);
 							}
@@ -392,7 +399,7 @@ public class User_table extends Activity {
 					header.setText("Change username");
 
 					EditText old_user_name = (EditText) layout1
-							.findViewById(R.id.etOldUsername);
+							.findViewById(R.id.etOld_User_Name);
 					if ("manager".equals(userrole1)) {
 						old_user_name.setText(username);
 					} else {
@@ -415,9 +422,9 @@ public class User_table extends Activity {
 						@Override
 						public void onClick(View arg0) {
 
-							Toast.makeText(c, "hii", Toast.LENGTH_SHORT).show();
+							//Toast.makeText(c, "hii", Toast.LENGTH_SHORT).show();
 							EditText olduser_name = (EditText) layout1
-									.findViewById(R.id.etOldUsername);
+									.findViewById(R.id.etOld_User_Name);
 							String olduserName = olduser_name.getText()
 									.toString();
 							System.out.println("olduserName:" + olduserName);
@@ -446,11 +453,18 @@ public class User_table extends Activity {
 									error_msg.setVisibility(TextView.VISIBLE);
 									error_msg
 											.setText("Username updated successully");
-									m.dialog.cancel();
 									
 									olduser_name.setText("");
 									newuser_name.setText("");
 									password.setText("");
+									
+									if(rbmanager.isChecked()){
+										role_names = user.getUserNemeOfManagerRole(client_id);
+										setRoleList();
+									}else if(rboperator.isChecked()){
+										role_names = user.getUserNemeOfOperatorRole(client_id);
+										setRoleList();
+									}
 
 								} else {
 									error_msg.setVisibility(TextView.VISIBLE);
@@ -496,7 +510,7 @@ public class User_table extends Activity {
 						@Override
 						public void onClick(View arg0) {
 
-							Toast.makeText(c, "hii", Toast.LENGTH_SHORT).show();
+							//Toast.makeText(c, "hii", Toast.LENGTH_SHORT).show();
 							oldpass = (EditText) layout
 									.findViewById(R.id.etOldPass);
 							String old_pass = oldpass.getText().toString();

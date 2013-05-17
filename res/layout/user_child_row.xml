@@ -4,7 +4,8 @@ android:layout_width="fill_parent"
 android:layout_height="wrap_content"
 android:orientation="horizontal" 
 android:padding="10dp">
- 
+
+<!-- sr no -->
 <TextView
 android:id="@+id/tvRowTitle0"
 android:layout_width="5dp" 
@@ -15,7 +16,7 @@ android:textAppearance="?android:attr/textAppearanceMedium"
 android:layout_weight="1" 
 android:textColor="#FFFFFF"/>    
 
-    
+<!-- user name -->
 <TextView
 android:id="@+id/tvRowTitle1"
 android:layout_width="100dp" 
@@ -23,10 +24,10 @@ android:layout_height="wrap_content"
 android:layout_gravity="center_vertical"
 android:gravity="center_horizontal"
 android:textAppearance="?android:attr/textAppearanceMedium"
-android:layout_weight="1" 
+android:layout_weight="2" 
 android:textColor="#FFFFFF"/>
 
-
+<!-- logout time -->
 		<TextView
 		android:id="@+id/tvSubItem0"
 		android:layout_width="150dp" 
@@ -36,7 +37,7 @@ android:textColor="#FFFFFF"/>
 		android:textColor="#088A08"
 		android:layout_weight="1"
 		android:layout_gravity="center_vertical" />
-		
+		<!-- log in time -->
 		<TextView
 		android:id="@+id/tvSubItem1"
 		android:layout_width="150dp" 
@@ -46,7 +47,7 @@ android:textColor="#FFFFFF"/>
 		android:textColor="#088A08" 
 		android:layout_weight="1"
 		android:layout_gravity="center_vertical"/>
-		
+		<!-- duration -->
 		<TextView
 		android:id="@+id/tvSubItem2"
 		android:layout_width="150dp" 

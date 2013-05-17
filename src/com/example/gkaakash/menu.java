@@ -677,7 +677,7 @@ public class menu extends ListActivity{
 
 							
 							EditText olduser_name = (EditText) layout1
-									.findViewById(R.id.etOldUsername);
+									.findViewById(R.id.etOld_User_Name);
 							String olduserName = olduser_name.getText()
 									.toString();
 							System.out.println("olduserName:" + olduserName);

@@ -149,6 +149,7 @@
         \nCopyright © 2012, IIT Bombay 
    </string>
    <string name="Rs">\u20B9</string>  
+   <string name="forgot_password"><u>Forgot password?</u></string>  
    
    <string name="questions">Select question</string>
     <string-array name="ques_prompt">
