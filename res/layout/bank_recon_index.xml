@@ -1,12 +1,30 @@
- <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:orientation="vertical"
+         android:id="@+id/layout_root"
+         android:weightSum="100" >
+	
+          <ScrollView
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_weight="90" >
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" 
         android:orientation="vertical"
          android:id="@+id/layout_root" >
-         
+        
+              <TextView
+             android:id="@+id/tvBankReconWarning"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:textColor="#F90000"
+             android:textSize="20dp" />
+      
          <TextView
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
@@ -18,7 +36,7 @@
         <Spinner
             android:id="@+id/sBankAccounts"
             android:layout_width="254dp"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_gravity="center"
             android:entries="@array/accountName_arrays"
             android:prompt="@string/accountName_prompt" />
@@ -122,3 +140,34 @@
 
     </LinearLayout>
     </ScrollView>
+
+ <LinearLayout
+     android:layout_width="fill_parent"
+     android:layout_height="49dp"
+     android:background="@drawable/dark_gray_background"
+     android:gravity="center"
+     android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="View"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Cancel"
+                android:textSize="20sp" />
+        </LinearLayout>
+  </LinearLayout>

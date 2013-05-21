@@ -4,7 +4,15 @@
         android:layout_height="fill_parent" 
         android:orientation="vertical"
          android:id="@+id/layout_root" >
-
+		  <TextView
+             android:id="@+id/tvRolloverWarning"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:textColor="#F90000"
+             android:textSize="20dp" 
+             android:visibility="gone"/>
+      		
         <TextView
             android:id="@+id/tvsetT0date"
             android:layout_width="wrap_content"

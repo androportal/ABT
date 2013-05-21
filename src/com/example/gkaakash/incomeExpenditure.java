@@ -400,5 +400,12 @@ public class incomeExpenditure extends Activity{
         Ll.addView(label,params);
         tr.addView((View)Ll); // Adding textView to tablerow.
     }
+    public void onBackPressed() {
+		
+		MainActivity.nameflag = false;
+		Intent intent = new Intent(getApplicationContext(),reportMenu.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
 
+}
 }

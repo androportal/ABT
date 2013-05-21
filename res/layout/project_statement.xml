@@ -12,15 +12,15 @@
         android:layout_weight="100.67"
         android:orientation="vertical" >
 
-		 <TextView
-             android:id="@+id/tvProjStateWarning"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_gravity="center"
-             android:textColor="#F90000"
-             android:textSize="20dp"
-             android:visibility="gone" />
-		 
+        <TextView
+            android:id="@+id/tvProjStateWarning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#F90000"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tvsetT0date"
             android:layout_width="wrap_content"
@@ -42,22 +42,24 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Project"
-            android:textColor="#FFFFFF" 
-            android:textSize="20dp"/>
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
 
         <Spinner
             android:id="@+id/sProject"
             android:layout_width="254dp"
-            android:layout_height="60dp"
+            android:layout_height="49dp"
             android:layout_gravity="center"
+            android:layout_weight="0.00"
             android:prompt="@string/projectName_prompt" />
-
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_vertical"
+        android:layout_weight="0.27"
         android:background="@drawable/dark_gray_background"
         android:gravity="center"
         android:orientation="horizontal" >

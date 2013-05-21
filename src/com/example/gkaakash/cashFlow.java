@@ -476,6 +476,14 @@ public class cashFlow extends Activity{
     	}
 		
 	}
+	public void onBackPressed() {
+		
+		MainActivity.nameflag = false;
+		Intent intent = new Intent(getApplicationContext(),reportMenu.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+
+}
     
     
 }

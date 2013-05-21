@@ -94,6 +94,7 @@ public class menu extends ListActivity{
 	boolean reportmenuflag;
     static String orgtype,userrole;
     static String OrgName;
+    TextView tvWarning;
     module m;
     String[] menuOptions;
     static String rollover;
@@ -412,7 +413,51 @@ public class menu extends ListActivity{
 		   	final CheckBox cbClearedTransaction = (CheckBox)layout.findViewById(R.id.cbClearedTransaction);
 		   	final CheckBox cbNarration = (CheckBox)layout.findViewById(R.id.cbReconNarration);
 		   	
-			builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
+		   	tvWarning = (TextView)layout.findViewById(R.id.tvBankReconWarning);
+			Button btnView = (Button)layout.findViewById(R.id.btnView);
+		   	Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
+		   	
+		   	btnView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					if(cbClearedTransaction.isChecked()){
+				   		cleared_tran_flag = true;
+				   	}
+				   	else{
+				   		cleared_tran_flag = false;
+				   	}
+				   	
+				   	if(cbNarration.isChecked()){
+				   		narration_flag = true;
+				   	}
+				   	else{
+				   		narration_flag = false;
+				   	}
+					
+					selectedAccount = sBankAccounts.getSelectedItem().toString();
+					
+					System.out.println("i am account"+selectedAccount);
+					validateDate(ReconFromdate, ReconT0date, "validatebothFromToDate",tvWarning);
+					
+					
+					if(validateDateFlag){
+						Intent intent = new Intent(context, bankReconciliation.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}
+				}
+			});
+		   	
+		   	btnCancel.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					
+					dialog.dismiss();
+				}
+			});
+			/*builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 				
@@ -454,7 +499,7 @@ public class menu extends ListActivity{
 					// TODO Auto-generated method stub
 				}
 				
-			});
+			});*/
 			dialog=builder.create();
     		dialog.show();
     		
@@ -478,6 +523,7 @@ public class menu extends ListActivity{
 			builder.setView(layout);
 			builder.setTitle("RollOver");
 
+			tvWarning = (TextView)layout.findViewById(R.id.tvRolloverWarning);
 			final DatePicker rollover_todate = (DatePicker) layout.findViewById(R.id.dpRollT0date);
 			rollover_todate.init((Integer.parseInt(toyear) + 1),(Integer.parseInt(tomonth) - 1),Integer.parseInt(today), null);
 
@@ -486,7 +532,7 @@ public class menu extends ListActivity{
 						@Override
 						public void onClick(DialogInterface arg0,int arg1) {
 
-							validateDate(null, rollover_todate,"rollover");
+							validateDate(null, rollover_todate,"rollover",tvWarning);
 
 							if (validateDateFlag) {
 								Object[] rollover_params = new Object[] {OrgName, financialFromDate,financialToDate,
@@ -885,9 +931,8 @@ public class menu extends ListActivity{
 		epassword.setText("");
 		econfpassword.setText("");
 		rbMale.setChecked(true);
-		
 	}
-    private boolean validateDate(DatePicker fromdate, DatePicker todate, String flag){
+    private boolean validateDate(DatePicker fromdate, DatePicker todate, String flag,TextView warning){
     	try {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 			Date date1 = sdf.parse(financialFromDate);
@@ -936,7 +981,9 @@ public class menu extends ListActivity{
 	        	}
 	        	else{
 	        		String message = "Please enter proper date";
-	        		m.toastValidationMessage(menu.this,message);
+	        		//m.toastValidationMessage(menu.this,message);
+	        		tvWarning.setVisibility(View.VISIBLE);
+	        		tvWarning.setText(message);
 	        		validateDateFlag = false;
 	        	}
 	    	}
@@ -959,7 +1006,9 @@ public class menu extends ListActivity{
 	        	}
 	        	else{
 	        		String message = "Please enter proper date";
-	        		m.toastValidationMessage(menu.this,message);
+	        		//m.toastValidationMessage(menu.this,message);
+	        		tvWarning.setVisibility(View.VISIBLE);
+	        		tvWarning.setText(message);
 	        		validateDateFlag = false;
 	        	}
 	    	}
