@@ -331,19 +331,26 @@ public class User_table extends Activity {
 			map.put("srno", (i+1)+" ");
 			map.put("username", Grid.get(i).get(0).toString());
 			
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			java.util.Date loginDate = null;
 			java.util.Date logoutDate = null;
 		    try {
 		    	loginDate = formatter.parse(Grid.get(i).get(1).toString());
 		    	logoutDate = formatter.parse(Grid.get(i).get(2).toString());
-		    	System.out.println("utilDate:" + loginDate);
-		    	int diffInDays = (int)( (loginDate.getTime() - logoutDate.getTime()) 
-		                 / (1000 * 60 * 60 * 24) );
+		    	System.out.println("utilDate:" + loginDate+"   "+logoutDate);
+		    	
+		    	//in milliseconds
+				long diff = logoutDate.getTime() - loginDate.getTime();
+	 
+				long diffSeconds = diff / 1000 % 60;
+				long diffMinutes = diff / (60 * 1000) % 60;
+				long diffHours = diff / (60 * 60 * 1000) % 24;
+				long diffDays = diff / (24 * 60 * 60 * 1000);
+		    	
 		    	if(loginDate != null && logoutDate != null){
 		    		map.put("login", loginDate.toLocaleString());
 					map.put("logout", logoutDate.toLocaleString());
-					map.put("Total", diffInDays+" days");
+					map.put("Total", diffDays+" days "+diffHours+" hrs "+diffMinutes+" mins "+diffSeconds+" secs");
 		    	}
 		    	
 			} catch (ParseException e) {

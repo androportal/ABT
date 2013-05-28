@@ -8,9 +8,9 @@ import com.gkaakash.coreconnection.CoreConnection;
 
 public class Account {
 	
-	private CoreConnection conn;
-	private Object[] accparams;
-	private String setaccount;
+	private static CoreConnection conn;
+	private static Object[] accparams;
+	private static String setaccount;
 	private Object getTotalDrBalance;
 	private Object getTotalCrBalance;
 	private String total_drbal;
@@ -22,7 +22,7 @@ public class Account {
 	private Object code_suggestion_chars;
 	private String character;
 	private String suggested_code;
-	private String accChar;
+	private static String accChar;
 	private String accountCodeExists;
 	private Object[] accountDetails;
 	private Object editaccount;
@@ -270,5 +270,24 @@ public class Account {
 		}
 		return getAllBankAccounts;
 	}
+	
+	/***
+	 * call getAccountNameByAccountCode method from core_engine account.py
+	 * @param account code, client id
+	 * returns accountname
+	 */
+	public static String getAccountNameByAccountCode(Object[] accname, Object client_id) {
+		
+		try {
+			setaccount = (String)conn.getClient().call("account.getAccountNameByAccountCode",accname,client_id);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return setaccount;
+	}
+	
+	
 	
 }

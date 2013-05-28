@@ -41,29 +41,10 @@ public class preferences extends Activity {
 
 		cbAccCode = (CheckBox) findViewById(R.id.cbAccCode);
 		addListenerOnButton();
-		addListenerOnCheckBox();  
 
 	}
 
 
-	private void addListenerOnCheckBox() {
-
-
-		cbAccCode.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				//Setting the account code flag value
-				if (((CheckBox) v).isChecked()) {
-					//System.out.println("checked:");
-					setpref = preference.setPreferences(new Object[]{"1","manually"},client_id);
-				}
-				else {
-
-				}
-			}
-		});
-	}
 
 	private void addListenerOnButton() {
 		
@@ -72,7 +53,11 @@ public class preferences extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
+				//Setting the account code flag value
+				if (cbAccCode.isChecked()) {
+					//System.out.println("checked:");
+					setpref = preference.setPreferences(new Object[]{"1","manually"},client_id);
+				}
 				//To pass on the activity to the next page called menu page
 				Intent intent = new Intent(preferences.this, menu.class);
 				startActivity(intent);  

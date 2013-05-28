@@ -143,8 +143,13 @@ public class cashFlow extends Activity{
         	TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
         	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
      
-        	//tvfinancialFromDate.setText();
-        	tvfinancialToDate.setText("Period : " +fromDateString+" to " +toDateString);
+        	//to get month in words
+			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
+			String str_fromDate = write.format(read.parse(fromDateString));
+			String str_toDate = write.format(read.parse(toDateString));
+	    	
+	    	tvfinancialToDate.setText("Period : "+str_fromDate+" to "+str_toDate);   
         	/*
         	 * send params to controller report.getCashFlow to get the result
         	 */

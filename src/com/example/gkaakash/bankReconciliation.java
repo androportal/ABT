@@ -160,8 +160,13 @@ public class bankReconciliation extends Activity{
 			tvfinancialToDate = (TextView) findViewById(R.id.tvfinancialToDate);
 
 			tvaccontName.setText("Account name: " + accountName);
-			tvfinancialToDate.setText("Period : " + fromDate + " to " + toDate);
-
+			//to get month in words
+			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
+			String str_fromDate = write.format(read.parse(fromDate));
+			String str_toDate = write.format(read.parse(toDate));
+	    	
+	    	tvfinancialToDate.setText("Period : "+str_fromDate+" to "+str_toDate);   
 			Object[] params = new Object[] { accountName, financialFromDate,
 					fromDate, toDate, "No Project" };
 			Object[] flag = new Object[] { cleared_tran_flag };

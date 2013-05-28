@@ -185,8 +185,13 @@ public class balanceSheet extends Activity{
     		});
     		
     		animated_dialog();
-    		//tvfinancialFromDate.setText("Financial from : " +financialFromDate);
-    		tvfinancialToDate.setText("Period : "+financialFromDate+" to "+balanceToDateString);
+    		//to get month in words
+			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
+			String str_fromDate = write.format(read.parse(financialFromDate));
+			String str_toDate = write.format(read.parse(balanceToDateString));
+	    	
+	    	tvfinancialToDate.setText("Period : "+str_fromDate+" to "+str_toDate);   
     		Object[] params = new Object[]{financialFromDate,financialFromDate,balanceToDateString,"balancesheet",getSelectedOrgType,balancetype};
     		balancesheetresult = (Object[]) report.getBalancesheetDisplay(params,client_id);
     		//balance sheet result is 3 dimensional list 

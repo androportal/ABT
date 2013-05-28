@@ -121,9 +121,13 @@ public class incomeExpenditure extends Activity{
         	 */
         	TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
         	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
-        	//tvfinancialFromDate.setText("Financial from : " +financialFromDate);
-        	//tvfinancialToDate.setText("Financial to : " +IEToDateString);
-        	tvfinancialToDate.setText("Period : "+financialFromDate+" to "+IEToDateString);   
+        	//to get month in words
+			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
+			String str_fromDate = write.format(read.parse(financialFromDate));
+			String str_toDate = write.format(read.parse(IEToDateString));
+	    	
+	    	tvfinancialToDate.setText("Period : "+str_fromDate+" to "+str_toDate);   
    
         	/*
         	 * send params to controller report.getProfitLossDisplay to get the result

@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -676,12 +677,20 @@ public class edit_account extends Activity {
 			String Acc_name = list.get(i);
 			String financialFromDate = Startup.getfinancialFromDate();
 			String financialToDate = Startup.getFinancialToDate();
+			if (sSearchAccountBy.getSelectedItemPosition() == 1) {
+				// if search by account code, get account name by code
+				Object[] params = new Object[] {Acc_name};
+				Acc_name = (String)Account.getAccountNameByAccountCode(params, client_id);
+			}
+			//calculate closing balance and set the list
 			Object[] params1 = new Object[] { Acc_name, financialFromDate,
 					financialFromDate, financialToDate };
 			String calculateBalance = (String) reports.calculateBalance(
 					params1, client_id);
 
-			map.put("col_1", "" + calculateBalance);
+			SpannableString rsSymbol = new SpannableString(edit_account.this.getText(R.string.Rs)); 
+			
+			map.put("col_1", rsSymbol +" "+calculateBalance);
 			fillMaps.add(map);
 		} 
 

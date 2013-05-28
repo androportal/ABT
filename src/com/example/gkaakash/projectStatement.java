@@ -136,7 +136,13 @@ public class projectStatement extends Activity{
         	 * set financial from date and to date in textview
         	 */
         	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
-        	tvfinancialToDate.setText("Period : "+financialFromDate+" to "+ToDateString);
+        	//to get month in words
+			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
+			String str_fromDate = write.format(read.parse(financialFromDate));
+			String str_toDate = write.format(read.parse(ToDateString));
+	    	
+	    	tvfinancialToDate.setText("Period : "+str_fromDate+" to "+str_toDate);   
         	/*
         	 * send params to controller report.getProjectStatementReport to get the result
         	 */

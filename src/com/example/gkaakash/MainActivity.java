@@ -28,6 +28,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -247,7 +248,7 @@ public class MainActivity extends Activity {
 		getOrgNames = (Spinner)findViewById(R.id.sGetOrgNames);
 		//creating new method do event on button
 		addListenerOnButton();
-
+		
 		// copy 'aakash.sh and 'preinstall.sh to their respective paths'
 		File path = new File("/data/data/com.example.gkaakash/files/copyFilesFlag.txt");
 		if(!path.exists()){
@@ -268,6 +269,31 @@ public class MainActivity extends Activity {
 
 		}
 
+//		try {
+//			final Intent emailIntent = new Intent(
+//			android.content.Intent.ACTION_SEND);
+//			
+//			emailIntent.setType("plain/text");
+//			 
+//			emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL,
+//			new String[] { "nutannivate@gmail.com" });
+//			 
+//			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Recite");
+//			 
+//			emailIntent.putExtra(Intent.EXTRA_STREAM,
+//					Uri.fromFile(new File("/data/data/com.example.gkaakash/files/copyFilesFlag.txt")));
+//			 
+//			emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Please check the attached recite");
+//			 
+//			this.startActivity(Intent
+//			.createChooser(emailIntent, "Send mail..."));
+//			 
+//			} catch (Throwable t) {
+//				Toast.makeText(this, "Request failed: " + t.toString(),
+//				Toast.LENGTH_LONG).show();
+//		}
+		
+		
 	}
 
 

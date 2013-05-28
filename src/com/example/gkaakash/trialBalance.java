@@ -140,7 +140,13 @@ public class trialBalance extends Activity{
 	    	TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
 	    	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
 		  
-	    	tvfinancialToDate.setText("Period : "+financialFromDate+" to "+trialToDateString);   
+	    	//to get month in words
+			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
+			String str_fromDate = write.format(read.parse(financialFromDate));
+			String str_toDate = write.format(read.parse(trialToDateString));
+	    	
+	    	tvfinancialToDate.setText("Period : "+str_fromDate+" to "+str_toDate);   
 	    	/*
 		    * send params to controller report.getTrialBalance to get the result
 		    */
