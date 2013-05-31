@@ -108,7 +108,8 @@ public class bankReconciliation extends Activity{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 1:
-			m.generate_pdf1(bankReconciliation.this, pdf_params,bankReconGrid,
+			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+			String password = m.setPasswordForPdfFile(context,inflater, R.layout.sign_up, 1, pdf_params,bankReconGrid,
 					statementGrid);
 			return true;
 
@@ -204,11 +205,13 @@ public class bankReconciliation extends Activity{
            		}
            	});
            	Date date= new Date();
-			String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+			String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
 			OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
 			BankReconcilPeriod = fromDate+" to "+toDate;
 			String account = accountName.replace(" ","");
-	   	 	sFilename = "BankRec"+"_"+account+"_"+date_format;
+			
+	   	 	sFilename = "BankRec"+"_"+ OrgName.replace(" ", "")+"_"+account+ "_" +
+					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
 			
 			pdf_params = new String[]{"BankRec",sFilename,OrgName,OrgPeriod,"Bank Reconciliation for "+account,BankReconcilPeriod,"",result};
 

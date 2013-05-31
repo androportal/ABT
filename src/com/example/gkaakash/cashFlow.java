@@ -19,6 +19,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -84,8 +85,9 @@ public class cashFlow extends Activity{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 1:
-			m.generate_pdf1(cashFlow.this, pdf_params,cashFlow1,
-					cashFlow2);
+			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+			String password = m.setPasswordForPdfFile(cashFlow.this,inflater, 
+					R.layout.sign_up, 1, pdf_params, cashFlow1, cashFlow2);
 			return true;
 
 		case 2:
@@ -225,10 +227,11 @@ public class cashFlow extends Activity{
             });
             
             date= new Date();
-			String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+			String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
 			OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
 			balancePeriod = fromDateString+" to "+toDateString;
-			sFilename = "CashFlow"+"_"+date_format;
+			sFilename = "CashFlow"+"_"+ OrgName.replace(" ", "")+ "_" +
+					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
 			pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Flow",balancePeriod,"",result,rsSymbol.toString()};
 			
             animated_dialog();

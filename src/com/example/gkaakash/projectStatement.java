@@ -18,6 +18,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -80,7 +81,8 @@ public class projectStatement extends Activity{
    	public boolean onOptionsItemSelected(MenuItem item) {
    		switch (item.getItemId()) {
    		case 1:			
-   			m.generate_pdf(projectStatement.this, pdf_params,projectStatementGrid);
+   			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+			String password = m.setPasswordForPdfFile(projectStatement.this,inflater, R.layout.sign_up, 0, pdf_params,projectStatementGrid, null);
    			return true;
 
    		case 2:
@@ -190,11 +192,12 @@ public class projectStatement extends Activity{
         		}
         	});
         	 Date date= new Date();
-	   		     String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+	   		     String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
 				 OrgPeriod = "Financial Year:  "+financialFromDate+" to "+financialToDate;
 	             Period = financialFromDate+" to "+ToDateString;
 	             String project = projectName.replace(" ","");
-				 sFilename = "ProjeST"+"_"+project+"_"+date_format;
+				 sFilename = "ProjeST"+"_"+ OrgName.replace(" ", "")+"_"+project+ "_" +
+							financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
 		         pdf_params = new String[]{"ProjeST",sFilename,OrgName,OrgPeriod,"Project Statement",Period,projectName,String.format("%.2f", Math.abs(result))};
         	
         	

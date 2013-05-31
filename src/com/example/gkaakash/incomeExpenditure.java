@@ -17,6 +17,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -73,7 +74,8 @@ public class incomeExpenditure extends Activity{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 1:
-			m.generate_pdf1(incomeExpenditure.this, pdf_params, IEGrid1,IEGrid2);
+			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+			String password = m.setPasswordForPdfFile(incomeExpenditure.this,inflater, R.layout.sign_up, 1, pdf_params, IEGrid1,IEGrid2);
 			return true;
 
 		case 2:
@@ -171,7 +173,7 @@ public class incomeExpenditure extends Activity{
         	
 		   
         	 Date date= new Date();
-	   		 date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+	   		 date_format = new SimpleDateFormat("dMMMyyyy").format(date);
 	         OrgPeriod = "Financial Year:  "+financialFromDate+" to "+financialToDate;
 	         TrialPeriod = financialFromDate+" to "+IEToDateString;
 	        // trialBalGrid = new ArrayList<ArrayList>();
@@ -210,7 +212,8 @@ public class incomeExpenditure extends Activity{
             });
             if(Reporttypeflag.equalsIgnoreCase("Income and Expenditure"))
 			{
-					sFilename = "IE"+"_"+date_format;
+					sFilename = "IE"+"_"+ OrgName.replace(" ", "")+ "_" +
+							financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
 		        	pdf_params = new String[]{"I&E",sFilename,OrgName,OrgPeriod,Reporttypeflag,TrialPeriod,"","",rsSymbol.toString()};
 			}else
 		    {

@@ -38,6 +38,7 @@ import android.renderscript.RSRuntimeException;
 import android.renderscript.Sampler.Value;
 import android.text.SpannableString;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -100,7 +101,8 @@ public class balanceSheet extends Activity{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 1:			
-			m.generate_pdf1(balanceSheet.this, pdf_params, BalanceGrid1,BalanceGrid2);
+			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+			String password = m.setPasswordForPdfFile(balanceSheet.this,inflater, R.layout.sign_up, 1, pdf_params, BalanceGrid1,BalanceGrid2);
 			return true;
 
 		case 2:
@@ -234,10 +236,11 @@ public class balanceSheet extends Activity{
     		}    
     		
     		date= new Date();
-			String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+			String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
 			OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
 			balancePeriod = financialFromDate+" to "+balanceToDateString;
-			sFilename = balType+"_"+date_format;
+			sFilename = balType+"_"+ OrgName.replace(" ", "")+ "_" +
+					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
 			pdf_params = new String[]{balType,sFilename,OrgName,OrgPeriod,balancetype,balancePeriod,"",result,rsSymbol.toString()};
 			
     		drillDown();

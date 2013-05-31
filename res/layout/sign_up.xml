@@ -105,7 +105,7 @@
 			  </RadioGroup>
  	  		</TableRow>
 			
-			<TableRow>
+			<TableRow android:id="@+id/row_username">
 				<TextView
 				    android:id="@+id/tUserName"
 				    android:layout_width="wrap_content"
@@ -127,8 +127,7 @@
 		            android:inputType="textPersonName"
 		            android:layout_weight="1" />
 			</TableRow>
-			<TableRow>
-
+			<TableRow android:id="@+id/row_password">
 				<TextView
 				    android:id="@+id/tPassword"
 				    android:layout_width="wrap_content"
@@ -150,7 +149,7 @@
 		            android:inputType="textPassword"
 		            android:layout_weight="1" />
 			</TableRow>
-			<TableRow>
+			<TableRow android:id="@+id/row_confirmPassword">
 
 				<TextView
 				    android:layout_width="wrap_content"
@@ -220,7 +219,7 @@
 		            android:layout_weight="1"/>
 			</TableRow>
           
-		    <TableRow>
+		    <TableRow android:id="@+id/rowGender">
 		        <TextView
 				    android:id="@+id/tGender"
 				    android:layout_width="wrap_content"

@@ -2,7 +2,7 @@ package com.example.gkaakash;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
-import java.io.File; 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,14 +11,13 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
+
 import org.apache.tools.tar.TarEntry;
 import org.apache.tools.tar.TarInputStream;
-
-import com.gkaakash.controller.Organisation;
-import com.gkaakash.controller.Startup;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -28,19 +27,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.StatFs;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -49,6 +46,12 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.gkaakash.controller.Organisation;
+import com.gkaakash.controller.Startup;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
 
 public class MainActivity extends Activity {
@@ -228,7 +231,7 @@ public class MainActivity extends Activity {
 		}
 		
 	}
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

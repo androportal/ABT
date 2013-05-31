@@ -62,6 +62,7 @@ public class PdfGenaretor {
 	 * @param Grid ArrayList of ArrayList take all reports grid from view
 	 * @param pdf_params list of String contain 7 values
 	 * Example:{report_flag,sFilename,OrgName,OrgPeriod,"Ledger for: "+accountName,LedgerPeriod,"Project: "+Ledger_project,};
+	 * @param password 
 	 * @throws DocumentException 
 	 * It takes Grid value from the its respective report.
 	 * for example: ledegr.java will call this method and pass the ledger grid what ledger.java 
@@ -71,12 +72,12 @@ public class PdfGenaretor {
 	 * It also set the alignment depending on fields like if amount column then
 	 * align it at right side and else centre etc..
 	 */
-	public void generatePDFFile(ArrayList<ArrayList> Grid,String[] pdf_params) throws DocumentException
+	public void generatePDFFile(ArrayList<ArrayList> Grid,String[] pdf_params, String password) throws DocumentException
 	{
 		try
 		{
 			/* call createTitle method to set the title of pdf file*/
-			this.cerateTitle(pdf_params);
+			this.cerateTitle(pdf_params, password);
 			/* define table instances */
 			PdfPTable table;
 			PdfPTable table1;
@@ -244,12 +245,12 @@ public class PdfGenaretor {
 	 * @param pdf_params 
 	 * @throws DocumentException
 	 */
-	public void generateBalancePDFFile(ArrayList<ArrayList> Grid1,ArrayList<ArrayList> Grid2,String[] pdf_params) throws DocumentException
+	public void generateBalancePDFFile(ArrayList<ArrayList> Grid1,ArrayList<ArrayList> Grid2,String[] pdf_params, String password) throws DocumentException
 	{
 
 		try {
 			/* call createTitle method*/
-			cerateTitle(pdf_params);
+			cerateTitle(pdf_params, password);
 			/* Create table for body content */
 			PdfPTable table;
 			PdfPTable table1;
@@ -646,16 +647,22 @@ public class PdfGenaretor {
 	/***
 	 * This function is to create title to each pdf  
 	 * @param pdf_params
+	 * @param password 
 	 * @throws FileNotFoundException
 	 * @throws DocumentException
 	 */
-	void cerateTitle(String[] pdf_params) throws FileNotFoundException, DocumentException
+	void cerateTitle(String[] pdf_params, String password) throws FileNotFoundException, DocumentException
 	{
 		/* Get the /mnt/sdcard */
 		File root = Environment.getExternalStorageDirectory();
 		/* Create new file with sFilename*/ 
 		File pdffile = new File(root,pdf_params[1]+".pdf");
-		PdfWriter.getInstance(document, new FileOutputStream(pdffile));
+		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdffile));
+		//set password for pdf file
+		if(password != null){
+			writer.setEncryption("hello".getBytes(), password.getBytes(),
+					PdfWriter.ALLOW_PRINTING, PdfWriter.ENCRYPTION_AES_128);
+		}
 		// open the document 
 		document.open(); 
 		/* Create Header Table*/

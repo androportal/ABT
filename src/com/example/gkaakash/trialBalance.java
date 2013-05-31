@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -89,7 +90,9 @@ public class trialBalance extends Activity{
    	public boolean onOptionsItemSelected(MenuItem item) {
    		switch (item.getItemId()) {
    		case 1:			
-   			m.generate_pdf(trialBalance.this, pdf_params,trialBalGrid);
+   			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+			String password = m.setPasswordForPdfFile(trialBalance.this,inflater, 
+					R.layout.sign_up, 0, pdf_params,trialBalGrid, null);
    			return true;
 
    		case 2:
@@ -164,7 +167,7 @@ public class trialBalance extends Activity{
 	    		trialbalType = "ExtendedT";
 	    	}
 	    	 Date date= new Date();
-	   		 date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+	   		 date_format = new SimpleDateFormat("dMMMyyyy").format(date);
 	         OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
 	         TrialPeriod = financialFromDate+" to "+trialToDateString;
 	         trialBalGrid = new ArrayList<ArrayList>();
@@ -204,7 +207,8 @@ public class trialBalance extends Activity{
 		           }
 				}
 	        });
-	    	sFilename = trialbalType+"_"+date_format;
+	    	sFilename = trialbalType+"_"+ OrgName.replace(" ", "")+ "_" +
+					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
 			pdf_params = new String[]{trialbalType,sFilename,OrgName,OrgPeriod,trialbalancetype,
 					TrialPeriod,"",rsSymbol+String.format("%.2f", Math.abs(result))};
 					

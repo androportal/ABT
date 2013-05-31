@@ -48,6 +48,7 @@ import android.os.Environment;
 import android.text.SpannableString;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -57,12 +58,16 @@ import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class ledger extends Activity {
 	TableLayout ledgertable;
@@ -113,31 +118,33 @@ public class ledger extends Activity {
 	ArrayList<String> stringList;
 	private int group1Id = 1;
 	int PDF = Menu.FIRST;
-	int CSV=Menu.FIRST+1;
+	int CSV = Menu.FIRST + 1;
 	int len;
-	
-	 @Override
-	 public boolean onCreateOptionsMenu(Menu menu) {
-	
-			menu.add(group1Id, PDF, PDF, "Export as PDF");
-	   		menu.add(group1Id, CSV, CSV, "Export as CSV");
-	 return super.onCreateOptionsMenu(menu);
-	 }
-	
-	 @Override
-	 public boolean onOptionsItemSelected(MenuItem item) {
-	 switch (item.getItemId()) {
-	 case 1:
-	 m.generate_pdf(ledger.this, pdf_params,ledgerGrid);
-	 return true;
-	
-	 case 2:
-	 m.csv_writer(pdf_params,ledgerGrid_with_header);
-	 m.toastValidationMessage(ledger.this, "CSV exported");
-	 return true;
-	 }
-	 return super.onOptionsItemSelected(item);
-	 }
+	AlertDialog dialog;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		menu.add(group1Id, PDF, PDF, "Export as PDF");
+		menu.add(group1Id, CSV, CSV, "Export as CSV");
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case 1:
+			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+			String password = m.setPasswordForPdfFile(context,inflater, R.layout.sign_up,0, pdf_params, ledgerGrid, null);
+			return true;
+
+		case 2:
+			m.csv_writer(pdf_params,ledgerGrid_with_header);
+			m.toastValidationMessage(ledger.this, "CSV exported");
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -206,14 +213,15 @@ public class ledger extends Activity {
 			tvaccontName = (TextView) findViewById(R.id.tvaccountName);
 			tvfinancialToDate = (TextView) findViewById(R.id.tvfinancialToDate);
 			tvaccontName.setText("Account name: " + accountName);
-			
-			//to get month in words
+
+			// to get month in words
 			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
 			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
 			String str_fromDate = write.format(read.parse(fromDate));
 			String str_toDate = write.format(read.parse(toDate));
-			
-			tvfinancialToDate.setText("Period : " + str_fromDate + " to " + str_toDate);
+
+			tvfinancialToDate.setText("Period : " + str_fromDate + " to "
+					+ str_toDate);
 
 			if (!projectName.equalsIgnoreCase("No Project")) {
 				TextView tvProjectName = (TextView) findViewById(R.id.tvProjectName);
@@ -237,13 +245,14 @@ public class ledger extends Activity {
 
 			}
 			Date date = new Date();
-			String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss")
+			String date_format = new SimpleDateFormat("dMMMyyyy")
 					.format(date);
 			OrgPeriod = "Financial Year: " + financialFromDate + " to "
 					+ financialToDate;
 			LedgerPeriod = fromDate + " to " + toDate;
 			String account = accountName.replace(" ", "");
-			sFilename = "L" + "_" + account + "_" + date_format;
+			sFilename = "L" +"_"+ OrgName.replace(" ", "")+"_" + account + "_" +
+					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+ date_format;
 			pdf_params = new String[] { "L", sFilename, OrgName, OrgPeriod,
 					"Ledger for: " + accountName, LedgerPeriod,
 					"Project: " + Ledger_project, };
@@ -275,19 +284,17 @@ public class ledger extends Activity {
 				}
 
 				ledgerGrid.add(ledgerResultList);
-				
-			
-				
+
 			}
 
 			ledgertable = (TableLayout) findViewById(R.id.maintable);
-			addTable();//////
+			addTable();// ////
 
 			final TextView tvReportTitle = (TextView) findViewById(R.id.tvReportTitle);
 			tvReportTitle.setText("Menu >> " + "Report >> " + "Ledger");
 			final Button btnSaveRecon = (Button) findViewById(R.id.btnSaveRecon);
 			btnSaveRecon.setVisibility(Button.GONE);
-		
+
 			// btnSaveRecon.setVisibility(Button.GONE);
 			final Button btnScrollDown = (Button) findViewById(R.id.btnScrollDown);
 			btnScrollDown.setOnClickListener(new OnClickListener() {
@@ -307,7 +314,6 @@ public class ledger extends Activity {
 				}
 			});
 
-			
 			animated_dialog();
 			floatingHeader();
 
@@ -562,7 +568,6 @@ public class ledger extends Activity {
 
 		tr = new TableRow(this);
 
-		
 		if (checked == true) {
 			len = ColumnNameList.length;
 		} else {
@@ -577,17 +582,16 @@ public class ledger extends Activity {
 			label.setGravity(Gravity.CENTER);
 		}
 
-		//for adding header in the main grid
+		// for adding header in the main grid
 		stringList = new ArrayList<String>();
 		for (String s : ColumnNameList) {
 			stringList.add(s);
 		}
-		
+
 		ledgerGrid_with_header.add(stringList);
 		ledgerGrid_with_header.addAll(ledgerGrid);
 		System.out.println("ledgerGrid_with_header1:" + ledgerGrid_with_header);
-		
-	    
+
 		// Add the TableRow to the TableLayout
 		ledgertable.addView(tr, new TableLayout.LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.MATCH_PARENT));
@@ -599,26 +603,27 @@ public class ledger extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				//fade the row color(black/gray to orange) when clicked
-				View row = ledgertable.getChildAt(i+1);
-				
+				// fade the row color(black/gray to orange) when clicked
+				View row = ledgertable.getChildAt(i + 1);
+
 				for (int j = 0; j < len; j++) {
 					LinearLayout l = (LinearLayout) ((ViewGroup) row)
 							.getChildAt(j);
 					TextView t = (TextView) l.getChildAt(0);
-					ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"), Color.parseColor("#000000"));
+					ObjectAnimator colorFade = ObjectAnimator.ofObject(t,
+							"backgroundColor", new ArgbEvaluator(),
+							Color.parseColor("#FBB117"),
+							Color.parseColor("#000000"));
 					colorFade.setDuration(100);
 					colorFade.start();
 				}
-				
-				
+
 				MainActivity.nameflag = true;
 
 				name = "Voucher details";
 
 				MainActivity.searchFlag = true;
 
-				
 				Object[] params = new Object[] { "Dr" };
 				Accountlist = new ArrayList<String>();
 

@@ -165,8 +165,12 @@ public class createVoucher extends Activity {
 		closing_bal = (EditText) findViewById(R.id.Closing_balance);
 		try {
 			searchFlag = MainActivity.searchFlag;
-
-			cloneflag = SearchVoucher.cloneflag;
+			
+			if(from_report_flag == null){
+				cloneflag = SearchVoucher.cloneflag;
+			}else{
+				cloneflag = false;
+			}
 			// Toast.makeText(context, "abbbbccc"+searchFlag,
 			// Toast.LENGTH_SHORT).show();
 			// System.out.println("serachflag:"+searchFlag);
@@ -281,7 +285,7 @@ public class createVoucher extends Activity {
 			projetct_name.setCacheColorHint(color.transparent);
 			setProject();
 
-			if (from_report_flag != null) {
+			if (from_report_flag != null && !(menu.userrole.equalsIgnoreCase("admin"))) {
 				// Toast.makeText(context,"i am from report",Toast.LENGTH_SHORT).show();
 				etnarration.setEnabled(false);
 				etRefNumber.setEnabled(false);
@@ -1140,26 +1144,33 @@ public class createVoucher extends Activity {
 								// for satisfying reset condition
 								searchFlag = false;
 								edittabflag = false;
-							} else if (cloneflag == false) {// for saving edited
+							} else if (cloneflag == false) {// for saving edited transaction
 								// account details
 
 								Object[] params_master = new Object[] {
 										vouchercode, vDate, vproject, narration };
 								transaction.editVoucher(params_master,
 										paramsMaster, client_id);
-								// for satisfying reset condition
-								searchFlag = false;
+								
+								
 								edittabflag = true;
+								
 								MainActivity.nameflag = false;
-								transaction_tab.tabHost.setCurrentTab(1);// for
-								// changing
-								// the
-								// tab
-								String tabname1 = transaction_tab.tabname;
-								transaction_tab.tab1.setText(tabname1);// for
-								// changing
-								// tab
-								// name
+								/* if we are coming from report and edited transaction then be on the same page
+								 * else change the tab to search voucher 
+								 */
+								if(from_report_flag == null){	
+									// for satisfying reset condition
+									searchFlag = false;
+									
+									// for changing the tab
+									transaction_tab.tabHost.setCurrentTab(1);
+									
+									// for changing the tab name
+									String tabname1 = transaction_tab.tabname;
+									transaction_tab.tab1.setText(tabname1);
+								}
+								
 							} else if (cloneflag == true) {// for saving cloned
 								// details
 								Object[] params_master = new Object[] {
@@ -1192,7 +1203,7 @@ public class createVoucher extends Activity {
 							alert.show();
 
 							// reset all fields
-							if (searchFlag == false || cloneflag == false) {
+							if ((searchFlag == false || cloneflag == false) && from_report_flag == null) {
 
 								// etRefNumber.setText("");
 								etRefNumber = (EditText) findViewById(R.id.etRefNumber);
