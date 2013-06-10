@@ -483,7 +483,7 @@ public class createOrg extends MainActivity {
 					.setPositiveButton("Ok",
 							new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
-							MainActivity.remoteflag = true;
+							MainActivity.menuOptionFlag = true;
 							Intent intent = new Intent(context,MainActivity.class);
 							startActivity(intent);  
 						}
@@ -641,6 +641,7 @@ public class createOrg extends MainActivity {
 	}// end of addListenerOnRadioButton()
 
 	public void onBackPressed() {
+		MainActivity.menuOptionFlag = true;
 		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);

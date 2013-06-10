@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
 	module m;
 	private AlertDialog dialog;
 	protected RadioButton radioButtonValue;
-	static Boolean username_flag=false,flagIP = false,remoteflag = true;
+	static Boolean username_flag=false,flagIP = false,remoteflag = true , menuOptionFlag = true;
 	static String IPaddr;
 
 
@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
 		// 'Help' menu to main page options menu
 		
 		menu.add(1,1,1,"Help");
-		if(remoteflag == true)
+		if(menuOptionFlag == true)
 		{
 			menu.add(1,2,2,"Import");
 			menu.add(1,3,3,"Set IP");
@@ -299,11 +299,7 @@ public class MainActivity extends Activity {
 			}
 
 		}
-
-
 	}
-
-
 	//Attach a listener to the click event for the button
 	private void addListenerOnButton() {
 
@@ -317,6 +313,7 @@ public class MainActivity extends Activity {
 				if(flagIP.equals(true)){
 					System.out.println("in create  button listner"+IPaddr);
 					remoteflag=false;
+					menuOptionFlag = false;
 					//To pass on the activity to the next page
 					Intent intent = new Intent(context,createOrg.class);
 					startActivity(intent);
@@ -324,6 +321,7 @@ public class MainActivity extends Activity {
 				{
 					m.toastValidationMessage(context, "Please set proper IP again or check server is running!!");
 					remoteflag = true;
+					menuOptionFlag = true;
 				}
 
 			}// end of onClick
