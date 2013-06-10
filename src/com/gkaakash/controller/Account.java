@@ -34,8 +34,8 @@ public class Account {
 	 * Default constructor
 	 * create instance of CoreConnection() to get connection with server
 	 */
-	public Account() {
-		conn = new CoreConnection();
+	public Account(String ip) {
+		conn = new CoreConnection(ip);
 		
 	}
 	/***

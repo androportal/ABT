@@ -109,7 +109,7 @@ public class menu extends ListActivity{
     EditText oldpass,newpass,confirmpass;
     CharSequence[] items;
     boolean reset_password_flag = false;
-   
+    static String IPaddr;
     /*
     //adding options to the options menu
     @Override
@@ -176,16 +176,18 @@ public class menu extends ListActivity{
     //on load...getfinancialFromDate
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        account = new Account();
-        preferences = new Preferences();
-        organisation = new Organisation();
-        report = new Report();
+        IPaddr = MainActivity.IPaddr;
+    	System.out.println("in createorg"+IPaddr);
+        account = new Account(IPaddr);
+        preferences = new Preferences(IPaddr);
+        organisation = new Organisation(IPaddr);
+        report = new Report(IPaddr);
         client_id= Startup.getClient_id();
         m= new module();
         reportmenuflag = MainActivity.reportmenuflag;
         
 		// create instance of user class to call setUser method
-		user = new User();
+		user = new User(IPaddr);
 		// get the client_id from startup
 		
 		

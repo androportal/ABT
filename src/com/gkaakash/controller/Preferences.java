@@ -29,8 +29,8 @@ public class Preferences {
      * default constructor
      * connect with core_engine see CoreConnection
      */
-    public Preferences() {
-        conn = new CoreConnection();
+    public Preferences(String ip) {
+        conn = new CoreConnection(ip);
     }
     /***
      * setPreferences method will call xmlrpc_setPreferences from rpc_organisation.py

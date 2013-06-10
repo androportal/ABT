@@ -102,7 +102,7 @@ public class ledger extends Activity {
 	String Ledger_project, sFilename;
 	static String name;
 	static Boolean cloneflag = false;
-
+	static String IPaddr;
 	final Context context = this;
 	static String vouchertypeflag;
 	static Object[] voucherAccounts;
@@ -150,9 +150,10 @@ public class ledger extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.ledger_table);
-
-		report = new Report();
-		transaction = new Transaction();
+		IPaddr = MainActivity.IPaddr;
+	    System.out.println("in createorg"+IPaddr);
+		report = new Report(IPaddr);
+		transaction = new Transaction(IPaddr);
 		client_id = Startup.getClient_id();
 		m = new module();
 		msg = "At lease 2 accounts require to enter transaction, please create account!";

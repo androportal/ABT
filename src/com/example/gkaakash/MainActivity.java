@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.tools.tar.TarEntry;
@@ -31,6 +33,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StatFs;
 import android.text.Html;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,9 +43,14 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,14 +89,22 @@ public class MainActivity extends Activity {
 	static boolean no_dailog=false;
 	module m;
 	private AlertDialog dialog;
-	static Boolean username_flag=false;
+	protected RadioButton radioButtonValue;
+	static Boolean username_flag=false,flagIP = false,remoteflag = true;
+	static String IPaddr;
 
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// 'Help' menu to main page options menu
+		
 		menu.add(1,1,1,"Help");
-		menu.add(1,2,2,"Import");
+		if(remoteflag == true)
+		{
+			menu.add(1,2,2,"Import");
+			menu.add(1,3,3,"Set IP");
+		}
+		
 		return super.onCreateOptionsMenu(menu);	
 	}
 
@@ -102,12 +118,19 @@ public class MainActivity extends Activity {
 			//Toast.makeText(context, "help_flag_option is set to 1", Toast.LENGTH_SHORT).show();
 			help_option_menu_flag = 1;
 			//if running this app on emulator, comment the below line
-			help_popup();
+			//help_popup();
 		}
 		if(item.getItemId() == 2){
 			//Toast.makeText(context, "help_flag_option is set to 2", Toast.LENGTH_SHORT).show();
-			importorganisation();
+			if(flagIP.equals(true)){
+				importorganisation();
+			}
 		}
+		 if(item.getItemId() == 3){
+			 //Toast.makeText(context, "help_flag_option is set to 3"
+			 setRemoteLocation();
+		}
+
 		return super.onOptionsItemSelected(item);
 	}//if running this app on emulator, comment the below line
 
@@ -120,7 +143,7 @@ public class MainActivity extends Activity {
 				String[] command = {"rm -r /data/local/abt/opt/abt/export/","busybox cp /mnt/sdcard/export/ /data/local/abt/opt/abt/ -R"};
 				module.RunAsRoot(command);
 
-				final Organisation organisation = new Organisation();
+				final Organisation organisation = new Organisation(IPaddr);
 				//get list of all exported organisations
 				Object[] result = (Object[]) organisation.getAllExportedOrganisations();
 				final ArrayList<ArrayList> Grid = new ArrayList<ArrayList>();
@@ -238,10 +261,15 @@ public class MainActivity extends Activity {
 		//Calling activity_main.xml which is first page of GNUKhata
 		setContentView(R.layout.activity_main);
 		//create object of Startup to access connection
-		startup = new Startup();
+		//startup = new Startup();
 		m=new module();
+		if(remoteflag==true)
+		{
+			setRemoteLocation();
+		}
 		// call the getOrganisationName method from startup
-		orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
+		//orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
+		
 		//Request a reference to the button from the activity by calling “findViewById”
 		//and assign the retrieved button to an instance variable
 		create_org = (Button) findViewById(R.id.bcreateOrg);
@@ -263,7 +291,7 @@ public class MainActivity extends Activity {
 		}
 		if(no_dailog==false){
 			//if running this app on emulator, comment the below line
-			help_popup(); 
+			//help_popup(); 
 		}    
 		else{
 			if(checkFlag=="false"){
@@ -272,31 +300,7 @@ public class MainActivity extends Activity {
 
 		}
 
-//		try {
-//			final Intent emailIntent = new Intent(
-//			android.content.Intent.ACTION_SEND);
-//			
-//			emailIntent.setType("plain/text");
-//			 
-//			emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL,
-//			new String[] { "nutannivate@gmail.com" });
-//			 
-//			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Recite");
-//			 
-//			emailIntent.putExtra(Intent.EXTRA_STREAM,
-//					Uri.fromFile(new File("/data/data/com.example.gkaakash/files/copyFilesFlag.txt")));
-//			 
-//			emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Please check the attached recite");
-//			 
-//			this.startActivity(Intent
-//			.createChooser(emailIntent, "Send mail..."));
-//			 
-//			} catch (Throwable t) {
-//				Toast.makeText(this, "Request failed: " + t.toString(),
-//				Toast.LENGTH_LONG).show();
-//		}
-		
-		
+
 	}
 
 
@@ -309,9 +313,18 @@ public class MainActivity extends Activity {
 
 			public void onClick(View arg0) {
 				reportmenuflag = true;
-				//To pass on the activity to the next page
-				Intent intent = new Intent(context, createOrg.class);
-				startActivity(intent);
+				System.out.println("ip on click create"+flagIP);
+				if(flagIP.equals(true)){
+					System.out.println("in create  button listner"+IPaddr);
+					remoteflag=false;
+					//To pass on the activity to the next page
+					Intent intent = new Intent(context,createOrg.class);
+					startActivity(intent);
+				}else
+				{
+					m.toastValidationMessage(context, "Please set proper IP again or check server is running!!");
+					remoteflag = true;
+				}
 
 			}// end of onClick
 		});// end of create_org.setOnClickListener
@@ -319,6 +332,10 @@ public class MainActivity extends Activity {
 
 			public void onClick(View arg0) {
 				reportmenuflag = false;
+				if(flagIP.equals(true)){
+					System.out.println("in button listner"+IPaddr);
+					startup = new Startup(IPaddr);
+					remoteflag=false;
 				// check existing organisation name list is null
 				try{
 					// call the getOrganisationName method from startup
@@ -345,8 +362,14 @@ public class MainActivity extends Activity {
 					}
 				}catch(Exception e)
 				{
-					m.toastValidationMessage(context, "Please check server connection");
+					m.toastValidationMessage(context, "Please set IP again or check server is running!!");
+					remoteflag = true;
 				}
+			}else
+			{
+				m.toastValidationMessage(context, "Please set IP again or check server is running!!");
+				remoteflag = true;
+			}
 			}// end of onClick
 		});// end of select_org.setOnClickListener
 	}// end of addListenerOnButton() method
@@ -1031,6 +1054,7 @@ public class MainActivity extends Activity {
 		AlertDialog alert1 = builder.create();
 		alert1.show();
 	}
+	
 	// REBOOT END
 
 	public void onBackPressed() {
@@ -1071,20 +1095,121 @@ public class MainActivity extends Activity {
 		return availableSpace/SIZE_MB;
 	}
 
-
-	/**
-	 * @return Number of bytes available on external storage extSD
-
-	    public long getExternalAvailableSpaceInBytes() {
-	        long availableSpace = -1L;
-	        try {
-	            StatFs stat = new StatFs("mnt/extsd");
-	            availableSpace = (long) stat.getAvailableBlocks() * (long) stat.getBlockSize();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-
-	        return availableSpace;
-	    }
-	 */ 
+	public void setRemoteLocation()
+	{
+		 System.out.println("in remote location");
+		 
+		 final View layout = m.builder_with_inflater(this,"",R.layout.login);
+		 TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
+		 tvalertHead1.setText("Remote Server Location");
+		 TextView tvUserRole =(TextView) layout.findViewById(R.id.tvUserRole);
+		 tvUserRole.setText("Please select reomteserver location");
+		 final RadioButton rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
+		 final RadioButton rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
+		 final RadioButton rb_operator =(RadioButton) layout.findViewById(R.id.rbOperator);
+		 final TextView tvLoginWarning = (TextView) layout.findViewById(R.id.tvLoginWarning);
+		 rb_admin.setText("Emulater");
+		 rb_guest.setText("Tablet");
+		 rb_operator.setVisibility(View.VISIBLE);
+		 rb_operator.setText("Server location");
+		 LinearLayout LinearPassword =(LinearLayout) layout.findViewById(R.id.LinearPassword);
+		 LinearPassword.setVisibility(View.GONE);
+		 TextView tLoginUser =(TextView) layout.findViewById(R.id.tLoginUser);
+		 EditText eLoginUser =(EditText) layout.findViewById(R.id.eLoginUser);
+		 eLoginUser.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		 eLoginUser.setEnabled(false);
+		 tLoginUser.setText("Enter Server IP Address: ");
+		 eLoginUser.setHint("for ex: 192.168.1.113");
+		 Button btnLogin = (Button)layout.findViewById(R.id.btnLogin);
+		 btnLogin.setText("Apply");
+		 addListenerOnRadioButton(layout);
+		 module.dialog.setCanceledOnTouchOutside(true);
+		 System.out.println("weloxcme");
+		 btnLogin.setOnClickListener(new OnClickListener() {   
+				   
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					if(rb_operator.isChecked() || rb_admin.isChecked()||rb_guest.isChecked())
+					{
+					EditText eLoginUser =(EditText) layout.findViewById(R.id.eLoginUser);
+					IPaddr = eLoginUser.getText().toString();
+					if(m.isEmpty(new Object[]{IPaddr}))
+					{
+						tvLoginWarning.setVisibility(View.VISIBLE);
+						tvLoginWarning.setText("Please fill text field");
+					}
+					else{
+						System.out.println("value of:"+IPaddr);
+						//CoreConnection.setIPaddress(IPaddr);
+						if(rb_operator.isChecked())
+						{
+				        String pattern="([0-9]+)(\\.[0-9]+)(\\.[0-9]+)(\\.[0-9])";
+				         
+				        Pattern p = Pattern.compile(pattern);
+				        Matcher m = p.matcher(IPaddr);
+				        
+				       // String pattern1="([0-9a-z]+)(\\.[0-9a-z]+)(\\.[0-9a-z]+)(\\.[0-9a-z])";
+				         
+				        //Pattern p1 = Pattern.compile(pattern1);
+				       // Matcher m1 = p.matcher(IPaddr);
+				         
+				        if(m.find())
+				        {
+							flagIP = true;
+							module.dialog.dismiss();
+						}else
+						{
+							tvLoginWarning.setVisibility(View.VISIBLE);
+							tvLoginWarning.setText("Please enter proper IP");
+						}
+						}else
+						{
+							flagIP = true;
+							module.dialog.dismiss();
+						}
+					}
+					}else
+					{
+						tvLoginWarning.setVisibility(View.VISIBLE);
+						tvLoginWarning.setText("Please choose server location");
+					}
+				}  
+			});  
+		 
+		
+   }
+	public void addListenerOnRadioButton(final View layout) {
+		
+		System.out.println("in radio listener in mainac");
+		RadioGroup radioIP =  (RadioGroup) layout.findViewById(R.id.radioUser);
+		radioIP.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				checkedId = group.getCheckedRadioButtonId();
+				radioButtonValue = (RadioButton)layout.findViewById(checkedId);
+				String role = (String) radioButtonValue.getText();
+				EditText eLoginUser =(EditText) layout.findViewById(R.id.eLoginUser);
+				eLoginUser.setEnabled(false);
+				//System.out.println("value"+role);
+				
+				if(role.equalsIgnoreCase("emulater"))
+				{
+						eLoginUser.setText("10.0.2.2");
+				}else if(role.equalsIgnoreCase("Tablet"))
+				{
+					    eLoginUser.setText("127.0.0.1");
+				}else
+				{
+					 eLoginUser.setText("");
+					 eLoginUser.setHint("Enter IP");
+					 eLoginUser.setEnabled(true);
+				}
+					   
+				
+			}
+		});
+	}
+	
 }

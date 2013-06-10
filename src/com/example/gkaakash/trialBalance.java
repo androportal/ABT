@@ -76,7 +76,7 @@ public class trialBalance extends Activity{
    	int PDF = Menu.FIRST;
    	int CSV=Menu.FIRST+1;
    	module m;
-   	
+   	static String IPaddr;
    	
    	@Override
    	public boolean onCreateOptionsMenu(Menu menu) {
@@ -108,7 +108,9 @@ public class trialBalance extends Activity{
 	    super.onCreate(savedInstanceState);
 	    requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 	    setContentView(R.layout.trial_table);
-	    report = new Report();
+	    IPaddr = MainActivity.IPaddr;
+		System.out.println("in createorg"+IPaddr);
+	    report = new Report(IPaddr);
 	    client_id= Startup.getClient_id();
 		 m=new module();
 	    reportmenuflag = MainActivity.reportmenuflag;

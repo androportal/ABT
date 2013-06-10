@@ -59,20 +59,22 @@ public class selectOrg extends Activity{
 	private module m;
 	String get_extra_flag;
 	static boolean reset_password_flag = false;
-
-
+	static String IPaddr;
+    
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.select_org);
 
 //		MainActivity.username_flag=true;
-		MainActivity.no_dailog = true; //comment this line if running this app on emulator
+		//MainActivity.no_dailog = true; //comment this line if running this app on emulator
 
 		// set flag to true , if we are in existing organisation
 		//existingOrgFlag="true";
 		// call startup to get client connection 
-		startup = new Startup();
-		user= new User();
+		IPaddr = MainActivity.IPaddr;
+		System.out.println("in createorg"+IPaddr);
+		startup = new Startup(IPaddr);
+		user= new User(IPaddr);
 		m = new module();
 
 		Bundle extras = getIntent().getExtras();

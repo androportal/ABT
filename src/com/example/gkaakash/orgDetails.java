@@ -85,7 +85,7 @@ import android.widget.Toast;
 		Spinner getFinancialyear;
 		Object[] deleteprgparams;
 		Boolean deleted;
-		
+		static String IPaddr;
 		
 		//adding options to the options menu
 		@Override
@@ -114,8 +114,10 @@ import android.widget.Toast;
 			// Calling org_details.xml
 			setContentView(R.layout.org_details);
 			// creating instance of startup to get the connection
-			startup = new Startup();
-			org = new Organisation();
+			IPaddr = MainActivity.IPaddr;
+			System.out.println("in createorg"+IPaddr);
+			startup = new Startup(IPaddr);
+			org = new Organisation(IPaddr);
 			m= new module();
 		
 			editDetailsflag = MainActivity.editDetails;

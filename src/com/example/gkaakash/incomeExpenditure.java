@@ -61,7 +61,7 @@ public class incomeExpenditure extends Activity{
 	int CSV = Menu.FIRST + 1;
 	module m;
 	SpannableString rsSymbol;
-		
+	static String IPaddr;	
 		
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,7 +91,9 @@ public class incomeExpenditure extends Activity{
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.income_expenditure_table);
-        report = new Report();
+        IPaddr = MainActivity.IPaddr;
+    	System.out.println("in createorg"+IPaddr);
+        report = new Report(IPaddr);
         client_id= Startup.getClient_id();
         m=new module();
         rsSymbol = new SpannableString(incomeExpenditure.this.getText(R.string.Rs));

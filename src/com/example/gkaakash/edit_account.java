@@ -54,15 +54,16 @@ public class edit_account extends Activity {
 	static int flag = 1;
 	module m;
 	private Report reports;
-
+	static String IPaddr;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_acc_tab);
-
-		account = new Account();
+		IPaddr = MainActivity.IPaddr;
+	    System.out.println("in createorg"+IPaddr);
+		account = new Account(IPaddr);
 		client_id = Startup.getClient_id();
 		m = new module();
-		reports = new Report();
+		reports = new Report(IPaddr);
 		List = (ListView) findViewById(R.id.ltAccname);
 		List.setCacheColorHint(color.transparent);
 		List.setTextFilterEnabled(true);
@@ -70,7 +71,7 @@ public class edit_account extends Activity {
 		etSearch = (EditText) findViewById(R.id.etSearch);
 		sSearchAccountBy = (Spinner) findViewById(R.id.sSearchAccountBy);
 
-		Preferences preferencObj = new Preferences();
+		Preferences preferencObj = new Preferences(IPaddr);
 		// call getPrefernece to get set preference related to account code flag
 		accCodeCheckFlag = preferencObj.getPreferences(new Object[] { "1" },client_id);
 

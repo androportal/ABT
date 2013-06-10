@@ -66,14 +66,15 @@ public class createAccount<group> extends Activity{
     module m;
     boolean setGroupFlag = false;
     String setGroupName ,setSubGroupName;
-        
+    static String IPaddr;   
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Calling create_account.xml
         setContentView(R.layout.create_account);
         m=new module();
-        
+        IPaddr = MainActivity.IPaddr;
+	    System.out.println("in createorg"+IPaddr);
         try {
             //for visibility of account tab layout
             LinearLayout l0=(LinearLayout)findViewById(R.id.createacc_tab0);  
@@ -81,9 +82,9 @@ public class createAccount<group> extends Activity{
             LinearLayout l2=(LinearLayout)findViewById(R.id.createacc_tab2);
             
             // create the object of Group class
-            group = new Group();
-            account = new Account();
-            preferencObj= new Preferences();
+            group = new Group(IPaddr);
+            account = new Account(IPaddr);
+            preferencObj= new Preferences(IPaddr);
             
             // getting client id 
             client_id = Startup.getClient_id();

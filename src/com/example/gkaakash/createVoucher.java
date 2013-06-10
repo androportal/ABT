@@ -114,16 +114,17 @@ public class createVoucher extends Activity {
 	Button btnResetVoucher;
 	Button btnSaveVoucher;
 	String from_trial;
-	
+	static String IPaddr;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_voucher);
-
-		transaction = new Transaction();
-		organisation = new Organisation();
-		reports = new Report();
+		IPaddr = MainActivity.IPaddr;
+	    System.out.println("in createorg"+IPaddr);
+		transaction = new Transaction(IPaddr);
+		organisation = new Organisation(IPaddr);
+		reports = new Report(IPaddr);
 		client_id = Startup.getClient_id();
 
 		m = new module();

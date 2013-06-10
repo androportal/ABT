@@ -18,8 +18,8 @@ public class Group {
 	 * Default constructor
 	 * create instance of CoreConnection() to get connection with server
 	 */
-	public Group() {
-		conn = new CoreConnection();
+	public Group(String ip) {
+		conn = new CoreConnection(ip);
 	}
 	
 	/***

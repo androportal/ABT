@@ -95,7 +95,7 @@ public class bankReconciliation extends Activity{
 	private int group1Id = 1;
 	int PDF = Menu.FIRST;
 	int CSV = Menu.FIRST + 1;
-		
+	static String IPaddr;	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -125,9 +125,10 @@ public class bankReconciliation extends Activity{
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
     	setContentView(R.layout.bank_recon_table);
-       
-    	report = new Report(); 
-    	transaction = new Transaction();
+    	 IPaddr = MainActivity.IPaddr;
+     	System.out.println("in createorg"+IPaddr);
+    	report = new Report(IPaddr); 
+    	transaction = new Transaction(IPaddr);
     	client_id= Startup.getClient_id();
     	m = new module();
        

@@ -54,14 +54,17 @@ public class addProject extends MainActivity {
 	private boolean setProject;
 	module m;
 	TextView tvProWarning,tveditWarning;
+	static String IPaddr;
 
 	// on load...
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_projectnames);
-		account = new Account();
-		preferences = new Preferences();
-		organisation = new Organisation();
+		IPaddr = MainActivity.IPaddr;
+		System.out.println("in createorg"+IPaddr);
+		account = new Account(IPaddr);
+		preferences = new Preferences(IPaddr);
+		organisation = new Organisation(IPaddr);
 		client_id = Startup.getClient_id();
 		ltProjectNames = (ListView) findViewById(R.id.ltProjectNames);
 		tvProWarning = (TextView) findViewById(R.id.tvProWarning);

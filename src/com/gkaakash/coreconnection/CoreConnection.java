@@ -7,25 +7,32 @@ public class CoreConnection {
 	
 	private URL url;
 	private XMLRPCClient client; 
+	
+	private static String Port = "7081";
 	/***
 	 * default constructor         
 	 * connect to server
 	 * create xml_rpc client
 	*/   
-	public CoreConnection()  {    
+	public CoreConnection(String IPaddress)  {    
 		try {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-			StrictMode.setThreadPolicy(policy); 
-			//url = new URL("http://10.102.152.127:7081"); //uncomment on remote server
-			url = new URL("http://127.0.0.1:7081"); //uncomment on tablet
-			//url = new URL("http://10.0.2.2:7081"); // uncomment for emulator  
+			StrictMode.setThreadPolicy(policy);
+			
+			System.out.println("ip address:"+IPaddress);
+			System.out.println("port:"+Port);
+			String link = "http://"+IPaddress+":"+Port;
+			System.out.println(link);
+			url = new URL(link); 
+			
 			client = new XMLRPCClient(url);
+			System.out.println("client"+client);
 		} catch (MalformedURLException e) {   
 			  
+			  
 			e.printStackTrace();
-		}
+		}  
 	} //default constructor
-	
 	/***
 	 * getter for url , It's a private member
 	 * @return url

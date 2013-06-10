@@ -17,8 +17,8 @@ public class User {
 	 * default constructor   
 	 * connect to server
 	 */
-	public User() {
-		conn = new CoreConnection();
+	public User(String ip) {
+		conn = new CoreConnection(ip);
 	}
 	
 	/**

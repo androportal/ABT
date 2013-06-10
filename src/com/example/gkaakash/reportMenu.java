@@ -64,14 +64,15 @@ public class reportMenu extends ListActivity{
 	static String balancetype;
 	module m;
 	TextView tvLedgerWarning;
-	
+	static String IPaddr;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		account = new Account();
-		organisation = new Organisation();
+		IPaddr = MainActivity.IPaddr;
+		System.out.println("in createorg"+IPaddr);
+		account = new Account(IPaddr);
+		organisation = new Organisation(IPaddr);
 		m= new module();
 		
        	client_id= Startup.getClient_id();

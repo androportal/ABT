@@ -18,12 +18,13 @@ public class account_tab extends TabActivity{
 	TextView tab2 = null;
 	private Integer client_id;
 	private Preferences preferences;
-	
+	static String IPaddr;
 	public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.tab);
 	        //accCodeFlag = getIntent().getExtras().getString("flag");
-	 
+	        IPaddr = MainActivity.IPaddr;
+			System.out.println("in createorg"+IPaddr);
 	        final TabHost tabHost = getTabHost();
 	        //creating TabSpec for create account
 	        TabSpec createspec = tabHost.newTabSpec("tab1");
@@ -35,7 +36,7 @@ public class account_tab extends TabActivity{
 	        tab1.setTextColor(Color.WHITE);
 	        tab1.setText("Create account");
 	        createspec.setIndicator(tab1);//assigning TextView to tab Indicator
-	        preferences = new Preferences();
+	        preferences = new Preferences(IPaddr);
 	        // this is client_id get after getConnetion method call for existing organisation 
 	        client_id = Startup.getClient_id();
 	        // call getPreferences to get flag for account code where flagno is 1

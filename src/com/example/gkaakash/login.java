@@ -16,13 +16,15 @@ public class login extends Activity {
 	final Context context = this;
 	private Preferences prferenceObj;
 	private Integer client_id;
-
+	static String IPaddr;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Calling create_account.xml
 		setContentView(R.layout.login);
 		client_id = Startup.getClient_id();
-		prferenceObj = new Preferences();
+		IPaddr = MainActivity.IPaddr;
+	    System.out.println("in createorg"+IPaddr);
+		prferenceObj = new Preferences(IPaddr);
 		accCodeCheckFlag = prferenceObj.getPreferences(new Object[]{2},client_id );
 		OnClickListener();
 }

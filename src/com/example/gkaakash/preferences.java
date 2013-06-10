@@ -25,14 +25,16 @@ public class preferences extends Activity {
 	protected String projectname;
 	protected Context context;
 	Organisation organisation;  
-
+	static String IPaddr;
 	public void onCreate(Bundle savedInstanceState) {   
 		super.onCreate(savedInstanceState);
 		// Calling preferences.xml
 		setContentView(R.layout.preferences);
 		// get Client_id return by Deploy method
-		organisation = new Organisation();
-		preference = new Preferences();
+		IPaddr = MainActivity.IPaddr;
+		System.out.println("in createorg"+IPaddr);
+		organisation = new Organisation(IPaddr);
+		preference = new Preferences(IPaddr);
 		client_id= Startup.getClient_id();
 
 		//for visibility of account tab layout

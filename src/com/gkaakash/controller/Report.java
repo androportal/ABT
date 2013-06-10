@@ -29,8 +29,8 @@ public class Report {
 	 * Default constructor
 	 * create instance of CoreConnection() to get connection with server
 	 */ 
-	public Report() {
-		conn = new CoreConnection();
+	public Report(String ip) {
+		conn = new CoreConnection(ip);
 	}
 	
 	/*

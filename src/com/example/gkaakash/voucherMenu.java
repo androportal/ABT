@@ -35,11 +35,13 @@ public class voucherMenu extends ListActivity {
 	static boolean flag;
 	static module m;
 	String msg;
-	
+	static String IPaddr;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		transaction = new Transaction();
+		IPaddr = MainActivity.IPaddr;
+		System.out.println("in createorg"+IPaddr);
+		transaction = new Transaction(IPaddr);
        	client_id= Startup.getClient_id();
 		flag = true;
 		//calling transactions.xml page

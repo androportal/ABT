@@ -87,7 +87,7 @@ public class balanceSheet extends Activity{
 	int CSV=Menu.FIRST+1;
 	module m;
 	SpannableString rsSymbol;
-	
+	static String IPaddr;
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -117,7 +117,8 @@ public class balanceSheet extends Activity{
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-       
+    	IPaddr = MainActivity.IPaddr;
+	    System.out.println("in createorg"+IPaddr);
     	try {
     		balancetype=reportMenu.balancetype;
        
@@ -145,7 +146,7 @@ public class balanceSheet extends Activity{
 			rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs));
     		//customizing title bar
     		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
-    		report = new Report();
+    		report = new Report(IPaddr);
     		client_id= Startup.getClient_id();
     		m=new module();
     		financialFromDate =Startup.getfinancialFromDate();

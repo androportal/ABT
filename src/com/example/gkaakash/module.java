@@ -21,6 +21,7 @@ import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,9 +56,11 @@ public class module {
 	int columnSize;
 	FileWriter fw;
 	String security_password = null;
-
+	static String IPaddr;
 	void getAccountsByRule(Object[] DrCrFlag, String vouchertypeflag2, Context context) {
-		transaction = new Transaction();
+		IPaddr = MainActivity.IPaddr;
+		System.out.println("in createorg"+IPaddr);
+		transaction = new Transaction(IPaddr);
 		client_id= Startup.getClient_id();
 		System.out.println();
 
@@ -342,6 +345,13 @@ public class module {
 
 		dialog = builder.create();
 		dialog.show();
+		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+		//customizing the width and location of the dialog on screen 
+		lp.copyFrom(dialog.getWindow().getAttributes());
+		lp.width = 800;
+		
+		dialog.getWindow().setAttributes(lp);
+		dialog.setCanceledOnTouchOutside(false);
 		return layout;
 	}
 
@@ -415,7 +425,9 @@ public class module {
 				if(!"".equals(new_pass)&!"".equals(confirm_pass)){
 					if(new_pass.equals(confirm_pass)){
 						// create instance of user class to call setUser method
-						User user = new User();
+						IPaddr = MainActivity.IPaddr;
+						System.out.println("in createorg"+IPaddr);
+						User user = new User(IPaddr);
 						System.out.println("we are about to reset"+username+new_pass+user_role);
 						Boolean reset= user.resetPassword(new Object[]{username,new_pass,user_role}, client_id);
 						System.out.println("r:"+reset);

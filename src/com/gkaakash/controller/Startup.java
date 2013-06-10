@@ -14,12 +14,13 @@ public class Startup {
 	private Boolean deleteOrg, closeConnectionFlag;
 	private static String  financialFromDate,financialToDate;
 	
+	
 	/***
 	 * default constructor
 	 * do connection with core_engine 
 	 */
-	public Startup() {
-		conn = new CoreConnection();
+	public Startup(String ip) {
+		conn = new CoreConnection(ip);
 		
 	} // default constructor
 	

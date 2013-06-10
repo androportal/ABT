@@ -74,22 +74,28 @@ public class createOrg extends MainActivity {
 	private Organisation orgnisation;
 	User user;
 	private module module;
+	static String IPaddr;
+	Startup  startup;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//Calling create_org.xml
 		setContentView(R.layout.create_org);
-		MainActivity.username_flag=false;
-
+		MainActivity.username_flag = false;
+		System.out.println("in createorg1");
+		IPaddr = MainActivity.IPaddr;
+		user = new User(IPaddr);
+		startup = new Startup(IPaddr);
+	    System.out.println("in createorg2");
 		help_flag = new File("/data/data/com.example.gkaakash/files/help_flag.txt");
 		if(!help_flag.exists()){
 			/*
 			 * comment below lines if running this app on emulator and 
 			 * also if running on device using remote server ie. when installer is not in use.
 			 */
-			MainActivity.no_dailog = true; 
-			MainActivity.help_dialog.dismiss();
+			//MainActivity.no_dailog = true; 
+			//MainActivity.help_dialog.dismiss();
 		} 
 
 
@@ -107,9 +113,9 @@ public class createOrg extends MainActivity {
 		addListeneronCreateButton();
 		orgType = (Spinner) findViewById(R.id.sOrgType);
 		org  = (String) orgType.getSelectedItem();
-		user = new User();
+		
 		module = new module();
-		addListeneronCreateButton();
+		//addListeneronCreateButton();
 		//creating interface to listen activity on Item 
 		addListenerOnItem();
 		
@@ -263,15 +269,13 @@ public class createOrg extends MainActivity {
 						} catch (Exception e) {
 							// TODO: handle exception
 						}
-
-
-					}
+						}
 				}); 
 				dialog=builder.create();
 				dialog.show();
 			}	
-		});
-	}
+		});   
+	}     
 
 
 	// method to take ItemSelectedListner interface as a argument  
@@ -282,7 +286,8 @@ public class createOrg extends MainActivity {
 			public void onItemSelected(AdapterView<?> parent, View v, int position,long id){
 				//Retrieving the selected org type from the Spinner and assigning it to a variable 
 				selectedOrgType = parent.getItemAtPosition(position).toString();
-				orgTypeFlag = selectedOrgType;
+				orgTypeFlag = selectedOrgType;       
+				
 
 			}
 			@Override
@@ -306,7 +311,8 @@ public class createOrg extends MainActivity {
 		tvDisplayFromDate = (TextView) findViewById(R.id.tvFromDate);
 		tvDisplayToDate = (TextView) findViewById(R.id.tvToDate);
 		orgName = (EditText) findViewById(R.id.etOrgName);
-		orgnisation= new Organisation();
+		System.out.println("ADD List"+IPaddr);
+		orgnisation= new Organisation(IPaddr);
 		//Create a class implementing “OnClickListener” and set it as the on click listener for the button "Next"
 		btnCreate.setOnClickListener(new OnClickListener() {
 
@@ -470,20 +476,36 @@ public class createOrg extends MainActivity {
 					}
 				}catch(Exception e)
 				{
-					String message = "Please check server connection";
-					toastValidationMessage(message);
+					String message = "Can not connect to server!! Please set IP again or check server is running!!";
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					builder.setMessage(message)
+					.setCancelable(false)
+					.setPositiveButton("Ok",
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							MainActivity.remoteflag = true;
+							Intent intent = new Intent(context,MainActivity.class);
+							startActivity(intent);  
+						}
+					});
+
+					AlertDialog alert = builder.create();
+					alert.show();
+					//m.toastValidationMessage(contex, msg)
+					
 				}
 			}
 		}); //End of btnCreate.setOnClickListener
 
 	}
-
+    
 	public void addListenerOnRadioButton(final View layout) {
 		
 		radioUserGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			public void onCheckedChanged(RadioGroup rg, int selectedId) {
 
+				System.out.println("add listener radio button Create");
 				if(adminflag==false){
 					rb_admin.setChecked(false);
 				}

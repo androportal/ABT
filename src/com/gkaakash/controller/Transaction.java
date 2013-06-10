@@ -32,8 +32,8 @@ public class Transaction {
 	 * Default constructor
 	 * create instance of CoreConnection() to get connection with server
 	 */ 
-	public Transaction() {
-		conn = new CoreConnection();
+	public Transaction(String ip) {
+		conn = new CoreConnection(ip);
 	} 
 	
 	/*  

@@ -60,10 +60,12 @@ public class User_table extends Activity {
 	RadioGroup radioUserGroup;
 	Object[] role_names;
 	AlertDialog dialog;
-	
+	static String IPaddr;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		user = new User();
+		IPaddr = MainActivity.IPaddr;
+		System.out.println("in createorg"+IPaddr);
+		user = new User(IPaddr);
 		client_id = Startup.getClient_id();
 		m = new module();
 

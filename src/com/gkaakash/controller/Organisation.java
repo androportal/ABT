@@ -18,8 +18,8 @@ public class Organisation {
 	/***
 	 *
 	 */
-	 public Organisation() {
-		 conn = new CoreConnection();
+	 public Organisation(String ip) {
+		 conn = new CoreConnection(ip);
 	 }
 	 /***
 	  * setOrganisation method will call xmlrpc_setOrganisation from rpc_organisation.py

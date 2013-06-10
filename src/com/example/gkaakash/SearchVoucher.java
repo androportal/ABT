@@ -81,14 +81,15 @@ public class SearchVoucher extends Activity {
 	TableLayout floating_heading_table;
 	module m;
 	String[] ColumnNameList;
-
+	static String IPaddr;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_voucher);
-
+		IPaddr = MainActivity.IPaddr;
+		System.out.println("in createorg"+IPaddr);
 		client_id = Startup.getClient_id();
-		transaction = new Transaction();
+		transaction = new Transaction(IPaddr);
 		m= new module();
 
 
