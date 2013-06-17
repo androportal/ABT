@@ -17,7 +17,7 @@ import android.widget.CheckBox;
 
 public class preferences extends Activity {
 	//Declaring variables
-	CheckBox cbProject, cbAccCode;
+	CheckBox cbProject, cbAccCode ,	cbRollover;
 	Button btnNext;
 	private Preferences preference;
 	private Integer client_id;
@@ -42,12 +42,10 @@ public class preferences extends Activity {
 		btnNext = (Button) findViewById(R.id.btnNext);
 
 		cbAccCode = (CheckBox) findViewById(R.id.cbAccCode);
+		cbRollover = (CheckBox) findViewById(R.id.cbRollover);
 		addListenerOnButton();
 
 	}
-
-
-
 	private void addListenerOnButton() {
 		
 		//Create a class implementing “OnClickListener” and set it as the on click listener for the button
@@ -59,6 +57,10 @@ public class preferences extends Activity {
 				if (cbAccCode.isChecked()) {
 					//System.out.println("checked:");
 					setpref = preference.setPreferences(new Object[]{"1","manually"},client_id);
+				}
+				if(cbRollover.isChecked())
+				{
+					setpref = preference.setPreferences(new Object[]{"2","manually"},client_id);
 				}
 				//To pass on the activity to the next page called menu page
 				Intent intent = new Intent(preferences.this, menu.class);

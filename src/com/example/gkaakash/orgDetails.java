@@ -370,11 +370,11 @@ import android.widget.Toast;
 							if(fromDate.equals(financialFrom)&&toDate.equals(financialTo))
 								{
 									message = "Are you sure you want to permanently delete currently logged in "+getOrgName+" for financialyear "+fromDate+" To "+toDate+"?\n" +
-							        		"your data will be permanetly lost and session will be closed!!!!";
+							        		"your data will be permanetly lost and session will be closed !";
 								}
 								else{
 									message = "Are you sure you want to permanently delete "+getOrgName+" for financialyear "+fromDate+" To "+toDate+"?\n" +
-							        		"It will be permenantly lost !!!!";
+							        		"It will be permenantly lost !";
 								}
 								//tvalertHead1   
 								

@@ -11,7 +11,7 @@
     <string name="preferences">Select Prferences </string>
     <string name="projectwise_accounting">Do you want to do projectwise accouting ?</string> 
     <string name="suggested_accountcode">   Do you want to give your own accountcode, if yes, then suggested code will be available </string> 
-    
+    <string name="muanually_rollover">  rollover manually?? default: automatic </string>
     <string name="orgType_prompt">Select organisation type</string>
     <string-array name="orgType_arrays">
        	<item>NGO</item>

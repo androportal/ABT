@@ -93,7 +93,7 @@ public class menu extends ListActivity{
 	static ArrayList<String> accdetailsList;
 	boolean reportmenuflag;
     static String orgtype,userrole;
-    static String OrgName;
+    static String OrgName,rolloverFlag;
     TextView tvWarning;
     module m;
     String[] menuOptions;
@@ -236,16 +236,30 @@ public class menu extends ListActivity{
 		login_time = dateFormat.format(date);
 		
         user.getUserNemeOfOperatorRole(client_id);
-		
-		
+     // call getPrefernece to get set preference related to account code flag   
+        rolloverFlag = preferences.getPreferences(new Object[]{"2"},client_id);
 	    //adding list items to the newly created menu list
 	    if(userrole.equalsIgnoreCase("guest"))
         {
+	    	if(rolloverFlag.equalsIgnoreCase("manually"))
+	    	{
         	menuOptions = new String[] { "Create account", "Transaction", "Reports",
                     "Bank Reconciliation", "Preferences","RollOver","Export organisation","Help","About"};
+	    	}else
+	    	{
+	    		menuOptions = new String[] { "Create account", "Transaction", "Reports",
+	                    "Bank Reconciliation", "Preferences","Export organisation","Help","About"};
+	    	}
         }else if(userrole.equalsIgnoreCase("admin")){
+        	if(rolloverFlag.equalsIgnoreCase("manually"))
+	    	{
         	menuOptions = new String[] { "Create account", "Transaction", "Reports",
                     "Bank Reconciliation", "Preferences","RollOver","Export organisation","Account Settings","Help","About" };
+	    	}else
+	    	{
+	    		menuOptions = new String[] { "Create account", "Transaction", "Reports",
+	                    "Bank Reconciliation", "Preferences","Export organisation","Account Settings","Help","About" };
+	    	}
         }else if(userrole.equalsIgnoreCase("manager")){
         	menuOptions = new String[] { "Create account", "Transaction", "Reports",
                     "Bank Reconciliation","Preferences", "Export organisation","Account Settings","Help","About" };
@@ -253,6 +267,7 @@ public class menu extends ListActivity{
             menuOptions = new String[] { "Create account", "Transaction","Export organisation","Account Settings","Help","About" };
             
         }
+        
         
         //calling menu.xml and adding menu list into the page
         setListAdapter(new ArrayAdapter<String>(this, R.layout.menu,menuOptions));
@@ -515,96 +530,19 @@ public class menu extends ListActivity{
 	}
 
 	protected void rollover() {
-    	Object[] rollover_exist_params = new Object[] { OrgName,financialFromDate, financialToDate };
+    	Object[] rollover_exist_params = new Object[] {OrgName,financialFromDate,financialToDate};
 		Boolean existRollOver = report.existRollOver(rollover_exist_params);
-		if (existRollOver.equals(false)) {
-			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-			View layout = inflater.inflate(R.layout.roll_over,(ViewGroup) findViewById(R.id.layout_root));
-			// Building DatepPcker dialog
-			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			builder.setView(layout);
-			builder.setTitle("RollOver");
-
-			tvWarning = (TextView)layout.findViewById(R.id.tvRolloverWarning);
-			final DatePicker rollover_todate = (DatePicker) layout.findViewById(R.id.dpRollT0date);
-			rollover_todate.init((Integer.parseInt(toyear) + 1),(Integer.parseInt(tomonth) - 1),Integer.parseInt(today), null);
-
-			builder.setPositiveButton("Rollover",
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface arg0,int arg1) {
-
-							validateDate(null, rollover_todate,"rollover",tvWarning);
-
-							if (validateDateFlag) {
-								Object[] rollover_params = new Object[] {OrgName, financialFromDate,financialToDate,
-										givenToDateString, orgtype };
-								rollover = report.rollOver(rollover_params,client_id);
-
-								AlertDialog.Builder builder = new AlertDialog.Builder(context);
-								builder.setMessage(
-										"RollOver is done completely!!! You can proceed for  "
-												+ rollover + " to "
-												+ givenToDateString
-												+ " year")
-										.setCancelable(false)
-										.setPositiveButton(
-												"Ok",new DialogInterface.OnClickListener() {
-													public void onClick(DialogInterface dialog,int id) {
-														Intent intent = new Intent(context,selectOrg.class);
-														// To pass
-														// on the
-														// value to
-														// the next
-														// page
-														intent.putExtra("flag", "from_menu");
-														startActivity(intent);
-
-													}
-												});
-
-								AlertDialog alert = builder.create();
-								alert.show();
-
-							}
-
-						}
-
-					});
-			builder.setNegativeButton("Cancel",
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog,
-								int which) {
-
-						}
-					});
-			dialog = builder.create();
-			dialog.show();
-		} else {
-			AlertDialog.Builder builder = new AlertDialog.Builder(
-					context);
-			builder.setMessage("Sorry!! Rollover has already done")
-					.setCancelable(false)
-					.setPositiveButton("Ok",
-							new DialogInterface.OnClickListener() {
-								public void onClick(
-										DialogInterface dialog,int id) {
-									Intent intent = new Intent(context, menu.class);
-									// To pass on the value to the
-									// next page
-									intent.putExtra("flag", "from_menu");
-									startActivity(intent);
-
-								}
-							});
-
-			AlertDialog alert = builder.create();
-			alert.show();
-			dialog = builder.create();
-			dialog.show();
-		}
 		
+		if (existRollOver.equals(false)) {
+					Object[] rollover_params = new Object[] {OrgName, financialFromDate,financialToDate,
+orgtype };
+					rollover = report.rollOver(rollover_params,client_id);
+					if(rollover.equalsIgnoreCase("false"))
+					{
+						m.toastValidationMessage(context,"can not rollover , since financial year is not completed !!");
+					}
+		}
+
 	}
 
 	protected void export() {
@@ -639,13 +577,13 @@ public class menu extends ListActivity{
         String[] command = {"rm -r /mnt/sdcard/export", "busybox cp /data/local/abt/opt/abt/export/ /mnt/sdcard/ -R"};
         module.RunAsRoot(command);
         m.toastValidationMessage(context, "organisation "+OrgName+" has been exported to /mnt/sdcard/export/");
+        MainActivity.menuOptionFlag = true;
 		
 	}
 
 	protected void about() {
     	AlertDialog about_dialog;
-        final SpannableString s = 
-                new SpannableString(context.getText(R.string.about_para));
+        final SpannableString s = new SpannableString(context.getText(R.string.about_para));
                 Linkify.addLinks(s, Linkify.WEB_URLS);
                 
 

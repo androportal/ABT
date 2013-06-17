@@ -96,7 +96,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// 'Help' menu to main page options menu
+		// 'Help' menu to 66666main page options menu
 		
 		menu.add(1,1,1,"Help");
 		if(menuOptionFlag == true)
@@ -1095,7 +1095,6 @@ public class MainActivity extends Activity {
 
 	public void setRemoteLocation()
 	{
-		 System.out.println("in remote location");
 		 
 		 final View layout = m.builder_with_inflater(this,"",R.layout.login);
 		 TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
@@ -1117,12 +1116,12 @@ public class MainActivity extends Activity {
 		 eLoginUser.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		 eLoginUser.setEnabled(false);
 		 tLoginUser.setText("Enter Server IP Address: ");
-		 eLoginUser.setHint("for ex: 192.168.1.113");
+		 eLoginUser.setHint("enter server ip address");
 		 Button btnLogin = (Button)layout.findViewById(R.id.btnLogin);
 		 btnLogin.setText("Apply");
 		 addListenerOnRadioButton(layout);
 		 module.dialog.setCanceledOnTouchOutside(true);
-		 System.out.println("weloxcme");
+		 
 		 btnLogin.setOnClickListener(new OnClickListener() {   
 				   
 				@Override
