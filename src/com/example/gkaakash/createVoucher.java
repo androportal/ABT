@@ -59,6 +59,7 @@ public class createVoucher extends Activity {
 	String amount, financialFromDate, financialToDate, drcramount,
 	vouchertypeflag;
 	AlertDialog dialog;
+	String vouchernoExist;
 	final Context context = this;
 	TextView voucherDate, tvTotalDebit, tvTotalCredit, projectName;
 	final List<String> dr_cr = new ArrayList<String>();
@@ -98,7 +99,7 @@ public class createVoucher extends Activity {
 	String Fsecond_spinner, Ssecond_spinner, Sacctype, Facctype;
 	static int FaccnamePosition, SaccnamePosition, SacctypePosition,
 	FacctypePosition;
-	String vouchercode;
+	String vouchercode,voucherno;
 	static Boolean cloneflag;
 	boolean nameflag;
 	static boolean edittabflag;
@@ -114,6 +115,7 @@ public class createVoucher extends Activity {
 	Button btnResetVoucher;
 	Button btnSaveVoucher;
 	String from_trial;
+	private EditText etvoucherno;
 	static String IPaddr;
 
 	@Override
@@ -134,6 +136,7 @@ public class createVoucher extends Activity {
 		btnSaveVoucher = (Button) findViewById(R.id.btnSaveVoucher);
 		btnResetVoucher = (Button) findViewById(R.id.btnResetVoucher);
 		
+		etvoucherno = (EditText) findViewById(R.id.etVoucherNumber);
 		Bundle extras = getIntent().getExtras();
 		if (extras == null) {
 			// Toast.makeText(context, "i am null", Toast.LENGTH_SHORT).show();
@@ -178,11 +181,11 @@ public class createVoucher extends Activity {
 			// Toast.makeText(context, "clone"+cloneflag,
 			// Toast.LENGTH_SHORT).show();
 			etRefNumber = (EditText) findViewById(R.id.etRefNumber);
-
+			
 			name = SearchVoucher.name;
 			// Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
 			// after click om edit voucher Reff Edit text non-editable
-
+			voucherno = etvoucherno.getText().toString();
 			etnarration = (EditText) findViewById(R.id.etVoucherNarration);
 			account = (Spinner) findViewById(R.id.getAccountByRule);
 			DrCr = (Spinner) findViewById(R.id.sDrCr);
@@ -239,6 +242,7 @@ public class createVoucher extends Activity {
 				searchdate = (String) otherdetailsrow.get(1);
 				etnarration.setText(narration);
 				etRefNumber.setText(refno);
+				etvoucherno.setText(vouchercode);
 
 				projetct_name = (ListView) findViewById(R.id.voucher_list4);
 				projetct_name.setTextFilterEnabled(true);
@@ -683,8 +687,7 @@ public class createVoucher extends Activity {
 							android.R.layout.simple_spinner_item, CrAccountlist);
 				}
 				Fsecond_spinner = accdetailsList.get(0).get(0);
-				dataAdapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				FaccnamePosition = dataAdapter.getPosition(Fsecond_spinner);
 				account.setAdapter(dataAdapter);
 				account.setSelection(FaccnamePosition);
@@ -1005,11 +1008,16 @@ public class createVoucher extends Activity {
 
 				String refNumber = etRefNumber.getText().toString();
 				String strnarration = etnarration.getText().toString(); 
-
-				if(totalDr == totalCr && !"".equals(refNumber) && !"".equals(strnarration)){ 
+				voucherno = etvoucherno.getText().toString();
+				vouchernoExist = transaction.voucherNoExist(new Object[]{voucherno},client_id);
+				System.out.println("voucher exist "+vouchernoExist);
+				
+				if(totalDr == totalCr && !"".equals(refNumber) && !"".equals(strnarration)&& !"".equals(voucherno)){ 
 					if (totalDr == 0) {
 						m.toastValidationMessage(context,"Please enter amount");
-					} else {
+					} else if (vouchernoExist.equals("0")){
+						System.out.println("voucher no"+voucherno);
+						
 						// main list
 						paramsMaster = new ArrayList<ArrayList>();
 						ArrayList<String> accNames = new ArrayList();
@@ -1135,16 +1143,17 @@ public class createVoucher extends Activity {
 							}
 							if (searchFlag == false) {// for saving accounts
 								// details
+								
 								Object[] params_master = new Object[] {
 										refNumber, vDate, vouchertypeflag,
-										vproject, narration };
+										vproject, narration ,voucherno};
 								setVoucher = (Integer) transaction
 										.setTransaction(params_master,
 												paramsMaster, client_id);
-
 								// for satisfying reset condition
 								searchFlag = false;
 								edittabflag = false;
+							
 							} else if (cloneflag == false) {// for saving edited transaction
 								// account details
 
@@ -1174,18 +1183,21 @@ public class createVoucher extends Activity {
 								
 							} else if (cloneflag == true) {// for saving cloned
 								// details
+								
 								Object[] params_master = new Object[] {
 										refNumber, vDate, vouchertypeflag,
-										vproject, narration };
+										vproject, narration, voucherno};
 								setVoucher = (Integer) transaction
 										.setTransaction(params_master,
 												paramsMaster, client_id);
-
 								// for not getting reseted
 								searchFlag = true;
 								edittabflag = false;// this flag is seted for
 								// changing tab name on tab
 								// change
+							   
+									
+							
 							}
 
 							AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -1234,14 +1246,20 @@ public class createVoucher extends Activity {
 						} else {
 							m.toastValidationMessage(context,"Account name can not be repeated, please select another account name");
 						}
+					}else 
+					{
+						etvoucherno.requestFocus();
+						m.toastValidationMessage(context,"Voucher no already exist");
 					}
 
 				} else if (totalDr != totalCr) {
 					m.toastValidationMessage(context,"Debit and Credit amount is not tally");
 				} else if ("".equals(refNumber)) {
 					m.toastValidationMessage(context,"Please enter voucher reference number");
-				}
-				else if ("".equals(strnarration)) {
+				}else if("".equals(voucherno)){
+					//voucherNoExist
+					m.toastValidationMessage(context,"Please enter voucher number");
+				}else if ("".equals(strnarration)) {
 					m.toastValidationMessage(context,"Please enter narration");
 				} 
 			}

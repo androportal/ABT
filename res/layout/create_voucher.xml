@@ -247,6 +247,41 @@
         android:paddingTop="3dp"
         android:paddingRight="20dp"
         android:gravity="left">
+
+	<TextView
+	    android:id="@+id/tvVoucherNumber"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="73.00"
+	    android:paddingLeft="20dp"
+	    android:text="Voucher number"
+	    android:textColor="#FFFFFF"
+	    android:textSize="14dp" />
+	
+	<EditText
+			        android:id="@+id/etVoucherNumber"
+			        android:layout_width="305dp"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="30"
+			        android:hint="Tap to enter voucher number" 
+			        android:paddingTop="2dp"/>
+	</LinearLayout>
+	
+	<LinearLayout 
+	    android:orientation="horizontal"
+	    android:layout_width="match_parent"
+	    android:layout_height="0.01dp"
+	    android:paddingLeft="20dp"
+	    android:paddingRight="20dp"
+	    android:background="@android:color/darker_gray"/>
+	<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:paddingTop="3dp"
+        android:paddingRight="20dp"
+        android:gravity="left">
 	<TextView
 		    android:id="@+id/tvRefNumber"
 		    android:layout_width="wrap_content"
