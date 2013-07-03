@@ -525,7 +525,7 @@ public class SearchVoucher extends Activity {
 
 								//System.out.println("in addrow"+i); 
 								value=searchedVoucherGrid.get(i);
-								Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show();
+								//Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show();
 
 								MainActivity.searchFlag=true;
 								Intent intent = new Intent(context, transaction_tab.class);

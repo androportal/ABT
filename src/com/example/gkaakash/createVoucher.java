@@ -116,7 +116,7 @@ public class createVoucher extends Activity {
 	Button btnSaveVoucher;
 	String from_trial;
 	private EditText etvoucherno;
-	static String IPaddr;
+	static String IPaddr,checkvoucher_number;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -243,7 +243,7 @@ public class createVoucher extends Activity {
 				etnarration.setText(narration);
 				etRefNumber.setText(refno);
 				etvoucherno.setText(vouchercode);
-
+				checkvoucher_number = vouchercode;
 				projetct_name = (ListView) findViewById(R.id.voucher_list4);
 				projetct_name.setTextFilterEnabled(true);
 				projetct_name.setCacheColorHint(color.transparent);
@@ -1015,7 +1015,8 @@ public class createVoucher extends Activity {
 				if(totalDr == totalCr && !"".equals(refNumber) && !"".equals(strnarration)&& !"".equals(voucherno)){ 
 					if (totalDr == 0) {
 						m.toastValidationMessage(context,"Please enter amount");
-					} else if (vouchernoExist.equals("0")){
+					} else if ((cloneflag==false && checkvoucher_number.equals(voucherno))||vouchernoExist.equals("0")){
+						
 						System.out.println("voucher no"+voucherno);
 						
 						// main list
@@ -1297,7 +1298,7 @@ public class createVoucher extends Activity {
 						etRefNumber.setText(reff_no.toString());
 						etnarration = (EditText) findViewById(R.id.etVoucherNarration);
 						etnarration.setText("");
-
+						etvoucherno.setText("");
 						TextView tvproject = (TextView) projetct_name
 								.findViewById(R.id.tvSubItem1);
 						tvproject.setText("No Project");

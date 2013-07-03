@@ -17,7 +17,7 @@
            android:id="@+id/createacc_tab0"
            android:layout_width="match_parent"
            android:layout_height="3dp"
-           android:paddingLeft="20dp"
+           android:paddingLeft="20dp"  
            android:paddingRight="20dp"
            android:background="#60AFFE"
            android:layout_weight="1"/>
@@ -252,19 +252,21 @@
 	    android:id="@+id/tvVoucherNumber"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_weight="73.00"
+	    android:layout_weight="71.67"
 	    android:paddingLeft="20dp"
 	    android:text="Voucher number"
 	    android:textColor="#FFFFFF"
 	    android:textSize="14dp" />
 	
 	<EditText
-			        android:id="@+id/etVoucherNumber"
-			        android:layout_width="305dp"
-			        android:layout_height="wrap_content"
-			        android:layout_weight="30"
-			        android:hint="Tap to enter voucher number" 
-			        android:paddingTop="2dp"/>
+	    android:id="@+id/etVoucherNumber"
+	    android:layout_width="283dp"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="31.88"
+	    android:hint="Tap to enter voucher number"
+	    android:paddingTop="2dp" />
+
+
 	</LinearLayout>
 	
 	<LinearLayout 
@@ -282,15 +284,16 @@
         android:paddingTop="3dp"
         android:paddingRight="20dp"
         android:gravity="left">
+
 	<TextView
-		    android:id="@+id/tvRefNumber"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:text="Voucher reference number"
-		    android:layout_weight="70"
-		    android:textSize="14dp"
-		    android:paddingLeft="20dp"
-		    android:textColor="#FFFFFF"/>
+	    android:id="@+id/tvRefNumber"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="70.76"
+	    android:paddingLeft="20dp"
+	    android:text="Voucher reference number"
+	    android:textColor="#FFFFFF"
+	    android:textSize="14dp" />
 	
 	<EditText
 			        android:id="@+id/etRefNumber"
@@ -299,6 +302,7 @@
 			        android:layout_weight="30"
 			        android:hint="Tap to enter reference number" 
 			        android:paddingTop="2dp"/>
+	
 	</LinearLayout>
 	
 	
@@ -320,15 +324,16 @@
         android:paddingTop="3dp"
         android:paddingRight="20dp"
         android:gravity="left">
+
 	<TextView
-		    android:id="@+id/tvVoucherNarration"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:text="Voucher narration"
-		    android:layout_weight="70"
-		    android:textSize="14dp"
-		    android:paddingLeft="20dp"
-		    android:textColor="#FFFFFF"/>
+	    android:id="@+id/tvVoucherNarration"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="71.10"
+	    android:paddingLeft="20dp"
+	    android:text="Voucher narration"
+	    android:textColor="#FFFFFF"
+	    android:textSize="14dp" />
 	
 	<EditText
 			        android:id="@+id/etVoucherNarration"

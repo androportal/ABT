@@ -420,7 +420,7 @@ public class createOrg extends MainActivity {
 											
 											if ((login_user.equals("guest"))&&(login_password.equals("guest")))
 											{
-												Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
+												//Toast.makeText(createOrg.this,"exist "+user_role, Toast.LENGTH_SHORT).show();
 												Intent intent = new Intent(context,orgDetails.class);
 												startActivity(intent);
 											}else
