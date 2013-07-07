@@ -267,8 +267,6 @@ public class menu extends ListActivity{
             menuOptions = new String[] { "Create account", "Transaction","Export organisation","Account Settings","Help","About" };
             
         }
-        
-        
         //calling menu.xml and adding menu list into the page
         setListAdapter(new ArrayAdapter<String>(this, R.layout.menu,menuOptions));
  
@@ -319,23 +317,17 @@ public class menu extends ListActivity{
                 		addPreferences();
        	
                 	}
-                    if(userrole.equalsIgnoreCase("guest") || userrole.equalsIgnoreCase("admin")){   	
-                        // for rollOver
-        				if (position == 5) {
-        					rollover();
-
-        				}
-        				
-        				if(userrole.equalsIgnoreCase("admin")){
-        					
-        					exportToAbout(position, 6);
-        					
-        				}else{//for guest only
-        					if(position == 6){
+                    if(userrole.equalsIgnoreCase("guest")){ 
+                    	if(rolloverFlag.equals("manually"))
+                    	{
+	                        // for rollOver
+	        				if (position == 5) {
+	        					rollover();
+	        				}
+	        				if(position == 6){
         						export();
         					}
-        					
-        					//for help
+                    		//for help
         	                if(position == 7){
         	                    Intent intent = new Intent(context, Help.class);
         						// To pass on the value to the next page
@@ -346,6 +338,35 @@ public class menu extends ListActivity{
         	                if(position == 8){
         	                    about();
         	                }
+	        				
+                    	}else{
+                    		
+                    		if(position == 5){
+        						export();
+        					}
+                    		//for help
+        	                if(position == 6){
+        	                    Intent intent = new Intent(context, Help.class);
+        						// To pass on the value to the next page
+        						startActivity(intent);
+        	                }
+        	                
+        	                //for about
+        	                if(position == 7){
+        	                    about();
+        	                }
+                    	}
+                    }
+                    else if(userrole.equalsIgnoreCase("admin")){
+                    	if(rolloverFlag.equals("manually"))
+        				{
+                    		 // for rollOver
+	        				if (position == 5) {
+	        					rollover();
+	        				}
+        					
+        				}else{//for admin only
+        					exportToAbout(position,5);
         				}
                     }else{ //for manager only
         				exportToAbout(position,5);
@@ -360,6 +381,7 @@ public class menu extends ListActivity{
 			private void exportToAbout(int position, int i) {
 				//export organisation
 				if(position == i){
+					
 					export();
 				}
 				//for settings
@@ -567,17 +589,36 @@ orgtype };
 //        //need this to prompts email client only
 //        email.setType("message/rfc822");
 //        startActivity(Intent.createChooser(email, "Choose an Email client :"));
+		 AlertDialog.Builder builder = new AlertDialog.Builder(
+                 context);
+         //builder.setTitle("Aakash Business Tool");
+         builder.setMessage("Do you want to export organisation");
+         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+             public void onClick(DialogInterface dialog, int which) {
+            	 Object[] export = new Object[] {OrgName, financialFromDate,financialToDate};
+         		//call back-end to export organisation 
+         		String encrypted_db = organisation.Export(export,client_id);
+         		Toast.makeText(menu.this, encrypted_db, Toast.LENGTH_SHORT).show();
+         		//copy export dir from /opt/abt/ to sdcard
+                 String[] command = {"rm -r /mnt/sdcard/export", "busybox cp /data/local/abt/opt/abt/export/ /mnt/sdcard/ -R"};
+                 module.RunAsRoot(command);
+                 m.toastValidationMessage(context, "organisation "+OrgName+" has been exported to /mnt/sdcard/export/");
+                 MainActivity.menuOptionFlag = true;
+                 
+             }
+           
+         });
+         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        	 public void onClick(DialogInterface dialog, int id) {
+
+ 			}
+          
+         });
+         
+        AlertDialog about_dialog = builder.create();
+        about_dialog.show();
 		
-		
-    	Object[] export = new Object[] {OrgName, financialFromDate,financialToDate};
-		//call back-end to export organisation 
-		String encrypted_db = organisation.Export(export,client_id);
-		Toast.makeText(menu.this, encrypted_db, Toast.LENGTH_SHORT).show();
-		//copy export dir from /opt/abt/ to sdcard
-        String[] command = {"rm -r /mnt/sdcard/export", "busybox cp /data/local/abt/opt/abt/export/ /mnt/sdcard/ -R"};
-        module.RunAsRoot(command);
-        m.toastValidationMessage(context, "organisation "+OrgName+" has been exported to /mnt/sdcard/export/");
-        MainActivity.menuOptionFlag = true;
+    	
 		
 	}
 

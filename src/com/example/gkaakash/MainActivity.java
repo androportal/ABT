@@ -1106,6 +1106,7 @@ public class MainActivity extends Activity {
 		 final RadioButton rb_operator =(RadioButton) layout.findViewById(R.id.rbOperator);
 		 final TextView tvLoginWarning = (TextView) layout.findViewById(R.id.tvLoginWarning);
 		 rb_admin.setText("Emulater");
+		 //rb_admin.setVisibility(View.GONE);
 		 rb_guest.setText("Tablet");
 		 rb_operator.setVisibility(View.VISIBLE);
 		 rb_operator.setText("Server location");
