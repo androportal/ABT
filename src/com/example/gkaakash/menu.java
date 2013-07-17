@@ -364,6 +364,7 @@ public class menu extends ListActivity{
 	        				if (position == 5) {
 	        					rollover();
 	        				}
+	        				exportToAbout(position,6);
         					
         				}else{//for admin only
         					exportToAbout(position,5);

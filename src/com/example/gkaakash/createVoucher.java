@@ -1011,11 +1011,12 @@ public class createVoucher extends Activity {
 				voucherno = etvoucherno.getText().toString();
 				vouchernoExist = transaction.voucherNoExist(new Object[]{voucherno},client_id);
 				System.out.println("voucher exist "+vouchernoExist);
-				
+				System.out.println("voucher no"+voucherno);
+				System.out.println("check no"+checkvoucher_number);
 				if(totalDr == totalCr && !"".equals(refNumber) && !"".equals(strnarration)&& !"".equals(voucherno)){ 
 					if (totalDr == 0) {
 						m.toastValidationMessage(context,"Please enter amount");
-					} else if ((cloneflag==false && checkvoucher_number.equals(voucherno))||vouchernoExist.equals("0")){
+					} else if ((searchFlag==true && cloneflag==false && checkvoucher_number.equals(voucherno))||vouchernoExist.equals("0")){
 						
 						System.out.println("voucher no"+voucherno);
 						
