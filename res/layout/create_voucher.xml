@@ -5,60 +5,102 @@
  android:id="@+id/voucher_layout"
  android:orientation="vertical"
  android:weightSum="100"
- android:background="@drawable/dark_gray_background">
- 
-    <!-- to make the tab like feel -->
-    <LinearLayout  
-		   android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal"
-           android:baselineAligned="false">
-    <LinearLayout
-           android:id="@+id/createacc_tab0"
-           android:layout_width="match_parent"
-           android:layout_height="3dp"
-           android:paddingLeft="20dp"  
-           android:paddingRight="20dp"
-           android:background="#60AFFE"
-           android:layout_weight="1"/>
-    
-    <LinearLayout
-           android:id="@+id/createacc_tab1"
-           android:layout_width="match_parent"
-           android:layout_height="3dp"
-           android:paddingLeft="20dp"
-           android:paddingRight="20dp"
-           android:background="#000000"
-           android:layout_weight="1"/>
-   </LinearLayout>
-    <LinearLayout
-            android:id="@+id/createacc_tab2"
-           android:orientation="horizontal"
-           android:layout_width="match_parent"
-           android:layout_height="3dp"
-           android:paddingLeft="20dp"
-           android:paddingRight="20dp"
-           android:background="#60AFFE"/>
+ android:background="@color/gray_theme">
     
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_weight="80"
-    android:background="@drawable/dark_gray_background" >
+    android:layout_weight="80">
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:orientation="vertical"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:paddingTop="5dp" >
- 
+	    android:paddingLeft="10dp"
+ 		android:paddingRight="10dp" >
+
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:paddingTop="5dp"
+		    android:paddingBottom="5dp" >
+
+			<LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:orientation="horizontal"
+			    android:layout_weight="1" >
+
+				<TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="Voucher type:"
+				    style="@style/CodeFont" />
+				
+				<Spinner 
+            		android:id="@+id/sVouchertypes"
+            		android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+            		android:spinnerMode="dialog"
+            		style="@style/SpinnerAppTheme.DropDown" />
+			    
+			</LinearLayout>
+
+			<LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:orientation="horizontal"
+			    android:layout_weight="1"
+			    android:gravity="center" >
+
+				<TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="Voucher date:"
+				    style="@style/CodeFont" />
+
+				<EditText
+				    android:id="@+id/etVoucherDate"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="1"
+				    style="@style/EditTextAppTheme" />
+
+			</LinearLayout>
+			
+			<LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:orientation="horizontal"
+			    android:gravity="right"
+			    android:layout_weight="1" >
+
+				<TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="Project:"
+				    style="@style/CodeFont" />
+
+				<Spinner 
+            		android:id="@+id/sProjectNames"
+            		android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+            		android:spinnerMode="dialog"
+            		style="@style/SpinnerAppTheme.DropDown" />
+
+			</LinearLayout>
+
+		</LinearLayout>
+	    
 		<TableLayout
 		    xmlns:android="http://schemas.android.com/apk/res/android"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:orientation="vertical"
-		    android:paddingLeft="20dp"
-		    android:paddingRight="20dp"
-		    android:stretchColumns="4" >
+		    android:stretchColumns="4"
+		    android:paddingLeft="3dp"
+		    android:paddingRight="3dp"
+		    android:background="@drawable/gradiant_list_bg" >
 		    
 		    
 		    <TableRow 
@@ -69,50 +111,60 @@
 			    
 			    <TextView
 			        android:id="@+id/account_type"
-			        android:layout_width="100dp"
+			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
-			        android:layout_gravity="center"
+			        android:layout_weight="1"
+			        android:gravity="center_horizontal"
 			        android:text="Account type"
-			        android:textColor="#FFFFFF"
-			        android:textSize="16dp" />
+			        android:textColor="@color/blue_theme"
+			        style="@style/CodeFont" />
 			    
 			    <TextView
 			        android:id="@+id/acount_name"
-			        android:layout_width="260dp"
+			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
-			        android:layout_gravity="center"
+			        android:layout_weight="1"
+			        android:gravity="center_horizontal"
 			        android:text="Account name"
-			        android:textColor="#FFFFFF"
-			        android:textSize="16dp" />
+			        android:textColor="@color/blue_theme"
+			        style="@style/CodeFont" />
 			    
 			    <TextView
 			        android:id="@+id/amount"
-			        android:layout_width="wrap_content"
+			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
-			        android:text="     Closing balance"
-			        android:textColor="#FFFFFF"
-			        android:textSize="16dp" />
+			        android:layout_weight="1"
+			        android:gravity="center_horizontal"
+			        android:text="Closing balance"
+			        android:textColor="@color/blue_theme"
+			        style="@style/CodeFont" />
 			    
 			    <TextView
 			        android:id="@+id/closing_balance"
-			        android:layout_width="250dp"
+			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:gravity="center_horizontal"
 			        android:text="Amount"
-			        android:textColor="#FFFFFF"
-			        android:textSize="16dp" />
+			        android:textColor="@color/blue_theme"
+			        style="@style/CodeFont" />
 			    
 			    <TextView
-			        android:layout_width="200dp"
+			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
 			        android:text="add button"
-			        android:textColor="#FFFFFF"
-			        android:textSize="16dp" />
+			        android:textColor="@color/blue_theme"
+			        android:gravity="center_horizontal"
+			        style="@style/CodeFont" />
 
 			</TableRow>
 
 		    <TableRow
 		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content" >
+		        android:layout_height="wrap_content"
+		        android:background="@color/blue_theme"
+		        android:paddingTop="5dp">
 
 		   	<Spinner
 		   	    android:id="@+id/sDrCr"
@@ -126,8 +178,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:text="Account name"
-		        android:textSize="14dp"
-		        android:textColor="#FFFFFF" 
+		        style="@style/CodeFont"
 		        android:visibility="gone"/>
 
 		    <Spinner
@@ -141,8 +192,7 @@
 		        android:id="@+id/amount"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="Amount"
-		        android:textSize="14dp"
+		        style="@style/CodeFont"
 		        android:textColor="#FFFFFF" 
 		        android:visibility="gone"/>
 		    
@@ -151,8 +201,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:text="@string/Rs"
-		        android:textColor="#FFFFFF"
-		        android:textSize="19dp"
+		        style="@style/CodeFont"
 		        android:paddingRight="5dp"
 		        android:paddingLeft="10dp"
 		        android:visibility="gone"/>
@@ -173,7 +222,8 @@
 			       android:layout_width="180dp"
 			       android:layout_height="wrap_content"
 			       android:inputType="numberDecimal"
-			       android:text="0.00" >
+			       android:text="0.00"
+			       style="@style/EditTextAppTheme" >
 
 	          <requestFocus />
 			  </EditText>
@@ -182,7 +232,8 @@
 			     android:id="@+id/add"
 			     android:layout_width="65dp"
 			     android:layout_height="wrap_content"
-			     android:text=" +  " />
+			     android:text=" + "
+			     style="@style/DefaultButton" />
    
 		    </TableRow>
 		</TableLayout>
@@ -193,59 +244,17 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent" 
     		android:stretchColumns="7" 
-    		android:paddingLeft="20dp"
-    		android:paddingRight="20dp"
-    		android:paddingBottom="5dp"
-    		/>
-		
-		<LinearLayout 
-	    android:orientation="horizontal"
-	    android:layout_width="match_parent"
-	    android:layout_height="1dp"
-	    android:paddingLeft="20dp"
-	    android:paddingRight="20dp"
-	    android:weightSum="100" 
-	    android:background="@android:color/darker_gray">
-		
-		
-		
-		</LinearLayout>
-
-	<ListView
-	android:id="@+id/voucher_list"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content">
-	</ListView>
-	
-	<LinearLayout 
-	    android:orientation="horizontal"
-	    android:layout_width="match_parent"
-	    android:layout_height="0.01dp"
-	    android:paddingLeft="20dp"
-	    android:paddingRight="20dp"
-	    android:background="@android:color/darker_gray"/>
-	
-	<ListView
-	android:id="@+id/voucher_list4"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content">
-	</ListView>
-	
-	<LinearLayout 
-	    android:orientation="horizontal"
-	    android:layout_width="match_parent"
-	    android:layout_height="0.01dp"
-	    android:paddingLeft="20dp"
-	    android:paddingRight="20dp"
-	    android:background="@android:color/darker_gray"/>
+    		android:paddingLeft="3dp"
+    		android:paddingRight="3dp"
+    		android:paddingBottom="3dp"
+    		android:background="@drawable/gradiant_list_bg"/>
 	
 	<LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="100"
-        android:paddingTop="3dp"
-        android:paddingRight="20dp"
+        android:paddingTop="10dp"
         android:gravity="left">
 
 	<TextView
@@ -253,10 +262,8 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_weight="71.67"
-	    android:paddingLeft="20dp"
 	    android:text="Voucher number"
-	    android:textColor="#FFFFFF"
-	    android:textSize="14dp" />
+	    style="@style/CodeFont" />
 	
 	<EditText
 	    android:id="@+id/etVoucherNumber"
@@ -264,25 +271,16 @@
 	    android:layout_height="wrap_content"
 	    android:layout_weight="31.88"
 	    android:hint="Tap to enter voucher number"
-	    android:paddingTop="2dp" />
-
+	    android:paddingTop="2dp"
+	    style="@style/EditTextAppTheme" />
 
 	</LinearLayout>
 	
-	<LinearLayout 
-	    android:orientation="horizontal"
-	    android:layout_width="match_parent"
-	    android:layout_height="0.01dp"
-	    android:paddingLeft="20dp"
-	    android:paddingRight="20dp"
-	    android:background="@android:color/darker_gray"/>
 	<LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="100"
-        android:paddingTop="3dp"
-        android:paddingRight="20dp"
         android:gravity="left">
 
 	<TextView
@@ -290,10 +288,8 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_weight="70.76"
-	    android:paddingLeft="20dp"
 	    android:text="Voucher reference number"
-	    android:textColor="#FFFFFF"
-	    android:textSize="14dp" />
+	    style="@style/CodeFont" />
 	
 	<EditText
 			        android:id="@+id/etRefNumber"
@@ -301,28 +297,18 @@
 			        android:layout_height="wrap_content"
 			        android:layout_weight="30"
 			        android:hint="Tap to enter reference number" 
-			        android:paddingTop="2dp"/>
+			        android:paddingTop="2dp"
+			        style="@style/EditTextAppTheme"/>
 	
 	</LinearLayout>
 	
 	
-	
-	
-	<LinearLayout 
-	    android:orientation="horizontal"
-	    android:layout_width="match_parent"
-	    android:layout_height="0.01dp"
-	    android:paddingLeft="20dp"
-	    android:paddingRight="20dp"
-	    android:background="@android:color/darker_gray"/>
 	
 	<LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="100"
-        android:paddingTop="3dp"
-        android:paddingRight="20dp"
         android:gravity="left">
 
 	<TextView
@@ -330,10 +316,8 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_weight="71.10"
-	    android:paddingLeft="20dp"
 	    android:text="Voucher narration"
-	    android:textColor="#FFFFFF"
-	    android:textSize="14dp" />
+	    style="@style/CodeFont" />
 	
 	<EditText
 			        android:id="@+id/etVoucherNarration"
@@ -342,16 +326,10 @@
 			        android:layout_weight="30"
 			        android:hint="Tap to enter voucher narration" 
 			        android:paddingTop="2dp"
-			        android:inputType="textCapSentences"/>
+			        android:inputType="textCapSentences"
+			        style="@style/EditTextAppTheme"/>
 	</LinearLayout>
 	
-	<LinearLayout 
-	    android:orientation="horizontal"
-	    android:layout_width="match_parent"
-	    android:layout_height="0.01dp"
-	    android:paddingLeft="20dp"
-	    android:paddingRight="20dp"
-	    android:background="@android:color/darker_gray"/>
 	
 	</LinearLayout>
 </ScrollView>
@@ -373,7 +351,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="50"
             android:text="Save"
-            android:textSize="20dp" />
+            style="@style/DefaultButton" />
 		
         <Button
             android:id="@+id/btnResetVoucher"
@@ -382,7 +360,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="50"
             android:text="Reset"
-            android:textSize="20dp" />
+            style="@style/DefaultButton" />
 
     </LinearLayout>
 </LinearLayout>

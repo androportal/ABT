@@ -4,13 +4,15 @@ import org.xmlrpc.android.XMLRPCException;
 
 import android.os.Message;
 
+import com.example.gkaakash.R.string;
 import com.gkaakash.coreconnection.CoreConnection;
 
 public class User {
 	private CoreConnection conn;
 	String setuser;
 	boolean isuserexist,isuserunique,isadmin,AdminForgotPassword,changePassword,changeUserName;
-	Object[] getUserRole,getUserNemeOfOperatorRole,getUserNemeOfManagerRole;
+	String getUserRole;
+	Object[] getUserNemeOfOperatorRole,getUserNemeOfManagerRole;
 	Boolean resetPassword;
 	
 	/**
@@ -97,10 +99,10 @@ public class User {
 	 * @param client_id
 	 * @return
 	 */
-	public Object[] getUserRole(Object[] params,Object client_id)
+	public String getUserRole(Object[] params,Object client_id)
 	{
 		try {
-			getUserRole = (Object[]) conn.getClient().call("user.getUserRole",params,client_id);
+			getUserRole = (String) conn.getClient().call("user.getUserRole",params,client_id);
 		} catch (XMLRPCException e) {
 			
 			e.printStackTrace();

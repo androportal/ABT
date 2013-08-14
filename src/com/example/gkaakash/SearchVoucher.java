@@ -112,7 +112,8 @@ public class SearchVoucher extends Activity {
 		tvVFromdate.setText("Financial from date: " +financialFromDate);
 		tvVTodate.setText("Financial to date: " +financialToDate);
 
-		vouchertypeflag = voucherMenu.vouchertypeflag;
+		System.out.println("VOUCHER TYPE"+vouchertypeflag);
+		vouchertypeflag = createVoucher.vouchertypeflag;
 
 
 
@@ -120,9 +121,6 @@ public class SearchVoucher extends Activity {
 
 		try {
 			setOnSearchButtonClick();
-
-			Object[] params = new Object[]{2,"",financialFromDate,financialToDate,""};
-			getallvouchers(params);
 			//floatingHeader();
 
 
@@ -398,9 +396,9 @@ public class SearchVoucher extends Activity {
 				/** Creating a TextView to add to the row **/
 				addRow(columnValue.get(j),i); 
 				if ((i + 1) % 2 == 0)
-					label.setBackgroundColor(Color.parseColor("#474335"));
+					label.setBackgroundColor(Color.parseColor("#2f2f2f"));
 				else
-					label.setBackgroundColor(Color.BLACK);
+					label.setBackgroundColor(Color.parseColor("#085e6b")); //blue theme
 				/*
 				 * set center aligned gravity for amount and for others set center gravity
 				 */
@@ -468,7 +466,7 @@ public class SearchVoucher extends Activity {
 
 			addRow(ColumnNameList[k],k);
 			params.height=LayoutParams.WRAP_CONTENT;
-			label.setBackgroundColor(Color.parseColor("#348017"));
+			label.setTextColor(Color.parseColor("#085e6b")); //blue theme
 			label.setGravity(Gravity.CENTER);
 			tr.setClickable(false);
 		}
@@ -499,7 +497,7 @@ public class SearchVoucher extends Activity {
 					LinearLayout l = (LinearLayout) ((ViewGroup) row)
 							.getChildAt(j);
 					TextView t = (TextView) l.getChildAt(0);
-					ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"), Color.parseColor("#000000"));
+					ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"), Color.TRANSPARENT);
 					colorFade.setDuration(100);
 					colorFade.start();
 				}
@@ -610,18 +608,16 @@ public class SearchVoucher extends Activity {
 
 
 	public void getallvouchers(Object[] params){
-
+		vouchertypeflag = createVoucher.vouchertypeflag;
 		Object[] searchedVoucher = (Object[])transaction.searchVoucher(params,client_id);
 		searchedVoucherGrid = new ArrayList<ArrayList<String>>();
 		for(Object voucherRow : searchedVoucher){
 			Object[] v = (Object[]) voucherRow;
 			searchedVoucherList = new ArrayList<String>();
 			for(int i=0;i<v.length;i++){
-
 				if(((String) v[3].toString()).equalsIgnoreCase(vouchertypeflag)){
 					searchedVoucherList.add((String) v[i].toString());
 				}
-
 			}
 			if(searchedVoucherList.size() != 0){
 				searchedVoucherGrid.add(searchedVoucherList);
@@ -644,6 +640,7 @@ public class SearchVoucher extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		System.out.println("ON this RESUME");
         if(searchVoucherBy == 1){ // by reference number
                 Object[] params = new Object[]{1,searchByRefNumber,financialFromDate,financialToDate,""};
                 getallvouchers(params);
@@ -682,7 +679,7 @@ public class SearchVoucher extends Activity {
 
 	public void onBackPressed() {
 		MainActivity.nameflag=false;
-		Intent intent = new Intent(getApplicationContext(), voucherMenu.class);
+		Intent intent = new Intent(getApplicationContext(), menu.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 	}

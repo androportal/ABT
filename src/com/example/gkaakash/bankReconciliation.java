@@ -79,7 +79,7 @@ public class bankReconciliation extends Activity{
 	String result;
 	String[] dateParts;
 	Boolean updown=false;
-	String getSelectedOrgType,OrgName, OrgPeriod,BankReconcilPeriod,sFilename ;
+	String OrgName, OrgPeriod,BankReconcilPeriod,sFilename ;
 	String[]pdf_params; 
 	final Context context = this;
 	static String vouchertypeflag;
@@ -123,9 +123,9 @@ public class bankReconciliation extends Activity{
      
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-    	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+    	requestWindowFeature(Window.FEATURE_NO_TITLE);
     	setContentView(R.layout.bank_recon_table);
-    	 IPaddr = MainActivity.IPaddr;
+    	IPaddr = MainActivity.IPaddr;
      	System.out.println("in createorg"+IPaddr);
     	report = new Report(IPaddr); 
     	transaction = new Transaction(IPaddr);
@@ -133,13 +133,15 @@ public class bankReconciliation extends Activity{
     	m = new module();
        
     	//customizing title bar
-    	getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
+    	//getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
        
     	//two digit date format for dd and mm
       	mFormat= new DecimalFormat("00");
 		mFormat.setRoundingMode(RoundingMode.DOWN);
       
 		try {
+			OrgName = MainActivity.organisationName;
+			
 			financialFromDate =Startup.getfinancialFromDate();
 			String dateParts[] = financialFromDate.split("-");
 		   	String fromday  = dateParts[0];
@@ -167,44 +169,41 @@ public class bankReconciliation extends Activity{
 			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
 			String str_fromDate = write.format(read.parse(fromDate));
 			String str_toDate = write.format(read.parse(toDate));
-	    	
+	    	System.out.println("params are "+accountName+ financialFromDate+ fromDate+toDate+ OrgName);
 	    	tvfinancialToDate.setText("Period : "+str_fromDate+" to "+str_toDate);   
 			Object[] params = new Object[] { accountName, financialFromDate,
 					fromDate, toDate, "No Project" };
+			System.out.println("PARAMS ARE"+accountName+financialFromDate+fromDate+toDate+cleared_tran_flag);
 			Object[] flag = new Object[] { cleared_tran_flag };
-			if (MainActivity.reportmenuflag == true) {
-
-				OrgName = createOrg.organisationName;
-
-			} else {
-				OrgName = selectOrg.selectedOrgName;
-
-			}
+			
 		   	setTableAndStatement(params,flag);
             
 		   	setbankRecon();
            
-		   	final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
-		   	btnSaveRecon.setVisibility(Button.VISIBLE);
+//		   	//set title
+//			TextView org = (TextView)findViewById(R.id.org_name);
+//			org.setText(OrgName);
+//			TextView tvdate = (TextView)findViewById(R.id.date);
+//			tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
 		
-		   	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
-           	btnScrollDown.setOnClickListener(new OnClickListener() {
-			
-           		@Override
-           		public void onClick(View v) {
-           			if(updown==false){
-           				ScrollView sv = (ScrollView)findViewById(R.id.Scroll);
-	                    sv.fullScroll(ScrollView.FOCUS_DOWN); 
-	                    btnScrollDown.setBackgroundResource(R.drawable.up);
-	                    updown=true;
-	                }else {
-	                    ScrollView sv = (ScrollView)findViewById(R.id.Scroll);
-	                    sv.fullScroll(ScrollView.FOCUS_UP); 
-	                    btnScrollDown.setBackgroundResource(R.drawable.down);
-	                    updown=false;
-	                }
-           		}
-           	});
+//		   	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+//           	btnScrollDown.setOnClickListener(new OnClickListener() {
+//			
+//           		@Override
+//           		public void onClick(View v) {
+//           			if(updown==false){
+//           				ScrollView sv = (ScrollView)findViewById(R.id.Scroll);
+//	                    sv.fullScroll(ScrollView.FOCUS_DOWN); 
+//	                    btnScrollDown.setBackgroundResource(R.drawable.up);
+//	                    updown=true;
+//	                }else {
+//	                    ScrollView sv = (ScrollView)findViewById(R.id.Scroll);
+//	                    sv.fullScroll(ScrollView.FOCUS_UP); 
+//	                    btnScrollDown.setBackgroundResource(R.drawable.down);
+//	                    updown=false;
+//	                }
+//           		}
+//           	});
            	Date date= new Date();
 			String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
 			OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
@@ -219,6 +218,7 @@ public class bankReconciliation extends Activity{
     		
             
 		} catch (Exception e) {
+			System.out.println("my error is"+e);
 			m.toastValidationMessage(bankReconciliation.this,"Please try again");
 		}
     }
@@ -457,9 +457,9 @@ public class bankReconciliation extends Activity{
 		                    /** Creating a TextView to add to the row **/
 		            		addRow(columnValue.get(k),k,k,0);
 		            		if ((i + 1) % 2 == 0)
-		    					label.setBackgroundColor(Color.parseColor("#474335"));
+		    					label.setBackgroundColor(Color.parseColor("#085e6b")); //blue theme
 		    				else
-		    					label.setBackgroundColor(Color.BLACK);
+		    					label.setBackgroundColor(Color.parseColor("#2f2f2f")); //light blue theme
 		                    params.height = 45;
 		                         
 		                    //hide vouchercode column
@@ -501,9 +501,9 @@ public class bankReconciliation extends Activity{
 		            	if(j!=0){// 0 is voucher code
 			            	addRow(columnValue.get(j),i,j,1);   
 			            	if ((i + 1) % 2 == 0)
-								label.setBackgroundColor(Color.parseColor("#474335"));
+								label.setBackgroundColor(Color.parseColor("#085e6b"));
 							else
-								label.setBackgroundColor(Color.BLACK);
+								label.setBackgroundColor(Color.parseColor("#2f2f2f"));
 			                if(j == 4 || j == 5){// dr and cr amount
 			                    if(columnValue.get(j).trim().length() > 0){
 			                        label.setText(columnValue.get(j)); 
@@ -527,13 +527,15 @@ public class bankReconciliation extends Activity{
 		                    addRow("",i,6,1);  //date
 		                    //memo
 		                    EditText e = new EditText(this);
+		                    e.setBackgroundResource(R.drawable.edit_text_holo_light);
 		                    tr.addView(e);
 		                }
 		                else {
 		                    addRow("",i,6,1);  //date
 		                    //memo
 		                    EditText e = new EditText(this);
-		                        tr.addView(e);
+		                    e.setBackgroundResource(R.drawable.edit_text_holo_light);
+		                    tr.addView(e);
 		                    addRow(for_naration.get(i).get(6).toString(),i,8,1);   //naration
 		                   
 		                }
@@ -546,6 +548,7 @@ public class bankReconciliation extends Activity{
 		                	//memo
 		                	EditText e = new EditText(this);
 		                	e.setText(bankReconGrid.get(i).get(7).toString());
+		                	e.setBackgroundResource(R.drawable.edit_text_holo_light);
 		                    tr.addView(e);
 		                    
 		                    if(narration_flag==true){
@@ -584,7 +587,8 @@ public class bankReconciliation extends Activity{
 	            			}
 			            	
 			            	params1.height = LayoutParams.WRAP_CONTENT;
-			            	label1.setBackgroundColor(Color.parseColor("#348017"));
+			            	label1.setBackgroundColor(Color.parseColor("#ffffff"));
+			            	label1.setTextColor(Color.parseColor("#085e6b"));
 		            	}
 	            	}
 	            	else{//remaining rows
@@ -623,7 +627,8 @@ public class bankReconciliation extends Activity{
         for(int k=0;k<ColumnNameList.length;k++){
             /** Creating a TextView to add to the row **/
         	addRow(ColumnNameList[k],k,k,0);
-        	label.setBackgroundColor(Color.parseColor("#348017"));
+        	label.setBackgroundColor(Color.parseColor("#ffffff"));
+			label.setTextColor(Color.parseColor("#085e6b")); //blue theme
         	label.setGravity(Gravity.CENTER);
         	tr.setClickable(false);
         	params.height = LayoutParams.WRAP_CONTENT;
@@ -719,9 +724,9 @@ public class bankReconciliation extends Activity{
         label.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.MATCH_PARENT));
         if ((i + 1) % 2 == 0)
-			label.setBackgroundColor(Color.parseColor("#474335"));
+			label.setBackgroundColor(Color.parseColor("#085e6b"));
 		else
-			label.setBackgroundColor(Color.BLACK);
+			label.setBackgroundColor(Color.parseColor("#2f2f2f"));
         label.setPadding(2, 2, 2, 2);
         label.setClickable(false);
         
@@ -1173,7 +1178,7 @@ public class bankReconciliation extends Activity{
         //label.setBackgroundColor(Color.);
         label1.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.MATCH_PARENT));
-        label1.setBackgroundColor(Color.BLACK);
+        label1.setBackgroundColor(Color.parseColor("#085e6b"));
         label1.setPadding(2, 2, 2, 2);
         label1.setClickable(false);
         

@@ -24,6 +24,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.webkit.WebView.FindListener;
@@ -63,6 +64,7 @@ public class User_table extends Activity {
 	static String IPaddr;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		IPaddr = MainActivity.IPaddr;
 		System.out.println("in createorg"+IPaddr);
 		user = new User(IPaddr);
@@ -103,6 +105,12 @@ public class User_table extends Activity {
 				}
 			}
 		});
+		
+		//set title
+		TextView org = (TextView)findViewById(R.id.org_name);
+		org.setText(menu.OrgName + ", "+menu.orgtype);
+		TextView tvdate = (TextView)findViewById(R.id.date);
+		tvdate.setText(m.changeDateFormat(menu.financialFromDate)+" To "+m.changeDateFormat(menu.financialToDate));
 		
 		addNewUser();
 		

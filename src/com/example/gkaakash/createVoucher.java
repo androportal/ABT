@@ -56,14 +56,13 @@ public class createVoucher extends Activity {
 	TableLayout table;
 	int rowsSoFar = 0;
 	static int tableRowCount;
-	String amount, financialFromDate, financialToDate, drcramount,
-	vouchertypeflag;
+	String amount, financialFromDate, financialToDate, drcramount;
+	static String vouchertypeflag;
 	AlertDialog dialog;
 	String vouchernoExist;
 	final Context context = this;
-	TextView voucherDate, tvTotalDebit, tvTotalCredit, projectName;
+	TextView tvTotalDebit, tvTotalCredit, projectName;
 	final List<String> dr_cr = new ArrayList<String>();
-	ListView voucher_date, projetct_name;;
 	final Calendar c = Calendar.getInstance();
 	static int day, month, year;
 	static final int VOUCHER_DATE_DIALOG_ID = 1;
@@ -89,7 +88,8 @@ public class createVoucher extends Activity {
 	Float drcrAmountFirstRow, drcrAmount, amountdrcr;
 	boolean addRowFlag = true;
 	List<String> accnames = new ArrayList<String>();
-	List<String> DrAccountlist, CrAccountlist;
+	List<String> DrAccountlist = new ArrayList<String>();
+	List<String> CrAccountlist = new ArrayList<String>();
 	static Boolean searchFlag;
 	ArrayList otherdetailsrow;
 	ArrayAdapter<String> da1;
@@ -117,6 +117,8 @@ public class createVoucher extends Activity {
 	String from_trial;
 	private EditText etvoucherno;
 	static String IPaddr,checkvoucher_number;
+	EditText etVoucherDate;
+	Spinner sProjectNames;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -150,7 +152,7 @@ public class createVoucher extends Activity {
 		}
 
 		if (from_report_flag == null) {
-			vouchertypeflag = voucherMenu.vouchertypeflag;
+			vouchertypeflag = transaction_tab.vouchertypeflag;
 		} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
 			vouchertypeflag = ledger.vouchertypeflag;
 			from_trial = ledger.get_extra_flag;
@@ -187,6 +189,7 @@ public class createVoucher extends Activity {
 			// after click om edit voucher Reff Edit text non-editable
 			voucherno = etvoucherno.getText().toString();
 			etnarration = (EditText) findViewById(R.id.etVoucherNarration);
+			sProjectNames= (Spinner)findViewById(R.id.sProjectNames);
 			account = (Spinner) findViewById(R.id.getAccountByRule);
 			DrCr = (Spinner) findViewById(R.id.sDrCr);
 			table = (TableLayout) findViewById(R.id.Vouchertable);
@@ -206,11 +209,12 @@ public class createVoucher extends Activity {
 				// Toast.makeText(context, "V_code_flag"+voucher_code_flag,
 				// Toast.LENGTH_SHORT).show();
 
-				// System.err.println("cumning form serach voucher"+SearchVoucher.value);
+				System.err.println("cumning form serach voucher"+SearchVoucher.value);
 				// list coming from search voucher
 				ArrayList<String> abc = SearchVoucher.value;
 				if (from_report_flag == null) {
 					vouchercode = abc.get(0);
+					System.out.println("voucher_code:"+vouchercode);
 				} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
 					vouchercode = ledger.code;
 					// System.out.println("voucher_code:"+vouchercode);
@@ -244,10 +248,8 @@ public class createVoucher extends Activity {
 				etRefNumber.setText(refno);
 				etvoucherno.setText(vouchercode);
 				checkvoucher_number = vouchercode;
-				projetct_name = (ListView) findViewById(R.id.voucher_list4);
-				projetct_name.setTextFilterEnabled(true);
-				projetct_name.setCacheColorHint(color.transparent);
-				setProject();
+				System.out.println("values are:"+narration+refno+searchdate+proj);
+				//setProject();
 
 				accdetailsList = new ArrayList<ArrayList<String>>();
 				for (Object row2 : VoucherDetails) {
@@ -278,16 +280,10 @@ public class createVoucher extends Activity {
 			// spinner
 			setFirstAndSecondRow();
 
-			// for setting voucher date
-			voucher_date = (ListView) findViewById(R.id.voucher_list);
-			voucher_date.setTextFilterEnabled(true);
-			voucher_date.setCacheColorHint(color.transparent);
+			//for setting voucher date
 			setVoucherDate();
 
 			// for setting project
-			projetct_name = (ListView) findViewById(R.id.voucher_list4);
-			projetct_name.setTextFilterEnabled(true);
-			projetct_name.setCacheColorHint(color.transparent);
 			setProject();
 
 			if (from_report_flag != null && !(menu.userrole.equalsIgnoreCase("admin"))) {
@@ -299,9 +295,10 @@ public class createVoucher extends Activity {
 				firstRowamount.setEnabled(false);
 				btnSaveVoucher.setEnabled(false);
 				btnResetVoucher.setEnabled(false);
-				voucher_date.setOnItemClickListener(null);
-				projetct_name.setOnItemClickListener(null);
-
+				etVoucherDate.setEnabled(false);
+				sProjectNames.setEnabled(false);
+				etvoucherno.setEnabled(false);
+				
 				tableRowCount = table.getChildCount();
 
 				for (int i = 0; i < (tableRowCount); i++) {
@@ -320,17 +317,106 @@ public class createVoucher extends Activity {
 			}
 
 		} catch (Exception ex) {
+			System.out.println("error now"+ex);
 			m.toastValidationMessage(context, "Please try again"); 
 		}
 		// add all onclick events in this method
 		OnClickListener();
-
+		
 		// on dr/cr item selected from dropdown...
 		OnDrCrItemSelectedListener();
 
 		// move foucs from amount to reference number edittext
 		OnAmountFocusChangeListener();
+		
+		//change voucher type
+		changeVoucherType();
 
+	}
+
+	private void resetFields() {
+		System.out.println("we are in reset");
+		name = "Create voucher";
+		// Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
+		etRefNumber = (EditText) findViewById(R.id.etRefNumber);
+		if ("Create voucher".equals(name)) {
+			etRefNumber.setEnabled(true);
+		}
+		
+		String reff_no = transaction
+				.getLastReferenceNumber(
+						new Object[] { vouchertypeflag },
+						client_id);
+		etRefNumber.setText(reff_no.toString());
+		etnarration = (EditText) findViewById(R.id.etVoucherNarration);
+		etnarration.setText("");
+		etvoucherno.setText("");
+
+		DrCr = (Spinner) findViewById(R.id.sDrCr); 
+		DrCr.setSelection(0);
+
+		account = (Spinner) findViewById(R.id.getAccountByRule);
+		account.setSelection(0);
+
+		firstRowamount.setText("0.00");
+		closing_bal.setText("0.00");
+		second_table_closingbal_et.setText("0.00");
+		searchFlag = false;
+		cloneflag = true;
+		setVoucherDate();
+		setProject();
+		// add a keylistener to keep track user
+		// input
+
+		table.removeAllViews();
+		DrAccountlist.clear();
+		CrAccountlist.clear();
+		accnames.clear();
+		setFirstAndSecondRow();
+		String tabname1 = transaction_tab.tabname;
+		
+		System.out.println("tabname:"+tabname1);
+		transaction_tab.tab.setText(tabname1);	
+		
+	}
+
+	private void changeVoucherType() {
+		//adding voucher list items
+		final String[] voucherTypes = new String[] { "Contra","Journal","Payment","Receipt","Credit note",
+				"Debit note","Sales","Sales return","Purchase","Purchase return" };
+		
+		final Spinner change_voucher_type= (Spinner)findViewById(R.id.sVouchertypes);
+		// creating array adaptor to take list of vouchertypes
+        final ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
+                android.R.layout.simple_spinner_item, voucherTypes);
+        // set resource layout of spinner to that adaptor
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		change_voucher_type.setAdapter(dataAdapter);
+		
+		change_voucher_type.setSelection(dataAdapter.getPosition(vouchertypeflag));
+		
+		if (searchFlag == true || from_report_flag != null) {
+			change_voucher_type.setEnabled(false);
+		}
+		
+		change_voucher_type.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int pos, long arg3) {
+				System.out.println("flags are"+searchFlag+from_report_flag);
+				if(searchFlag == false && from_report_flag == null){
+					vouchertypeflag = voucherTypes[pos];
+					resetFields();
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	private void OnAmountFocusChangeListener() {
@@ -508,7 +594,9 @@ public class createVoucher extends Activity {
 		if ("Contra".equals(vouchertypeflag)
 				|| "Journal".equals(vouchertypeflag)) {
 			if (from_report_flag == null) {
-				accnames = voucherMenu.Accountlist;
+				Object[] params = new Object[] { "Dr" };
+				m.getAccountsByRule(params, vouchertypeflag, context);
+				accnames = module.Accountlist;
 				// System.out.println("acc_names:"+accnames);
 			} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
 				accnames = ledger.Accountlist;// ////////////////////////////
@@ -619,8 +707,17 @@ public class createVoucher extends Activity {
 			}
 		} else {
 			if (from_report_flag == null) {
-				DrAccountlist = voucherMenu.DrAccountlist;
-				CrAccountlist = voucherMenu.CrAccountlist;
+				
+				Object[] paramDr = new Object[]{"Dr"};
+				m.getAccountsByRule(paramDr,vouchertypeflag, context);
+				accnames = module.Accountlist;
+				DrAccountlist.addAll(accnames);
+				
+				Object[] paramCr = new Object[]{"Cr"};
+				m.getAccountsByRule(paramCr,vouchertypeflag, context);
+				accnames = module.Accountlist;
+				CrAccountlist.addAll(accnames);
+				
 			} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
 				DrAccountlist = ledger.DrAccountlist;
 				CrAccountlist = ledger.CrAccountlist;
@@ -1180,7 +1277,7 @@ public class createVoucher extends Activity {
 									
 									// for changing the tab name
 									String tabname1 = transaction_tab.tabname;
-									transaction_tab.tab1.setText(tabname1);
+									transaction_tab.tab.setText(tabname1);
 								}
 								
 							} else if (cloneflag == true) {// for saving cloned
@@ -1229,9 +1326,7 @@ public class createVoucher extends Activity {
 								etRefNumber.setText(reff_no.toString());
 								etnarration.setText("");
 
-								TextView tvproject = (TextView) projetct_name
-										.findViewById(R.id.tvSubItem1);
-								tvproject.setText("No Project");
+								setProject();
 
 								setVoucherDate();
 
@@ -1286,44 +1381,7 @@ public class createVoucher extends Activity {
 					public void onClick(DialogInterface dialog,
 							int id) {
 
-						name = "Create voucher";
-						// Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
-						if ("Create voucher".equals(name)) {
-							etRefNumber.setEnabled(true);
-						}
-						etRefNumber = (EditText) findViewById(R.id.etRefNumber);
-						String reff_no = transaction
-								.getLastReferenceNumber(
-										new Object[] { vouchertypeflag },
-										client_id);
-						etRefNumber.setText(reff_no.toString());
-						etnarration = (EditText) findViewById(R.id.etVoucherNarration);
-						etnarration.setText("");
-						etvoucherno.setText("");
-						TextView tvproject = (TextView) projetct_name
-								.findViewById(R.id.tvSubItem1);
-						tvproject.setText("No Project");
-
-						DrCr = (Spinner) findViewById(R.id.sDrCr);
-						DrCr.setSelection(0);
-
-						account = (Spinner) findViewById(R.id.getAccountByRule);
-						account.setSelection(0);
-
-						firstRowamount.setText("0.00");
-						closing_bal.setText("0.00");
-						second_table_closingbal_et.setText("0.00");
-						searchFlag = false;
-						cloneflag = true;
-						setVoucherDate();
-
-						// add a keylistener to keep track user
-						// input
-
-						table.removeAllViews();
-						setFirstAndSecondRow();
-						String tabname1 = transaction_tab.tabname;
-						transaction_tab.tab1.setText(tabname1);
+						resetFields();		
 
 					}
 				})
@@ -1347,87 +1405,49 @@ public class createVoucher extends Activity {
 		 * item(project name) is selected, sets selected name in the subtitle
 		 */
 
-		String[] abc = new String[] { "rowid", "col_1" };
-		int[] pqr = new int[] { R.id.tvRowTitle1, R.id.tvSubItem1 };
+		// call the getAllProjects method to get all projects
+		Object[] projectnames = (Object[]) organisation
+				.getAllProjects(client_id);
+		// create new array list of type String to add gropunames
+		List<String> projectnamelist = new ArrayList<String>();
+		projectnamelist.add("No Project");
+		for (Object pn : projectnames) {
+			Object[] p = (Object[]) pn;
+			projectnamelist.add((String) p[1]); // p[0] is project
+			// code & p[1] is
+			// projectname
+		}
+		
+		// creating array adaptor to take list of vouchertypes
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
+                android.R.layout.simple_spinner_item, projectnamelist);
+        // set resource layout of spinner to that adaptor
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sProjectNames.setAdapter(dataAdapter);
+		
 		if (searchFlag == true) {// this code will be executed while
 			// cloning,editing
-			List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
-			HashMap<String, String> map = new HashMap<String, String>();
-			map.put("rowid", "" + "Select project");
-			map.put("col_1", "" + proj);
-			fillMaps.add(map);
-			projectAdapter = new SimpleAdapter(this, fillMaps,
-					R.layout.child_row1, abc, pqr);
-			projetct_name.setAdapter(projectAdapter);
+			sProjectNames.setSelection(dataAdapter.getPosition(proj));
 
 		} else {// this code will be executed while creating account
-			List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
-			HashMap<String, String> map = new HashMap<String, String>();
-			map.put("rowid", "" + "Select project");
-			map.put("col_1", "" + "No Project");
-			fillMaps.add(map);
-			projectAdapter = new SimpleAdapter(this, fillMaps,
-					R.layout.child_row1, abc, pqr);
-			projetct_name.setAdapter(projectAdapter);
-
+			sProjectNames.setSelection(dataAdapter.getPosition("No Project"));
 		}
+		
 		vproject = "No Project";
 
-		projetct_name.setOnItemClickListener(new OnItemClickListener() {
+		sProjectNames.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View arg1,
+					int pos, long arg3) {
+				vproject = parent.getItemAtPosition(pos).toString();
+				Toast.makeText(context, vproject, Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
-				projetct_name.setCacheColorHint(color.transparent);
-				if (position == 0) {
-					projectName = (TextView) view.findViewById(R.id.tvSubItem1);
-
-					// call the getAllProjects method to get all projects
-					Object[] projectnames = (Object[]) organisation
-							.getAllProjects(client_id);
-					// create new array list of type String to add gropunames
-					List<String> projectnamelist = new ArrayList<String>();
-					projectnamelist.add("No Project");
-					for (Object pn : projectnames) {
-						Object[] p = (Object[]) pn;
-						projectnamelist.add((String) p[1]); // p[0] is project
-						// code & p[1] is
-						// projectname
-					}
-
-					/*
-					 * 'builder.setItems' takes Charsequence Array as a
-					 * parameter, we have to convert List<Address> to
-					 * List<String> and then use list.toarray()
-					 */
-
-					final CharSequence[] allProjectNames = projectnamelist
-							.toArray(new String[0]);
-
-					// creating a dialog box for popup
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							context);
-					// setting title
-					builder.setTitle("Select project");
-					// adding allProjectNames
-					builder.setItems(allProjectNames,
-							new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog,
-								int pos) {
-							// set project name in project field
-
-							projectName.setText(allProjectNames[pos]);
-							vproject = allProjectNames[pos].toString();
-
-						}
-					});
-					// building a complete dialog
-					dialog = builder.create();
-					dialog.show();
-
-				}
+				
 			}
 		});
 	}
@@ -1461,31 +1481,16 @@ public class createVoucher extends Activity {
 		month = Integer.parseInt(frommonth);
 		day = Integer.parseInt(fromday);
 
-		String[] abc = new String[] { "rowid", "col_1" };
-		int[] pqr = new int[] { R.id.tvRowTitle1, R.id.tvSubItem1 };
-
-		List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("rowid", "" + "Voucher Date");
-		map.put("col_1", "" + mFormat.format(Double.valueOf(day)) + "-"
+		etVoucherDate = (EditText)findViewById(R.id.etVoucherDate);
+		etVoucherDate.setText(mFormat.format(Double.valueOf(day)) + "-"
 				+ mFormat.format(Double.valueOf(month)) + "-" + year);
-		fillMaps.add(map);
-
-		dateAdapter = new SimpleAdapter(this, fillMaps, R.layout.child_row1,
-				abc, pqr);
-		voucher_date.setAdapter(dateAdapter);
 
 		vDate = mFormat.format(Double.valueOf(day)) + "-"
 				+ mFormat.format(Double.valueOf(month)) + "-" + year;
-		voucher_date.setOnItemClickListener(new OnItemClickListener() {
-
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				voucher_date.setCacheColorHint(color.transparent);
-
-				if (position == 0) {
-					showDialog(VOUCHER_DATE_DIALOG_ID);
-				}
+		etVoucherDate.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showDialog(VOUCHER_DATE_DIALOG_ID);
 			}
 		});
 	}
@@ -1540,10 +1545,9 @@ public class createVoucher extends Activity {
 
 				if ((cal3.after(cal1) && cal3.before(cal2))
 						|| cal3.equals(cal1) || cal3.equals(cal2)) {
-					voucherDate = (TextView) findViewById(R.id.tvSubItem1);
 
 					// set selected date into textview
-					voucherDate.setText(new StringBuilder()
+					etVoucherDate.setText(new StringBuilder()
 					.append(mFormat.format(Double.valueOf(day)))
 					.append("-")
 					.append(mFormat.format(Double.valueOf(Integer
@@ -1613,6 +1617,8 @@ public class createVoucher extends Activity {
 		newRow = new TableRow(table.getContext());
 		newRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT));
+		newRow.setBackgroundColor(Color.parseColor("#085e6b"));
+		newRow.setPadding(0, 0, 0, 10);
 		// newRow.addView(child, width, height)
 
 		second_table_drcr_spinner = new Spinner(newRow.getContext());
@@ -1643,6 +1649,7 @@ public class createVoucher extends Activity {
 
 		// tv1.setWidth(100);
 		second_table_amount_et = new EditText(newRow.getContext());
+		second_table_amount_et.setBackgroundResource(R.drawable.edit_text_holo_light);
 		second_table_amount_et.setText("0.00");
 		second_table_amount_et.setInputType(InputType.TYPE_CLASS_NUMBER
 				| InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -1655,12 +1662,13 @@ public class createVoucher extends Activity {
 		second_table_closingbal_et.setEnabled(false);
 
 		// second_table_accountname_spinner.setText( "Action: " + ++rowsSoFar );
-		removeSelfButton = new Button(newRow.getContext());
+		removeSelfButton = new Button(newRow.getContext(),null);
 		removeSelfButton.setText("      -      "); // for tablet ***** add space
-
+		removeSelfButton.setBackgroundResource(R.drawable.default_button_selector);
 		// pass on all the information necessary for deletion
 		removeSelfButton.setOnClickListener(new RowRemover(table, newRow));
-
+		removeSelfButton.setTextColor(Color.WHITE);
+		
 		newRow.addView(second_table_drcr_spinner, 100, 50);
 		newRow.addView(tv);
 		newRow.addView(second_table_accountname_spinner, 259, 50);
@@ -1683,7 +1691,7 @@ public class createVoucher extends Activity {
 		if (from_report_flag == null) {
 			MainActivity.nameflag = false;
 			Intent intent = new Intent(getApplicationContext(),
-					voucherMenu.class);
+					menu.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {

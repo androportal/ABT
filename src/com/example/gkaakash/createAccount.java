@@ -76,11 +76,6 @@ public class createAccount<group> extends Activity{
         IPaddr = MainActivity.IPaddr;
 	    System.out.println("in createorg"+IPaddr);
         try {
-            //for visibility of account tab layout
-            LinearLayout l0=(LinearLayout)findViewById(R.id.createacc_tab0);  
-            LinearLayout l1=(LinearLayout)findViewById(R.id.createacc_tab1);  
-            LinearLayout l2=(LinearLayout)findViewById(R.id.createacc_tab2);
-            
             // create the object of Group class
             group = new Group(IPaddr);
             account = new Account(IPaddr);

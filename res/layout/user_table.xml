@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/dark_gray_background">
+    android:background="@color/gray_theme">
 
    <LinearLayout 
             android:layout_width="fill_parent"
@@ -9,22 +9,23 @@
             android:orientation="vertical"
             android:id="@+id/layout_root"
             android:layout_weight="50">
+            
+       <include layout="@layout/org_info"/>
       
         <LinearLayout
             android:id="@+id/layout_root"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:minHeight="50dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/blue_theme"
+            android:layout_margin="3dp">
 			        
 					<Button
 					    android:id="@+id/add_user"
 					    android:layout_width="wrap_content"
 					    android:layout_height="match_parent"
 					    android:text="Add user"
-					    android:textColor="#000000"
 					    android:layout_gravity="center_vertical"
-					    android:textAppearance="?android:attr/textAppearanceLarge"
 					    android:gravity="center"
 					    style="@style/DefaultButton"
 			         	android:layout_weight="1"
@@ -35,20 +36,17 @@
 					    android:layout_width="wrap_content"
 					    android:layout_height="wrap_content"
 					    android:layout_weight="1"
-					    android:background="#F2F2F2"
-					    android:gravity="center_horizontal">
+					    android:gravity="center_horizontal"
+					    android:layout_gravity="center">
 		        <TextView
 				    android:id="@+id/tRole"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
 				    android:text="Choose user role"
-				    android:textAppearance="?android:attr/textAppearanceLarge"
-				    android:textStyle="bold"
-                    android:textColor="#0B2161"
-				    android:textSize="20dp"
 				    android:layout_gravity="center_vertical"
-				    android:gravity="left" />
+				    android:gravity="left"
+				    style="@style/CodeFont" />
 			 	<RadioGroup
 			        android:id="@+id/radioRole"
 			        android:layout_width="wrap_content"
@@ -61,8 +59,7 @@
 		                android:layout_height="wrap_content"
 		        		android:paddingRight="20dp"
 		                android:text="manager"
-		                android:textAppearance="?android:attr/textAppearanceLarge"
-		               	android:textColor="#000000"
+		               	style="@style/CodeFont"
 		                android:checked="true" />  
 		
 		          <RadioButton
@@ -70,8 +67,7 @@
 		              android:layout_width="wrap_content"
 		              android:layout_height="wrap_content"
 		              android:paddingRight="20dp"
-		              android:textAppearance="?android:attr/textAppearanceLarge"
-		              android:textColor="#000000"
+		              style="@style/CodeFont"
 		              android:text="operator" />
 		        
 			  </RadioGroup>

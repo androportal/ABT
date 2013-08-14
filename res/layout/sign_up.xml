@@ -20,23 +20,17 @@
     	<TextView
 		    android:id="@+id/tvalertHead1"
 		    android:layout_width="match_parent"
-		    android:layout_height="40dp"
-		    android:textColor="#FFFFFF"
-		    android:textSize="20dp"
-		    android:gravity="left"
-		    android:layout_gravity="center_vertical"
+		    android:layout_height="50dp"
+		    android:gravity="center_vertical"
 		    android:paddingLeft="20dp"
-		    android:shadowColor="#000000"
-		    android:shadowDx="-1"
-           	android:shadowDy="-1"
-         	android:shadowRadius="1"
-		    android:background="#F2C60E"
+		    style="@style/ShodowFont"
+		    android:background="@color/blue_theme"
 		    android:layout_weight="20"/>
     
     	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     		android:layout_width="match_parent"
     		android:layout_height="match_parent"
-    		android:background="#FFFFFF"
+    		android:background="@color/gray_theme"
     		android:paddingLeft="20dp"
     		android:paddingRight="20dp"
     		android:paddingTop="5dp"
@@ -72,10 +66,8 @@
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
-				    android:text="Choose user role"
-				    android:textAppearance="?android:attr/textAppearanceMedium"
-				    android:textColor="#000000"
-				    android:textSize="20dp"
+				    android:text="Choose user role:"
+				    style="@style/CodeFont"
 				    android:layout_weight="1"
 				    android:gravity="left" />
 			 	<RadioGroup
@@ -91,16 +83,16 @@
 		                android:layout_height="wrap_content"
 		        		android:paddingRight="20dp"
 		                android:text="manager"
-		               	android:textColor="#000000"
-		                android:checked="true" />  
+		                android:checked="true"
+		                style="@style/RadioButtonAppTheme" />  
 		
 		          <RadioButton
 		              android:id="@+id/rbOperator"
 		              android:layout_width="wrap_content"
 		              android:layout_height="wrap_content"
 		              android:paddingRight="20dp"
-		              android:textColor="#000000"
-		              android:text="operator" />
+		              android:text="operator"
+		              style="@style/RadioButtonAppTheme" />
 		        
 			  </RadioGroup>
  	  		</TableRow>
@@ -112,9 +104,7 @@
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
 				    android:text="Enter username"
-				    android:textAppearance="?android:attr/textAppearanceMedium"
-				    android:textColor="#000000"
-				    android:textSize="20dp"
+				    style="@style/CodeFont"
 				    android:layout_weight="1"
 				    android:gravity="left" />
 
@@ -125,7 +115,8 @@
 		            android:ems="10"
 		            android:hint="Enter username"
 		            android:inputType="textPersonName"
-		            android:layout_weight="1" />
+		            android:layout_weight="1"
+		            style="@style/EditTextAppTheme" />
 			</TableRow>
 			<TableRow android:id="@+id/row_password">
 				<TextView
@@ -134,9 +125,7 @@
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
 				    android:text="Enter password"
-				    android:textAppearance="?android:attr/textAppearanceMedium"
-				    android:textColor="#000000"
-				    android:textSize="20dp"
+				    style="@style/CodeFont"
 				    android:layout_weight="1"
 				    android:gravity="left" />
 
@@ -145,9 +134,10 @@
 		            android:layout_width="300dp"
 		            android:layout_height="wrap_content"
 		            android:ems="10"
-		            android:hint="Enter a password"
+		            android:hint="Re-enter password"
 		            android:inputType="textPassword"
-		            android:layout_weight="1" />
+		            android:layout_weight="1"
+		            style="@style/EditTextAppTheme" />
 			</TableRow>
 			<TableRow android:id="@+id/row_confirmPassword">
 
@@ -156,9 +146,7 @@
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
 				    android:text="Confirm password"
-				    android:textAppearance="?android:attr/textAppearanceMedium"
-				    android:textColor="#000000"
-				    android:textSize="20dp"
+				    style="@style/CodeFont"
 				    android:layout_weight="1"
 				    android:gravity="left" />
 
@@ -169,7 +157,8 @@
 		            android:ems="10"
 		            android:hint="Enter a password"
 		            android:inputType="textPassword"
-		            android:layout_weight="1" />
+		            android:layout_weight="1"
+		            style="@style/EditTextAppTheme" />
 			</TableRow>
 			
 			<TableRow
@@ -180,9 +169,7 @@
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
 				    android:text="Select security question"
-				    android:textAppearance="?android:attr/textAppearanceMedium"
-				    android:textColor="#000000"
-				    android:textSize="20dp"
+				    style="@style/CodeFont"
 				    android:layout_weight="1"
 				    android:gravity="left" />
 
@@ -192,7 +179,8 @@
 				    android:layout_height="wrap_content"
 				    android:layout_weight="1"
 				    android:entries="@array/ques_prompt"
-                	android:prompt="@string/questions" />
+                	android:prompt="@string/questions"
+                	style="@style/SpinnerAppTheme.DropDown" />
  
 			</TableRow>
 			<TableRow
@@ -203,9 +191,7 @@
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
 				    android:text="Enter answer"
-				    android:textAppearance="?android:attr/textAppearanceMedium"
-				    android:textColor="#000000"
-				    android:textSize="20dp"
+				    style="@style/CodeFont"
 				    android:layout_weight="1"
 				    android:gravity="left" />
 
@@ -216,7 +202,8 @@
 		            android:ems="10"
 		            android:hint="Enter answer"
 		            android:inputType="textEmailAddress"
-		            android:layout_weight="1"/>
+		            android:layout_weight="1"
+		            style="@style/EditTextAppTheme"/>
 			</TableRow>
           
 		    <TableRow android:id="@+id/rowGender">
@@ -225,10 +212,8 @@
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
-				    android:text="Select gender"
-				    android:textAppearance="?android:attr/textAppearanceMedium"
-				    android:textColor="#000000"
-				    android:textSize="20dp"
+				    android:text="Select gender:"
+				    style="@style/CodeFont"
 				    android:layout_weight="1"
 				    android:gravity="left" />
 		        
@@ -245,15 +230,15 @@
 		                android:layout_height="wrap_content"
 		        		android:paddingRight="20dp"
 		                android:text="Male"
-		               	android:textColor="#000000"
-		                android:checked="true" />  
+		                android:checked="true"
+		                style="@style/RadioButtonAppTheme" />  
 		
 		          <RadioButton
 		              android:id="@+id/rbFemale"
 		              android:layout_width="wrap_content"
 		              android:layout_height="wrap_content"
 		              android:paddingRight="20dp"
-		              android:textColor="#000000"
+		              style="@style/RadioButtonAppTheme"
 		              android:text="Female" 
 		              />
 		          
@@ -262,7 +247,7 @@
 		              android:layout_width="wrap_content"
 		              android:layout_height="wrap_content"
 		              android:paddingRight="20dp"
-		              android:textColor="#000000"
+		              style="@style/RadioButtonAppTheme"
 		              android:text="Other" 
 		              />
 			  </RadioGroup>
@@ -278,7 +263,6 @@
 			     android:layout_width="fill_parent"
 			     android:layout_height="wrap_content"
 			     android:layout_gravity="center_vertical"
-			     android:background="#FFFFFF"
 			     android:gravity="center"
 			     android:orientation="horizontal" 
 			     android:layout_alignParentBottom="true"
@@ -290,7 +274,7 @@
                      android:layout_height="match_parent"
                      android:text="Done"
                      android:layout_weight="1"
-                     android:textSize="20sp"
+                     style="@style/DefaultButton"
                      android:gravity="center"
                      android:layout_alignParentBottom="true"
                      android:layout_gravity="center_vertical" />
@@ -299,7 +283,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Cancel"
-                    android:textSize="20sp"
+                    style="@style/DefaultButton"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:layout_alignParentBottom="true"

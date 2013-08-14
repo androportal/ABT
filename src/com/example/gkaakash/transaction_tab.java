@@ -1,6 +1,7 @@
 package com.example.gkaakash;
 
 import android.app.AlertDialog;
+import android.app.LocalActivityManager;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,23 +22,23 @@ import android.widget.Toast;
 
 public class transaction_tab extends TabActivity {
 
-	static TextView tab1 = null;
-	static TextView tab2 = null;
 	AlertDialog dialog;
 	final Context context = this;
 	Boolean nameflag;
 	String name;
-
+	LocalActivityManager manager;
 	static TabHost tabHost;
 	static String tabname;
 	EditText etRefNumber;
 	String from_report_flag;
-	String vouchertypeflag;
+	static String vouchertypeflag;
 	static TabSpec editspec;
+	static TextView tab;
 
+	@SuppressWarnings("deprecation")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.tab);
 
 		Bundle extras = getIntent().getExtras();
@@ -52,13 +53,18 @@ public class transaction_tab extends TabActivity {
 		//tab name flag
 		nameflag=MainActivity.nameflag;
 
-		//Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+		Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
 		//customizing title bar
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.voucher_title);
-		final TextView label = (TextView) findViewById(R.id.tvVoucherTitle);
+		//getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.voucher_title);
+		//final TextView label = (TextView) findViewById(R.id.tvVoucherTitle);
 		//String vouchertypeflag = voucherMenu.vouchertypeflag;
 		if (from_report_flag == null){
-			vouchertypeflag =  voucherMenu.vouchertypeflag;
+			//vouchertypeflag =  voucherMenu.vouchertypeflag
+			if(MainActivity.searchFlag != true){
+				vouchertypeflag = "Journal";
+			}else{
+				vouchertypeflag = SearchVoucher.vouchertypeflag;
+			}
 		} else if(from_report_flag.equalsIgnoreCase("from_ledger")){
 			vouchertypeflag =  ledger.vouchertypeflag;
 			name=ledger.name;
@@ -69,74 +75,71 @@ public class transaction_tab extends TabActivity {
 
 		}  
 		
-		label.setText("Menu >> Transaction >> " + vouchertypeflag);
-		final Button home = (Button) findViewById(R.id.btnhome);
-		home.setOnClickListener(new OnClickListener() {
+		//label.setText("Menu >> Transaction >> " + vouchertypeflag);
+//		final Button home = (Button) findViewById(R.id.btnhome);
+//		home.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View arg0) {
+//				Intent intent = new Intent(context, menu.class);
+//				// To pass on the value to the next page
+//				startActivity(intent);
+//
+//			}
+//
+//		});
 
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(context, menu.class);
-				// To pass on the value to the next page
-				startActivity(intent);
+		manager = new LocalActivityManager(transaction_tab.this, true);
+		tabHost = (TabHost) findViewById(android.R.id.tabhost);
+       
+        manager.dispatchCreate(savedInstanceState);
+        tabHost.setup(manager);
+        TabHost.TabSpec spec;
+        Intent intent;
 
-			}
-
-		});
-
-
-		tabHost = getTabHost();
-		//creating TabSpec for create voucher
-		TabSpec createspec = tabHost.newTabSpec("tab1");
-		tab1 = new TextView(this);
-		//setting properties in textView
-		tab1.setGravity(android.view.Gravity.CENTER);
-		tab1.setTextSize(18.0f);
-		tab1.setHeight(50);
-		tab1.setTextColor(Color.WHITE);
-
+        intent = new Intent(transaction_tab.this, createVoucher.class); 
+        intent.putExtra("flag", from_report_flag);
+        spec = tabHost.newTabSpec("Create voucher").setIndicator("Create voucher").setContent(intent);
+        tabHost.addTab(spec);
+  
+        intent = new Intent(transaction_tab.this, SearchVoucher.class);   
+        spec = tabHost.newTabSpec("Search voucher").setIndicator("Search voucher").setContent(intent);
+        tabHost.addTab(spec);
+		
+        //change the tab text color
+        TextView tv = (TextView) tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
+        tv.setTextColor(Color.WHITE);
+        tv = (TextView) tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
+        tv.setTextColor(Color.WHITE);
+        
 		if(nameflag==true){//setting tab name while editing and cloning
-			tab1.setText(name);
-			//System.out.println("name:"+name);
+			tab = (TextView) tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
+			tab.setText(name);
+			System.out.println("name:"+name);
 			System.out.println("In if");
 		}else {//setting tab name while creating account
-			tab1.setText("Create voucher");
-			tabname=(String) tab1.getText();
-			//System.out.println("In else");
+			tab = (TextView) tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
+			tab.setText("Create voucher");			
+			tabname = "Create voucher";
+			System.out.println("In else");
 		} 
-		createspec.setIndicator(tab1);//assigning TextView to tab Indicator
-		Intent create = new Intent(this, createVoucher.class);
-		create.putExtra("flag", from_report_flag);
-		createspec.setContent(create);
-		tabHost.addTab(createspec);  // Adding create tab
-
-		//creating TabSpec for edit voucher
-		editspec = tabHost.newTabSpec("tab2");
-		tab2 = new TextView(this);
-		//setting properties in textView
-		tab2.setGravity(android.view.Gravity.CENTER);
-		tab2.setTextSize(18.0f);
-		tab2.setHeight(50);
-		tab2.setTextColor(Color.WHITE);
-		tab2.setText("Search voucher");
-		editspec.setIndicator(tab2);//assigning TextView to tab Indicator
-		Intent edit = new Intent(this, SearchVoucher.class);
-		//edit.putExtra("flag","Contra");
-		editspec.setContent(edit);
-		tabHost.addTab(editspec); // Adding edit tab
-
+		
 		if (name == "Voucher details") {
 			tabHost.getTabWidget().getChildAt(1).setVisibility(View.INVISIBLE);
 		} else {
 			tabHost.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
 		}
-		//		    else if (name=="Edit voucher" || name=="Copy voucher") {
-		//		    	 tab1.setText(name); 
-		//		    tabHost.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
-		//			}else {
-		//				tab1.setText("Create voucher"); 
-		//				 tabHost.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
-		//			}
-
+		tabHost.getTabWidget().setCurrentTab(0);
+		tabHost.setOnTabChangedListener(new OnTabChangeListener() {
+			
+			@Override
+			public void onTabChanged(String tabId) {
+				//manager.dispatchPause(isFinishing());
+				manager.dispatchResume();
+				
+			}
+		});
+		
 	}
 
 }

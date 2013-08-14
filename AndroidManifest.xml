@@ -12,12 +12,12 @@
      
     <application
         android:icon="@drawable/logo_app"
-        android:label="@string/app_name" 
-        android:theme="@style/CustomTheme" >
+        android:label="@string/app_name" >
         <activity  
             android:name=".MainActivity"  
             android:label="@string/title_activity_main" 
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" >
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,7 +40,6 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:label="Create account"
             android:name=".createAccount"
             android:screenOrientation="landscape" >
         </activity>
@@ -55,7 +54,6 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity 
-            android:theme="@style/CustomTheme"
             android:label="Report types"
             android:name=".report"
             android:screenOrientation="landscape" >
@@ -65,8 +63,7 @@
             android:name=".reportMenu"
             android:screenOrientation="landscape" >
         </activity>
-         <activity 
-             android:theme="@style/CustomTheme"
+         <activity
             android:label="Voucher types"
             android:name=".SearchVoucher"
             android:screenOrientation="landscape" >
@@ -77,19 +74,16 @@
             android:screenOrientation="landscape" >
         </activity>
          <activity
-            android:theme="@style/CustomTheme"
-            android:label=""
+            android:theme="@android:style/Theme.NoTitleBar"
             android:name=".edit_account"
             android:screenOrientation="landscape" >
             
         </activity>
          <activity
-      		 android:label="Account"
             android:name=".account_tab"
             android:screenOrientation="landscape" >
        </activity>
        <activity
-            android:theme="@style/CustomTheme"
       		 android:label="Transaction"
             android:name=".transaction_tab"
             android:screenOrientation="landscape" >

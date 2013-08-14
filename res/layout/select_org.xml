@@ -1,19 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-           android:layout_width="fill_parent"
-           android:layout_height="fill_parent"
-           android:background="@drawable/dark_gray_background"
-           android:orientation="vertical"
-           android:padding="20dp" >
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:background="@android:color/transparent"
+           android:orientation="vertical">
 
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:orientation="vertical"
+               android:padding="10dp"
                android:id="@+id/selectOrg" >
 
                <LinearLayout
                    android:layout_width="match_parent"
-                   android:layout_height="81dp" >
+                   android:layout_height="wrap_content" >
 
                    <TableLayout
                 android:layout_width="fill_parent"
@@ -29,15 +29,16 @@
                        android:layout_height="wrap_content"
                        android:layout_weight="0.5"
                        android:text="Organisation name"
-                       android:textColor="#FFFFFF"
-                       android:textSize="20dp" />
+                       style="@style/CodeFont" />
 
                    <Spinner
                        android:id="@+id/sGetOrgNames"
                        android:layout_width="0dip"
                        android:layout_height="wrap_content"
                        android:layout_weight="2.5"
-                       android:prompt="@string/orgName_prompt" />
+                       android:spinnerMode="dialog"
+                       android:prompt="@string/selectOrgButton"
+                         style="@style/SpinnerAppTheme.DropDown"/>
 
                    </TableRow>
                    </TableLayout>
@@ -46,7 +47,8 @@
 
            <LinearLayout
                android:layout_width="match_parent"
-               android:layout_height="wrap_content" >
+               android:layout_height="wrap_content"
+               android:padding="10dp" >
 
              <TableRow
                  android:layout_width="fill_parent"
@@ -58,33 +60,34 @@
                    android:layout_height="wrap_content"
                    android:layout_weight="0.5"
                    android:text="Financial year         "
-                   android:textColor="#FFFFFF"
-                   android:textSize="20dp" />
+                   style="@style/CodeFont" />
 
                <Spinner
                    android:id="@+id/sGetFinancialYear"
                    android:layout_width="0dip"
                    android:layout_height="wrap_content"
                    android:layout_weight="2.5"
-                   android:prompt="@string/financialyear_prompt"/>
+                   android:prompt="@string/financialyear_prompt"
+                   android:spinnerMode="dialog"
+                   style="@style/SpinnerAppTheme.DropDown"/>
                 </TableRow>
            </LinearLayout>
 
-            
-             <LinearLayout
+           
+           <LinearLayout
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:orientation="horizontal"
-	        android:layout_weight="20">
+	        android:layout_weight="20"
+	        android:layout_alignParentBottom="true">
 
-        <Button
-            android:id="@+id/btnSelLogIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.90"
-            android:text="Login"
-            android:textSize="20dp" />
+		        <Button
+		            android:id="@+id/btnSelLogIn"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_gravity="bottom"
+		            android:text="Login"
+		            style="@style/DefaultButton"/>
+    		</LinearLayout>
 
-</LinearLayout>
        </LinearLayout>

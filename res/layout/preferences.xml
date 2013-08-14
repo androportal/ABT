@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
  android:layout_width="wrap_content"
- android:layout_height="wrap_content"        
+ android:layout_height="wrap_content" 
+ android:background="@color/gray_theme"       
  android:layout_centerHorizontal="true">
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/dark_gray_background"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 	 <TextView
-             android:layout_width="match_parent"
-             android:layout_height="28dp"
-             android:background="#F2C60E"
-             android:height="50dp"
-             android:paddingLeft="20dp"
-             android:shadowColor="#000000"
-             android:shadowDx="1"
-             android:shadowDy="1"
-             android:shadowRadius="1"
-             android:text="@string/preferences"
-             android:textColor="#FFFFFF"
-             android:textSize="17dp" />
+		android:layout_width="match_parent"
+		android:layout_height="50dp"
+		android:gravity="center_vertical"
+		android:paddingLeft="20dp"
+		style="@style/ShodowFont"
+		android:layout_weight="20"
+		android:background="@color/blue_theme"
+		android:text="@string/preferences" />
 
     <TableLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -100,7 +96,7 @@
             android:layout_alignParentBottom="true"
             android:layout_weight="0.73"
             android:text="Next >>"
-            android:textSize="20dp" />
+            style="@style/DefaultButton" />
        
       
 </LinearLayout>

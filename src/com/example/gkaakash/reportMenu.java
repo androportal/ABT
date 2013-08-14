@@ -15,6 +15,7 @@ import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.Transaction;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
@@ -24,6 +25,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -37,7 +39,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class reportMenu extends ListActivity{
+public class reportMenu extends Activity{
 	//adding report list items
 	
 	final Context context = this;
@@ -69,6 +71,8 @@ public class reportMenu extends ListActivity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.report);
 		IPaddr = MainActivity.IPaddr;
 		System.out.println("in createorg"+IPaddr);
 		account = new Account(IPaddr);
@@ -78,19 +82,10 @@ public class reportMenu extends ListActivity{
        	client_id= Startup.getClient_id();
        	
        	/*
-       	 * get org type from create page or select org page
+       	 * get org type 
        	 */
-       	reportmenuflag=MainActivity.reportmenuflag;
-       	if(reportmenuflag==true){
-            orgtype=createOrg.orgTypeFlag;
-        }
-       	else {
-	         orgname=selectOrg.selectedOrgName;
-	         //System.out.println("org name in selett "+orgname);
-	         Object[] params = new Object[]{orgname};
-	         orgtype = (String) organisation.getorgTypeByname(params, client_id);;
-	         //System.out.println("org type in select"+orgtype);
-       	}
+       	orgtype = menu.orgtype;
+       	
         if("NGO".equals(orgtype))
         {
             reportType = new String[] { "Ledger","Trial Balance","Project Statement",
@@ -114,13 +109,20 @@ public class reportMenu extends ListActivity{
 	   	tomonth = dateParts1[1];
 	   	toyear = dateParts1[2];
 		
-		//calling report.xml page
-		setListAdapter(new ArrayAdapter<String>(this, R.layout.report,reportType));
-		
+	   	//set title
+	   	String OrgName = MainActivity.organisationName;
+		TextView org = (TextView)findViewById(R.id.org_name);
+		org.setText(OrgName + ", "+orgtype);
+		TextView tvdate = (TextView)findViewById(R.id.date);
+		tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
+	   	
 		//getting the list view and setting background
-		final ListView listView = getListView();
+		final ListView listView = (ListView)findViewById(R.id.ListReportType);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, reportType);
+		 
+		listView.setAdapter(adapter);
 		listView.setTextFilterEnabled(true);
-		listView.setBackgroundColor(R.drawable.dark_gray_background);
+		listView.setBackgroundColor(Color.parseColor("#2f2f2f")); //gray theme
 		listView.setCacheColorHint(Color.TRANSPARENT);
 		
 		//for two digit format date for dd and mm
@@ -221,39 +223,8 @@ public class reportMenu extends ListActivity{
 								dialog.dismiss();
 							}
 						});
-						/*builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
-
-							@Override
-							public void onClick(DialogInterface arg0, int arg1) {
-								
-								selectedAccount = accountNames.getSelectedItem().toString();
-								selectedProject = projectNames.getSelectedItem().toString();
-								cheched = cbNarration.isChecked();
-								validateDate(LedgerFromdate, LedgerT0date, "validatebothFromToDate",tvLedgerWarning);
-								
-								if(validateDateFlag){
-									Intent intent = new Intent(context, ledger.class);
-									// To pass on the value to the next page
-									startActivity(intent);
-								}
-								
-							}
-						});
-						
-						builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-							
-							}	
-						});*/
 						dialog=builder.create();
-						dialog.show();
-						WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-						//customizing the width and location of the dialog on screen 
-						lp.copyFrom(dialog.getWindow().getAttributes());
-						lp.width = 700;
-						dialog.getWindow().setAttributes(lp);
-						
+						dialog.show();						
 					}
 					
 					
@@ -299,29 +270,7 @@ public class reportMenu extends ListActivity{
 							dialog.dismiss();
 						}
 					});
-					/*builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
-						@Override
-						public void onClick(DialogInterface arg0, int arg1) {
-							
-							trialbalancetype=strialBalanceType.getSelectedItem().toString();
-							
-							validateDate(null, trialtodate, null,tvLedgerWarning);
-							
-						   	if(validateDateFlag){
-								Intent intent = new Intent(context, trialBalance.class);
-								// To pass on the value to the next page
-								startActivity(intent);
-							}
-							
-						}
-						
-					});
-					builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							
-						}
-					});*/
+					
 					dialog=builder.create();
 	        		dialog.show();
 				}
@@ -385,29 +334,6 @@ public class reportMenu extends ListActivity{
 						}
 					});
 				   	
-					/*builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							selectedProject = projectNames.getSelectedItem().toString();
-							
-							validateDate(null, dpProjectStatementSetT0date, null,tvLedgerWarning);
-							
-						   	if(validateDateFlag){
-								Intent intent = new Intent(context, projectStatement.class);
-								// To pass on the value to the next page
-								startActivity(intent);
-							}
-						}
-					});
-					
-					builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							
-						}
-					});*/
-				   	
 					dialog=builder.create();
 	        		dialog.show();
 	        		
@@ -451,34 +377,9 @@ public class reportMenu extends ListActivity{
 							dialog.dismiss();
 						}
 					});
-					/* builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
-		
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							
-							validateDate(CashFlowFromdate, CashFlowT0date, "validatebothFromToDate",tvLedgerWarning);
-							
-							if(validateDateFlag){
-								Intent intent = new Intent(context, cashFlow.class);
-								// To pass on the value to the next page
-								startActivity(intent);
-							}
-						}
-					 });
-					 builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								
-							}
-							 
-						 });*/
+					
 					 dialog=builder.create();
 					 dialog.show();
-					 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-					 //customizing the width and location of the dialog on screen 
-					 lp.copyFrom(dialog.getWindow().getAttributes());
-					 lp.width = 600;
-					 dialog.getWindow().setAttributes(lp);
 					
 				}
 				if(position == 4)
@@ -523,33 +424,7 @@ public class reportMenu extends ListActivity{
 							dialog.dismiss();
 						}
 					});
-					/*builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
-						
 					
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-
-							validateDate(null, dpBalanceSheetsetT0date, null,tvLedgerWarning);
-							
-						   	if(validateDateFlag){
-								balancetype=sbalanceSheetType.getSelectedItem().toString();
-								Intent intent = new Intent(context, balanceSheet.class);
-								// To pass on the value to the next page
-								startActivity(intent);
-						   	}
-						}
-						
-					});
-					
-					builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-						}
-						
-					});*/
 					dialog=builder.create();
 	        		dialog.show();
 	        		
@@ -600,30 +475,10 @@ public class reportMenu extends ListActivity{
 							dialog.dismiss();
 						}
 					});
-					/*builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							
-							validateDate(null, dpIEPLT0date, null,tvLedgerWarning);
-							
-						   	if(validateDateFlag){
-								Intent intent = new Intent(context, incomeExpenditure.class);
-								// To pass on the value to the next page
-								startActivity(intent);
-							}
-						}
-						 
-					 });
-					 builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								
-							}
-							 
-						 });*/
+					
 					dialog=builder.create();
 	        		dialog.show();
-	        	//*/
+	        	
 				}
 			} 
 		});

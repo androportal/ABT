@@ -106,7 +106,7 @@ public class trialBalance extends Activity{
     
     public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+	    requestWindowFeature(Window.FEATURE_NO_TITLE);
 	    setContentView(R.layout.trial_table);
 	    IPaddr = MainActivity.IPaddr;
 		System.out.println("in createorg"+IPaddr);
@@ -116,21 +116,15 @@ public class trialBalance extends Activity{
 	    reportmenuflag = MainActivity.reportmenuflag;
 	    rsSymbol = new SpannableString(trialBalance.this.getText(R.string.Rs)); 
 	    //customizing title bar
-	    getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
+	    //getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
 	   
 	    try {
 	    	floating_heading_table = (TableLayout)findViewById(R.id.floating_heading_table);
 	    	floating_heading_table.setVisibility(TableLayout.GONE);
 	    	sv = (ScrollView)findViewById(R.id.ScrollTrial);
-			if (reportmenuflag == true) {
-
-				OrgName = createOrg.organisationName;
-
-			} else {
-				OrgName = selectOrg.selectedOrgName;
-
-			}
-		   
+			
+	    	OrgName = MainActivity.organisationName;
+	    	
 	    	/*
 	    	 * get financial from and to date from startup page
 	    	 */
@@ -189,26 +183,27 @@ public class trialBalance extends Activity{
 	    	trialBaltable = (TableLayout)findViewById(R.id.maintable);
 	    	addTable();
 	        
-	    	final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
-	    	tvReportTitle.setText("Menu >> "+"Report >> "+trialbalancetype);
-	    	final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
-	    	btnSaveRecon.setVisibility(Button.GONE);
-	    	 
-	    	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
-	    	btnScrollDown.setOnClickListener(new OnClickListener() {
-	    		@Override
-				public void onClick(View v) {
-					if(updown==false){
-		                sv.fullScroll(ScrollView.FOCUS_DOWN); 
-		                btnScrollDown.setBackgroundResource(R.drawable.up);
-		                updown=true;
-		           }else {
-		                sv.fullScroll(ScrollView.FOCUS_UP); 
-		                btnScrollDown.setBackgroundResource(R.drawable.down);
-		                updown=false; 
-		           }
-				}
-	        });
+	    	//set title
+			TextView org = (TextView)findViewById(R.id.org_name);
+			org.setText(OrgName + ", "+reportMenu.orgtype);
+			TextView tvdate = (TextView)findViewById(R.id.date);
+			tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
+	    	
+//	    	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+//	    	btnScrollDown.setOnClickListener(new OnClickListener() {
+//	    		@Override
+//				public void onClick(View v) {
+//					if(updown==false){
+//		                sv.fullScroll(ScrollView.FOCUS_DOWN); 
+//		                btnScrollDown.setBackgroundResource(R.drawable.up);
+//		                updown=true;
+//		           }else {
+//		                sv.fullScroll(ScrollView.FOCUS_UP); 
+//		                btnScrollDown.setBackgroundResource(R.drawable.down);
+//		                updown=false; 
+//		           }
+//				}
+//	        });
 	    	sFilename = trialbalType+"_"+ OrgName.replace(" ", "")+ "_" +
 					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
 			pdf_params = new String[]{trialbalType,sFilename,OrgName,OrgPeriod,trialbalancetype,
@@ -216,7 +211,7 @@ public class trialBalance extends Activity{
 					
 	    	
 	    	
-	       animated_dialog();
+	       //animated_dialog();
 	       //floatingHeader();
 	    } catch (Exception e) {
 		   	m.toastValidationMessage(trialBalance.this, "Please try again");
@@ -261,7 +256,8 @@ public class trialBalance extends Activity{
                     for(int k=0;k<ColumnNameList.length;k++){
                         /** Creating a TextView to add to the row **/
                         addRow(ColumnNameList[k],k);
-                        label.setBackgroundColor(Color.parseColor("#348017"));
+                        label.setBackgroundColor(Color.WHITE);
+                        label.setTextColor(Color.parseColor("#085e6b"));
                         label.setGravity(Gravity.CENTER);
                         LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(k);
 			            label.setWidth(l.getWidth());
@@ -294,58 +290,53 @@ public class trialBalance extends Activity{
 //		});
 //		
 	}
-	private void animated_dialog() {
-		try {
-            final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
-            Llalert.setVisibility(LinearLayout.GONE);
-            animation2 = ObjectAnimator.ofFloat(Llalert,
-                    "x", 1000);
-            animation2.setDuration(1000);
-            animation2.start();
-            
-            final Button btnOrgDetailsDialog = (Button) findViewById(R.id.btnOrgDetailsDialog);
-        
-           
-            btnOrgDetailsDialog.setOnClickListener(new OnClickListener() {
-                
-                @Override
-                public void onClick(View v) {
-                   btnOrgDetailsDialog.setAlpha(100);
-                    if(alertdialog==false){
-                        Llalert.setVisibility(LinearLayout.VISIBLE);
-                        TextView tvOrgNameAlert = (TextView)findViewById(R.id.tvOrgNameAlert);
-                        
-                        if(reportmenuflag==true){
-                            tvOrgNameAlert.setText(createOrg.organisationName);
-                        }
-                           else {
-                               tvOrgNameAlert.setText(selectOrg.selectedOrgName);
-                           }
-                        TextView tvOrgTypeAlert = (TextView)findViewById(R.id.tvOrgTypeAlert);
-                        tvOrgTypeAlert.setText(reportMenu.orgtype);
-                        
-                        TextView tvFinancialYearAlert = (TextView)findViewById(R.id.tvFinancialYearAlert);
-                        tvFinancialYearAlert.setText(reportMenu.financialFromDate+" to "+ reportMenu.financialToDate);
-                        
-                        animation2 = ObjectAnimator.ofFloat(Llalert,
-                                  "x", 300);
-                        alertdialog=true;
-                     }else {
-                         
-                        animation2 = ObjectAnimator.ofFloat(Llalert,
-                                  "x", 1000);
-                        alertdialog=false;
-                     }
-                      
-                     animation2.setDuration(1000);
-                     animation2.start();
-                }
-                
-            });
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-}
+//	private void animated_dialog() {
+//		try {
+//            final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
+//            Llalert.setVisibility(LinearLayout.GONE);
+//            animation2 = ObjectAnimator.ofFloat(Llalert,
+//                    "x", 1000);
+//            animation2.setDuration(1000);
+//            animation2.start();
+//            
+//            final Button btnOrgDetailsDialog = (Button) findViewById(R.id.btnOrgDetailsDialog);
+//        
+//           
+//            btnOrgDetailsDialog.setOnClickListener(new OnClickListener() {
+//                
+//                @Override
+//                public void onClick(View v) {
+//                   btnOrgDetailsDialog.setAlpha(100);
+//                    if(alertdialog==false){
+//                        Llalert.setVisibility(LinearLayout.VISIBLE);
+//                        TextView tvOrgNameAlert = (TextView)findViewById(R.id.tvOrgNameAlert);
+//                        tvOrgNameAlert.setText(OrgName);
+//                        
+//                        TextView tvOrgTypeAlert = (TextView)findViewById(R.id.tvOrgTypeAlert);
+//                        tvOrgTypeAlert.setText(reportMenu.orgtype);
+//                        
+//                        TextView tvFinancialYearAlert = (TextView)findViewById(R.id.tvFinancialYearAlert);
+//                        tvFinancialYearAlert.setText(reportMenu.financialFromDate+" to "+ reportMenu.financialToDate);
+//                        
+//                        animation2 = ObjectAnimator.ofFloat(Llalert,
+//                                  "x", 300);
+//                        alertdialog=true;
+//                     }else {
+//                         
+//                        animation2 = ObjectAnimator.ofFloat(Llalert,
+//                                  "x", 1000);
+//                        alertdialog=false;
+//                     }
+//                      
+//                     animation2.setDuration(1000);
+//                     animation2.start();
+//                }
+//                
+//            });
+//        } catch (Exception e) {
+//            // TODO: handle exception
+//        }
+//}
 
 	private void addTable() {
         addHeader();
@@ -359,9 +350,9 @@ public class trialBalance extends Activity{
                 /** Creating a TextView to add to the row **/
                 addRow(columnValue.get(j),i);   
                 if ((i + 1) % 2 == 0)
-					label.setBackgroundColor(Color.parseColor("#474335"));
+					label.setBackgroundColor(Color.parseColor("#085e6b")); //blue theme
 				else
-					label.setBackgroundColor(Color.BLACK);
+					label.setBackgroundColor(Color.parseColor("#2f2f2f")); //gray theme
                 /*
                  * set right aligned gravity for amount and for others set center gravity
                  */
@@ -484,7 +475,8 @@ public class trialBalance extends Activity{
         for(int k=0;k<ColumnNameList.length;k++){
             /** Creating a TextView to add to the row **/
             addRow(ColumnNameList[k],0);
-            label.setBackgroundColor(Color.parseColor("#348017"));
+            label.setBackgroundColor(Color.parseColor("#ffffff"));
+			label.setTextColor(Color.parseColor("#085e6b")); //blue theme
             label.setGravity(Gravity.CENTER);
             tr.setClickable(false);
         }

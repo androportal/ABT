@@ -5,30 +5,35 @@
             android:orientation="vertical"
             android:id="@+id/layout_root"
             android:layout_weight="50"
-            android:paddingTop="10dp">
-        
+            android:background="@color/gray_theme">
+       
+<!--        <include layout="@layout/org_info"/> -->
+       
        <TextView
            android:id="@+id/tvReconAccName"
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:layout_gravity="center"
            android:gravity="center_horizontal"
            android:textColor="#FFFFFF"
-           android:textSize="18dp" />
+           android:textSize="18dp"
+           android:background="@color/blue_theme" />
       
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/layout_root"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:layout_gravity="left"
+            android:background="@color/blue_theme" >
            
          <TextView
              android:id="@+id/tvfinancialFromDate"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:layout_gravity="start"
              android:layout_weight="50"
+             android:layout_gravity="center_vertical"
              android:gravity="center_horizontal"
              android:textColor="#FFFFFF"
              android:textSize="18dp" />
@@ -37,12 +42,22 @@
               android:id="@+id/tvfinancialToDate"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_gravity="right"
+              android:layout_gravity="center_vertical"
               android:layout_weight="50"
-              android:gravity="right"
               android:paddingRight="10dp"
               android:textColor="#FFFFFF"
               android:textSize="18dp" />
+          
+          <Button
+                android:id="@+id/btnSaveRecon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:text="Save"
+                android:layout_weight="1"
+                style="@style/DefaultButton"/>
+          	
           
         </LinearLayout>
 
@@ -50,8 +65,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/layout_root"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:padding="10dp" >
+            android:layout_height="fill_parent" >
              <HorizontalScrollView 
               	android:layout_height="fill_parent"
           		android:layout_width="fill_parent"
@@ -90,7 +104,7 @@
 				            android:layout_height="wrap_content"
 				            android:stretchColumns="0,1,2,3,4,5,6,7"
 				            android:id="@+id/maintable"
-				            android:background="#696565"
+				            android:background="#ffffff"
 				            android:layout_weight="1" />
 
 			            <!-- just add space line -->
@@ -103,7 +117,7 @@
 				            android:layout_width="wrap_content"
 				            android:layout_height="wrap_content"
 				            android:stretchColumns="*"
-				            android:background="#696565"
+				            android:background="#ffffff"
 				            android:layout_weight="1"
 				            android:layout_gravity="center_horizontal" />
                

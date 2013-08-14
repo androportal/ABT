@@ -100,8 +100,8 @@ public class cashFlow extends Activity{
 	    
 	
     public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+    	super.onCreate(savedInstanceState);
+    	requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.cash_flow_table);
         IPaddr = MainActivity.IPaddr;
 	    System.out.println("in createorg"+IPaddr);
@@ -110,7 +110,7 @@ public class cashFlow extends Activity{
         m=new module();
         rsSymbol = new SpannableString(cashFlow.this.getText(R.string.Rs)); 
         //customizing title bar
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
+        //getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
    
         try {
         	floating_heading_table1 = (TableLayout)findViewById(R.id.mainheadertable1);
@@ -200,33 +200,31 @@ public class cashFlow extends Activity{
            
         		}
         	}
-        	 if(reportmenuflag==true){ 
-  	    		OrgName = createOrg.organisationName;
-             }
-             else {
-          	    OrgName= selectOrg.selectedOrgName;
-             }
-        	final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
-            tvReportTitle.setText("Menu >> "+"Report >> "+"Cash Flow");
-            final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
-            btnSaveRecon.setVisibility(Button.GONE);
-       
-            final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
-            btnScrollDown.setOnClickListener(new OnClickListener() {
- 	
-            	@Override
-            	public void onClick(View v) {
-            		if(updown==false){
-            			sv.fullScroll(ScrollView.FOCUS_DOWN); 
-            			btnScrollDown.setBackgroundResource(R.drawable.up);
-            			updown=true;
-            		}else {
-            			sv.fullScroll(ScrollView.FOCUS_UP); 
-            			btnScrollDown.setBackgroundResource(R.drawable.down);
-            			updown=false;
-            		}
-            	}
-            });
+        	 
+  	    	OrgName = MainActivity.organisationName;
+             
+  	    	//set title
+			TextView org = (TextView)findViewById(R.id.org_name);
+			org.setText(OrgName + ", "+reportMenu.orgtype);
+			TextView tvdate = (TextView)findViewById(R.id.date);
+			tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
+			
+//            final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+//            btnScrollDown.setOnClickListener(new OnClickListener() {
+// 	
+//            	@Override
+//            	public void onClick(View v) {
+//            		if(updown==false){
+//            			sv.fullScroll(ScrollView.FOCUS_DOWN); 
+//            			btnScrollDown.setBackgroundResource(R.drawable.up);
+//            			updown=true;
+//            		}else {
+//            			sv.fullScroll(ScrollView.FOCUS_UP); 
+//            			btnScrollDown.setBackgroundResource(R.drawable.down);
+//            			updown=false;
+//            		}
+//            	}
+//            });
             
             date= new Date();
 			String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
@@ -236,7 +234,7 @@ public class cashFlow extends Activity{
 					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
 			pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Flow",balancePeriod,"",result,rsSymbol.toString()};
 			
-            animated_dialog();
+            //animated_dialog();
             //floatingHeader();
 		} catch (Exception e) {
 			m.toastValidationMessage(cashFlow.this, "Please try again");
@@ -244,58 +242,51 @@ public class cashFlow extends Activity{
 	}
 
 
-    private void animated_dialog() {
-    	try {
-    		final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
-            Llalert.setVisibility(LinearLayout.GONE);
-            animation2 = ObjectAnimator.ofFloat(Llalert,
-                    "x", 1000);
-            animation2.setDuration(1000);
-            animation2.start();
-            
-            final Button btnOrgDetailsDialog = (Button) findViewById(R.id.btnOrgDetailsDialog);
-           
-            btnOrgDetailsDialog.setOnClickListener(new OnClickListener() {
-                
-                @Override
-                public void onClick(View v) {
-                	btnOrgDetailsDialog.setAlpha(100);
-                    if(alertdialog==false){
-                        Llalert.setVisibility(LinearLayout.VISIBLE);
-                        TextView tvOrgNameAlert = (TextView)findViewById(R.id.tvOrgNameAlert);
-                        
-                        if(reportmenuflag==true){
-                            tvOrgNameAlert.setText(createOrg.organisationName);
-                        }
-                        else {
-                        	tvOrgNameAlert.setText(selectOrg.selectedOrgName);
-                        }
-                        
-                        
-                        TextView tvOrgTypeAlert = (TextView)findViewById(R.id.tvOrgTypeAlert);
-                        tvOrgTypeAlert.setText(reportMenu.orgtype);
-                        
-                        TextView tvFinancialYearAlert = (TextView)findViewById(R.id.tvFinancialYearAlert);
-                        tvFinancialYearAlert.setText(reportMenu.financialFromDate+" to "+ reportMenu.financialToDate);
-                        
-                        animation2 = ObjectAnimator.ofFloat(Llalert,
-                                  "x", 300);
-                        alertdialog=true;
-                    }else {
-                         
-                    	animation2 = ObjectAnimator.ofFloat(Llalert,
-                                  "x", 1000);
-                        alertdialog=false;
-                     }
-                      
-                     animation2.setDuration(1000);
-                     animation2.start();
-                }
-            });
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-    }
+//    private void animated_dialog() {
+//    	try {
+//    		final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
+//            Llalert.setVisibility(LinearLayout.GONE);
+//            animation2 = ObjectAnimator.ofFloat(Llalert,
+//                    "x", 1000);
+//            animation2.setDuration(1000);
+//            animation2.start();
+//            
+//            final Button btnOrgDetailsDialog = (Button) findViewById(R.id.btnOrgDetailsDialog);
+//           
+//            btnOrgDetailsDialog.setOnClickListener(new OnClickListener() {
+//                
+//                @Override
+//                public void onClick(View v) {
+//                	btnOrgDetailsDialog.setAlpha(100);
+//                    if(alertdialog==false){
+//                        Llalert.setVisibility(LinearLayout.VISIBLE);
+//                        TextView tvOrgNameAlert = (TextView)findViewById(R.id.tvOrgNameAlert);
+//                        tvOrgNameAlert.setText(OrgName);
+//                      
+//                        TextView tvOrgTypeAlert = (TextView)findViewById(R.id.tvOrgTypeAlert);
+//                        tvOrgTypeAlert.setText(reportMenu.orgtype);
+//                        
+//                        TextView tvFinancialYearAlert = (TextView)findViewById(R.id.tvFinancialYearAlert);
+//                        tvFinancialYearAlert.setText(reportMenu.financialFromDate+" to "+ reportMenu.financialToDate);
+//                        
+//                        animation2 = ObjectAnimator.ofFloat(Llalert,
+//                                  "x", 300);
+//                        alertdialog=true;
+//                    }else {
+//                         
+//                    	animation2 = ObjectAnimator.ofFloat(Llalert,
+//                                  "x", 1000);
+//                        alertdialog=false;
+//                     }
+//                      
+//                     animation2.setDuration(1000);
+//                     animation2.start();
+//                }
+//            });
+//        } catch (Exception e) {
+//            // TODO: handle exception
+//        }
+//    }
 
 
     private void addTable(TableLayout tableID) {
@@ -309,14 +300,14 @@ public class cashFlow extends Activity{
             if(columnValue.get(0).equalsIgnoreCase("Account Name")){
                	//for heading pass green color code
             	// System.out.println("iam in chaninging color "+columnValue.get(1));
-               	setRowColorSymbolGravity(columnValue, Color.parseColor("#348017"), true);
+               	setRowColorSymbolGravity(columnValue, Color.parseColor("#ffffff"), true);
             }
             else{
             	int row_color;
             	if ((i + 1) % 2 == 0)
-            		row_color = Color.parseColor("#474335");
+            		row_color = Color.parseColor("#085e6b"); //blue theme
         		else
-        			row_color = Color.BLACK;
+        			row_color = Color.parseColor("#2f2f2f"); //gray theme
             	
             	//for remaining rows pass black color code
                	setRowColorSymbolGravity(columnValue, row_color, false);
@@ -343,6 +334,7 @@ public class cashFlow extends Activity{
     			}else{
     				addRow(columnValue.get(j),j);   
     			}
+    			label.setTextColor(Color.parseColor("#085e6b")); //blue theme
     		}
     		else{
     			addRow(columnValue.get(j),j);   

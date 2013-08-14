@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -111,6 +112,7 @@ import android.widget.Toast;
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
 			// Calling org_details.xml
 			setContentView(R.layout.org_details);
 			// creating instance of startup to get the connection
@@ -206,13 +208,13 @@ import android.widget.Toast;
 		       		}
 		       	} 
 		       	orgcode=OrgdetailsList.get(0);
-		       	getOrgName = createOrg.organisationName;
-		       	financialFrom  = createOrg.fromdate;
-		       	financialTo = createOrg.todate;
+		       	getOrgName = MainActivity.organisationName;
+		       	financialFrom  = MainActivity.fromdate;
+		       	financialTo = MainActivity.todate;
 			}
 			// Retrieving the organisation type flag value from the previous page(create organisation page)
 			if(editDetailsflag==false){ 
-				getSelectedOrgType=createOrg.orgTypeFlag;
+				getSelectedOrgType=MainActivity.orgTypeFlag;
 			}
 			else {
 				getSelectedOrgType=orgtype; 
@@ -247,6 +249,13 @@ import android.widget.Toast;
 				tvServiceTaxnum.setVisibility(TextView.VISIBLE);
 				etServiceTaxnum.setVisibility(EditText.VISIBLE);
 			}
+			
+			//set title
+			TextView org = (TextView)findViewById(R.id.org_name);
+			org.setText(getOrgName);
+			TextView tvdate = (TextView)findViewById(R.id.date);
+			tvdate.setText(m.changeDateFormat(financialFrom)+" To "+m.changeDateFormat(financialTo));
+			
 			if(editDetailsflag==false){
 				// Declaring new method for setting current date into "Registration Date"
 				setCurrentDateOnButton();
@@ -284,8 +293,8 @@ import android.widget.Toast;
 		private void addListenerOnButton() {
 			final Context context = this;
 			
-			getFromDate=createOrg.fromdate;
-			getToDate=createOrg.todate;
+			getFromDate=MainActivity.fromdate;
+			getToDate=MainActivity.todate;
 			//Create a class implementing “OnClickListener” and set it as the on click listener for the button
 			btnSkip.setOnClickListener(new OnClickListener() {
 				@Override
@@ -355,7 +364,7 @@ import android.widget.Toast;
 					btnDelete = (Button)layout.findViewById(R.id.btnImport);
 					Button btnCancel = (Button) layout.findViewById(R.id.btnCancel);
 			        TextView tvalertHead1 = (TextView) layout.findViewById(R.id.tvalertHead1);
-			        tvalertHead1.setText("Delete "+getOrgName+" orgnisation for given financial year");
+			        tvalertHead1.setText("Delete "+getOrgName+" orgnisation for given financial year?");
 					btnDelete.setText("Delete");
 					System.out.println("print orgname : "+getOrgName);
 					
@@ -682,8 +691,8 @@ import android.widget.Toast;
 	private void savedeatils() {
 		// TODO Auto-generated method stub
 		
-		getFromDate = createOrg.fromdate;
-		getToDate = createOrg.todate;
+		getFromDate = MainActivity.fromdate;
+		getToDate = MainActivity.todate;
 		getAddr = etGetAddr.getText().toString();
 		getPin = sGetPostal.getText().toString();
 		eGetTelNo = eGetPhone.getText().toString();
@@ -730,7 +739,7 @@ import android.widget.Toast;
 	
 	public void onBackPressed() {
 		if(editDetailsflag==false){
-			Intent intent = new Intent(getApplicationContext(), createOrg.class);
+			Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 			    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			    startActivity(intent);
 			}else {

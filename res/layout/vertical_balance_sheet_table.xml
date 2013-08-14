@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@color/gray_theme">
 
 
    <LinearLayout 
@@ -8,9 +9,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/layout_root"
-            android:layout_weight="50"
-           >
+            android:layout_weight="50">
       
+       <include layout="@layout/org_info"/>
+       
         <LinearLayout
             android:id="@+id/layout_root"
             android:layout_width="fill_parent"
@@ -44,8 +46,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ScrollVertiBalanceSheet"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/dark_gray_background">
+    android:layout_height="match_parent">
          <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/layout_root"
@@ -76,7 +77,7 @@
            android:layout_height="wrap_content"
            android:stretchColumns=",1,2,3,4"
            android:id="@+id/col1"
-           android:background="#696565"
+           android:background="#ffffff"
            android:layout_weight="1" />
                
                 <!-- just add space line -->
@@ -89,7 +90,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:stretchColumns=",1,2,3,4"
-           android:background="#696565"
+           android:background="#ffffff"
            android:layout_weight="1" />
                 </LinearLayout>
                  
@@ -98,117 +99,7 @@
          </LinearLayout>  
          </ScrollView>
            </LinearLayout>
- 	<!-- floating button at top|left
-<Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:text="Button" />
-         -->
-         
-    <Button
-        android:id="@+id/btnOrgDetailsDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/arrow"/>
-      
-    <LinearLayout 
-        android:id="@+id/Llalert"
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-           android:layout_alignParentRight="true"
-           android:background="#FFFFFF">
 
-        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <LinearLayout 
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" 
-                    android:background="#FFFFFF"
-                    android:padding="1dp">
-            
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="35dp"
-                    android:background="#000000"
-                    android:textSize="20dp"
-                    android:text="Organisation info" 
-                    android:gravity="center"
-                    android:textColor="#FFFFFF"/>
-                
-                <LinearLayout 
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" 
-                    android:background="#FFFFFF"
-                    android:padding="10dp">
-                 <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#CCCCB2"
-                    android:textSize="17dp"
-                    android:text="Organisation name" 
-                    android:textColor="#000000"/>
-                
-                 <TextView
-                    android:id="@+id/tvOrgNameAlert"
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:gravity="center_vertical"
-                    android:textColor="#000000"
-                    android:textSize="17dp"/>
-                
-                 
-                 <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#CCCCB2"
-                    android:text="Organisation type" 
-                    android:textSize="17dp"
-                    android:textColor="#000000"/>
-                
-                 <TextView
-                    android:id="@+id/tvOrgTypeAlert"
-                    android:layout_width="fill_parent" 
-                    android:layout_height="30dp"
-                    android:gravity="center_vertical"
-                    android:textColor="#000000"
-                    android:textSize="17dp"/>
-                 
-                 <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#CCCCB2"
-                    android:text="Financial year(dd-mm-yyyy)" 
-                    android:textSize="17dp"
-                    android:textColor="#000000"/>
-                
-                 <TextView
-                    android:id="@+id/tvFinancialYearAlert"
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:gravity="center_vertical"
-                    android:textColor="#000000"
-                    android:textSize="17dp"/>
-                </LinearLayout>
-        </LinearLayout>
-  </ScrollView>
-</LinearLayout>
-         
-             
-        
-        
- 
-    
 <LinearLayout
               xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/layout_root"

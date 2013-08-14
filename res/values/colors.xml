@@ -1,0 +1,11 @@
+<resources>
+
+    <color name="transparent">#00000000</color>
+    <color name="md__defaultBackground">#FF555555</color>
+    <color name="blue_theme">#085e6b</color>
+    <color name="gray_theme">#2f2f2f</color>
+    <color name="light_blue_theme">#218d9d</color>
+    <color name="green_theme">#348017</color>
+    <color name="yellow_theme">#F2C60E</color>
+    <color name="red_theme">#FF010f</color>
+</resources>

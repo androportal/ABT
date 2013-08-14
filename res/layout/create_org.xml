@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
- android:layout_width="fill_parent" 
- android:layout_height="fill_parent"
+ android:layout_width="match_parent" 
+ android:layout_height="match_parent"
  android:orientation="vertical"
- android:weightSum="100"
- android:background="@drawable/dark_gray_background">
+ android:background="@android:color/transparent">
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/dark_gray_background"
-    android:layout_weight="80">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" 
     android:paddingLeft="10dp"
  	android:paddingRight="10dp">
@@ -23,8 +20,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Enter organisation name"
-        android:textColor="#FFFFFF"
-        android:textSize="20dp" />
+        style="@style/CodeFont" />
 
     <EditText
         android:id="@+id/etOrgName"
@@ -33,7 +29,9 @@
         android:ems="10"
         android:hint="Maximum 50 characters " 
         android:inputType="textCapWords"
-        android:maxLength="50">
+        android:maxLength="50"
+        style="@style/EditTextAppTheme"
+        android:textColor="#FFFFFF">
 
         <requestFocus android:layout_width="wrap_content" />
 
@@ -44,15 +42,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Select organisation type"
-        android:textColor="#FFFFFF"
-        android:textSize="20dp" />
+        style="@style/CodeFont" />
 
     <Spinner
         android:id="@+id/sOrgType"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:entries="@array/orgType_arrays"
-        android:prompt="@string/orgType_prompt" />
+        android:prompt="@string/orgType_prompt"
+        style="@style/SpinnerAppTheme.DropDown"
+        android:spinnerMode="dialog"/>
     
     <TextView
         android:id="@+id/tvFnclYear"
@@ -78,8 +77,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="40"
-            android:textSize="20dp"
-            android:text="Set from date" />
+            android:text="Set from date"
+            style="@style/DefaultButton" />
 		<View
 		android:layout_width="0dp"
         android:layout_height="0dp"
@@ -90,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="40"
-            android:textSize="20dp"
+            style="@style/DefaultButton"
             android:text=" Set to date " />
     </LinearLayout>
     
@@ -108,9 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="40"
             android:gravity="center"
-            android:text=""
-            android:textSize="20dp"
-            android:textColor="#FFFFFF" />
+            style="@style/CodeFont" />
 		
         <View
         android:layout_width="0dp"
@@ -124,9 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="40"
             android:gravity="center"
-            android:text=""
-           	android:textSize="20dp"
-            android:textColor="#FFFFFF" />
+            style="@style/CodeFont" />
     </LinearLayout>
 
     
@@ -138,15 +133,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_weight="20"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/blackbutton" >
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/btnCreate"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:text="Next"
-            android:textSize="20dp" />
+            style="@style/DefaultButton"/>
     </LinearLayout>
 </LinearLayout>

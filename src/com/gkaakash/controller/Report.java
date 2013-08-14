@@ -182,7 +182,6 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 		return getBalancesheetDisplay;
 	}
 	
-	
 	/*
 	 * get all cleared and uncleared transactions for bank recon
 	 * depending upon clear flag

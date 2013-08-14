@@ -22,7 +22,8 @@
             android:ems="10"
             android:hint="Tap to enter voucher code"
             android:layout_gravity="center"
-            android:visibility="invisible" >
+            android:visibility="invisible"
+            style="@style/EditTextAppTheme" >
             <requestFocus />
         </EditText>
         
@@ -92,7 +93,8 @@
             android:ems="10"
             android:hint="Tap to enter narration"
             android:layout_gravity="center"
-            android:visibility="invisible" >
+            android:visibility="invisible"
+            style="@style/EditTextAppTheme" >
             <requestFocus />
         </EditText>
         

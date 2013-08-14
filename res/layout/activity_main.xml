@@ -2,83 +2,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical" 
-    android:background="@drawable/main_page">
-
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="79dp">
-            
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text=""
-            android:textColor="#FFFFFF" />
-
-    </LinearLayout>
-    
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:orientation="vertical" >
+    android:background="@color/gray_theme">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:orientation="vertical"
-                android:paddingBottom="50dp"
-                android:paddingRight="70dp"
-                android:paddingTop="65dp" >
+                android:orientation="horizontal"
+                android:background="@color/blue_theme">
 
            
             <Button
                 android:id="@+id/bcreateOrg"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_gravity="top"
-                style="@style/DefaultButton"
-                android:clickable="true"
-                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:text="@string/createOrgButton"
-                android:textColor="#000000"
-                android:textSize="20dp" />
+                android:layout_weight="1"
+                style="@style/DefaultButton"
+                android:layout_margin="7dp" />
+            
+            <TextView
+	    		style="@style/ShodowFont" 
+	    		android:text="Aakash Business Tool"
+	    		android:layout_weight="1"
+	    		android:gravity="center"
+	    		android:layout_gravity="center_vertical"
+	    		android:paddingLeft="5dp"
+	    		android:paddingRight="5dp"/>
+            
+            <Button
+                android:id="@+id/bselectOrg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="@string/selectOrgButton"
+                style="@style/DefaultButton"
+        		android:layout_margin="7dp" />
             </LinearLayout>
 
             <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:orientation="vertical"
-            android:paddingRight="70dp" >
-            <Button
-                android:id="@+id/bselectOrg"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_gravity="bottom"
-                style="@style/DefaultButton"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/selectOrgButton"
-                android:textColor="#000000"
-                android:textSize="20dp" />
+                android:id="@+id/content_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@android:color/transparent">
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|right"
-                android:paddingRight="40dp"
-                android:paddingTop="60dp"
-                android:text="IIT Bombay"
-                android:textColor="#FFFFFF" />
-
+            
         </LinearLayout>
-   
-
-</LinearLayout>

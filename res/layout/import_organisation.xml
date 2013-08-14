@@ -1,12 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-         android:layout_width="fill_parent" 
- android:layout_height="fill_parent"
- android:orientation="vertical"
- android:weightSum="100">
+        android:layout_width="fill_parent" 
+ 		android:layout_height="fill_parent"
+ 		android:orientation="vertical"
+ 		android:weightSum="100">
     	<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" 
- android:layout_height="fill_parent"
- android:layout_weight="90">
+		   android:layout_width="fill_parent" 
+			android:layout_height="fill_parent"
+			android:layout_weight="90">
    
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,31 +15,23 @@
     android:layout_height="459dp"
     android:gravity="center_vertical"
     android:orientation="vertical"
-    android:weightSum="100">
+    android:weightSum="100" >
             	
     	<TextView
 		    android:id="@+id/tvalertHead1"
 		    android:layout_width="match_parent"
 		    android:layout_height="40dp"
-		    android:textColor="#FFFFFF"
-		    android:textSize="20dp"
-		    android:gravity="left"
-		    android:layout_gravity="center_vertical"
+		    android:gravity="center_vertical"
 		    android:paddingLeft="20dp"
-		    android:shadowColor="#000000"
-		    android:shadowDx="-1"
-           	android:shadowDy="-1"
-         	android:shadowRadius="1"
-		    android:background="#F2C60E"
-		    android:layout_weight="20"/>
+		    style="@style/ShodowFont"
+		    android:layout_weight="20"
+		    android:background="@color/blue_theme"/>
     
     	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     		android:layout_width="match_parent"
     		android:layout_height="match_parent"
-    		android:background="#FFFFFF"
-    		android:paddingLeft="20dp"
-    		android:paddingRight="20dp"
-    		android:paddingTop="5dp"
+    		android:background="@color/gray_theme"
+    		android:padding="20dp"
     		android:layout_gravity="center_horizontal"
     		android:layout_weight="80" >
                <TableLayout
@@ -50,7 +42,7 @@
 				    android:id="@+id/tvWarning"
 				    android:layout_width="match_parent"
 				    android:layout_height="wrap_content"
-				    android:textAppearance="?android:attr/textAppearanceSmall"
+				    style="@style/CodeFont"
 				    android:textColor="#088A08"
 				    android:gravity="center_horizontal"
 				    android:visibility="gone" />
@@ -61,10 +53,8 @@
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
-				    android:text="Select organisation"
-				    android:textAppearance="?android:attr/textAppearanceLarge"
-				    android:textColor="#000000"
-				    android:textSize="20dp"
+				    android:text="Select organisation:"
+				    style="@style/CodeFont"
 				    android:layout_weight="1"
 				    android:gravity="left" />
 
@@ -82,10 +72,8 @@
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:paddingRight="100dp"
-				    android:text="Select financial year"
-				    android:textAppearance="?android:attr/textAppearanceLarge"
-				    android:textColor="#000000"
-				    android:textSize="20dp"
+				    android:text="Select financial year:"
+				    style="@style/CodeFont"
 				    android:layout_weight="1"
 				    android:gravity="left" />
 
@@ -102,7 +90,7 @@
 
 
 </ScrollView>
- <LinearLayout
+ 		<LinearLayout
 			     android:layout_width="fill_parent"
 			     android:layout_height="wrap_content"
 			     android:layout_gravity="center_vertical"
@@ -118,19 +106,19 @@
                      android:layout_height="match_parent"
                      android:text="Import"
                      android:layout_weight="1"
-                     android:textSize="20sp"
                      android:gravity="center"
                      android:layout_alignParentBottom="true"
-                     android:layout_gravity="center_vertical" />
+                     android:layout_gravity="center_vertical"
+                     style="@style/DefaultButton"  />
                  <Button
                     android:id="@+id/btnCancel"  
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Cancel"
-                    android:textSize="20sp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:layout_alignParentBottom="true"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    style="@style/DefaultButton" />
             </LinearLayout>
  </LinearLayout>

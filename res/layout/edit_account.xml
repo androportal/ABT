@@ -6,7 +6,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" 
-        android:background="#FFFFFF"
         android:padding="10dp">
 
     <TextView
@@ -21,10 +20,10 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#CCCCB2"
+        android:background="@color/blue_theme"
         android:text="Account name" 
         android:textSize="17dp"
-        android:textColor="#000000"/>
+        android:textColor="#FFFFFF"/>
 
     <LinearLayout 
         android:layout_width="fill_parent"
@@ -36,7 +35,6 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:textSize="17dp"
-        android:textColor="#000000"
         android:layout_weight="60"
         android:clickable="true"
         android:gravity="center_vertical"/>
@@ -46,7 +44,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="60"
-        android:inputType="textCapWords">
+        android:inputType="textCapWords"
+        style="@style/EditTextAppTheme" >
     </EditText>
     
     <Button 
@@ -62,10 +61,10 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#CCCCB2"
+        android:background="@color/blue_theme"
         android:textSize="17dp"
         android:text="Opening balance" 
-        android:textColor="#000000"/>
+        android:textColor="#FFFFFF"/>
     
      <LinearLayout 
         android:layout_width="fill_parent"
@@ -77,7 +76,6 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:textSize="17dp"
-        android:textColor="#000000"
         android:layout_weight="60"
         android:clickable="true"
         android:gravity="center_vertical"/>
@@ -87,7 +85,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="60"
-        android:inputType="numberDecimal" >
+        android:inputType="numberDecimal"
+        style="@style/EditTextAppTheme" >
     </EditText>
     
     <Button 
@@ -103,47 +102,44 @@
      <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#CCCCB2"
+        android:background="@color/blue_theme"
         android:textSize="17dp"
         android:text="Account code" 
-        android:textColor="#000000"/>
+        android:textColor="#FFFFFF"/>
     
      <TextView
         android:id="@+id/tvEditAccountCode"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
         android:textSize="17dp"/>
     
      
      <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#CCCCB2"
+        android:background="@color/blue_theme"
         android:text="Group name" 
         android:textSize="17dp"
-        android:textColor="#000000"/>
+        android:textColor="#FFFFFF"/>
     
      <TextView
         android:id="@+id/tvEditGroupName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
         android:textSize="17dp"/>
      
      <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#CCCCB2"
+        android:background="@color/blue_theme"
         android:text="Subgroup name" 
         android:textSize="17dp"
-        android:textColor="#000000"/>
+        android:textColor="#FFFFFF"/>
     
      <TextView
         android:id="@+id/tvEditSubgroupName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
         android:textSize="17dp"/>
     
     

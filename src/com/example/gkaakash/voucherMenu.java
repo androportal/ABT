@@ -41,9 +41,9 @@ public class voucherMenu extends ListActivity {
 		super.onCreate(savedInstanceState);
 		IPaddr = MainActivity.IPaddr;
 		System.out.println("in createorg"+IPaddr);
-		transaction = new Transaction(IPaddr);
-       	client_id= Startup.getClient_id();
-		flag = true;
+//		transaction = new Transaction(IPaddr);
+//       	client_id= Startup.getClient_id();
+//		flag = true;
 		//calling transactions.xml page
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.transactions,voucherType));
 		

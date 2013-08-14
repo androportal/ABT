@@ -68,7 +68,7 @@ public class balanceSheet extends Activity{
     static ArrayList<String> balancesheetresultList;
     private TableLayout balanceSheetTable1; 
     private TableLayout balanceSheetTable2;
-    private View label;
+    private TextView label;
     private ArrayList<String> TotalAmountList;
     private TextView balDiff;
     String OrgName, OrgPeriod,balancePeriod,sFilename ;
@@ -116,7 +116,7 @@ public class balanceSheet extends Activity{
     
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-    	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+    	requestWindowFeature(Window.FEATURE_NO_TITLE);
     	IPaddr = MainActivity.IPaddr;
 	    System.out.println("in createorg"+IPaddr);
     	try {
@@ -134,18 +134,13 @@ public class balanceSheet extends Activity{
     			sv = (ScrollView)findViewById(R.id.ScrollVertiBalanceSheet);
     			balType="Sources_bal";
     		}
-    		 if(reportmenuflag==true){ 
-    	   	    	
- 	    		OrgName = createOrg.organisationName;
-            }
-            else {
-         	    OrgName= selectOrg.selectedOrgName;
-          
-            }
+    		
+    		OrgName = MainActivity.organisationName;
+    		
     		//For adding rupee symbol   
 			rsSymbol = new SpannableString(balanceSheet.this.getText(R.string.Rs));
     		//customizing title bar
-    		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
+    		//getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.bank_recon_title);
     		report = new Report(IPaddr);
     		client_id= Startup.getClient_id();
     		m=new module();
@@ -165,29 +160,30 @@ public class balanceSheet extends Activity{
     		 */
     		TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
     		TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
-  
-    		final TextView tvReportTitle = (TextView)findViewById(R.id.tvReportTitle);
-    		tvReportTitle.setText("Menu >> "+"Report >> "+balancetype);
-    		final Button btnSaveRecon = (Button)findViewById(R.id.btnSaveRecon);
-    		btnSaveRecon.setVisibility(Button.GONE);
+ 
+    		//set title
+			TextView org = (TextView)findViewById(R.id.org_name);
+			org.setText(OrgName + ", "+reportMenu.orgtype);
+			TextView tvdate = (TextView)findViewById(R.id.date);
+			tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
+			
+//    		final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
+//    		btnScrollDown.setOnClickListener(new OnClickListener() {
+//    			@Override
+//    			public void onClick(View v) {
+//    				if(updown==false){
+//    					sv.fullScroll(ScrollView.FOCUS_DOWN); 
+//    					btnScrollDown.setBackgroundResource(R.drawable.up);
+//    					updown=true;
+//    				}else {
+//    					sv.fullScroll(ScrollView.FOCUS_UP); 
+//    					btnScrollDown.setBackgroundResource(R.drawable.down);
+//    					updown=false;
+//    				}
+//    			}
+//    		});
     		
-    		final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
-    		btnScrollDown.setOnClickListener(new OnClickListener() {
-    			@Override
-    			public void onClick(View v) {
-    				if(updown==false){
-    					sv.fullScroll(ScrollView.FOCUS_DOWN); 
-    					btnScrollDown.setBackgroundResource(R.drawable.up);
-    					updown=true;
-    				}else {
-    					sv.fullScroll(ScrollView.FOCUS_UP); 
-    					btnScrollDown.setBackgroundResource(R.drawable.down);
-    					updown=false;
-    				}
-    			}
-    		});
-    		
-    		animated_dialog();
+    		//animated_dialog();
     		//to get month in words
 			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
 			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
@@ -337,56 +333,50 @@ public class balanceSheet extends Activity{
 	}
     
     
-    private void animated_dialog() {
-    	try {
-    		final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
-            Llalert.setVisibility(LinearLayout.GONE);
-            animation2 = ObjectAnimator.ofFloat(Llalert,
-                    "x", 1000);
-            animation2.setDuration(1000);
-            animation2.start();
-            
-            final Button btnOrgDetailsDialog = (Button) findViewById(R.id.btnOrgDetailsDialog);
-        
-            btnOrgDetailsDialog.setOnClickListener(new OnClickListener() {
-                
-                @Override
-                public void onClick(View v) {
-                	btnOrgDetailsDialog.setAlpha(100);
-                    if(alertdialog==false){
-                        Llalert.setVisibility(LinearLayout.VISIBLE);
-                        TextView tvOrgNameAlert = (TextView)findViewById(R.id.tvOrgNameAlert);
-                        
-                        if(reportmenuflag==true){
-                            tvOrgNameAlert.setText(createOrg.organisationName);
-                        }
-                           else {
-                               tvOrgNameAlert.setText(selectOrg.selectedOrgName);
-                           }
-                        
-                        TextView tvOrgTypeAlert = (TextView)findViewById(R.id.tvOrgTypeAlert);
-                        tvOrgTypeAlert.setText(reportMenu.orgtype);
-                        
-                        TextView tvFinancialYearAlert = (TextView)findViewById(R.id.tvFinancialYearAlert);
-                        tvFinancialYearAlert.setText(reportMenu.financialFromDate+" to "+ reportMenu.financialToDate);
-                        
-                        animation2 = ObjectAnimator.ofFloat(Llalert,
-                                  "x", 300);
-                        alertdialog=true;
-                     }else {
-                        animation2 = ObjectAnimator.ofFloat(Llalert,
-                                  "x", 1000);
-                        alertdialog=false;
-                     }
-                      
-                     animation2.setDuration(1000);
-                     animation2.start();
-                }
-            });
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-    }
+//    private void animated_dialog() {
+//    	try {
+//    		final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
+//            Llalert.setVisibility(LinearLayout.GONE);
+//            animation2 = ObjectAnimator.ofFloat(Llalert,
+//                    "x", 1000);
+//            animation2.setDuration(1000);
+//            animation2.start();
+//            
+//            final Button btnOrgDetailsDialog = (Button) findViewById(R.id.btnOrgDetailsDialog);
+//        
+//            btnOrgDetailsDialog.setOnClickListener(new OnClickListener() {
+//                
+//                @Override
+//                public void onClick(View v) {
+//                	btnOrgDetailsDialog.setAlpha(100);
+//                    if(alertdialog==false){
+//                        Llalert.setVisibility(LinearLayout.VISIBLE);
+//                        TextView tvOrgNameAlert = (TextView)findViewById(R.id.tvOrgNameAlert);
+//                        tvOrgNameAlert.setText(OrgName);
+//                       
+//                        TextView tvOrgTypeAlert = (TextView)findViewById(R.id.tvOrgTypeAlert);
+//                        tvOrgTypeAlert.setText(reportMenu.orgtype);
+//                        
+//                        TextView tvFinancialYearAlert = (TextView)findViewById(R.id.tvFinancialYearAlert);
+//                        tvFinancialYearAlert.setText(reportMenu.financialFromDate+" to "+ reportMenu.financialToDate);
+//                        
+//                        animation2 = ObjectAnimator.ofFloat(Llalert,
+//                                  "x", 300);
+//                        alertdialog=true;
+//                     }else {
+//                        animation2 = ObjectAnimator.ofFloat(Llalert,
+//                                  "x", 1000);
+//                        alertdialog=false;
+//                     }
+//                      
+//                     animation2.setDuration(1000);
+//                     animation2.start();
+//                }
+//            });
+//        } catch (Exception e) {
+//            // TODO: handle exception
+//        }
+//    }
     
     
     private void addTable(TableLayout tableID) {
@@ -401,14 +391,14 @@ public class balanceSheet extends Activity{
     		if(columnValue.get(1).equalsIgnoreCase("Amount")||columnValue.get(1).equalsIgnoreCase("Debit")){
     			//for heading pass green color code
     			// System.out.println("iam in chaninging color "+columnValue.get(1));
-    			setRowColorSymbolGravity(columnValue, Color.parseColor("#348017"),true);
+    			setRowColorSymbolGravity(columnValue, Color.parseColor("#ffffff"),true);
     		}
     		else{
     			int row_color;
             	if ((i + 1) % 2 == 0)
-            		row_color = Color.parseColor("#474335");
+            		row_color = Color.parseColor("#085e6b"); //blue theme
         		else
-        			row_color = Color.BLACK;
+        			row_color = Color.parseColor("#2f2f2f"); //gray theme
     			
     			//for remaining rows pass black color code
     			setRowColorSymbolGravity(columnValue, row_color,false);
@@ -441,6 +431,7 @@ public class balanceSheet extends Activity{
     			}else{
     				addRow(columnValue.get(j));
     			}
+    			label.setTextColor(Color.parseColor("#085e6b")); //blue theme
     		}else{
     			addRow(columnValue.get(j));
     		}

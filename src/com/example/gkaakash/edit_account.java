@@ -579,12 +579,17 @@ public class edit_account extends Activity {
 				System.out.println("glist:"+getList+etSearch.getText().toString());
 
 				if(textlength > 0){
+					System.out.println("lengh is"+textlength+"get list size"+getList.size());
 					for (int i = 0; i < getList.size(); i++) {
-						if(etSearch.getText().toString().equalsIgnoreCase(getList.get(i).substring(0, textlength))){
-							System.out.println("same");
-							array_sort.add(getList.get(i));
-						}
-						else{
+						System.out.println("we are in for"+etSearch.getText().toString());
+						try {
+							if(etSearch.getText().toString().equalsIgnoreCase(getList.get(i).substring(0, textlength))){
+								System.out.println("same");
+								array_sort.add(getList.get(i));
+							}else{
+								System.out.println("not same");
+							}
+						} catch (Exception e) {
 							System.out.println("not same");
 						}
 					}
@@ -653,15 +658,15 @@ public class edit_account extends Activity {
 	 */
 	@Override
 	protected void onResume() {
-		super.onResume();
-
+		super.onResume(); 
+		System.out.println("ON RESUME");
 		// get all acoount names in list view on load
 		accountnames = (Object[]) account.getAllAccountNames(client_id);
 		getResultList(accountnames);
 		setaccountlist();
 
 	}
-
+	
 	private void filllist(ArrayList<String> list) {
 
 		String[] abc = new String[] { "rowid", "col_1" };

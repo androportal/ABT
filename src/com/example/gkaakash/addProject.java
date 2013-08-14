@@ -53,7 +53,7 @@ public class addProject extends MainActivity {
 	boolean projectExistsFlag = false;
 	private boolean setProject;
 	module m;
-	TextView tvProWarning,tveditWarning;
+	TextView tveditWarning;
 	static String IPaddr;
 
 	// on load...
@@ -67,11 +67,16 @@ public class addProject extends MainActivity {
 		organisation = new Organisation(IPaddr);
 		client_id = Startup.getClient_id();
 		ltProjectNames = (ListView) findViewById(R.id.ltProjectNames);
-		tvProWarning = (TextView) findViewById(R.id.tvProWarning);
 		ltProjectNames.setCacheColorHint(color.transparent);
 		ltProjectNames.setTextFilterEnabled(true);
 		m = new module();
 
+		//set title
+		TextView org = (TextView)findViewById(R.id.org_name);
+		org.setText(menu.OrgName);
+		TextView tvdate = (TextView)findViewById(R.id.date);
+		tvdate.setText(m.changeDateFormat(menu.financialFromDate)+" To "+m.changeDateFormat(menu.financialToDate));
+		
 		// get all project names in list view on load
 		projectnames = (Object[]) organisation.getAllProjects(client_id);
 		getResultList(projectnames);
@@ -106,7 +111,7 @@ public class addProject extends MainActivity {
 							View layout = inflater.inflate(R.layout.edit_projectname,(ViewGroup) findViewById(R.id.layout_root));
 							AlertDialog.Builder builder = new AlertDialog.Builder(addProject.this);
 							builder.setView(layout);
-							builder.setTitle("Edit project");
+							builder.setTitle("Edit project name");
 							// get account details
 							final String old_projectname = ltProjectNames.getItemAtPosition(position).toString();
 
@@ -238,8 +243,7 @@ public class addProject extends MainActivity {
 				}
 
 				if (projectname.equals("")) {
-					tvProWarning.setVisibility(View.VISIBLE);
-					tvProWarning.setText("Please enter project name");
+					m.toastValidationMessage(context, "Please enter project name");
 					
 				}
 				else
@@ -253,9 +257,7 @@ public class addProject extends MainActivity {
 					}
 				}	
 				if (projectExistsFlag == true) {
-					
-					tvProWarning.setVisibility(View.VISIBLE);
-					tvProWarning.setText("Project '"+ projectname + "' already exists");
+					m.toastValidationMessage(context, "Project '"+ projectname + "' already exists");
 					etProject.setText("");
 				} else {
 					
@@ -266,8 +268,6 @@ public class addProject extends MainActivity {
 					projectnames = (Object[]) organisation.getAllProjects(client_id);
 					getResultList(projectnames);
 					etProject.setText("");
-					tvProWarning.setVisibility(View.GONE);
-					
 				}
 				}
 			

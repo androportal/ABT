@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -657,5 +658,19 @@ public class module {
 		dialog = builder.create();
 		dialog.show();
 		return security_password;
+	}
+	
+	public String changeDateFormat(String Date){
+		// to get month in words
+		SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
+		String date = null;
+		try {
+			date = write.format(read.parse(Date));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return date;
 	}
 }
