@@ -9,6 +9,7 @@
         android:id="@+id/layout_root"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_weight="100.67"
         android:orientation="vertical" >
 
@@ -21,46 +22,52 @@
             android:textSize="20dp"
             android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/tvsetT0date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="To"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp" />
-
-        <DatePicker
-            android:id="@+id/dpProjectStatementSetT0date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-
+        <TableRow android:layout_width="match_parent"
+               android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tvProject"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Project"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+            android:text="Select project name:"
+            android:layout_weight="1"
+            style="@style/CodeFont" />
 
         <Spinner
             android:id="@+id/sProject"
-            android:layout_width="254dp"
-            android:layout_height="49dp"
-            android:layout_gravity="center"
-            android:layout_weight="0.00"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:prompt="@string/projectName_prompt" />
+        </TableRow>
+        
+        <TableRow android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+             
+             <TextView
+                 style="@style/CodeFont"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:layout_weight="1"
+                 android:text="To date:" />
+             
+             <Button
+                 android:id="@+id/btnsetLedgerTodate"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:text="123" />
+             
+         </TableRow>
+
+        
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.27"
-        android:background="@drawable/dark_gray_background"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -70,16 +77,16 @@
                      android:layout_height="match_parent"
                      android:text="View"
                      android:layout_weight="1"
-                     android:textSize="20sp"
                      android:gravity="center"
                      android:layout_alignParentBottom="true"
-                     android:layout_gravity="center_vertical" />
+                     android:layout_gravity="center_vertical"
+                     style="@style/DefaultButton" />
                  <Button
                     android:id="@+id/btnCancel"  
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Cancel"
-                    android:textSize="20sp"
+                    style="@style/DefaultButton"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:layout_alignParentBottom="true"

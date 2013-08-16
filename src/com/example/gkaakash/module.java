@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -58,6 +59,9 @@ public class module {
 	FileWriter fw;
 	String security_password = null;
 	static String IPaddr;
+	static String givenfromDateString, givenToDateString;
+	boolean validateDateFlag;
+	
 	void getAccountsByRule(Object[] DrCrFlag, String vouchertypeflag2, Context context) {
 		IPaddr = MainActivity.IPaddr;
 		System.out.println("in createorg"+IPaddr);
@@ -673,4 +677,77 @@ public class module {
 		}
 		return date;
 	}
+	
+	public boolean validateDate(String financialFromDate, String financialToDate, String fromdate, String todate, String flag,TextView tvWarning) {
+		
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			Date date1 = sdf.parse(financialFromDate);
+	    	Date date2 = sdf.parse(financialToDate);
+			
+	    	Calendar cal1 = Calendar.getInstance(); //financial from date
+	    	Calendar cal2 = Calendar.getInstance(); //financial to date
+	    	Calendar cal3 = Calendar.getInstance(); //from date
+	    	Calendar cal4 = Calendar.getInstance(); //to date
+	    	
+	    	cal1.setTime(date1);
+	    	cal2.setTime(date2);
+	    	
+			if("validatebothFromToDate".equals(flag)){
+				String FromDay = fromdate.substring(0,2);
+				String FromMonth = fromdate.substring(4, 5);
+				String FromYear = fromdate.substring(6,10);
+			   	
+			   	givenfromDateString = FromDay+"-"+FromMonth+"-"+FromYear;
+			   	
+			   	Date date3 = sdf.parse(givenfromDateString);
+			   	cal3.setTime(date3);
+			}
+			
+			String T0Day = todate.substring(0,2);
+			String T0Month = todate.substring(4, 5);
+			String T0Year = todate.substring(6,10);
+		   	
+		   	givenToDateString = T0Day+"-"+T0Month+"-"+T0Year ;
+		   	
+		   	Date date4 = sdf.parse(givenToDateString);
+		   	cal4.setTime(date4);  
+			
+	    	System.out.println("all dates are...........");
+	    	System.out.println(fromdate+" "+todate+" "+financialFromDate+"---"+financialToDate+"---"+givenfromDateString+"---"+givenToDateString);
+	    	
+	    	if("validatebothFromToDate".equals(flag)){
+	    		if(((cal3.after(cal1)&&(cal3.before(cal2))) || (cal3.equals(cal1) || (cal3.equals(cal2)))) 
+	        			&& ((cal4.after(cal1) && (cal4.before(cal2))) || (cal4.equals(cal2)) || (cal4.equals(cal1)))){
+	        		
+	        		validateDateFlag = true;
+	        	}
+	        	else{
+	        		String message = "Please enter proper date";
+	        		//m.toastValidationMessage(reportMenu.this,message);
+	        		tvWarning.setVisibility(View.VISIBLE);
+	        		tvWarning.setText(message);
+	        		validateDateFlag = false;
+	        	}
+	    	}
+	    	else {
+	    		if((cal4.after(cal1) && cal4.before(cal2)) || cal4.equals(cal1) || cal4.equals(cal2) ){
+					
+	    			validateDateFlag = true;
+	        	}
+	        	else{
+	        		String message = "Please enter proper date";
+	        		//m.toastValidationMessage(reportMenu.this,message);
+	        		tvWarning.setVisibility(View.VISIBLE);
+	        		tvWarning.setText(message);
+	        		validateDateFlag = false;
+	        	}
+	    	}
+    	
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return validateDateFlag;
+		
+	} 
 }

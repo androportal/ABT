@@ -121,10 +121,14 @@ public class projectStatement extends Activity{
         	ToDateString = reportMenu.givenToDateString;
    
         	projectName = reportMenu.selectedProject;
-   
+        	
+        	TextView tvaccountName = (TextView) findViewById( R.id.tvaccountName);
+        	tvaccountName.setVisibility(View.GONE);
+        	
         	if(!projectName.equalsIgnoreCase("No Project")){
         		TextView tvProjectName = (TextView) findViewById( R.id.tvProjectName );
-        		tvProjectName.setText("Project name: " +projectName);
+        		tvProjectName.setVisibility(View.VISIBLE);
+        		tvProjectName.setText("Project: " +projectName);
          		
             }
         	
@@ -133,7 +137,7 @@ public class projectStatement extends Activity{
         	/*
         	 * set financial from date and to date in textview
         	 */
-        	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
+        	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
         	//to get month in words
 			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
 			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");

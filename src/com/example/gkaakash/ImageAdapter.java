@@ -39,7 +39,7 @@ public class ImageAdapter extends BaseAdapter {
 			// set image based on selected text
 			ImageView imageView = (ImageView) gridView
 					.findViewById(R.id.grid_item_image);
- 
+			
 			if (MENU_OPTIONS[position].equalsIgnoreCase("Create account")) {
 				imageView.setImageResource(R.drawable.account_logo);
 			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Transaction")) {

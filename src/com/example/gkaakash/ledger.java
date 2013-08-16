@@ -213,7 +213,7 @@ public class ledger extends Activity {
 
 			tvaccontName = (TextView) findViewById(R.id.tvaccountName);
 			tvfinancialToDate = (TextView) findViewById(R.id.tvfinancialToDate);
-			tvaccontName.setText("Account name: " + accountName);
+			tvaccontName.setText("Ledger for: " + accountName);
 
 			// to get month in words
 			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
@@ -226,7 +226,8 @@ public class ledger extends Activity {
 
 			if (!projectName.equalsIgnoreCase("No Project")) {
 				TextView tvProjectName = (TextView) findViewById(R.id.tvProjectName);
-				tvProjectName.setText("Project name: " + projectName);
+				tvProjectName.setVisibility(View.VISIBLE);
+				tvProjectName.setText("Project: " + projectName);
 				Ledger_project = "for the " + projectName + " project";
 			} else {
 				Ledger_project = "No Project";

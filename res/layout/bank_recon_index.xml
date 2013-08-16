@@ -15,6 +15,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" 
         android:orientation="vertical"
+        android:padding="10dp"
          android:id="@+id/layout_root" >
         
               <TextView
@@ -23,151 +24,131 @@
              android:layout_height="wrap_content"
              android:layout_gravity="center"
              android:textColor="#F90000"
-             android:textSize="20dp" />
+             android:textSize="20dp"
+             android:visibility="gone" />
       
+              <TableRow android:layout_width="match_parent"
+               android:layout_height="wrap_content">
          <TextView
-             android:layout_width="wrap_content"
+             android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:layout_gravity="center"
              android:text="Account name"
-             android:textColor="#FFFFFF"
-             android:textSize="20dp" />
+             android:layout_weight="1"
+             style="@style/CodeFont"/>
 
         <Spinner
             android:id="@+id/sBankAccounts"
-            android:layout_width="254dp"
-            android:layout_height="52dp"
-            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:entries="@array/accountName_arrays"
+            android:layout_weight="1"
             android:prompt="@string/accountName_prompt" />
+        </TableRow>
         
-        
-           <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" 
-        android:orientation="horizontal"
-         android:id="@+id/layout_root" >
-        
+    	<TableRow android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+             
+             <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center"
+                       android:text="From date:"
+                       android:layout_weight="1"
+                       style="@style/CodeFont" />
+             
+             <Button 
+                 android:id="@+id/btnsetLedgerFromdate"
+                 android:layout_width="match_parent"
+                 android:layout_weight="1"
+                 android:layout_height="wrap_content"
+                 android:text="123"/>
+             
+         </TableRow>
          
-         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" 
-        android:orientation="vertical"
-         android:id="@+id/layout_root"
-         android:layout_gravity="left"
-          android:layout_weight="50" >
-        
-         <TextView
-             android:id="@+id/tvsetFromdate"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_gravity="center"
-             android:text="From"
-             android:textColor="#FFFFFF"
-             android:textSize="20dp" />
+         <TableRow android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+             
+             <TextView
+                 style="@style/CodeFont"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:layout_weight="1"
+                 android:text="To date:" />
+             
+             <Button
+                 android:id="@+id/btnsetLedgerTodate"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:text="123" />
+             
+         </TableRow>
 
-         <DatePicker
-             android:id="@+id/dpsetReconFromdate"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_gravity="center" />
-
-        </LinearLayout>
-        
-        
-         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" 
-        android:orientation="vertical"
-         android:id="@+id/layout_root"
-         android:layout_weight="50" >
-         
-        <TextView
-            android:id="@+id/tvsetT0date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="To"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp" />
-
-        <DatePicker
-            android:id="@+id/dpsetReconT0date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-        </LinearLayout>
-        
-         </LinearLayout>
-         
-           <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		    		android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center">
-
-		<TableRow>
+		<TableRow android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+             
+		    <TextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="Display cleared transactions:"
+		        style="@style/CodeFont" />
+		    
 		    <CheckBox
 		        android:id="@+id/cbClearedTransaction"
-		        android:layout_width="wrap_content"
+		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_weight="0.3" 
-		        android:layout_marginRight="30dp"/>
+		        android:layout_weight="1" />		    
 		    
-		    <TextView
-		        android:layout_width="wrap_content"
-		        android:layout_weight="1.7"
-		        android:text="with cleared transactions"
-		        android:textColor="#FFFFFF"
-		        android:textSize="20dp" />
 		</TableRow>
 		
-		<TableRow>
+		<TableRow android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+		    <TextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="Display narrations:"
+		        style="@style/CodeFont"/>
+		    
 		    <CheckBox
 		        android:id="@+id/cbReconNarration"
-		        android:layout_width="wrap_content"
+		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_weight="0.3" 
-		        android:layout_marginRight="30dp"/>
+		        android:layout_weight="1" />
 		    
-		    <TextView
-		        android:layout_width="wrap_content"
-		        android:layout_weight="1.7"
-		        android:text="with narration"
-		        android:textColor="#FFFFFF"
-		        android:textSize="20dp" />
 		</TableRow>
-		</TableLayout>
-
     </LinearLayout>
     </ScrollView>
 
  <LinearLayout
-     android:layout_width="fill_parent"
-     android:layout_height="49dp"
-     android:background="@drawable/dark_gray_background"
-     android:gravity="center"
-     android:orientation="horizontal" >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/btnView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="View"
-                android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/btnCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Cancel"
-                android:textSize="20sp" />
-        </LinearLayout>
+                 <Button
+                     android:id="@+id/btnView"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:text="View"
+                     android:layout_weight="1"
+                     android:gravity="center"
+                     android:layout_alignParentBottom="true"
+                     android:layout_gravity="center_vertical"
+                     style="@style/DefaultButton" />
+                 <Button
+                    android:id="@+id/btnCancel"  
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Cancel"
+                    style="@style/DefaultButton"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
   </LinearLayout>

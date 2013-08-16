@@ -27,6 +27,7 @@ import com.gkaakash.controller.User;
 import android.R.drawable;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
@@ -119,6 +120,8 @@ public class menu extends Activity{
 	
 	private Transaction transaction;
 	static boolean flag;
+	static final int FROM_DATE_DIALOG_ID = 0, TO_DATE_DIALOG_ID = 1;
+	Button from_btn_ID, to_btn_ID;
 	/*
     //adding options to the options menu
     @Override
@@ -453,12 +456,25 @@ public class menu extends Activity{
 			da.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			sBankAccounts.setAdapter(da);
 
-			final DatePicker ReconFromdate = (DatePicker) layout.findViewById(R.id.dpsetReconFromdate);
-			ReconFromdate.init(Integer.parseInt(fromyear),(Integer.parseInt(frommonth)-1),Integer.parseInt(fromday), null);
-
-			final DatePicker ReconT0date = (DatePicker) layout.findViewById(R.id.dpsetReconT0date);
-			ReconT0date.init(Integer.parseInt(toyear),(Integer.parseInt(tomonth)-1),Integer.parseInt(today), null);
-
+			from_btn_ID = (Button)layout.findViewById(R.id.btnsetLedgerFromdate);
+	  	   	from_btn_ID.setText(fromday+"-"+frommonth+"-"+fromyear);
+	  	   	from_btn_ID.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					showDialog(FROM_DATE_DIALOG_ID);
+				}
+			});
+	  	   	to_btn_ID= (Button)layout.findViewById(R.id.btnsetLedgerTodate);
+	  	   	to_btn_ID.setText(today+"-"+tomonth+"-"+toyear);
+	  	   	to_btn_ID.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					showDialog(TO_DATE_DIALOG_ID);
+				}
+			});
+			
 			final CheckBox cbClearedTransaction = (CheckBox)layout.findViewById(R.id.cbClearedTransaction);
 			final CheckBox cbNarration = (CheckBox)layout.findViewById(R.id.cbReconNarration);
 
@@ -487,8 +503,11 @@ public class menu extends Activity{
 					selectedAccount = sBankAccounts.getSelectedItem().toString();
 
 					System.out.println("i am account"+selectedAccount);
-					validateDate(ReconFromdate, ReconT0date, "validatebothFromToDate",tvWarning);
-
+					
+					validateDateFlag = m.validateDate(financialFromDate, financialToDate, from_btn_ID.getText().toString(), 
+							to_btn_ID.getText().toString(), "validatebothFromToDate",tvWarning);
+					givenfromDateString = m.givenfromDateString;
+					givenToDateString = m.givenToDateString;
 
 					if(validateDateFlag){
 						Intent intent = new Intent(context, bankReconciliation.class);
@@ -878,100 +897,62 @@ public class menu extends Activity{
 
 	}
 
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case FROM_DATE_DIALOG_ID:
+			
+				// set date picker as current date
+				return new DatePickerDialog(this, fromdatePickerListener, 
+						Integer.parseInt(fromyear), Integer.parseInt(frommonth)-1,Integer.parseInt(fromday));
+		
+		case TO_DATE_DIALOG_ID:
+		
+				// set date picker as current date
+				return new DatePickerDialog(this, todatePickerListener, 
+						Integer.parseInt(toyear), Integer.parseInt(tomonth)-1,Integer.parseInt(today));
+		}
+		return null;
+	}
+	private DatePickerDialog.OnDateSetListener fromdatePickerListener 
+    	= new DatePickerDialog.OnDateSetListener() {
+ 
+		// when dialog box is closed, below method will be called.
+		public void onDateSet(DatePicker view, int selectedYear,
+				int selectedMonth, int selectedDay) {
+				int year = selectedYear; 
+				int month = selectedMonth; 
+				int day = selectedDay;
+				from_btn_ID.setText(new StringBuilder()
+				// Month is 0 based, just add 1
+				.append(String.format("%02d", day)).append("-").append(String.format("%02d", month+1)).append("-")
+				.append(year));
+				givenfromDateString = String.format("%02d", day)+"-"+String.format("%02d", month+1)+"-"+(year-1);
+		}
+	};  
+	
+	private DatePickerDialog.OnDateSetListener todatePickerListener 
+	= new DatePickerDialog.OnDateSetListener() {
+
+	// when dialog box is closed, below method will be called.
+	public void onDateSet(DatePicker view, int selectedYear,
+			int selectedMonth, int selectedDay) {
+			int year = selectedYear; 
+			int month = selectedMonth; 
+			int day = selectedDay;
+			to_btn_ID.setText(new StringBuilder()
+			// Month is 0 based, just add 1
+			.append(String.format("%02d", day)).append("-").append(String.format("%02d", month+1)).append("-")
+			.append(year));
+			givenToDateString = String.format("%02d", day)+"-"+String.format("%02d", month+1)+"-"+(year-1);
+	}
+};  
+	
+	
 	private void reset() {
 		eusername.setText("");
 		epassword.setText("");
 		econfpassword.setText("");
 		rbMale.setChecked(true);
 	}
-	private boolean validateDate(DatePicker fromdate, DatePicker todate, String flag,TextView warning){
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-			Date date1 = sdf.parse(financialFromDate);
-			Date date2 = sdf.parse(financialToDate);
-
-			Calendar cal1 = Calendar.getInstance(); //financial from date
-			Calendar cal2 = Calendar.getInstance(); //financial to date
-			Calendar cal3 = Calendar.getInstance(); //from date
-			Calendar cal4 = Calendar.getInstance(); //to date
-
-			cal1.setTime(date1);
-			cal2.setTime(date2);
-
-			if("validatebothFromToDate".equals(flag)){
-				int FromDay = fromdate.getDayOfMonth();
-				int FromMonth = fromdate.getMonth();
-				int FromYear = fromdate.getYear();
-
-				givenfromDateString = mFormat.format(Double.valueOf(FromDay))+ "-" 
-						+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(FromMonth))))+ 1))) + "-" 
-						+ FromYear;
-
-				Date date3 = sdf.parse(givenfromDateString);
-				cal3.setTime(date3);
-			}
-
-			int T0Day = todate.getDayOfMonth();
-			int T0Month = todate.getMonth();
-			int T0Year = todate.getYear();
-
-			givenToDateString = mFormat.format(Double.valueOf(T0Day))+ "-" 
-					+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(T0Month))))+ 1))) + "-" 
-					+ T0Year;
-
-			Date date4 = sdf.parse(givenToDateString);
-			cal4.setTime(date4);  
-
-			//System.out.println("all dates are...........");
-			//System.out.println(financialFromDate+"---"+financialToDate+"---"+givenfromDateString+"---"+givenToDateString);
-
-			if("validatebothFromToDate".equals(flag)){
-				if(((cal3.after(cal1)&&(cal3.before(cal2))) || (cal3.equals(cal1) || (cal3.equals(cal2)))) 
-						&& ((cal4.after(cal1) && (cal4.before(cal2))) || (cal4.equals(cal2)) || (cal4.equals(cal1)))){
-
-					validateDateFlag = true;
-				}
-				else{
-					String message = "Please enter proper date";
-					//m.toastValidationMessage(menu.this,message);
-					tvWarning.setVisibility(View.VISIBLE);
-					tvWarning.setText(message);
-					validateDateFlag = false;
-				}
-			}
-			else if("rollover".equals(flag)) // check for the roll over flag
-			{   // if yes, then selected To-date must be after financial-todate and not equal financial-todate
-				if(cal4.after(cal2)&& !cal4.equals(cal2)) 
-				{
-					validateDateFlag = true;
-				}
-				else
-				{
-					String message = "Please enter proper date";
-					m.toastValidationMessage(menu.this,message);
-					validateDateFlag = false;
-				}
-			}else{
-				if((cal4.after(cal1) && cal4.before(cal2)) || cal4.equals(cal1) || cal4.equals(cal2) ){
-
-					validateDateFlag = true;
-				}
-				else{
-					String message = "Please enter proper date";
-					//m.toastValidationMessage(menu.this,message);
-					tvWarning.setVisibility(View.VISIBLE);
-					tvWarning.setText(message);
-					validateDateFlag = false;
-				}
-			}
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return validateDateFlag;
-	}
-
-
-
-
 }

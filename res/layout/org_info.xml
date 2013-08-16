@@ -1,41 +1,82 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-    	android:layout_height="60dp"
-    	android:orientation="horizontal"
-    	android:background="@drawable/gradiant_list_bg">
-    <ImageView 
-        android:layout_width="50dp"
-    	android:layout_height="50dp"/>
-    
-    <LinearLayout 
-        android:layout_width="match_parent"
-    	android:layout_height="match_parent"
+    	android:layout_height="wrap_content"
     	android:orientation="vertical"
-    	android:layout_gravity="center_vertical"
-    	android:paddingBottom="5dp">
-    
+    	android:background="@color/blue_theme">
+    	
     <TextView 
         android:id="@+id/org_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
     	android:layout_height="wrap_content"
-    	android:layout_gravity="center_horizontal"
-    	android:textColor="#054a55"
-    	android:shadowColor="#FFFFFF"
+    	android:textColor="#FFFFFF"
+    	android:gravity="center"
+    	android:shadowColor="#000000"
 	   	android:shadowDx="-1"
 	    android:shadowDy="-1"
 	    android:shadowRadius="2"
 	    android:textSize="23dp"/>
     
+    <TableRow 
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:paddingLeft="10dp"
+             android:paddingRight="10dp">
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical"
+    	android:layout_weight="1">
+    	
+        <TextView
+           android:id="@+id/tvaccountName"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" 
+           style="@style/ShodowFont"
+           
+           android:textSize="15dp"/>
+        
+        <TextView
+             android:id="@+id/tvProjectName"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             style="@style/ShodowFont"
+             android:visibility="gone"
+           	 android:textSize="15dp"/>
+    	</LinearLayout>
+    	
+    
     <TextView 
         android:id="@+id/date"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
     	android:layout_height="wrap_content"
-    	android:layout_gravity="center_horizontal"
     	android:textSize="15dp"
-    	android:textColor="#054a55"
-    	android:shadowColor="#FFFFFF"
+    	android:textColor="#ffffff"
+    	android:shadowColor="#000000"
+    	android:gravity="center"
 	   	android:shadowDx="-1"
 	    android:shadowDy="-1"
-	    android:shadowRadius="2"/>
-    </LinearLayout>
+	    
+	    android:shadowRadius="2"
+	    android:layout_weight="1"/>
+        
+    <TextView
+        android:id="@+id/tvfinancialToDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ShodowFont"
+     	  android:textSize="15dp"
+     	  android:layout_weight="1"/>
+    
+    <Button
+                android:id="@+id/btnSaveRecon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="Save"
+                android:layout_weight="1"
+                style="@style/DefaultButton"
+                android:visibility="gone"/>
+    </TableRow>
 </LinearLayout>

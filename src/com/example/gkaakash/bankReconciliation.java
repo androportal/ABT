@@ -160,7 +160,6 @@ public class bankReconciliation extends Activity{
 			cleared_tran_flag = menu.cleared_tran_flag;
 			narration_flag = menu.narration_flag;
 			tvaccontName = (TextView) findViewById(R.id.tvReconAccName);
-			tvfinancialFromDate = (TextView) findViewById(R.id.tvfinancialFromDate);
 			tvfinancialToDate = (TextView) findViewById(R.id.tvfinancialToDate);
 
 			tvaccontName.setText("Account name: " + accountName);

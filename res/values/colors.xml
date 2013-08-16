@@ -8,4 +8,6 @@
     <color name="green_theme">#348017</color>
     <color name="yellow_theme">#F2C60E</color>
     <color name="red_theme">#FF010f</color>
+    <color name="blue_link">#0B2161</color>
+    <color name="cream_theme">#F2F2F2</color>
 </resources>

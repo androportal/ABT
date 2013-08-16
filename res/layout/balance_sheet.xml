@@ -7,6 +7,7 @@
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
+    android:padding="10dp"
     android:layout_weight="90">
         
     <LinearLayout
@@ -25,46 +26,53 @@
              android:textSize="20dp"
              android:visibility="gone" />
         
-        <TextView
-            android:id="@+id/tvsetT0date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="To"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp" />
-
-        <DatePicker
-            android:id="@+id/dpBalanceSheetsetT0date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-
+        <TableRow android:layout_width="match_parent"
+               android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tvbalanceSheetType"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Balance Sheet type"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+            android:text="Select Balance Sheet type:"
+            style="@style/CodeFont"
+            android:layout_weight="1" />
 
         <Spinner
             android:id="@+id/sbalanceSheetType"
-            android:layout_width="254dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:entries="@array/BalanceSheet_arrays"
-            android:prompt="@string/BalanceSheet_prompt" />
+            android:prompt="@string/BalanceSheet_prompt"
+            android:layout_weight="1" />
+		</TableRow>
+        
+        <TableRow android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+             
+             <TextView
+                 style="@style/CodeFont"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:layout_weight="1"
+                 android:text="To date:" />
+             
+             <Button
+                 android:id="@+id/btnsetLedgerTodate"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:text="123" />
+             
+         </TableRow>
 
+        
     </LinearLayout>
 </ScrollView>
 	<LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/dark_gray_background"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -74,16 +82,16 @@
                      android:layout_height="match_parent"
                      android:text="View"
                      android:layout_weight="1"
-                     android:textSize="20sp"
                      android:gravity="center"
                      android:layout_alignParentBottom="true"
-                     android:layout_gravity="center_vertical" />
+                     android:layout_gravity="center_vertical"
+                     style="@style/DefaultButton" />
                  <Button
                     android:id="@+id/btnCancel"  
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Cancel"
-                    android:textSize="20sp"
+                    style="@style/DefaultButton"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:layout_alignParentBottom="true"

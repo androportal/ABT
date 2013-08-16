@@ -117,7 +117,7 @@ public class createVoucher extends Activity {
 	String from_trial;
 	private EditText etvoucherno;
 	static String IPaddr,checkvoucher_number;
-	EditText etVoucherDate;
+	Button btnVoucherDate;
 	Spinner sProjectNames;
 
 	@Override
@@ -125,7 +125,7 @@ public class createVoucher extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_voucher);
 		IPaddr = MainActivity.IPaddr;
-	    System.out.println("in createorg"+IPaddr);
+	    System.out.println("in create voucher"+IPaddr);
 		transaction = new Transaction(IPaddr);
 		organisation = new Organisation(IPaddr);
 		reports = new Report(IPaddr);
@@ -295,7 +295,7 @@ public class createVoucher extends Activity {
 				firstRowamount.setEnabled(false);
 				btnSaveVoucher.setEnabled(false);
 				btnResetVoucher.setEnabled(false);
-				etVoucherDate.setEnabled(false);
+				btnVoucherDate.setEnabled(false);
 				sProjectNames.setEnabled(false);
 				etvoucherno.setEnabled(false);
 				
@@ -1460,8 +1460,8 @@ public class createVoucher extends Activity {
 		String fromday, frommonth, fromyear, LastFromDate;
 		if (searchFlag == true) {
 			// will get executed while clonning and editing
-			financialFromDate = searchdate;
-			String dateParts[] = financialFromDate.split("-");
+			financialFromDate = Startup.getfinancialFromDate();
+			String dateParts[] = searchdate.split("-");
 			fromday = dateParts[0];
 			frommonth = dateParts[1];
 			fromyear = dateParts[2];
@@ -1481,13 +1481,13 @@ public class createVoucher extends Activity {
 		month = Integer.parseInt(frommonth);
 		day = Integer.parseInt(fromday);
 
-		etVoucherDate = (EditText)findViewById(R.id.etVoucherDate);
-		etVoucherDate.setText(mFormat.format(Double.valueOf(day)) + "-"
+		btnVoucherDate = (Button)findViewById(R.id.btnVoucherDate);
+		btnVoucherDate.setText(mFormat.format(Double.valueOf(day)) + "-"
 				+ mFormat.format(Double.valueOf(month)) + "-" + year);
 
 		vDate = mFormat.format(Double.valueOf(day)) + "-"
 				+ mFormat.format(Double.valueOf(month)) + "-" + year;
-		etVoucherDate.setOnClickListener(new OnClickListener() {
+		btnVoucherDate.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				showDialog(VOUCHER_DATE_DIALOG_ID);
@@ -1547,7 +1547,7 @@ public class createVoucher extends Activity {
 						|| cal3.equals(cal1) || cal3.equals(cal2)) {
 
 					// set selected date into textview
-					etVoucherDate.setText(new StringBuilder()
+					btnVoucherDate.setText(new StringBuilder()
 					.append(mFormat.format(Double.valueOf(day)))
 					.append("-")
 					.append(mFormat.format(Double.valueOf(Integer

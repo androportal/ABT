@@ -59,12 +59,10 @@
 				    android:text="Voucher date:"
 				    style="@style/CodeFont" />
 
-				<EditText
-				    android:id="@+id/etVoucherDate"
+				<Button
+				    android:id="@+id/btnVoucherDate"
 				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:layout_weight="1"
-				    style="@style/EditTextAppTheme" />
+				    android:layout_height="wrap_content"/>
 
 			</LinearLayout>
 			

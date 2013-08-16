@@ -123,8 +123,7 @@ public class incomeExpenditure extends Activity{
         	/*
         	 * set financial from date and to date in textview
         	 */
-        	TextView tvfinancialFromDate = (TextView) findViewById( R.id.tvTfinancialFromDate );
-        	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvTfinancialToDate );
+        	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
         	//to get month in words
 			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
 			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
