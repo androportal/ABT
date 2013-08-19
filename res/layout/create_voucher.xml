@@ -98,7 +98,7 @@
 		    android:stretchColumns="4"
 		    android:paddingLeft="3dp"
 		    android:paddingRight="3dp"
-		    android:background="@drawable/gradiant_list_bg" >
+		    android:background="@color/blue_theme" >
 		    
 		    
 		    <TableRow 
@@ -114,7 +114,7 @@
 			        android:layout_weight="1"
 			        android:gravity="center_horizontal"
 			        android:text="Account type"
-			        android:textColor="@color/blue_theme"
+			        android:textColor="#ffffff"
 			        style="@style/CodeFont" />
 			    
 			    <TextView
@@ -124,7 +124,7 @@
 			        android:layout_weight="1"
 			        android:gravity="center_horizontal"
 			        android:text="Account name"
-			        android:textColor="@color/blue_theme"
+			        android:textColor="#ffffff"
 			        style="@style/CodeFont" />
 			    
 			    <TextView
@@ -134,7 +134,7 @@
 			        android:layout_weight="1"
 			        android:gravity="center_horizontal"
 			        android:text="Closing balance"
-			        android:textColor="@color/blue_theme"
+			        android:textColor="#ffffff"
 			        style="@style/CodeFont" />
 			    
 			    <TextView
@@ -144,7 +144,7 @@
 			        android:layout_weight="1"
 			        android:gravity="center_horizontal"
 			        android:text="Amount"
-			        android:textColor="@color/blue_theme"
+			        android:textColor="#ffffff"
 			        style="@style/CodeFont" />
 			    
 			    <TextView
@@ -152,7 +152,7 @@
 			        android:layout_height="wrap_content"
 			        android:layout_weight="1"
 			        android:text="add button"
-			        android:textColor="@color/blue_theme"
+			        android:textColor="#ffffff"
 			        android:gravity="center_horizontal"
 			        style="@style/CodeFont" />
 
@@ -161,7 +161,7 @@
 		    <TableRow
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:background="@color/blue_theme"
+		        android:background="@color/gray_theme"
 		        android:paddingTop="5dp">
 
 		   	<Spinner
@@ -169,7 +169,9 @@
 		   	    android:layout_width="50dp"
 		   	    android:layout_height="wrap_content"
 		   	    android:entries="@array/SearchBy_arrays"
-		   	    android:paddingRight="50dp" />
+		   	    android:paddingRight="50dp"
+		   	    android:layout_weight="1"
+		   	    style="@style/SpinnerAppTheme.DropDown" />
 				        
 		    <TextView
 		        android:id="@+id/accountName"
@@ -177,6 +179,7 @@
 		        android:layout_height="wrap_content"
 		        android:text="Account name"
 		        style="@style/CodeFont"
+		        android:layout_weight="1"
 		        android:visibility="gone"/>
 
 		    <Spinner
@@ -184,7 +187,9 @@
 		        android:layout_width="259dp"
 		        android:layout_height="wrap_content"
 		        android:entries="@array/accountName_arrays"
-		        android:prompt="@string/accountName_prompt" />
+		        android:prompt="@string/accountName_prompt"
+		        android:layout_weight="1"
+		        style="@style/SpinnerAppTheme.DropDown" />
     
 		    <TextView
 		        android:id="@+id/amount"
@@ -192,6 +197,7 @@
 		        android:layout_height="wrap_content"
 		        style="@style/CodeFont"
 		        android:textColor="#FFFFFF" 
+		        android:layout_weight="1"
 		        android:visibility="gone"/>
 		    
 		     <TextView
@@ -201,6 +207,7 @@
 		        android:text="@string/Rs"
 		        style="@style/CodeFont"
 		        android:paddingRight="5dp"
+		        android:layout_weight="1"
 		        android:paddingLeft="10dp"
 		        android:visibility="gone"/>
 		     
@@ -210,7 +217,9 @@
 			      android:layout_height="wrap_content"
 			      android:inputType="numberDecimal"
 			      android:text="0.00"
-			      android:enabled="false" >
+			      android:layout_weight="1"
+			      android:enabled="false"
+			      style="@style/EditTextAppTheme" >
 				  
 	          <requestFocus />
 			  </EditText>
@@ -221,6 +230,7 @@
 			       android:layout_height="wrap_content"
 			       android:inputType="numberDecimal"
 			       android:text="0.00"
+			       android:layout_weight="1"
 			       style="@style/EditTextAppTheme" >
 
 	          <requestFocus />
@@ -228,9 +238,10 @@
 			  
 			 <Button
 			     android:id="@+id/add"
-			     android:layout_width="65dp"
+			     android:layout_width="match_parent"
 			     android:layout_height="wrap_content"
 			     android:text=" + "
+			     android:layout_weight="1"
 			     style="@style/DefaultButton" />
    
 		    </TableRow>
@@ -245,7 +256,7 @@
     		android:paddingLeft="3dp"
     		android:paddingRight="3dp"
     		android:paddingBottom="3dp"
-    		android:background="@drawable/gradiant_list_bg"/>
+    		android:background="@color/blue_theme"/>
 	
 	<LinearLayout
         android:layout_width="fill_parent"

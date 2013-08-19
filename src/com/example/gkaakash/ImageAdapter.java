@@ -40,25 +40,25 @@ public class ImageAdapter extends BaseAdapter {
 			ImageView imageView = (ImageView) gridView
 					.findViewById(R.id.grid_item_image);
 			
-			if (MENU_OPTIONS[position].equalsIgnoreCase("Create account")) {
-				imageView.setImageResource(R.drawable.account_logo);
-			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Transaction")) {
-				imageView.setImageResource(R.drawable.money_image);
-			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Reports")) {
-				imageView.setImageResource(R.drawable.report_logo);
-			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Bank Reconciliation")) {
-				imageView.setImageResource(R.drawable.help_logo);
-			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Preferences")) {
-				imageView.setImageResource(R.drawable.settings_logo);
-			} else if (MENU_OPTIONS[position].equalsIgnoreCase("RollOver")) {
-				imageView.setImageResource(R.drawable.settings_logo);
-			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Export organisation")) {
-				imageView.setImageResource(R.drawable.export_logo);
-			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Help")) {
-				imageView.setImageResource(R.drawable.help_logo);
-			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Account Settings")){
-				imageView.setImageResource(R.drawable.settings_logo);
-			}
+//			if (MENU_OPTIONS[position].equalsIgnoreCase("Create account")) {
+//				imageView.setImageResource(R.drawable.account_logo);
+//			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Transaction")) {
+//				imageView.setImageResource(R.drawable.money_image);
+//			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Reports")) {
+//				imageView.setImageResource(R.drawable.report_logo);
+//			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Bank Reconciliation")) {
+//				imageView.setImageResource(R.drawable.help_logo);
+//			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Preferences")) {
+//				imageView.setImageResource(R.drawable.settings_logo);
+//			} else if (MENU_OPTIONS[position].equalsIgnoreCase("RollOver")) {
+//				imageView.setImageResource(R.drawable.settings_logo);
+//			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Export organisation")) {
+//				imageView.setImageResource(R.drawable.export_logo);
+//			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Help")) {
+//				imageView.setImageResource(R.drawable.help_logo);
+//			} else if (MENU_OPTIONS[position].equalsIgnoreCase("Account Settings")){
+//				imageView.setImageResource(R.drawable.settings_logo);
+//			}
  
 		} else {
 			gridView = (View) convertView;

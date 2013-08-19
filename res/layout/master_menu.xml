@@ -3,10 +3,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@color/light_blue_theme">
+    android:background="@color/blue_theme">
     
     <include layout="@layout/org_info"/>
-    
     
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
@@ -52,6 +51,10 @@
 	            android:padding="5dp"
 	    		style="@style/FontSmall"/>
     </LinearLayout>
+    
+    <LinearLayout android:layout_width="2dp"
+    android:layout_height="match_parent"
+    android:background="#ffffff"/>
     
 <GridView 
     android:id="@+id/gridView1"

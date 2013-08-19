@@ -155,16 +155,15 @@ public class balanceSheet extends Activity{
    	
     		getSelectedOrgType = reportMenu.orgtype;
 			
-    		/*
-    		 * set financial from date and to date in textview
-    		 */
-    		TextView tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
- 
+    		
     		//set title
 			TextView org = (TextView)findViewById(R.id.org_name);
 			org.setText(OrgName + ", "+reportMenu.orgtype);
 			TextView tvdate = (TextView)findViewById(R.id.date);
 			tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
+			
+			TextView tv = (TextView) findViewById(R.id.tvaccountName);
+			tv.setText(balancetype);
 			
 //    		final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
 //    		btnScrollDown.setOnClickListener(new OnClickListener() {
@@ -188,8 +187,14 @@ public class balanceSheet extends Activity{
 			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
 			String str_fromDate = write.format(read.parse(financialFromDate));
 			String str_toDate = write.format(read.parse(balanceToDateString));
+			/*
+    		 * set financial from date and to date in textview
+    		 */
+    		tv = (TextView) findViewById( R.id.tvfinancialToDate );
+ 
+	    	tv.setText("Period : "+str_fromDate+" to "+str_toDate);   
 	    	
-	    	tvfinancialToDate.setText("Period : "+str_fromDate+" to "+str_toDate);   
+	    	
     		Object[] params = new Object[]{financialFromDate,financialFromDate,balanceToDateString,"balancesheet",getSelectedOrgType,balancetype};
     		balancesheetresult = (Object[]) report.getBalancesheetDisplay(params,client_id);
     		//balance sheet result is 3 dimensional list 
@@ -390,7 +395,7 @@ public class balanceSheet extends Activity{
     		if(columnValue.get(1).equalsIgnoreCase("Amount")||columnValue.get(1).equalsIgnoreCase("Debit")){
     			//for heading pass green color code
     			// System.out.println("iam in chaninging color "+columnValue.get(1));
-    			setRowColorSymbolGravity(columnValue, Color.parseColor("#ffffff"),true);
+    			setRowColorSymbolGravity(columnValue, Color.WHITE,true);
     		}
     		else{
     			int row_color;
@@ -430,7 +435,7 @@ public class balanceSheet extends Activity{
     			}else{
     				addRow(columnValue.get(j));
     			}
-    			label.setTextColor(Color.parseColor("#085e6b")); //blue theme
+    			label.setTextColor(Color.BLACK); //blue theme
     		}else{
     			addRow(columnValue.get(j));
     		}

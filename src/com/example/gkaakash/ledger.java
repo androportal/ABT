@@ -381,8 +381,8 @@ public class ledger extends Activity {
 					for (int k = 0; k < len; k++) {
 						/** Creating a TextView to add to the row **/
 						addRow(ColumnNameList[k], k);
-						label.setBackgroundColor(Color.parseColor("#ffffff"));
-						label.setTextColor(Color.parseColor("#085e6b")); //blue theme
+						label.setBackgroundColor(Color.WHITE);
+						label.setTextColor(Color.BLACK); //blue theme
 						label.setGravity(Gravity.CENTER);
 						tr.setClickable(false);
 						LinearLayout l = (LinearLayout) ((ViewGroup) row)
@@ -569,8 +569,8 @@ public class ledger extends Activity {
 			/** Creating a TextView to add to the row **/
 			addRow(ColumnNameList[k], k);
 			tr.setClickable(false);
-			label.setBackgroundColor(Color.parseColor("#ffffff"));
-			label.setTextColor(Color.parseColor("#085e6b")); //blue theme
+			label.setBackgroundColor(Color.WHITE);
+			label.setTextColor(Color.BLACK); //blue theme
 			label.setGravity(Gravity.CENTER);
 		}
 

@@ -1617,11 +1617,11 @@ public class createVoucher extends Activity {
 		newRow = new TableRow(table.getContext());
 		newRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT));
-		newRow.setBackgroundColor(Color.parseColor("#085e6b"));
-		newRow.setPadding(0, 0, 0, 10);
+		newRow.setBackgroundColor(Color.parseColor("#2f2f2f"));
 		// newRow.addView(child, width, height)
 
 		second_table_drcr_spinner = new Spinner(newRow.getContext());
+		second_table_drcr_spinner.setBackgroundResource(R.drawable.spinner_background_holo_light);
 
 		TextView tv = new TextView(newRow.getContext());
 		tv.setText("        Account Name");
@@ -1631,6 +1631,7 @@ public class createVoucher extends Activity {
 
 		second_table_accountname_spinner = new Spinner(newRow.getContext());
 		second_table_accountname_spinner.setMinimumWidth(259);// for emulator keep 283
+		second_table_accountname_spinner.setBackgroundResource(R.drawable.spinner_background_holo_light);
 
 		OnDrCrItemSelectedListener();
 
@@ -1655,6 +1656,8 @@ public class createVoucher extends Activity {
 				| InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
 		second_table_closingbal_et = new EditText(newRow.getContext());
+		second_table_closingbal_et.setBackgroundResource(R.drawable.edit_text_holo_light);
+		second_table_closingbal_et.setTextColor(Color.WHITE);
 		second_table_closingbal_et.setText("0.00");
 		second_table_closingbal_et.setInputType(InputType.TYPE_CLASS_NUMBER
 				| InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -1669,15 +1672,15 @@ public class createVoucher extends Activity {
 		removeSelfButton.setOnClickListener(new RowRemover(table, newRow));
 		removeSelfButton.setTextColor(Color.WHITE);
 		
-		newRow.addView(second_table_drcr_spinner, 100, 50);
+		newRow.addView(second_table_drcr_spinner, 105, 50);
 		newRow.addView(tv);
 		newRow.addView(second_table_accountname_spinner, 259, 50);
 		newRow.addView(tv1);
 		newRow.addView(tv2);
 
-		newRow.addView(second_table_closingbal_et, 160, 50);
-		newRow.addView(second_table_amount_et, 180, 50);
-		newRow.addView(removeSelfButton);
+		newRow.addView(second_table_closingbal_et, 162, 50);
+		newRow.addView(second_table_amount_et, 182, 50);
+		newRow.addView(removeSelfButton,60,50);
 		table.addView(newRow);
 		OnAmountFocusChangeListener();
 	}

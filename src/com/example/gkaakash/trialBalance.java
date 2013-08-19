@@ -136,15 +136,18 @@ public class trialBalance extends Activity{
 	    	/*
 		    * set financial from date and to date in textview
 		    */
-	    	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
+	    	TextView tv = (TextView) findViewById( R.id.tvfinancialToDate );
 		  
 	    	//to get month in words
 			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
 			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
 			String str_fromDate = write.format(read.parse(financialFromDate));
 			String str_toDate = write.format(read.parse(trialToDateString));
+	    	tv.setText("Period : "+str_fromDate+" to "+str_toDate);
 	    	
-	    	tvfinancialToDate.setText("Period : "+str_fromDate+" to "+str_toDate);   
+	    	tv = (TextView) findViewById(R.id.tvaccountName);
+	    	tv.setText(trialbalancetype);
+	    	
 	    	/*
 		    * send params to controller report.getTrialBalance to get the result
 		    */
@@ -256,7 +259,7 @@ public class trialBalance extends Activity{
                         /** Creating a TextView to add to the row **/
                         addRow(ColumnNameList[k],k);
                         label.setBackgroundColor(Color.WHITE);
-                        label.setTextColor(Color.parseColor("#085e6b"));
+                        label.setTextColor(Color.BLACK);
                         label.setGravity(Gravity.CENTER);
                         LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(k);
 			            label.setWidth(l.getWidth());
@@ -475,7 +478,7 @@ public class trialBalance extends Activity{
             /** Creating a TextView to add to the row **/
             addRow(ColumnNameList[k],0);
             label.setBackgroundColor(Color.parseColor("#ffffff"));
-			label.setTextColor(Color.parseColor("#085e6b")); //blue theme
+			label.setTextColor(Color.BLACK); //blue theme
             label.setGravity(Gravity.CENTER);
             tr.setClickable(false);
         }

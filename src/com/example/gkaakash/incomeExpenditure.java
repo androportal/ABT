@@ -123,14 +123,15 @@ public class incomeExpenditure extends Activity{
         	/*
         	 * set financial from date and to date in textview
         	 */
-        	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
+        	TextView tv = (TextView) findViewById( R.id.tvfinancialToDate );
         	//to get month in words
 			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
 			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
 			String str_fromDate = write.format(read.parse(financialFromDate));
 			String str_toDate = write.format(read.parse(IEToDateString));
+	    	tv.setText("Period : "+str_fromDate+" to "+str_toDate);   
 	    	
-	    	tvfinancialToDate.setText("Period : "+str_fromDate+" to "+str_toDate);   
+	    	
    
         	/*
         	 * send params to controller report.getProfitLossDisplay to get the result
@@ -187,6 +188,9 @@ public class incomeExpenditure extends Activity{
 			org.setText(OrgName + ", "+getSelectedOrgType);
 			TextView tvdate = (TextView)findViewById(R.id.date);
 			tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
+			
+			tv = (TextView) findViewById(R.id.tvaccountName);
+	    	tv.setText(Reporttypeflag);
 			
 //            final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);            
 //            btnScrollDown.setOnClickListener(new OnClickListener() {
@@ -285,7 +289,7 @@ public class incomeExpenditure extends Activity{
             
             if(columnValue.get(2).equalsIgnoreCase("Amount")){
             	//for heading pass green color code
-            	setRowColorSymbolGravity(columnValue, Color.parseColor("#ffffff"));
+            	setRowColorSymbolGravity(columnValue, Color.WHITE);
             }
             else{
             	int row_color;
@@ -322,7 +326,7 @@ public class incomeExpenditure extends Activity{
     				
     				addRow(rsSymbol+" "+columnValue.get(j));   
     				label.setBackgroundColor(color);
-    				label.setTextColor(Color.parseColor("#085e6b")); //blue theme
+    				label.setTextColor(Color.BLACK); //blue theme
     				label.setGravity(Gravity.CENTER);
     			}
     			else{

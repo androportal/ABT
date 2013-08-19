@@ -162,7 +162,7 @@ public class bankReconciliation extends Activity{
 			tvaccontName = (TextView) findViewById(R.id.tvReconAccName);
 			tvfinancialToDate = (TextView) findViewById(R.id.tvfinancialToDate);
 
-			tvaccontName.setText("Account name: " + accountName);
+			tvaccontName.setText("Bank Reconciliation for " + accountName);
 			//to get month in words
 			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
 			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
@@ -458,7 +458,7 @@ public class bankReconciliation extends Activity{
 		            		if ((i + 1) % 2 == 0)
 		    					label.setBackgroundColor(Color.parseColor("#085e6b")); //blue theme
 		    				else
-		    					label.setBackgroundColor(Color.parseColor("#2f2f2f")); //light blue theme
+		    					label.setBackgroundColor(Color.parseColor("#2f2f2f")); //gray theme
 		                    params.height = 45;
 		                         
 		                    //hide vouchercode column
@@ -527,14 +527,27 @@ public class bankReconciliation extends Activity{
 		                    //memo
 		                    EditText e = new EditText(this);
 		                    e.setBackgroundResource(R.drawable.edit_text_holo_light);
-		                    tr.addView(e);
+		                    
+		                    Ll = new LinearLayout(this);
+		                    params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+		                            45);
+		                    params.setMargins(1, 1, 1, 1);
+		                    Ll.addView(e,params);
+		                    Ll.setBackgroundColor(Color.parseColor("#2f2f2f"));
+		                    tr.addView((View)Ll);
 		                }
 		                else {
 		                    addRow("",i,6,1);  //date
 		                    //memo
 		                    EditText e = new EditText(this);
 		                    e.setBackgroundResource(R.drawable.edit_text_holo_light);
-		                    tr.addView(e);
+		                    Ll = new LinearLayout(this);
+		                    params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+		                            45);
+		                    params.setMargins(1, 1, 1, 1);
+		                    Ll.addView(e,params);
+		                    Ll.setBackgroundColor(Color.parseColor("#2f2f2f"));
+		                    tr.addView((View)Ll);
 		                    addRow(for_naration.get(i).get(6).toString(),i,8,1);   //naration
 		                   
 		                }
@@ -548,7 +561,13 @@ public class bankReconciliation extends Activity{
 		                	EditText e = new EditText(this);
 		                	e.setText(bankReconGrid.get(i).get(7).toString());
 		                	e.setBackgroundResource(R.drawable.edit_text_holo_light);
-		                    tr.addView(e);
+		                	Ll = new LinearLayout(this);
+		                    params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+		                            45);
+		                    params.setMargins(1, 1, 1, 1);
+		                    Ll.addView(e,params);
+		                    Ll.setBackgroundColor(Color.parseColor("#2f2f2f"));
+		                    tr.addView((View)Ll);
 		                    
 		                    if(narration_flag==true){
 		                    	addRow(for_naration.get(i).get(6).toString(),i,8,1);   //naration
@@ -586,8 +605,8 @@ public class bankReconciliation extends Activity{
 	            			}
 			            	
 			            	params1.height = LayoutParams.WRAP_CONTENT;
-			            	label1.setBackgroundColor(Color.parseColor("#ffffff"));
-			            	label1.setTextColor(Color.parseColor("#085e6b"));
+			            	label1.setBackgroundColor(Color.WHITE);
+			            	label1.setTextColor(Color.BLACK);
 		            	}
 	            	}
 	            	else{//remaining rows
@@ -626,8 +645,8 @@ public class bankReconciliation extends Activity{
         for(int k=0;k<ColumnNameList.length;k++){
             /** Creating a TextView to add to the row **/
         	addRow(ColumnNameList[k],k,k,0);
-        	label.setBackgroundColor(Color.parseColor("#ffffff"));
-			label.setTextColor(Color.parseColor("#085e6b")); //blue theme
+        	label.setBackgroundColor(Color.WHITE);
+			label.setTextColor(Color.BLACK); //blue theme
         	label.setGravity(Gravity.CENTER);
         	tr.setClickable(false);
         	params.height = LayoutParams.WRAP_CONTENT;
@@ -915,12 +934,6 @@ public class bankReconciliation extends Activity{
                                   
                                     dialog1=builder.create();
                                     dialog1.show();
-                                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                                    //customizing the width and location of the dialog on screen
-                                    lp.copyFrom(((Dialog) dialog1).getWindow().getAttributes());
-                                    lp.height = 600;
-                                    lp.width = 400;
-                                    ((Dialog) dialog).getWindow().setAttributes(lp);   
                                 }
                                 /*
                                  * option 'clear date' will clear date in the textview and instead set just a space
@@ -957,12 +970,6 @@ public class bankReconciliation extends Activity{
                         });
                         dialog = builder.create();
                         dialog.show();
-                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                        //customizing the width and location of the dialog on screen
-                        lp.copyFrom(dialog.getWindow().getAttributes());
-                        lp.height = 600;
-                        lp.width = 400;
-                        dialog.getWindow().setAttributes(lp);   
                     }
                     /*
                      * if clearance date field is empty, 
@@ -1056,14 +1063,7 @@ public class bankReconciliation extends Activity{
                         });
                       
                         dialog2=builder.create();
-                        dialog2.show();
-                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                        //customizing the width and location of the dialog on screen
-                        lp.copyFrom(((Dialog) dialog2).getWindow().getAttributes());
-                        lp.height = 600;
-                        lp.width = 400;
-                        ((Dialog) dialog2).getWindow().setAttributes(lp);
-                       
+                        dialog2.show();                       
                     }
                 }
             });

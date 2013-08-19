@@ -123,7 +123,7 @@ public class projectStatement extends Activity{
         	projectName = reportMenu.selectedProject;
         	
         	TextView tvaccountName = (TextView) findViewById( R.id.tvaccountName);
-        	tvaccountName.setVisibility(View.GONE);
+        	tvaccountName.setText("Project Statement");
         	
         	if(!projectName.equalsIgnoreCase("No Project")){
         		TextView tvProjectName = (TextView) findViewById( R.id.tvProjectName );
@@ -137,14 +137,15 @@ public class projectStatement extends Activity{
         	/*
         	 * set financial from date and to date in textview
         	 */
-        	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
+        	TextView tv = (TextView) findViewById( R.id.tvfinancialToDate );
         	//to get month in words
 			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
 			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
 			String str_fromDate = write.format(read.parse(financialFromDate));
 			String str_toDate = write.format(read.parse(ToDateString));
 	    	
-	    	tvfinancialToDate.setText("Period : "+str_fromDate+" to "+str_toDate);   
+	    	tv.setText("Period : "+str_fromDate+" to "+str_toDate);  
+	    	
         	/*
         	 * send params to controller report.getProjectStatementReport to get the result
         	 */
@@ -242,8 +243,8 @@ public class projectStatement extends Activity{
 			        for(int k=0;k<ColumnNameList.length;k++){
 			            /** Creating a TextView to add to the row **/
 			            addRow(ColumnNameList[k],k);
-			            label.setBackgroundColor(Color.parseColor("#ffffff"));
-						label.setTextColor(Color.parseColor("#085e6b")); //blue theme
+			            label.setBackgroundColor(Color.WHITE);
+						label.setTextColor(Color.BLACK); //blue theme
 			            label.setGravity(Gravity.CENTER);
 			            LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(k);
 			            label.setWidth(l.getWidth());
@@ -405,8 +406,8 @@ public class projectStatement extends Activity{
         for(int k=0;k<ColumnNameList.length;k++){
             /** Creating a TextView to add to the row **/
             addRow(ColumnNameList[k],k);
-            label.setBackgroundColor(Color.parseColor("#ffffff"));
-			label.setTextColor(Color.parseColor("#085e6b")); //blue theme
+            label.setBackgroundColor(Color.WHITE);
+			label.setTextColor(Color.BLACK); //blue theme
             label.setGravity(Gravity.CENTER);
             label.setClickable(false);
         }

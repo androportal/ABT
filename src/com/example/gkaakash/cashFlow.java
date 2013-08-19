@@ -144,7 +144,7 @@ public class cashFlow extends Activity{
         	 * set financial from date and to date in textview
         	 */
         	
-        	TextView tvfinancialToDate = (TextView) findViewById( R.id.tvfinancialToDate );
+        	TextView tv = (TextView) findViewById( R.id.tvfinancialToDate );
      
         	//to get month in words
 			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
@@ -152,7 +152,11 @@ public class cashFlow extends Activity{
 			String str_fromDate = write.format(read.parse(fromDateString));
 			String str_toDate = write.format(read.parse(toDateString));
 	    	
-	    	tvfinancialToDate.setText("Period : "+str_fromDate+" to "+str_toDate);   
+	    	tv.setText("Period : "+str_fromDate+" to "+str_toDate);   
+	    	
+	    	tv = (TextView) findViewById(R.id.tvaccountName);
+	    	tv.setText("Cash Flow");
+	    	
         	/*
         	 * send params to controller report.getCashFlow to get the result
         	 */
@@ -299,7 +303,7 @@ public class cashFlow extends Activity{
             if(columnValue.get(0).equalsIgnoreCase("Account Name")){
                	//for heading pass green color code
             	// System.out.println("iam in chaninging color "+columnValue.get(1));
-               	setRowColorSymbolGravity(columnValue, Color.parseColor("#ffffff"), true);
+               	setRowColorSymbolGravity(columnValue, Color.WHITE, true);
             }
             else{
             	int row_color;
@@ -333,7 +337,7 @@ public class cashFlow extends Activity{
     			}else{
     				addRow(columnValue.get(j),j);   
     			}
-    			label.setTextColor(Color.parseColor("#085e6b")); //blue theme
+    			label.setTextColor(Color.BLACK); //blue theme
     		}
     		else{
     			addRow(columnValue.get(j),j);   
