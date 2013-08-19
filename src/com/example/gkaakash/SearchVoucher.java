@@ -54,8 +54,6 @@ public class SearchVoucher extends Activity {
 	AlertDialog dialog;
 	DecimalFormat mFormat;
 	private Transaction transaction;
-
-
 	static Integer client_id;
 	static ArrayList<ArrayList<String>> searchedVoucherGrid;
 	static ArrayList<String> searchedVoucherList;
@@ -67,8 +65,8 @@ public class SearchVoucher extends Activity {
 	int rowid=0;
 	static String vouchertypeflag;
 	static ArrayList<String> value;
-	static String name;
-	static Boolean cloneflag=false;
+	static String name,deleted_vouchercode;
+	static Boolean cloneflag=false,deletedflag=false;
 	String vouchercode;
 	LinearLayout.LayoutParams params;
 	static int searchVoucherBy = 2; // by date
@@ -556,7 +554,11 @@ public class SearchVoucher extends Activity {
 										vouchercode=value.get(0);
 										Object[] params = new Object[]{vouchercode};
 										deleteVoucher = (Boolean) transaction.deleteVoucher(params,client_id);
-
+										if(deleteVoucher.equals(true))
+										{
+											deletedflag = true;
+											deleted_vouchercode = vouchercode;
+										}
 										Object[] allvouchersparams = new Object[]{2,"",financialFromDate,financialToDate,""};
 										getallvouchers(allvouchersparams);
 
