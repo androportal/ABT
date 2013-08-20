@@ -116,7 +116,7 @@ public class menu extends Activity{
 	CharSequence[] items;
 	boolean reset_password_flag = false;
 	static String IPaddr;
-	GridView gridView;
+	ListView listView;
 	
 	private Transaction transaction;
 	static boolean flag;
@@ -284,11 +284,11 @@ public class menu extends Activity{
 		}
 
 
-		gridView = (GridView) findViewById(R.id.gridView1);
+		listView = (ListView) findViewById(R.id.gridView1);
 
-		gridView.setAdapter(new ImageAdapter(this, menuOptions));
+		listView.setAdapter(new ImageAdapter(this, menuOptions));
 
-		gridView.setOnItemClickListener(new OnItemClickListener() {
+		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
 				Toast.makeText(
