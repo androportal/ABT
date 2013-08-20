@@ -1,5 +1,7 @@
 package com.example.gkaakash;
 
+import java.util.List;
+
 import com.gkaakash.controller.Preferences; 
 import com.gkaakash.controller.Startup;
 
@@ -18,7 +20,6 @@ import android.widget.TextView;
 
 @SuppressWarnings("deprecation")
 public class account_tab extends Activity{
-	String accCodeFlag;
 	TextView tab1 = null;
 	TextView tab2 = null;
 	private Integer client_id;
@@ -35,8 +36,7 @@ public class account_tab extends Activity{
 	        preferences = new Preferences(IPaddr);
 	        // this is client_id get after getConnetion method call for existing organisation 
 	        client_id = Startup.getClient_id();
-	        // call getPreferences to get flag for account code where flagno is 1
-	        accCodeFlag = preferences.getPreferences(new Object[]{1},client_id);
+	        
 	        //for visibility of account tab layout 
 			MainActivity.tabFlag = true;
 			

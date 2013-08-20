@@ -1,5 +1,7 @@
 package com.example.gkaakash;
 
+import java.util.List;
+
 import com.gkaakash.controller.Preferences;
 import com.gkaakash.controller.Startup;
 
@@ -12,9 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class login extends Activity {
-	String accCodeCheckFlag;
 	final Context context = this;
-	private Preferences prferenceObj;
 	private Integer client_id;
 	static String IPaddr;
 	public void onCreate(Bundle savedInstanceState) {
@@ -24,8 +24,6 @@ public class login extends Activity {
 		client_id = Startup.getClient_id();
 		IPaddr = MainActivity.IPaddr;
 	    System.out.println("in createorg"+IPaddr);
-		prferenceObj = new Preferences(IPaddr);
-		accCodeCheckFlag = prferenceObj.getPreferences(new Object[]{2},client_id );
 		OnClickListener();
 }
 

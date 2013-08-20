@@ -226,7 +226,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_weight="0.90"
-            android:text="Finish"
+            android:text="Exit"
             android:layout_gravity="center_vertical"
             style="@style/DefaultButton" />
 

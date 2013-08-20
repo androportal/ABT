@@ -34,7 +34,8 @@ import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
 
 public class edit_account extends Activity {
-	static String accCodeCheckFlag;
+	static Object[] accCodeCheckFlag_Obj;
+	String accCodeCheckFlag;
 	private ListView List;
 	private EditText etSearch;
 	Spinner sSearchAccountBy;
@@ -73,10 +74,11 @@ public class edit_account extends Activity {
 
 		Preferences preferencObj = new Preferences(IPaddr);
 		// call getPrefernece to get set preference related to account code flag
-		accCodeCheckFlag = preferencObj.getPreferences(new Object[] { "1" },client_id);
-
+		accCodeCheckFlag_Obj = preferencObj.getPreferences(new Object[] { "1" },client_id);
+		accCodeCheckFlag=(String)accCodeCheckFlag_Obj[0];
+		
 		// set visibility of spinner
-		if (accCodeCheckFlag.equals("automatic")) {
+		if (accCodeCheckFlag.equalsIgnoreCase("automatic")) {
 			sSearchAccountBy.setVisibility(Spinner.GONE);
 		} else {
 			sSearchAccountBy.setVisibility(Spinner.VISIBLE);
@@ -686,10 +688,11 @@ public class edit_account extends Activity {
 			if (sSearchAccountBy.getSelectedItemPosition() == 1) {
 				// if search by account code, get account name by code
 				Object[] params = new Object[] {Acc_name};
-				Acc_name = (String)Account.getAccountNameByAccountCode(params, client_id);
+				Object Acc_name1 = (Object)Account.getAccountNameByAccountCode(params, client_id);
+				Acc_name = Acc_name1.toString();
 			}
 			//calculate closing balance and set the list
-			Object[] params1 = new Object[] { Acc_name, financialFromDate,
+			Object[] params1 = new Object[] { Acc_name.toString(), financialFromDate,
 					financialFromDate, financialToDate };
 			String calculateBalance = (String) reports.calculateBalance(
 					params1, client_id);

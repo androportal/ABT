@@ -300,7 +300,7 @@ import android.widget.Toast;
 				@Override
 				public void onClick(View v) {
 					if(editDetailsflag==false){
-						Intent intent = new Intent(getApplicationContext(), preferences.class);
+						Intent intent = new Intent(getApplicationContext(), menu.class);
 					    startActivity(intent);
 					}else {
 						AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -721,7 +721,7 @@ import android.widget.Toast;
 				public void onClick(DialogInterface dialog, int id) {
 					if(editDetailsflag==false){
 					//To pass on the activity to the next page
-					Intent intent = new Intent(context, preferences.class);
+					Intent intent = new Intent(context, menu.class);
 					startActivity(intent);
 					}else{
 						

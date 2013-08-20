@@ -26,7 +26,8 @@
          
          <TableRow 
              android:layout_width="match_parent"
-             android:layout_height="wrap_content">
+             android:layout_height="wrap_content"
+             android:id="@+id/acc_row">
          
          <TextView
              android:id="@+id/tvAccName"
@@ -49,7 +50,8 @@
         </TableRow>
         
          <TableRow android:layout_width="match_parent"
-               android:layout_height="wrap_content">
+               android:layout_height="wrap_content"
+               android:id="@+id/from_btn_row" >
              
              <TextView
                        android:layout_width="match_parent"
@@ -69,7 +71,8 @@
          </TableRow>
          
          <TableRow android:layout_width="match_parent"
-               android:layout_height="wrap_content">
+               android:layout_height="wrap_content"
+               android:id="@+id/to_btn_row" >
              
              <TextView
                  style="@style/CodeFont"
@@ -106,7 +109,8 @@
 		</TableRow>
         
 		<TableRow android:layout_width="match_parent"
-               android:layout_height="wrap_content">
+               android:layout_height="wrap_content"
+               android:id="@+id/project_row" >
         <TextView
             android:id="@+id/tvProject"
             android:layout_width="match_parent"

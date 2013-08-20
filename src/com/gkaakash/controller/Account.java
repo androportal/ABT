@@ -10,6 +10,7 @@ public class Account {
 	
 	private static CoreConnection conn;
 	private static Object[] accparams;
+	private static Object getaccountname;
 	private static String setaccount;
 	private Object getTotalDrBalance;
 	private Object getTotalCrBalance;
@@ -276,16 +277,16 @@ public class Account {
 	 * @param account code, client id
 	 * returns accountname
 	 */
-	public static String getAccountNameByAccountCode(Object[] accname, Object client_id) {
+	public static Object getAccountNameByAccountCode(Object[] accname, Object client_id) {
 		
 		try {
-			setaccount = (String)conn.getClient().call("account.getAccountNameByAccountCode",accname,client_id);
+			getaccountname = conn.getClient().call("account.getAccountNameByAccountCode",accname,client_id);
 			
 		} catch (XMLRPCException e) {
 			
 			e.printStackTrace();
 		}
-		return setaccount;
+		return getaccountname;
 	}
 	
 	

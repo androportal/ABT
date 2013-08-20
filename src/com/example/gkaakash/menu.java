@@ -99,7 +99,7 @@ public class menu extends Activity{
 	static ArrayList<String> accdetailsList;
 	boolean reportmenuflag;
 	static String orgtype,userrole;
-	static String OrgName,rolloverFlag;
+	static String OrgName;
 	TextView tvWarning;
 	module m;
 	static String[] menuOptions;
@@ -262,30 +262,19 @@ public class menu extends Activity{
 		reset_password(reset_password_flag);
 
 		user.getUserNemeOfOperatorRole(client_id);
-		// call getPrefernece to get set preference related to account code flag
-		rolloverFlag = preferences.getPreferences(new Object[]{"2"},client_id);
+		
 		//adding list items to the newly created menu list
 		if(userrole.equalsIgnoreCase("guest"))
 		{
-			if(rolloverFlag.equalsIgnoreCase("manually"))
-			{
-				menuOptions = new String[] { "Create account", "Transaction", "Reports",
-						"Bank Reconciliation", "Preferences","RollOver","Export organisation","Help"};
-			}else
-			{
-				menuOptions = new String[] { "Create account", "Transaction", "Reports",
-						"Bank Reconciliation", "Preferences","Export organisation","Help"};
-			}
+			
+			menuOptions = new String[] { "Create account", "Transaction", "Reports",
+					"Bank Reconciliation", "Preferences","RollOver","Export organisation","Help"};
+			
 		}else if(userrole.equalsIgnoreCase("admin")){
-			if(rolloverFlag.equalsIgnoreCase("manually"))
-			{
-				menuOptions = new String[] { "Create account", "Transaction", "Reports",
-						"Bank Reconciliation", "Preferences","RollOver","Export organisation","Account Settings","Help"};
-			}else
-			{
-				menuOptions = new String[] { "Create account", "Transaction", "Reports",
-						"Bank Reconciliation", "Preferences","Export organisation","Account Settings","Help"};
-			}
+			
+			menuOptions = new String[] { "Create account", "Transaction", "Reports",
+					"Bank Reconciliation", "Preferences","RollOver","Export organisation","Account Settings","Help"};
+			
 		}else if(userrole.equalsIgnoreCase("manager")){
 			menuOptions = new String[] { "Create account", "Transaction", "Reports",
 					"Bank Reconciliation","Preferences", "Export organisation","Account Settings","Help"};
@@ -346,46 +335,29 @@ public class menu extends Activity{
 
 					}
 					if(userrole.equalsIgnoreCase("guest")){
-						if(rolloverFlag.equals("manually"))
-						{
-							// for rollOver
-							if (position == 5) {
-								rollover();
-							}
-							if(position == 6){
-								export();
-							}
-							//for help
-							if(position == 7){
-								Intent intent = new Intent(context, Help.class);
-								// To pass on the value to the next page
-								startActivity(intent);
-							}
-						}else{
-
-							if(position == 5){
-								export();
-							}
-							//for help
-							if(position == 6){
-								Intent intent = new Intent(context, Help.class);
-								// To pass on the value to the next page
-								startActivity(intent);
-							}
+						// for rollOver
+						if (position == 5) {
+							rollover();
 						}
+						if(position == 6){
+							export();
+						}
+						//for help
+						if(position == 7){
+							Intent intent = new Intent(context, Help.class);
+							// To pass on the value to the next page
+							startActivity(intent);
+						}
+						
 					}
 					else if(userrole.equalsIgnoreCase("admin")){
-						if(rolloverFlag.equals("manually"))
-						{
-							// for rollOver
-							if (position == 5) {
-								rollover();
-							}
-							exportToAbout(position,6);
-
-						}else{//for admin only
-							exportToAbout(position,5);
+						
+						// for rollOver
+						if (position == 5) {
+							rollover();
 						}
+						exportToAbout(position,6);
+
 					}else{ //for manager only
 						exportToAbout(position,5);
 					}

@@ -13,21 +13,27 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class createAccount<group> extends Activity{
     // Declaring variables
-    static String accCodeCheckFlag;
+	static Object[] accCodeCheckFlag_Obj;
+	String accCodeCheckFlag;
+	int setFlag = 0;
     TextView tvaccCode, tvDbOpBal, tvOpBal,tvOpBalRupeeSymbol,tvAccName,tvAccCode;
     EditText etaccCode, etDtOpBal, etOpBal,etAccCode;
     Spinner sgrpName,sSearchBy,sAccName;
@@ -98,10 +104,64 @@ public class createAccount<group> extends Activity{
             etDiffbal = (EditText) findViewById(R.id.etDiffBal);
             
             // call getPrefernece to get set preference related to account code flag   
-            accCodeCheckFlag = preferencObj.getPreferences(new Object[]{"1"},client_id);
-            
+            accCodeCheckFlag_Obj = preferencObj.getPreferences(new Object[]{"1"},client_id);
+			accCodeCheckFlag=(String)accCodeCheckFlag_Obj[0];
+			setFlag =(Integer)accCodeCheckFlag_Obj[1];
+			
+			if(setFlag == 0){
+    	 
+	            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+				View layout = inflater.inflate(R.layout.ledger, (ViewGroup) findViewById(R.id.layout_root));
+				//Building DatepPcker dialog
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setView(layout);
+				builder.setTitle("Set manual account code");
+				builder.setCancelable(false);
+				
+				//set invisibility of unwanted elements
+				TableRow row = (TableRow)layout.findViewById(R.id.acc_row);
+				row.setVisibility(View.GONE);
+				row = (TableRow)layout.findViewById(R.id.project_row);
+				row.setVisibility(View.GONE);
+				row = (TableRow)layout.findViewById(R.id.from_btn_row);
+				row.setVisibility(View.GONE);
+				row = (TableRow)layout.findViewById(R.id.to_btn_row);
+				row.setVisibility(View.GONE);
+				
+				TextView tv = (TextView)layout.findViewById(R.id.tvcbNarration);
+				tv.setText("Set manual account code");
+				final CheckBox cb = (CheckBox)layout.findViewById(R.id.cbNarrations);
+				Button btnView = (Button)layout.findViewById(R.id.btnView);
+				btnView.setText("Confirm");
+				btnView.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View arg0) {
+						//Setting the account code flag value
+						if (cb.isChecked()) {
+							//System.out.println("checked:");
+							preferencObj.setPreferences(new Object[]{"1","manually",1},client_id);
+							
+							accCodeCheckFlag = "manually";
+			                etaccCode.setVisibility(EditText.VISIBLE);
+			                tvaccCode.setVisibility(TextView.VISIBLE);
+						}
+						else{
+							preferencObj.setPreferences(new Object[]{"1","automatic",2},client_id);
+						}
+						dialog.dismiss();
+					}
+				});
+				
+				Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
+				btnCancel.setVisibility(View.GONE);
+				
+				dialog=builder.create();
+	    		dialog.show();
+			}
+            System.out.println("FLAG IS"+accCodeCheckFlag);
             // Setting visibility depending upon account code flag value
-            if (accCodeCheckFlag.equals("automatic")) {
+            if (accCodeCheckFlag.equalsIgnoreCase("automatic")) {
                 etaccCode.setVisibility(EditText.GONE);
                 tvaccCode.setVisibility(TextView.GONE);
             } else {

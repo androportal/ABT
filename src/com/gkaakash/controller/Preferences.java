@@ -21,7 +21,7 @@ public class Preferences {
     private Object[] accCodeParams;
     private Object[] refNoParams;
     private Boolean setProject;
-    private String getPreference;
+    private Object[] getPreference;
     private boolean setproject;
     private String editproject;
    
@@ -55,11 +55,11 @@ public class Preferences {
      * @param client_id
      * @return flag type of String
      */
-    public String getPreferences(Object[] params,Object client_id)
+    public Object[] getPreferences(Object[] params,Object client_id)
     {
         try {
          
-            getPreference= (String)conn.getClient().call("organisation.getPreferences",params,client_id);
+            getPreference= (Object[])conn.getClient().call("organisation.getPreferences",params,client_id);
           
             } catch (Exception e) {
                 System.out.println("cant call");
