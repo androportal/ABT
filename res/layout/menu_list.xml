@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?><!--<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:orientation="vertical" 
+    android:gravity="center">
+ 
+    <ImageView
+        android:id="@+id/grid_item_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/logo_app" >
+    </ImageView>
+ 
+    <TextView
+        android:id="@+id/grid_item_label"
+        android:text="@+id/label"
+        android:gravity="center_horizontal"
+        style="@style/FontSmall" >
+    </TextView>
+ 
+</LinearLayout>  -->
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+ 
+    <!--  ListRow Left sied Thumbnail image -->
+    <LinearLayout android:id="@+id/image_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+       	
+        android:layout_marginRight="5dip">
+ 
+        <ImageView
+            android:id="@+id/grid_item_image"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:src="@drawable/logo_app"
+            />
+   
+    </LinearLayout>
+ 
+    <!-- Software Name-->
+ 
+    <!-- Software Tagline-->
+   <!--  <TextView
+        android:id="@+id/soft_sub_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"    
+        android:layout_below="@id/soft_title"
+       	android:textColor="#0481ab"
+        android:textSize="16sp"
+        android:layout_marginTop="1dip"
+        
+        android:layout_toRightOf="@+id/image_layout"
+        />-->
+ 
+    <!-- Rightend Duration -->
+    <!--  <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/title"
+        android:gravity="right"
+        android:text="5:45"
+        android:layout_marginRight="5dip"  
+        android:textSize="10dip"
+        android:textColor="#10bcc9"
+        android:textStyle="bold"/>-->
+
+    <TextView
+        android:id="@+id/grid_item_label"
+        style="@style/FontSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/image_layout"
+        android:text="@+id/label"
+        android:textSize="18sp"
+        android:typeface="sans" />
+ 
+</RelativeLayout>
