@@ -435,6 +435,7 @@ public class createVoucher extends Activity {
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
 
+					e.setBackgroundResource(R.drawable.textfield_activated_holo_light);
 					etRefNumber = (EditText) findViewById(R.id.etRefNumber);
 					e.setNextFocusDownId(etRefNumber.getId());
 				}
@@ -444,6 +445,7 @@ public class createVoucher extends Activity {
 		firstRowamount.setOnFocusChangeListener(new OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasfocus) {
+				firstRowamount.setBackgroundResource(R.drawable.textfield_activated_holo_light);
 				int tableRowCount1 = table.getChildCount();
 
 				if (tableRowCount1 == 1) {
@@ -545,6 +547,8 @@ public class createVoucher extends Activity {
 		String drcramountFirstRow = firstRowamount.getText().toString();
 		if (drcramountFirstRow.length() < 1) {
 			drcramountFirstRow = "0.00";
+			firstRowamount.requestFocus();
+			firstRowamount.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
 		}
 		drcrAmountFirstRow = Float.parseFloat(drcramountFirstRow);
 
@@ -573,6 +577,8 @@ public class createVoucher extends Activity {
 
 			if (drcramount.length() < 1) {
 				drcramount = "0.00";
+				e.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+
 			}
 			drcrAmount = Float.parseFloat(drcramount);
 
@@ -1111,8 +1117,20 @@ public class createVoucher extends Activity {
 				System.out.println("voucher no"+voucherno);
 				System.out.println("check no"+checkvoucher_number);
 				if(totalDr == totalCr && !"".equals(refNumber) && !"".equals(strnarration)&& !"".equals(voucherno)){ 
+
 					if (totalDr == 0) {
+						
+						System.out.println("TOTdR:"+totalDr);
+						System.out.println("TOTCR:"+totalCr);
+						
+						if("0.0".equals(Float.toString(totalDr))){
+							System.out.println("m in1");
+							firstRowamount.requestFocus();
+							firstRowamount.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+						}
 						m.toastValidationMessage(context,"Please enter amount");
+						
+						
 					} else if ((searchFlag==true && cloneflag==false && checkvoucher_number.equals(voucherno))||vouchernoExist.equals("0")){
 						
 						System.out.println("voucher no"+voucherno);
@@ -1349,19 +1367,74 @@ public class createVoucher extends Activity {
 						m.toastValidationMessage(context,"Voucher no already exist");
 					}
 
+
+
 				} else if (totalDr != totalCr) {
+					
+				System.out.println("TOTdR:"+totalDr);
+				System.out.println("TOTCR:"+totalCr);
+				
+				if("0.0".equals(Float.toString(totalDr))){
+					System.out.println("m in");
+					firstRowamount.requestFocus();
+					firstRowamount.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+				}else {
+					e.requestFocus();
+					e.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+				}
+				
+					
 					m.toastValidationMessage(context,"Debit and Credit amount is not tally");
+					
+					
+					
 				} else if ("".equals(refNumber)) {
+					etRefNumber.requestFocus();
+
 					m.toastValidationMessage(context,"Please enter voucher reference number");
+					etRefNumber.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+					
 				}else if("".equals(voucherno)){
 					//voucherNoExist
+					etvoucherno.requestFocus();
 					m.toastValidationMessage(context,"Please enter voucher number");
+					etvoucherno.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+					
 				}else if ("".equals(strnarration)) {
+					etnarration.requestFocus();
 					m.toastValidationMessage(context,"Please enter narration");
+					etnarration.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
 				} 
 			}
 
 		});
+		
+		etvoucherno.setOnFocusChangeListener(new OnFocusChangeListener() {
+			
+			@Override
+			public void onFocusChange(View arg0, boolean arg1) {
+				etvoucherno.setBackgroundResource(R.drawable.textfield_activated_holo_light);
+				
+			}
+		});
+		
+	etRefNumber.setOnFocusChangeListener(new OnFocusChangeListener() {
+			
+			@Override
+			public void onFocusChange(View arg0, boolean arg1) {
+				etRefNumber.setBackgroundResource(R.drawable.textfield_activated_holo_light);
+				
+			}
+		});
+	
+	etnarration.setOnFocusChangeListener(new OnFocusChangeListener() {
+		
+		@Override
+		public void onFocusChange(View arg0, boolean arg1) {
+			etnarration.setBackgroundResource(R.drawable.textfield_activated_holo_light);
+			
+		}
+	});
 
 		/*
 		 * ======================================================================
@@ -1666,21 +1739,21 @@ public class createVoucher extends Activity {
 
 		// second_table_accountname_spinner.setText( "Action: " + ++rowsSoFar );
 		removeSelfButton = new Button(newRow.getContext(),null);
-		removeSelfButton.setText("      -      "); // for tablet ***** add space
+		removeSelfButton.setText("     -      "); // for tablet ***** add space
 		removeSelfButton.setBackgroundResource(R.drawable.default_button_selector);
 		// pass on all the information necessary for deletion
 		removeSelfButton.setOnClickListener(new RowRemover(table, newRow));
 		removeSelfButton.setTextColor(Color.WHITE);
 		
-		newRow.addView(second_table_drcr_spinner, 105, 50);
+		newRow.addView(second_table_drcr_spinner, 105, 40);
 		newRow.addView(tv);
-		newRow.addView(second_table_accountname_spinner, 259, 50);
+		newRow.addView(second_table_accountname_spinner, 259, 40);
 		newRow.addView(tv1);
 		newRow.addView(tv2);
 
-		newRow.addView(second_table_closingbal_et, 162, 50);
-		newRow.addView(second_table_amount_et, 182, 50);
-		newRow.addView(removeSelfButton,60,50);
+		newRow.addView(second_table_closingbal_et, 162, 40);
+		newRow.addView(second_table_amount_et, 182, 40);
+		newRow.addView(removeSelfButton,60,45);
 		table.addView(newRow);
 		OnAmountFocusChangeListener();
 	}

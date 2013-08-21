@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -81,6 +82,8 @@ public class createAccount<group> extends Activity{
         m=new module();
         IPaddr = MainActivity.IPaddr;
 	    System.out.println("in createorg"+IPaddr);
+        etOpBal = (EditText) findViewById(R.id.etOpBal);
+
         try {
             // create the object of Group class
             group = new Group(IPaddr);
@@ -152,7 +155,7 @@ public class createAccount<group> extends Activity{
 						dialog.dismiss();
 					}
 				});
-				
+				 
 				Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
 				btnCancel.setVisibility(View.GONE);
 				
@@ -246,7 +249,6 @@ public class createAccount<group> extends Activity{
                 selGrpName = parent.getItemAtPosition(position).toString();
                 tvOpBal = (TextView) findViewById(R.id.tvOpBal);
                 tvOpBalRupeeSymbol = (TextView) findViewById(R.id.tvOpBalRupeeSymbol);
-                etOpBal = (EditText) findViewById(R.id.etOpBal);
                 System.out.println("selcted groupname:"+selGrpName);
                 // Comparing the variable value to group name and setting visibility
                 if ("Current Asset".equals(selGrpName)
@@ -427,10 +429,22 @@ public class createAccount<group> extends Activity{
                 if("Create New Sub-Group".equals(selSubGrpName)&&newsubgrpname.length()<1||("manually".equals(accCodeCheckFlag)&& accountcode.length()<1))
                 {
                     m.toastValidationMessage(context, "Please fill textfield");
+                	System.out.println("in if");
+                	etaccCode.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
                     
-                }else if((accountname.length()<1)||(openingbalance.length()<1))
+                }else if((accountname.trim().length()<1)||(openingbalance.length()<1))
                 {
+                	System.out.println("in else");
+                	if(accountname.trim().length()<1){
+                		etAccName.requestFocus();
+                		etAccName.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+                	}else {
+                		etOpBal.requestFocus();
+                		etOpBal.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+
+					}
                 
+                	
                 	 m.toastValidationMessage(context, "Please fill textfield");
                     
                 }
@@ -500,6 +514,10 @@ public class createAccount<group> extends Activity{
     
     private void addEditTextListner()
     {
+    	
+    	
+    	
+    	
     etAccName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
         @Override
           public void onFocusChange(View v, boolean hasFocus) {
@@ -522,6 +540,8 @@ public class createAccount<group> extends Activity{
                 }
                 
                 }
+            
+            etAccName.setBackgroundResource(R.drawable.textfield_activated_holo_light);
           }
         });// close addEditTextListner()
     
@@ -563,10 +583,23 @@ public class createAccount<group> extends Activity{
                                 }
                             
                      }
+                            etaccCode.setBackgroundResource(R.drawable.textfield_activated_holo_light);
                 }
 
+            
             });// close setOnFocusChangeListener
+    
+    
+    etOpBal.setOnFocusChangeListener(new OnFocusChangeListener() {
+		
+		@Override
+		public void onFocusChange(View arg0, boolean arg1) {
+				etOpBal.setBackgroundResource(R.drawable.textfield_activated_holo_light);
+		}
+	});
     } // close addEditTextListner()
+    
+    
     
     
     /*
