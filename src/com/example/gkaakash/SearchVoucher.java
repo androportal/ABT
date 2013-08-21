@@ -495,7 +495,7 @@ public class SearchVoucher extends Activity {
 					LinearLayout l = (LinearLayout) ((ViewGroup) row)
 							.getChildAt(j);
 					TextView t = (TextView) l.getChildAt(0);
-					ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"), Color.TRANSPARENT);
+					ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"), Color.BLACK);
 					colorFade.setDuration(100);
 					colorFade.start();
 				}

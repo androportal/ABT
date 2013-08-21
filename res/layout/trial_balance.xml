@@ -63,7 +63,8 @@
             android:layout_height="wrap_content"
             android:entries="@array/TrialBalance_arrays"
             android:prompt="@string/TrialBalance_prompt"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            style="@style/SpinnerAppTheme" />
              
          </TableRow>
         

@@ -27,7 +27,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_selector"
+    style="@style/DefaultButton"
+    android:gravity="left"
     android:orientation="horizontal"
     android:padding="5dip" >
  
@@ -80,13 +81,10 @@
 
     <TextView
         android:id="@+id/grid_item_label"
-        style="@style/FontSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/image_layout"
-        android:text="@+id/label"
-        android:textSize="18sp"
-        android:typeface="sans" />
+        style="@style/CodeFont" />
  
 </RelativeLayout>

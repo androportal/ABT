@@ -42,7 +42,8 @@
             android:layout_height="wrap_content"
             android:entries="@array/accountName_arrays"
             android:layout_weight="1"
-            android:prompt="@string/accountName_prompt" />
+            android:prompt="@string/accountName_prompt"
+            style="@style/SpinnerAppTheme" />
         </TableRow>
         
     	<TableRow android:layout_width="match_parent"

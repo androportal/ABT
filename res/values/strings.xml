@@ -61,7 +61,8 @@
         <item>Extended Trial Balance</item>
     </string-array>
     
-    <string name="grpName_prompt">Select group name</string>    
+    <string name="grpName_prompt">Select group name</string> 
+    <string name="voucherType_prompt">Select voucher type</string>       
     <string name="subgrpName_prompt">Select subgroup name</string>
     <string name="orgName_prompt">Select organisation name</string>
     <string name="financialyear_prompt">Select financial year</string>

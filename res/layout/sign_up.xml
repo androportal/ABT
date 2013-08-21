@@ -134,7 +134,7 @@
 		            android:layout_width="300dp"
 		            android:layout_height="wrap_content"
 		            android:ems="10"
-		            android:hint="Re-enter password"
+		            android:hint="Enter password"
 		            android:inputType="textPassword"
 		            android:layout_weight="1"
 		            style="@style/EditTextAppTheme" />
@@ -155,7 +155,7 @@
 		            android:layout_width="300dp"
 		            android:layout_height="wrap_content"
 		            android:ems="10"
-		            android:hint="Enter a password"
+		            android:hint="Re-enter password"
 		            android:inputType="textPassword"
 		            android:layout_weight="1"
 		            style="@style/EditTextAppTheme" />
