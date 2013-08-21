@@ -10,9 +10,11 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Currency;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -64,6 +66,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SimpleAdapter;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -263,30 +266,69 @@ public class menu extends Activity{
 
 		user.getUserNemeOfOperatorRole(client_id);
 		
-		//adding list items to the newly created menu list
+		/*
+		 * create separate lists for menu options, their respective heading and description
+		 */
+		ArrayList<String> menuOptions = new ArrayList<String>(Arrays.asList("Create account", "Transaction", "Reports",
+				"Bank Reconciliation", "Preferences","RollOver","Export organisation","Account Settings","Help"));
+		ArrayList<Integer> image_ids = new ArrayList<Integer>(Arrays.asList(R.drawable.account_logo, 
+				R.drawable.export_logo, R.drawable.report_logo,
+				R.drawable.help_logo, R.drawable.settings_logo, 
+				R.drawable.rollover_logo, R.drawable.export_logo,
+				R.drawable.settings_logo, R.drawable.help_logo));
+		ArrayList<String> description = new ArrayList<String>(Arrays.asList(
+				"Create/Search/Edit/Delete ledger accounts", 
+				"Make voucher entry for eg. Journal, Contra, Payment etc...", 
+				"View reports such as Ledger, Trial Balance etc...",
+				"Reconcile and compare", 
+				"Edit/Delete organisation, Add/Edit/Delete project",
+				"Transfer the holdings to the next financial year",
+				"Export organisation data from one device to another",
+				"Change Username/Password, Add/Edit/Delete user role",
+				"How to use ABT"));
+		
+		//modify menu list according to the user
 		if(userrole.equalsIgnoreCase("guest"))
 		{
-			
-			menuOptions = new String[] { "Create account", "Transaction", "Reports",
-					"Bank Reconciliation", "Preferences","RollOver","Export organisation","Help"};
-			
-		}else if(userrole.equalsIgnoreCase("admin")){
-			
-			menuOptions = new String[] { "Create account", "Transaction", "Reports",
-					"Bank Reconciliation", "Preferences","RollOver","Export organisation","Account Settings","Help"};
+			menuOptions.remove(7);			
+			image_ids.remove(7);
+			description.remove(7);
 			
 		}else if(userrole.equalsIgnoreCase("manager")){
-			menuOptions = new String[] { "Create account", "Transaction", "Reports",
-					"Bank Reconciliation","Preferences", "Export organisation","Account Settings","Help"};
+			menuOptions.remove(5);
+			image_ids.remove(5);
+			description.remove(5);
 		}else{//operator
-			menuOptions = new String[] { "Create account", "Transaction","Export organisation","Account Settings","Help"};
-
+			menuOptions.remove(3);
+			menuOptions.remove(4);
+			menuOptions.remove(5);
+			menuOptions.remove(6);
+			image_ids.remove(3);
+			image_ids.remove(4);
+			image_ids.remove(5);
+			image_ids.remove(6);
+			description.remove(3);
+			description.remove(4);
+			description.remove(5);
+			description.remove(6);
 		}
+		
+		listView = (ListView) findViewById(R.id.listView1);
+		
+		String[] from = new String[] {"image", "label","sub_title"};
+		int[] to = new int[] {R.id.grid_item_image, R.id.grid_item_label, R.id.sub_title};
 
-
-		listView = (ListView) findViewById(R.id.gridView1);
-
-		listView.setAdapter(new ImageAdapter(this, menuOptions));
+		final List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
+	
+		for(int i = 0; i < menuOptions.size(); i++){
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("image", "" + image_ids.get(i));
+			map.put("label", "" + menuOptions.get(i));
+			map.put("sub_title", "" + description.get(i));
+			fillMaps.add(map);
+		} 
+		SimpleAdapter adapter = new SimpleAdapter(this, fillMaps, R.layout.menu_list, from, to);
+		listView.setAdapter(adapter);
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,

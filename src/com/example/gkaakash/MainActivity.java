@@ -1228,7 +1228,7 @@ public class MainActivity extends Activity{
 		 TextView tvalertHead2 =(TextView) layout.findViewById(R.id.tvalertHead2);
 		 tvalertHead2.setVisibility(View.GONE);
 		 TextView tvUserRole =(TextView) layout.findViewById(R.id.tvUserRole);
-		 tvUserRole.setText("Please select reomteserver location");
+		 tvUserRole.setText("Please select remote server location");
 		 final RadioButton rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
 		 final RadioButton rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
 		 final RadioButton rb_operator =(RadioButton) layout.findViewById(R.id.rbOperator);
