@@ -1,12 +1,27 @@
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_width="fill_parent" 
+ android:layout_height="fill_parent"
+ android:orientation="vertical"
+ android:weightSum="100">
  <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="90"
+    android:padding="10dp" >
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 
         android:orientation="vertical"
         android:id="@+id/layout_root" >
-    
+    	<TextView
+             android:id="@+id/tvWarning"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:textColor="#F90000"
+             android:textSize="20dp"
+             android:visibility="gone" />
+        
         <Spinner
             android:id="@+id/sSearchVoucherBy"
             android:layout_width="260dp"
@@ -52,11 +67,12 @@
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
-         <DatePicker
-             android:id="@+id/dpSearchVoucherFromdate"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_gravity="center" />
+         <Button 
+                 android:id="@+id/btnsetLedgerFromdate"
+                 android:layout_width="match_parent"
+                 android:layout_weight="1"
+                 android:layout_height="wrap_content"
+                 android:text="123"/>
 
         </LinearLayout>
         
@@ -77,11 +93,12 @@
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
-        <DatePicker
-            android:id="@+id/dpSearchVoucherTodate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+                 <Button
+                 android:id="@+id/btnsetLedgerTodate"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:text="123" />
         </LinearLayout>
         
          </LinearLayout>
@@ -97,9 +114,38 @@
             style="@style/EditTextAppTheme" >
             <requestFocus />
         </EditText>
-        
-        
-           
 
     </LinearLayout>
     </ScrollView>
+    
+ <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+                 <Button
+                     android:id="@+id/btnView"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:text="View"
+                     android:layout_weight="1"
+                     android:gravity="center"
+                     android:layout_alignParentBottom="true"
+                     android:layout_gravity="center_vertical"
+                     style="@style/DefaultButton" />
+                 <Button
+                    android:id="@+id/btnCancel"  
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Cancel"
+                    style="@style/DefaultButton"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+            </LinearLayout>
+ 

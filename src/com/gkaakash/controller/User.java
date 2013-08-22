@@ -14,6 +14,7 @@ public class User {
 	String getUserRole;
 	Object[] getUserNemeOfOperatorRole,getUserNemeOfManagerRole;
 	Boolean resetPassword;
+	String last_login;
 	
 	/**
 	 * default constructor   
@@ -174,6 +175,19 @@ public class User {
             e.printStackTrace();
         }
       
+    }
+	
+	public String getLastLoginTiming(Object[] params,Object client_id)
+    {
+        System.out.println("we are about to get time");
+       System.out.println(params+"and"+client_id);
+        try{
+            last_login = (String) conn.getClient().call("user.getLastLoginTiming",params,client_id);
+        }catch(XMLRPCException e)
+        {
+            e.printStackTrace();
+        }
+      return last_login;
     }
 	
 	 /***

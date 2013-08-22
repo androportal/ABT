@@ -360,7 +360,8 @@ public class User_table extends Activity {
 		    	if(loginDate != null && logoutDate != null){
 		    		map.put("login", loginDate.toLocaleString());
 					map.put("logout", logoutDate.toLocaleString());
-					map.put("Total", diffDays+" days "+diffHours+" hrs "+diffMinutes+" mins "+diffSeconds+" secs");
+					map.put("Total", diffDays+" days "+String.format("%02d", diffHours)+
+							":"+String.format("%02d", diffMinutes)+":"+String.format("%02d", diffSeconds));
 		    	}
 		    	
 			} catch (ParseException e) {

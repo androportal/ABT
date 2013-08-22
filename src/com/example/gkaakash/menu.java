@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -239,10 +240,9 @@ public class menu extends Activity{
 			orgtype = (String) organisation.getorgTypeByname(params, client_id);
 		}
 		System.out.println("params are:"+OrgName+userrole+username+reset_password_flag+orgtype);
-		//set the login timing of user in the database
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-		Date date = new Date();
-		login_time = dateFormat.format(date);
+		//get the last login timing of user from the database
+		
+		
 		
 		
 		//set title
@@ -255,7 +255,32 @@ public class menu extends Activity{
 		TextView tvuser = (TextView)findViewById(R.id.user);
 		tvuser.setText(Character.toString(userrole.charAt(0)).toUpperCase()+userrole.substring(1));
 		TextView tvusername = (TextView)findViewById(R.id.username);
-		tvusername.setText(username + "\nLast login: "+ m.changeDateFormat(login_time));
+		//set the login timing of user in the database
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Date today_date = new Date();
+		login_time = dateFormat.format(today_date);
+		
+		if(!userrole.equalsIgnoreCase("guest")){
+			Object[] params = new Object[]{userrole,username};
+			String result = user.getLastLoginTiming(params, client_id);
+			System.out.println("last login time"+result);
+			if(!result.equalsIgnoreCase("")){
+				//DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date date = null;
+				try {
+					date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				tvusername.setText(username + "\nLast login: "+ date.toLocaleString());
+			}else{
+				tvusername.setText(username);
+			}
+		}else{
+			tvusername.setText(username);
+		}
+		
 //		final SpannableString s = new SpannableString(context.getText(R.string.about_para));
 //		Linkify.addLinks(s, Linkify.WEB_URLS);
 		TextView tvabout = (TextView)findViewById(R.id.about);
@@ -265,14 +290,14 @@ public class menu extends Activity{
 		reset_password(reset_password_flag);
 
 		user.getUserNemeOfOperatorRole(client_id);
-		
+		System.out.println("before arrays");
 		/*
 		 * create separate lists for menu options, their respective heading and description
 		 */
 		ArrayList<String> menuOptions = new ArrayList<String>(Arrays.asList("Create account", "Transaction", "Reports",
 				"Bank Reconciliation", "Preferences","RollOver","Export organisation","Account Settings","Help"));
 		ArrayList<Integer> image_ids = new ArrayList<Integer>(Arrays.asList(R.drawable.account_logo, 
-				R.drawable.export_logo, R.drawable.report_logo,
+				R.drawable.money_image, R.drawable.report_logo,
 				R.drawable.help_logo, R.drawable.settings_logo, 
 				R.drawable.rollover_logo, R.drawable.export_logo,
 				R.drawable.settings_logo, R.drawable.help_logo));
@@ -288,7 +313,9 @@ public class menu extends Activity{
 				"How to use ABT"));
 		
 		//modify menu list according to the user
-		if(userrole.equalsIgnoreCase("guest"))
+		if(userrole.equalsIgnoreCase("admin")){
+			//no changes in above 3 lists, display them as it is
+		}else if(userrole.equalsIgnoreCase("guest"))
 		{
 			menuOptions.remove(7);			
 			image_ids.remove(7);
@@ -302,17 +329,17 @@ public class menu extends Activity{
 			menuOptions.remove(3);
 			menuOptions.remove(4);
 			menuOptions.remove(5);
-			menuOptions.remove(6);
+			menuOptions.remove(2);
 			image_ids.remove(3);
 			image_ids.remove(4);
 			image_ids.remove(5);
-			image_ids.remove(6);
+			image_ids.remove(2);
 			description.remove(3);
 			description.remove(4);
 			description.remove(5);
-			description.remove(6);
+			description.remove(2);
 		}
-		
+		System.out.println("before listview");
 		listView = (ListView) findViewById(R.id.listView1);
 		
 		String[] from = new String[] {"image", "label","sub_title"};

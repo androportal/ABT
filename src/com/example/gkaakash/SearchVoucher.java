@@ -18,6 +18,7 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
@@ -80,6 +81,11 @@ public class SearchVoucher extends Activity {
 	module m;
 	String[] ColumnNameList;
 	static String IPaddr;
+	Button from_btn_ID, to_btn_ID;
+	static final int FROM_DATE_DIALOG_ID = 0, TO_DATE_DIALOG_ID = 1;
+	String givenfromDateString, givenToDateString;
+	String setfromday, setfrommonth, setfromyear, settoday, settomonth, settoyear;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -217,21 +223,36 @@ public class SearchVoucher extends Activity {
 
 
 				String dateParts[] = financialFromDate.split("-");
-				String setfromday  = dateParts[0];
-				String setfrommonth = dateParts[1];
-				String setfromyear = dateParts[2];
+				setfromday  = dateParts[0];
+				setfrommonth = dateParts[1];
+				setfromyear = dateParts[2];
 
 
 				String dateParts1[] = financialToDate.split("-");
-				String settoday  = dateParts1[0];
-				String settomonth = dateParts1[1];
-				String settoyear = dateParts1[2];
+				settoday  = dateParts1[0];
+				settomonth = dateParts1[1];
+				settoyear = dateParts1[2];
 
-				DatePicker SearchVoucherFromdate = (DatePicker) layout.findViewById(R.id.dpSearchVoucherFromdate);
-				SearchVoucherFromdate.init(Integer.parseInt(setfromyear),(Integer.parseInt(setfrommonth)-1),Integer.parseInt(setfromday), null);
-
-				DatePicker SearchVoucherTodate = (DatePicker) layout.findViewById(R.id.dpSearchVoucherTodate);
-				SearchVoucherTodate.init(Integer.parseInt(settoyear),(Integer.parseInt(settomonth)-1),Integer.parseInt(settoday), null);
+				final TextView tvWarning = (TextView)layout.findViewById(R.id.tvWarning);
+				
+				from_btn_ID = (Button)layout.findViewById(R.id.btnsetLedgerFromdate);
+		  	   	from_btn_ID.setText(setfromday+"-"+setfrommonth+"-"+setfromyear);
+		  	   	from_btn_ID.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						showDialog(FROM_DATE_DIALOG_ID);
+					}
+				});
+		  	   	to_btn_ID= (Button)layout.findViewById(R.id.btnsetLedgerTodate);
+		  	   	to_btn_ID.setText(settoday+"-"+settomonth+"-"+settoyear);
+		  	   	to_btn_ID.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						showDialog(TO_DATE_DIALOG_ID);
+					}
+				});
 
 				final EditText etVoucherCode = (EditText)layout.findViewById(R.id.searchByVCode);
 				etVoucherCode.setVisibility(EditText.GONE);
@@ -248,16 +269,19 @@ public class SearchVoucher extends Activity {
 					@Override
 					public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
 						if(position == 0){
+							tvWarning.setVisibility(View.GONE);
 							etNarration.setVisibility(EditText.GONE);
 							timeInterval.setVisibility(LinearLayout.GONE);
 							etVoucherCode.setVisibility(EditText.VISIBLE);
 						}
 						if(position == 1){
+							tvWarning.setVisibility(View.GONE);
 							etVoucherCode.setVisibility(EditText.GONE);
 							etNarration.setVisibility(EditText.GONE);
 							timeInterval.setVisibility(LinearLayout.VISIBLE);
 						}
 						if(position == 2){
+							tvWarning.setVisibility(View.GONE);
 							etVoucherCode.setVisibility(EditText.GONE);
 							timeInterval.setVisibility(LinearLayout.GONE);
 							etNarration.setVisibility(EditText.VISIBLE);
@@ -271,17 +295,19 @@ public class SearchVoucher extends Activity {
 
 					}
 				});
-
-				builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
-
+				Button btnView = (Button)layout.findViewById(R.id.btnView);
+			   	Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
+			   	btnView.setOnClickListener(new OnClickListener() {
+					
 					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
+					public void onClick(View arg0) {
 						int pos = searchBy.getSelectedItemPosition();
 
 						if(pos == 0){
 							searchByRefNumber = etVoucherCode.getText().toString();
 							if(searchByRefNumber.length() < 1){
-								m.toastValidationMessage(context,"Please enter voucher reference number");
+								tvWarning.setVisibility(View.VISIBLE);
+								tvWarning.setText("Please enter voucher reference number");
 							}
 							else{
 								searchVoucherBy = 1; //by reference no
@@ -291,61 +317,21 @@ public class SearchVoucher extends Activity {
 							}
 						}
 						else if(pos == 1){
-							final   DatePicker dpSearchVoucherFromdate = (DatePicker) dialog.findViewById(R.id.dpSearchVoucherFromdate);
-							int SearchVoucherFromDay = dpSearchVoucherFromdate.getDayOfMonth();
-							int SearchVoucherFromMonth = dpSearchVoucherFromdate.getMonth();
-							int SearchVoucherFromYear = dpSearchVoucherFromdate.getYear();
-
-							String SearchVoucherFromdate = mFormat.format(Double.valueOf(SearchVoucherFromDay))+ "-" 
-									+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(SearchVoucherFromMonth))))+ 1))) + "-" 
-									+ SearchVoucherFromYear;
-
-							final   DatePicker dpSearchVoucherTodate = (DatePicker) dialog.findViewById(R.id.dpSearchVoucherTodate);
-							int SearchVoucherToDay = dpSearchVoucherTodate.getDayOfMonth();
-							int SearchVoucherToMonth = dpSearchVoucherTodate.getMonth();
-							int SearchVoucherToYear = dpSearchVoucherTodate.getYear();
-
-							String SearchVoucherTodate = mFormat.format(Double.valueOf(SearchVoucherToDay))+ "-" 
-									+(mFormat.format(Double.valueOf(Integer.parseInt((mFormat.format(Double.valueOf(SearchVoucherToMonth))))+ 1))) + "-" 
-									+ SearchVoucherToYear;
-
-							try {
-								SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-								Date date1 = sdf.parse(financialFromDate);
-								Date date2 = sdf.parse(financialToDate);
-								Date date3 = sdf.parse(SearchVoucherFromdate);
-								Date date4 = sdf.parse(SearchVoucherTodate);
-								/*
-					        	System.out.println("all dates are...........");
-					        	System.out.println(financialFromDate+"---"+financialToDate+"---"+SearchVoucherFromdate+"---"+SearchVoucherTodate);
-								 */
-								Calendar cal1 = Calendar.getInstance(); //financial from date
-								Calendar cal2 = Calendar.getInstance(); //financial to date
-								Calendar cal3 = Calendar.getInstance(); //from date
-								Calendar cal4 = Calendar.getInstance(); //to date
-								cal1.setTime(date1);
-								cal2.setTime(date2);
-								cal3.setTime(date3);
-								cal4.setTime(date4);  
-
-								if(((cal3.after(cal1)&&(cal3.before(cal2))) || (cal3.equals(cal1) || (cal3.equals(cal2)))) 
-										&& ((cal4.after(cal1) && (cal4.before(cal2))) || (cal4.equals(cal2)) || (cal4.equals(cal1)))){
+							Boolean validateDateFlag = m.validateDate(financialFromDate, financialToDate, from_btn_ID.getText().toString(), 
+									to_btn_ID.getText().toString(), "validatebothFromToDate",tvWarning);
+							if(validateDateFlag){
+								givenfromDateString = m.givenfromDateString;
+								givenToDateString = m.givenToDateString;
 									searchVoucherBy = 2; // by date
-									Object[] params = new Object[]{2,"",SearchVoucherFromdate,SearchVoucherTodate,""};
+									Object[] params = new Object[]{2,"",givenfromDateString,givenToDateString,""};
 									getallvouchers(params);
-								}
-								else{
-									m.toastValidationMessage(context,"Please enter proper date");
-								}
-							} catch (Exception e) {
-								// TODO: handle exception
 							}
-
 						}
 						else if(pos == 2){
 							searchByNarration = etNarration.getText().toString();
 							if(searchByNarration.length() < 1){
-								m.toastValidationMessage(context,"Please enter narration");
+								tvWarning.setVisibility(View.VISIBLE);
+								tvWarning.setText("Please enter narration");
 							}
 							else{
 								searchVoucherBy = 3; //by narration
@@ -357,19 +343,15 @@ public class SearchVoucher extends Activity {
 					}
 				});
 
-				builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
+			   	btnCancel.setOnClickListener(new OnClickListener() {
+					
 					@Override
-					public void onClick(DialogInterface dialog, int which) {
-
-					}	
+					public void onClick(View v) {
+						dialog.dismiss();
+					}
 				});
 				dialog=builder.create();
 				dialog.show();
-				WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-				//customizing the width and location of the dialog on screen 
-				lp.copyFrom(dialog.getWindow().getAttributes());
-				lp.width = 700;
-				dialog.getWindow().setAttributes(lp);
 
 			}
 		});
@@ -464,7 +446,7 @@ public class SearchVoucher extends Activity {
 
 			addRow(ColumnNameList[k],k);
 			params.height=LayoutParams.WRAP_CONTENT;
-			label.setTextColor(Color.parseColor("#085e6b")); //blue theme
+			label.setTextColor(Color.BLACK); 
 			label.setGravity(Gravity.CENTER);
 			tr.setClickable(false);
 		}
@@ -577,12 +559,6 @@ public class SearchVoucher extends Activity {
 					});
 					dialog=builder.create();
 					((Dialog) dialog).show();
-					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-					//customizing the width and location of the dialog on screen 
-					lp.copyFrom(dialog.getWindow().getAttributes());
-					lp.height = 600;
-					lp.width = 400;
-					dialog.getWindow().setAttributes(lp);		
 
 				} catch (Exception e) {
 					//System.out.println(e);
@@ -676,7 +652,56 @@ public class SearchVoucher extends Activity {
 	}
 
 
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case FROM_DATE_DIALOG_ID:
+			
+				// set date picker as current date
+				return new DatePickerDialog(this, fromdatePickerListener, 
+						Integer.parseInt(setfromyear), Integer.parseInt(setfrommonth)-1,Integer.parseInt(setfromday));
+		
+		case TO_DATE_DIALOG_ID:
+		
+				// set date picker as current date
+				return new DatePickerDialog(this, todatePickerListener, 
+						Integer.parseInt(settoyear), Integer.parseInt(settomonth)-1,Integer.parseInt(settoday));
+		}
+		return null;
+	}
+	private DatePickerDialog.OnDateSetListener fromdatePickerListener 
+    	= new DatePickerDialog.OnDateSetListener() {
+ 
+		// when dialog box is closed, below method will be called.
+		public void onDateSet(DatePicker view, int selectedYear,
+				int selectedMonth, int selectedDay) {
+				int year = selectedYear; 
+				int month = selectedMonth; 
+				int day = selectedDay;
+				from_btn_ID.setText(new StringBuilder()
+				// Month is 0 based, just add 1
+				.append(String.format("%02d", day)).append("-").append(String.format("%02d", month+1)).append("-")
+				.append(year));
+				givenfromDateString = String.format("%02d", day)+"-"+String.format("%02d", month+1)+"-"+(year-1);
+		}
+	};  
 	
+	private DatePickerDialog.OnDateSetListener todatePickerListener 
+	= new DatePickerDialog.OnDateSetListener() {
+
+	// when dialog box is closed, below method will be called.
+	public void onDateSet(DatePicker view, int selectedYear,
+			int selectedMonth, int selectedDay) {
+			int year = selectedYear; 
+			int month = selectedMonth; 
+			int day = selectedDay;
+			to_btn_ID.setText(new StringBuilder()
+			// Month is 0 based, just add 1
+			.append(String.format("%02d", day)).append("-").append(String.format("%02d", month+1)).append("-")
+			.append(year));
+			givenToDateString = String.format("%02d", day)+"-"+String.format("%02d", month+1)+"-"+(year-1);
+	}
+};  
 
 
 	public void onBackPressed() {

@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:stretchColumns="0,1,2,3,4,5"
                     android:id="@+id/floating_heading_table"
-                    android:background="@drawable/gradiant_list_bg" 
+                    android:background="#ffffff" 
                     android:visibility="invisible">
                 </TableLayout>
                 
@@ -79,7 +79,7 @@
                     android:layout_height="0dp"
                     android:stretchColumns="0,1,2,3,4,5"
                     android:id="@+id/maintable"
-                    android:background="@drawable/gradiant_list_bg">
+                    android:background="#ffffff">
                 </TableLayout>
             </ScrollView>
        		</LinearLayout>
