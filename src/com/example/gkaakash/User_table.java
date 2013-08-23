@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -336,6 +337,14 @@ public class User_table extends Activity {
 		int[] pqr = new int[] { R.id.tvRowTitle0, R.id.tvRowTitle1, R.id.tvSubItem0, R.id.tvSubItem1, R.id.tvSubItem2 };
 		//System.out.println("grid size"+Grid.get(0).size());
 		List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> map_heading = new HashMap<String, String>();
+		map_heading.put("srno", "No.");
+		map_heading.put("username", "Username");
+		map_heading.put("login","Login");
+		map_heading.put("logout", "Logout");
+		map_heading.put("Total", "Total");
+		fillMaps.add(map_heading);
+		
 		for (int i = 0; i < Grid.size(); i++) {
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("srno", (i+1)+" ");
@@ -360,8 +369,13 @@ public class User_table extends Activity {
 		    	if(loginDate != null && logoutDate != null){
 		    		map.put("login", loginDate.toLocaleString());
 					map.put("logout", logoutDate.toLocaleString());
+					if(diffDays == 0){
+						map.put("Total", String.format("%02d", diffHours)+
+								":"+String.format("%02d", diffMinutes)+":"+String.format("%02d", diffSeconds));
+					}else{
 					map.put("Total", diffDays+" days "+String.format("%02d", diffHours)+
 							":"+String.format("%02d", diffMinutes)+":"+String.format("%02d", diffSeconds));
+					}
 		    	}
 		    	
 			} catch (ParseException e) {
@@ -377,14 +391,12 @@ public class User_table extends Activity {
 		role_list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
-				TextView username = (TextView)arg1.findViewById(R.id.tvRowTitle1);
-//				TextView login = (TextView)arg1.findViewById(R.id.tvSubItem0);
-//				TextView logout = (TextView)arg1.findViewById(R.id.tvSubItem1);
-//				TextView total = (TextView)arg1.findViewById(R.id.tvSubItem2);
-//				System.out.println(username.getText()+" "+login.getText());
-				dialog_builder(username.getText().toString(), "manager");
+				if(position != 0){
+					TextView username = (TextView)arg1.findViewById(R.id.tvRowTitle1);
+					dialog_builder(username.getText().toString(), "manager");
+				}
 			}
 		});
 		

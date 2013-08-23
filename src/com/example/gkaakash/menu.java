@@ -295,12 +295,12 @@ public class menu extends Activity{
 		 * create separate lists for menu options, their respective heading and description
 		 */
 		ArrayList<String> menuOptions = new ArrayList<String>(Arrays.asList("Create account", "Transaction", "Reports",
-				"Bank Reconciliation", "Preferences","RollOver","Export organisation","Account Settings","Help"));
+				"Bank Reconciliation", "Preferences","Rollover","Export organisation","Account Settings","Help"));
 		ArrayList<Integer> image_ids = new ArrayList<Integer>(Arrays.asList(R.drawable.account_logo, 
 				R.drawable.money_image, R.drawable.report_logo,
-				R.drawable.help_logo, R.drawable.settings_logo, 
+				R.drawable.bank_recon_logo, R.drawable.settings_logo, 
 				R.drawable.rollover_logo, R.drawable.export_logo,
-				R.drawable.settings_logo, R.drawable.help_logo));
+				R.drawable.account_setting, R.drawable.help_logo));
 		ArrayList<String> description = new ArrayList<String>(Arrays.asList(
 				"Create/Search/Edit/Delete ledger accounts", 
 				"Make voucher entry for eg. Journal, Contra, Payment etc...", 

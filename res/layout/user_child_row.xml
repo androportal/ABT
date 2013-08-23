@@ -1,61 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:orientation="horizontal" 
-android:padding="10dp">
+android:layout_height="50dp"
+android:orientation="horizontal"
+style="@style/DefaultButton" >
 
 <!-- sr no -->
 <TextView
 android:id="@+id/tvRowTitle0"
-android:layout_width="5dp" 
+android:layout_width="50dp"
 android:layout_height="wrap_content"
 android:layout_gravity="center_vertical"
 android:gravity="center_horizontal"
-android:textAppearance="?android:attr/textAppearanceMedium"
-android:layout_weight="1" 
-android:textColor="#FFFFFF"/>    
+android:text="123"
+style="@style/CodeFont" />    
 
 <!-- user name -->
 <TextView
 android:id="@+id/tvRowTitle1"
-android:layout_width="100dp" 
+android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:layout_gravity="center_vertical"
 android:gravity="center_horizontal"
-android:textAppearance="?android:attr/textAppearanceMedium"
-android:layout_weight="2" 
-android:textColor="#FFFFFF"/>
+android:layout_weight="1"
+android:text="123"
+style="@style/CodeFont"/>
 
 <!-- logout time -->
 		<TextView
 		android:id="@+id/tvSubItem0"
-		android:layout_width="150dp" 
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content" 
 		android:gravity="center_horizontal"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:textColor="#088A08"
 		android:layout_weight="1"
+		android:text="123"
+		style="@style/CodeFont"
 		android:layout_gravity="center_vertical" />
 		<!-- log in time -->
 		<TextView
 		android:id="@+id/tvSubItem1"
-		android:layout_width="150dp" 
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content" 
 		android:gravity="center_horizontal"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:textColor="#088A08" 
 		android:layout_weight="1"
+		android:text="123"
+		style="@style/CodeFont"
 		android:layout_gravity="center_vertical"/>
 		<!-- duration -->
 		<TextView
 		android:id="@+id/tvSubItem2"
-		android:layout_width="150dp" 
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content" 
 		android:gravity="center_horizontal"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:textColor="#F90000"
 		android:layout_weight="1"
+		android:text="123"
+		style="@style/CodeFont"
 		android:layout_gravity="center_vertical"/>
 		
 </LinearLayout>
