@@ -7,11 +7,11 @@
  android:weightSum="100"
  android:background="@color/gray_theme">
     
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView 
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_weight="80">
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	<LinearLayout 
 	    android:orientation="vertical"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
 		</LinearLayout>
 	    
 		<TableLayout
-		    xmlns:android="http://schemas.android.com/apk/res/android"
+		    
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:orientation="vertical"
@@ -248,7 +248,7 @@
 		    </TableRow>
 		</TableLayout>
 		
-		<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		<TableLayout 
 			android:id="@+id/Vouchertable"
 		    android:orientation="vertical"
 		    android:layout_width="fill_parent"

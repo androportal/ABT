@@ -16,6 +16,7 @@ import android.app.ActionBar.LayoutParams;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.util.DisplayMetrics;
@@ -514,7 +515,10 @@ public class trialBalance extends Activity{
 						LinearLayout l = (LinearLayout) ((ViewGroup) row)
 								.getChildAt(j);
 						TextView t = (TextView) l.getChildAt(0);
-						ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"), Color.parseColor("#000000"));
+						ColorDrawable drawable = (ColorDrawable)t.getBackground();
+						System.out.println("color:"+drawable.getColor());
+
+						ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"),drawable.getColor());
 						colorFade.setDuration(100);
 						colorFade.start();
 					}
