@@ -174,7 +174,7 @@ public class MainActivity extends Activity{
 			//Toast.makeText(context, "help_flag_option is set to 1", Toast.LENGTH_SHORT).show();
 			help_option_menu_flag = 1;
 			//if running this app on emulator, comment the below line
-			//help_popup();
+			startApp();
 		}
 		if(item.getItemId() == 2){
 			//Toast.makeText(context, "help_flag_option is set to 2", Toast.LENGTH_SHORT).show();
@@ -332,10 +332,6 @@ public class MainActivity extends Activity{
 
 		}
 		
-		if(remoteflag==true)
-		{
-			setRemoteLocation();
-		}
 		// call the getOrganisationName method from startup
 		//orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
 		
@@ -360,7 +356,7 @@ public class MainActivity extends Activity{
 		}
 		if(no_dailog==false){
 			//if running this app on emulator, comment the below line
-			//help_popup(); 
+			startApp(); 
 		}    
 		else{
 			if(checkFlag=="false"){
@@ -574,7 +570,7 @@ public class MainActivity extends Activity{
 
 
 	////////////////////////////
-	private void help_popup() {
+	private void startApp() {
 		/**
 		 * checks existance of:
 		 * 1) /data/local/linux/etc/fstab
@@ -592,14 +588,24 @@ public class MainActivity extends Activity{
 
 		if(fstab.exists()) {
 			if ( help_option_menu_flag == 1 || !help_flag.exists()) {
-				//Toast.makeText(context, "fstab exist , startapp()", Toast.LENGTH_SHORT).show();
-				startApp();
+				//Toast.makeText(context, "fstab exist , help_popup()", Toast.LENGTH_SHORT).show();
+				help_popup();
+			}else{
+				if(remoteflag){
+					setRemoteLocation();
+				}
 			}
 		}
 		else if(checkImg.exists()) {
-			if((help_option_menu_flag == 1 || !help_flag.exists()) && fstab.exists()) {
-				//Toast.makeText(context, "img exists , startapp()", Toast.LENGTH_SHORT).show();
-				startApp();
+			if(fstab.exists()) {
+				//Toast.makeText(context, "img exists , help_popup()", Toast.LENGTH_SHORT).show();
+				if(help_option_menu_flag == 1 || !help_flag.exists()){
+					help_popup();
+				}else{
+					if(remoteflag){
+						setRemoteLocation();
+					}
+				}
 			}
 			else {
 				fstab_flag = false;	
@@ -608,9 +614,16 @@ public class MainActivity extends Activity{
 			}
 		}
 		else if(checkImgextsd.exists()) {
-			if((help_option_menu_flag == 1 || !help_flag.exists()) && fstab.exists()) {
-				//Toast.makeText(context, "fstab exist***** , startapp()", Toast.LENGTH_SHORT).show();
-				startApp();
+			if(fstab.exists()) {
+				//Toast.makeText(context, "fstab exist***** , help_popup()", Toast.LENGTH_SHORT).show();
+				if(help_option_menu_flag == 1 || !help_flag.exists()){
+					help_popup();
+				}else{
+					if(remoteflag){
+						setRemoteLocation();
+					}
+				}
+				
 			}
 			else {
 				fstab_flag = false;	
@@ -641,9 +654,9 @@ public class MainActivity extends Activity{
 			AlertDialog.Builder builder = new AlertDialog.Builder(
 					MainActivity.this);        	        	
 			builder.setView(layout);
-			builder.setTitle("Notice");
+			builder.setTitle("Download Aakash Business Tool(ABT) Filesystem");
 			builder.setCancelable(false);
-			Button btnNO = (Button) layout.findViewById(R.id.btnNo);
+			Button btnNO = (Button) layout.findViewById(R.id.btnCancel);
 
 			btnNO.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
@@ -653,7 +666,7 @@ public class MainActivity extends Activity{
 				}	
 			});	
 
-			Button btnyes = (Button) layout.findViewById(R.id.btnyes);
+			Button btnyes = (Button) layout.findViewById(R.id.btnYes);
 			btnyes.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
 
@@ -743,14 +756,12 @@ public class MainActivity extends Activity{
 			help_dialog.getWindow().setAttributes(lp);
 
 		}
-	}
-
-	////////////////////////////
+	}///////START APP END
 
 
 	private void startDownloadProgressBar(final String dest) {
 		mProgressDialog = new ProgressDialog(context);
-		mProgressDialog.setMessage("Downloading file..");
+		mProgressDialog.setMessage("Downloading file...");
 		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		mProgressDialog.setCancelable(false);
 		mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"Cancel",new DialogInterface.OnClickListener() {
@@ -820,7 +831,7 @@ public class MainActivity extends Activity{
 
 
 	// START-APP
-	private void startApp() {
+	private void help_popup() {
 		/**
 		 * start the application and show initial help pop-up
 		 **/ 
@@ -852,8 +863,6 @@ public class MainActivity extends Activity{
 		cbHelp.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
-
-				//for setting the visibility of EditText:'etProject' depending upon the condition
 				if (((CheckBox) v).isChecked()) {
 					//Toast.makeText(context, "TRUE", Toast.LENGTH_SHORT).show();
 					checkFlag = "true";
@@ -883,6 +892,10 @@ public class MainActivity extends Activity{
 					RunAsRoot(command);
 					//Toast.makeText(context, "help_flag deleted", Toast.LENGTH_SHORT).show();
 				}
+				if(remoteflag){
+					setRemoteLocation();
+				}
+				
 			}
 
 		});
@@ -895,7 +908,7 @@ public class MainActivity extends Activity{
 		lp.width = 700;
 		help_dialog.getWindow().setAttributes(lp);
 	}
-	// START-APP END
+	// HELP POPUP END
 
 
 
