@@ -351,8 +351,7 @@
         android:orientation="horizontal"
         android:layout_weight="20"
         android:weightSum="100"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/blackbutton" >
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/btnSaveVoucher"

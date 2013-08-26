@@ -29,7 +29,7 @@
            android:layout_width="320dp"
            android:layout_height="190dp"
            android:layout_gravity="center"
-           android:background="@drawable/home_page"/>
+           android:background="@drawable/master_menu"/>
         
         <TextView
 
@@ -67,7 +67,7 @@
            android:layout_width="320dp"
            android:layout_height="190dp"
            android:layout_gravity="center"
-           android:background="@drawable/select_org"/>
+           android:background="@drawable/create_org"/>
         
         <TextView
 
@@ -86,7 +86,7 @@
            android:layout_width="320dp"
            android:layout_height="190dp"
            android:layout_gravity="center"
-           android:background="@drawable/org_details"/>
+           android:background="@drawable/create_org"/>
         
         <TextView
 
@@ -98,14 +98,14 @@
             android:singleLine="false"
             android:textColor="#FFFFFF"
             android:textSize="16dp"
-            android:text="@string/help_para5" />
+            android:text="@drawable/create_org" />
         
         <ImageView
            android:focusable="false"
            android:layout_width="320dp"
            android:layout_height="190dp"
            android:layout_gravity="center"
-           android:background="@drawable/pref"/>
+           android:background="@drawable/create_org"/>
         
         <TextView
 
@@ -162,7 +162,7 @@
            android:layout_width="320dp"
            android:layout_height="190dp"
            android:layout_gravity="center"
-           android:background="@drawable/create_vouvher"/>
+           android:background="@drawable/create_voucher"/>
         
         <TextView
 
@@ -185,7 +185,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_gravity="center"
-           android:background="@drawable/index"/>
+           android:background="@drawable/create_org"/>
         
         <TextView
 
@@ -206,7 +206,7 @@
            android:layout_width="320dp"
            android:layout_height="190dp"
            android:layout_gravity="center"
-           android:background="@drawable/serach_voucher"/>
+           android:background="@drawable/create_org"/>
         
         <TextView
 

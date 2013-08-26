@@ -79,7 +79,7 @@ Features
   #. Rollover
   #. Export reports in PDF/CSV format
   
-	.. image::  res/drawable-hdpi/PDF_file_security.png
+	.. image::  res/drawable-hdpi/pdf_file_security.png
 	   :name: PDF file security
 	   :align: center
 	   :height: 200pt
@@ -190,7 +190,7 @@ if you want to clone code for Android(4.0.3, API-15), type ::
 
 if you want to checkout all branches then type, ::
 
-   git checkout -b holo_theme remotes/origin/ics
+   git checkout -b holo_theme remotes/origin/holo_theme
    git checkout -b docs remotes/origin/docs
    git checkout -b froyo remotes/origin/froyo
    git checkout -b ics remotes/origin/ics
