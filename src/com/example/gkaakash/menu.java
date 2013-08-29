@@ -251,6 +251,9 @@ public class menu extends Activity{
 		TextView tvdate = (TextView)findViewById(R.id.date);
 		tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
 		
+		Button btn_optionsMenu= (Button) findViewById(R.id.btn_optionsMenu);
+		btn_optionsMenu.setVisibility(View.GONE);
+		
 		//set user details
 		TextView tvuser = (TextView)findViewById(R.id.user);
 		tvuser.setText(Character.toString(userrole.charAt(0)).toUpperCase()+userrole.substring(1));
@@ -360,10 +363,10 @@ public class menu extends Activity{
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				Toast.makeText(
-						getApplicationContext(),
-						((TextView) v.findViewById(R.id.grid_item_label))
-						.getText(), Toast.LENGTH_SHORT).show();
+//				Toast.makeText(
+//						getApplicationContext(),
+//						((TextView) v.findViewById(R.id.grid_item_label))
+//						.getText(), Toast.LENGTH_SHORT).show();
 
 				if(position == 0)
 				{
@@ -413,9 +416,9 @@ public class menu extends Activity{
 						}
 						//for help
 						if(position == 7){
-							Intent intent = new Intent(context, Help.class);
-							// To pass on the value to the next page
-							startActivity(intent);
+//							Intent intent = new Intent(context, Help.class);
+//							// To pass on the value to the next page
+//							startActivity(intent);
 						}
 						
 					}
@@ -449,9 +452,9 @@ public class menu extends Activity{
 				}
 				//for help
 				if(position == i+2){
-					Intent intent = new Intent(context, Help.class);
-					// To pass on the value to the next page
-					startActivity(intent);
+//					Intent intent = new Intent(context, Help.class);
+//					// To pass on the value to the next page
+//					startActivity(intent);
 				}
 			}
 		});
@@ -662,13 +665,13 @@ public class menu extends Activity{
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				context);
 		//builder.setTitle("Aakash Business Tool");
-		builder.setMessage("Do you want to export organisation");
+		builder.setMessage("Do you want to export organisation?");
 		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				Object[] export = new Object[] {OrgName, financialFromDate,financialToDate};
 				//call back-end to export organisation 
 				String encrypted_db = organisation.Export(export,client_id);
-				Toast.makeText(menu.this, encrypted_db, Toast.LENGTH_SHORT).show();
+//				Toast.makeText(menu.this, encrypted_db, Toast.LENGTH_SHORT).show();
 				//copy export dir from /opt/abt/ to sdcard
 				String[] command = {"rm -r /mnt/sdcard/export", "busybox cp /data/local/abt/opt/abt/export/ /mnt/sdcard/ -R"};
 				module.RunAsRoot(command);
@@ -836,7 +839,7 @@ public class menu extends Activity{
 
 							String username;
 
-							Toast.makeText(context, "lll:"+MainActivity.username_flag, Toast.LENGTH_SHORT).show();
+//							Toast.makeText(context, "lll:"+MainActivity.username_flag, Toast.LENGTH_SHORT).show();
 							
 							username=MainActivity.username;
 							System.out.println("username1:"+username);

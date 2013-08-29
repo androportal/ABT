@@ -12,6 +12,7 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ActionBar.LayoutParams;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -216,11 +217,49 @@ public class trialBalance extends Activity{
 	    	
 	       //animated_dialog();
 	       //floatingHeader();
+			createMenuOptions();
 	    } catch (Exception e) {
 		   	m.toastValidationMessage(trialBalance.this, "Please try again");
 	   	}
     }
    
+    public void createMenuOptions() {
+    	Button btn_optionsMenu = (Button)findViewById(R.id.btn_optionsMenu);
+		
+		btn_optionsMenu.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
+				
+				AlertDialog dialog;
+				//creating a dialog box for popup
+				AlertDialog.Builder builder = new AlertDialog.Builder(trialBalance.this);
+				//setting title
+				builder.setTitle("Select");
+				//adding items
+				builder.setItems(items, new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog,
+							int pos) {
+						if(pos == 0){
+							LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+							String password = m.setPasswordForPdfFile(trialBalance.this,inflater, 
+									R.layout.sign_up, 0, pdf_params,trialBalGrid, null);
+						}else if(pos == 1){
+							m.csv_writer(pdf_params,trialBalGrid_with_header);
+				   			m.toastValidationMessage(trialBalance.this, "CSV exported");
+						}
+					}
+				});
+				dialog=builder.create();
+				((Dialog) dialog).show();
+			}
+			
+		});
+    }
+    
     /*
      * this method adds the floating header to the table on touching it.
      * In this case, we have a main table which includes table rows and a header at the load time.

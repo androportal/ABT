@@ -77,6 +77,9 @@ public class addProject extends MainActivity {
 		TextView tvdate = (TextView)findViewById(R.id.date);
 		tvdate.setText(m.changeDateFormat(menu.financialFromDate)+" To "+m.changeDateFormat(menu.financialToDate));
 		
+		Button btn_optionsMenu= (Button) findViewById(R.id.btn_optionsMenu);
+		btn_optionsMenu.setVisibility(View.GONE);
+		
 		// get all project names in list view on load
 		projectnames = (Object[]) organisation.getAllProjects(client_id);
 		getResultList(projectnames);

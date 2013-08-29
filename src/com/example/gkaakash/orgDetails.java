@@ -256,6 +256,9 @@ import android.widget.Toast;
 			TextView tvdate = (TextView)findViewById(R.id.date);
 			tvdate.setText(m.changeDateFormat(financialFrom)+" To "+m.changeDateFormat(financialTo));
 			
+			Button btn_optionsMenu= (Button) findViewById(R.id.btn_optionsMenu);
+			btn_optionsMenu.setVisibility(View.GONE);
+			
 			if(editDetailsflag==false){
 				// Declaring new method for setting current date into "Registration Date"
 				setCurrentDateOnButton();

@@ -309,5 +309,5 @@
             android:layout_height="wrap_content"
             android:text="Don&apos;t Ask Me Later" 
             android:layout_alignParentBottom="true"
-            />
+            style="@style/CheckBoxAppTheme"/>
             </RelativeLayout>

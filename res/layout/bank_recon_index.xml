@@ -42,8 +42,7 @@
             android:layout_height="wrap_content"
             android:entries="@array/accountName_arrays"
             android:layout_weight="1"
-            android:prompt="@string/accountName_prompt"
-            style="@style/SpinnerAppTheme" />
+            android:prompt="@string/accountName_prompt" />
         </TableRow>
         
     	<TableRow android:layout_width="match_parent"
@@ -100,7 +99,8 @@
 		        android:id="@+id/cbClearedTransaction"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_weight="1" />		    
+		        android:layout_weight="1"
+		        style="@style/CheckBoxAppTheme" />		    
 		    
 		</TableRow>
 		
@@ -117,7 +117,8 @@
 		        android:id="@+id/cbReconNarration"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_weight="1" />
+		        android:layout_weight="1"
+		        style="@style/CheckBoxAppTheme" />
 		    
 		</TableRow>
     </LinearLayout>

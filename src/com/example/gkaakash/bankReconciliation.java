@@ -215,12 +215,50 @@ public class bankReconciliation extends Activity{
 			
 			pdf_params = new String[]{"BankRec",sFilename,OrgName,OrgPeriod,"Bank Reconciliation for "+account,BankReconcilPeriod,"",result};
 
-    		
+			createMenuOptions();
             
 		} catch (Exception e) {
 			System.out.println("my error is"+e);
 			m.toastValidationMessage(bankReconciliation.this,"Please try again");
 		}
+    }
+    
+    public void createMenuOptions() {
+    	Button btn_optionsMenu = (Button)findViewById(R.id.btn_optionsMenu);
+		
+		btn_optionsMenu.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
+				
+				AlertDialog dialog;
+				//creating a dialog box for popup
+				AlertDialog.Builder builder = new AlertDialog.Builder(bankReconciliation.this);
+				//setting title
+				builder.setTitle("Select");
+				//adding items
+				builder.setItems(items, new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog,
+							int pos) {
+						if(pos == 0){
+							LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+							String password = m.setPasswordForPdfFile(context,inflater, R.layout.sign_up, 1, pdf_params,bankReconGrid,
+									statementGrid);
+													
+						}else if(pos == 1){
+							m.csv_writer1(pdf_params,bankReconGrid, statementGrid);
+							m.toastValidationMessage(bankReconciliation.this, "CSV exported");
+						}
+					}
+				});
+				dialog=builder.create();
+				((Dialog) dialog).show();
+			}
+			
+		});
     }
    
     /*
@@ -346,7 +384,8 @@ public class bankReconciliation extends Activity{
 							LinearLayout l4 = (LinearLayout)((ViewGroup) row).getChildAt(5);
 							TextView tvcramount = (TextView) l4.getChildAt(0); //cr amount
 							
-							EditText etmemo= (EditText)((ViewGroup) row).getChildAt(7); //memo
+							l4 = (LinearLayout)((ViewGroup) row).getChildAt(7);
+							TextView memo = (TextView) l4.getChildAt(0); //memo
 							
 							rowArray.add(tvVoucherCode.getText().toString());
 							rowArray.add(tvrefdate.getText().toString());
@@ -363,7 +402,7 @@ public class bankReconciliation extends Activity{
 							}
 							
 							rowArray.add(tvclearanceDate.getText().toString());
-							rowArray.add(etmemo.getText().toString());
+							rowArray.add(memo.getText().toString());
 							
 							/*
 							System.out.println("i am row "+ i+ tvrefdate.getText().toString()

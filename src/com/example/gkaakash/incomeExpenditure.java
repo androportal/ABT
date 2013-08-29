@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ActionBar.LayoutParams;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -223,11 +224,48 @@ public class incomeExpenditure extends Activity{
          
            
             //animated_diolog();
+            createMenuOptions();
         } catch (Exception e) {
         	m.toastValidationMessage(incomeExpenditure.this, "Please try again"); 
         }
     }
    
+    public void createMenuOptions() {
+    	Button btn_optionsMenu = (Button)findViewById(R.id.btn_optionsMenu);
+		
+		btn_optionsMenu.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
+				
+				AlertDialog dialog;
+				//creating a dialog box for popup
+				AlertDialog.Builder builder = new AlertDialog.Builder(incomeExpenditure.this);
+				//setting title
+				builder.setTitle("Select");
+				//adding items
+				builder.setItems(items, new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog,
+							int pos) {
+						if(pos == 0){
+							LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+							String password = m.setPasswordForPdfFile(incomeExpenditure.this,inflater, R.layout.sign_up, 1, pdf_params, IEGrid1,IEGrid2);
+							
+						}else if(pos == 1){
+							m.csv_writer1(pdf_params,IEGrid1, IEGrid2);
+							m.toastValidationMessage(incomeExpenditure.this, "CSV exported");
+						}
+					}
+				});
+				dialog=builder.create();
+				((Dialog) dialog).show();
+			}
+			
+		});
+    }
     
 //    private void animated_diolog() {
 //    	try {
@@ -326,7 +364,7 @@ public class incomeExpenditure extends Activity{
     				
     				addRow(rsSymbol+" "+columnValue.get(j));   
     				label.setBackgroundColor(color);
-    				label.setTextColor(Color.BLACK); //blue theme
+    				label.setTextColor(Color.BLACK);
     				label.setGravity(Gravity.CENTER);
     			}
     			else{
@@ -356,8 +394,11 @@ public class incomeExpenditure extends Activity{
     			}
             }
             else if (j==1){
-           
-            	if(columnValue.get(j).equalsIgnoreCase("Direct Expense")
+            	if(columnValue.get(j).equalsIgnoreCase("Particulars")){
+            		addRow(columnValue.get(j));  
+            		label.setGravity(Gravity.CENTER);
+            		label.setTextColor(Color.BLACK);
+            	}else if(columnValue.get(j).equalsIgnoreCase("Direct Expense")
             			||columnValue.get(j).equalsIgnoreCase("Direct Income")
             			||columnValue.get(j).equalsIgnoreCase("Indirect Expense")
             			||columnValue.get(j).equalsIgnoreCase("Indirect Income")){ // for heading "Amount"
@@ -368,12 +409,13 @@ public class incomeExpenditure extends Activity{
             	{
             		if(!columnValue.get(j).equalsIgnoreCase("Total"))
             		{
+            			//for accounts
             			addRow("          "+columnValue.get(j));   
             			label.setBackgroundColor(color);
        	       
             		}else
             		{
-            			addRow(columnValue.get(j));   
+            			addRow(columnValue.get(j)); 
             			label.setBackgroundColor(color);
             			label.setGravity(Gravity.RIGHT);
             		}

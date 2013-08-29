@@ -220,7 +220,7 @@
 			      android:text="0.00"
 			      android:layout_weight="1"
 			      android:enabled="false"
-			      style="@style/EditTextAppTheme" >
+			      style="@style/EditTextReadOnlyAppTheme" >
 				  
 	          <requestFocus />
 			  </EditText>

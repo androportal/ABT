@@ -1142,10 +1142,18 @@ public class createVoucher extends Activity {
 						// first row
 						List<String> paramFirstRow = new ArrayList<String>();
 						String fistRowDrCr = DrCr.getSelectedItem().toString();
-
-						String fistRowAccountName = account.getSelectedItem()
-								.toString();
-						accNames.add(fistRowAccountName);
+						String fistRowAccountName="";
+						boolean empty_spinner = false;
+						
+						try {
+							fistRowAccountName = account.getSelectedItem()
+									.toString();
+							accNames.add(fistRowAccountName);
+						} catch (Exception e) {
+							empty_spinner = true;
+						}
+						
+						
 
 						String firstRowAmount = firstRowamount.getText()
 								.toString();
@@ -1192,9 +1200,16 @@ public class createVoucher extends Activity {
 							// account name
 							Spinner rowAccountName = (Spinner) ((ViewGroup) row)
 									.getChildAt(2);
-							String accountName = rowAccountName
-									.getSelectedItem().toString();
-							accNames.add(accountName);
+							String accountName = "";
+							try {
+								accountName = rowAccountName
+										.getSelectedItem().toString();
+								accNames.add(accountName);
+							} catch (Exception e) {
+								empty_spinner = true;
+								break;
+							}
+							
 
 							// amount edittext
 							EditText etamount = (EditText) ((ViewGroup) row)
@@ -1249,7 +1264,8 @@ public class createVoucher extends Activity {
 								break;
 							}
 						}
-						if (flag == false) {
+						
+						if (empty_spinner == false && flag == false) {
 							// other voucher details...
 							etnarration = (EditText) findViewById(R.id.etVoucherNarration);
 							String narration = etnarration.getText().toString();
@@ -1359,9 +1375,13 @@ public class createVoucher extends Activity {
 							}
 
 						} else {
-							m.toastValidationMessage(context,"Account name can not be repeated, please select another account name");
+							if(empty_spinner){
+								m.toastValidationMessage(context,"Please create account");
+							} else{
+								m.toastValidationMessage(context,"Account name can not be repeated, please select another account name");
+							}
 						}
-					}else 
+					} else 
 					{
 						etvoucherno.requestFocus();
 						m.toastValidationMessage(context,"Voucher no already exist");
@@ -1729,8 +1749,8 @@ public class createVoucher extends Activity {
 				| InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
 		second_table_closingbal_et = new EditText(newRow.getContext());
-		second_table_closingbal_et.setBackgroundResource(R.drawable.edit_text_holo_light);
-		second_table_closingbal_et.setTextColor(Color.WHITE);
+		second_table_closingbal_et.setBackgroundResource(R.drawable.textfield_focused_holo_light);
+		second_table_closingbal_et.setTextColor(Color.parseColor("#738678"));
 		second_table_closingbal_et.setText("0.00");
 		second_table_closingbal_et.setInputType(InputType.TYPE_CLASS_NUMBER
 				| InputType.TYPE_NUMBER_FLAG_DECIMAL);

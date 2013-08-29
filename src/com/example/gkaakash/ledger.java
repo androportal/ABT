@@ -39,6 +39,7 @@ import android.app.ActionBar.LayoutParams;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -313,6 +314,8 @@ public class ledger extends Activity {
 
 			floatingHeader();
 
+			createMenuOptions();
+			
 		} catch (Exception e) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(ledger.this);
 			builder.setMessage("Please try again")
@@ -329,6 +332,42 @@ public class ledger extends Activity {
 			alert.show();
 
 		}
+	}
+
+	public void createMenuOptions() {
+		Button btn_optionsMenu = (Button)findViewById(R.id.btn_optionsMenu);
+		
+		btn_optionsMenu.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
+				
+
+				//creating a dialog box for popup
+				AlertDialog.Builder builder = new AlertDialog.Builder(ledger.this);
+				//setting title
+				builder.setTitle("Select");
+				//adding items
+				builder.setItems(items, new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog,
+							int pos) {
+						if(pos == 0){
+							LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+							String password = m.setPasswordForPdfFile(context,inflater, R.layout.sign_up,0, pdf_params, ledgerGrid, null);
+						}else if(pos == 1){
+							m.csv_writer(pdf_params,ledgerGrid_with_header);
+							m.toastValidationMessage(ledger.this, "CSV exported");
+						}
+					}
+				});
+				dialog=builder.create();
+				((Dialog) dialog).show();
+			}
+		});
+		
 	}
 
 	private void other_details() {

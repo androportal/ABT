@@ -45,7 +45,6 @@
             android:layout_gravity="center"
             android:entries="@array/getaccNamesinLedger"
             android:prompt="@string/getaccNamesinLedger" 
-            style="@style/SpinnerAppTheme"
             android:layout_weight="1"/>
         
         </TableRow>
@@ -106,7 +105,8 @@
 		        android:id="@+id/cbNarrations"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_weight="1"/>
+		        android:layout_weight="1"
+		        style="@style/CheckBoxAppTheme"/>
 		</TableRow>
         
 		<TableRow android:layout_width="match_parent"
@@ -125,8 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:prompt="@string/projectName_prompt"
-			style="@style/SpinnerAppTheme"/>
+            android:prompt="@string/projectName_prompt" />
 	</TableRow>
 		
     </LinearLayout>

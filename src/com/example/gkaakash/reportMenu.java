@@ -120,6 +120,9 @@ public class reportMenu extends Activity{
 		TextView tvdate = (TextView)findViewById(R.id.date);
 		tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
 	   	
+		Button btn_optionsMenu= (Button) findViewById(R.id.btn_optionsMenu);
+		btn_optionsMenu.setVisibility(View.GONE);
+		
 		//getting the list view and setting background
 		final ListView listView = (ListView)findViewById(R.id.ListReportType);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, reportType);

@@ -11,6 +11,7 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ActionBar.LayoutParams; 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -206,6 +207,8 @@ public class projectStatement extends Activity{
         	
         	//animated_dialog();
         	floatingHeader();
+        	
+        	createMenuOptions();
         
         } catch (Exception e) {
         	m.toastValidationMessage(projectStatement.this, "Please try again");
@@ -278,6 +281,44 @@ public class projectStatement extends Activity{
 		});
 	}
 
+    public void createMenuOptions() {
+    	Button btn_optionsMenu = (Button)findViewById(R.id.btn_optionsMenu);
+		
+		btn_optionsMenu.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
+				
+				AlertDialog dialog;
+				//creating a dialog box for popup
+				AlertDialog.Builder builder = new AlertDialog.Builder(projectStatement.this);
+				//setting title
+				builder.setTitle("Select");
+				//adding items
+				builder.setItems(items, new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog,
+							int pos) {
+						if(pos == 0){
+							LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+							String password = m.setPasswordForPdfFile(projectStatement.this,inflater, R.layout.sign_up, 0, pdf_params,projectStatementGrid, null);
+				   			
+				   			
+						}else if(pos == 1){
+							m.csv_writer(pdf_params,projectStatementGrid_with_header);
+				   			m.toastValidationMessage(projectStatement.this, "CSV exported");
+						}
+					}
+				});
+				dialog=builder.create();
+				((Dialog) dialog).show();
+			}
+			
+		});
+		
+	}
     
 //	private void animated_dialog() {
 //		try {
