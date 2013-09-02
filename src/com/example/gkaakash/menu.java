@@ -625,20 +625,27 @@ public class menu extends Activity{
 	}
 
 	protected void rollover() {
-		Object[] rollover_exist_params = new Object[] {OrgName,financialFromDate,financialToDate};
-		Boolean existRollOver = report.existRollOver(rollover_exist_params);
+        Object[] rollover_exist_params = new Object[] {OrgName,financialFromDate,financialToDate};
+        Boolean existRollOver = report.existRollOver(rollover_exist_params);
 
-		if (existRollOver.equals(false)) {
-			Object[] rollover_params = new Object[] {OrgName, financialFromDate,financialToDate,
-					orgtype };
-			rollover = report.rollOver(rollover_params,client_id);
-			if(rollover.equalsIgnoreCase("false"))
-			{
-				m.toastValidationMessage(context,"can not rollover , since financial year is not completed !!");
-			}
-		}
+        if (existRollOver.equals(false)) {
+            Object[] rollover_params = new Object[] {OrgName, financialFromDate,financialToDate,
+                    orgtype };
+            rollover = report.rollOver(rollover_params,client_id);
+            if(rollover.equalsIgnoreCase("false"))
+            {
+                m.toastValidationMessage(context,"can not rollover , since financial year is not completed!!");
+            }else
+            {
+                m.toastValidationMessage(context,"rollover has been done!!");
+            }       
 
-	}
+        }else{
+            m.toastValidationMessage(context,"rollover has done already!!");
+        }
+
+    }
+
 
 	protected void export() {
 		//		Intent email = new Intent(Intent.ACTION_SEND);
