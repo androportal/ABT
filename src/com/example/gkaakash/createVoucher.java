@@ -120,6 +120,7 @@ public class createVoucher extends Activity {
 	EditText amount_first,amount_sec,closing_first;
 	Spinner first_account_name,first_dr_cr ,second_dr_cr,second_account_name;
 	View row123,row1;
+	Spinner change_voucher_type;
 
 
 	@Override
@@ -140,7 +141,7 @@ public class createVoucher extends Activity {
 		
 		row1 = table.getChildAt(1);
 
-
+		change_voucher_type= (Spinner)findViewById(R.id.sVouchertypes);
 		btnSaveVoucher = (Button) findViewById(R.id.btnSaveVoucher);
 		btnResetVoucher = (Button) findViewById(R.id.btnResetVoucher);
 		
@@ -363,14 +364,14 @@ public class createVoucher extends Activity {
 		etnarration.setText("");
 		etvoucherno.setText("");
 
-		second_table_closingbal_et.setText("0.00");
+		second_table_closingbal_et.setText("");
 		searchFlag = false;
 		cloneflag = true;
 		setVoucherDate();
 		setProject();
 		// add a keylistener to keep track user
 		// input
-
+		change_voucher_type.setEnabled(true);
 		table.removeAllViews();
 		DrAccountlist.clear();
 		CrAccountlist.clear();
@@ -387,8 +388,6 @@ public class createVoucher extends Activity {
 		//adding voucher list items
 		final String[] voucherTypes = new String[] { "Contra","Journal","Payment","Receipt","Credit note",
 				"Debit note","Sales","Sales return","Purchase","Purchase return" };
-		
-		final Spinner change_voucher_type= (Spinner)findViewById(R.id.sVouchertypes);
 		// creating array adaptor to take list of vouchertypes
         final ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
                 android.R.layout.simple_spinner_item, voucherTypes);
@@ -439,7 +438,7 @@ public class createVoucher extends Activity {
 				public void onFocusChange(View v, boolean hasFocus) {
 
 					e.setBackgroundResource(R.drawable.textfield_activated_holo_light);
-					etRefNumber = (EditText) findViewById(R.id.etRefNumber);
+					etRefNumber = (EditText) findViewById(R.id.etVoucherNumber);
 					e.setNextFocusDownId(etRefNumber.getId());
 				}
 			});
@@ -637,7 +636,7 @@ public class createVoucher extends Activity {
 			if (searchFlag == false) {
 			
 				addButton();
-				
+				change_voucher_type.setEnabled(true);
 				ArrayAdapter<String> da12 = new ArrayAdapter<String>(createVoucher.this,
 						android.R.layout.simple_spinner_item, dr_cr);
 				
@@ -788,6 +787,7 @@ public class createVoucher extends Activity {
 			}
 
 			if (searchFlag == false) {
+				change_voucher_type.setEnabled(true);
 				addButton();
 				removeSelfButton.setText("+");   
 				// set first row
@@ -1548,7 +1548,7 @@ public class createVoucher extends Activity {
 			public void onClick(View v) {
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-				builder.setMessage("Are you sure, you want reset all fields? ")
+				builder.setMessage("Are you sure, you want reset all fields for creating a new voucher?")
 				.setCancelable(false)
 				.setPositiveButton("Yes",
 						new DialogInterface.OnClickListener() {
@@ -1887,7 +1887,8 @@ public class createVoucher extends Activity {
 		// tv1.setWidth(100);
 		second_table_amount_et = new EditText(newRow.getContext());
 		second_table_amount_et.setBackgroundResource(R.drawable.edit_text_holo_light);
-		second_table_amount_et.setText("0.00");
+		second_table_amount_et.setText("");
+		second_table_amount_et.setHint("Enter amount");
 		second_table_amount_et.setInputType(InputType.TYPE_CLASS_NUMBER
 				| InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		TableRow.LayoutParams paramsExample = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT,1.0f);
@@ -1896,7 +1897,7 @@ public class createVoucher extends Activity {
 		second_table_closingbal_et = new EditText(newRow.getContext());
 		second_table_closingbal_et.setBackgroundResource(R.drawable.edit_text_holo_light);
 		second_table_closingbal_et.setTextColor(Color.WHITE);
-		second_table_closingbal_et.setText("0.00");
+		second_table_closingbal_et.setText("");
 		second_table_closingbal_et.setInputType(InputType.TYPE_CLASS_NUMBER
 				| InputType.TYPE_NUMBER_FLAG_DECIMAL);
 

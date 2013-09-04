@@ -34,7 +34,8 @@
            android:fillViewport="true"
            android:scrollbarFadeDuration="0"
            android:scrollbarAlwaysDrawVerticalTrack="true" 
-           android:scrollbarAlwaysDrawHorizontalTrack="true">
+           android:scrollbarAlwaysDrawHorizontalTrack="true" 
+           android:paddingBottom="15dp" >
 
             <LinearLayout
        	android:layout_width="wrap_content"
@@ -83,10 +84,9 @@
               android:id="@+id/layout_root"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:paddingRight="10dp"
-              android:paddingBottom="10dp" 
               android:layout_alignParentBottom="true"
-              android:layout_alignParentRight="true">
+              android:layout_alignParentRight="true"
+              android:background="#ffffff">
              
                <TextView
               android:id="@+id/tvdifference"
@@ -96,9 +96,9 @@
               android:text="Difference:"
               android:layout_weight="80"
               android:gravity="center|right"
-              android:textColor="#FFFFFF"
-              android:textSize="18dp" 
-              />
+              android:textColor="#000000"
+              android:paddingRight="10dp"
+              android:textSize="15dp" />
              
           </LinearLayout>
 </RelativeLayout>

@@ -18,7 +18,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ScrollVertiBalanceSheet"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="15dp" >
          <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/layout_root"
@@ -75,10 +76,9 @@
               android:id="@+id/layout_root"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:paddingRight="10dp"
-              android:paddingBottom="10dp" 
               android:layout_alignParentBottom="true"
-              android:layout_alignParentRight="true">
+              android:layout_alignParentRight="true"
+              android:background="#ffffff">
              
                <TextView
               android:id="@+id/tvdifference"
@@ -88,8 +88,10 @@
               android:text="Difference:"
               android:layout_weight="80"
               android:gravity="center|right"
-              android:textColor="#FFFFFF"
-              android:textSize="18dp" />
-   </LinearLayout>
+              android:textColor="#000000"
+              android:paddingRight="10dp"
+              android:textSize="15dp" />
+             
+          </LinearLayout>
                
 </RelativeLayout>

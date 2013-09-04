@@ -670,7 +670,7 @@ public class PdfGenaretor {
 		title_table.setWidthPercentage(100f);
 		float[] columnWidths1 = new float[] {25f,45f,30f};
 		/* first cell contain genarated date which will the current date */
-		PdfPCell h1 = new PdfPCell(new Phrase("Genrated Date:\n"+new SimpleDateFormat("EEE d-MMM-yyyy HH:mm:ss").format(date),smallBold));
+		PdfPCell h1 = new PdfPCell(new Phrase("Date of PDF generation:\n"+new SimpleDateFormat("EEE d-MMM-yyyy HH:mm:ss").format(date),smallBold));
 		h1.setBorder(Rectangle.NO_BORDER);
 		/* second cell will print organisation name and financile year*/
 		PdfPCell h2 = new PdfPCell(new Phrase(pdf_params[2]+"\n"+pdf_params[3],bigBold));

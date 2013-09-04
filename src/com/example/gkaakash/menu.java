@@ -416,9 +416,9 @@ public class menu extends Activity{
 						}
 						//for help
 						if(position == 7){
-//							Intent intent = new Intent(context, Help.class);
-//							// To pass on the value to the next page
-//							startActivity(intent);
+							Intent intent = new Intent(context, Help.class);
+							// To pass on the value to the next page
+							startActivity(intent);
 						}
 						
 					}
@@ -452,9 +452,9 @@ public class menu extends Activity{
 				}
 				//for help
 				if(position == i+2){
-//					Intent intent = new Intent(context, Help.class);
-//					// To pass on the value to the next page
-//					startActivity(intent);
+					Intent intent = new Intent(context, Help.class);
+					// To pass on the value to the next page
+					startActivity(intent);
 				}
 			}
 		});

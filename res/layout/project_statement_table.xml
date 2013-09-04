@@ -49,7 +49,8 @@
                     android:layout_height="0dp"
                     android:stretchColumns="0,1,2,3,4,5"
                     android:id="@+id/maintable"
-                    android:background="#ffffff">
+                    android:background="#ffffff"
+                    android:paddingBottom="15dp">
                 </TableLayout>
             </ScrollView>
        		</LinearLayout>
@@ -63,10 +64,9 @@
               android:id="@+id/layout_root"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:paddingRight="10dp"
-              android:paddingBottom="10dp" 
               android:layout_alignParentBottom="true"
-              android:layout_alignParentRight="true">
+              android:layout_alignParentRight="true"
+              android:background="#ffffff">
              
                <TextView
               android:id="@+id/tvdifference"
@@ -76,8 +76,9 @@
               android:text="Difference:"
               android:layout_weight="80"
               android:gravity="center|right"
-              android:textColor="#FFFFFF"
-              android:textSize="18dp" />
+              android:textColor="#000000"
+              android:paddingRight="10dp"
+              android:textSize="15dp" />
              
           </LinearLayout>
   

@@ -845,9 +845,9 @@ public class MainActivity extends Activity{
 		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 		builder.setView(layout);
 		builder.setTitle("Help");
-
+		
 		CheckBox cbHelp = (CheckBox)layout.findViewById(R.id.cbHelp);
-
+		cbHelp.setChecked(false);
 
 		if(help_option_menu_flag == 1) { 
 			if (help_flag.exists()) {
