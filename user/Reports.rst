@@ -14,24 +14,21 @@ Reports
    :height: 200pt
    :width: 350pt
 
-* In each of the report screen, we have some common components like, ``Scroll button`` to scroll the screen to the bottom and vice versa.
-	  
-.. image:: images/down.jpeg
-   :name: ABT main page
-   :align: center
 	  	
-* and ``arrow button`` to view respective organisation information such as name, type and financial year in a dialog box.
-	  
-.. image:: images/arrow.png
-   :name: ABT main page
+* Title will display respective organisation information such as name, type and financial year.
+
+* Options button is provided to export report in a PDF or CSV format. 
+
+.. image:: images/export_pdf.png
    :align: center
-   
-.. image:: images/org_info_dialog.png
+   :height: 200pt
+   :width: 350pt
+* You can also set security to your file.
+.. image:: images/file_security.png
    :name: ABT main page
    :align: center
    :height: 200pt
-   :width: 350pt	   
-		   
+   :width: 350pt
 
 Ledger
 ----------

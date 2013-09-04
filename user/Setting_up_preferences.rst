@@ -6,10 +6,16 @@ Setting up preferences
 
 Select ``Preferences`` option from master menu to edit organisation details or Add/Edit/Delete project.
 
-Edit organisation details
--------------------------
+Edit/Delete organisation details
+--------------------------------
 
 * Displays previously saved organisation information, all the fields are editable.
+
+.. image:: images/edit_org.png
+   :name: ABT main page
+   :align: center
+   :height: 200pt
+   :width: 350pt
 
 * User can edit these fields if required.
 
@@ -17,7 +23,10 @@ Edit organisation details
 
 * Press ``Reset`` to clear all the fields.
 
-.. image:: images/edit_org.png
+* Press ``Delete`` button to delete organisation. You can also delete previous financial year of
+  the same organisation.
+
+.. image:: images/delete_org.png
    :name: ABT main page
    :align: center
    :height: 200pt
@@ -34,13 +43,7 @@ Add/Edit/Delete project
    :height: 200pt
    :width: 350pt
 
-* ``Plus button`` (see fig.) will help to add new project/projects if not exists.
-
-* Multiple project names can be added at a time.
-
-.. image:: images/add_proj.png
-   :name: ABT main page
-   :align: center
+* ``Add project`` (see figure) will help to add new project if not exists.
 	
 * Select project name from the list, It diplays a popup which is having two options such as ``edit`` or ``delete`` project name.
 

@@ -5,24 +5,45 @@ Maintaining organisations
 =========================
 * This article explains maintainance of organisation in **Aakash Business Tool(ABT)**.
 
-* It includes ``creation`` of organisation, ``saving`` organisation details and setting ``preferences``.
+* It includes ``creation`` of organisation and ``saving`` organisation details.
 
-welcome page
+Welcome page
 ------------
-* This page contains the features for the first screen that displays two buttons, **Create new organisation** and
-  **Select existing organisation**, besides the main logo of Aakash Business Tool(ABT).
 
-.. image:: images/home_page.png
+* On loading application, it asks for address of the server location such as emulator,
+  tablet or remote server. Select **any one** of them.
+  
+* Choose ``tablet`` option to run ABT on android device.
+
+* Android developers can Choose ``emulator`` option, to test app or modify ABT source code.
+
+* On selecting ``Remote server`` for ABT, enter IP address manually. 
+  It requires a live internet connection, it can be within an Organization
+  or an Institute. User can access a centralize remote server running within 
+  the Institute. The advantage is, each user will have his/her own 
+  account on the server. The central server runs Postgres as a database engine.
+
+.. image:: images/remote_location.png
    :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
+
+* Click ``Apply`` button and you will see a page contains the features for the 
+  first screen that displays two buttons, **Create new organisation** and
+  **Select existing organisation** at the top.
 
 Setting up a new organisation
 -----------------------------
 The first step to get started in ``ABT`` is to create an organisation
 
 * Go to Welcome page of ABT >> Press ``Create New Organisation``.
+
+.. image:: images/create_org.png
+   :name: ABT main page
+   :align: center
+   :height: 200pt
+   :width: 350pt
 
 * To get started with the application, there should be ``atleast one`` organization.
   
@@ -34,9 +55,19 @@ The first step to get started in ``ABT`` is to create an organisation
 
 * **Note**: ABT provides 1st April to 31st March as the predefined financial year, But user can change the To date ``manually`` according to organization's rules or requirement. Once the ``From`` date is seted, ``To`` date gets automatically updated by ``12`` months and minus ``1`` day.
   
-* Press ``next`` to go to the next page.
+* Press ``next`` to sign up as a user. This will open a promt-box to select the user role such as Admin or guest.
 
-.. image:: images/create_org.png
+.. image:: images/login.png
+   :align: center
+   :height: 200pt
+   :width: 350pt
+
+* Guest user has a default username ``guest`` and password is also ``guest``.
+
+* If you select ``Admin``, a new pop-up box will appear on the screen to sign up as an Admin.
+  Save details and press ``Login`` to continue.
+
+.. image:: images/sign_up.png
    :name: ABT main page
    :align: center
    :height: 200pt
@@ -55,21 +86,7 @@ The first step to get started in ``ABT`` is to create an organisation
 
 * **Note**: Organisation will get created by clicking either ``Save`` or ``Skip`` button.
 
-* Once you create a new organisation and save details of it, ABT asks for preferences.
-
-* It provides **preferences** to add new ``projects`` for projectwise accounting and ``manual account code`` generation.
-
-* if project checkbox is checked, new edittext will appear on the screen to add project names and ``Save`` button will save project names in database if it is not exist.
-
-* Check the account code using the ``check-box``,if a manual account code has to be provided.
-
-.. image:: images/pref.png
-   :name: ABT main page
-   :align: center
-   :height: 200pt
-   :width: 350pt
-
-
+* Welcome to ABT's master menu!
 
 Select existing organisation
 ----------------------------
@@ -80,21 +97,17 @@ Select existing organisation
   
 * Select the required ``organisation`` and respective ``financial year``.
   
-* Press ``Proceed``.
+* Press ``Next``.
 
 .. image:: images/select_org.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
-
-* To delete existing organisation press ``Delete Organisation``.
+   
+* This will ask you to login. Guest user have to just select radio button and Admin/Manager/operator
+  have to insert username and password.
   
-* There can be same organisation with different financial year as shown in below fig.
-  
-.. image:: images/diff_financial_year.png
-   :name: ABT main page
+.. image:: images/login_user.png
    :align: center
    :height: 200pt
    :width: 350pt
-

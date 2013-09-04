@@ -11,3 +11,5 @@ How to Operate
    Reports  
    Setting_up_preferences
    Bank_reconciliation
+   Rollover
+   Export_organisation

@@ -21,12 +21,17 @@ It was initially derived from `GNUkhata <http://www.gnukhata.org>`_, a free
 accounting software which is mostly based on Python framework.
 
 Some features included in Aakash Business Tool:
-  #. Managing Organizations
+  #. Managing Organizations and User authentication
   #. Maintaining books of accounts
   #. Recording, cloning and editing transactions
   #. Recording of transactions under particular project
   #. Generating reports such as Ledger Accounts, Trial Balance(Net,
      Gross, Extended), Profit and Loss Account, Project Statement,
-     Cash Flow and Balance Sheet
+     Cash Flow and Balance Sheet(Conventional or Sources of application 
+     and funds)
   #. Bank Reconciliation
+  #. Rollover
+  #. Export reports in PDF/CSV format
+  #. Import/Export of organization data to other device
+  #. ABT as a remote server
 

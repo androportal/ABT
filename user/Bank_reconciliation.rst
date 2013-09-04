@@ -36,10 +36,12 @@ Bank reconciliation
   
 * ``Total Debit`` & ``Total Credit`` at the end of the table.
 	    	
-* Bank Reconciliation Statement is located at the bottom of the table. Scroll vertically or use ``easy scroll button`` to directly reach to the bottom of the page to view the Statement.
+* Bank Reconciliation Statement is located at the bottom of the table.
   
 .. image:: images/bank_statement.png
    :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
+   
+* Options button is provided to export report in a PDF or CSV format.
