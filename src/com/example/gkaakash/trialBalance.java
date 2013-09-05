@@ -581,7 +581,7 @@ public class trialBalance extends Activity{
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
-				Toast.makeText(trialBalance.this, "i am nre touch"+i, Toast.LENGTH_SHORT).show();
+				//Toast.makeText(trialBalance.this, "i am nre touch"+i, Toast.LENGTH_SHORT).show();
 				floatingHeader();
 				return false;
 			}

@@ -55,6 +55,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.view.Window;
@@ -684,6 +685,7 @@ public class ledger extends Activity {
 				// To pass on the value to the next page
 				startActivity(intent);
 				// Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+				return;
 
 			}
 		});
