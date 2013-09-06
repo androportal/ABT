@@ -1238,11 +1238,11 @@ public class MainActivity extends Activity{
 
 		final View layout = m.builder_with_inflater(this,"",R.layout.login);
 		TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
-		tvalertHead1.setText("Remote Server Location");
+		tvalertHead1.setText("Server Location");
 		TextView tvalertHead2 =(TextView) layout.findViewById(R.id.tvalertHead2);
 		tvalertHead2.setVisibility(View.GONE);
 		TextView tvUserRole =(TextView) layout.findViewById(R.id.tvUserRole);
-		tvUserRole.setText("Please select remote server location");
+		tvUserRole.setText("Please select server location");
 		final RadioButton rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
 		final RadioButton rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
 		final RadioButton rb_operator =(RadioButton) layout.findViewById(R.id.rbOperator);
@@ -1251,7 +1251,7 @@ public class MainActivity extends Activity{
 		//rb_admin.setVisibility(View.GONE);
 		rb_guest.setText("Tablet");
 		rb_operator.setVisibility(View.VISIBLE);
-		rb_operator.setText("Server location");
+		rb_operator.setText("Remote server location");
 		LinearLayout LinearPassword =(LinearLayout) layout.findViewById(R.id.LinearPassword);
 		LinearPassword.setVisibility(View.GONE);
 		TextView tLoginUser =(TextView) layout.findViewById(R.id.tLoginUser);

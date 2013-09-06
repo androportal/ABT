@@ -98,24 +98,27 @@
 		    android:layout_height="wrap_content"
 		    android:orientation="vertical"
 		    android:stretchColumns="5"
-		    android:paddingLeft="3dp"
-		    android:paddingRight="3dp"
-		    android:background="@color/blue_theme" >
+		    android:paddingLeft="1dp"
+		    android:paddingRight="1dp"
+		    android:background="#ffffff" >
 		    
 		    
 		    <TableRow 
 			    android:layout_width="match_parent"
+			    android:layout_marginTop="1dp"
+			    android:layout_marginBottom="1dp"
 		        android:layout_height="wrap_content">
 			    
 			    <TextView
 			        android:id="@+id/account_type"
+			        style="@style/CodeFont"
 			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
 			        android:layout_weight="1"
-			        android:gravity="center_horizontal"
-			        android:text="Account type"
-			        android:textColor="#ffffff"
-			        style="@style/CodeFont" />
+			        android:gravity="left"
+			        android:layout_gravity="center"
+			        android:text="      A/C type"
+			        android:background="@color/blue_theme" />
 			    
 			    <TextView
 			        android:id="@+id/acount_name"
@@ -123,9 +126,9 @@
 			        android:layout_height="wrap_content"
 			        android:layout_weight="1"
 			        android:gravity="center_horizontal"
-			        android:text="Account name"
-			        android:textColor="#ffffff"
-			        style="@style/CodeFont" />
+			        android:text="Account name        "
+			        style="@style/CodeFont"
+			        android:background="@color/blue_theme"  />
 			    
 			    <TextView
 			        android:id="@+id/amount"
@@ -133,28 +136,28 @@
 			        android:layout_height="wrap_content"
 			        android:layout_weight="1"
 			        android:gravity="center_horizontal"
-			        android:text="Closing balance"
-			        android:textColor="#ffffff"
-			        style="@style/CodeFont" />
+			        android:text="@string/closing_balance"
+			        style="@style/CodeFont"
+			        android:background="@color/blue_theme"  />
 			    
 			    <TextView
 			        android:id="@+id/closing_balance"
 			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
 			        android:layout_weight="1"
-			        android:gravity="left"
-			        android:text="Amount"
-			        android:textColor="#ffffff"
-			        style="@style/CodeFont" />
+			        android:gravity="center_horizontal"
+			        android:text="@string/amount"
+			        style="@style/CodeFont"
+			        android:background="@color/blue_theme"  />
 			    
 			    <TextView
 			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
 			        android:layout_weight="1"
 			        android:text=""
-			        android:textColor="#ffffff"
 			        android:gravity="center_horizontal"
-			        style="@style/CodeFont" />
+			        style="@style/CodeFont"
+			        android:background="@color/blue_theme"  />
 
 			</TableRow>
 
@@ -167,10 +170,10 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent" 
     		android:stretchColumns="7" 
-    		android:paddingLeft="3dp"
-    		android:paddingRight="3dp"
-    		android:paddingBottom="3dp"
-    		android:background="@color/blue_theme"/>
+    		android:paddingLeft="1dp"
+    		android:paddingRight="1dp"
+    		android:paddingBottom="1dp"
+    		android:background="#ffffff"/>
 	
 	<LinearLayout
         android:layout_width="fill_parent"

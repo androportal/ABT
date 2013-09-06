@@ -86,7 +86,7 @@ public class createVoucher extends Activity {
 	EditText etnarration, second_table_amount_et, second_table_closingbal_et;
 	static EditText etRefNumber;
 	private Object diffbal;
-	Float drcrAmountFirstRow, drcrAmount, amountdrcr;
+	Float drcrAmount, amountdrcr;
 	boolean addRowFlag = true;
 	List<String> accnames = new ArrayList<String>();
 	List<String> DrAccountlist = new ArrayList<String>();
@@ -302,24 +302,20 @@ public class createVoucher extends Activity {
 				btnSaveVoucher.setText("Back");	
 
 				etnarration.setEnabled(false);
+				etnarration.setTextColor(Color.parseColor("#AEC6CF"));
 				etRefNumber.setEnabled(false);
-				View row = table.getChildAt(0);
-
-				first_dr_cr= (Spinner) ((ViewGroup) row).getChildAt(0);
-				first_account_name = (Spinner) ((ViewGroup) row).getChildAt(2);
-				amount_first = (EditText) ((ViewGroup) row).getChildAt(6);
-
-				first_account_name.setClickable(false);
-				first_dr_cr.setClickable(false);
-				amount_first.setEnabled(false);
+				etRefNumber.setTextColor(Color.parseColor("#AEC6CF"));
+				
 				btnResetVoucher.setEnabled(false);
 				btnVoucherDate.setEnabled(false);
+				btnVoucherDate.setTextColor(Color.parseColor("#AEC6CF"));
 				sProjectNames.setEnabled(false);
 				etvoucherno.setEnabled(false);
+				etvoucherno.setTextColor(Color.parseColor("#AEC6CF"));
 
 				tableRowCount = table.getChildCount();
 
-				for (int i = 1; i < (tableRowCount); i++) {
+				for (int i = 0; i < (tableRowCount); i++) {
 					View row1 = table.getChildAt(i);
 
 					second_table_drcr_spinner = (Spinner) ((ViewGroup) row1).getChildAt(0);
@@ -328,8 +324,9 @@ public class createVoucher extends Activity {
 					second_table_accountname_spinner.setClickable(false);
 					second_table_amount_et = (EditText) ((ViewGroup) row1).getChildAt(6);
 					second_table_amount_et.setEnabled(false);
+					second_table_amount_et.setTextColor(Color.parseColor("#AEC6CF"));
 					removeSelfButton = (Button) ((ViewGroup) row1).getChildAt(7);
-					removeSelfButton.setClickable(false);
+					removeSelfButton.setVisibility(View.GONE);
 
 				}
 			}
@@ -556,39 +553,12 @@ public class createVoucher extends Activity {
 		totalDr = 0;
 		totalCr = 0;
 		// System.out.println("m in..........");
-		// selected dr/cr and amount of the first row
 
-		View row_1 = table.getChildAt(0);
-		Spinner acc_first = (Spinner) ((ViewGroup) row_1).getChildAt(0);
-
-
-		String Dr_Cr = acc_first.getSelectedItem().toString();
-
-		// System.out.println("sasa:"+Dr_Cr);
-		amount_first = (EditText) ((ViewGroup) row_1).getChildAt(6);
-		String drcramountFirstRow = amount_first.getText().toString();
-		if (drcramountFirstRow.length() < 1) {
-			drcramountFirstRow = "0.00";
-
-
-			amount_first.requestFocus();
-			amount_first.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
-		}
-		drcrAmountFirstRow = Float.parseFloat(drcramountFirstRow);
-
-		if ("Dr".equals(Dr_Cr)) {
-
-			totalDr = totalDr + drcrAmountFirstRow;
-		} else if ("Cr".equals(Dr_Cr)) {
-
-			totalCr = totalCr + drcrAmountFirstRow;
-		}
-
-		// selected dr/cr and amount of the remaining rows
+		// selected dr/cr and amount of the all rows
 
 		tableRowCount = table.getChildCount();
 
-		for (int i = 1; i < (tableRowCount); i++) {
+		for (int i = 0; i < (tableRowCount); i++) {
 			View row = table.getChildAt(i);
 			// dr cr spinner
 			Spinner s = (Spinner) ((ViewGroup) row).getChildAt(0);
@@ -1090,7 +1060,7 @@ public class createVoucher extends Activity {
 					if (from_report_flag == null) {
 						m.toastValidationMessage(context,"Debit and Credit amount is tally");
 					}
-				} else if (drcrAmountFirstRow <= 0 || drcrAmount <= 0) {
+				} else if (drcrAmount <= 0) {
 					m.toastValidationMessage(context,"No row can be added,Please fill the existing row");
 				} else {
 					for (int i = 0; i < (tableRowCount); i++) {
@@ -1875,7 +1845,7 @@ public class createVoucher extends Activity {
 
 		second_table_closingbal_et = new EditText(newRow.getContext());
 		second_table_closingbal_et.setBackgroundResource(R.drawable.textfield_focused_holo_light);
-		second_table_closingbal_et.setTextColor(Color.parseColor("#738678")); 
+		second_table_closingbal_et.setTextColor(Color.parseColor("#AEC6CF"));
 		second_table_closingbal_et.setText("");
 		second_table_closingbal_et.setInputType(InputType.TYPE_CLASS_NUMBER
 				| InputType.TYPE_NUMBER_FLAG_DECIMAL);

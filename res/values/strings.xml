@@ -150,6 +150,8 @@
         \nCopyright © 2012, IIT Bombay 
    </string>
    <string name="Rs">\u20B9</string>  
+   <string name="closing_balance">Closing balance(\u20B9)</string>  
+   <string name="amount">Amount(\u20B9)\t\t</string>  
    <string name="forgot_password"><u>Forgot password?</u></string>  
    
    <string name="questions">Select question</string>
