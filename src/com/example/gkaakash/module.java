@@ -152,7 +152,7 @@ public class module {
 					Grid, params, password);
 			AlertDialog.Builder builder1 = new AlertDialog.Builder(
 					c);
-			builder1.setMessage("PDF genration completed ..see /mnt/sdcard/"
+			builder1.setMessage("PDF generation completed ..see /mnt/sdcard/"
 					+ params[1]);
 			AlertDialog alert1 = builder1
 					.create();
@@ -171,7 +171,7 @@ public class module {
 		try {
 			pdfgen.generateBalancePDFFile(Grid,Grid1,params, password);
 			AlertDialog.Builder builder1 = new AlertDialog.Builder(c);
-			builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+params[1]);
+			builder1.setMessage("Pdf generation completed ..see /mnt/sdcard/"+params[1]);
 			AlertDialog alert1 = builder1.create();
 			alert1.show();
 			alert1.setCancelable(true);
@@ -484,7 +484,7 @@ public class module {
 
 		try {
 			fw = new FileWriter("/mnt/sdcard/"+params[1]+".csv");
-			fw.append("Genrated Date:  "+new SimpleDateFormat("EEE d-MMM-yyyy HH:mm:ss").format(date));
+			fw.append("Date of file generation:  "+new SimpleDateFormat("EEE d-MMM-yyyy HH:mm:ss").format(date));
 			fw.append(',');
 			fw.append("   "+params[2]);
 			fw.append(',');
