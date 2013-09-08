@@ -258,6 +258,8 @@ import android.widget.Toast;
 			
 			Button btn_optionsMenu= (Button) findViewById(R.id.btn_optionsMenu);
 			btn_optionsMenu.setVisibility(View.GONE);
+			Button btn_changeInputs= (Button) findViewById(R.id.btn_changeInputs);
+			btn_changeInputs.setVisibility(View.GONE);
 			
 			if(editDetailsflag==false){
 				// Declaring new method for setting current date into "Registration Date"

@@ -43,10 +43,6 @@
     </string-array>
     
    <string name="BalanceSheet_prompt">Select balancesheet type</string>
-    <string-array name="BalanceSheet_arrays">
-        <item>Conventional Balance Sheet</item>
-        <item>Sources and Application of Funds</item>
-    </string-array>
     
     <string name="getaccNamesinLedger">Select account name</string>
     <string-array name="getaccNamesinLedger">

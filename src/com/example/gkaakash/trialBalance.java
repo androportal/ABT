@@ -134,7 +134,7 @@ public class trialBalance extends Activity{
 	    	financialToDate=Startup.getFinancialToDate();
 	    	trialToDateString = reportMenu.givenToDateString;
 	    	// String trialFromoDateString = reportMenu.givenfromDateString;
-	    	trialbalancetype=reportMenu.trialbalancetype;
+	    	trialbalancetype=reportMenu.input;
 	    	/*
 		    * set financial from date and to date in textview
 		    */
@@ -218,11 +218,24 @@ public class trialBalance extends Activity{
 	       //animated_dialog();
 	       //floatingHeader();
 			createMenuOptions();
+			changeInputs();
 	    } catch (Exception e) {
 		   	m.toastValidationMessage(trialBalance.this, "Please try again");
 	   	}
     }
    
+    private void changeInputs() {
+		Button btn_changeInputs = (Button)findViewById(R.id.btn_changeInputs);
+		btn_changeInputs.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				reportMenu reportM = new reportMenu();
+				reportM.callReport(trialBalance.this,"T",trialBalance.class);
+			}
+		});
+	}
+    
     public void createMenuOptions() {
     	Button btn_optionsMenu = (Button)findViewById(R.id.btn_optionsMenu);
 		

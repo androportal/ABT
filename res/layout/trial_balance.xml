@@ -47,10 +47,11 @@
          </TableRow>
 
         <TableRow android:layout_width="match_parent"
-               android:layout_height="wrap_content">
+               android:layout_height="wrap_content"
+               android:id="@+id/spinner_row">
              
              <TextView
-            android:id="@+id/tvtrialBalanceType"
+            android:id="@+id/tv_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Trial Balance type:"
@@ -58,7 +59,7 @@
             android:layout_weight="1" />
 
         <Spinner
-            android:id="@+id/strialBalanceType"
+            android:id="@+id/spinner_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/TrialBalance_arrays"

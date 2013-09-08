@@ -317,6 +317,8 @@ public class ledger extends Activity {
 
 			createMenuOptions();
 			
+			changeInputs();
+			
 		} catch (Exception e) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(ledger.this);
 			builder.setMessage("Please try again")
@@ -333,6 +335,18 @@ public class ledger extends Activity {
 			alert.show();
 
 		}
+	}
+
+	private void changeInputs() {
+		Button btn_changeInputs = (Button)findViewById(R.id.btn_changeInputs);
+		btn_changeInputs.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				reportMenu reportM = new reportMenu();
+				reportM.callLedgerOrCashFlowOrBankRecon(context,"L",ledger.class); 
+			}
+		});
 	}
 
 	public void createMenuOptions() {

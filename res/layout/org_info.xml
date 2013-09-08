@@ -12,7 +12,6 @@
 		    	android:layout_height="wrap_content"
 		    	android:textColor="#FFFFFF"
 		    	android:gravity="center|center_horizontal"
-		    	android:text="1234"
 		    	android:shadowColor="#000000"
 			   	android:shadowDx="-1"
 			    android:shadowDy="-1"
@@ -22,9 +21,15 @@
 			    android:layout_centerHorizontal="true"/>
 		    
 		    <Button
+		        android:id="@+id/btn_changeInputs"
+		        android:layout_width="35dp"
+		        android:layout_height="35dp"
+		        android:background="@drawable/ic_action_select_all_dark"/>
+		    		    
+		    <Button
 		        android:id="@+id/btn_optionsMenu"
-		        android:layout_width="30dp"
-		        android:layout_height="30dp"
+		        android:layout_width="35dp"
+		        android:layout_height="35dp"
 		        android:layout_alignParentRight="true"
 		        style="@style/optionsMenuAppTheme" />
 

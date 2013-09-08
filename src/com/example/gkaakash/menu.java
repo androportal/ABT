@@ -254,6 +254,9 @@ public class menu extends Activity{
 		Button btn_optionsMenu= (Button) findViewById(R.id.btn_optionsMenu);
 		btn_optionsMenu.setVisibility(View.GONE);
 		
+		Button btn_changeInputs= (Button) findViewById(R.id.btn_changeInputs);
+		btn_changeInputs.setVisibility(View.GONE);
+		
 		//set user details
 		TextView tvuser = (TextView)findViewById(R.id.user);
 		tvuser.setText(Character.toString(userrole.charAt(0)).toUpperCase()+userrole.substring(1));
@@ -396,9 +399,8 @@ public class menu extends Activity{
 					}
 					//bank reconciliation
 					if(position == 3){
-
-						bankrecon();
-
+						reportMenu reportM = new reportMenu();
+						reportM.callLedgerOrCashFlowOrBankRecon(context,"BR",bankReconciliation.class);
 					}
 					//for "adding project", adding popup menu ...
 					if(position == 4)
@@ -468,160 +470,6 @@ public class menu extends Activity{
 			 */
 			m.resetPassword(context,username,userrole,false,client_id);
 		}		
-	}
-
-	protected void bankrecon() {
-		//call the getAllBankAccounts method to get all bank account names
-		Object[] accountnames = (Object[]) account.getAllBankAccounts(client_id);
-		// create new array list of type String to add account names
-		List<String> accountnamelist = new ArrayList<String>();
-		for(Object an : accountnames)
-		{	
-			accountnamelist.add((String) an); 
-		}	
-
-		if(accountnamelist.size() <= 0){
-			String message = "Bank reconciliation statement cannot be displayed, Please create bank account!";
-			m.toastValidationMessage(menu.this,message);
-		}
-		else{
-
-			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-			View layout = inflater.inflate(R.layout.bank_recon_index, (ViewGroup) findViewById(R.id.layout_root));
-			//Building DatepPcker dialog
-			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			builder.setView(layout);
-			builder.setTitle("Bank reconcilition");
-
-			//populate all bank account names in accountname dropdown(spinner)
-			final Spinner sBankAccounts = (Spinner)layout.findViewById(R.id.sBankAccounts);
-			ArrayAdapter<String> da = new ArrayAdapter<String>(menu.this, 
-					android.R.layout.simple_spinner_item,accountnamelist);
-			da.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			sBankAccounts.setAdapter(da);
-
-			from_btn_ID = (Button)layout.findViewById(R.id.btnsetLedgerFromdate);
-	  	   	from_btn_ID.setText(fromday+"-"+frommonth+"-"+fromyear);
-	  	   	from_btn_ID.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					showDialog(FROM_DATE_DIALOG_ID);
-				}
-			});
-	  	   	to_btn_ID= (Button)layout.findViewById(R.id.btnsetLedgerTodate);
-	  	   	to_btn_ID.setText(today+"-"+tomonth+"-"+toyear);
-	  	   	to_btn_ID.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					showDialog(TO_DATE_DIALOG_ID);
-				}
-			});
-			
-			final CheckBox cbClearedTransaction = (CheckBox)layout.findViewById(R.id.cbClearedTransaction);
-			final CheckBox cbNarration = (CheckBox)layout.findViewById(R.id.cbReconNarration);
-
-			tvWarning = (TextView)layout.findViewById(R.id.tvBankReconWarning);
-			Button btnView = (Button)layout.findViewById(R.id.btnView);
-			Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
-
-			btnView.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View arg0) {
-					if(cbClearedTransaction.isChecked()){
-						cleared_tran_flag = true;
-					}
-					else{
-						cleared_tran_flag = false;
-					}
-
-					if(cbNarration.isChecked()){
-						narration_flag = true;
-					}
-					else{
-						narration_flag = false;
-					}
-
-					selectedAccount = sBankAccounts.getSelectedItem().toString();
-
-					System.out.println("i am account"+selectedAccount);
-					
-					validateDateFlag = m.validateDate(financialFromDate, financialToDate, from_btn_ID.getText().toString(), 
-							to_btn_ID.getText().toString(), "validatebothFromToDate",tvWarning);
-					givenfromDateString = m.givenfromDateString;
-					givenToDateString = m.givenToDateString;
-
-					if(validateDateFlag){
-						Intent intent = new Intent(context, bankReconciliation.class);
-						// To pass on the value to the next page
-						startActivity(intent);
-					}
-				}
-			});
-
-			btnCancel.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View arg0) {
-
-					dialog.dismiss();
-				}
-			});
-			/*builder.setPositiveButton("View",new  DialogInterface.OnClickListener(){
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-
-					if(cbClearedTransaction.isChecked()){
-				   		cleared_tran_flag = true;
-				   	}
-				   	else{
-				   		cleared_tran_flag = false;
-				   	}
-
-				   	if(cbNarration.isChecked()){
-				   		narration_flag = true;
-				   	}
-				   	else{
-				   		narration_flag = false;
-				   	}
-
-					selectedAccount = sBankAccounts.getSelectedItem().toString();
-
-					System.out.println("i am account"+selectedAccount);
-					validateDate(ReconFromdate, ReconT0date, "validatebothFromToDate");
-
-
-					if(validateDateFlag){
-						Intent intent = new Intent(context, bankReconciliation.class);
-						// To pass on the value to the next page
-						startActivity(intent);
-					}
-				}
-
-
-
-			});
-
-			builder.setNegativeButton("Cancel",new  DialogInterface.OnClickListener(){
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-				}
-
-			});*/
-			dialog=builder.create();
-			dialog.show();
-
-			WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-			//customizing the width and location of the dialog on screen 
-			lp.copyFrom(dialog.getWindow().getAttributes());
-			lp.width = 700;
-			dialog.getWindow().setAttributes(lp);
-		}
-
 	}
 
 	protected void rollover() {
@@ -947,57 +795,6 @@ public class menu extends Activity{
 		dialog.show();
 
 	}
-
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-		case FROM_DATE_DIALOG_ID:
-			
-				// set date picker as current date
-				return new DatePickerDialog(this, fromdatePickerListener, 
-						Integer.parseInt(fromyear), Integer.parseInt(frommonth)-1,Integer.parseInt(fromday));
-		
-		case TO_DATE_DIALOG_ID:
-		
-				// set date picker as current date
-				return new DatePickerDialog(this, todatePickerListener, 
-						Integer.parseInt(toyear), Integer.parseInt(tomonth)-1,Integer.parseInt(today));
-		}
-		return null;
-	}
-	private DatePickerDialog.OnDateSetListener fromdatePickerListener 
-    	= new DatePickerDialog.OnDateSetListener() {
- 
-		// when dialog box is closed, below method will be called.
-		public void onDateSet(DatePicker view, int selectedYear,
-				int selectedMonth, int selectedDay) {
-				int year = selectedYear; 
-				int month = selectedMonth; 
-				int day = selectedDay;
-				from_btn_ID.setText(new StringBuilder()
-				// Month is 0 based, just add 1
-				.append(String.format("%02d", day)).append("-").append(String.format("%02d", month+1)).append("-")
-				.append(year));
-				givenfromDateString = String.format("%02d", day)+"-"+String.format("%02d", month+1)+"-"+(year-1);
-		}
-	};  
-	
-	private DatePickerDialog.OnDateSetListener todatePickerListener 
-	= new DatePickerDialog.OnDateSetListener() {
-
-	// when dialog box is closed, below method will be called.
-	public void onDateSet(DatePicker view, int selectedYear,
-			int selectedMonth, int selectedDay) {
-			int year = selectedYear; 
-			int month = selectedMonth; 
-			int day = selectedDay;
-			to_btn_ID.setText(new StringBuilder()
-			// Month is 0 based, just add 1
-			.append(String.format("%02d", day)).append("-").append(String.format("%02d", month+1)).append("-")
-			.append(year));
-			givenToDateString = String.format("%02d", day)+"-"+String.format("%02d", month+1)+"-"+(year-1);
-	}
-};  
 	
 	
 	private void reset() {

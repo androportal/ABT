@@ -225,11 +225,24 @@ public class incomeExpenditure extends Activity{
            
             //animated_diolog();
             createMenuOptions();
+            changeInputs();
         } catch (Exception e) {
         	m.toastValidationMessage(incomeExpenditure.this, "Please try again"); 
         }
     }
    
+    private void changeInputs() {
+		Button btn_changeInputs = (Button)findViewById(R.id.btn_changeInputs);
+		btn_changeInputs.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				reportMenu reportM = new reportMenu();
+				reportM.callReport(incomeExpenditure.this,"I",incomeExpenditure.class);
+			}
+		});
+	}
+    
     public void createMenuOptions() {
     	Button btn_optionsMenu = (Button)findViewById(R.id.btn_optionsMenu);
 		

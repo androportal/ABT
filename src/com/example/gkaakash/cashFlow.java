@@ -243,13 +243,25 @@ public class cashFlow extends Activity{
             //floatingHeader();
 			
 			createMenuOptions();
-			
+			changeInputs();
 		} catch (Exception e) {
 			m.toastValidationMessage(cashFlow.this, "Please try again");
 		}
 	}
 
 
+    private void changeInputs() {
+		Button btn_changeInputs = (Button)findViewById(R.id.btn_changeInputs);
+		btn_changeInputs.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				reportMenu reportM = new reportMenu();
+				reportM.callLedgerOrCashFlowOrBankRecon(cashFlow.this,"C",cashFlow.class); 
+			}
+		});
+	}
+    
     public void createMenuOptions() {
     	Button btn_optionsMenu = (Button)findViewById(R.id.btn_optionsMenu);
 		

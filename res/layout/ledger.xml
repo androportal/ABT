@@ -91,15 +91,36 @@
              
          </TableRow>
 
+         <TableRow android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/cleared_row">
+             
+		    <TextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="Display cleared transactions:"
+		        style="@style/CodeFont" />
+		    
+		    <CheckBox
+		        android:id="@+id/cbClearedTransaction"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        style="@style/CheckBoxAppTheme" />		    
+		    
+		</TableRow>
+         
 		<TableRow android:layout_width="match_parent"
-               android:layout_height="wrap_content">
+               android:layout_height="wrap_content"
+               android:id="@+id/narration_row">
              
 		    <TextView
 		        android:id="@+id/tvcbNarration"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:text="View ledger with narration:"
+		        android:text="Display narrations:"
 		        style="@style/CodeFont" />
 		    <CheckBox
 		        android:id="@+id/cbNarrations"

@@ -79,6 +79,8 @@ public class addProject extends MainActivity {
 		
 		Button btn_optionsMenu= (Button) findViewById(R.id.btn_optionsMenu);
 		btn_optionsMenu.setVisibility(View.GONE);
+		Button btn_changeInputs= (Button) findViewById(R.id.btn_changeInputs);
+		btn_changeInputs.setVisibility(View.GONE);
 		
 		// get all project names in list view on load
 		projectnames = (Object[]) organisation.getAllProjects(client_id);

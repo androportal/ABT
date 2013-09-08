@@ -122,7 +122,7 @@ public class balanceSheet extends Activity{
     	IPaddr = MainActivity.IPaddr;
 	    System.out.println("in createorg"+IPaddr);
     	try {
-    		balancetype=reportMenu.balancetype;
+    		balancetype=reportMenu.input;
        
     		if(balancetype.equals("Conventional Balance Sheet"))
     		{
@@ -249,11 +249,23 @@ public class balanceSheet extends Activity{
     		drillDown();
     		
     		createMenuOptions();
-    		
+    		changeInputs();
     	} catch (Exception e) {
     		m.toastValidationMessage(balanceSheet.this,"Please try again");
     	}
     }
+    
+    private void changeInputs() {
+		Button btn_changeInputs = (Button)findViewById(R.id.btn_changeInputs);
+		btn_changeInputs.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				reportMenu reportM = new reportMenu();
+				reportM.callReport(balanceSheet.this,"B",balanceSheet.class);
+			}
+		});
+	}
     
     public void createMenuOptions() {
 		Button btn_optionsMenu = (Button)findViewById(R.id.btn_optionsMenu);

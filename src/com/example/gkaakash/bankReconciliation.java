@@ -154,12 +154,12 @@ public class bankReconciliation extends Activity{
 		   	day = Integer.parseInt(fromday);
            
 		   	financialToDate=Startup.getFinancialToDate();
-		   	accountName = menu.selectedAccount;
+		   	accountName = reportMenu.selectedAccount;
 		  
-			fromDate = menu.givenfromDateString;
-			toDate = menu.givenToDateString;
-			cleared_tran_flag = menu.cleared_tran_flag;
-			narration_flag = menu.narration_flag;
+			fromDate = reportMenu.givenfromDateString;
+			toDate = reportMenu.givenToDateString;
+			cleared_tran_flag = reportMenu.cleared_tran_flag;
+			narration_flag = reportMenu.cheched;
 			tvaccontName = (TextView) findViewById(R.id.tvReconAccName);
 			tvfinancialToDate = (TextView) findViewById(R.id.tvfinancialToDate);
 
@@ -216,12 +216,26 @@ public class bankReconciliation extends Activity{
 			pdf_params = new String[]{"BankRec",sFilename,OrgName,OrgPeriod,"Bank Reconciliation for "+account,BankReconcilPeriod,"",result};
 
 			createMenuOptions();
+			
+			changeInputs();
             
 		} catch (Exception e) {
 			System.out.println("my error is"+e);
 			m.toastValidationMessage(bankReconciliation.this,"Please try again");
 		}
     }
+    
+    private void changeInputs() {
+    	Button btn_changeInputs = (Button)findViewById(R.id.btn_changeInputs);
+		btn_changeInputs.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				reportMenu reportM = new reportMenu();
+				reportM.callLedgerOrCashFlowOrBankRecon(context,"BR",bankReconciliation.class); 
+			}
+		});
+	}
     
     public void createMenuOptions() {
     	Button btn_optionsMenu = (Button)findViewById(R.id.btn_optionsMenu);

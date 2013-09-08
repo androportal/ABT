@@ -122,7 +122,7 @@ public class projectStatement extends Activity{
         	financialToDate=Startup.getFinancialToDate();
         	ToDateString = reportMenu.givenToDateString;
    
-        	projectName = reportMenu.selectedProject;
+        	projectName = reportMenu.input;
         	
         	TextView tvaccountName = (TextView) findViewById( R.id.tvaccountName);
         	tvaccountName.setText("Project Statement");
@@ -209,12 +209,24 @@ public class projectStatement extends Activity{
         	floatingHeader();
         	
         	createMenuOptions();
-        
+        	changeInputs();
         } catch (Exception e) {
         	m.toastValidationMessage(projectStatement.this, "Please try again");
         	}
     }
    
+    private void changeInputs() {
+		Button btn_changeInputs = (Button)findViewById(R.id.btn_changeInputs);
+		btn_changeInputs.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				reportMenu reportM = new reportMenu();
+				reportM.callReport(projectStatement.this, "P", projectStatement.class);
+			}
+		});
+	}
+    
     /*
      * this method adds the floating header to the table on touching it.
      * In this case, we have a main table which includes table rows and a header at the load time.
