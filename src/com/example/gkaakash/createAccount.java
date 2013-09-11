@@ -124,6 +124,8 @@ public class createAccount<group> extends Activity{
 				//set invisibility of unwanted elements
 				TableRow row = (TableRow)layout.findViewById(R.id.acc_row);
 				row.setVisibility(View.GONE);
+				row = (TableRow)layout.findViewById(R.id.cleared_row);
+				row.setVisibility(View.GONE);
 				row = (TableRow)layout.findViewById(R.id.project_row);
 				row.setVisibility(View.GONE);
 				row = (TableRow)layout.findViewById(R.id.from_btn_row);

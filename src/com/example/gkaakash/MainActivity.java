@@ -65,13 +65,9 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.gkaakash.R.layout;
 import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.User;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 
 
 public class MainActivity extends Activity{
@@ -149,7 +145,7 @@ public class MainActivity extends Activity{
 	protected Object[] orgparams;
 	private Organisation orgnisation;
 	private module module;
-
+	private SlideHolder mSlideHolder;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -318,10 +314,35 @@ public class MainActivity extends Activity{
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//Calling activity_main.xml which is first page of GNUKhata
 		setContentView(R.layout.activity_main);
+		
+		
+		
+		/*
+		 * toggleView can actually be any view you want.
+		 * Here, for simplicity, we're using TextView, but you can
+		 * easily replace it with button.
+		 * 
+		 * Note, when menu opens our textView will become invisible, so
+		 * it quite pointless to assign toggle-event to it. In real app
+		 * consider using UP button instead. In our case toggle() can be
+		 * replaced with open().
+		 */
+		mSlideHolder = (SlideHolder) findViewById(R.id.slideHolder);
+		View toggleView = findViewById(R.id.content_layout);
+		toggleView.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mSlideHolder.toggle();
+			}
+		});
+		
 		//create object of Startup to access connection
 		//startup = new Startup();
 		m=new module();
 
+		
+		
 		Bundle extras = getIntent().getExtras();
 		if (extras == null) {
 			System.out.println("don hav xtra");
@@ -340,6 +361,36 @@ public class MainActivity extends Activity{
 		//and assign the retrieved button to an instance variable
 		create_org = (Button) findViewById(R.id.bcreateOrg);
 		select_org =(Button) findViewById(R.id. bselectOrg);
+		Button btnImport = (Button) findViewById(R.id.btnImport);
+		
+		btnImport.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(flagIP.equals(true)){
+					importorganisation();
+				}
+				
+			}
+		});
+		
+		Button btnSetIP = (Button) findViewById(R.id.btnSetIP);
+		btnSetIP.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				setRemoteLocation();
+			}
+		});
+		Button btnHelp = (Button) findViewById(R.id.btnHelp);
+		btnHelp.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				help_option_menu_flag = 1;
+				startApp();
+			}
+		});
 		//Request a reference to the spinner from the activity by calling “findViewById”
 		//and assign the retrieved spinner to an instance variable
 		getOrgNames = (Spinner)findViewById(R.id.sGetOrgNames);

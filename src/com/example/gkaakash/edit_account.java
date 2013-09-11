@@ -152,7 +152,7 @@ public class edit_account extends Activity {
 						if (accCodeCheckFlag.equals("automatic")) {
 							flag = 1;
 						}
-						TextView tvaccname = (TextView) view.findViewById(R.id.tvRowTitle1);
+						final TextView tvaccname = (TextView) view.findViewById(R.id.tvRowTitle1);
 						Object[] params1 = new Object[] {
 								tvaccname.getText().toString(),
 								flag, pos };
@@ -538,18 +538,35 @@ public class edit_account extends Activity {
 						}
 						break;
 						case 1: {
-
-							System.out.println("value" + accountDeleteValue);
-							if ("account deleted".equals(accountDeleteValue)) {
-								m.toastValidationMessage(edit_account.this, msg);
-								setaccountlist();
-							} else {
-								m.toastValidationMessage(
-										edit_account.this,
-										"Account '"
-												+ tvaccname.getText().toString()
-														+ msg + " deleted.");
-							}
+							final AlertDialog.Builder builder = new AlertDialog.Builder(edit_account.this);
+							builder.setMessage("Are you sure you want delete account '"+tvaccname.getText().toString()+ "'?")
+							.setPositiveButton("Yes", new OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									if ("account deleted".equals(accountDeleteValue)) {
+										m.toastValidationMessage(edit_account.this, msg);
+										setaccountlist();
+									} else {
+										m.toastValidationMessage(
+												edit_account.this,
+												"Account '"
+														+ tvaccname.getText().toString()
+																+ msg + " deleted.");
+									}
+								}
+							})
+							.setNegativeButton("No", new OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									// do nothing
+									
+								}
+							});
+							AlertDialog alert = builder.create();
+							alert.show();
+							
 						}
 						break;
 						}
