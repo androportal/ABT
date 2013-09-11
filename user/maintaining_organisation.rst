@@ -3,24 +3,23 @@
 
 Maintaining organisations
 =========================
-* This article explains maintainance of organisation in **Aakash Business Tool(ABT)**.
 
 * It includes ``creation`` of organisation and ``saving`` organisation details.
 
 Welcome page
 ------------
 
-* On loading application, it asks for address of the server location such as emulator,
-  tablet or remote server. Select **any one** of them.
+* As the application is started, it asks the user to select the server location such as emulator,
+  tablet or remote server. Select **any one** of them as per requirement.
   
 * Choose ``tablet`` option to run ABT on android device.
 
-* Android developers can Choose ``emulator`` option, to test app or modify ABT source code.
+* Android developers can choose ``emulator`` option, to test app or modify ABT source code.
 
 * On selecting ``Remote server`` for ABT, enter IP address manually. 
-  It requires a live internet connection, it can be within an Organization
-  or an Institute. User can access a centralize remote server running within 
-  the Institute. The advantage is, each user will have his/her own 
+  It requires a live internet connection, it can be within an organization
+  or an institute. User can access a centralized remote server running within 
+  the institute. The advantage is, each user will have his/her own 
   account on the server. The central server runs Postgres as a database engine.
 
 .. image:: images/remote_location.png
@@ -29,13 +28,12 @@ Welcome page
    :height: 200pt
    :width: 350pt
 
-* Click ``Apply`` button and you will see a page contains the features for the 
-  first screen that displays two buttons, **Create new organisation** and
-  **Select existing organisation** at the top.
+* Click on ``Apply`` button and it will give two options : **Create new organisation** and
+  **Select existing organisation**.
 
 Setting up a new organisation
 -----------------------------
-The first step to get started in ``ABT`` is to create an organisation
+To get started ,user need to create aleast one organisation.
 
 * Go to Welcome page of ABT >> Press ``Create New Organisation``.
 
@@ -44,8 +42,6 @@ The first step to get started in ``ABT`` is to create an organisation
    :align: center
    :height: 200pt
    :width: 350pt
-
-* To get started with the application, there should be ``atleast one`` organization.
   
 * Type the ``name`` of organisation.
   
@@ -53,18 +49,18 @@ The first step to get started in ``ABT`` is to create an organisation
   
 * Specify the Financial Year ``From`` and Financial Year ``To``.
 
-* **Note**: ABT provides 1st April to 31st March as the predefined financial year, But user can change the To date ``manually`` according to organization's rules or requirement. Once the ``From`` date is seted, ``To`` date gets automatically updated by ``12`` months and minus ``1`` day.
+* **Note**: ABT provides 1st April to 31st March as the predefined financial year, But user can change the To date ``manually`` according to organization's rules or requirement. Once the ``From`` date is set, ``To`` date gets automatically updated by ``12`` months and minus ``1`` day.
   
-* Press ``next`` to sign up as a user. This will open a promt-box to select the user role such as Admin or guest.
+* Press ``next`` to sign up as a user. This will open a dialog where user can select role such as admin or guest.
 
 .. image:: images/login.png
    :align: center
    :height: 200pt
    :width: 350pt
 
-* Guest user has a default username ``guest`` and password is also ``guest``.
+* Guest user has a default username and password ie. ``guest``.
 
-* If you select ``Admin``, a new pop-up box will appear on the screen to sign up as an Admin.
+* If user will select ``admin``, a new pop-up box will appear on the screen to sign up as an admin.
   Save details and press ``Login`` to continue.
 
 .. image:: images/sign_up.png
@@ -76,7 +72,7 @@ The first step to get started in ``ABT`` is to create an organisation
 
 * Fill the organisation details if required else, press ``Skip``.
   
-* Press the ``Save`` button to save the organisation details.
+* Press the ``Save`` button to save the organisation details and it will take to ABT's master menu.
 
 .. image:: images/org_details.png
    :name: ABT main page
@@ -84,9 +80,7 @@ The first step to get started in ``ABT`` is to create an organisation
    :height: 200pt
    :width: 350pt
 
-* **Note**: Organisation will get created by clicking either ``Save`` or ``Skip`` button.
-
-* Welcome to ABT's master menu!
+* **Note**: In both cases,whether the user clicks ``skip`` or ``save`` organisation will be created .
 
 Select existing organisation
 ----------------------------
@@ -104,8 +98,8 @@ Select existing organisation
    :height: 200pt
    :width: 350pt
    
-* This will ask you to login. Guest user have to just select radio button and Admin/Manager/operator
-  have to insert username and password.
+* This will ask you to login. Guest users just need to select radio button and rest ie. Admin/Manager/operator
+  have to authenticate themselves by putting username and password.
   
 .. image:: images/login_user.png
    :align: center

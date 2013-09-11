@@ -4,10 +4,10 @@
 Setting up preferences
 ======================
 
-Select ``Preferences`` option from master menu to edit organisation details or Add/Edit/Delete project.
+Select ``Preferences`` option from master menu to edit/delete/reset organisation details or Add/Edit/Delete project.
 
-Edit/Delete organisation details
---------------------------------
+Edit/delete/reset organisation details
+--------------------------------------
 
 * Displays previously saved organisation information, all the fields are editable.
 
@@ -32,7 +32,7 @@ Edit/Delete organisation details
    :height: 200pt
    :width: 350pt
 
-Add/Edit/Delete project
+Add/edit/delete project
 -----------------------
 
 * It displays list of all projects added before.
@@ -43,9 +43,9 @@ Add/Edit/Delete project
    :height: 200pt
    :width: 350pt
 
-* ``Add project`` (see figure) will help to add new project if not exists.
+* ``Add project`` (see figure) will help to add new project.
 	
-* Select project name from the list, It diplays a popup which is having two options such as ``edit`` or ``delete`` project name.
+* Select project name from the list, it diplays a popup which give two options such as ``edit`` or ``delete`` project name.
 
 * **Note**: If project has transactions, it can not be deleted.
 		

@@ -6,20 +6,55 @@ Transaction management
 ======================
 * This chapter provides guidence to ``add/search/edit/clone/delete`` transaction.
 
-* Go to ``Master menu`` > ``Create Voucher``.
+* Go to ``Master menu`` > ``Create voucher``.
 
 Record Transaction
 ------------------
- 
-* See ``Create Voucher`` tab as shown in below fig. for recording transactions.
+* Below table will help the user to understand, ``voucher types`` and their respective accounts as per rule:
+
+	+------------------------------+-------------------------------------+----------------------------------------+
+	|Voucher type                  |   Accounts(dr)                      |	Accounts(cr)			      |
+	|                              |                                     |                                        |
+	+==============================+=====================================+========================================+
+	|Contra                        |    subgroup(Cash,Bank)              |   subgroup(Cash,Bank)                  |
+	+------------------------------+-------------------------------------+----------------------------------------+
+	|Journal                       |    **except** subgroup(Cash,Bank)   |   **except** subgroup(Cash,Bank)       |
+	+------------------------------+-------------------------------------+----------------------------------------+             
+	|Receivable                    |    subgroup(Cash,Bank)              |   **except** subgroup(Cash,Bank)       |
+	+------------------------------+-------------------------------------+----------------------------------------+  
+	|Payment                       |    **except** subgroup(Cash,Bank)   |   subgroup(Cash,Bank)                  |
+	+------------------------------+-------------------------------------+----------------------------------------+   
+	|Debit Note                    |subgroup(Sundry Creditors for Expense|group(Direct Income,Indirect Expense,   |
+	+			       +     ,Sundry Creditors for Purchase) +    Fixed Assets)                       +
+	|                              |                                     |                                        |
+	+------------------------------+-------------------------------------+----------------------------------------+
+	|Credit Note                   |groupname(Direct Income,Indirect     |  subgroup(Sundry Debtors)              |
+	+			       +	Income)                      +                                        +
+	|                              |                                     |                                        |
+	+------------------------------+-------------------------------------+----------------------------------------+
+	|Sales                         | subgroup(Cash,Bank,Sundry Debtors)  |groupname(Direct Income,Indirect Income)|
+	+------------------------------+-------------------------------------+----------------------------------------+   
+	|Purchase                      |groupname(Direct Expense,Indirect    |subgroup(Sundry Creditors for Expense,  |
+	+                              +    Expense)                         +Sundry Creditors for Purchase,Bank,Cash)+
+	|                              |                                     |                                        |
+	+------------------------------+-------------------------------------+----------------------------------------+
+	|Sales Return                  |groupname(Direct Expense,Indirect    |subgroup(Sundry Debtors)                |
+	+                              +         Expense)                    +                                        +
+	|                              |                                     |                                        |
+	+------------------------------+-------------------------------------+----------------------------------------+
+	|Purchase Returns              |subgroup(Sundry Creditors for Expense|groupname(Direct Income,Indirect        |
+	+                              +     ,Sundry Creditors for Purchase) +        Income)                         +
+	|                              |                                     |                                        |
+	+------------------------------+-------------------------------------+----------------------------------------+   
+	
+	
+* To record transaction in ``ABT``, select ``Create voucher`` (see bellow fig.) tab and follow the below steps:
 
 .. image:: images/create_voucher.png
    :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
-
-* To record transaction in ``ABT`` follow the below steps:
 
 * Select the mode of transaction from the list of voucher type.
 
@@ -50,20 +85,13 @@ There should be atleast ``two`` accounts for recording transactions. To get star
   of the respective voucher type. If the date is changed, it updates the bydefault date or previous 
   date with the new date. 
 
-* Press ``Project name`` to select the project name from list of projects for recording transaction 
-  under that particular project, otherwise select ``No project``.
+* Select ``Project name`` from the dropdown for recording transaction if there are any , otherwise select ``No project``.
 
-* Enter ``Voucher code``.
-
-* Enter ``Voucher reference No.`` or edit the last reference No. .
-
-* Enter ``Narration``.
+* Enter ``Voucher code``, ``Voucher reference No.`` or edit the last reference No. and ``Narration``.
 
 * Press ``Save`` to save transaction and ``Reset`` to clear all fields.
 
 * After saving transaction it resets all the fields automatically.
-
-* ``Reset`` button shown below , present at the bottom will resets all the fields automatically.
    
 * You can change the voucher type if you want to make different voucher entries.
  
@@ -73,7 +101,7 @@ Search/Edit/Clone/Delete Transaction
 * To ``Edit/Clone/Delete`` transaction select ``Search voucher`` tab.
 
 * Its displays ``all`` transactions for the complete financial year which comes under ``selected``
-  voucher type in create account page as shown in figure.
+  voucher type as shown in figure.
 
 .. image:: images/search_voucher.png
    :name: ABT main page
@@ -97,14 +125,14 @@ Search/Edit/Clone/Delete Transaction
    :height: 200pt
    :width: 350pt
 
-* In **Edit voucher**, except ``Voucher No.``, all other fields are editable. Press ``Save`` to save the changes. 
+* In **Edit voucher**, all fields are editable. Press ``Save`` to save the changes. 
 
 .. image:: images/edit_voucher.png
    :align: center
    :height: 200pt
    :width: 350pt
 
-* **Clone voucher** duplicates information on an existing transaction, to create a new one without having to enter all the fields. There is an option to ``keep or change`` the existing field values. Press ``Save`` to save the transaction. 
+* **Clone voucher** duplicates information on an existing transaction, to create a new one with all the fields pre-filled. There is an option to ``keep or change`` the existing field values. Press ``Save`` to save the transaction. 
 
 .. image:: images/clone_voucher.png
    :align: center

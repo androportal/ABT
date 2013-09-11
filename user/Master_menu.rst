@@ -13,7 +13,7 @@ Aakash Business Tool's master menu includes list of menu options as shown in fig
    :width: 350pt
 
 **Create account**
-	* Create an account under respective ``group`` and ``subgroup`` with an opening balance.
+	* Create accounts under respective ``group`` and ``subgroup`` with opening balance(it can be ``0.00``).
 	* Search/Edit/Delete account.
 
 **Transaction**
@@ -27,7 +27,7 @@ Aakash Business Tool's master menu includes list of menu options as shown in fig
 	*  Set clearance date for cleared transaction and view ``Bank Reconciliation`` statement.
 
 **Preferences**
-	* Set preferences to ``Edit/Delete organisation details`` and ``Add/Edit/Delete project name``.
+	* User can ``Edit/Delete organisation details`` and ``Add/Edit/Delete project name``.
 
 **Rollover**
 	* Transfer the holdings to the next financial year.
@@ -48,9 +48,9 @@ According to the user role access to the menus are provided.
 
 1. **Admin** have access to all the above options.
 
-2. Except ``rollover`` **Manager** can access all the options.
+2. Except ``rollover``, **manager** can access all other options.
 
 3. **Operator** has access to ``create account, Transaction, Export organisation, Account Settings, Help``.
 
-4. Except ``rollover and account setting`` **guest** can access remaining options.
+4. Except ``rollover and account setting``,  **guest** can access all other options.
 

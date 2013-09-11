@@ -8,18 +8,17 @@ Export/Import organisation
 
 		* Go to ``Master menu`` > ``Export organisation``.
 
-		* Click on it, It will pop up a ``dialog box`` (see fig.) which ask’s "Do you want to export organisation".
+		* As the user clicks on ``Export organisation``, ``dialog box`` will appear with a message and yes or no option.
 
-		* If you will click on ``Yes`` then, it will again prompt "organisation has been exported to /mnt/sdcard/export/".
+		* If the user clicks ``Yes`` then, it prompts the location where the organisation data/backup is exported.
 
-		* See, there is a location in tablet called ``/mnt/sdcard/export`` , you can able ton find exported organisation
-		  sql formated file.
+		* Location of the exported data : ``/mnt/sdcard/export`` .
 
 	+ Import organisation :
 
 		* To import same organisation in another tablet just transfer ``export`` folder, provided ``ABT`` is installed.
 
-		* Import option is available at first page of ``ABT`` in ``Options menu``.
+		* ``Options menu`` present in the first page of ``ABT`` include import option.
 
 		.. image:: images/import_option.png
 		   :align: center
@@ -27,7 +26,7 @@ Export/Import organisation
 		   :width: 350pt		
 
 		* Just click on ``Import``, it will show all available exported organisation and financial years 
-		  to import it on current tablet.
+		  to import.
 
 		* Now, select organisation name and it's financial year which you would like to import and click on ``Import`` button.
 
