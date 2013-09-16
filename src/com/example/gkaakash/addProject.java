@@ -38,7 +38,7 @@ public class addProject extends MainActivity {
 	Button add;
 	private TableLayout projectTable;
 	int rowsSoFar = 0;
-	int count;
+	int count; 
 	AlertDialog dialog;
 	EditText etProject, etdynamic;
 	private Account account;

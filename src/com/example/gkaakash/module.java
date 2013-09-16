@@ -35,6 +35,7 @@ import android.widget.RadioButton;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.gkaakash.controller.Group;
 import com.gkaakash.controller.PdfGenaretor;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.Transaction;
@@ -61,6 +62,8 @@ public class module {
 	static String IPaddr;
 	static String givenfromDateString, givenToDateString;
 	boolean validateDateFlag;
+    private Group group;
+
 	
 	void getAccountsByRule(Object[] DrCrFlag, String vouchertypeflag2, Context context) {
 		IPaddr = MainActivity.IPaddr;
@@ -68,6 +71,7 @@ public class module {
 		transaction = new Transaction(IPaddr);
 		client_id= Startup.getClient_id();
 		System.out.println();
+		
 
 		vouchertypeflag=vouchertypeflag2;
 		if("Contra".equals(vouchertypeflag)){
@@ -152,7 +156,7 @@ public class module {
 					Grid, params, password);
 			AlertDialog.Builder builder1 = new AlertDialog.Builder(
 					c);
-			builder1.setMessage("PDF generation completed ..see /mnt/sdcard/"
+			builder1.setMessage("PDF genration completed ..see /mnt/sdcard/"
 					+ params[1]);
 			AlertDialog alert1 = builder1
 					.create();
@@ -171,7 +175,7 @@ public class module {
 		try {
 			pdfgen.generateBalancePDFFile(Grid,Grid1,params, password);
 			AlertDialog.Builder builder1 = new AlertDialog.Builder(c);
-			builder1.setMessage("Pdf generation completed ..see /mnt/sdcard/"+params[1]);
+			builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+params[1]);
 			AlertDialog alert1 = builder1.create();
 			alert1.show();
 			alert1.setCancelable(true);
@@ -484,7 +488,7 @@ public class module {
 
 		try {
 			fw = new FileWriter("/mnt/sdcard/"+params[1]+".csv");
-			fw.append("Date of file generation:  "+new SimpleDateFormat("EEE d-MMM-yyyy HH:mm:ss").format(date));
+			fw.append("Genrated Date:  "+new SimpleDateFormat("EEE d-MMM-yyyy HH:mm:ss").format(date));
 			fw.append(',');
 			fw.append("   "+params[2]);
 			fw.append(',');
@@ -750,4 +754,23 @@ public class module {
 		return validateDateFlag;
 		
 	} 
+	 
+	
+	List<String> get_all_groupname(){
+		IPaddr = MainActivity.IPaddr;
+		group = new Group(IPaddr);
+		 Object[] groupnames = (Object[]) group.getAllGroups(client_id);
+	        // create new array list of type String to add gropunames
+	        List<String> groupnamelist = new ArrayList<String>();
+	        // create new array list of type Integer to add gropcode
+	        
+	        for(Object gs : groupnames)
+	        {    
+	            Object[] g = (Object[]) gs;
+	            groupnamelist.add((String) g[1]); //groupname
+	            //groupdesc.add(g[2]); //description
+	        }    
+	        
+	        return groupnamelist;
+	}
 }

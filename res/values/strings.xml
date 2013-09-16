@@ -65,11 +65,19 @@
     <string name="projectName_prompt">Select project name</string>
     
     <string name="searchVoucherBy">Search voucher by</string>
-    <string-array name="searchVoucherBy">
+   <string-array name="searchVoucherBy">
         <item>Voucher reference number</item>
         <item>Date</item>
         <item>Narration</item>
+        <item>Voucher number</item>
+        <item>Group name</item>
+        <item>Sub-group name</item>
+        <item>Voucher type</item>
+        
+        
+        
     </string-array>
+    
     
     <string name="searchAccountBy_prompt">Search account by</string>
     <string-array name="searchAccountBy_arrays">
@@ -162,8 +170,6 @@
         <item>Where is your work place?</item>
         <item>What is your worst boss name?</item>
     </string-array>
-    
-    
     </resources>
 	
     
