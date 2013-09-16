@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.example.gkaakash.R.layout;
@@ -39,6 +40,7 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -255,6 +257,12 @@ public class SearchVoucher extends Activity {
 					}
 				});
 
+				final Spinner group_name = (Spinner)layout.findViewById(R.id.sgroup_name);
+				group_name.setVisibility(Spinner.GONE);
+				
+				final EditText voucher_number = (EditText)layout.findViewById(R.id.etVoucher_number);
+				voucher_number.setVisibility(EditText.GONE);
+
 				final EditText etVoucherCode = (EditText)layout.findViewById(R.id.searchByVCode);
 				etVoucherCode.setVisibility(EditText.GONE);
 
@@ -274,20 +282,55 @@ public class SearchVoucher extends Activity {
 							etNarration.setVisibility(EditText.GONE);
 							timeInterval.setVisibility(LinearLayout.GONE);
 							etVoucherCode.setVisibility(EditText.VISIBLE);
+							group_name.setVisibility(Spinner.GONE);
+							voucher_number.setVisibility(EditText.GONE);
+
+
 						}
 						if(position == 1){
 							tvWarning.setVisibility(View.GONE);
 							etVoucherCode.setVisibility(EditText.GONE);
 							etNarration.setVisibility(EditText.GONE);
 							timeInterval.setVisibility(LinearLayout.VISIBLE);
+							group_name.setVisibility(Spinner.GONE);
+							voucher_number.setVisibility(EditText.GONE);
+
 						}
 						if(position == 2){
 							tvWarning.setVisibility(View.GONE);
 							etVoucherCode.setVisibility(EditText.GONE);
 							timeInterval.setVisibility(LinearLayout.GONE);
 							etNarration.setVisibility(EditText.VISIBLE);
-						}
+							group_name.setVisibility(Spinner.GONE);
+							voucher_number.setVisibility(EditText.GONE);
 
+
+						}
+						if(position == 3){
+							tvWarning.setVisibility(View.GONE);
+							etVoucherCode.setVisibility(EditText.GONE);
+							timeInterval.setVisibility(LinearLayout.GONE);
+							etNarration.setVisibility(EditText.GONE);
+							group_name.setVisibility(Spinner.GONE);
+							voucher_number.setVisibility(EditText.VISIBLE);
+
+						}
+						if(position == 4){
+							tvWarning.setVisibility(View.GONE);
+							etVoucherCode.setVisibility(EditText.GONE);
+							timeInterval.setVisibility(LinearLayout.GONE);
+							etNarration.setVisibility(EditText.GONE);
+							group_name.setVisibility(Spinner.VISIBLE);
+							voucher_number.setVisibility(EditText.GONE);
+
+					        List<String> groupnamelist = new ArrayList<String>();
+
+					        groupnamelist=m.get_all_groupname();
+					        System.out.println("groupnameList:"+groupnamelist);
+					        ArrayAdapter<String> adapter=new ArrayAdapter<String>(SearchVoucher.this, android.R.layout.simple_spinner_dropdown_item, groupnamelist);
+					        group_name.setAdapter(adapter);
+
+						}
 					}
 
 					@Override
@@ -312,7 +355,7 @@ public class SearchVoucher extends Activity {
 							}
 							else{
 								searchVoucherBy = 1; //by reference no
-								Object[] params = new Object[]{1,searchByRefNumber,financialFromDate,financialToDate,""};
+								Object[] params = new Object[]{1,searchByRefNumber};
 								getallvouchers(params);
 
 							}
@@ -324,7 +367,7 @@ public class SearchVoucher extends Activity {
 								givenfromDateString = m.givenfromDateString;
 								givenToDateString = m.givenToDateString;
 									searchVoucherBy = 2; // by date
-									Object[] params = new Object[]{2,"",givenfromDateString,givenToDateString,""};
+									Object[] params = new Object[]{2,"",givenfromDateString,givenToDateString};
 									getallvouchers(params);
 							}
 						}
@@ -336,9 +379,23 @@ public class SearchVoucher extends Activity {
 							}
 							else{
 								searchVoucherBy = 3; //by narration
-								Object[] params = new Object[]{3,"",financialFromDate,financialToDate,searchByNarration};
+								Object[] params = new Object[]{3,searchByNarration};
 								getallvouchers(params);
 							}
+						}else if (pos==3) {
+							String voucher_num=voucher_number.getText().toString();
+							searchVoucherBy = 4; //by voucher number
+							
+							Object[] params = new Object[]{4,voucher_num};
+							getallvouchers(params);
+							dialog.dismiss();
+
+						}
+						else if (pos==4) {
+							String Group_Name=group_name.getSelectedItem().toString();
+							searchVoucherBy = 5; //by group name
+							Object[] params = new Object[]{5,financialFromDate,financialToDate,Group_Name};
+							getallvouchers(params);
 						}
 
 					}
