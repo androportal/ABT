@@ -384,9 +384,9 @@ public class MainActivity extends Activity{
 		});
 		Button btnHelp = (Button) findViewById(R.id.btnHelp);
 		btnHelp.setOnClickListener(new OnClickListener() {
-			
+			  
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) {  
 				help_option_menu_flag = 1;
 				startApp();
 			}
@@ -403,7 +403,7 @@ public class MainActivity extends Activity{
 			loadDataFromAsset();
 		}
 		else {
-			//Toast.makeText(context, "not copying files from asset", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(context, "not c       opying files from asset", Toast.LENGTH_SHORT).show();
 			System.out.println("NOT copying files from asset");
 		}
 		if(no_dailog==false){

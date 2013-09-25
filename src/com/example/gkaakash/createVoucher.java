@@ -26,12 +26,15 @@ import android.opengl.Visibility;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.KeyListener;
+import android.text.method.Touch;
 import android.text.style.ClickableSpan;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
@@ -123,6 +126,8 @@ public class createVoucher extends Activity {
 	Spinner first_account_name,first_dr_cr ,second_dr_cr,second_account_name;
 	View row123,row1;
 	Spinner change_voucher_type;
+	Boolean touch=false;
+	
 
 
 	@Override
@@ -215,9 +220,7 @@ public class createVoucher extends Activity {
 				// System.out.println("vuc:"+voucher_code_flag);
 				// Toast.makeText(context, "V_code_flag"+voucher_code_flag,
 				// Toast.LENGTH_SHORT).show();
-				System.out.println("I am in edit of p0");
 				addButton();
-				removeSelfButton.setText("+");
 				System.err.println("cumning form serach voucher"+SearchVoucher.value);
 				// list coming from search voucher
 				ArrayList<String> abc = SearchVoucher.value;
@@ -279,7 +282,6 @@ public class createVoucher extends Activity {
 				amount_first = (EditText) ((ViewGroup) row).getChildAt(6);
 
 				amount_first.setText(accdetailsList.get(0).get(2));
-				
 			}
 
 			// two digit date format for dd and mm
@@ -342,7 +344,7 @@ public class createVoucher extends Activity {
 		OnClickListener();
 
 		// on dr/cr item selected from dropdown...
-		OnDrCrItemSelectedListener();
+//		OnDrCrItemSelectedListener();
 
 		// move foucs from amount to reference number edittext
 		OnAmountFocusChangeListener();
@@ -398,6 +400,7 @@ public class createVoucher extends Activity {
 		final ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
 				android.R.layout.simple_spinner_item, voucherTypes);
 		// set resource layout of spinner to that adaptor
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		change_voucher_type.setAdapter(dataAdapter);
 
 		change_voucher_type.setSelection(dataAdapter.getPosition(vouchertypeflag));
@@ -612,15 +615,16 @@ public class createVoucher extends Activity {
 
 			// set resource layout of spinner to that adapter
 			if (searchFlag == false) {
-
+				
 				addButton();
 				change_voucher_type.setEnabled(true);
 				ArrayAdapter<String> da12 = new ArrayAdapter<String>(createVoucher.this,
 						android.R.layout.simple_spinner_dropdown_item, dr_cr);
 
 				dataAdapter = new ArrayAdapter<String>(this,
-						android.R.layout.simple_spinner_dropdown_item, accnames);
-				
+						android.R.layout.simple_spinner_item, accnames);
+				dataAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				second_table_accountname_spinner.setAdapter(dataAdapter);
 				second_table_drcr_spinner.setAdapter(da12);
 				second_table_accountname_spinner.setAdapter(dataAdapter);
@@ -634,17 +638,22 @@ public class createVoucher extends Activity {
 				dr_cr.add("Dr");
 				dr_cr.add("Cr");
 				da1 = new ArrayAdapter<String>(createVoucher.this,
-						android.R.layout.simple_spinner_dropdown_item, dr_cr);
+						android.R.layout.simple_spinner_item, dr_cr);
+				da1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				second_table_drcr_spinner.setAdapter(da1);
 				second_table_drcr_spinner.setSelection(1);
 
 				// set adaptor with account name list in second row spinner
 				second_table_accountname_spinner.setAdapter(dataAdapter);
 
-			} else {// for setting second row for editing
+			} else {
+				// for setting second row for editing
+				System.out.println("In journel/contra true case");
 				dr_cr.clear();
 				// for setting 1st row's 2nd spinner
 				Fsecond_spinner = accdetailsList.get(0).get(0);
+				System.out.println("FirstS:" + Fsecond_spinner);
+
 				System.out.println("names:" + accnames);
 				// setting adapter
 				dataAdapter = new ArrayAdapter<String>(this,
@@ -653,7 +662,7 @@ public class createVoucher extends Activity {
 				dataAdapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				FaccnamePosition = dataAdapter.getPosition(Fsecond_spinner);
-
+				System.out.println("Position:"+FaccnamePosition);
 				View row = table.getChildAt(0);
 				// drcr flag
 				first_account_name = (Spinner) ((ViewGroup) row).getChildAt(2);
@@ -736,6 +745,7 @@ public class createVoucher extends Activity {
 						SacctypePosition = da1.getPosition(Sacctype);
 						second_table_drcr_spinner.setAdapter(da1);
 						second_table_drcr_spinner.setSelection(SacctypePosition);
+						
 
 					}
 				}
@@ -809,15 +819,17 @@ public class createVoucher extends Activity {
 				dataAdapter = new ArrayAdapter<String>(this,
 						android.R.layout.simple_spinner_item, CrAccountlist);
 				// set resource layout of spinner to that adapter
+				dataAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				// set adaptor with account name list in spinner
 				second_account_name.setAdapter(dataAdapter);
 			} else {
-				System.out.println("I am in edit of p");
-				
 				// add second row
+				
+				System.out.println();
+				
 				addButton();
-//				removeSelfButton.setText("+");
-			
+				removeSelfButton.setText("+");
 				dr_cr.clear();
 				dr_cr.add("Dr");
 				dr_cr.add("Cr");
@@ -859,6 +871,7 @@ public class createVoucher extends Activity {
 				}
 				Fsecond_spinner = accdetailsList.get(0).get(0);
 				System.out.println("Fsecond_spinner:"+Fsecond_spinner);
+				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				FaccnamePosition = dataAdapter.getPosition(Fsecond_spinner);
 
 				first_account_name = (Spinner) ((ViewGroup) row).getChildAt(2);
@@ -927,48 +940,71 @@ public class createVoucher extends Activity {
 						second_table_drcr_spinner.setAdapter(da1);
 						second_table_drcr_spinner.setSelection(SacctypePosition);
 					}
-					
-				
 				}
 			}
 		}
 	}
- 
+
 	private void OnDrCrItemSelectedListener() {
-		
 		/*
 		 * to set account names in dropdown when Dr/Cr changed
 		 */
 		// for first row
+		
+		System.out.println("in selected change:"+table.getChildCount());
 
-		second_table_drcr_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+		for (int i = 0; i < table.getChildCount(); i++) {
+			final int poooos=second_table_drcr_spinner.getSelectedItemPosition();
+			System.out.println("position1:"+poooos);
+			second_table_drcr_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View v,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				String a = parent.getItemAtPosition(position).toString();
-				if (a != null) {
-						Object[] params = new Object[] { a };
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View v,
+						int position, long id) {
+					// TODO Auto-generated method stub
+					String a = parent.getItemAtPosition(position).toString();
+					System.out.println("position2:"+position);
+//					Toast.makeText(createVoucher.this, "value_of:"+touch, Toast.LENGTH_SHORT).show();
 
-						m.getAccountsByRule(params, vouchertypeflag,
-								context);
-						dataAdapter = module.dataAdapter;
+					
+					if (a != null) {
+						if (searchFlag == false) {
 						
-						View v1 = (View) parent.getParent();
-						second_table_accountname_spinner = (Spinner) ((ViewGroup) v1).getChildAt(2);
-						second_table_accountname_spinner.setAdapter(dataAdapter);
-						System.out.println("in method");
+							Object[] params = new Object[] { a };
+	
+							m.getAccountsByRule(params, vouchertypeflag,
+									context);
+							dataAdapter = module.dataAdapter;
+							View v1 = (View) parent.getParent();
+							Spinner sp = (Spinner) ((ViewGroup) v1).getChildAt(2);
+							sp.setAdapter(dataAdapter);			
+							
+						}else if (touch==true) {
+							System.out.println("Done finally");
+							Object[] params = new Object[] { a };
+							
+							m.getAccountsByRule(params, vouchertypeflag,
+									context);
+							dataAdapter = module.dataAdapter;
+							View v1 = (View) parent.getParent();
+							Spinner sp = (Spinner) ((ViewGroup) v1).getChildAt(2);
+							sp.setAdapter(dataAdapter);		
+						}					
+					}
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
 
 				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+			});	
+		}
+//		
+		
+				
+		
+		
 
 
 		second_table_accountname_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -976,8 +1012,6 @@ public class createVoucher extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View v,
 					int position, long id) {
-				System.out.println("in method2");
-
 				String ac = parent.getItemAtPosition(position).toString();
 				// Toast.makeText(createVoucher.this,
 				// "account:"+ac,Toast.LENGTH_SHORT).show();
@@ -1017,6 +1051,26 @@ public class createVoucher extends Activity {
 		///////////////////////
 		//		
 
+		
+		second_table_drcr_spinner.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View arg0, MotionEvent arg1) {
+				if(searchFlag==true){
+					touch = true;
+					
+//					Toast.makeText(createVoucher.this, "value:"+touch, Toast.LENGTH_SHORT).show();
+
+//							
+				}
+				
+				return false;
+			}
+		});
+		
+		
+		
+		
 		tableRowCount = table.getChildCount();
 		System.out.println("child ouside:"+tableRowCount);
 
@@ -1112,7 +1166,6 @@ public class createVoucher extends Activity {
 //							@Override
 //							public void onItemSelected(AdapterView<?> parent,
 //									View v, int position, long id) {
-//								System.out.println("in method 3");
 //								// TODO Auto-generated method stub
 //								String a = parent.getItemAtPosition(position)
 //										.toString();
@@ -1122,8 +1175,6 @@ public class createVoucher extends Activity {
 //									m.getAccountsByRule(params,
 //											vouchertypeflag, context);
 //									dataAdapter = module.dataAdapter;
-//									View v1 = (View) parent.getParent();
-//									second_table_accountname_spinner = (Spinner) ((ViewGroup) v1).getChildAt(2);
 //									second_table_accountname_spinner.setAdapter(dataAdapter);
 //								}
 //
@@ -1556,6 +1607,7 @@ public class createVoucher extends Activity {
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
 				android.R.layout.simple_spinner_item, projectnamelist);
 		// set resource layout of spinner to that adaptor
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sProjectNames.setAdapter(dataAdapter);
 
 		if (searchFlag == true) {// this code will be executed while
@@ -1817,7 +1869,7 @@ public class createVoucher extends Activity {
 
 		second_table_drcr_spinner = new Spinner(newRow.getContext(),Spinner.MODE_DIALOG);
 		second_table_drcr_spinner.setBackgroundResource(R.drawable.spinner_background_holo_light);
-		second_table_drcr_spinner.setPrompt("Select Account type");
+		
 		
 
 		TextView tv = new TextView(newRow.getContext());
@@ -1826,11 +1878,9 @@ public class createVoucher extends Activity {
 		tv.setTextColor(Color.WHITE);
 		tv.setVisibility(TextView.GONE);
 
-		second_table_accountname_spinner = new Spinner(newRow.getContext(),Spinner.MODE_DIALOG);
+		second_table_accountname_spinner = new Spinner(newRow.getContext());
 		second_table_accountname_spinner.setMinimumWidth(259);// for emulator keep 283
 		second_table_accountname_spinner.setBackgroundResource(R.drawable.spinner_background_holo_light);
-		second_table_accountname_spinner.setPrompt("Select Account name");
-
 
 
 		TextView tv1 = new TextView(newRow.getContext());
@@ -1891,39 +1941,14 @@ public class createVoucher extends Activity {
 		newRow.addView(removeSelfButton,60,45);
 		table.addView(newRow);
 		OnAmountFocusChangeListener();
+		System.out.println("flag:"+MainActivity.searchFlag);
+//		if(MainActivity.searchFlag=false){
 		OnDrCrItemSelectedListener();
-
-
+//		}
 		OnClickListener();
 		
-		second_table_drcr_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+		
 
-			@Override
-			public void onItemSelected(AdapterView<?> parent,
-					View v, int position, long id) {
-				System.out.println("in method 3");
-				// TODO Auto-generated method stub
-				String a = parent.getItemAtPosition(position)
-						.toString();
-				if (a != null) {
-					Object[] params = new Object[] { a };
-  
-					m.getAccountsByRule(params,
-							vouchertypeflag, context);
-					dataAdapter = module.dataAdapter;
-					View v1 = (View) parent.getParent();
-					second_table_accountname_spinner = (Spinner) ((ViewGroup) v1).getChildAt(2);
-					second_table_accountname_spinner.setAdapter(dataAdapter);
-				}
-
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 		
 	}
 
