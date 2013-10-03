@@ -3,13 +3,13 @@
  android:layout_height="fill_parent"
  android:orientation="vertical"
  android:weightSum="100">
-<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView  
  android:layout_width="fill_parent" 
  android:layout_height="fill_parent"
  android:layout_weight="90">
    
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    
     android:id="@+id/layout_signup"
     android:layout_width="fill_parent"
     android:layout_height="459dp"
@@ -27,7 +27,7 @@
 		    android:background="@color/blue_theme"
 		    android:layout_weight="20"/>
     
-    	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    	<ScrollView 
     		android:layout_width="match_parent"
     		android:layout_height="match_parent"
     		android:background="@color/gray_theme"
@@ -180,7 +180,7 @@
 				    android:layout_weight="1"
 				    android:entries="@array/ques_prompt"
                 	android:prompt="@string/questions"
-                	style="@style/SpinnerAppTheme.DropDown" />
+                	style="@style/SpinnerAppTheme" />
  
 			</TableRow>
 			<TableRow

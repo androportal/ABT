@@ -27,7 +27,7 @@ public class Account {
 	private String accountCodeExists;
 	private Object[] accountDetails;
 	private Object editaccount;
-	private Object deleteaccount;
+	private Object deleteaccount,deleteAccountNameMaster;
 	private Double closing_bal;
 	private Object[] getAllBankAccounts;
 	
@@ -242,10 +242,24 @@ public class Account {
 			return editaccount;
 		}
 	
-	public Object deleteAccount(Object[] params,Object client_id) {
+	public Object deleteAccountNameMaster(Object[] params,Object client_id) {
 		
 		try {
-			deleteaccount = (Object)conn.getClient().call("account.deleteAccountNameMaster",params,client_id);
+			deleteAccountNameMaster = (Object)conn.getClient().call("account.deleteAccountNameMaster",params,client_id);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return deleteAccountNameMaster;
+	}
+	
+	
+public Object deleteAccount(Object[] params,Object client_id) {
+		
+		try {
+			deleteaccount = (Object)conn.getClient().call("account.deleteAccount",params,client_id);
 			
 		} catch (XMLRPCException e) {
 			

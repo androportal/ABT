@@ -148,7 +148,7 @@ public class edit_account extends Activity {
 				builder.setTitle("Edit/Delete Account");
 				// adding items
 				builder.setItems(items, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface which, int pos) {
+					public void onClick(DialogInterface which, final int pos) {
 						if (accCodeCheckFlag.equals("automatic")) {
 							flag = 1;
 						}
@@ -158,15 +158,14 @@ public class edit_account extends Activity {
 								flag, pos };
 						System.out.println(tvaccname.getText().toString());
 						final String accountDeleteValue = (String) account
-								.deleteAccount(params1, client_id);
+								.deleteAccountNameMaster(params1, client_id);
+						System.out.println("value returned:"+accountDeleteValue);
 						String message = "";
 						System.out.println("value" + accountDeleteValue);
-
-						if ("account deleted".equals(accountDeleteValue)) {
-							message = "Account '"
-									+ tvaccname.getText().toString()
-									+ "' has been deleted successfully";
-						} else if ("account can be edited"
+						if ("account deleted"
+								.equals(accountDeleteValue)) {
+							message = "edit";
+						}else if ("account can be edited"
 								.equals(accountDeleteValue)) {
 							message = "edit";
 						} else if ("has both opening balance and trasaction"
@@ -537,13 +536,20 @@ public class edit_account extends Activity {
 							dialog.getWindow().setAttributes(lp);
 						}
 						break;
-						case 1: {
+						case 1: { 
 							final AlertDialog.Builder builder = new AlertDialog.Builder(edit_account.this);
-							builder.setMessage("Are you sure you want delete account '"+tvaccname.getText().toString()+ "'?")
+							builder.setMessage("Are you sure you want ` account '"+tvaccname.getText().toString()+ "'?")
 							.setPositiveButton("Yes", new OnClickListener() {
 								
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
+									
+									Object[] params1 = new Object[] {
+											tvaccname.getText().toString(),
+											flag, pos };
+									System.out.println(tvaccname.getText().toString());
+									account.deleteAccount(params1, client_id);
+									
 									if ("account deleted".equals(accountDeleteValue)) {
 										m.toastValidationMessage(edit_account.this, msg);
 										setaccountlist();
@@ -561,6 +567,7 @@ public class edit_account extends Activity {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									// do nothing
+									System.out.println("in delete");
 									
 								}
 							});
@@ -690,7 +697,7 @@ public class edit_account extends Activity {
 
 		String[] abc = new String[] { "rowid", "col_1" };
 		int[] pqr = new int[] { R.id.tvRowTitle1, R.id.tvSubItem1 };
-
+		
 		System.out.println("size:" + list.toString().length()+ "" + list);
 		System.out.println("size:" + list);
 

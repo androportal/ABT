@@ -1631,7 +1631,7 @@ public class createVoucher extends Activity {
 				vproject = parent.getItemAtPosition(pos).toString();
 				//Toast.makeText(context, vproject, Toast.LENGTH_SHORT).show();
 			}
-
+  
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
@@ -1872,7 +1872,7 @@ public class createVoucher extends Activity {
 
 		second_table_drcr_spinner = new Spinner(newRow.getContext(),Spinner.MODE_DIALOG);
 		second_table_drcr_spinner.setBackgroundResource(R.drawable.spinner_background_holo_light);
-		
+		second_table_drcr_spinner.setPrompt("Select Account type");
 		
 
 		TextView tv = new TextView(newRow.getContext());
@@ -1881,9 +1881,10 @@ public class createVoucher extends Activity {
 		tv.setTextColor(Color.WHITE);
 		tv.setVisibility(TextView.GONE);
 
-		second_table_accountname_spinner = new Spinner(newRow.getContext());
+		second_table_accountname_spinner = new Spinner(newRow.getContext(),Spinner.MODE_DIALOG);
 		second_table_accountname_spinner.setMinimumWidth(259);// for emulator keep 283
 		second_table_accountname_spinner.setBackgroundResource(R.drawable.spinner_background_holo_light);
+		second_table_accountname_spinner.setPrompt("Select Account name");
 
 
 		TextView tv1 = new TextView(newRow.getContext());
