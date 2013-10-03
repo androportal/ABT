@@ -296,8 +296,17 @@ public class reportMenu extends Activity{
 		Organisation organisation = new Organisation(IPaddr);
 		final module m= new module();
 		if (report_flag.equalsIgnoreCase("L") || report_flag.equalsIgnoreCase("BR")) {
-			//call the allAccountNames method to get all account names
-			Object[] accountnames = (Object[]) account.getAllAccountNames(Startup.getClient_id());
+			Object[] accountnames;
+			
+			if(report_flag.equalsIgnoreCase("BR")){
+				//call the allAccountNames method to get all account names
+				accountnames = (Object[]) account.getAllBankAccounts(Startup.getClient_id());
+			}else {
+				//call the allAccountNames method to get all account names
+			    accountnames = (Object[]) account.getAllAccountNames(Startup.getClient_id());
+			}
+		
+			
 			// create new array list of type String to add account names
 			accountnamelist = new ArrayList<String>();
 			for(Object an : accountnames)

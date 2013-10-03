@@ -386,7 +386,7 @@ public class MainActivity extends Activity{
 		btnHelp.setOnClickListener(new OnClickListener() {
 			  
 			@Override
-			public void onClick(View v) {  
+			public void onClick(View v) {
 				help_option_menu_flag = 1;
 				//startApp();
 			}

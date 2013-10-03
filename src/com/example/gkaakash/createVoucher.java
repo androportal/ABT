@@ -757,6 +757,7 @@ public class createVoucher extends Activity {
 				m.getAccountsByRule(paramDr,vouchertypeflag, context);
 				accnames = module.Accountlist;
 				DrAccountlist.addAll(accnames);
+				System.out.println("List1:"+DrAccountlist);
 
 				Object[] paramCr = new Object[]{"Cr"};
 				m.getAccountsByRule(paramCr,vouchertypeflag, context);
@@ -764,6 +765,8 @@ public class createVoucher extends Activity {
 
 				CrAccountlist.addAll(accnames);
 
+				System.out.println("List2:"+CrAccountlist);
+				
 			} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
 				DrAccountlist = ledger.DrAccountlist;
 				CrAccountlist = ledger.CrAccountlist;
