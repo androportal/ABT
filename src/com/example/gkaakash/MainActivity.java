@@ -171,7 +171,7 @@ public class MainActivity extends Activity{
 			//Toast.makeText(context, "help_flag_option is set to 1", Toast.LENGTH_SHORT).show();
 			help_option_menu_flag = 1;
 			//if running this app on emulator, comment the below line
-			startApp();
+			//startApp();
 		}
 		if(item.getItemId() == 2){
 			//Toast.makeText(context, "help_flag_option is set to 2", Toast.LENGTH_SHORT).show();
@@ -388,7 +388,7 @@ public class MainActivity extends Activity{
 			@Override
 			public void onClick(View v) {  
 				help_option_menu_flag = 1;
-				startApp();
+				//startApp();
 			}
 		});
 		//Request a reference to the spinner from the activity by calling “findViewById”
@@ -408,7 +408,7 @@ public class MainActivity extends Activity{
 		}
 		if(no_dailog==false){
 			//if running this app on emulator, comment the below line
-			startApp(); 
+			//startApp(); 
 		}    
 		else{
 			if(checkFlag=="false"){

@@ -128,7 +128,13 @@
         </EditText>
         
         <Spinner
-            android:id="@+id/sgroup_name"
+            android:id="@+id/saccount_name"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+        <Spinner
+            android:id="@+id/svoucher_type"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

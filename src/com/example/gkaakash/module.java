@@ -61,7 +61,7 @@ public class module {
 	String security_password = null;
 	static String IPaddr;
 	static String givenfromDateString, givenToDateString;
-	boolean validateDateFlag;
+	static boolean validateDateFlag;
     private Group group;
 
 	

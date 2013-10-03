@@ -82,6 +82,7 @@ public class SearchVoucher extends Activity {
 	int oneTouch = 1;
 	TableLayout floating_heading_table;
 	module m;
+	Account account;
 	String[] ColumnNameList;
 	static String IPaddr;
 	Button from_btn_ID, to_btn_ID;
@@ -95,11 +96,12 @@ public class SearchVoucher extends Activity {
 		setContentView(R.layout.search_voucher);
 		IPaddr = MainActivity.IPaddr;
 		System.out.println("in createorg"+IPaddr);
-		client_id = Startup.getClient_id();
+		
 		transaction = new Transaction(IPaddr);
 		m= new module();
-
-
+		account = new Account(IPaddr);
+		
+		client_id = Startup.getClient_id();
 		//for two digit format date for dd and mm
 		mFormat= new DecimalFormat("00");
 		mFormat.setRoundingMode(RoundingMode.DOWN);
@@ -257,7 +259,7 @@ public class SearchVoucher extends Activity {
 					}
 				});
 
-				final Spinner group_name = (Spinner)layout.findViewById(R.id.sgroup_name);
+				final Spinner group_name = (Spinner)layout.findViewById(R.id.saccount_name);
 				group_name.setVisibility(Spinner.GONE);
 				
 				final EditText voucher_number = (EditText)layout.findViewById(R.id.etVoucher_number);
@@ -271,6 +273,10 @@ public class SearchVoucher extends Activity {
 
 				final LinearLayout timeInterval = (LinearLayout)layout.findViewById(R.id.timeInterval);
 				timeInterval.setVisibility(LinearLayout.GONE);
+				
+				final Spinner voucher_type = (Spinner)layout.findViewById(R.id.svoucher_type);
+				voucher_type.setVisibility(Spinner.GONE);
+				
 
 				final Spinner searchBy = (Spinner) layout.findViewById(R.id.sSearchVoucherBy);
 				searchBy.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -283,6 +289,7 @@ public class SearchVoucher extends Activity {
 							timeInterval.setVisibility(LinearLayout.GONE);
 							etVoucherCode.setVisibility(EditText.VISIBLE);
 							group_name.setVisibility(Spinner.GONE);
+							voucher_type.setVisibility(Spinner.GONE);
 							voucher_number.setVisibility(EditText.GONE);
 
 
@@ -293,6 +300,7 @@ public class SearchVoucher extends Activity {
 							etNarration.setVisibility(EditText.GONE);
 							timeInterval.setVisibility(LinearLayout.VISIBLE);
 							group_name.setVisibility(Spinner.GONE);
+							voucher_type.setVisibility(Spinner.GONE);
 							voucher_number.setVisibility(EditText.GONE);
 
 						}
@@ -312,23 +320,64 @@ public class SearchVoucher extends Activity {
 							timeInterval.setVisibility(LinearLayout.GONE);
 							etNarration.setVisibility(EditText.GONE);
 							group_name.setVisibility(Spinner.GONE);
+							voucher_type.setVisibility(Spinner.GONE);
 							voucher_number.setVisibility(EditText.VISIBLE);
 
 						}
+//						if(position == 4){
+//							tvWarning.setVisibility(View.GONE);
+//							etVoucherCode.setVisibility(EditText.GONE);
+//							timeInterval.setVisibility(LinearLayout.GONE);
+//							etNarration.setVisibility(EditText.GONE);
+//							group_name.setVisibility(Spinner.VISIBLE);
+//							voucher_number.setVisibility(EditText.GONE);
+//
+//					        List<String> groupnamelist = new ArrayList<String>();
+//
+//					        groupnamelist=m.get_all_groupname();
+//					        System.out.println("groupnameList:"+groupnamelist);
+//					        ArrayAdapter<String> adapter=new ArrayAdapter<String>(SearchVoucher.this, android.R.layout.simple_spinner_dropdown_item, groupnamelist);
+//					        group_name.setAdapter(adapter);
+//
+//						}
 						if(position == 4){
 							tvWarning.setVisibility(View.GONE);
 							etVoucherCode.setVisibility(EditText.GONE);
 							timeInterval.setVisibility(LinearLayout.GONE);
 							etNarration.setVisibility(EditText.GONE);
 							group_name.setVisibility(Spinner.VISIBLE);
+							voucher_type.setVisibility(Spinner.GONE);
 							voucher_number.setVisibility(EditText.GONE);
 
-					        List<String> groupnamelist = new ArrayList<String>();
-
-					        groupnamelist=m.get_all_groupname();
-					        System.out.println("groupnameList:"+groupnamelist);
-					        ArrayAdapter<String> adapter=new ArrayAdapter<String>(SearchVoucher.this, android.R.layout.simple_spinner_dropdown_item, groupnamelist);
+					        List<String> accountnamelist = new ArrayList<String>();
+					        //IPaddr = MainActivity.IPaddr;
+					        
+					        //Object[] subgroupnames = (Object[])group.getSubGroupsByGroupName(params,client_id);
+					        Object[] groupname=(Object[]) account.getAllAccountNames(client_id);
+		                    // loop through subgroup names list 
+		                    for(Object accname : groupname)
+		                    {
+		                    	accountnamelist.add((String)accname);
+		                    }
+					       
+					        System.out.println("groupnameList:"+accountnamelist);
+					        ArrayAdapter<String> adapter=new ArrayAdapter<String>(SearchVoucher.this, android.R.layout.simple_spinner_dropdown_item, accountnamelist);
 					        group_name.setAdapter(adapter);
+
+						}
+						if(position == 5){
+							tvWarning.setVisibility(View.GONE);
+							etVoucherCode.setVisibility(EditText.GONE);
+							timeInterval.setVisibility(LinearLayout.GONE);
+							etNarration.setVisibility(EditText.GONE);
+							voucher_type.setVisibility(Spinner.VISIBLE);
+							voucher_number.setVisibility(EditText.GONE);
+
+					       List<String> voucherTypes = new ArrayList<String>(Arrays.asList(new String[] {"Contra","Journal","Payment","Receipt","Credit note",
+									"Debit note","Sales","Sales return","Purchase","Purchase return"}));
+					       
+					        ArrayAdapter<String> adapter=new ArrayAdapter<String>(SearchVoucher.this, android.R.layout.simple_spinner_dropdown_item, voucherTypes);
+					        voucher_type.setAdapter(adapter);
 
 						}
 					}
@@ -346,20 +395,23 @@ public class SearchVoucher extends Activity {
 					@Override
 					public void onClick(View arg0) {
 						int pos = searchBy.getSelectedItemPosition();
+						boolean validate = true;
 
 						if(pos == 0){
 							searchByRefNumber = etVoucherCode.getText().toString();
 							if(searchByRefNumber.length() < 1){
 								tvWarning.setVisibility(View.VISIBLE);
 								tvWarning.setText("Please enter voucher reference number");
+								validate = false;
 							}
 							else{
 								searchVoucherBy = 1; //by reference no
 								Object[] params = new Object[]{1,searchByRefNumber};
 								getallvouchers(params);
+								validate = true;
 
 							}
-						}
+						}  
 						else if(pos == 1){
 							Boolean validateDateFlag = m.validateDate(financialFromDate, financialToDate, from_btn_ID.getText().toString(), 
 									to_btn_ID.getText().toString(), "validatebothFromToDate",tvWarning);
@@ -376,29 +428,54 @@ public class SearchVoucher extends Activity {
 							if(searchByNarration.length() < 1){
 								tvWarning.setVisibility(View.VISIBLE);
 								tvWarning.setText("Please enter narration");
+								validate = false;
 							}
 							else{
 								searchVoucherBy = 3; //by narration
 								Object[] params = new Object[]{3,searchByNarration};
 								getallvouchers(params);
+								validate = true;
 							}
 						}else if (pos==3) {
 							String voucher_num=voucher_number.getText().toString();
-							searchVoucherBy = 4; //by voucher number
+							if(voucher_num.length() < 1){
+								tvWarning.setVisibility(View.VISIBLE);
+								tvWarning.setText("Please enter voucher number");
+								validate = false;
+							}else
+							{
+								searchVoucherBy = 4; //by voucher number
+								
+								Object[] params = new Object[]{4,voucher_num};
+								getallvouchers(params);
+								validate = true;
+							}
+							//dialog.dismiss();
+
+						}
+						else if (pos==4) {  
+							String Account_Name=group_name.getSelectedItem().toString();
+							searchVoucherBy = 5; //by account name
+							Object[] params = new Object[]{5,financialFromDate,financialToDate,Account_Name};
+							getallvouchers(params);
+							validate = true;
+						}
+						else if (pos==5) {
+							String voucher_Type=voucher_type.getSelectedItem().toString();
+							searchVoucherBy = 6; //by voucher type name
+							Object[] params = new Object[]{6,financialFromDate,financialToDate,voucher_Type};
+							getallvouchers(params);
+							validate = true;
+						}
+						if(pos==1&&!module.validateDateFlag||validate == false)
+						{
 							
-							Object[] params = new Object[]{4,voucher_num};
-							getallvouchers(params);
+						}else
+						{
 							dialog.dismiss();
-
 						}
-						else if (pos==4) {
-							String Group_Name=group_name.getSelectedItem().toString();
-							searchVoucherBy = 5; //by group name
-							Object[] params = new Object[]{5,financialFromDate,financialToDate,Group_Name};
-							getallvouchers(params);
-						}
-
 					}
+					
 				});
 
 			   	btnCancel.setOnClickListener(new OnClickListener() {
@@ -448,7 +525,7 @@ public class SearchVoucher extends Activity {
 
 						colValue=columnValue.get(j);
 						if(!"".equals(colValue)){
-							//System.out.println("m in ");
+							System.out.println("m in ");
 							if(!"0.00".equals(colValue)){
 								// for checking multiple \n and pattern matching
 								Pattern pattern = Pattern.compile("\\n");
@@ -654,9 +731,9 @@ public class SearchVoucher extends Activity {
 			Object[] v = (Object[]) voucherRow;
 			searchedVoucherList = new ArrayList<String>();
 			for(int i=0;i<v.length;i++){
-				if(((String) v[3].toString()).equalsIgnoreCase(vouchertypeflag)){
+				//if(((String) v[3].toString()).equalsIgnoreCase(vouchertypeflag)){
 					searchedVoucherList.add((String) v[i].toString());
-				}
+				//}
 			}
 			if(searchedVoucherList.size() != 0){
 				searchedVoucherGrid.add(searchedVoucherList);
