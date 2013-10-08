@@ -77,6 +77,7 @@ public class SearchVoucher extends Activity {
 	protected Boolean deleteVoucher;
 	static String searchByNarration;
 	static String searchByRefNumber;
+	static String voucher_num,Account_Name,voucher_Type;
 	DecimalFormat formatter = new DecimalFormat("#,##,##,###.00");
 	String colValue;
 	int oneTouch = 1;
@@ -84,7 +85,7 @@ public class SearchVoucher extends Activity {
 	module m;
 	Account account;
 	String[] ColumnNameList;
-	static String IPaddr;
+	static String IPaddr,vouchertype;
 	Button from_btn_ID, to_btn_ID;
 	static final int FROM_DATE_DIALOG_ID = 0, TO_DATE_DIALOG_ID = 1;
 	String givenfromDateString, givenToDateString;
@@ -123,9 +124,6 @@ public class SearchVoucher extends Activity {
 
 		System.out.println("VOUCHER TYPE"+vouchertypeflag);
 		vouchertypeflag = createVoucher.vouchertypeflag;
-
-
-
 
 
 		try {
@@ -372,6 +370,7 @@ public class SearchVoucher extends Activity {
 							etNarration.setVisibility(EditText.GONE);
 							voucher_type.setVisibility(Spinner.VISIBLE);
 							voucher_number.setVisibility(EditText.GONE);
+							group_name.setVisibility(Spinner.GONE);
 
 					       List<String> voucherTypes = new ArrayList<String>(Arrays.asList(new String[] {"Contra","Journal","Payment","Receipt","Credit note",
 									"Debit note","Sales","Sales return","Purchase","Purchase return"}));
@@ -437,7 +436,7 @@ public class SearchVoucher extends Activity {
 								validate = true;
 							}
 						}else if (pos==3) {
-							String voucher_num=voucher_number.getText().toString();
+							voucher_num=voucher_number.getText().toString();
 							if(voucher_num.length() < 1){
 								tvWarning.setVisibility(View.VISIBLE);
 								tvWarning.setText("Please enter voucher number");
@@ -454,14 +453,14 @@ public class SearchVoucher extends Activity {
 
 						}
 						else if (pos==4) {  
-							String Account_Name=group_name.getSelectedItem().toString();
+							Account_Name=group_name.getSelectedItem().toString();
 							searchVoucherBy = 5; //by account name
 							Object[] params = new Object[]{5,financialFromDate,financialToDate,Account_Name};
 							getallvouchers(params);
 							validate = true;
 						}
 						else if (pos==5) {
-							String voucher_Type=voucher_type.getSelectedItem().toString();
+							voucher_Type=voucher_type.getSelectedItem().toString();
 							searchVoucherBy = 6; //by voucher type name
 							Object[] params = new Object[]{6,financialFromDate,financialToDate,voucher_Type};
 							getallvouchers(params);
@@ -644,6 +643,7 @@ public class SearchVoucher extends Activity {
 								//Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show();
 
 								MainActivity.searchFlag=true;
+								vouchertype=value.get(3);
 								Intent intent = new Intent(context, transaction_tab.class);
 								// To pass on the value to the next page
 								startActivity(intent);
@@ -655,6 +655,8 @@ public class SearchVoucher extends Activity {
 								//Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
 								//System.out.println("in addrow"+i); 
 								value=searchedVoucherGrid.get(i);
+								vouchertype=value.get(3);
+								
 								//Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show(); 
 								MainActivity.searchFlag=true;
 								Intent intent = new Intent(context, transaction_tab.class);
@@ -672,6 +674,7 @@ public class SearchVoucher extends Activity {
 									public void onClick(DialogInterface dialog, int id) {
 										value=searchedVoucherGrid.get(i);
 										vouchercode=value.get(0);
+										vouchertype=value.get(3);
 										Object[] params = new Object[]{vouchercode};
 										deleteVoucher = (Boolean) transaction.deleteVoucher(params,client_id);
 										if(deleteVoucher.equals(true))
@@ -769,7 +772,20 @@ public class SearchVoucher extends Activity {
                 Object[] params = new Object[]{3,"",financialFromDate,financialToDate,searchByNarration};
                 getallvouchers(params);
         }
-
+        else if(searchVoucherBy == 4){ // narration
+            Object[] params = new Object[]{4,voucher_num};
+            getallvouchers(params);
+    }
+        else if(searchVoucherBy == 5){ //account name
+            Object[] params = new Object[]{5,financialFromDate,financialToDate,Account_Name};
+            getallvouchers(params);}
+        else if(searchVoucherBy == 6){ // voucher type
+            Object[] params = new Object[]{6,financialFromDate,financialToDate,voucher_Type};
+            getallvouchers(params);}
+      
+	}
+	
+	
         /*
          * hide header row from voucher table if floating header is present
          */
@@ -787,7 +803,7 @@ public class SearchVoucher extends Activity {
 //        }
 //        }
 
-	}
+	
 
 
 	@Override

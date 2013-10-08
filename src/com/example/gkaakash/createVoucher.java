@@ -222,6 +222,7 @@ public class createVoucher extends Activity {
 				// Toast.LENGTH_SHORT).show();
 				addButton();
 				System.err.println("cumning form serach voucher"+SearchVoucher.value);
+				vouchertypeflag = SearchVoucher.vouchertype;
 				// list coming from search voucher
 				ArrayList<String> abc = SearchVoucher.value;
 				if (from_report_flag == null) {
@@ -536,7 +537,7 @@ public class createVoucher extends Activity {
 		// Toast.LENGTH_SHORT).show();
 		// View row = list.getChildAt(0);
 		// e = (EditText)((ViewGroup) row).getChildAt(6);
-		// Toast.makeText(createVoucher.this,
+		// .makeText(createVoucher.this,
 		// "amount:"+firstRowamount.getText(), Toast.LENGTH_SHORT).show();
 		// e.setText(firstRowamount.getText());
 		//
@@ -652,9 +653,9 @@ public class createVoucher extends Activity {
 				dr_cr.clear();
 				// for setting 1st row's 2nd spinner
 				Fsecond_spinner = accdetailsList.get(0).get(0);
-				System.out.println("FirstS:" + Fsecond_spinner);
+				//System.out.println("FirstS:" + Fsecond_spinner);
 
-				System.out.println("names:" + accnames);
+				//System.out.println("names:" + accnames);
 				// setting adapter
 				dataAdapter = new ArrayAdapter<String>(this,
 						android.R.layout.simple_spinner_item, accnames);
@@ -974,6 +975,7 @@ public class createVoucher extends Activity {
 						if (searchFlag == false) {
 						
 							Object[] params = new Object[] { a };
+							System.out.println("in voucher:"+vouchertypeflag);
 	
 							m.getAccountsByRule(params, vouchertypeflag,
 									context);
@@ -985,9 +987,9 @@ public class createVoucher extends Activity {
 						}else if (touch==true) {
 							System.out.println("Done finally");
 							Object[] params = new Object[] { a };
+							System.out.println("in vooucher change:"+vouchertypeflag);
 							
-							m.getAccountsByRule(params, vouchertypeflag,
-									context);
+							m.getAccountsByRule(params, vouchertypeflag,context);
 							dataAdapter = module.dataAdapter;
 							View v1 = (View) parent.getParent();
 							Spinner sp = (Spinner) ((ViewGroup) v1).getChildAt(2);

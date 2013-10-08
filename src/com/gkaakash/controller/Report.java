@@ -157,6 +157,25 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 		} 
 		return cashFlowStatement;
 	}
+	
+	/*
+	 * get cash flow report
+	 */ 
+	public Object getCashBook(Object[] params,Object client_id) {
+		
+		try { 
+			cashFlowStatement = (Object[])conn.getClient().call("reports.getCashBook",params,client_id);
+		} catch (XMLRPCException e1) {
+		
+			e1.printStackTrace();
+		}
+		
+		catch (Exception e) { 
+			
+			e.printStackTrace();
+		} 
+		return cashFlowStatement;
+	}
 	/***
 	 * It will give balance sheet report grid with the front-end 
 	 * display sequence 1st coloum , 2nd coloum  and headers values
