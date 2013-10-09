@@ -222,7 +222,7 @@ public class createVoucher extends Activity {
 				// Toast.LENGTH_SHORT).show();
 				addButton();
 				System.err.println("cumning form serach voucher"+SearchVoucher.value);
-				vouchertypeflag = SearchVoucher.vouchertype;
+				vouchertypeflag = SearchVoucher.vouchertypeflag;
 				// list coming from search voucher
 				ArrayList<String> abc = SearchVoucher.value;
 				if (from_report_flag == null) {
@@ -1987,6 +1987,7 @@ public class createVoucher extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		//vouchertypeflag = createVoucher.vouchertypeflag;
 		System.out.println("voucher"+vouchercode);
 		if(SearchVoucher.deletedflag.equals(true) && SearchVoucher.deleted_vouchercode.equals(vouchercode))
 		{

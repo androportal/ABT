@@ -122,10 +122,10 @@ public class SearchVoucher extends Activity {
 		tvVFromdate.setText("Financial from date: " +financialFromDate);
 		tvVTodate.setText("Financial to date: " +financialToDate);
 
-		System.out.println("VOUCHER TYPE"+vouchertypeflag);
+		
 		vouchertypeflag = createVoucher.vouchertypeflag;
 
-
+		System.out.println("VOUCHER TYPE"+vouchertypeflag);
 		try {
 			setOnSearchButtonClick();
 			//floatingHeader();
@@ -460,9 +460,9 @@ public class SearchVoucher extends Activity {
 							validate = true;
 						}
 						else if (pos==5) {
-							voucher_Type=voucher_type.getSelectedItem().toString();
+							vouchertypeflag=voucher_type.getSelectedItem().toString();
 							searchVoucherBy = 6; //by voucher type name
-							Object[] params = new Object[]{6,financialFromDate,financialToDate,voucher_Type};
+							Object[] params = new Object[]{6,financialFromDate,financialToDate,vouchertypeflag};
 							getallvouchers(params);
 							validate = true;
 						}
@@ -655,7 +655,7 @@ public class SearchVoucher extends Activity {
 								//Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
 								//System.out.println("in addrow"+i); 
 								value=searchedVoucherGrid.get(i);
-								vouchertype=value.get(3);
+								vouchertypeflag=value.get(3);
 								
 								//Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show(); 
 								MainActivity.searchFlag=true;
@@ -674,7 +674,7 @@ public class SearchVoucher extends Activity {
 									public void onClick(DialogInterface dialog, int id) {
 										value=searchedVoucherGrid.get(i);
 										vouchercode=value.get(0);
-										vouchertype=value.get(3);
+										vouchertypeflag=value.get(3);
 										Object[] params = new Object[]{vouchercode};
 										deleteVoucher = (Boolean) transaction.deleteVoucher(params,client_id);
 										if(deleteVoucher.equals(true))
@@ -727,16 +727,16 @@ public class SearchVoucher extends Activity {
 
 
 	public void getallvouchers(Object[] params){
-		vouchertypeflag = createVoucher.vouchertypeflag;
+		
 		Object[] searchedVoucher = (Object[])transaction.searchVoucher(params,client_id);
 		searchedVoucherGrid = new ArrayList<ArrayList<String>>();
 		for(Object voucherRow : searchedVoucher){
 			Object[] v = (Object[]) voucherRow;
 			searchedVoucherList = new ArrayList<String>();
 			for(int i=0;i<v.length;i++){
-				//if(((String) v[3].toString()).equalsIgnoreCase(vouchertypeflag)){
+				if(((String) v[3].toString()).equalsIgnoreCase(vouchertypeflag)||params[0].equals(6)){
 					searchedVoucherList.add((String) v[i].toString());
-				//}
+				}
 			}
 			if(searchedVoucherList.size() != 0){
 				searchedVoucherGrid.add(searchedVoucherList);
@@ -759,7 +759,10 @@ public class SearchVoucher extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		System.out.println("ON this RESUME");
+		System.out.println("ON search RESUME");
+		vouchertypeflag = createVoucher.vouchertypeflag;  
+		System.out.println("VOUCHER TYPE"+vouchertypeflag);
+		//
         if(searchVoucherBy == 1){ // by reference number
                 Object[] params = new Object[]{1,searchByRefNumber,financialFromDate,financialToDate,""};
                 getallvouchers(params);
@@ -780,7 +783,7 @@ public class SearchVoucher extends Activity {
             Object[] params = new Object[]{5,financialFromDate,financialToDate,Account_Name};
             getallvouchers(params);}
         else if(searchVoucherBy == 6){ // voucher type
-            Object[] params = new Object[]{6,financialFromDate,financialToDate,voucher_Type};
+            Object[] params = new Object[]{6,financialFromDate,financialToDate,vouchertypeflag};
             getallvouchers(params);}
       
 	}
