@@ -695,11 +695,14 @@ public class module {
 	    	Calendar cal4 = Calendar.getInstance(); //to date
 	    	
 	    	cal1.setTime(date1);
-	    	cal2.setTime(date2);
+	    	cal2.setTime(date2); 
+	    	System.out.println("flag:"+flag);
 	    	
 			if("validatebothFromToDate".equals(flag)){
 				String FromDay = fromdate.substring(0,2);
-				String FromMonth = fromdate.substring(4, 5);
+//				System.out.println("From datee:"+fromdate);
+				String FromMonth = fromdate.substring(3, 5);
+//				System.out.println("Datteee1:"+FromMonth);
 				String FromYear = fromdate.substring(6,10);
 			   	
 			   	givenfromDateString = FromDay+"-"+FromMonth+"-"+FromYear;
@@ -709,7 +712,8 @@ public class module {
 			}
 			
 			String T0Day = todate.substring(0,2);
-			String T0Month = todate.substring(4, 5);
+			String T0Month = todate.substring(3, 5);
+			
 			String T0Year = todate.substring(6,10);
 		   	
 		   	givenToDateString = T0Day+"-"+T0Month+"-"+T0Year ;
@@ -732,6 +736,7 @@ public class module {
 	        		tvWarning.setVisibility(View.VISIBLE);
 	        		tvWarning.setText(message);
 	        		validateDateFlag = false;
+//	        		System.out.println("1st else");
 	        	}
 	    	}
 	    	else {
@@ -745,6 +750,8 @@ public class module {
 	        		tvWarning.setVisibility(View.VISIBLE);
 	        		tvWarning.setText(message);
 	        		validateDateFlag = false;
+//	        		System.out.println("2nd else");
+
 	        	}
 	    	}
     	

@@ -6,30 +6,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import android.R.color;
-import android.R.layout;
-
-import com.gkaakash.controller.*;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.method.KeyListener;
-import android.text.method.Touch;
-import android.text.style.ClickableSpan;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,7 +24,6 @@ import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -45,17 +31,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
-import android.widget.TabHost;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
-import android.view.View.OnKeyListener;
-import android.view.inputmethod.InputMethodManager;
+import com.gkaakash.controller.Organisation;
+import com.gkaakash.controller.Report;
+import com.gkaakash.controller.Startup;
+import com.gkaakash.controller.Transaction;
 
 public class createVoucher extends Activity {
 	TableLayout table;
@@ -127,6 +111,7 @@ public class createVoucher extends Activity {
 	View row123,row1;
 	Spinner change_voucher_type;
 	Boolean touch=false;
+	Boolean add=false;
 	
 
 
@@ -973,9 +958,8 @@ public class createVoucher extends Activity {
 					
 					if (a != null) {
 						if (searchFlag == false) {
-						
+							
 							Object[] params = new Object[] { a };
-							System.out.println("in voucher:"+vouchertypeflag);
 	
 							m.getAccountsByRule(params, vouchertypeflag,
 									context);
@@ -983,18 +967,27 @@ public class createVoucher extends Activity {
 							View v1 = (View) parent.getParent();
 							Spinner sp = (Spinner) ((ViewGroup) v1).getChildAt(2);
 							sp.setAdapter(dataAdapter);			
-							
-						}else if (touch==true) {
+						}else if (searchFlag == true && touch==true && add == false) {
 							System.out.println("Done finally");
 							Object[] params = new Object[] { a };
-							System.out.println("in vooucher change:"+vouchertypeflag);
 							
-							m.getAccountsByRule(params, vouchertypeflag,context);
+							m.getAccountsByRule(params, vouchertypeflag,
+									context);
 							dataAdapter = module.dataAdapter;
 							View v1 = (View) parent.getParent();
 							Spinner sp = (Spinner) ((ViewGroup) v1).getChildAt(2);
 							sp.setAdapter(dataAdapter);		
-						}					
+						}else if (searchFlag == true && touch==false && add == true) {
+							System.out.println("in 3rd condition");
+							Object[] params = new Object[] { a };
+							
+							m.getAccountsByRule(params, vouchertypeflag,
+									context);
+							dataAdapter = module.dataAdapter;
+							View v1 = (View) parent.getParent();
+							Spinner sp = (Spinner) ((ViewGroup) v1).getChildAt(2);
+							sp.setAdapter(dataAdapter);	
+						}				
 					}
 				}
 
@@ -1063,10 +1056,9 @@ public class createVoucher extends Activity {
 			public boolean onTouch(View arg0, MotionEvent arg1) {
 				if(searchFlag==true){
 					touch = true;
-					
+					add = false;
 //					Toast.makeText(createVoucher.this, "value:"+touch, Toast.LENGTH_SHORT).show();
 
-//							
 				}
 				
 				return false;
@@ -1114,7 +1106,6 @@ public class createVoucher extends Activity {
 		}
 
 
-
 		View row = table.getChildAt(0);
 		removeSelfButton = (Button) ((ViewGroup) row).getChildAt(7);
 
@@ -1150,6 +1141,8 @@ public class createVoucher extends Activity {
 					}
 
 					if (addRowFlag == true) {
+						touch = false;
+						add = true;
 						// add new row
 						addButton();
 						ArrayAdapter<String> da1 = new ArrayAdapter<String>(
