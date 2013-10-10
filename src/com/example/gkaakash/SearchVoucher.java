@@ -81,7 +81,7 @@ public class SearchVoucher extends Activity {
 	DecimalFormat formatter = new DecimalFormat("#,##,##,###.00");
 	String colValue;
 	int oneTouch = 1;
-	TableLayout floating_heading_table;
+	TableLayout floating_heading_table;  
 	module m;
 	Account account;
 	String[] ColumnNameList;
