@@ -6,7 +6,8 @@
 Welcome to Aakash Business Tool(ABT) documentation!
 ===================================================
 
-**Parts of the documentation:**
+Parts of the documentation:
+===============================
 
 `User guide <user/user_guide.html>`_
  start here

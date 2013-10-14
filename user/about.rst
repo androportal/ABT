@@ -1,6 +1,4 @@
-.. toctree::
-   :numbered:
-
+===============================
 About Aakash Business Tool(ABT)
 ===============================
 
