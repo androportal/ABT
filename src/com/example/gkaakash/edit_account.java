@@ -538,7 +538,7 @@ public class edit_account extends Activity {
 						break;
 						case 1: { 
 							final AlertDialog.Builder builder = new AlertDialog.Builder(edit_account.this);
-							builder.setMessage("Are you sure you want ` account '"+tvaccname.getText().toString()+ "'?")
+							builder.setMessage("Are you sure you want account '"+tvaccname.getText().toString()+ "'?")
 							.setPositiveButton("Yes", new OnClickListener() {
 								
 								@Override
@@ -547,13 +547,17 @@ public class edit_account extends Activity {
 									Object[] params1 = new Object[] {
 											tvaccname.getText().toString(),
 											flag, pos };
-									System.out.println(tvaccname.getText().toString());
-									account.deleteAccount(params1, client_id);
+									
 									
 									if ("account deleted".equals(accountDeleteValue)) {
+										System.out.println(tvaccname.getText().toString());
+										account.deleteAccount(params1, client_id);
 										m.toastValidationMessage(edit_account.this, msg);
 										setaccountlist();
+										System.out.println("if"+accountDeleteValue);
 									} else {
+										System.out.println("else"+accountDeleteValue);
+
 										m.toastValidationMessage(
 												edit_account.this,
 												"Account '"
