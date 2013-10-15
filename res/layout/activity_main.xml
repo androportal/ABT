@@ -66,7 +66,7 @@
                 android:id="@+id/btnImport"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent"
+                style="@drawable/default_button"
                 android:text="Import organisation" />
 
             <LinearLayout android:layout_width="fill_parent"
@@ -79,8 +79,8 @@
                 android:id="@+id/btnSetIP"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:text="Change IP" />
+                style="@drawable/default_button"
+                android:text="Change server location" />
 
             <LinearLayout android:layout_width="fill_parent"
     			android:layout_height="2dp"
@@ -92,7 +92,7 @@
                 android:id="@+id/btnHelp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent"
+                style="@drawable/default_button"
                 android:text="Help" />
             
             <LinearLayout android:layout_width="fill_parent"
@@ -107,7 +107,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:background="@android:color/transparent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/logo" />
+                
+                <TextView
+                    android:layout_width="700dp"
+                	android:layout_height="wrap_content"
+            		android:layout_gravity="center"
+            		android:textSize="15dp"
+            		android:textColor="#FFFFFF"
+            		android:gravity="center"
+            		android:text="@string/about_para" />
+                
             </LinearLayout>
             </com.example.gkaakash.SlideHolder>
         </LinearLayout>

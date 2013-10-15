@@ -249,7 +249,7 @@ public class menu extends Activity{
 		TextView org = (TextView)findViewById(R.id.org_name);
 		org.setText(OrgName + ", "+orgtype);
 		TextView tvdate = (TextView)findViewById(R.id.date);
-		tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
+		tvdate.setText("Financial Period: "+ m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
 		
 		Button btn_optionsMenu= (Button) findViewById(R.id.btn_optionsMenu);
 		btn_optionsMenu.setVisibility(View.GONE);
@@ -531,8 +531,6 @@ public class menu extends Activity{
 				String[] command = {"rm -r /mnt/sdcard/export", "busybox cp /data/local/abt/opt/abt/export/ /mnt/sdcard/ -R"};
 				module.RunAsRoot(command);
 				m.toastValidationMessage(context, "organisation "+OrgName+" has been exported to /mnt/sdcard/export/");
-				MainActivity.menuOptionFlag = true;
-
 			}
 
 		});

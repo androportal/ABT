@@ -53,7 +53,7 @@ public class transaction_tab extends TabActivity {
 		//tab name flag
 		nameflag=MainActivity.nameflag;
 
-		Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+		//Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
 		//customizing title bar
 		//getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.voucher_title);
 		//final TextView label = (TextView) findViewById(R.id.tvVoucherTitle);
@@ -61,7 +61,7 @@ public class transaction_tab extends TabActivity {
 		if (from_report_flag == null){
 			//vouchertypeflag =  voucherMenu.vouchertypeflag
 			if(MainActivity.searchFlag != true){
-				vouchertypeflag = "Journal";
+				vouchertypeflag = "Contra";
 			}else{
 				vouchertypeflag = SearchVoucher.vouchertypeflag;
 			}

@@ -538,7 +538,7 @@ public class edit_account extends Activity {
 						break;
 						case 1: { 
 							final AlertDialog.Builder builder = new AlertDialog.Builder(edit_account.this);
-							builder.setMessage("Are you sure you want account '"+tvaccname.getText().toString()+ "'?")
+							builder.setMessage("Are you sure you want to delete account '"+tvaccname.getText().toString()+ "'?")
 							.setPositiveButton("Yes", new OnClickListener() {
 								
 								@Override
@@ -562,7 +562,7 @@ public class edit_account extends Activity {
 												edit_account.this,
 												"Account '"
 														+ tvaccname.getText().toString()
-																+ msg + " deleted.");
+																+ msg + "' deleted.");
 									}
 								}
 							})
