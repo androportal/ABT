@@ -252,9 +252,9 @@ import android.widget.Toast;
 			
 			//set title
 			TextView org = (TextView)findViewById(R.id.org_name);
-			org.setText(getOrgName+", "+orgtype);
+			org.setText(getOrgName+", "+getSelectedOrgType);
 			TextView tvdate = (TextView)findViewById(R.id.date);
-			tvdate.setText("Financial Period: "+ m.changeDateFormat(financialFrom)+" To "+m.changeDateFormat(financialTo));
+			tvdate.setText(m.changeDateFormat(financialFrom)+" To "+m.changeDateFormat(financialTo));
 			
 			Button btn_optionsMenu= (Button) findViewById(R.id.btn_optionsMenu);
 			btn_optionsMenu.setVisibility(View.GONE);

@@ -168,7 +168,7 @@ public class MainActivity extends Activity{
 			//Toast.makeText(context, "help_flag_option is set to 1", Toast.LENGTH_SHORT).show();
 			help_option_menu_flag = 1;
 			//if running this app on emulator, comment the below line
-//			startApp();
+			//			startApp();
 		}
 		if(item.getItemId() == 2){
 			//Toast.makeText(context, "help_flag_option is set to 2", Toast.LENGTH_SHORT).show();
@@ -309,21 +309,21 @@ public class MainActivity extends Activity{
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//Calling activity_main.xml which is first page of ABT
 		setContentView(R.layout.activity_main);
-		
-		
-	       if (Build.BRAND.equalsIgnoreCase("generic")) {
-	    	   IPaddr = "10.0.2.2";
-	    	   IPaddr_value = IPaddr;
-	           System.out.println("YES, I am an emulator");
 
-	       } else {
-	    	   IPaddr = "127.0.0.1";
-	    	   IPaddr_value = IPaddr;
-	    	   System.out.println("NO, I am NOT an emulator");
 
-	       }
-		
-		
+		if (Build.BRAND.equalsIgnoreCase("generic")) {
+			IPaddr = "10.0.2.2";
+			IPaddr_value = IPaddr;
+			System.out.println("YES, I am an emulator");
+
+		} else {
+			IPaddr = "127.0.0.1";
+			IPaddr_value = IPaddr;
+			System.out.println("NO, I am NOT an emulator");
+
+		}
+
+
 		/*
 		 * toggleView can actually be any view you want.
 		 * Here, for simplicity, we're using TextView, but you can
@@ -337,19 +337,19 @@ public class MainActivity extends Activity{
 		mSlideHolder = (SlideHolder) findViewById(R.id.slideHolder);
 		View toggleView = findViewById(R.id.content_layout);
 		toggleView.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				mSlideHolder.toggle();
 			}
 		});
-		
+
 		//create object of Startup to access connection
 		//startup = new Startup();
 		m=new module();
 
-		
-		
+
+
 		Bundle extras = getIntent().getExtras();
 		if (extras == null) {
 			System.out.println("don hav xtra");
@@ -369,20 +369,20 @@ public class MainActivity extends Activity{
 		create_org = (Button) findViewById(R.id.bcreateOrg);
 		select_org =(Button) findViewById(R.id. bselectOrg);
 		Button btnImport = (Button) findViewById(R.id.btnImport);
-		
+
 		btnImport.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				
+
 				importorganisation();
-				
+
 			}
 		});
-		
+
 		Button btnSetIP = (Button) findViewById(R.id.btnSetIP);
 		btnSetIP.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				setRemoteLocation();
@@ -390,11 +390,11 @@ public class MainActivity extends Activity{
 		});
 		Button btnHelp = (Button) findViewById(R.id.btnHelp);
 		btnHelp.setOnClickListener(new OnClickListener() {
-			  
+
 			@Override
 			public void onClick(View v) {
 				help_option_menu_flag = 1;
-//				startApp();
+				//				startApp();
 			}
 		});
 		//Request a reference to the spinner from the activity by calling “findViewById”
@@ -414,7 +414,7 @@ public class MainActivity extends Activity{
 		}
 		if(no_dailog==false){
 			//if running this app on emulator, comment the below line
-//			startApp(); 
+			//			startApp(); 
 		}    
 		else{
 			if(checkFlag=="false"){
@@ -478,61 +478,61 @@ public class MainActivity extends Activity{
 		select_org.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View arg0) {
-					System.out.println("in button listner"+IPaddr);
-					startup = new Startup(IPaddr);
-					// check existing organisation name list is null
-					try{
-						// call the getOrganisationName method from startup
-						orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
-						if(orgNameList.length<1)
-						{
-							AlertDialog.Builder builder = new AlertDialog.Builder(context);
-							builder.setMessage("Please create organisation")
-							.setCancelable(false)
-							.setPositiveButton("Ok",
-									new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int id) {
-									//do nothing
-								}
-							});
-
-							AlertDialog alert = builder.create();
-							alert.show();                    }
-						else
-						{
-							LinearLayout content_layout = (LinearLayout)findViewById(R.id.content_layout);
-							LayoutInflater inflater = ((Activity)MainActivity.this).getLayoutInflater();
-							View layout = inflater.inflate(R.layout.select_org, null);
-
-							if(content_layout.getChildCount() == 0){
-								content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
-							}else{
-								content_layout.removeAllViews();
-								content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
-							}
-
-							user= new User(IPaddr);
-							getOrgNames = (Spinner) layout.findViewById(R.id.sGetOrgNames);
-							getFinancialyear = (Spinner) layout.findViewById(R.id.sGetFinancialYear);
-							getOrgNames.setMinimumWidth(100);
-							getFinancialyear.setMinimumWidth(250);
-							btnSelLogIn = (Button) layout.findViewById(R.id.btnSelLogIn);
-
-							getExistingOrgNames(layout);
-							addListenerOnItem(layout);
-							addListenerOnLoginButton(layout);
-
-							//To pass on the activity to the next page
-							//						Intent intent = new Intent(context, selectOrg.class);
-							//						startActivity(intent);  
-						}
-					}catch(Exception e)
+				System.out.println("in button listner"+IPaddr);
+				startup = new Startup(IPaddr);
+				// check existing organisation name list is null
+				try{
+					// call the getOrganisationName method from startup
+					orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
+					if(orgNameList.length<1)
 					{
-						IPaddr = IPaddr_value;
-						String message = "Can not connect to remote server!! \nPlease set IP again or check server is running!!" +
-								"\nRe-establishing connection to the local server...";
-						m.toastValidationMessage(context, message);
+						AlertDialog.Builder builder = new AlertDialog.Builder(context);
+						builder.setMessage("Please create organisation")
+						.setCancelable(false)
+						.setPositiveButton("Ok",
+								new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								//do nothing
+							}
+						});
+
+						AlertDialog alert = builder.create();
+						alert.show();                    }
+					else
+					{
+						LinearLayout content_layout = (LinearLayout)findViewById(R.id.content_layout);
+						LayoutInflater inflater = ((Activity)MainActivity.this).getLayoutInflater();
+						View layout = inflater.inflate(R.layout.select_org, null);
+
+						if(content_layout.getChildCount() == 0){
+							content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+						}else{
+							content_layout.removeAllViews();
+							content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+						}
+
+						user= new User(IPaddr);
+						getOrgNames = (Spinner) layout.findViewById(R.id.sGetOrgNames);
+						getFinancialyear = (Spinner) layout.findViewById(R.id.sGetFinancialYear);
+						getOrgNames.setMinimumWidth(100);
+						getFinancialyear.setMinimumWidth(250);
+						btnSelLogIn = (Button) layout.findViewById(R.id.btnSelLogIn);
+
+						getExistingOrgNames(layout);
+						addListenerOnItem(layout);
+						addListenerOnLoginButton(layout);
+
+						//To pass on the activity to the next page
+						//						Intent intent = new Intent(context, selectOrg.class);
+						//						startActivity(intent);  
 					}
+				}catch(Exception e)
+				{
+					IPaddr = IPaddr_value;
+					String message = "Can not connect to remote server!! \nPlease set IP again or check server is running!!" +
+							"\nRe-establishing connection to the local server...";
+					m.toastValidationMessage(context, message);
+				}
 			}// end of onClick
 
 		});// end of select_org.setOnClickListener
@@ -876,7 +876,7 @@ public class MainActivity extends Activity{
 		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 		builder.setView(layout);
 		builder.setTitle("Help");
-		
+
 		CheckBox cbHelp = (CheckBox)layout.findViewById(R.id.cbHelp);
 		cbHelp.setChecked(false);
 
@@ -1285,6 +1285,7 @@ public class MainActivity extends Activity{
 		eLoginUser.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		tLoginUser.setText("Enter remote server IP address: ");
 		eLoginUser.setHint("enter remote server IP address");
+		eLoginUser.setInputType(InputType.TYPE_CLASS_PHONE);
 		eLoginUser.setBackgroundResource(R.drawable.textfield_activated_holo_light);
 		Button btnLogin = (Button)layout.findViewById(R.id.btnLogin);
 		btnLogin.setText("Ok");
@@ -1303,27 +1304,27 @@ public class MainActivity extends Activity{
 				else{
 					System.out.println("value of:"+eLoginUser.getText().toString());
 					//CoreConnection.setIPaddress(IPaddr);
-					
-						String pattern="([0-9]+)(\\.[0-9]+)(\\.[0-9]+)(\\.[0-9])";
 
-						Pattern p = Pattern.compile(pattern);
-						Matcher m = p.matcher(eLoginUser.getText().toString());
+					String pattern="([0-9]+)(\\.[0-9]+)(\\.[0-9]+)(\\.[0-9])";
 
-						if(m.find())
-						{
-							IPaddr = eLoginUser.getText().toString();
-							module.dialog.dismiss();
-						}else
-						{
-							tvLoginWarning.setVisibility(View.VISIBLE);
-							eLoginUser.setText("");
-							tvLoginWarning.setText("Please enter proper IP");
-						}
+					Pattern p = Pattern.compile(pattern);
+					Matcher m = p.matcher(eLoginUser.getText().toString());
+
+					if(m.find())
+					{
+						IPaddr = eLoginUser.getText().toString();
+						module.dialog.dismiss();
+					}else
+					{
+						tvLoginWarning.setVisibility(View.VISIBLE);
+						eLoginUser.setText("");
+						tvLoginWarning.setText("Please enter proper IP");
+					}
 				}
 			}  
 		});  
 	}
-	
+
 
 	public void getExistingOrgNames(View layout) {
 		//call getOrganisationNames method 
@@ -1369,188 +1370,209 @@ public class MainActivity extends Activity{
 
 			@Override
 			public void onClick(View v) {
-
+				startup = new Startup(IPaddr);
 				//parameters pass to core_engine xml_rpc functions
 				deployparams=new Object[]{organisationName,fromDate,toDate};
 				//call method login from startup.java 
 				client_id = startup.login(deployparams);
-				final boolean isadmin = user.isAdmin(client_id);
-				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-				final View layout = inflater.inflate(R.layout.login, (ViewGroup) findViewById(R.id.layout_login));
-				final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-				builder.setView(layout);
-				TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
-				tvalertHead1.setText(Html.fromHtml("Log In to <b>"+organisationName+"</b>"));
-				TextView tvalertHead2 =(TextView) layout.findViewById(R.id.tvalertHead2);
-				tvalertHead2.setText(Html.fromHtml("Financial Year: <b>"+fromDate+"</b> to <b>"+toDate+"</b>"));
+				if (client_id != null) {
+					final boolean isadmin = user.isAdmin(client_id);
+					LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+					final View layout = inflater.inflate(R.layout.login, (ViewGroup) findViewById(R.id.layout_login));
+					final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					builder.setView(layout);
+					TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
+					tvalertHead1.setText(Html.fromHtml("Log In to <b>"+organisationName+"</b>"));
+					TextView tvalertHead2 =(TextView) layout.findViewById(R.id.tvalertHead2);
+					tvalertHead2.setText(Html.fromHtml("Financial Year: <b>"+fromDate+"</b> to <b>"+toDate+"</b>"));
 
-				radioUserGroup = (RadioGroup)layout.findViewById(R.id.radioUser);
-				rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
-				rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
-				rb_manager =(RadioButton) layout.findViewById(R.id.rbManager);
-				rb_operator =(RadioButton) layout.findViewById(R.id.rbOperator);
-				eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
-				eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
-				tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
-				link =(TextView) layout.findViewById(R.id.tvlink);
+					radioUserGroup = (RadioGroup)layout.findViewById(R.id.radioUser);
+					rb_admin =(RadioButton) layout.findViewById(R.id.rbAdmin);
+					rb_guest =(RadioButton) layout.findViewById(R.id.rbGuest);
+					rb_manager =(RadioButton) layout.findViewById(R.id.rbManager);
+					rb_operator =(RadioButton) layout.findViewById(R.id.rbOperator);
+					eloginUsername =(EditText) layout.findViewById(R.id.eLoginUser);
+					eloginPassword =(EditText) layout.findViewById(R.id.eLoginPassword);
+					tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
+					link =(TextView) layout.findViewById(R.id.tvlink);
 
-				tvLoginWarning.setVisibility(TextView.GONE);
+					tvLoginWarning.setVisibility(TextView.GONE);
 
-				tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
-				tvSignUp.setVisibility(TextView.GONE);
-				if(isadmin)
-				{
-					rb_guest.setVisibility(View.GONE);
-					rb_manager.setVisibility(View.VISIBLE);  
-					rb_operator.setVisibility(View.VISIBLE);
-				}
-				else{
-					rb_guest.setVisibility(View.VISIBLE);
+					tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
+					tvSignUp.setVisibility(TextView.GONE);
+					if(isadmin)
+					{
+						rb_guest.setVisibility(View.GONE);
+						rb_manager.setVisibility(View.VISIBLE);  
+						rb_operator.setVisibility(View.VISIBLE);
+					}
+					else{
+						rb_guest.setVisibility(View.VISIBLE);
 
-					rb_admin.setVisibility(View.GONE);
-
-				}
-
-
-				link.setOnClickListener(new OnClickListener() { 
-
-					@Override 
-					public void onClick(View arg0) { 
-						if(!(eloginUsername.getText().toString().equals(""))){
-							String unique = (String) user.getUserRole(new Object[]{eloginUsername.getText().toString()},client_id);
-							if((unique.length() != 0) && (unique.equalsIgnoreCase("Admin"))){
-								LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-								final View layout = inflater.inflate(R.layout.forgot_password, null);
-								final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-								builder.setView(layout);
-								final EditText answer =(EditText) layout.findViewById(R.id.etAnswer);
-								TextView header =(TextView) layout.findViewById(R.id.tvheader);
-								final Spinner Question =(Spinner) layout.findViewById(R.id.SpQuestions);
-
-								header.setText("Answer the security question to get access");
-								Button Ok =(Button) layout.findViewById(R.id.btnOK);
-								Button Cancel =(Button) layout.findViewById(R.id.btnCancel);
-								Cancel.setOnClickListener(new OnClickListener() {
-
-									@Override
-									public void onClick(View arg0) {
-										dialog.cancel();
-										tvLoginWarning.setVisibility(View.GONE);
-									}
-								});
-
-								Ok.setOnClickListener(new OnClickListener() {
-
-									@Override
-									public void onClick(View arg0) {
-
-										int position = Question.getSelectedItemPosition();
-										String ans =answer.getText().toString();
-										TextView errormsg =(TextView) layout.findViewById(R.id.tverror_msg);
-										Boolean result = user.AdminForgotPassword(new Object[]{position,ans,"admin"},client_id);
-
-										if(result==true){
-											Intent intent = new Intent(context,menu.class); 
-											reset_password_flag = true;
-											username = eloginUsername.getText().toString();
-											startActivity(intent); 
-										}else if ("".equals(ans)) {
-											errormsg.setVisibility(View.VISIBLE);
-											errormsg.setText("Please fill the field!");
-										}else {
-											errormsg.setVisibility(View.VISIBLE);
-											errormsg.setText("Invalid input,please try again!");
-											answer.setText("");
-										}
-									}
-								});
-
-								dialog = builder.create();
-								dialog.show();
-							}else{
-								eloginUsername.setText("");
-								eloginPassword.setText("");
-								tvLoginWarning.setVisibility(View.VISIBLE);
-								tvLoginWarning.setText("User is not present");
-							}
-
-
-						}
-						else{
-							tvLoginWarning.setVisibility(View.VISIBLE);
-							tvLoginWarning.setText("Please enter username");
-						}
+						rb_admin.setVisibility(View.GONE);
 
 					}
-				});
 
-				Button login =  (Button) layout.findViewById(R.id.btnLogin);
-				addRadioListnerOnItem(layout);
-				login.setOnClickListener(new View.OnClickListener(){
 
-					public void onClick(View v) {
-						username = eloginUsername.getText().toString();
-						login_password = eloginPassword.getText().toString();
+					link.setOnClickListener(new OnClickListener() { 
 
-						Object[] params = new Object[]{username,login_password,user_role};
+						@Override 
+						public void onClick(View arg0) { 
+							if(!(eloginUsername.getText().toString().equals(""))){
+								String unique = (String) user.getUserRole(new Object[]{eloginUsername.getText().toString()},client_id);
+								if((unique.length() != 0) && (unique.equalsIgnoreCase("Admin"))){
+									LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+									final View layout = inflater.inflate(R.layout.forgot_password, null);
+									final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+									builder.setView(layout);
+									final EditText answer =(EditText) layout.findViewById(R.id.etAnswer);
+									TextView header =(TextView) layout.findViewById(R.id.tvheader);
+									final Spinner Question =(Spinner) layout.findViewById(R.id.SpQuestions);
 
-						if(!m.isEmpty(params)){
-							if(isadmin==true)
-							{
-								if(rb_admin.isChecked()||rb_manager.isChecked()||rb_operator.isChecked())
+									header.setText("Answer the security question to get access");
+									Button Ok =(Button) layout.findViewById(R.id.btnOK);
+									Button Cancel =(Button) layout.findViewById(R.id.btnCancel);
+									Cancel.setOnClickListener(new OnClickListener() {
+
+										@Override
+										public void onClick(View arg0) {
+											dialog.cancel();
+											tvLoginWarning.setVisibility(View.GONE);
+										}
+									});
+
+									Ok.setOnClickListener(new OnClickListener() {
+
+										@Override
+										public void onClick(View arg0) {
+
+											int position = Question.getSelectedItemPosition();
+											String ans =answer.getText().toString();
+											TextView errormsg =(TextView) layout.findViewById(R.id.tverror_msg);
+											Boolean result = user.AdminForgotPassword(new Object[]{position,ans,"admin"},client_id);
+
+											if(result==true){
+												Intent intent = new Intent(context,menu.class); 
+												reset_password_flag = true;
+												username = eloginUsername.getText().toString();
+												startActivity(intent); 
+											}else if ("".equals(ans)) {
+												errormsg.setVisibility(View.VISIBLE);
+												errormsg.setText("Please fill the field!");
+											}else {
+												errormsg.setVisibility(View.VISIBLE);
+												errormsg.setText("Invalid input,please try again!");
+												answer.setText("");
+											}
+										}
+									});
+
+									dialog = builder.create();
+									dialog.show();
+								}else{
+									eloginUsername.setText("");
+									eloginPassword.setText("");
+									tvLoginWarning.setVisibility(View.VISIBLE);
+									tvLoginWarning.setText("User is not present");
+								}
+
+
+							}
+							else{
+								tvLoginWarning.setVisibility(View.VISIBLE);
+								tvLoginWarning.setText("Please enter username");
+							}
+
+						}
+					});
+
+					Button login =  (Button) layout.findViewById(R.id.btnLogin);
+					addRadioListnerOnItem(layout);
+					login.setOnClickListener(new View.OnClickListener(){
+
+						public void onClick(View v) {
+
+							username = eloginUsername.getText().toString();
+							login_password = eloginPassword.getText().toString();
+
+							Object[] params = new Object[]{username,login_password,user_role};
+
+							if(!m.isEmpty(params)){
+								if(isadmin==true)
 								{
-									boolean is_user_exist = user.isUserExist(params, client_id);
-									if(is_user_exist==true)
+									if(rb_admin.isChecked()||rb_manager.isChecked()||rb_operator.isChecked())
+									{
+										boolean is_user_exist = user.isUserExist(params, client_id);
+										if(is_user_exist==true)
+										{
+											//To pass on the activity to the next page  
+											Intent intent = new Intent(context,menu.class); 
+											startActivity(intent); 
+
+
+										}else{
+
+
+											tvLoginWarning.setVisibility(TextView.VISIBLE);
+											tvLoginWarning.setText("Please enter correct username and password or choose proper role");
+
+										}
+									}else
+									{
+										tvLoginWarning.setVisibility(TextView.VISIBLE);
+										tvLoginWarning.setText("Please select role");
+									}
+								}else{
+
+									if ((username.equals("guest"))&&(login_password.equals("guest")))
 									{
 										//To pass on the activity to the next page  
-										Intent intent = new Intent(context,menu.class); 
+										Intent intent = new Intent(context,menu.class);
 										startActivity(intent); 
-
-
-									}else{
-
-
+									}else
+									{
 										tvLoginWarning.setVisibility(TextView.VISIBLE);
-										tvLoginWarning.setText("Please enter correct username and password or choose proper role");
+										tvLoginWarning.setText("Username and Password is incorrect");
 
-									}
-								}else
-								{
-									tvLoginWarning.setVisibility(TextView.VISIBLE);
-									tvLoginWarning.setText("Please select role");
+									}		
 								}
-							}else{
-
-								if ((username.equals("guest"))&&(login_password.equals("guest")))
-								{
-									//To pass on the activity to the next page  
-									Intent intent = new Intent(context,menu.class);
-									startActivity(intent); 
-								}else
-								{
-									tvLoginWarning.setVisibility(TextView.VISIBLE);
-									tvLoginWarning.setText("Username and Password is incorrect");
-
-								}		
 							}
+							else{
+								tvLoginWarning.setVisibility(TextView.VISIBLE);
+								tvLoginWarning.setText("Please fill empty field");
+							}
+
+
 						}
-						else{
-							tvLoginWarning.setVisibility(TextView.VISIBLE);
-							tvLoginWarning.setText("Please fill empty field");
+
+
+					});
+
+					dialog = builder.create();
+					dialog.show();
+					dialog.setCanceledOnTouchOutside(true);
+					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+					//customizing the width and location of the dialog on screen 
+					lp.copyFrom(dialog.getWindow().getAttributes());
+					lp.width = 750;
+					dialog.getWindow().setAttributes(lp);
+				}else{
+					IPaddr = IPaddr_value;
+					String message = "Can not connect to remote server!! \nPlease set IP again or check server is running!!" +
+							"\nRe-establishing connection to the local server...";
+					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					builder.setMessage(message)
+					.setCancelable(false)
+					.setPositiveButton("Ok",
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							//do nothing
 						}
-					}
+					});
 
-
-				});
-
-				dialog = builder.create();
-				dialog.show();
-				dialog.setCanceledOnTouchOutside(true);
-				WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-				//customizing the width and location of the dialog on screen 
-				lp.copyFrom(dialog.getWindow().getAttributes());
-				lp.width = 750;
-				dialog.getWindow().setAttributes(lp);
+					AlertDialog alert = builder.create();
+					alert.show();
+				}
 			}
 
 		});
@@ -1859,13 +1881,13 @@ public class MainActivity extends Activity{
 
 			@Override
 			public void onClick(View arg0) {
-				System.out.println("next button "+IPaddr);
-				startup = new Startup(IPaddr);
-				organisationName = orgName.getText().toString();
-				fromdate = tvDisplayFromDate.getText().toString();
-				todate = tvDisplayToDate.getText().toString();
-
+				
 				try{
+					System.out.println("next button "+IPaddr);
+					startup = new Startup(IPaddr);
+					organisationName = orgName.getText().toString();
+					fromdate = tvDisplayFromDate.getText().toString();
+					todate = tvDisplayToDate.getText().toString();
 					// call the getOrganisationName method from startup
 					orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
 
