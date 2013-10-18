@@ -17,6 +17,14 @@ Reports
 	  	
 * Title will display respective organisation information such as name, type and financial year.
 
+* To change the above informations provided , user can click on button present in top left corner of the screen .
+
+.. image:: images/export_pdf.png
+   :align: center
+   :height: 200pt
+   :width: 350pt
+
+
 * In options menu two features are provided: export report in PDF or CSV format.
 
 .. image:: images/export_pdf.png

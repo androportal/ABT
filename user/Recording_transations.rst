@@ -109,7 +109,7 @@ Search/Edit/Clone/Delete Transaction
    :height: 200pt
    :width: 350pt
 
-* Press ``Search`` button (see figure) to search transaction by ``Voucher reference No., Date or Narration`` 
+* Press ``Search`` button (see figure) to search transaction by ``Voucher reference No., Date, Narration, Voucher No., type or Account name`` 
   and press ``View`` button to view the transactions.
 
 

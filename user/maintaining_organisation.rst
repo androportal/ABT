@@ -9,14 +9,12 @@ Maintaining organisations
 Welcome page
 ------------
 
-* As the application is started, it asks the user to select the server location such as emulator,
-  tablet or remote server. Select **any one** of them as per requirement.
+* As the application is launched, it automatically checks whether the application is running on ``emulator`` or ``tablet`` and do all required things.
+
   
-* Choose ``tablet`` option to run ABT on android device.
+* To switch to ``Remote server``, user can drag the screen from left to right to find ``Change server location`` option.
 
-* Android developers can choose ``emulator`` option, to test app or modify ABT source code.
-
-* On selecting ``Remote server`` for ABT, enter IP address manually. 
+* On selecting ``Change server location`` , it prompts a dialog to enter IP address manually. 
   It requires a live internet connection, it can be within an organization
   or an institute. User can access a centralized remote server running within 
   the institute. The advantage is, each user will have his/her own 
@@ -100,7 +98,17 @@ Select existing organisation
    
 * This will ask you to login. Guest users just need to select radio button and rest ie. Admin/Manager/operator
   have to authenticate themselves by putting username and password.
+
+
   
+.. image:: images/login_user.png
+   :align: center
+   :height: 200pt
+   :width: 350pt
+
+* If the admin forgets his password, he can reset his password by answering the security questions using ``Forgot password`` link .
+
+
 .. image:: images/login_user.png
    :align: center
    :height: 200pt
