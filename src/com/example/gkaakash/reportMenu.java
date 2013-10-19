@@ -94,11 +94,11 @@ public class reportMenu extends Activity{
         if("NGO".equals(orgtype))
         {
             reportType = new String[] { "Ledger","Trial Balance","Project Statement",
-                 "Cash Flow","Balance Sheet","Income and Expenditure" };
+                 "Cash Flow","Balance Sheet","Income and Expenditure","Cash Book" };
         }
         else{
             reportType = new String[] { "Ledger","Trial Balance","Project Statement",
-                 "Cash Flow","Balance Sheet","Profit and Loss account" };
+                 "Cash Flow","Balance Sheet","Profit and Loss account","Cash Book" };
         }
        	
        	//get financial from and to date, split and store day, month and year in seperate variable
@@ -171,6 +171,10 @@ public class reportMenu extends Activity{
 				if(position == 5)
 				{
 					callReport(reportMenu.this,"I", incomeExpenditure.class);
+				}
+				if(position == 6)
+				{
+					callLedgerOrCashFlowOrBankRecon(reportMenu.this,"CB",cashBook.class);
 				}
 			} 
 		});
@@ -329,7 +333,7 @@ public class reportMenu extends Activity{
 		}
 		
 		
-		if(report_flag.equalsIgnoreCase("C") || callingLedger == true){
+		if(report_flag.equalsIgnoreCase("C") || report_flag.equals("CB")||callingLedger == true){
 			LayoutInflater inflater = ((Activity)context).getLayoutInflater();
 			View layout = inflater.inflate(R.layout.ledger, null);
 			//Building DatepPcker dialog
@@ -381,7 +385,14 @@ public class reportMenu extends Activity{
 		  	   	
 		  	   	cbNarration = (CheckBox)layout.findViewById(R.id.cbNarrations);
 			}else{
-				builder.setTitle("Cash Flow");
+				
+				if(report_flag.equalsIgnoreCase("C"))
+				{
+					builder.setTitle("Cash Flow");
+				}else
+				{
+					builder.setTitle("Cash Book");
+				}
 				acc_row.setVisibility(View.GONE);
 				narration_row.setVisibility(View.GONE);
 				project_row.setVisibility(View.GONE);

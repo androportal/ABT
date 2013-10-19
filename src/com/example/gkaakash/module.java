@@ -134,7 +134,7 @@ public class module {
 		alert.setCanceledOnTouchOutside(true);
 	}
 
-	void toastValidationMessage(Context c,String msg) {
+	public void toastValidationMessage(Context c,String msg) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(c);
 		builder.setMessage(msg)
 		.setCancelable(false)
@@ -674,6 +674,7 @@ public class module {
 		SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
 		String date = null;
 		try {
+			System.out.println(Date);
 			date = write.format(read.parse(Date));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

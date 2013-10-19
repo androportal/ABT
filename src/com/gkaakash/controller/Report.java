@@ -170,10 +170,6 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 			e1.printStackTrace();
 		}
 		
-		catch (Exception e) { 
-			
-			e.printStackTrace();
-		} 
 		return cashFlowStatement;
 	}
 	/***

@@ -29,6 +29,7 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.log.SysoLogger;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -212,6 +213,14 @@ public class ledger extends Activity {
 				accountName = balanceSheet.acc_name1;
 				other_details();
 				System.out.println("m in extra1");
+			}else if(get_extra_flag.equalsIgnoreCase("from_cashbook")) {   
+				accountName = cashBook.acc_name;
+				//other_details();
+				projectName = "No Project";
+				checked = true;
+				fromDate = cashBook.fromDateString;
+				toDate = cashBook.toDateString;
+				System.out.println("m in extra1");
 			}
 
 			tvaccontName = (TextView) findViewById(R.id.tvaccountName);
@@ -235,26 +244,28 @@ public class ledger extends Activity {
 			} else {
 				Ledger_project = "No Project";
 			}
-			// System.out.println("ledger with project"+accountName+financialFromDate+fromDate+toDate+projectName);
-			ledger_params = new Object[] { accountName, financialFromDate,
-					fromDate, toDate, projectName };
-			ledgerResult = (Object[]) report
-					.getLedger(ledger_params, client_id);
-
-			OrgName = MainActivity.organisationName;
 			
+			/**
+			 * call to the ledger report and collect input parameters for the same 
+			 */
+			ledger_params = new Object[] { accountName, financialFromDate,fromDate, toDate, projectName };
+			ledgerResult = (Object[]) report.getLedger(ledger_params, client_id);
+
+			/**
+			 * below variables are to providing information to PDF genartion header
+			 */
+			OrgName = MainActivity.organisationName;
 			Date date = new Date();
-			String date_format = new SimpleDateFormat("dMMMyyyy")
-					.format(date);
-			OrgPeriod = "Financial Year: " + financialFromDate + " to "
-					+ financialToDate;
+			String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
+			OrgPeriod = "Financial Year: " + financialFromDate + " to "+ financialToDate;
 			LedgerPeriod = fromDate + " to " + toDate;
 			String account = accountName.replace(" ", "");
-			sFilename = "L" +"_"+ OrgName.replace(" ", "")+"_" + account + "_" +
-					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+ date_format;
-			pdf_params = new String[] { "L", sFilename, OrgName, OrgPeriod,
-					"Ledger for: " + accountName, LedgerPeriod,
-					"Project: " + Ledger_project, };
+			sFilename = "L" +"_"+ OrgName.replace(" ", "")+"_" + account + "_" +financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+ date_format;
+			pdf_params = new String[] { "L", sFilename, OrgName, OrgPeriod,"Ledger for: " + accountName, LedgerPeriod,"Project: " + Ledger_project, };
+			
+			/**
+			 * get the result of ledger from rpc and display it to tables accordingly
+			 */
 			ledgerGrid = new ArrayList<ArrayList>();
 			ledgerGrid_with_voucherCode = new ArrayList<ArrayList>();
 			ledgerGrid_with_header = new ArrayList<ArrayList>();
@@ -287,32 +298,13 @@ public class ledger extends Activity {
 			}
 
 			ledgertable = (TableLayout) findViewById(R.id.maintable);
-			addTable();// ////
+			addTable();
 
 			//set title
 			TextView org = (TextView)findViewById(R.id.org_name);
 			org.setText(OrgName + ", "+reportMenu.orgtype);
 			TextView tvdate = (TextView)findViewById(R.id.date);
 			tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
-			
-//			final Button btnScrollDown = (Button) findViewById(R.id.btnScrollDown);
-//			btnScrollDown.setOnClickListener(new OnClickListener() {
-//
-//				@Override
-//				public void onClick(View v) {
-//					if (updown == false) {
-//
-//						sv.fullScroll(ScrollView.FOCUS_DOWN);
-//						btnScrollDown.setBackgroundResource(R.drawable.up);
-//						updown = true;
-//					} else {
-//						sv.fullScroll(ScrollView.FOCUS_UP);
-//						btnScrollDown.setBackgroundResource(R.drawable.down);
-//						updown = false;
-//					}
-//				}
-//			});
-
 			floatingHeader();
 
 			createMenuOptions();
@@ -416,13 +408,9 @@ public class ledger extends Activity {
 					int rowcount = ledgertable.getChildCount();
 					View row = ledgertable.getChildAt(rowcount - 1);
 
-					final SpannableString rsSymbol = new SpannableString(
-							ledger.this.getText(R.string.Rs));
+					final SpannableString rsSymbol = new SpannableString(ledger.this.getText(R.string.Rs));
 					/** Create a TableRow dynamically **/
-					String[] ColumnNameList = new String[] { "Date",
-							"Particulars", "Reference no.",
-							rsSymbol + " Debit", rsSymbol + " Credit",
-							"Narration" };
+					String[] ColumnNameList = new String[] { "Date","Particulars", "Reference no.",rsSymbol + " Debit", rsSymbol + " Credit","Narration" };
 
 					tr = new TableRow(ledger.this);
 
@@ -440,28 +428,22 @@ public class ledger extends Activity {
 						label.setTextColor(Color.BLACK); //blue theme
 						label.setGravity(Gravity.CENTER);
 						tr.setClickable(false);
-						LinearLayout l = (LinearLayout) ((ViewGroup) row)
-								.getChildAt(k);
+						LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(k);
 						label.setWidth(l.getWidth());
 						// System.out.println("size is"+l.getWidth());
 					}
 
 					// Add the TableRow to the TableLayout
-					floating_heading_table.addView(tr,
-							new TableLayout.LayoutParams(
-									LayoutParams.FILL_PARENT,
-									LayoutParams.MATCH_PARENT));
+					floating_heading_table.addView(tr,new TableLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.MATCH_PARENT));
 
 					// ledgertable.removeViewAt(0);
 					ledgertable.getChildAt(0).setVisibility(View.INVISIBLE);
 
 					View firstrow = ledgertable.getChildAt(0);
 					for (int k = 0; k < len; k++) {
-						LinearLayout l = (LinearLayout) ((ViewGroup) firstrow)
-								.getChildAt(k);
+						LinearLayout l = (LinearLayout) ((ViewGroup) firstrow).getChildAt(k);
 						TextView tv = (TextView) l.getChildAt(0);
 						tv.setHeight(0);
-
 						l.getLayoutParams().height = 0;
 					}
 					// ledgertable.getChildAt(0).setLayoutParams(new
@@ -476,51 +458,6 @@ public class ledger extends Activity {
 		});
 	}
 
-//	private void animated_dialog() {
-//		try {
-//			final LinearLayout Llalert = (LinearLayout) findViewById(R.id.Llalert);
-//			Llalert.setVisibility(LinearLayout.GONE);
-//			animation2 = ObjectAnimator.ofFloat(Llalert, "x", 1000);
-//			animation2.setDuration(1000);
-//			animation2.start();
-//
-//			Button btnOrgDetailsDialog = (Button) findViewById(R.id.btnOrgDetailsDialog);
-//			btnOrgDetailsDialog.setOnClickListener(new OnClickListener() {
-//
-//				@Override
-//				public void onClick(View v) {
-//
-//					if (alertdialog == false) {
-//						Llalert.setVisibility(LinearLayout.VISIBLE);
-//						TextView tvOrgNameAlert = (TextView) findViewById(R.id.tvOrgNameAlert);
-//						tvOrgNameAlert.setText(OrgName);
-//
-//						TextView tvOrgTypeAlert = (TextView) findViewById(R.id.tvOrgTypeAlert);
-//						tvOrgTypeAlert.setText(reportMenu.orgtype);
-//
-//						TextView tvFinancialYearAlert = (TextView) findViewById(R.id.tvFinancialYearAlert);
-//						tvFinancialYearAlert
-//								.setText(reportMenu.financialFromDate + " to "
-//										+ reportMenu.financialToDate);
-//
-//						animation2 = ObjectAnimator.ofFloat(Llalert, "x", 300);
-//						alertdialog = true;
-//					} else {
-//
-//						animation2 = ObjectAnimator.ofFloat(Llalert, "x", 1000);
-//						alertdialog = false;
-//					}
-//
-//					animation2.setDuration(1000);
-//					animation2.start();
-//				}
-//
-//			});
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//	}
-
 	private void addTable() {
 		addHeader();
 		// System.out.println("ledgerGrid."+ledgerGrid);
@@ -532,8 +469,7 @@ public class ledger extends Activity {
 			tr = new TableRow(this);
 			Integer lastIndex = ledgerGrid.size() - 1;
 			Boolean click = true;
-			if ("Opening Balance b/f".equalsIgnoreCase(columnValue.get(1)
-					.toString())) {
+			if ("Opening Balance b/f".equalsIgnoreCase(columnValue.get(1).toString())) {
 				// System.out.println("we are in new if");
 				click = false;
 			}
@@ -579,8 +515,7 @@ public class ledger extends Activity {
 								boolean found = matcher.find();
 								// System.out.println("value:"+found);
 								if (found == false) {
-									double amount = Double
-											.parseDouble(colValue);
+									double amount = Double.parseDouble(colValue);
 									label.setText(formatter.format(amount));
 								} else {
 									label.setText(colValue);
@@ -654,8 +589,7 @@ public class ledger extends Activity {
 				View row = ledgertable.getChildAt(i + 1);
 
 				for (int j = 0; j < len; j++) {
-					LinearLayout l = (LinearLayout) ((ViewGroup) row)
-							.getChildAt(j);
+					LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(j);
 					TextView t = (TextView) l.getChildAt(0);
 					ColorDrawable drawable = (ColorDrawable)t.getBackground();
 					System.out.println("color:"+drawable.getColor());
@@ -679,8 +613,7 @@ public class ledger extends Activity {
 
 				Object[] params1 = new Object[] { code };
 
-				Object[] VoucherMaster = (Object[]) transaction
-						.getVoucherMaster(params1, client_id);
+				Object[] VoucherMaster = (Object[]) transaction.getVoucherMaster(params1, client_id);
 				// System.out.println("i am new object"+VoucherMaster);
 
 				ArrayList otherdetailsrow = new ArrayList();
@@ -691,7 +624,8 @@ public class ledger extends Activity {
 				}
 
 				String vtf = otherdetailsrow.get(2).toString();
-
+				System.out.println("vtf"+vtf);
+				System.out.println("params "+params);
 				IntentToVoucher(vtf, params);
 
 				Intent intent = new Intent(ledger.this, transaction_tab.class);
@@ -770,19 +704,22 @@ public class ledger extends Activity {
 		Object[] paramDr = new Object[] { "Dr" };
 		m.getAccountsByRule(paramDr, vouchertypeflag, context);
 		Accountlist = module.Accountlist;
+		System.out.println("accountlist:"+Accountlist);
 		DrAccountlist.addAll(Accountlist);
-
+		System.out.println("DList:" + DrAccountlist);
 		CrAccountlist = new ArrayList<String>();
 		Object[] paramCr = new Object[] { "Cr" };
 		m.getAccountsByRule(paramCr, vouchertypeflag, context);
 		Accountlist = module.Accountlist;
 		CrAccountlist.addAll(Accountlist);
-		System.out.println(vouchertypeflag);
 		System.out.println("CList:" + CrAccountlist);
+		System.out.println(vouchertypeflag);
+		
 
 		if (DrAccountlist.size() < 1 || CrAccountlist.size() < 1) {
 			m.toastValidationMessage(ledger.this, msg);
 		} else {
+			System.out.println("..paramCr go to transaction tab");
 			Intent intent = new Intent(context, transaction_tab.class);
 			// To pass on the value to the next page
 			startActivity(intent);
@@ -795,9 +732,11 @@ public class ledger extends Activity {
 		m.getAccountsByRule(params, vouchertypeflag, context);
 
 		Accountlist = module.Accountlist;
+		System.out.println("Accountlist Contra"+Accountlist);
 		if (Accountlist.size() < 2) {
 			m.toastValidationMessage(ledger.this, msg);
 		} else {
+			System.out.println("listtt to pass transaction");
 			Intent intent = new Intent(context, transaction_tab.class);
 			// To pass on the value to the next page
 			startActivity(intent);
@@ -837,12 +776,16 @@ public class ledger extends Activity {
 		} else if (get_extra_flag.equalsIgnoreCase("from_balanceSheet")) {
 			get_extra_flag = null;// so that on backpress it will to reportmenu
 									// page
-			Intent intent = new Intent(getApplicationContext(),
-					balanceSheet.class);
+			Intent intent = new Intent(getApplicationContext(),  balanceSheet.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+		}else if(get_extra_flag.equalsIgnoreCase("from_cashbook")) {
+			get_extra_flag = null;// so that on backpress it will to reportmenu
+									// page
+			Intent intent = new Intent(getApplicationContext(), cashBook.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		}
-
 	}
 
 }

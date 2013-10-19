@@ -104,7 +104,7 @@ public class cashFlow extends Activity{
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.cash_flow_table);
+        setContentView(R.layout.cash_book_table);
         IPaddr = MainActivity.IPaddr;
 	    System.out.println("in createorg"+IPaddr);
         report = new Report(IPaddr);
@@ -156,7 +156,7 @@ public class cashFlow extends Activity{
 	    	
 	    	tv.setText("Period : "+str_fromDate+" to "+str_toDate);   
 	    	
-	    	tv = (TextView) findViewById(R.id.tvaccountName);
+	    	tv = (TextView) findViewById(R.id.tvaccountName);  
 	    	tv.setText("Cash Flow");
 	    	
         	/*
@@ -165,8 +165,8 @@ public class cashFlow extends Activity{
  
         	Object[] params = new Object[]{financialFromDate,fromDateString,toDateString};
    
-        	cashFlowResult = (Object[]) report.getCashFlow(params,client_id);
-        	//cashFlowResult = (Object[]) report.getCashBook(params,client_id);
+        	//cashFlowResult = (Object[]) report.getCashFlow(params,client_id);
+        	cashFlowResult = (Object[]) report.getCashBook(params,client_id);  
         	//cashFlowResult is 3 dimensional list 
         	int count = 0;
         	for(Object cf : cashFlowResult){
@@ -483,8 +483,7 @@ public class cashFlow extends Activity{
 				@Override
 				public void onClick(View v) {
 
-					LinearLayout l = (LinearLayout) ((ViewGroup) row)
-							.getChildAt(0);
+					LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(0);
 					final TextView tv = (TextView) l.getChildAt(0);
 					checkForAccountName(tv.getText().toString(), row);
 				}
@@ -500,8 +499,7 @@ public class cashFlow extends Activity{
 				@Override
 				public void onClick(View v) {
 
-					LinearLayout l = (LinearLayout) ((ViewGroup) row)
-							.getChildAt(0);
+					LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(0);
 					final TextView tv = (TextView) l.getChildAt(0);
 					checkForAccountName(tv.getText().toString(), row);
 					}
@@ -522,19 +520,16 @@ public class cashFlow extends Activity{
     		//change the row color(black/gray to orange) when clicked
     		
 			for (int j = 0; j < 2; j++) {
-				LinearLayout l = (LinearLayout) ((ViewGroup) row)
-						.getChildAt(j);
+				LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(j);
 				TextView t = (TextView) l.getChildAt(0);
 				ColorDrawable drawable = (ColorDrawable)t.getBackground();
-				System.out.println("color:"+drawable.getColor());
-
+		
 				ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"),drawable.getColor());
 				colorFade.setDuration(100);
 				colorFade.start();
 			}
     		acc_name = accname;
-			Intent intent = new Intent(getApplicationContext(),
-					ledger.class);
+			Intent intent = new Intent(getApplicationContext(),ledger.class);
 			intent.putExtra("flag", "from_cashflow");
 			startActivity(intent);
     	}

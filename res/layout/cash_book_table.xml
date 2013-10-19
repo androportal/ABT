@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_theme">
+    
+   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/main_heading"
+            android:layout_weight="50">
+            
+       <include layout="@layout/org_info"/>
+      
+         <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/layout_root"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="10dp" >
+            <HorizontalScrollView 
+             android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:fillViewport="true">
+                
+                <LinearLayout 
+                    android:layout_height="fill_parent"
+            		android:layout_width="fill_parent"
+            		android:orientation="vertical">
+            		
+                    <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1,2,3,4,5"
+                    android:id="@+id/floating_heading_table"
+                    android:background="#ffffff" 
+                    android:visibility="invisible">
+                </TableLayout>  
+                
+              <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ScrollCashBook"
+            android:fillViewport="true">
+            
+                <TableLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:stretchColumns="0,1,2,3,4,5"
+                    android:id="@+id/maintable"
+                    android:background="#ffffff">
+                </TableLayout>
+            </ScrollView>
+       		</LinearLayout>
+            </HorizontalScrollView>
+            
+         </LinearLayout>
+ </LinearLayout>
+ </RelativeLayout>

@@ -99,6 +99,7 @@ public class transaction_tab extends TabActivity {
 
         intent = new Intent(transaction_tab.this, createVoucher.class); 
         intent.putExtra("flag", from_report_flag);
+        System.out.println("transaction tab :"+from_report_flag);
         spec = tabHost.newTabSpec("Create voucher").setIndicator("Create voucher").setContent(intent);
         tabHost.addTab(spec);
   

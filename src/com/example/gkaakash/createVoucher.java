@@ -36,6 +36,8 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
@@ -164,7 +166,7 @@ public class createVoucher extends Activity {
 		// financialFromDate =Startup.getfinancialFromDate();
 		// financialToDate = Startup.getFinancialToDate();
 
-		try {
+//		try {
 			searchFlag = MainActivity.searchFlag;
 
 			if (from_report_flag == null) {
@@ -214,7 +216,7 @@ public class createVoucher extends Activity {
 					System.out.println("voucher_code:" + vouchercode);
 				} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
 					vouchercode = ledger.code;
-					// System.out.println("voucher_code:"+vouchercode);
+					System.out.println("voucher_code:"+vouchercode);
 
 				} else if (from_report_flag.equalsIgnoreCase("from_bankrecon")) {
 					vouchercode = bankReconciliation.code;
@@ -224,10 +226,8 @@ public class createVoucher extends Activity {
 
 				Object[] params = new Object[] { vouchercode };
 
-				Object[] VoucherMaster = (Object[]) transaction
-						.getVoucherMaster(params, client_id);
-				Object[] VoucherDetails = (Object[]) transaction
-						.getVoucherDetails(params, client_id);
+				Object[] VoucherMaster = (Object[]) transaction.getVoucherMaster(params, client_id);
+				Object[] VoucherDetails = (Object[]) transaction.getVoucherDetails(params, client_id);
 
 				otherdetailsrow = new ArrayList();
 				for (Object row1 : VoucherMaster) {
@@ -245,8 +245,7 @@ public class createVoucher extends Activity {
 				etRefNumber.setText(refno);
 				etvoucherno.setText(vouchercode);
 				checkvoucher_number = vouchercode;
-				System.out.println("values are:" + narration + refno
-						+ searchdate + proj);
+				System.out.println("values are:" + narration + refno+ searchdate + proj);
 				// setProject();
 
 				accdetailsList = new ArrayList<ArrayList<String>>();
@@ -325,10 +324,10 @@ public class createVoucher extends Activity {
 				}
 			}
 
-		} catch (Exception ex) {
-			
-			m.toastValidationMessage(context, "Please try again");
-		}
+//		} catch (Exception ex) {
+//			
+//			m.toastValidationMessage(context, "Please try again");
+//		}
 		// add all onclick events in this method
 		OnClickListener();
 
@@ -405,8 +404,7 @@ public class createVoucher extends Activity {
 					@Override
 					public void onItemSelected(AdapterView<?> arg0, View arg1,
 							int pos, long arg3) {
-						System.out.println("flags are" + searchFlag
-								+ from_report_flag);
+						System.out.println("flags are" + searchFlag+ from_report_flag);
 						if (searchFlag == false && from_report_flag == null) {
 							vouchertypeflag = voucherTypes[pos];
 							resetFields();
@@ -598,7 +596,7 @@ public class createVoucher extends Activity {
 				// System.out.println("acc_names:"+accnames);
 			} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
 				accnames = ledger.Accountlist;// ////////////////////////////
-				// System.out.println("acc_names:"+accnames);
+				System.out.println("acc_names:"+accnames);
 			} else if (from_report_flag.equalsIgnoreCase("from_bankrecon")) {
 				accnames = bankReconciliation.Accountlist;// ////////////////////////////
 				// System.out.println("acc_names:"+accnames);
@@ -640,9 +638,9 @@ public class createVoucher extends Activity {
 				dr_cr.clear();
 				// for setting 1st row's 2nd spinner
 				Fsecond_spinner = accdetailsList.get(0).get(0);
-				// System.out.println("FirstS:" + Fsecond_spinner);
+				System.out.println("FirstS:" + Fsecond_spinner);
 
-				// System.out.println("names:" + accnames);
+				 System.out.println("names:" + accnames);
 				// setting adapter
 				dataAdapter = new ArrayAdapter<String>(this,
 						android.R.layout.simple_spinner_item, accnames);
@@ -748,8 +746,19 @@ public class createVoucher extends Activity {
 	
 
 			} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
-				DrAccountlist = ledger.DrAccountlist;
-				CrAccountlist = ledger.CrAccountlist;
+				if(!ledger.vouchertypeflag.equalsIgnoreCase("Contra"))
+				{
+					DrAccountlist = ledger.DrAccountlist;
+					
+					System.out.println(" create "+DrAccountlist);
+					CrAccountlist = ledger.CrAccountlist;
+					System.out.println(" create "+CrAccountlist);
+				}else
+				{
+					accnames = ledger.Accountlist;
+					DrAccountlist.addAll(accnames);
+					CrAccountlist.addAll(accnames);
+				}
 			} else if (from_report_flag.equalsIgnoreCase("from_bankrecon")) {
 				DrAccountlist = bankReconciliation.DrAccountlist;
 				CrAccountlist = bankReconciliation.CrAccountlist;
@@ -810,7 +819,8 @@ public class createVoucher extends Activity {
 				Facctype = accdetailsList.get(0).get(1);
 				
 				Sacctype = accdetailsList.get(1).get(1);
-				
+				System.out.println("account name :"+DrAccountlist);
+				System.out.println("account name :"+CrAccountlist);
 				View row1 = table.getChildAt(1);
 				second_dr_cr = (Spinner) ((ViewGroup) row1).getChildAt(0);
 
@@ -826,7 +836,7 @@ public class createVoucher extends Activity {
 
 				first_dr_cr.setAdapter(da1);
 				first_dr_cr.setSelection(FacctypePosition);
-
+				System.out.println("dr acco");
 				if ("Dr".equals(Facctype)) {// if acctype is DR
 					dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, DrAccountlist);
 					
@@ -851,8 +861,7 @@ public class createVoucher extends Activity {
 					dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, CrAccountlist);
 					
 				}
-				// Toast.makeText(context, "data:"+accdetailsList,
-				// Toast.LENGTH_SHORT).show();
+				//Toast.makeText(context, "data:"+accdetailsList,Toast.LENGTH_SHORT).show();
 				
 				Ssecond_spinner = accdetailsList.get(1).get(0);
 				
@@ -883,8 +892,7 @@ public class createVoucher extends Activity {
 						SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
 						dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 						second_table_accountname_spinner.setAdapter(dataAdapter);
-						second_table_accountname_spinner
-								.setSelection(SaccnamePosition);
+						second_table_accountname_spinner.setSelection(SaccnamePosition);
 						dr_cr.clear();
 						dr_cr.add("Dr");
 						dr_cr.add("Cr");
