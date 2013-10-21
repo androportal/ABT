@@ -6,7 +6,33 @@ Master menu
 
 Aakash Business Tool's master menu includes list of menu options as shown in figure.
 
-.. image:: images/master_menu.png
+Guest
+-----
+.. image:: images/guest_master.png
+   :name: ABT main page
+   :align: center
+   :height: 200pt
+   :width: 350pt
+   
+Admin
+-----
+.. image:: images/admin_master.png
+   :name: ABT main page
+   :align: center
+   :height: 200pt
+   :width: 350pt
+   
+Manager
+-------
+.. image:: images/manager_master.png
+   :name: ABT main page
+   :align: center
+   :height: 200pt
+   :width: 350pt
+   
+Operator
+--------
+.. image:: images/operator_master.png
    :name: ABT main page
    :align: center
    :height: 200pt

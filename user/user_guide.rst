@@ -2,15 +2,13 @@
 User Guide
 ==========
 
-.. topic:: User manual
-
-	.. toctree::
-	   :maxdepth: 6
+.. toctree::
+   :numbered:
 	      
-	   about
-	   how_to_operate
-	   how_to_install
-	   demo
-	   issues
-   	   user_feedback
+   about
+   how_to_operate
+   how_to_install
+   demo
+   issues
+   user_feedback
    

@@ -9,10 +9,22 @@ Maintaining organisations
 Welcome page
 ------------
 
+.. image:: images/welcome_page.png
+   :name: welcome
+   :align: center
+   :height: 200pt
+   :width: 350pt
+
 * As the application is launched, it automatically checks whether the application is running on ``emulator`` or ``tablet`` and do all required things.
 
   
 * To switch to ``Remote server``, user can drag the screen from left to right to find ``Change server location`` option.
+
+.. image:: images/drawer_options.png
+   :name: ABT main page
+   :align: center
+   :height: 200pt
+   :width: 350pt
 
 * On selecting ``Change server location`` , it prompts a dialog to enter IP address manually. 
   It requires a live internet connection, it can be within an organization
@@ -26,14 +38,17 @@ Welcome page
    :height: 200pt
    :width: 350pt
 
-* Click on ``Apply`` button and it will give two options : **Create new organisation** and
+* Click on ``Ok`` button. 
+
+* There are two options at the top of the screen: **Create new organisation** and
   **Select existing organisation**.
 
 Setting up a new organisation
 -----------------------------
-To get started ,user need to create aleast one organisation.
 
-* Go to Welcome page of ABT >> Press ``Create New Organisation``.
+* To get started, user need to create aleast one organisation.
+
+* Press ``Create New Organisation``.
 
 .. image:: images/create_org.png
    :name: ABT main page
@@ -70,26 +85,26 @@ To get started ,user need to create aleast one organisation.
 
 * Fill the organisation details if required else, press ``Skip``.
   
-* Press the ``Save`` button to save the organisation details and it will take to ABT's master menu.
-
 .. image:: images/org_details.png
    :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
+  
+* Press the ``Save`` button to save the organisation details and it will take to ABT's master menu.
 
 * **Note**: In both cases,whether the user clicks ``skip`` or ``save`` organisation will be created .
 
 Select existing organisation
 ----------------------------
 
-* Go to Welcome page of ABT >> Press ``Select New Organisation``.
+* Press ``Select New Organisation``.
   
 * It will display the list of Organisations.
   
 * Select the required ``organisation`` and respective ``financial year``.
   
-* Press ``Next``.
+* Press ``Login``.
 
 .. image:: images/select_org.png
    :align: center
@@ -98,9 +113,12 @@ Select existing organisation
    
 * This will ask you to login. Guest users just need to select radio button and rest ie. Admin/Manager/operator
   have to authenticate themselves by putting username and password.
-
-
   
+.. image:: images/login_user_test.png
+   :align: center
+   :height: 200pt
+   :width: 350pt
+   
 .. image:: images/login_user.png
    :align: center
    :height: 200pt
@@ -108,8 +126,16 @@ Select existing organisation
 
 * If the admin forgets his password, he can reset his password by answering the security questions using ``Forgot password`` link .
 
-
-.. image:: images/login_user.png
+.. image:: images/forget_password.png
    :align: center
    :height: 200pt
    :width: 350pt
+   
+* This step will be followed by reset password activity. Admin has to reset password to 
+  perform any further activities.
+  
+.. image:: images/reset_password.png
+   :align: center
+   :height: 200pt
+   :width: 350pt
+  

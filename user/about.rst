@@ -1,6 +1,11 @@
-===============================
+.. toctree::
+   :numbered:
+
 About Aakash Business Tool(ABT)
 ===============================
+
+Introduction
+------------
 
 **Aakash Business Tool** is a portable accounting platform on Android
 intended for Accountants and Students. `Aakash
@@ -17,6 +22,9 @@ covers basic account management, creating vouchers and reports.
 
 It was initially derived from `GNUkhata <http://www.gnukhata.org>`_, a free
 accounting software which is mostly based on Python framework.
+
+Features
+--------
 
 Some features included in Aakash Business Tool:
   #. Managing Organizations and User authentication

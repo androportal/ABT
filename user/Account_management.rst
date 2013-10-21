@@ -19,7 +19,7 @@ Save account code preference
    :width: 350pt
   
 * Check the check-box if manual account code has to be provided or leave it as it is, for automatic
-  account code generation. Click on ``Save`` button to save this preference. 
+  account code generation. Click on ``Confirm`` button to save this preference. 
   Remember, this is one time activity. Later, this alert-box will 
   never appear, it will follow the saved preference(manual or automatic).
 
@@ -128,7 +128,7 @@ Search/Edit account
    :height: 200pt
    :width: 350pt
 
-* If ``manual account code`` was checked, there will be ``two`` options ie. Search by account name and code. Otherwise, only one option ie. search by account name.
+* If ``manual account code`` was checked, there will be ``two`` options ie. Search by account name or code. Otherwise, only one option ie. search by account name.
 	
 * User can Edit/Delete the selected account name from the list ,only if that account has no transactions.
 
@@ -142,4 +142,4 @@ Search/Edit account
 	  
 * **Note**: Opening balance field is not editable, if account comes under the following groups: ``Direct Income``, ``Direct Expense``, ``Indirect Income`` and ``Indirect Expense``.
 	
-* Press **Delete account** to delete the account. Accounts having opening balance or is under transaction cannot be deleted.
+* Press **Delete account** to delete the account. Accounts under transaction cannot be deleted.

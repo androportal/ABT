@@ -4,13 +4,13 @@
 ======================
 Transaction management
 ======================
-* This chapter provides guidence to ``add/search/edit/clone/delete`` transaction.
+* This chapter provides guidence to ``add/search/edit/copy/delete`` transaction.
 
 * Go to ``Master menu`` > ``Create voucher``.
 
 Record Transaction
 ------------------
-* Below table will help the user to understand, ``voucher types`` and their respective accounts as per rule:
+Below table will help the user to understand, ``voucher types`` and their respective accounts as per rule:
 
 	+------------------------------+-------------------------------------+----------------------------------------+
 	|Voucher type                  |   Accounts(dr)                      |	Accounts(cr)			      |
@@ -48,7 +48,7 @@ Record Transaction
 	+------------------------------+-------------------------------------+----------------------------------------+   
 	
 	
-* To record transaction in ``ABT``, select ``Create voucher`` (see bellow fig.) tab and follow the below steps:
+To record transaction in ``ABT``, select ``Create voucher`` tab (see bellow fig.) and follow the below steps:
 
 .. image:: images/create_voucher.png
    :name: ABT main page
@@ -56,9 +56,8 @@ Record Transaction
    :height: 200pt
    :width: 350pt
 
-* Select the mode of transaction from the list of voucher type.
-
-* ``Mode`` of transaction can be Contra, Journal, Payment, Receipt, Debit Note, Credit Note,Sales, 
+* Select the mode of transaction from the list of voucher type. ``Mode`` of transaction 
+  can be Contra, Journal, Payment, Receipt, Debit Note, Credit Note, Sales, 
   Sales Return, Purchase, Purchase Return.
 	
 .. image:: images/voucher_type.png
@@ -67,9 +66,8 @@ Record Transaction
    :height: 200pt
    :width: 350pt
 
-There should be atleast ``two`` accounts for recording transactions. To get started with,
-
-* Select account ``Type(Dr/Cr)``, ``Account name`` from the dropdown and enter the ``Amount`` in rupees
+* There should be atleast ``two`` accounts for recording transactions. To get started with, 
+  Select account ``Type(Dr/Cr)``, ``Account name`` from the dropdown and enter the ``Amount`` in rupees
   and repeat the same until amount gets tallied. Use ``plus`` button for adding new row.
   
 * **Note**: ABT populates drop down of account name by voucher type ``rule``. 
@@ -89,11 +87,14 @@ There should be atleast ``two`` accounts for recording transactions. To get star
 
 * Enter ``Voucher code``, ``Voucher reference No.`` or edit the last reference No. and ``Narration``.
 
-* Press ``Save`` to save transaction and ``Reset`` to clear all fields.
+* Press ``Save`` to save transaction.
 
-* After saving transaction it resets all the fields automatically.
+After saving transaction it resets all the fields automatically.
    
-* You can change the voucher type if you want to make different voucher entries.
+You can change the voucher type if you want to make different voucher entries.
+
+Press ``Reset`` to clear all fields.
+
  
 Search/Edit/Clone/Delete Transaction
 ------------------------------------
@@ -109,30 +110,41 @@ Search/Edit/Clone/Delete Transaction
    :height: 200pt
    :width: 350pt
 
-* Press ``Search`` button (see figure) to search transaction by ``Voucher reference No., Date, Narration, Voucher No., type or Account name`` 
-  and press ``View`` button to view the transactions.
-
+* Press ``Search`` button (see figure) to search transaction by ``Voucher 
+  reference number, Date, Narration, Voucher number, Account name or Voucher type``. 
 
 .. image:: images/search_voucher_by.png
 	   :align: center
 	   :height: 200pt
    	   :width: 350pt
 
-* Click table ``row`` to Edit/Clone/Delete the transactions.
+.. image:: images/search_voucher_by_options.png
+	   :align: center
+	   :height: 200pt
+   	   :width: 350pt
+
+* Select option, give the input and press ``View`` button to view the transaction.
+  
+* Click table ``row`` to Edit/Copy/Delete the transactions.
 
 .. image:: images/edit_voucher_alert.png
    :align: center
    :height: 200pt
    :width: 350pt
 
-* In **Edit voucher**, all fields are editable. Press ``Save`` to save the changes. 
+* In **Edit voucher**, all fields are editable except voucher type and voucher code. 
+  Press ``Save`` to save the changes. 
 
 .. image:: images/edit_voucher.png
    :align: center
    :height: 200pt
    :width: 350pt
 
-* **Clone voucher** duplicates information on an existing transaction, to create a new one with all the fields pre-filled. There is an option to ``keep or change`` the existing field values. Press ``Save`` to save the transaction. 
+* **Copy voucher** duplicates information on an existing transaction, to create 
+  a new one with all the fields pre-filled for the same voucher type. 
+  There is an option to ``keep or change`` the existing field values. **Note**: 
+  Change the voucher number, as this is an unique parameter. 
+  Press ``Save`` to save the transaction. 
 
 .. image:: images/clone_voucher.png
    :align: center

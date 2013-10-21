@@ -12,7 +12,6 @@ Edit/delete/reset organisation details
 * Displays previously saved organisation information, all the fields are editable.
 
 .. image:: images/edit_org.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -27,7 +26,6 @@ Edit/delete/reset organisation details
   the same organisation.
 
 .. image:: images/delete_org.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -38,14 +36,18 @@ Add/edit/delete project
 * It displays list of all projects added before.
 
 .. image:: images/project_list.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
 
 * ``Add project`` (see figure) will help to add new project.
 	
-* Select project name from the list, it diplays a popup which give two options such as ``edit`` or ``delete`` project name.
+* Select project name from the list, it displays a popup which give two options such as ``edit`` or ``delete`` project name.
+
+.. image:: images/edit_project.png
+   :align: center
+   :height: 200pt
+   :width: 350pt
 
 * **Note**: If project has transactions, it can not be deleted.
 		
