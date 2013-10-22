@@ -332,54 +332,6 @@ public class projectStatement extends Activity{
 		
 	}
     
-//	private void animated_dialog() {
-//		try {
-//            final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
-//            Llalert.setVisibility(LinearLayout.GONE);
-//            animation2 = ObjectAnimator.ofFloat(Llalert,
-//                    "x", 1000);
-//            animation2.setDuration(1000);
-//            animation2.start();
-//            
-//            final Button btnOrgDetailsDialog = (Button) findViewById(R.id.btnOrgDetailsDialog);
-//        
-//           
-//            btnOrgDetailsDialog.setOnClickListener(new OnClickListener() {
-//                
-//                @Override
-//                public void onClick(View v) {
-//                   btnOrgDetailsDialog.setAlpha(100);
-//                    if(alertdialog==false){
-//                        Llalert.setVisibility(LinearLayout.VISIBLE);
-//                        TextView tvOrgNameAlert = (TextView)findViewById(R.id.tvOrgNameAlert);
-//                        tvOrgNameAlert.setText(OrgName);
-//                        
-//                        TextView tvOrgTypeAlert = (TextView)findViewById(R.id.tvOrgTypeAlert);
-//                        tvOrgTypeAlert.setText(reportMenu.orgtype);
-//                        
-//                        TextView tvFinancialYearAlert = (TextView)findViewById(R.id.tvFinancialYearAlert);
-//                        tvFinancialYearAlert.setText(reportMenu.financialFromDate+" to "+ reportMenu.financialToDate);
-//                        
-//                        animation2 = ObjectAnimator.ofFloat(Llalert,
-//                                  "x", 300);
-//                        alertdialog=true;
-//                    }else {
-//                         
-//                        animation2 = ObjectAnimator.ofFloat(Llalert,
-//                                  "x", 1000);
-//                        alertdialog=false;
-//                     }
-//                      
-//                     animation2.setDuration(1000);
-//                     animation2.start();
-//                }
-//                
-//            });
-//        } catch (Exception e) {
-//            // TODO: handle exception
-//        }
-//	}
-
 	
 	private void addTable() {
         addHeader();

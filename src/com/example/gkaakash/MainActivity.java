@@ -50,6 +50,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -87,15 +88,13 @@ public class MainActivity extends Activity{
 	static boolean editDetails=false;
 	static AlertDialog help_dialog;
 	private ProgressDialog mProgressDialog, progressBar;
-	static String checkFlag, IPaddr_value;
-	int help_option_menu_flag = 0;
+	static String IPaddr_value;
 	String result;
 	boolean fstab_flag = true;
 	File checkImg;
 	File checkImgextsd;
 	File checkTar;
 	File checkTarExtsd;
-	File help_flag;
 	static boolean no_dailog=false;
 	module m;
 	private AlertDialog dialog;
@@ -152,7 +151,6 @@ public class MainActivity extends Activity{
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// 'Help' menu to 66666main page options menu
 
-		menu.add(1,1,1,"Help");
 		menu.add(1,2,2,"Import");
 		menu.add(1,3,3,"Set IP");
 		return super.onCreateOptionsMenu(menu);	
@@ -160,16 +158,6 @@ public class MainActivity extends Activity{
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		/*
-		 * when user clicks help menu on main page,
-		 * help_option_menu_flag is set to 1
-		 */
-		if(item.getItemId() == 1){
-			//Toast.makeText(context, "help_flag_option is set to 1", Toast.LENGTH_SHORT).show();
-			help_option_menu_flag = 1;
-			//if running this app on emulator, comment the below line
-			//			startApp();
-		}
 		if(item.getItemId() == 2){
 			//Toast.makeText(context, "help_flag_option is set to 2", Toast.LENGTH_SHORT).show();
 			importorganisation();
@@ -393,7 +381,19 @@ public class MainActivity extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				help_option_menu_flag = 1;
+				LinearLayout content_layout = (LinearLayout)findViewById(R.id.content_layout);
+				LayoutInflater inflater = ((Activity)MainActivity.this).getLayoutInflater();
+				View layout = inflater.inflate(R.layout.help, null);
+				if(content_layout.getChildCount() == 0){
+					content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+				}else{
+					content_layout.removeAllViews();
+					content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+				}
+				
+				Help help = new Help();
+				WebView engine = (WebView) layout.findViewById(R.id.webView1);
+				help.loadURL(engine);
 				//				startApp();
 			}
 		});
@@ -411,16 +411,6 @@ public class MainActivity extends Activity{
 		else {
 			//Toast.makeText(context, "not c       opying files from asset", Toast.LENGTH_SHORT).show();
 			System.out.println("NOT copying files from asset");
-		}
-		if(no_dailog==false){
-			//if running this app on emulator, comment the below line
-			//			startApp(); 
-		}    
-		else{
-			if(checkFlag=="false"){
-				help_dialog.dismiss();
-			}
-
 		}
 	}
 	//Attach a listener to the click event for the button
@@ -620,7 +610,6 @@ public class MainActivity extends Activity{
 		 * 1) /data/local/linux/etc/fstab
 		 * 2) /mnt/sdcard/abt.img
 		 * 3) /mnt/sdcard/abt.tar.gz or /mnt/extsd/abt.tar.gz
-		 * 4) /data/data/com.example.gkaakash/files/help_flag.txt
 		 * 
 		 **/
 		File fstab = new File("/data/local/abt/etc/fstab");
@@ -628,20 +617,14 @@ public class MainActivity extends Activity{
 		checkImgextsd = new File("/mnt/extsd/abt.img");
 		checkTar = new File("/mnt/sdcard/abt.tar.gz");
 		checkTarExtsd = new File("/mnt/extsd/abt.tar.gz");
-		help_flag = new File("/data/data/com.example.gkaakash/files/help_flag.txt");
 
 		if(fstab.exists()) {
-			if ( help_option_menu_flag == 1 || !help_flag.exists()) {
-				//Toast.makeText(context, "fstab exist , help_popup()", Toast.LENGTH_SHORT).show();
-				help_popup();
-			}
+			//start app
 		}
 		else if(checkImg.exists()) {
 			if(fstab.exists()) {
 				//Toast.makeText(context, "img exists , help_popup()", Toast.LENGTH_SHORT).show();
-				if(help_option_menu_flag == 1 || !help_flag.exists()){
-					help_popup();
-				}
+				//start app
 			}
 			else {
 				fstab_flag = false;	
@@ -652,10 +635,7 @@ public class MainActivity extends Activity{
 		else if(checkImgextsd.exists()) {
 			if(fstab.exists()) {
 				//Toast.makeText(context, "fstab exist***** , help_popup()", Toast.LENGTH_SHORT).show();
-				if(help_option_menu_flag == 1 || !help_flag.exists()){
-					help_popup();
-				}
-
+				//start app
 			}
 			else {
 				fstab_flag = false;	
@@ -862,88 +842,6 @@ public class MainActivity extends Activity{
 	}
 
 
-	// START-APP
-	private void help_popup() {
-		/**
-		 * start the application and show initial help pop-up
-		 **/ 
-
-		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-		final View layout = inflater.inflate(R.layout.help_popup,
-				(ViewGroup) findViewById(R.id.layout_root));
-
-		// builder
-		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		builder.setView(layout);
-		builder.setTitle("Help");
-
-		CheckBox cbHelp = (CheckBox)layout.findViewById(R.id.cbHelp);
-		cbHelp.setChecked(false);
-
-		if(help_option_menu_flag == 1) { 
-			if (help_flag.exists()) {
-				//Toast.makeText(context, "both exist", Toast.LENGTH_SHORT).show();
-				cbHelp.setChecked(true);
-			}
-		}
-		else {
-			//Toast.makeText(context, "only one exists", Toast.LENGTH_SHORT).show();
-			cbHelp.setChecked(false);
-		}
-
-
-		cbHelp.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View v) {
-				if (((CheckBox) v).isChecked()) {
-					//Toast.makeText(context, "TRUE", Toast.LENGTH_SHORT).show();
-					checkFlag = "true";
-				}
-				else {
-					//Toast.makeText(context, "FALSE", Toast.LENGTH_SHORT).show();
-					checkFlag = "false";
-				}
-			}
-		});
-		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				// 
-				if(("true").equals(checkFlag)) {
-					try {
-						FileOutputStream output = openFileOutput("help_flag.txt", Context.MODE_PRIVATE);
-						output.flush();
-						output.close();
-
-					}
-					catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-				else if(("false").equals(checkFlag)){
-					String[] command = {"busybox rm -r /data/data/com.example.gkaakash/files/help_flag.txt"};
-					RunAsRoot(command);
-					//Toast.makeText(context, "help_flag deleted", Toast.LENGTH_SHORT).show();
-				}
-
-			}
-
-		});
-
-		help_dialog = builder.create();
-		help_dialog.show();
-		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-		// customizing the width and location of the dialog on screen
-		lp.copyFrom(help_dialog.getWindow().getAttributes());
-		lp.width = 700;
-		help_dialog.getWindow().setAttributes(lp);
-	}
-	// HELP POPUP END
-
-
-
-
-
-
 	// DOWNLOAD ??
 	class DownloadFileAsync extends AsyncTask<String, String, String> {
 		/**
@@ -1031,7 +929,6 @@ public class MainActivity extends Activity{
 		//delete internal files during un-installation 
 		public boolean deleteFile (String name){
 			name = "aakash.sh";
-			name = "help_flag";
 			name = "copyFilesFlag.txt";
 			return false;
 
@@ -1230,13 +1127,13 @@ public class MainActivity extends Activity{
 		.setPositiveButton("Yes",
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				//Intent intent = new Intent(Intent.ACTION_MAIN);
-				//intent.addCategory(Intent.CATEGORY_HOME);
-				//intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				//startActivity(intent);
-				finish();
-				android.os.Process.killProcess(android.os.Process.myPid());
-
+//				finish();
+//				android.os.Process.killProcess(android.os.Process.myPid());
+				Intent intent = new Intent(Intent.ACTION_MAIN);
+				intent.addCategory(Intent.CATEGORY_HOME);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.putExtra("stopid", id);
+				startActivity(intent);
 			}
 		})
 		.setNegativeButton("No", new DialogInterface.OnClickListener() {

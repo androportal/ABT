@@ -20,28 +20,25 @@ public class Help extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.help);
-		// button for close
-		Button btnOpenNewActivity = (Button) findViewById(R.id.button1);
-		btnOpenNewActivity.setOnClickListener(new View.OnClickListener() {
-			// close this class and bring to same state
-			public void onClick(View v) {
+		WebView engine = (WebView)findViewById(R.id.webView1);
+		loadURL(engine);
 
-				finish();
-			}
-		});
+	}
 
+	public void loadURL(WebView engine) {
 		// webview for chelp
-		WebView engine = (WebView) findViewById(R.id.webView1);
-
 		WebSettings webSettings = engine.getSettings();
 		// java script enabled
 		webSettings.setJavaScriptEnabled(true);
 		// cache problem removed
 		webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 		webSettings.setAppCacheEnabled(false);
+		
 		// scroll bars disabled in webview
 		engine.setVerticalScrollBarEnabled(false);
 		engine.setHorizontalScrollBarEnabled(false);
+		engine.getSettings().setBuiltInZoomControls(true);
+		
 		// focus on web page
 		engine.setOnTouchListener(new View.OnTouchListener() {
 

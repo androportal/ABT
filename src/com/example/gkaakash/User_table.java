@@ -113,6 +113,11 @@ public class User_table extends Activity {
 		TextView tvdate = (TextView)findViewById(R.id.date);
 		tvdate.setText(m.changeDateFormat(menu.financialFromDate)+" To "+m.changeDateFormat(menu.financialToDate));
 		
+		Button btn_optionsMenu= (Button) findViewById(R.id.btn_optionsMenu);
+		btn_optionsMenu.setVisibility(View.GONE);
+		Button btn_changeInputs= (Button) findViewById(R.id.btn_changeInputs);
+		btn_changeInputs.setVisibility(View.GONE);
+		
 		addNewUser();
 		
 		

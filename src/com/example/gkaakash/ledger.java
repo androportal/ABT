@@ -213,6 +213,10 @@ public class ledger extends Activity {
 				accountName = balanceSheet.acc_name1;
 				other_details();
 				System.out.println("m in extra1");
+			}else if (get_extra_flag.equalsIgnoreCase("from_IncExp")) {
+				accountName = incomeExpenditure.acc_name;
+				other_details();
+				System.out.println("m in extra1");
 			}else if(get_extra_flag.equalsIgnoreCase("from_cashbook")) {   
 				accountName = cashBook.acc_name;
 				//other_details();
@@ -225,7 +229,7 @@ public class ledger extends Activity {
 
 			tvaccontName = (TextView) findViewById(R.id.tvaccountName);
 			tvfinancialToDate = (TextView) findViewById(R.id.tvfinancialToDate);
-			tvaccontName.setText("Ledger for: " + accountName);
+			tvaccontName.setText("Ledger for: " + accountName.trim());
 
 			// to get month in words
 			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
@@ -777,6 +781,12 @@ public class ledger extends Activity {
 			get_extra_flag = null;// so that on backpress it will to reportmenu
 									// page
 			Intent intent = new Intent(getApplicationContext(),  balanceSheet.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+		}else if (get_extra_flag.equalsIgnoreCase("from_IncExp")) {
+			get_extra_flag = null;// so that on backpress it will to reportmenu
+			// page
+			Intent intent = new Intent(getApplicationContext(), incomeExpenditure.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		}else if(get_extra_flag.equalsIgnoreCase("from_cashbook")) {

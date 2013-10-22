@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,6 +16,7 @@ import android.app.ActionBar.LayoutParams;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.view.Gravity;
@@ -22,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -40,7 +43,7 @@ public class incomeExpenditure extends Activity{
     private Report report;
     static Integer client_id;
     static Object[] IEResult;
-    TableLayout IEtable1, IEtable2, IEtable3, IEtable4;
+    TableLayout IEtable1, IEtable2;
     TableRow tr;
     TextView label;
     ArrayList<String> IEResultList;
@@ -63,6 +66,7 @@ public class incomeExpenditure extends Activity{
 	module m;
 	SpannableString rsSymbol;
 	static String IPaddr;	
+	static String acc_name; 
 		
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -279,54 +283,6 @@ public class incomeExpenditure extends Activity{
 			
 		});
     }
-    
-//    private void animated_diolog() {
-//    	try {
-//            final LinearLayout Llalert = (LinearLayout)findViewById(R.id.Llalert);
-//            Llalert.setVisibility(LinearLayout.GONE);
-//            animation2 = ObjectAnimator.ofFloat(Llalert,
-//                    "x", 1000);
-//            animation2.setDuration(1000);
-//            animation2.start();
-//            
-//            final Button btnOrgDetailsDialog = (Button) findViewById(R.id.btnOrgDetailsDialog);
-//        
-//           
-//            btnOrgDetailsDialog.setOnClickListener(new OnClickListener() {
-//                
-//                @Override
-//                public void onClick(View v) {
-//                   btnOrgDetailsDialog.setAlpha(100);
-//                    if(alertdialog==false){
-//                        Llalert.setVisibility(LinearLayout.VISIBLE);
-//                        TextView tvOrgNameAlert = (TextView)findViewById(R.id.tvOrgNameAlert);
-//                        tvOrgNameAlert.setText(OrgName);
-//                       
-//                        TextView tvOrgTypeAlert = (TextView)findViewById(R.id.tvOrgTypeAlert);
-//                        tvOrgTypeAlert.setText(reportMenu.orgtype);
-//                        
-//                        TextView tvFinancialYearAlert = (TextView)findViewById(R.id.tvFinancialYearAlert);
-//                        tvFinancialYearAlert.setText(reportMenu.financialFromDate+" to "+ reportMenu.financialToDate);
-//                        
-//                        animation2 = ObjectAnimator.ofFloat(Llalert,
-//                                  "x", 300);
-//                        alertdialog=true;
-//                     }else {
-//                         
-//                        animation2 = ObjectAnimator.ofFloat(Llalert,
-//                                  "x", 1000);
-//                        alertdialog=false;
-//                     }
-//                      
-//                     animation2.setDuration(1000);
-//                     animation2.start();
-//                }
-//                
-//            });
-//        } catch (Exception e) {
-//            // TODO: handle exception
-//        }
-//    }
 
     private void addTable(TableLayout tableID) {
         /** Create a TableRow dynamically **/
@@ -444,6 +400,7 @@ public class incomeExpenditure extends Activity{
      * this function add the value to the row
      */
     void addRow(String param){
+    	drillDown();
         label = new TextView(this);
         label.setText(param);
         label.setTextSize(18);
@@ -458,7 +415,73 @@ public class incomeExpenditure extends Activity{
         Ll.addView(label,params);
         tr.addView((View)Ll); // Adding textView to tablerow.
     }
-    public void onBackPressed() {
+    private void drillDown() {
+    	int count = IEtable1.getChildCount();
+		for (int i = 0; i < count; i++) {
+			final View row = IEtable1.getChildAt(i);
+			
+			row.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+
+					LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(1);
+					final TextView tv = (TextView) l.getChildAt(0);
+					checkForAccountName(tv.getText().toString(), row);
+				}
+			});
+		}
+
+		int count1 = IEtable2.getChildCount();
+		for (int i = 0; i < count1; i++) {
+			final View row = IEtable2.getChildAt(i);
+
+			row.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+
+					LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(1);
+					final TextView tv = (TextView) l.getChildAt(0);
+					checkForAccountName(tv.getText().toString(), row);
+					}
+			});
+		}
+	}
+    
+    /*
+     * below method helps to find out the selected string is account name or not.
+     * check for empty string, string "Total" and header column "account name".
+     */
+	private void checkForAccountName(String accname, View row) {
+    	if(!(accname.trim().equalsIgnoreCase("") || 
+    			accname.equalsIgnoreCase("Particulars") ||
+    			accname.equalsIgnoreCase("Total") ||
+    			accname.equalsIgnoreCase("Direct Expense") ||
+   				accname.equalsIgnoreCase("Direct Income") ||
+   				accname.equalsIgnoreCase("Indirect Income") ||
+   				accname.equalsIgnoreCase("Indirect Expense"))){
+    		//Toast.makeText(balanceSheet.this, "account name", Toast.LENGTH_SHORT).show();
+    		//change the row color(black/gray to orange) when clicked
+    		
+			for (int j = 0; j <= 2; j++) {
+				LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(j);
+				TextView t = (TextView) l.getChildAt(0);
+				ColorDrawable drawable = (ColorDrawable)t.getBackground();
+		
+				ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"),drawable.getColor());
+				colorFade.setDuration(100);
+				colorFade.start();
+			}
+    		acc_name = accname;
+			Intent intent = new Intent(getApplicationContext(),ledger.class);
+			intent.putExtra("flag", "from_IncExp");
+			startActivity(intent);
+    	}
+		
+	}
+
+	public void onBackPressed() {
 		
 		MainActivity.nameflag = false;
 		Intent intent = new Intent(getApplicationContext(),reportMenu.class);
