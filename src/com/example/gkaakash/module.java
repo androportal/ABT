@@ -119,8 +119,7 @@ public class module {
 			Accountlist.add((String) ac);
 		}
 
-		dataAdapter = new ArrayAdapter<String>(context,
-				android.R.layout.simple_spinner_item, Accountlist);
+		dataAdapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item, Accountlist);
 		//set resource layout of spinner to that adapter
 		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	}
@@ -152,14 +151,11 @@ public class module {
 	void generate_pdf(final Context c,final String[] params,final ArrayList<ArrayList> Grid, final String password){
 		PdfGenaretor pdfgen = new PdfGenaretor();
 		try {
-			pdfgen.generatePDFFile(
-					Grid, params, password);
-			AlertDialog.Builder builder1 = new AlertDialog.Builder(
-					c);
-			builder1.setMessage("PDF genration completed ..see /mnt/sdcard/"
-					+ params[1]);
-			AlertDialog alert1 = builder1
-					.create();
+			System.out.println("grid  .."+Grid);
+			pdfgen.generatePDFFile(Grid, params, password);
+			AlertDialog.Builder builder1 = new AlertDialog.Builder(c);
+			builder1.setMessage("PDF genration completed ..see /mnt/sdcard/"+ params[1]);
+			AlertDialog alert1 = builder1.create();
 			alert1.show();
 			alert1.setCancelable(true);
 			alert1.setCanceledOnTouchOutside(true);
@@ -194,9 +190,10 @@ public class module {
 			cerateTitle(params);
 			fw.append('\n');columnSize = Grid.get(0).size();
 			columnSize = Grid.get(0).size();
+			System.out.println(Grid.size());
 			for (int i = 0; i < Grid.size(); i++) {
 				for (int j = 0; j < Grid.get(i).size(); j++) {
-
+					System.out.println(Grid.get(i).get(j).toString());
 					fw.append(Grid.get(i).get(j).toString());
 					fw.append(',');
 				}
@@ -204,7 +201,7 @@ public class module {
 
 			}
 			fw.append('\n');
-			if(!params[0].equalsIgnoreCase("L"))
+			if(!params[0].equalsIgnoreCase("L")&&!params[0].equalsIgnoreCase("cash"))
 			{    
 				for (int i = 0; i < columnSize-2; i++) {
 					fw.append(" ");
@@ -383,16 +380,14 @@ public class module {
 		menu_flag = go_to_menu;
 		LinearLayout l1=(LinearLayout) layout.findViewById(R.id.changeusername);
 		l1.setVisibility(View.GONE);
-		Button cancel = (Button) layout
-				.findViewById(R.id.btnCancel);
+		Button cancel = (Button) layout.findViewById(R.id.btnCancel);
 		TextView header = (TextView) layout.findViewById(R.id.tvheader1);
 		header.setText("Please reset your password");
 
 		TextView tvoldpass = (TextView) layout.findViewById(R.id.tvOldPass);
 		tvoldpass.setVisibility(View.GONE);
 
-		final EditText oldpass = (EditText) layout
-				.findViewById(R.id.etOldPass);
+		final EditText oldpass = (EditText) layout.findViewById(R.id.etOldPass);
 		oldpass.setVisibility(View.GONE);
 
 		final TextView error_msg = (TextView) layout.findViewById(R.id.tverror_msg1);
@@ -404,7 +399,6 @@ public class module {
 					dialog.cancel();
 				}else{
 					error_msg.setVisibility(TextView.VISIBLE);
-
 					error_msg.setText("Please reset your password");
 				}
 
@@ -420,13 +414,11 @@ public class module {
 			@Override
 			public void onClick(View arg0) {
 
-				EditText newpass = (EditText) layout
-						.findViewById(R.id.etNewPass);
+				EditText newpass = (EditText) layout.findViewById(R.id.etNewPass);
 				String new_pass=newpass.getText().toString();
 				System.out.println("newpass:"+new_pass);
 
-				EditText confirmpass = (EditText) layout
-						.findViewById(R.id.etconfirmPass);
+				EditText confirmpass = (EditText) layout.findViewById(R.id.etconfirmPass);
 				String confirm_pass=confirmpass.getText().toString();
 				System.out.println("confirm_pass:"+confirm_pass);
 
@@ -443,14 +435,11 @@ public class module {
 
 						if(reset==false){
 							error_msg.setVisibility(TextView.VISIBLE);
-
 							error_msg.setText("User not present");
-
 							newpass.setText("");
 							confirmpass.setText(""); 
 						}else {
 							error_msg.setVisibility(TextView.VISIBLE);
-
 							error_msg.setText( "Password updated successully");
 							newpass.setText("");
 							confirmpass.setText(""); 
@@ -458,9 +447,7 @@ public class module {
 						}
 					}else {
 						error_msg.setVisibility(TextView.VISIBLE);
-
 						error_msg.setText( "New password and confirm password fields doesnot match!");
-
 						newpass.setText("");
 						confirmpass.setText(""); 
 					}
@@ -643,8 +630,10 @@ public class module {
 					 * pass null parameter if no password
 					 */
 					if(i == 0){
+						System.out.println("in i 0");
 						generate_pdf(context, pdf_params,Grid1, null);
 					}else if(i == 1){
+						System.out.println("in i 1");
 						generate_pdf1(context, pdf_params, Grid1,Grid2, null);
 					}
 					dialog.dismiss();

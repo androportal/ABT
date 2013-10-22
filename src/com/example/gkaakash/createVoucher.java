@@ -166,7 +166,7 @@ public class createVoucher extends Activity {
 		// financialFromDate =Startup.getfinancialFromDate();
 		// financialToDate = Startup.getFinancialToDate();
 
-//		try {
+		try {
 			searchFlag = MainActivity.searchFlag;
 
 			if (from_report_flag == null) {
@@ -324,10 +324,10 @@ public class createVoucher extends Activity {
 				}
 			}
 
-//		} catch (Exception ex) {
-//			
-//			m.toastValidationMessage(context, "Please try again");
-//		}
+		} catch (Exception ex) {
+			
+			m.toastValidationMessage(context, "Please try again");
+		}
 		// add all onclick events in this method
 		OnClickListener();
 

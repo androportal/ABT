@@ -63,7 +63,7 @@ public class cashBook extends Activity{
 	static String fromDateString,toDateString;
 	Object[] cashBookResult;
 	ArrayList<String> cashBookResultList;
-    ArrayList<ArrayList> cashBookGrid;
+    ArrayList<ArrayList> cashBookGrid,cashBook_with_header;
     ArrayList<ArrayList> cashBook;
     String 	OrgPeriod,balancePeriod,sFilename,OrgName,result;
     TableRow tr;
@@ -168,6 +168,7 @@ public class cashBook extends Activity{
         	Object[] params = new Object[]{financialFromDate,fromDateString,toDateString};
    
         	cashBookResult = (Object[]) report.getCashBook(params,client_id);  
+        	cashBook_with_header = new ArrayList<ArrayList>();   
         	//cashBookResult is 3 dimensional list 
         	int count = 0;
         	for(Object cf : cashBookResult){
@@ -187,7 +188,7 @@ public class cashBook extends Activity{
         				cashBookGrid.add(cashBookResultList);
         		
         			  addTable(cashbooktable);
-        			
+        			  cashBook_with_header.addAll(cashBookGrid);
         	}
         	
   	    	OrgName = MainActivity.organisationName;
@@ -207,7 +208,7 @@ public class cashBook extends Activity{
 			balancePeriod = fromDateString+" to "+toDateString;
 			sFilename = "cashBook"+"_"+ OrgName.replace(" ", "")+ "_" +
 					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
-			pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Flow",balancePeriod,"",result,rsSymbol.toString()};
+			pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Book",balancePeriod,"",result,rsSymbol.toString()};
 			
             //animated_dialog();
             //floatingHeader();
@@ -229,7 +230,7 @@ public class cashBook extends Activity{
 
             if(columnValue.get(0).equalsIgnoreCase("Particulars")){
                	//for heading pass green color code
-            	 System.out.println("iam in chaninging color "+columnValue.get(1));
+            	 System.out.println("i am in chaninging color "+columnValue.get(1));
                	setRowColorSymbolGravity(columnValue, Color.WHITE, true);
             }else if(columnValue.get(0).equalsIgnoreCase("Cash Accounts")||columnValue.get(0).equalsIgnoreCase("Bank Accounts"))
             {
@@ -406,7 +407,7 @@ private void drillDown() {
     		
 			for (int j = 0; j < 3; j++) {
 				LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(j);
-				TextView t = (TextView) l.getChildAt(0);
+				TextView t = (TextView)l.getChildAt(0);
 				ColorDrawable drawable = (ColorDrawable)t.getBackground();
 				ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"),drawable.getColor());
 				colorFade.setDuration(100);
@@ -427,7 +428,7 @@ private void drillDown() {
 
 			@Override
 			public void onClick(View v) {
-				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
+				CharSequence[] items = new CharSequence[]{"Export as PDF","Export as CSV"};
 				
 				AlertDialog dialog;
 				//creating a dialog box for popup
@@ -441,15 +442,15 @@ private void drillDown() {
 					public void onClick(DialogInterface dialog,
 							int pos) {
 						if(pos == 0){
-							//LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-							//String password = m.setPasswordForPdfFile(cashFlow.this,inflater, 
-									//R.layout.sign_up, 1, pdf_params, cashFlow1, cashFlow2);
+							LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+							String password = module.setPasswordForPdfFile(cashBook.this,inflater, 
+									R.layout.sign_up, 0, pdf_params,cashBook_with_header,null);
 				   			
 						}else if(pos == 1){
-							//module.csv_writer1(pdf_params,cashFlow1, cashFlow2);
-							//m.toastValidationMessage(cashBook.this, "CSV exported");
+							module.csv_writer(pdf_params,cashBook_with_header);
+							module.toastValidationMessage(cashBook.this, "CSV exported");
 						}
-					}
+					}    
 				});
 				dialog=builder.create();
 				((Dialog) dialog).show();
@@ -458,5 +459,13 @@ private void drillDown() {
 		});
 		
 	}
+    public void onBackPressed() {
+		
+		MainActivity.nameflag = false;
+		Intent intent = new Intent(getApplicationContext(),reportMenu.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+
+}
 
 }

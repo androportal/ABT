@@ -104,7 +104,7 @@ public class cashFlow extends Activity{
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.cash_book_table);
+        setContentView(R.layout.cash_flow_table);
         IPaddr = MainActivity.IPaddr;
 	    System.out.println("in createorg"+IPaddr);
         report = new Report(IPaddr);
@@ -165,8 +165,8 @@ public class cashFlow extends Activity{
  
         	Object[] params = new Object[]{financialFromDate,fromDateString,toDateString};
    
-        	//cashFlowResult = (Object[]) report.getCashFlow(params,client_id);
-        	cashFlowResult = (Object[]) report.getCashBook(params,client_id);  
+        	cashFlowResult = (Object[]) report.getCashFlow(params,client_id);
+        	
         	//cashFlowResult is 3 dimensional list 
         	int count = 0;
         	for(Object cf : cashFlowResult){

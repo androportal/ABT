@@ -104,7 +104,13 @@ public class PdfGenaretor {
 						ColumnName = new String[] {"AccountName","GroupName","Debit(Rs)","Credit(Rs)"};// list of string to add in column
 					columnWidths = new float[] {40f,40f,30f,30f};//list of floats to set column width 
 				}// end of if
-				else
+				else if(pdf_params[0].equalsIgnoreCase("cash"))
+				{
+					// if it is extended trial balance then 
+					table = new PdfPTable(3);// create table instance with column 7
+					ColumnName = new String[] {"Particular","Debit Balance(Rs)","Credit Balance(Rs)"};
+					columnWidths = new float[] {60f,50f,50f};
+				}else
 				{
 					// if it is extended trial balance then 
 					table = new PdfPTable(7);// create table instance with column 7
@@ -141,12 +147,14 @@ public class PdfGenaretor {
 			}
 			/* loop through the grid values coming from calling function
 			 * it is the main body of table all the values of column  */ 
+			System.out.println("grid vlaue "+Grid);
 			for(int i=0;i<Grid.size();i++)
 			{
 				ArrayList<String> column = new ArrayList<String>();
 				column.addAll(Grid.get(i));
+				System.out.println("grid vlaue each"+Grid.get(i));
 				PdfPCell column_table;
-				if(!pdf_params[0].equalsIgnoreCase("L")) // if not ledger it removes value of 0th index of grid
+				if(!pdf_params[0].equalsIgnoreCase("L")&&!pdf_params[0].equalsIgnoreCase("cash")) // if not ledger it removes value of 0th index of grid
 					column.remove(0);
 				if(pdf_params[0].equalsIgnoreCase("L")&&(column.size()==6))//else size of grid will be 6 if narration flag has checked
 					column.remove(5); // then remove narrartion column value
@@ -154,7 +162,9 @@ public class PdfGenaretor {
 				/*loop throught all the column values*/
 				for(int j=0;j<column.size();j++)
 				{
+					
 					String value = column.get(j);
+					System.out.println("clone");
 					if(column.get(1).equalsIgnoreCase("Total of Transactions")||
 							column.get(1).equalsIgnoreCase("Grand Total")||
 							column.get(0).equalsIgnoreCase(""))
@@ -222,7 +232,7 @@ public class PdfGenaretor {
 			document.add(table); // add table in document
 
 			/*To add difference in opening balance */
-			if(!pdf_params[0].equalsIgnoreCase("L"))
+			if(!pdf_params[0].equalsIgnoreCase("L")&&!pdf_params[0].equalsIgnoreCase("cash"))
 			{
 				// add a couple of blank line
 				document.add(new Paragraph("\n")); // put blank space after body of table 
