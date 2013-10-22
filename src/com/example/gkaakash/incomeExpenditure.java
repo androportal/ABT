@@ -454,13 +454,26 @@ public class incomeExpenditure extends Activity{
      * check for empty string, string "Total" and header column "account name".
      */
 	private void checkForAccountName(String accname, View row) {
+		accname = accname.trim();
     	if(!(accname.trim().equalsIgnoreCase("") || 
     			accname.equalsIgnoreCase("Particulars") ||
     			accname.equalsIgnoreCase("Total") ||
     			accname.equalsIgnoreCase("Direct Expense") ||
    				accname.equalsIgnoreCase("Direct Income") ||
    				accname.equalsIgnoreCase("Indirect Income") ||
-   				accname.equalsIgnoreCase("Indirect Expense"))){
+   				accname.equalsIgnoreCase("Indirect Expense") ||
+   				accname.equalsIgnoreCase("Gross Deficit C/O") ||
+   				accname.equalsIgnoreCase("Gross Deficit B/F") ||
+   				accname.equalsIgnoreCase("Net Deficit") ||
+   				accname.equalsIgnoreCase("Gross Profit C/O") ||
+   				accname.equalsIgnoreCase("Gross Loss C/O") ||
+   				accname.equalsIgnoreCase("Gross Loss B/F") ||
+   				accname.equalsIgnoreCase("Net Profit") ||
+   				accname.equalsIgnoreCase("Net Surplus") ||
+   				accname.equalsIgnoreCase("Gross Profit B/F") ||
+   				accname.equalsIgnoreCase("Gross Surplus B/F") ||
+   				accname.equalsIgnoreCase("Net Loss") ||
+   				accname.equalsIgnoreCase("Gross Surplus C/O"))){
     		//Toast.makeText(balanceSheet.this, "account name", Toast.LENGTH_SHORT).show();
     		//change the row color(black/gray to orange) when clicked
     		
