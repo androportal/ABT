@@ -4,6 +4,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -100,7 +101,12 @@ public class reportMenu extends Activity{
             reportType = new String[] { "Ledger","Trial Balance","Project Statement",
                  "Cash Flow","Balance Sheet","Profit and Loss account","Cash Book" };
         }
-       	
+        ArrayList<String> Options = new ArrayList<String>(Arrays.asList(reportType));
+        final String userrole = menu.userrole;
+        if (userrole.equalsIgnoreCase("Operator")) {
+			Options.remove(5); //remove income & expense
+		}
+        
        	//get financial from and to date, split and store day, month and year in seperate variable
        	financialFromDate =Startup.getfinancialFromDate();  	   	
 	   	String dateParts[] = financialFromDate.split("-");
@@ -128,7 +134,7 @@ public class reportMenu extends Activity{
 		
 		//getting the list view and setting background
 		final ListView listView = (ListView)findViewById(R.id.ListReportType);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, reportType);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Options);
 		 
 		listView.setAdapter(adapter);
 		listView.setTextFilterEnabled(true);
@@ -168,14 +174,22 @@ public class reportMenu extends Activity{
 					callReport(reportMenu.this,"B", balanceSheet.class);
 					
 				}
-				if(position == 5)
-				{
-					callReport(reportMenu.this,"I", incomeExpenditure.class);
+				if (userrole.equalsIgnoreCase("operator")) {
+					if(position == 5)
+					{
+						callLedgerOrCashFlowOrBankRecon(reportMenu.this,"CB",cashBook.class);
+					}
+				}else{
+					if(position == 5)
+					{
+						callReport(reportMenu.this,"I", incomeExpenditure.class);
+					}
+					if(position == 6)
+					{
+						callLedgerOrCashFlowOrBankRecon(reportMenu.this,"CB",cashBook.class);
+					}
 				}
-				if(position == 6)
-				{
-					callLedgerOrCashFlowOrBankRecon(reportMenu.this,"CB",cashBook.class);
-				}
+				
 			} 
 		});
 	}  

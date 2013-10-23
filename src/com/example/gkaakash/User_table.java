@@ -435,11 +435,10 @@ public class User_table extends Activity {
 
 					EditText old_user_name = (EditText) layout1
 							.findViewById(R.id.etOld_User_Name);
-					if ("manager".equals(userrole1)) {
-						old_user_name.setText(username);
-					} else {
-						old_user_name.setText(username);
-					}
+					old_user_name.setEnabled(false);
+					old_user_name.setTextColor(Color.parseColor("#AEC6CF"));
+					
+					old_user_name.setText(username);
 
 					Button cancel = (Button) layout1
 							.findViewById(R.id.btnCancel);

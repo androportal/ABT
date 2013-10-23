@@ -296,12 +296,16 @@ public class menu extends Activity{
 		reset_password(reset_password_flag);
 
 		user.getUserNemeOfOperatorRole(client_id);
-		System.out.println("before arrays");
 		/*
 		 * create separate lists for menu options, their respective heading and description
+		 * access to menus as per the role
+		 * Admin: All menus
+		 * Guest: All menus except rollover
+		 * Manager: All menus Except delete org and rollover
+		 * Operator: All menus except rollover, delete org, bank recon
 		 */
 		ArrayList<String> menuOptions = new ArrayList<String>(Arrays.asList("Create account", "Transaction", "Reports",
-				"Bank Reconciliation", "Preferences","Rollover","Export organisation","Account Settings","Help"));
+				"Bank Reconciliation", "Preferences","Rollover","Export organisation","User account settings","Help"));
 		ArrayList<Integer> image_ids = new ArrayList<Integer>(Arrays.asList(R.drawable.account_logo, 
 				R.drawable.money_image, R.drawable.report_logo,
 				R.drawable.bank_recon_logo, R.drawable.settings_logo, 
@@ -323,27 +327,38 @@ public class menu extends Activity{
 			//no changes in above 3 lists, display them as it is
 		}else if(userrole.equalsIgnoreCase("guest"))
 		{
+			//remove user account settings
 			menuOptions.remove(7);			
 			image_ids.remove(7);
 			description.remove(7);
 			
 		}else if(userrole.equalsIgnoreCase("manager")){
+			//change label preference
+			menuOptions.remove(4);
+			menuOptions.add(4, "Add Projects");
+			description.remove(4);
+			description.add(4, "Add/Edit/Delete project");
+			//remove rollover
 			menuOptions.remove(5);
 			image_ids.remove(5);
 			description.remove(5);
 		}else{//operator
-			menuOptions.remove(3);
 			menuOptions.remove(4);
-			menuOptions.remove(5);
-			menuOptions.remove(2);
+			menuOptions.add(4, "Add Projects");
+			menuOptions.remove(3); //bank recon
+			//menuOptions.remove(4); //preferences
+			menuOptions.remove(4); //rollover
+			//menuOptions.remove(2); //reports
 			image_ids.remove(3);
+			//image_ids.remove(4);
 			image_ids.remove(4);
-			image_ids.remove(5);
-			image_ids.remove(2);
-			description.remove(3);
+			//image_ids.remove(2);
 			description.remove(4);
-			description.remove(5);
-			description.remove(2);
+			description.add(4, "Add/Edit/Delete project");
+			description.remove(3);
+			//description.remove(4);
+			description.remove(4);
+			//description.remove(2);
 		}
 		System.out.println("before listview");
 		listView = (ListView) findViewById(R.id.listView1);
@@ -437,7 +452,21 @@ public class menu extends Activity{
 					}
 
 				}else{//for operator only
-					exportToAbout(position,2);
+					//for "reports"
+					if(position == 2)
+					{
+						Intent intent = new Intent(context, reportMenu.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}
+					//for "adding project", adding popup menu ...
+					if(position == 3)
+					{
+						addPreferences();
+
+					}else{
+						exportToAbout(position,4);
+					}
 				}
 
 			}
@@ -578,7 +607,13 @@ public class menu extends Activity{
 					TextView header = (TextView) layout1
 							.findViewById(R.id.tvheader1);
 					header.setText("Change username");
-
+					
+					final EditText olduser_name = (EditText) layout1
+							.findViewById(R.id.etOld_User_Name);
+					olduser_name.setTextColor(Color.parseColor("#AEC6CF"));
+					olduser_name.setText(username);
+					olduser_name.setEnabled(false);
+					
 					Button cancel = (Button) layout1
 							.findViewById(R.id.btnCancel);
 					cancel.setOnClickListener(new OnClickListener() {
@@ -593,10 +628,6 @@ public class menu extends Activity{
 
 						@Override
 						public void onClick(View arg0) {
-
-
-							EditText olduser_name = (EditText) layout1
-									.findViewById(R.id.etOld_User_Name);
 							String olduserName = olduser_name.getText()
 									.toString();
 							System.out.println("olduserName:" + olduserName);
@@ -748,51 +779,59 @@ public class menu extends Activity{
 	}
 
 	protected void addPreferences() {
-		final CharSequence[] items = { "Edit/Delete organisation", "Add/Edit/Delete project" };
-		//creating a dialog box for popup
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		//setting title
-		builder.setTitle("Select preference");
-		//adding items
-		builder.setItems(items, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog1, int pos) {
-				//code for the actions to be performed on clicking popup item goes here ...
-				switch (pos) {
-				case 0:
-				{
+		if(userrole.equalsIgnoreCase("Admin") || userrole.equalsIgnoreCase("Guest")){
+			items = new CharSequence[]{ "Edit/Delete organisation", "Add/Edit/Delete project" };
+			//creating a dialog box for popup
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			//setting title
+			builder.setTitle("Select preference");
+			//adding items
+			builder.setItems(items, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog1, int pos) {
+					//code for the actions to be performed on clicking popup item goes here ...
+					switch (pos) {
+					case 0:
+					{
 
-					MainActivity.editDetails=true;
-					Object[] editDetails = (Object[])organisation.getOrganisation(client_id);
-					accdetailsList = new ArrayList<String>();
-					for(Object row2 : editDetails){
-						Object[] a2=(Object[])row2;
-						ArrayList<String> accdetails = new ArrayList<String>();
-						for(int i=0;i<a2.length;i++){
-							accdetails.add((String) a2[i].toString());
+						MainActivity.editDetails=true;
+						Object[] editDetails = (Object[])organisation.getOrganisation(client_id);
+						accdetailsList = new ArrayList<String>();
+						for(Object row2 : editDetails){
+							Object[] a2=(Object[])row2;
+							ArrayList<String> accdetails = new ArrayList<String>();
+							for(int i=0;i<a2.length;i++){
+								accdetails.add((String) a2[i].toString());
+							}
+							accdetailsList.addAll(accdetails);
 						}
-						accdetailsList.addAll(accdetails);
+
+						//System.out.println("details:"+accdetailsList);
+
+						Intent intent = new Intent(context, orgDetails.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+					}break;
+					case 1:
+					{
+						Intent intent = new Intent(context, addProject.class);
+						// To pass on the value to the next page
+						startActivity(intent);
+
+					}break;
 					}
-
-					//System.out.println("details:"+accdetailsList);
-
-					Intent intent = new Intent(context, orgDetails.class);
-					// To pass on the value to the next page
-					startActivity(intent);
-				}break;
-				case 1:
-				{
-					Intent intent = new Intent(context, addProject.class);
-					// To pass on the value to the next page
-					startActivity(intent);
-
-				}break;
 				}
-			}
-		});
-		//building a complete dialog
-		dialog=builder.create();
-		dialog.show();
+			});
+			//building a complete dialog
+			dialog=builder.create();
+			dialog.show();
 
+		}else{
+			Intent intent = new Intent(context, addProject.class);
+			// To pass on the value to the next page
+			startActivity(intent);
+		}
+		
+		
 	}
 	
 	

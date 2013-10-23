@@ -11,7 +11,7 @@ developed at IIT Bombay. Please refer to `androportal
 <https://github.com/androportal/>`_ for some of the apps. Aakash
 Accounting provides an easy to use interface specially for
 students/newbies who have just started accounting. We have tried to
-make the user's experience simple and elegant. This initial version
+make the user's experience simple and elegant. This initial version 1.0
 covers basic account management, creating vouchers and reports.
 
 It was initially derived from `GNUkhata <http://www.gnukhata.org>`_, a
@@ -21,7 +21,7 @@ framework.
 Features
   #. Managing Organizations
   
-	.. image::  res/drawable-hdpi/create_org.png
+	.. image::  assets/create_org.png
 	   :name: Create Organisation
 	   :align: center
 	   :height: 200pt
@@ -29,7 +29,7 @@ Features
   
   #. User authentication
   
-	.. image::  res/drawable-hdpi/login.png
+	.. image::  assets/login_user.png
 	   :name: Create Organisation
 	   :align: center
 	   :height: 200pt
@@ -37,7 +37,7 @@ Features
   
   #. Main menu
   
-	.. image::  res/drawable-hdpi/master_menu.png
+	.. image::  assets/admin_master.png
 	   :name: Master menu
 	   :align: center
 	   :height: 200pt
@@ -45,7 +45,7 @@ Features
   
   #. Maintaining books of accounts
   
-	.. image::  res/drawable-hdpi/create_account.png
+	.. image::  assets/create_account.png
 	   :name: Create account
 	   :align: center
 	   :height: 200pt
@@ -54,7 +54,7 @@ Features
   #. Recording, cloning and editing transactions and Recording of transactions 
      under particular project
   
-	.. image::  res/drawable-hdpi/create_voucher.png
+	.. image::  assets/create_voucher.png
 	   :name: Create voucher
 	   :align: center
 	   :height: 200pt
@@ -64,22 +64,16 @@ Features
      Gross, Extended), Profit and Loss Account, Project Statement,
      Cash Flow and Balance Sheet, Bank Reconciliation.
 
-	.. image::  res/drawable-hdpi/ledger.png
+	.. image::  assets/ledger.png
 	   :name: Ledger
 	   :align: center
 	   :height: 200pt
 	   :width: 350pt     
      
-	.. image::  res/drawable-hdpi/trial_balance.png
-	   :name: Trial Balance
-	   :align: center
-	   :height: 200pt
-	   :width: 350pt
-
   #. Rollover
   #. Export reports in PDF/CSV format
   
-	.. image::  res/drawable-hdpi/pdf_file_security.png
+	.. image::  assets/pdf_file_security.png
 	   :name: PDF file security
 	   :align: center
 	   :height: 200pt
@@ -87,15 +81,15 @@ Features
   
   #. Import/Export of organization data to other device
   
-	.. image::  res/drawable-hdpi/import_organisation.png
+	.. image::  assets/import_organisation.png
 	   :name: Import Organisation
 	   :align: center
 	   :height: 200pt
 	   :width: 350pt
 
-  #. ABT as remote server
+  #. ABT running using remote server
   
-	.. image::  res/drawable-hdpi/remote_location.png
+	.. image::  assets/remote_location.png
 	   :name: Set remote location address
 	   :align: center
 	   :height: 200pt
@@ -188,7 +182,7 @@ if you want to clone code for Android(4.0.3, API-15), type ::
    git clone -b ics https://github.com/androportal/ABT.git
 
 
-if you want to checkout all branches then type, ::
+if you want to checkout other branches then type, ::
 
    git checkout -b holo_theme remotes/origin/holo_theme
    git checkout -b docs remotes/origin/docs
