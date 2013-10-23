@@ -155,9 +155,6 @@ public class cashBook extends Activity{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
-	    	
 	    	tv = (TextView) findViewById(R.id.tvaccountName);  
 	    	tv.setText("Cash Book");
 	    	
@@ -168,27 +165,31 @@ public class cashBook extends Activity{
         	Object[] params = new Object[]{financialFromDate,fromDateString,toDateString};
    
         	cashBookResult = (Object[]) report.getCashBook(params,client_id);  
+        	int length = cashBookResult.length;
         	cashBook_with_header = new ArrayList<ArrayList>();   
         	//cashBookResult is 3 dimensional list 
         	int count = 0;
         	for(Object cf : cashBookResult){
-       	
-        		Object[] c = (Object[]) cf;
         		
-        		cashBookGrid = new ArrayList<ArrayList>();   
-        		
-        				cashBookResultList = new ArrayList<String>();
-           	
-        				for(int j=0;j<c.length;j++){
-        					System.out.println("i am in loop");
-           	
-        					cashBookResultList.add((String) c[j].toString());
-        				}
-        				
-        				cashBookGrid.add(cashBookResultList);
-        		
-        			  addTable(cashbooktable);
-        			  cashBook_with_header.addAll(cashBookGrid);
+        		if(count<length-1)
+        		{
+	        		Object[] c = (Object[]) cf;
+	        		
+	        		cashBookGrid = new ArrayList<ArrayList>();   
+	        		
+	        				cashBookResultList = new ArrayList<String>();
+	           	
+	        				for(int j=0;j<c.length;j++){
+	        					
+	        					cashBookResultList.add((String) c[j].toString());
+	        				}
+	        				
+	        				cashBookGrid.add(cashBookResultList);
+	        		
+	        			  addTable(cashbooktable);
+	        			  cashBook_with_header.addAll(cashBookGrid);
+        		}
+        			  count++;
         	}
         	
   	    	OrgName = MainActivity.organisationName;
@@ -209,10 +210,7 @@ public class cashBook extends Activity{
 			sFilename = "cashBook"+"_"+ OrgName.replace(" ", "")+ "_" +
 					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
 			pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Book",balancePeriod,"",result,rsSymbol.toString()};
-			
-            //animated_dialog();
-            //floatingHeader();
-			
+		
 			createMenuOptions();
 			changeInputs();
 		
@@ -346,7 +344,7 @@ public class cashBook extends Activity{
         }
     }
 	
-private void drillDown() {
+    private void drillDown() {
 		int count = cashbooktable.getChildCount();
 		System.out.println("drill down "+count);
 		
