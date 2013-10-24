@@ -238,13 +238,7 @@ public class balanceSheet extends Activity{
     			}
     		}    
     		
-    		date= new Date();
-			String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
-			OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
-			balancePeriod = financialFromDate+" to "+balanceToDateString;
-			sFilename = balType+"_"+ OrgName.replace(" ", "")+ "_" +
-					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
-			pdf_params = new String[]{balType,sFilename,OrgName,OrgPeriod,balancetype,balancePeriod,"",result,rsSymbol.toString()};
+    		
 			
     		drillDown();
     		
@@ -274,6 +268,13 @@ public class balanceSheet extends Activity{
 			
 			@Override
 			public void onClick(View v) {
+				date= new Date();
+				String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+				OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
+				balancePeriod = financialFromDate+" to "+balanceToDateString;
+				sFilename = balType+"_"+ OrgName.replace(" ", "")+ "_" +
+						financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
+				pdf_params = new String[]{balType,sFilename,OrgName,OrgPeriod,balancetype,balancePeriod,"",result,rsSymbol.toString()};
 				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
 				
 				AlertDialog dialog;

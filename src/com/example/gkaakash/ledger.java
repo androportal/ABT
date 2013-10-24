@@ -125,6 +125,7 @@ public class ledger extends Activity {
 	int CSV = Menu.FIRST + 1;
 	int len;
 	AlertDialog dialog;
+	Date date;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -259,13 +260,7 @@ public class ledger extends Activity {
 			 * below variables are to providing information to PDF genartion header
 			 */
 			OrgName = MainActivity.organisationName;
-			Date date = new Date();
-			String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
-			OrgPeriod = "Financial Year: " + financialFromDate + " to "+ financialToDate;
-			LedgerPeriod = fromDate + " to " + toDate;
-			String account = accountName.replace(" ", "");
-			sFilename = "L" +"_"+ OrgName.replace(" ", "")+"_" + account + "_" +financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+ date_format;
-			pdf_params = new String[] { "L", sFilename, OrgName, OrgPeriod,"Ledger for: " + accountName, LedgerPeriod,"Project: " + Ledger_project, };
+			
 			
 			/**
 			 * get the result of ledger from rpc and display it to tables accordingly
@@ -352,6 +347,13 @@ public class ledger extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				date = new Date();
+				String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+				OrgPeriod = "Financial Year: " + financialFromDate + " to "+ financialToDate;
+				LedgerPeriod = fromDate + " to " + toDate;
+				String account = accountName.replace(" ", "");
+				sFilename = "L" +"_"+ OrgName.replace(" ", "")+"_" + account + "_" +financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+ date_format;
+				pdf_params = new String[] { "L", sFilename, OrgName, OrgPeriod,"Ledger for: " + accountName, LedgerPeriod,"Project: " + Ledger_project, };
 				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
 				
 
@@ -708,16 +710,14 @@ public class ledger extends Activity {
 		Object[] paramDr = new Object[] { "Dr" };
 		m.getAccountsByRule(paramDr, vouchertypeflag, context);
 		Accountlist = module.Accountlist;
-		System.out.println("accountlist:"+Accountlist);
+		
 		DrAccountlist.addAll(Accountlist);
-		System.out.println("DList:" + DrAccountlist);
+		
 		CrAccountlist = new ArrayList<String>();
 		Object[] paramCr = new Object[] { "Cr" };
 		m.getAccountsByRule(paramCr, vouchertypeflag, context);
 		Accountlist = module.Accountlist;
 		CrAccountlist.addAll(Accountlist);
-		System.out.println("CList:" + CrAccountlist);
-		System.out.println(vouchertypeflag);
 		
 
 		if (DrAccountlist.size() < 1 || CrAccountlist.size() < 1) {
@@ -752,23 +752,20 @@ public class ledger extends Activity {
 		if (get_extra_flag == null) {
 
 			MainActivity.nameflag = false;
-			Intent intent = new Intent(getApplicationContext(),
-					reportMenu.class);
+			Intent intent = new Intent(getApplicationContext(),reportMenu.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 
 		} else if (get_extra_flag.equalsIgnoreCase("from_trialBal")) {
 			get_extra_flag = null;// so that on backpress it will to reportmenu
 									// page
-			Intent intent = new Intent(getApplicationContext(),
-					trialBalance.class);
+			Intent intent = new Intent(getApplicationContext(),trialBalance.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		} else if (get_extra_flag.equalsIgnoreCase("from_projStatement")) {
 			get_extra_flag = null;// so that on backpress it will to reportmenu
 									// page
-			Intent intent = new Intent(getApplicationContext(),
-					projectStatement.class);
+			Intent intent = new Intent(getApplicationContext(),projectStatement.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		} else if (get_extra_flag.equalsIgnoreCase("from_cashflow")) {

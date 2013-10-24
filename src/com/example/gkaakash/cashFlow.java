@@ -213,34 +213,7 @@ public class cashFlow extends Activity{
 			org.setText(OrgName + ", "+reportMenu.orgtype);
 			TextView tvdate = (TextView)findViewById(R.id.date);
 			tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
-			
-//            final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
-//            btnScrollDown.setOnClickListener(new OnClickListener() {
-// 	
-//            	@Override
-//            	public void onClick(View v) {
-//            		if(updown==false){
-//            			sv.fullScroll(ScrollView.FOCUS_DOWN); 
-//            			btnScrollDown.setBackgroundResource(R.drawable.up);
-//            			updown=true;
-//            		}else {
-//            			sv.fullScroll(ScrollView.FOCUS_UP); 
-//            			btnScrollDown.setBackgroundResource(R.drawable.down);
-//            			updown=false;
-//            		}
-//            	}
-//            });
-            
-            date= new Date();
-			String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
-			OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
-			balancePeriod = fromDateString+" to "+toDateString;
-			sFilename = "CashFlow"+"_"+ OrgName.replace(" ", "")+ "_" +
-					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
-			pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Flow",balancePeriod,"",result,rsSymbol.toString()};
-			
-            //animated_dialog();
-            //floatingHeader();
+
 			
 			createMenuOptions();
 			changeInputs();
@@ -269,6 +242,13 @@ public class cashFlow extends Activity{
 
 			@Override
 			public void onClick(View v) {
+				date= new Date();
+				String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+				OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
+				balancePeriod = fromDateString+" to "+toDateString;
+				sFilename = "CashFlow"+"_"+ OrgName.replace(" ", "")+ "_" +
+						financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
+				pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Flow",balancePeriod,"",result,rsSymbol.toString()};
 				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
 				
 				AlertDialog dialog;

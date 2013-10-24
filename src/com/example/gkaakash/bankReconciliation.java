@@ -60,6 +60,7 @@ public class bankReconciliation extends Activity{
     static Object[] bankReconResult;
     static Integer client_id;
     private Report report;
+    
     ArrayList<String> bankReconResultList, with_narration;
     private ArrayList accountlist, for_clearenceDate; 
     static boolean narration_flag;
@@ -204,17 +205,7 @@ public class bankReconciliation extends Activity{
 //	                }
 //           		}
 //           	});
-           	Date date= new Date();
-			String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
-			OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
-			BankReconcilPeriod = fromDate+" to "+toDate;
-			String account = accountName.replace(" ","");
-			
-	   	 	sFilename = "BankRec"+"_"+ OrgName.replace(" ", "")+"_"+account+ "_" +
-					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
-			
-			pdf_params = new String[]{"BankRec",sFilename,OrgName,OrgPeriod,"Bank Reconciliation for "+account,BankReconcilPeriod,"",result};
-
+           
 			createMenuOptions();
 			
 			changeInputs();
@@ -244,6 +235,17 @@ public class bankReconciliation extends Activity{
 
 			@Override
 			public void onClick(View v) {
+				Date date= new Date();
+				String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
+				OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
+				BankReconcilPeriod = fromDate+" to "+toDate;
+				String account = accountName.replace(" ","");
+				
+		   	 	sFilename = "BankRec"+"_"+ OrgName.replace(" ", "")+"_"+account+ "_" +
+						financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
+				
+				pdf_params = new String[]{"BankRec",sFilename,OrgName,OrgPeriod,"Bank Reconciliation for "+account,BankReconcilPeriod,"",result};
+
 				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
 				
 				AlertDialog dialog;

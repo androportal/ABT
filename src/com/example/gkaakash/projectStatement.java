@@ -195,14 +195,7 @@ public class projectStatement extends Activity{
 //		           }
 //        		}
 //        	});
-        	 Date date= new Date();
-	   		     String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
-				 OrgPeriod = "Financial Year:  "+financialFromDate+" to "+financialToDate;
-	             Period = financialFromDate+" to "+ToDateString;
-	             String project = projectName.replace(" ","");
-				 sFilename = "ProjeST"+"_"+ OrgName.replace(" ", "")+"_"+project+ "_" +
-							financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
-		         pdf_params = new String[]{"ProjeST",sFilename,OrgName,OrgPeriod,"Project Statement",Period,projectName,String.format("%.2f", Math.abs(result))};
+        	
         	
         	
         	//animated_dialog();
@@ -300,6 +293,15 @@ public class projectStatement extends Activity{
 
 			@Override
 			public void onClick(View v) {
+				
+				 Date date= new Date();
+	   		     String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+				 OrgPeriod = "Financial Year:  "+financialFromDate+" to "+financialToDate;
+	             Period = financialFromDate+" to "+ToDateString;
+	             String project = projectName.replace(" ","");
+				 sFilename = "ProjeST"+"_"+ OrgName.replace(" ", "")+"_"+project+ "_" +
+							financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
+		         pdf_params = new String[]{"ProjeST",sFilename,OrgName,OrgPeriod,"Project Statement",Period,projectName,String.format("%.2f", Math.abs(result))};
 				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
 				
 				AlertDialog dialog;

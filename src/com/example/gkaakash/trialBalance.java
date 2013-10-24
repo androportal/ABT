@@ -64,6 +64,7 @@ public class trialBalance extends Activity{
    	Boolean alertdialog = false;
     ObjectAnimator animation2;
     Float result;
+    Date date;
     boolean reportmenuflag;
     int oneTouch = 1;
     TableLayout floating_heading_table;
@@ -166,8 +167,7 @@ public class trialBalance extends Activity{
 	    		trialBalanceResult = (Object[]) report.getExtendedTrialBalance(params,client_id);
 	    		trialbalType = "ExtendedT";
 	    	}
-	    	 Date date= new Date();
-	   		 date_format = new SimpleDateFormat("dMMMyyyy").format(date);
+	    	 
 	         OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
 	         TrialPeriod = financialFromDate+" to "+trialToDateString;
 	         trialBalGrid = new ArrayList<ArrayList>();
@@ -208,11 +208,7 @@ public class trialBalance extends Activity{
 //		           }
 //				}
 //	        });
-	    	sFilename = trialbalType+"_"+ OrgName.replace(" ", "")+ "_" +
-					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
-			pdf_params = new String[]{trialbalType,sFilename,OrgName,OrgPeriod,trialbalancetype,
-					TrialPeriod,"",rsSymbol+String.format("%.2f", Math.abs(result))};
-					
+	    	
 	    	
 	    	
 	       //animated_dialog();
@@ -243,6 +239,13 @@ public class trialBalance extends Activity{
 
 			@Override
 			public void onClick(View v) {
+				date= new Date();
+		   		date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+		   		sFilename = trialbalType+"_"+ OrgName.replace(" ", "")+ "_" +
+						financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
+				pdf_params = new String[]{trialbalType,sFilename,OrgName,OrgPeriod,trialbalancetype,
+						TrialPeriod,"",rsSymbol+String.format("%.2f", Math.abs(result))};
+						
 				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
 				
 				AlertDialog dialog;

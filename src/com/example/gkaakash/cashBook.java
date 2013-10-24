@@ -99,11 +99,11 @@ public class cashBook extends Activity{
         setContentView(R.layout.cash_book_table);
        // System.out.println("in cash"+IPaddr);
         IPaddr = MainActivity.IPaddr;
-        System.out.println("in createorg"+IPaddr);
+       
         report = new Report(IPaddr);
       
         client_id= Startup.getClient_id();
-        System.out.println("client id"+client_id);
+       
         rsSymbol = new SpannableString(cashBook.this.getText(R.string.Rs)); 
         module = new module();   
         //customizing title bar
@@ -194,23 +194,7 @@ public class cashBook extends Activity{
         	
   	    	OrgName = MainActivity.organisationName;
              
-  	    	//set title
-			TextView org = (TextView)findViewById(R.id.org_name);
-			org.setText(OrgName + ", "+reportMenu.orgtype);
-			TextView tvdate = (TextView)findViewById(R.id.date);
-			System.out.println("financialFromDate"+financialFromDate);
-			System.out.println("financialToDate"+financialToDate);
-			tvdate.setText(module.changeDateFormat(financialFromDate)+" To "+module.changeDateFormat(financialToDate));
-//			
-
-            date= new Date();
-			String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
-			OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
-			balancePeriod = fromDateString+" to "+toDateString;
-			sFilename = "cashBook"+"_"+ OrgName.replace(" ", "")+ "_" +
-					financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
-			pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Book",balancePeriod,"",result,rsSymbol.toString()};
-		
+  	    	
 			createMenuOptions();
 			changeInputs();
 		
@@ -426,6 +410,18 @@ public class cashBook extends Activity{
 
 			@Override
 			public void onClick(View v) {
+				//set title
+				TextView org = (TextView)findViewById(R.id.org_name);
+				org.setText(OrgName + ", "+reportMenu.orgtype);
+				TextView tvdate = (TextView)findViewById(R.id.date);
+				tvdate.setText(module.changeDateFormat(financialFromDate)+" To "+module.changeDateFormat(financialToDate));
+				date= new Date();
+				String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
+				OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
+				balancePeriod = fromDateString+" to "+toDateString;
+				sFilename = "cashBook"+"_"+ OrgName.replace(" ", "")+ "_" +financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
+				pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Book",balancePeriod,"",result,rsSymbol.toString()};
+			
 				CharSequence[] items = new CharSequence[]{"Export as PDF","Export as CSV"};
 				
 				AlertDialog dialog;
@@ -439,7 +435,9 @@ public class cashBook extends Activity{
 					@Override
 					public void onClick(DialogInterface dialog,
 							int pos) {
+						
 						if(pos == 0){
+							System.out.println("onclick params "+pdf_params);
 							LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 							String password = module.setPasswordForPdfFile(cashBook.this,inflater, 
 									R.layout.sign_up, 0, pdf_params,cashBook_with_header,null);
