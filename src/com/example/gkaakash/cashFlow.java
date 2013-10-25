@@ -269,7 +269,7 @@ public class cashFlow extends Activity{
 				   			
 						}else if(pos == 1){
 							m.csv_writer1(pdf_params,cashFlow1, cashFlow2);
-							m.toastValidationMessage(cashFlow.this, "CSV exported");
+							m.toastValidationMessage(cashFlow.this,"CSV exported please see at /mnt/sdcard/"+pdf_params[1]);
 						}
 					}
 				});

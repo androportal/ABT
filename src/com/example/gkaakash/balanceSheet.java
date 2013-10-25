@@ -294,7 +294,7 @@ public class balanceSheet extends Activity{
 						
 						}else if(pos == 1){
 							m.csv_writer1(pdf_params,BalanceGrid1,BalanceGrid2);
-							m.toastValidationMessage(balanceSheet.this, "CSV exported");
+							m.toastValidationMessage(balanceSheet.this, "CSV exported please see at /mnt/sdcard/"+pdf_params[1]);
 						}
 					}
 				});

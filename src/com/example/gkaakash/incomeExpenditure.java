@@ -275,7 +275,7 @@ public class incomeExpenditure extends Activity{
 							
 						}else if(pos == 1){
 							m.csv_writer1(pdf_params,IEGrid1, IEGrid2);
-							m.toastValidationMessage(incomeExpenditure.this, "CSV exported");
+							m.toastValidationMessage(incomeExpenditure.this, "CSV exported please see at /mnt/sdcard/"+pdf_params[1]);
 						}
 					}
 				});

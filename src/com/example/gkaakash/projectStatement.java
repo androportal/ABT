@@ -177,28 +177,6 @@ public class projectStatement extends Activity{
 			org.setText(OrgName + ", "+reportMenu.orgtype);
 			TextView tvdate = (TextView)findViewById(R.id.date);
 			tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
-			
-//        	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
-//        	btnScrollDown.setOnClickListener(new OnClickListener() {
-//        		@Override
-//        		public void onClick(View v) {
-//        			if(updown==false){
-//        				ScrollView sv = (ScrollView)findViewById(R.id.ScrollProjStatement);
-//		                sv.fullScroll(ScrollView.FOCUS_DOWN); 
-//		                btnScrollDown.setBackgroundResource(R.drawable.up);
-//		                updown=true;
-//		           }else {
-//		                ScrollView sv = (ScrollView)findViewById(R.id.ScrollProjStatement);
-//		                sv.fullScroll(ScrollView.FOCUS_UP); 
-//		                btnScrollDown.setBackgroundResource(R.drawable.down);
-//		                updown=false;
-//		           }
-//        		}
-//        	});
-        	
-        	
-        	
-        	//animated_dialog();
         	floatingHeader();
         	
         	createMenuOptions();
@@ -322,7 +300,7 @@ public class projectStatement extends Activity{
 				   			
 						}else if(pos == 1){
 							m.csv_writer(pdf_params,projectStatementGrid_with_header);
-				   			m.toastValidationMessage(projectStatement.this, "CSV exported");
+				   			m.toastValidationMessage(projectStatement.this,"CSV exported please see at /mnt/sdcard/"+pdf_params[1]);
 						}
 					}
 				});
@@ -451,12 +429,9 @@ public class projectStatement extends Activity{
 					//change the row color(black/gray to orange) when clicked
 					View row = projectStatementTable.getChildAt(i+1);
 					for (int j = 0; j < ColumnNameList.length; j++) {
-						LinearLayout l = (LinearLayout) ((ViewGroup) row)
-								.getChildAt(j);
+						LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(j);
 						TextView t = (TextView) l.getChildAt(0);
 						ColorDrawable drawable = (ColorDrawable)t.getBackground();
-						System.out.println("color:"+drawable.getColor());
-
 						ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"),drawable.getColor());
 						colorFade.setDuration(100);
 						colorFade.start();
@@ -474,12 +449,10 @@ public class projectStatement extends Activity{
         label.setText(param);
         label.setTextSize(18);
         label.setTextColor(Color.WHITE);
-        label.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT));
+        label.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
         label.setPadding(2, 2, 2, 2);
         LinearLayout Ll = new LinearLayout(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
         params.setMargins(1, 1, 1, 1);
         Ll.addView(label,params);
         tr.addView((View)Ll); // Adding textView to tablerow.

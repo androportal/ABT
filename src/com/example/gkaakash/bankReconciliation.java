@@ -266,7 +266,7 @@ public class bankReconciliation extends Activity{
 													
 						}else if(pos == 1){
 							m.csv_writer1(pdf_params,bankReconGrid, statementGrid);
-							m.toastValidationMessage(bankReconciliation.this, "CSV exported");
+							m.toastValidationMessage(bankReconciliation.this,"CSV exported please see at /mnt/sdcard/"+pdf_params[1]);
 						}
 					}
 				});

@@ -151,11 +151,10 @@ public class module {
 	void generate_pdf(final Context c,String[] params,final ArrayList<ArrayList> Grid, final String password){
 		PdfGenaretor pdfgen = new PdfGenaretor();
 		try {
-			System.out.println("grid  .."+Grid);
-			System.out.println("param "+ params[1]);
+			
 			pdfgen.generatePDFFile(Grid, params, password);
 			AlertDialog.Builder builder1 = new AlertDialog.Builder(c);
-			builder1.setMessage("PDF genration completed ..see /mnt/sdcard/"+ params[1]);
+			builder1.setMessage("PDF exported please see at/mnt/sdcard/"+ params[1]);
 			AlertDialog alert1 = builder1.create();
 			alert1.show();
 			alert1.setCancelable(true);
@@ -172,7 +171,7 @@ public class module {
 		try {
 			pdfgen.generateBalancePDFFile(Grid,Grid1,params, password);
 			AlertDialog.Builder builder1 = new AlertDialog.Builder(c);
-			builder1.setMessage("Pdf genration completed ..see /mnt/sdcard/"+params[1]);
+			builder1.setMessage("Pdf exported please see at/mnt/sdcard/"+params[1]);
 			AlertDialog alert1 = builder1.create();
 			alert1.show();
 			alert1.setCancelable(true);

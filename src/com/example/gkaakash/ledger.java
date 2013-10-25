@@ -372,7 +372,7 @@ public class ledger extends Activity {
 							String password = m.setPasswordForPdfFile(context,inflater, R.layout.sign_up,0, pdf_params, ledgerGrid, null);
 						}else if(pos == 1){
 							m.csv_writer(pdf_params,ledgerGrid_with_header);
-							m.toastValidationMessage(ledger.this, "CSV exported");
+							m.toastValidationMessage(ledger.this, "CSV exported please see at /mnt/sdcard/"+pdf_params[1]);
 						}
 					}
 				});

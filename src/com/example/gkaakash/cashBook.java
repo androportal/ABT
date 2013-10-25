@@ -444,7 +444,7 @@ public class cashBook extends Activity{
 				   			
 						}else if(pos == 1){
 							module.csv_writer(pdf_params,cashBook_with_header);
-							module.toastValidationMessage(cashBook.this, "CSV exported");
+							module.toastValidationMessage(cashBook.this, "CSV exported please see at /mnt/sdcard/"+pdf_params[1]);
 						}
 					}    
 				});

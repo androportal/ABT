@@ -265,7 +265,7 @@ public class trialBalance extends Activity{
 									R.layout.sign_up, 0, pdf_params,trialBalGrid, null);
 						}else if(pos == 1){
 							m.csv_writer(pdf_params,trialBalGrid_with_header);
-				   			m.toastValidationMessage(trialBalance.this, "CSV exported");
+				   			m.toastValidationMessage(trialBalance.this,"CSV exported at /mnt/sdcard/"+pdf_params[1]);
 						}
 					}
 				});
