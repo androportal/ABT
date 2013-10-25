@@ -29,7 +29,7 @@ Aakash Business Tool's master menu includes below options:
 **Export organisation**
 	* Export organisation data from one tablet to another.
 
-**Account settings**
+**User User account settings**
 	* Set new username and password.
 	* Create new user role.
 
@@ -48,7 +48,7 @@ Guest
 
 **Rights of Guest** :
 
-1. Except ``account setting``,  **guest** can access all other options.
+1. Except ``User account settings``,  **guest** can access all other options.
    
 Admin
 -----
@@ -61,8 +61,8 @@ Admin
 **Rights of Admin** :
 
 1. **Admin** have access to all the above options.
-2. As ``Account settings`` option is selected, it prompts a dialog with three options ie. ``Change username``, ``Change password`` (admin can change 
-   his own password and username) and ``add user``.
+
+2. As ``User account settings`` option is selected, it prompts a dialog with three options ie. ``Change username``, ``Change password`` (to change own username and password) and ``add user``.
 
 .. image:: images/user_settings.png
    :name: ABT main page
@@ -71,7 +71,7 @@ Admin
    :width: 350pt
    
 
-3. As add user is clicked, all the details about last login and logout time of manager and operator are displayed in the
+3. As ``add user`` is clicked, all the details about last login and logout time of manager and operator are displayed in the
    list as per the seleted radio button ie. manager or operator.
 
 .. image:: images/user_table.png
@@ -113,10 +113,10 @@ Manager
 
 **Rights of Manager** :
 
-1. Except ``rollover``, **manager** can access all other options.
-2. As ``Account settings`` option is selected, it prompts a dialog with three options ie. ``Change username``, ``Change password`` (manager can change 
-   his own password and username) and ``add user``.
-3. As add user is clicked, all the details about last login and logout time of operator are displayed in the
+1. Except ``rollover`` and ``delete existing organisation``, **manager** can access all other options.
+
+2. As ``User account settings`` option is selected, it prompts a dialog with three options ie. ``Change username``, ``Change password`` (to change own username and password) and ``add user``.
+3. As ``add user`` is clicked, all the details about last login and logout time of operator are displayed in the
    list.
 
 .. image:: images/operator_table.png
@@ -138,7 +138,7 @@ Operator
 
 **Rights of Operator** :
 
-1. **Operator** has access to ``create account, Transaction, Export organisation and Help``.
+1. **Operator** has access to ``Create account, Transaction, all reports except Income & Expenditure/Profit & Loss, Add projects, User account settings, Export organisation and Help``.
 
 	
 

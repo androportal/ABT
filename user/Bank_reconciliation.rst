@@ -65,6 +65,9 @@ Bank reconciliation
 
 * So the ``Bank Reconciliation Statement`` will get updated automatically.
    
+* Click on the table row to see the details of the transaction. In accounting 
+  terms this fuctionality is called ``Drilldown``.
+   
 * In options menu two features are provided: export report in PDF or CSV format.
 
 * To change the input informations, user can click on button present 

@@ -132,7 +132,7 @@ Search/Edit/Clone/Delete Transaction
    :height: 200pt
    :width: 350pt
 
-* In **Edit voucher**, all fields are editable except voucher type and voucher code. 
+* In **Edit voucher**, all fields are editable except voucher type and voucher number. 
   Press ``Save`` to save the changes. 
 
 .. image:: images/edit_voucher.png

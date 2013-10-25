@@ -53,6 +53,9 @@ ask’s following information:
    :height: 200pt
    :width: 350pt
 
+* Click on the table row to see the details of the transaction. In accounting 
+  terms this fuctionality is called ``Drilldown``.
+
 Below features are ``common`` for ``all`` the reports.
 
 * To change the above informations provided , user can click on button present 
@@ -103,6 +106,8 @@ Trial Balance
 * It will display Trial Balance for the given period in a tabular format. 
   Difference in Opening Balance is located at the bottom of the screen.
   
+* Click on the table row to see the ledger of the selected account.
+  
 .. image:: images/net_trial_balance.png
    :name: ABT main page
    :align: center
@@ -143,6 +148,8 @@ Project Statement
 * It will display Project Statement for the given period in a tabular format. 
   Difference in Opening Balance is located at the bottom of the screen.
   
+* Click on the table row to see the ledger of the selected account.
+  
 .. image:: images/proj_statement.png
    :name: ABT main page
    :align: center
@@ -168,6 +175,8 @@ Cash Flow
 * It will display Cash Flow for the given period in a tabular format. Net Flow 
   is located at the bottom of the screen.
   
+* Click on the table row to see the ledger of the selected account.
+  
 .. image:: images/cashflow.png
    :name: ABT main page
    :align: center
@@ -176,7 +185,7 @@ Cash Flow
 
 
 Balance Sheet
---------------------
+-------------
 * It will pop up a ``dialog box`` (see fig.) which ask’s following information:
   
 * ``To date``, by default it is financial year's to date. Change date as per 
@@ -195,6 +204,8 @@ Balance Sheet
   
 * It will display Balance Sheet for the given period in a tabular format. 
   Difference in Opening Balance is located at the bottom of the screen.
+  
+* Click on the table row to see the ledger of the selected account.
   
 .. image:: images/balancesheet.png
    :name: ABT main page
@@ -227,7 +238,34 @@ Income & Expenditure/Profit & Loss
 * It will display Income & Expenditure/Profit & Loss for the given period in 
   a tabular format.
   
+* Click on the table row to see the ledger of the selected account.
+  
 .. image:: images/profitloss.png
+   :name: ABT main page
+   :align: center
+   :height: 200pt
+   :width: 350pt
+
+Cash Book
+---------
+* It will pop up a ``dialog box`` (see fig.) which ask’s following information:
+  
+* ``From date`` and ``To date``, by default it is financial year's from date 
+  and to date. Change date as per the requirement or keep it as it is.
+
+.. image:: images/cashbook_index.png
+   :name: ABT main page
+   :align: center
+   :height: 200pt
+   :width: 350pt
+  	  
+* Press ``View``.
+  
+* It will display Cash Book for the given period in a tabular format.
+
+* Click on the table row to see the ledger of the selected account.
+  
+.. image:: images/cashbook.png
    :name: ABT main page
    :align: center
    :height: 200pt
