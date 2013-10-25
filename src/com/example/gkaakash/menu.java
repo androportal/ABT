@@ -1,10 +1,6 @@
 package com.example.gkaakash;
 
 
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -12,13 +8,33 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.gkaakash.controller.Account;
 import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Preferences;
@@ -26,54 +42,6 @@ import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.Transaction;
 import com.gkaakash.controller.User;
-
-import android.R.drawable;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.ListActivity;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.preference.Preference;
-import android.text.Html;
-import android.text.InputType;
-import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.SimpleAdapter;
-import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class menu extends Activity{
 	//adding a class property to hold a reference to the controls
@@ -104,7 +72,7 @@ public class menu extends Activity{
 	boolean reportmenuflag;
 	static String orgtype,userrole;
 	static String OrgName;
-	TextView tvWarning;
+	TextView tvWarning, tvusername;
 	module m;
 	static String[] menuOptions;
 	static String rollover;
@@ -121,6 +89,7 @@ public class menu extends Activity{
 	boolean reset_password_flag = false;
 	static String IPaddr;
 	ListView listView;
+	Date date = null;
 	
 	private Transaction transaction;
 	static boolean flag;
@@ -260,7 +229,7 @@ public class menu extends Activity{
 		//set user details
 		TextView tvuser = (TextView)findViewById(R.id.user);
 		tvuser.setText(Character.toString(userrole.charAt(0)).toUpperCase()+userrole.substring(1));
-		TextView tvusername = (TextView)findViewById(R.id.username);
+		tvusername = (TextView)findViewById(R.id.username);
 		//set the login timing of user in the database
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Date today_date = new Date();
@@ -272,7 +241,6 @@ public class menu extends Activity{
 			System.out.println("last login time"+result);
 			if(!result.equalsIgnoreCase("")){
 				//DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Date date = null;
 				try {
 					date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(result);
 				} catch (ParseException e) {
@@ -300,9 +268,9 @@ public class menu extends Activity{
 		 * create separate lists for menu options, their respective heading and description
 		 * access to menus as per the role
 		 * Admin: All menus
-		 * Guest: All menus except rollover
+		 * Guest: All menus except rollover, user account settings
 		 * Manager: All menus Except delete org and rollover
-		 * Operator: All menus except rollover, delete org, bank recon
+		 * Operator: All menus except rollover, delete org, bank recon, income-exp report, adding new user
 		 */
 		ArrayList<String> menuOptions = new ArrayList<String>(Arrays.asList("Create account", "Transaction", "Reports",
 				"Bank Reconciliation", "Preferences","Rollover","Export organisation","User account settings","Help"));
@@ -585,7 +553,7 @@ public class menu extends Activity{
 		}
 
 		//creating a dialog box for popup
-		AlertDialog.Builder builder = new AlertDialog.Builder(menu.this);
+		final AlertDialog.Builder builder = new AlertDialog.Builder(menu.this);
 		//setting title
 		builder.setTitle("User settings");
 		//adding items
@@ -614,6 +582,10 @@ public class menu extends Activity{
 					olduser_name.setText(username);
 					olduser_name.setEnabled(false);
 					
+					final EditText newuser_name = (EditText) layout1
+							.findViewById(R.id.etNewUsername);
+					newuser_name.requestFocus();
+					
 					Button cancel = (Button) layout1
 							.findViewById(R.id.btnCancel);
 					cancel.setOnClickListener(new OnClickListener() {
@@ -631,8 +603,7 @@ public class menu extends Activity{
 							String olduserName = olduser_name.getText()
 									.toString();
 							System.out.println("olduserName:" + olduserName);
-							EditText newuser_name = (EditText) layout1
-									.findViewById(R.id.etNewUsername);
+							
 							String newusername = newuser_name.getText()
 									.toString();
 							System.out.println("new username:" + newusername);
@@ -653,21 +624,20 @@ public class menu extends Activity{
 												userrole }, client_id);
 								System.out.println("r:" + username_result);
 								if (username_result == true) {
-									error_msg.setVisibility(TextView.VISIBLE);
-									error_msg
-									.setText("Username updated successully");
-
-									olduser_name.setText("");
-									newuser_name.setText("");
-									password.setText("");
+									m.dialog.cancel();
+									Toast.makeText(context, "Username updated successully", Toast.LENGTH_SHORT).show();
+									if (date != null) {
+										//add last login date
+										tvusername.setText(newusername + "\nLast login: "+ date.toLocaleString());
+									}else{
+										tvusername.setText(newusername);
+									}
+									username = newusername;
 
 								} else {
 									error_msg.setVisibility(TextView.VISIBLE);
 									error_msg
-									.setText("Invalid username or password");
-
-									olduser_name.setText("");
-									newuser_name.setText("");
+									.setText("Password is invalid");
 									password.setText("");
 								}
 							} else {
@@ -743,12 +713,8 @@ public class menu extends Activity{
 										newpass.setText("");
 										confirmpass.setText(""); 
 									}else {
-										error_msg.setVisibility(TextView.VISIBLE);
-
-										error_msg.setText( "Password updated successully");
-										oldpass.setText("");
-										newpass.setText("");
-										confirmpass.setText(""); 
+										m.dialog.cancel();
+										Toast.makeText(context, "Password updated successully", Toast.LENGTH_SHORT).show();
 									}
 								}else {
 									error_msg.setVisibility(TextView.VISIBLE);

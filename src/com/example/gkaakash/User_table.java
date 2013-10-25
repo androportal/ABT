@@ -400,7 +400,17 @@ public class User_table extends Activity {
 					long arg3) {
 				if(position != 0){
 					TextView username = (TextView)arg1.findViewById(R.id.tvRowTitle1);
-					dialog_builder(username.getText().toString(), "manager");
+					if (menu.userrole.equalsIgnoreCase("Admin")) {
+						if (rbmanager.isChecked()) {
+							dialog_builder(username.getText().toString(), "manager");
+						}else{
+							dialog_builder(username.getText().toString(), "operator");
+						}
+						
+					}else{
+						dialog_builder(username.getText().toString(), "operator");
+					}
+					
 				}
 			}
 		});
@@ -417,7 +427,7 @@ public class User_table extends Activity {
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 
 			@Override
-			public void onClick(DialogInterface dialog, int pos) {
+			public void onClick(DialogInterface dialog1, int pos) {
 				if (pos == 0) {
 
 					final View layout1 = m.builder_with_inflater(c, "",
@@ -437,9 +447,12 @@ public class User_table extends Activity {
 							.findViewById(R.id.etOld_User_Name);
 					old_user_name.setEnabled(false);
 					old_user_name.setTextColor(Color.parseColor("#AEC6CF"));
-					
 					old_user_name.setText(username);
 
+					final EditText newuser_name = (EditText) layout1
+							.findViewById(R.id.etNewUsername);
+					newuser_name.requestFocus();
+					
 					Button cancel = (Button) layout1
 							.findViewById(R.id.btnCancel);
 					cancel.setOnClickListener(new OnClickListener() {
@@ -462,8 +475,7 @@ public class User_table extends Activity {
 							String olduserName = olduser_name.getText()
 									.toString();
 							System.out.println("olduserName:" + olduserName);
-							EditText newuser_name = (EditText) layout1
-									.findViewById(R.id.etNewUsername);
+							
 							String newusername = newuser_name.getText()
 									.toString();
 							System.out.println("new username:" + newusername);
@@ -471,9 +483,7 @@ public class User_table extends Activity {
 							EditText password = (EditText) layout1
 									.findViewById(R.id.etPassword);
 							String password1 = password.getText().toString();
-							System.out.println("password:" + password1);
-							// System.out.println("username:"+username);
-							// System.out.println("userrole:"+userrole1);
+							System.out.println("password:" + password1+ userrole1);
 
 							if (!"".equals(olduserName)
 									& !"".equals(newusername)
@@ -484,27 +494,26 @@ public class User_table extends Activity {
 												userrole1 }, client_id);
 								System.out.println("r:" + username_result);
 								if (username_result == true) {
-									error_msg.setVisibility(TextView.VISIBLE);
-									error_msg
-											.setText("Username updated successully");
-									
-									olduser_name.setText("");
-									newuser_name.setText("");
-									password.setText("");
-									
-									if(rbmanager.isChecked()){
-										role_names = user.getUserNemeOfManagerRole(client_id);
-										setRoleList();
-									}else if(rboperator.isChecked()){
+									m.dialog.cancel();
+									Toast.makeText(User_table.this, "Username updated successully", Toast.LENGTH_SHORT).show();
+									if (menu.userrole.equalsIgnoreCase("Admin")) {
+										if(rbmanager.isChecked()){
+											role_names = user.getUserNemeOfManagerRole(client_id);
+											setRoleList();
+										}else if(rboperator.isChecked()){
+											role_names = user.getUserNemeOfOperatorRole(client_id);
+											setRoleList();
+										}
+									}else{
 										role_names = user.getUserNemeOfOperatorRole(client_id);
 										setRoleList();
 									}
+									
 
 								} else {
 									error_msg.setVisibility(TextView.VISIBLE);
 									error_msg
-											.setText("Invalid username or password");
-									olduser_name.setText("");
+											.setText("Password is invalid");
 									password.setText("");
 								}
 							} else {
@@ -568,7 +577,7 @@ public class User_table extends Activity {
 
 									Boolean result = user.changePassword(
 											new Object[] { username, old_pass,
-													new_pass, userrole },
+													new_pass, userrole1 },
 											client_id);
 									System.out.println("r:" + result);
 									if (result == false) {
@@ -579,15 +588,8 @@ public class User_table extends Activity {
 										newpass.setText("");
 										confirmpass.setText("");
 									} else {
-										error_msg
-												.setVisibility(TextView.VISIBLE);
-										error_msg
-												.setText("Password updated successully");
-
 										m.dialog.cancel();
-										oldpass.setText("");
-										newpass.setText("");
-										confirmpass.setText("");
+										Toast.makeText(User_table.this, "Password updated successully", Toast.LENGTH_SHORT).show();
 									}
 								} else {
 									error_msg.setVisibility(TextView.VISIBLE);
