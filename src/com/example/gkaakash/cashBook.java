@@ -134,6 +134,13 @@ public class cashBook extends Activity{
         	financialToDate= Startup.getFinancialToDate();
         	fromDateString = reportMenu.givenfromDateString;
         	toDateString = reportMenu.givenToDateString;
+        	OrgName = MainActivity.organisationName;
+        	
+        	//set title
+			TextView org = (TextView)findViewById(R.id.org_name);
+			org.setText(OrgName + ", "+reportMenu.orgtype);
+			TextView tvdate = (TextView)findViewById(R.id.date);
+			tvdate.setText(module.changeDateFormat(financialFromDate)+" To "+module.changeDateFormat(financialToDate));
    
         	/*
         	 * set financial from date and to date in textview
@@ -168,11 +175,11 @@ public class cashBook extends Activity{
         	int length = cashBookResult.length;
         	cashBook_with_header = new ArrayList<ArrayList>();   
         	//cashBookResult is 3 dimensional list 
-        	int count = 0;
+        	//int count = 0;
         	for(Object cf : cashBookResult){
         		
-        		if(count<length-1)
-        		{
+        		//if(count<length-1)
+        		//{
 	        		Object[] c = (Object[]) cf;
 	        		
 	        		cashBookGrid = new ArrayList<ArrayList>();   
@@ -188,8 +195,8 @@ public class cashBook extends Activity{
 	        		
 	        			  addTable(cashbooktable);
 	        			  cashBook_with_header.addAll(cashBookGrid);
-        		}
-        			  count++;
+        		//}
+        			  //count++;
         	}
         	
   	    	OrgName = MainActivity.organisationName;
@@ -410,11 +417,7 @@ public class cashBook extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				//set title
-				TextView org = (TextView)findViewById(R.id.org_name);
-				org.setText(OrgName + ", "+reportMenu.orgtype);
-				TextView tvdate = (TextView)findViewById(R.id.date);
-				tvdate.setText(module.changeDateFormat(financialFromDate)+" To "+module.changeDateFormat(financialToDate));
+				
 				date= new Date();
 				String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
 				OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
