@@ -244,6 +244,11 @@ public class createVoucher extends Activity {
 				etnarration.setText(narration);
 				etRefNumber.setText(refno);
 				etvoucherno.setText(vouchercode);
+				if (!cloneflag) {
+					etvoucherno.setEnabled(false);
+					etvoucherno.setTextColor(Color.parseColor("#AEC6CF"));
+				}
+				
 				checkvoucher_number = vouchercode;
 				System.out.println("values are:" + narration + refno+ searchdate + proj);
 				// setProject();
@@ -1305,7 +1310,7 @@ public class createVoucher extends Activity {
 									// transaction
 									// account details
 
-									Object[] params_master = new Object[] {vouchercode, vDate, vproject,narration };
+									Object[] params_master = new Object[] {vouchercode, vDate, vproject, narration, refNumber };
 									transaction.editVoucher(params_master,paramsMaster, client_id);
 									edittabflag = true;
 
