@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -509,10 +510,10 @@ public class trialBalance extends Activity{
      * this function add the value to the row
      */
 	void addRow(String param, final int i) {
-		tr.setOnClickListener(new OnClickListener() {
-
+		tr.setOnLongClickListener(new OnLongClickListener() {
+			
 			@Override
-			public void onClick(View v) {
+			public boolean onLongClick(View v) {
 				
 				String accname = trialBalGrid.get(i).get(1).toString();
 				//System.out.println("name is"+accname);
@@ -535,6 +536,7 @@ public class trialBalance extends Activity{
 					intent.putExtra("flag", "from_trialBal");
 					startActivity(intent); 
 				}
+				return false;
 			}
     	});
 		

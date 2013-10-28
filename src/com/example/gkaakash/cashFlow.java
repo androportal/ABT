@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -412,14 +413,15 @@ public class cashFlow extends Activity{
 		for (int i = 0; i < count; i++) {
 			final View row = cashFlowtable1.getChildAt(i);
 			
-			row.setOnClickListener(new OnClickListener() {
-
+			row.setOnLongClickListener(new OnLongClickListener() {
+				
 				@Override
-				public void onClick(View v) {
+				public boolean onLongClick(View v) {
 
 					LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(0);
 					final TextView tv = (TextView) l.getChildAt(0);
 					checkForAccountName(tv.getText().toString(), row);
+					return false;
 				}
 			});
 		}
@@ -428,14 +430,15 @@ public class cashFlow extends Activity{
 		for (int i = 0; i < count1; i++) {
 			final View row = cashFlowtable2.getChildAt(i);
 
-			row.setOnClickListener(new OnClickListener() {
-
+			row.setOnLongClickListener(new OnLongClickListener() {
+				
 				@Override
-				public void onClick(View v) {
+				public boolean onLongClick(View v) {
 
 					LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(0);
 					final TextView tv = (TextView) l.getChildAt(0);
 					checkForAccountName(tv.getText().toString(), row);
+					return false;
 					}
 			});
 		}

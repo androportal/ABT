@@ -40,6 +40,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -725,10 +726,10 @@ public class bankReconciliation extends Activity{
     void addRow(String param, final int i, final int j, final int flag){
     	
     	
-    	tr.setOnClickListener(new OnClickListener() {
+    	tr.setOnLongClickListener(new OnLongClickListener() {
 			
 			@Override
-			public void onClick(View arg0) {
+			public boolean onLongClick(View v) {
 				
 				String accname = bankReconGrid.get(i).get(1).toString();
 				
@@ -788,6 +789,7 @@ public class bankReconciliation extends Activity{
 					startActivity(intent);
 					// Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
 				}
+				return false;
 			}
 			});
     	

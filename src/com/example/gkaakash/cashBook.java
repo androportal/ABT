@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -343,10 +344,10 @@ public class cashBook extends Activity{
 			System.out.println("i value"+i);
 			final View row = cashbooktable.getChildAt(i);
 			
-			row.setOnClickListener(new OnClickListener() {
-
+			row.setOnLongClickListener(new OnLongClickListener() {
+				
 				@Override
-				public void onClick(View v) {
+				public boolean onLongClick(View v) {
 					
 					///Toast.makeText(cashBook.this, "m on click", Toast.LENGTH_LONG).show();
 					LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(0);
@@ -360,6 +361,7 @@ public class cashBook extends Activity{
 					{
 						checkForAccountName(first_col_value, row);
 					}
+					return false;
 				}
 			});
 			if(i==count)
