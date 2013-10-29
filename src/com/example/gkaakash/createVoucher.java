@@ -399,10 +399,15 @@ public class createVoucher extends Activity {
 		change_voucher_type.setSelection(dataAdapter
 				.getPosition(vouchertypeflag));
 
-		if (searchFlag == true || from_report_flag != null) {
-			change_voucher_type.setEnabled(false);
-		}
-
+		 if (searchFlag == true|| from_report_flag != null) {
+                if( from_report_flag != null)
+                {
+                        vouchertypeflag = ledger.vouchertypeflag;
+               }
+			                        
+                System.out.println("vouchertypeflag in voucher "+vouchertypeflag);
+               change_voucher_type.setSelection(dataAdapter.getPosition(vouchertypeflag));
+		 }
 		change_voucher_type
 				.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -751,19 +756,18 @@ public class createVoucher extends Activity {
 	
 
 			} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
-				if(!ledger.vouchertypeflag.equalsIgnoreCase("Contra"))
-				{
-					DrAccountlist = ledger.DrAccountlist;
-					
-					System.out.println(" create "+DrAccountlist);
-					CrAccountlist = ledger.CrAccountlist;
-					System.out.println(" create "+CrAccountlist);
-				}else
-				{
-					accnames = ledger.Accountlist;
-					DrAccountlist.addAll(accnames);
-					CrAccountlist.addAll(accnames);
-				}
+				if(ledger.vouchertypeflag.equalsIgnoreCase("Contra") || ledger.vouchertypeflag.equalsIgnoreCase("Journal"))
+                {
+                        accnames = ledger.Accountlist;
+                        DrAccountlist.addAll(accnames);
+                        CrAccountlist.addAll(accnames);
+              }else
+               {
+                       
+                       DrAccountlist = ledger.DrAccountlist;
+                      CrAccountlist = ledger.CrAccountlist;
+               }
+
 			} else if (from_report_flag.equalsIgnoreCase("from_bankrecon")) {
 				DrAccountlist = bankReconciliation.DrAccountlist;
 				CrAccountlist = bankReconciliation.CrAccountlist;
