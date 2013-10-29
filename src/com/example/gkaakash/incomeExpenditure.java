@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -422,14 +423,15 @@ public class incomeExpenditure extends Activity{
 		for (int i = 0; i < count; i++) {
 			final View row = IEtable1.getChildAt(i);
 			
-			row.setOnClickListener(new OnClickListener() {
-
+			row.setOnLongClickListener(new OnLongClickListener() {
+				
 				@Override
-				public void onClick(View v) {
+				public boolean onLongClick(View v) {
 
 					LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(1);
 					final TextView tv = (TextView) l.getChildAt(0);
 					checkForAccountName(tv.getText().toString(), row);
+					return false;
 				}
 			});
 		}
@@ -438,14 +440,15 @@ public class incomeExpenditure extends Activity{
 		for (int i = 0; i < count1; i++) {
 			final View row = IEtable2.getChildAt(i);
 
-			row.setOnClickListener(new OnClickListener() {
-
+			row.setOnLongClickListener(new OnLongClickListener() {
+				
 				@Override
-				public void onClick(View v) {
+				public boolean onLongClick(View v) {
 
 					LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(1);
 					final TextView tv = (TextView) l.getChildAt(0);
 					checkForAccountName(tv.getText().toString(), row);
+					return false;
 					}
 			});
 		}

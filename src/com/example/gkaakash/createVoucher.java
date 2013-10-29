@@ -446,8 +446,8 @@ public class createVoucher extends Activity {
 				public void onFocusChange(View v, boolean hasFocus) {
 
 					e.setBackgroundResource(R.drawable.textfield_activated_holo_light);
-					etRefNumber = (EditText) findViewById(R.id.etRefNumber);
-					e.setNextFocusDownId(etRefNumber.getId());
+					etvoucherno = (EditText) findViewById(R.id.etVoucherNumber);
+					e.setNextFocusDownId(etvoucherno.getId());
 				}
 			});
 		}
@@ -986,12 +986,18 @@ public class createVoucher extends Activity {
 						// Toast.makeText(createVoucher.this,
 						// "account:"+ac,Toast.LENGTH_SHORT).show();
 						Object[] params1 = new Object[] {accountname,financialFromDate, financialFromDate,financialToDate };
-						String calculateBalance = (String) reports.calculateBalance(params1, client_id);
+						Object[] calculateBalance = (Object[]) reports.calculateBalance(params1, client_id);
 
 						View v1 = (View) parent.getParent();
 						EditText e3 = (EditText) ((ViewGroup) v1).getChildAt(5);
-						// e3.setText(balance1.get(2).toString());
-						e3.setText(calculateBalance);
+						e3.setText(calculateBalance[2].toString());
+						if (calculateBalance[6].toString().equals("Dr")) {
+							e3.setTextColor(Color.parseColor("#348017")); //green
+						}else if (!calculateBalance[2].toString().equals("0.00")) {
+							e3.setTextColor(Color.parseColor("#FF010f")); //red
+						}else{//for 0 bal
+							e3.setTextColor(Color.parseColor("#348017")); //green
+						}
 
 					}
 
@@ -1837,7 +1843,6 @@ public class createVoucher extends Activity {
 
 		second_table_closingbal_et = new EditText(newRow.getContext());
 		second_table_closingbal_et.setBackgroundResource(R.drawable.textfield_focused_holo_light);
-		second_table_closingbal_et.setTextColor(Color.parseColor("#AEC6CF"));
 		second_table_closingbal_et.setText("");
 		second_table_closingbal_et.setInputType(InputType.TYPE_CLASS_NUMBER| InputType.TYPE_NUMBER_FLAG_DECIMAL);
 

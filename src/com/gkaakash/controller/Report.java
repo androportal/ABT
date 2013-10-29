@@ -19,11 +19,10 @@ public class Report {
 	private Object[] profitLossStatement;
 	private Object[] cashFlowStatement;
 	private Object[] getBalancesheetDisplay;
-	private Object[] getLedgerForBankRecon;
-	private String setBankReconciliationResult,rollover,getClosingBalance;
+	private Object[] getLedgerForBankRecon,getClosingBalance;
+	private String setBankReconciliationResult,rollover;
 	Boolean existrollover;
 	private Boolean result;
-	private Object[] calculateBalance;
 	
 	/***
 	 * Default constructor
@@ -261,8 +260,7 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 		
 		try { 
 			
-			calculateBalance = (Object[])conn.getClient().call("reports.calculateBalance",params,client_id);
-			getClosingBalance = calculateBalance[2].toString();
+			getClosingBalance = (Object[])conn.getClient().call("reports.calculateBalance",params,client_id);
 
 		} catch (XMLRPCException e) {
 			

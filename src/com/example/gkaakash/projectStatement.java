@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -417,10 +418,10 @@ public class projectStatement extends Activity{
      * this function add the value to the row
      */
     void addRow(String param,final int i){
-    	tr.setOnClickListener(new OnClickListener() {
-
+    	tr.setOnLongClickListener(new OnLongClickListener() {
+			
 			@Override
-			public void onClick(View v) {				
+			public boolean onLongClick(View v) {			
 				
 				String accname = projectStatementGrid.get(i).get(1).toString();
 				
@@ -442,6 +443,7 @@ public class projectStatement extends Activity{
 					intent.putExtra("flag", "from_projStatement");
 					startActivity(intent);
 				}
+				return false;
 			}
     	});
     	

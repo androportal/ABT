@@ -2,4 +2,7 @@
 <lint>
     <issue id="NewApi" severity="ignore" />
     <issue id="ParserError" severity="ignore" />
+    <issue id="ResourceAsColor">
+        <ignore path="src/com/example/gkaakash/createVoucher.java" />
+    </issue>
 </lint>

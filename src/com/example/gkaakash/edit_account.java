@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -552,7 +553,8 @@ public class edit_account extends Activity {
 									if ("account deleted".equals(accountDeleteValue)) {
 										System.out.println(tvaccname.getText().toString());
 										account.deleteAccount(params1, client_id);
-										m.toastValidationMessage(edit_account.this, msg);
+										m.toastValidationMessage(edit_account.this, "Account '"+ tvaccname.getText().toString()
+												+"' has been deleted successfully.");
 										setaccountlist();
 										System.out.println("if"+accountDeleteValue);
 									} else {
@@ -562,7 +564,7 @@ public class edit_account extends Activity {
 												edit_account.this,
 												"Account '"
 														+ tvaccname.getText().toString()
-																+ msg + "' deleted.");
+																+ msg + " deleted.");
 									}
 								}
 							})
@@ -722,12 +724,14 @@ public class edit_account extends Activity {
 			//calculate closing balance and set the list
 			Object[] params1 = new Object[] { Acc_name.toString(), financialFromDate,
 					financialFromDate, financialToDate };
-			String calculateBalance = (String) reports.calculateBalance(
-					params1, client_id);
+			Object[] calculateBalance = (Object[]) reports.calculateBalance(params1, client_id);
 
 			SpannableString rsSymbol = new SpannableString(edit_account.this.getText(R.string.Rs)); 
-			
-			map.put("col_1", rsSymbol +" "+calculateBalance);
+			if (!calculateBalance[2].toString().equals("0.00")) {
+				map.put("col_1", rsSymbol +" "+calculateBalance[2].toString()+ " ("+calculateBalance[6].toString()+")");
+			}else{
+				map.put("col_1", rsSymbol +" "+calculateBalance[2].toString());
+			}
 			fillMaps.add(map);
 		} 
 

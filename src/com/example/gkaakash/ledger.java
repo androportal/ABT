@@ -587,10 +587,10 @@ public class ledger extends Activity {
 
 	void addRow(String param, final int i) {
 
-		tr.setOnClickListener(new OnClickListener() {
-
+		tr.setOnLongClickListener(new OnLongClickListener() {
+			
 			@Override
-			public void onClick(View arg0) {
+			public boolean onLongClick(View v) {
 				// fade the row color(black/gray to orange) when clicked
 				View row = ledgertable.getChildAt(i + 1);
 
@@ -639,7 +639,7 @@ public class ledger extends Activity {
 				// To pass on the value to the next page
 				startActivity(intent);
 				// Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
-				return;
+				return false;
 
 			}
 		});
