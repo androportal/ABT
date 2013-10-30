@@ -34,6 +34,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -599,10 +600,10 @@ public class SearchVoucher extends Activity {
 	public void addRow(String string,final int i) {
 		tr.setClickable(true);
 
-		tr.setOnClickListener(new OnClickListener() {
-
+		tr.setOnLongClickListener(new OnLongClickListener() {
+			
 			@Override
-			public void onClick(View v) {
+			public boolean onLongClick(View v) {
 				// Toast.makeText(SearchVoucher.this, tr.getId(), Toast.LENGTH_SHORT).show(); 
 				//fade the row color(black/gray to orange) when clicked
 				View row = vouchertable.getChildAt(i+1);
@@ -704,6 +705,7 @@ public class SearchVoucher extends Activity {
 				} catch (Exception e) {
 					//System.out.println(e);
 				}
+				return false;
 			}
 		});
 
