@@ -10,7 +10,6 @@ Reports
   list contains Income and Expenditure otherwise Profit and Loss report.
   
 .. image:: images/report_list.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -36,7 +35,6 @@ ask’s following information:
   it is ``No Project``.
 
 .. image:: images/ledger_before.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -48,13 +46,14 @@ ask’s following information:
   such as transactions, total of transactions, closing balance and grand total .
   
 .. image:: images/ledger.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
 
-* Click on the table row to see the details of the transaction. In accounting 
-  terms this fuctionality is called ``Drilldown``.
+* ``Long press`` the table row to see the details of the transaction. In accounting 
+  terms this fuctionality is called ``drill-down``. The financials are clearly laid out 
+  and offer drill-down possibilities for single journals and analysis. 
+  It acts as your window to all registered accounting data.
 
 Below features are ``common`` for ``all`` the reports.
 
@@ -78,7 +77,6 @@ Below features are ``common`` for ``all`` the reports.
 * You can also set security to your file.
 
 .. image:: images/file_security.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -96,7 +94,6 @@ Trial Balance
   ``. Select it from the dropdown.
 
 .. image:: images/trial_before.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -106,22 +103,19 @@ Trial Balance
 * It will display Trial Balance for the given period in a tabular format. 
   Difference in Opening Balance is located at the bottom of the screen.
   
-* Click on the table row to see the ledger of the selected account.
+* ``Long press`` the table row to see the ledger of the selected account.
   
 .. image:: images/net_trial_balance.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
    
 .. image:: images/gross_trial_balance.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
    
 .. image:: images/extended_trial_balance.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -138,7 +132,6 @@ Project Statement
   by default ``No Project`` is selected.
 
 .. image:: images/proj_before.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -148,10 +141,9 @@ Project Statement
 * It will display Project Statement for the given period in a tabular format. 
   Difference in Opening Balance is located at the bottom of the screen.
   
-* Click on the table row to see the ledger of the selected account.
+* ``Long press`` the table row to see the ledger of the selected account.
   
 .. image:: images/proj_statement.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -165,20 +157,19 @@ Cash Flow
   and to date. Change date as per the requirement or keep it as it is.
 
 .. image:: images/cashflow_before.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
   	  
 * Press ``View``.
   
-* It will display Cash Flow for the given period in a tabular format. Net Flow 
-  is located at the bottom of the screen.
+* With the help of the Future cash flow functionality you get a preview of 
+  your future cash flow based on information that has already been registered. 
+  Net Flow is located at the bottom of the screen.
   
-* Click on the table row to see the ledger of the selected account.
+* ``Long press`` the table row to see the ledger of the selected account.
   
 .. image:: images/cashflow.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -195,7 +186,6 @@ Balance Sheet
   and Sources & Application of Funds(vertical)``. Select it from the dropdown.
 
 .. image:: images/balancesheet_before.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -205,16 +195,14 @@ Balance Sheet
 * It will display Balance Sheet for the given period in a tabular format. 
   Difference in Opening Balance is located at the bottom of the screen.
   
-* Click on the table row to see the ledger of the selected account.
+* ``Long press`` the table row to see the ledger of the selected account.
   
 .. image:: images/balancesheet.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
    
 .. image:: images/vertical_balancesheet.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -228,7 +216,6 @@ Income & Expenditure/Profit & Loss
   the requirement or keep it as it is.
 
 .. image:: images/profitloss_before.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -238,10 +225,9 @@ Income & Expenditure/Profit & Loss
 * It will display Income & Expenditure/Profit & Loss for the given period in 
   a tabular format.
   
-* Click on the table row to see the ledger of the selected account.
+* ``Long press`` the table row to see the ledger of the selected account.
   
 .. image:: images/profitloss.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -254,7 +240,6 @@ Cash Book
   and to date. Change date as per the requirement or keep it as it is.
 
 .. image:: images/cashbook_index.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -263,10 +248,9 @@ Cash Book
   
 * It will display Cash Book for the given period in a tabular format.
 
-* Click on the table row to see the ledger of the selected account.
+* ``Long press`` the table row to see the ledger of the selected account.
   
 .. image:: images/cashbook.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt

@@ -94,7 +94,8 @@ pygments_style = 'sphinx'
 html_theme = 'default'
 html_theme_options = {
     "rightsidebar": "false",
-    "relbarbgcolor": ""
+    "relbarbgcolor": "",
+    'stickysidebar': 'true'
 }
 
 # Theme options are theme-specific and customize the look and feel of a theme

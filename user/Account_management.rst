@@ -3,14 +3,14 @@
 
 Account management
 ==================
-* Account management covers three major parts ie. create,search, edit and delete account .
+* Account management covers three major parts ie. create,search, edit and delete account.
 
-* Go to ``Master menu`` > ``Create account``.
+* Go to ``create account`` which is the first menu by default.
 
 Save account code preference
 ----------------------------
 
-* After saving the organisation details, as we start with account creation an alert box will appear on the screen (See below figure), where user need to specify 
+* Alert box will appear on the screen (See below figure), where user need to specify 
   account code type ie. manual or automated.
   
 .. image:: images/account_code_pref.png
@@ -23,10 +23,15 @@ Save account code preference
   Remember, this is one time activity. Later, this alert-box will 
   never appear, it will follow the saved preference(manual or automatic).
 
-How to create a new account?
-----------------------------
+How to start?
+-------------
 
-* ABT include the following ``groups`` and ``subgroups`` . See below table:
+* We can start with ABT by creating minimum of two accounts. 
+
+How to create an account?
+-------------------------
+
+* In the create account you have to choose your ``group`` and ``sub group``. See below table:
   
 	+------------------------------+-------------------------------------+
 	| Group	                       |    Sub-Group                        |
@@ -103,17 +108,41 @@ How to create a new account?
 
 * Create accounts under respective ``group`` and ``subgroup`` (specified in the above table) with opening balance(it can be ``0.00``).
   This will automatically update the ``total debit opening balance, total credit opening balance`` and ``difference`` between them.
-
+  
 .. image:: images/create_account.png
-   :name: ABT main page
    :align: center	
    :height: 200pt
    :width: 350pt
-	
+  
 * Press ``Save`` to save an account.
 
-* ``Finish`` button will take to the Master menu page.
+* ``Finish`` button will take to the Master menu page. 
+ 
+Example
+-------
+Before passing any transaction we are now going to create an account.
+( Cash on hand and Bank account).
 
+
+* Go to Create account - Group name is **current asset**
+
+* Sub group is **cash**
+
+* Account name could be **Cash on hand**
+
+* Account code is an auto generation code which has to be specified at the time 
+  of creating an organization or user can give the account code.
+  
+* Opening balance can be mentioned during the time of create account. If you 
+  are setting up a new business and is your first accounting package you need 
+  to enter opening balance. If you are closing a previous book-keeping system, 
+  the closing position (Trial Balance) will be the Opening Balance.
+
+* Likewise, for creating ``bank`` account group name is again ``current asset``, 
+  sub group is ``bank`` and the bank name would be the name of the bank. 
+  An organization can have any number of banks. Finally, the bank balance 
+  will show the consolidated amount in the balance sheet.
+	
   
 Search/Edit account
 -------------------

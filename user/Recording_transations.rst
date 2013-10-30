@@ -8,8 +8,8 @@ Transaction management
 
 * Go to ``Master menu`` > ``Create voucher``.
 
-Record Transaction
-------------------
+How to pass a transaction
+-------------------------
 Below table will help the user to understand, ``voucher types`` and their respective accounts as per rule:
 
 	+------------------------------+-------------------------------------+----------------------------------------+
@@ -56,6 +56,12 @@ To record transaction in ``ABT``, select ``Create voucher`` tab (see bellow fig.
    :height: 200pt
    :width: 350pt
 
+* The journal entry has been designed with user-friendliness in mind, with a 
+  default chart of accounts as a starting point. However, you have to create 
+  at least two accounts to start any transaction. It also offers every 
+  opportunity for creating your own user-defined variations.
+
+
 * Select the mode of transaction from the list of voucher type. ``Mode`` of transaction 
   can be Contra, Journal, Payment, Receipt, Debit Note, Credit Note, Sales, 
   Sales Return, Purchase, Purchase Return.
@@ -66,26 +72,37 @@ To record transaction in ``ABT``, select ``Create voucher`` tab (see bellow fig.
    :height: 200pt
    :width: 350pt
 
-* There should be atleast ``two`` accounts for recording transactions. To get started with, 
-  Select account ``Type(Dr/Cr)``, ``Account name`` from the dropdown and enter the ``Amount`` in rupees
-  and repeat the same until amount gets tallied. Use ``plus`` button for adding new row.
-  
-* **Note**: ABT populates drop down of account name by voucher type ``rule``. 
-  For example, if transaction type is contra, it filters account names that 
-  comes under contra and fill them in the drop down.
-     
-* Closing balance is displayed in between the account name and amount field. It's a read only field.    
- 
-* Press ``Voucher date`` to set the date of transaction.
+* Voucher Date - date on which the transaction is happened.
 
 * **Note**: ABT sets financial date as Voucher date, if no transaction is recorded before. 
   If any transaction is previously recorded,it sets the voucher date of the previous transaction 
   of the respective voucher type. If the date is changed, it updates the bydefault date or previous 
   date with the new date. 
 
-* Select ``Project name`` from the dropdown for recording transaction if there are any , otherwise select ``No project``.
+* Project - The project module is organized with project-based work processes 
+  in mind. This module is also closely integrated with other modules in the 
+  program. The Project register can be opened by going to Ledger -Select 
+  project name- View.
+  
+* Select the Account name for Dr and Cr side. It will automatically show the 
+  closing balances for both the account name. Debit balance are highlighted 
+  in Green color and Credit balances are highlighted in Red color.   
+  
+* Default focus helps you make voucher entry more efficient. For example, If you register 
+  a journal item in journal entry, the setting will guide you to the correct 
+  field. This is set based on the Accounting Principles, ``Debit what comes in; 
+  credit what goes out, Debit the receiver; Credit the Giver, Debit All 
+  Expenses and losses; Credit all incomes and gains``.
+  
+* This also helps in selecting multiple debit or credit sides using ``plus`` button.
+ 
+* Amount - enter the amount.
 
-* Enter ``Voucher code``, ``Voucher reference No.`` or edit the last reference No. and ``Narration``.
+* Voucher number - Its a unique key for all the transaction.
+
+* Voucher Reference number - Many transaction can have a single voucher reference number.
+
+* Voucher Narration - Narration for a particular transaction.
 
 * Press ``Save`` to save transaction.
 
@@ -95,14 +112,13 @@ You can change the voucher type if you want to make different voucher entries.
 
 Press ``Reset`` to clear all fields.
 
+To indicate the transfer of funds from cash to bank, bank to bank and bank to cash 
+**contra** type is used.
  
 Search/Edit/Clone/Delete Transaction
 ------------------------------------
 
 * To ``Edit/Clone/Delete`` transaction select ``Search voucher`` tab.
-
-* Its displays ``all`` transactions for the complete financial year which comes under ``selected``
-  voucher type as shown in figure.
 
 .. image:: images/search_voucher.png
    :name: ABT main page
@@ -110,18 +126,21 @@ Search/Edit/Clone/Delete Transaction
    :height: 200pt
    :width: 350pt
 
-* Press ``Search`` button (see figure) to search transaction by ``Voucher 
-  reference number, Date, Narration, Voucher number, Account name or Voucher type``. 
-
 .. image:: images/search_voucher_by.png
 	   :align: center
 	   :height: 200pt
    	   :width: 350pt
 
+* Here Search option is given to search a particular transaction or group of 
+  transactions by ``Voucher reference number, Date, Narration, Voucher number, Account name or Voucher type``. 
+
 .. image:: images/search_voucher_by_options.png
 	   :align: center
 	   :height: 200pt
    	   :width: 350pt
+
+* You have several opportunities to view figures based on period
+  department and project accounting, key figures and more.
 
 * Select option, give the input and press ``View`` button to view the transaction.
   
