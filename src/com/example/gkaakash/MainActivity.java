@@ -394,7 +394,6 @@ public class MainActivity extends Activity{
 				Help help = new Help();
 				WebView engine = (WebView) layout.findViewById(R.id.webView1);
 				help.loadURL(engine);
-				//				startApp();
 			}
 		});
 		//Request a reference to the spinner from the activity by calling “findViewById”
@@ -412,6 +411,8 @@ public class MainActivity extends Activity{
 			//Toast.makeText(context, "not c       opying files from asset", Toast.LENGTH_SHORT).show();
 			System.out.println("NOT copying files from asset");
 		}
+		
+		startApp();
 	}
 	//Attach a listener to the click event for the button
 	private void addListenerOnButton() {
@@ -689,7 +690,7 @@ public class MainActivity extends Activity{
 						/**
 						 * download image from aakashlabs.org
 						 **/
-						String url = "http://aakashlabs.org/builds/abt.tar.gz";
+						String url = "http://www.it.iitb.ac.in/AakashApps/repo/abt.tar.gz";
 						String dest;
 
 						/*

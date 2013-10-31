@@ -385,7 +385,7 @@ public class reportMenu extends Activity{
 			  	   	
 			  	   	
 				}else {
-					builder.setTitle("Bank reconcilition");
+					builder.setTitle("Bank Reconciliation");
 					project_row.setVisibility(View.GONE);
 					cbClearedTransaction = (CheckBox)layout.findViewById(R.id.cbClearedTransaction);
 				}
