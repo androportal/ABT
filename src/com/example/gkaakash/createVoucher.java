@@ -354,6 +354,7 @@ public class createVoucher extends Activity {
 		etRefNumber = (EditText) findViewById(R.id.etRefNumber);
 		if ("Create voucher".equals(name)) {
 			etRefNumber.setEnabled(true);
+			etvoucherno.setEnabled(true);
 		}
 
 		String reff_no = transaction.getLastReferenceNumber(
