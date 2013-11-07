@@ -209,21 +209,31 @@ public Object getPurchaseReturnAccounts(Object[] params,Object client_id) {
 	} catch (XMLRPCException e) {
 		
 		e.printStackTrace();
-	}
+	} 
 	return purchaseReturnAccounts;
-}
+} 
 
 public Object searchVoucher(Object[] params,Object client_id) {
 	
-	try {
+	try { 
 		searchedVouchers = (Object[])conn.getClient().call("transaction.searchVoucher",params,client_id);
+		for(Object voucherRow : searchedVouchers){
+			Object[] v = (Object[]) voucherRow;
+			ArrayList<String> searchedVoucherList = new ArrayList<String>();
+			for(int i=0;i<v.length;i++){
+				
+					searchedVoucherList.add((String) v[i].toString());
+				}
+			System.out.println(searchedVoucherList);
+			}		
+		
 		
 	} catch (XMLRPCException e) {
 		
 		e.printStackTrace();
 	}
 	return searchedVouchers;
-}
+}  
 
 	public Object getVoucherMaster(Object[] params,Object client_id){
 	try {

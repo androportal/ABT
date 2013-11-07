@@ -80,6 +80,8 @@
 				    android:text="Project:"
 				    style="@style/CodeFont" />
 
+				
+
 				<Spinner 
             		android:id="@+id/sProjectNames"
             		android:layout_width="wrap_content"
@@ -257,7 +259,84 @@
 	</LinearLayout>
 	
 	
+	<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:gravity="left">
+	
+	<TextView
+	    android:id="@+id/tvpaymentmode"
+	    style="@style/CodeFont"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="65"
+	    android:text="Payment mode" />
+				<RadioGroup
+			        android:id="@+id/radioRole"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content" 
+			        android:orientation="horizontal"
+			        android:layout_weight="1">
+		 
+				 <RadioButton
+		                android:id="@+id/rbcash"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		        		android:paddingRight="20dp"
+		                android:text="Cash"
+		                android:checked="true"
+		                style="@style/RadioButtonAppTheme" />  
+		
+		          <RadioButton
+		              android:id="@+id/rbcheque"
+		              android:layout_width="wrap_content"
+		              android:layout_height="wrap_content"
+		              android:paddingRight="20dp"
+		              android:text="Cheque"
+		              style="@style/RadioButtonAppTheme" />
+		        
+			  </RadioGroup>
+
+	 
 	</LinearLayout>
+	
+	<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:gravity="left">
+	
+	<TextView
+	    android:id="@+id/tvcheque"
+	    style="@style/CodeFont"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="73.5"
+	    android:text="Cheque no." />
+				
+	<EditText
+        android:id="@+id/etcheque"
+        android:layout_width="283dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="30"
+        android:hint="Tap to enter voucher narration" 
+        android:paddingTop="2dp"
+        android:inputType="textCapSentences"
+        style="@style/EditTextAppTheme"/>  
+	 
+	</LinearLayout>
+	
+  	
+	
+	</LinearLayout>
+	
+	
+	
+	
+	
 </ScrollView>
 
 

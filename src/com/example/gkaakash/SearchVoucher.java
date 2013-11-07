@@ -155,8 +155,13 @@ public class SearchVoucher extends Activity {
                     final SpannableString rsSymbol = new SpannableString(
                             SearchVoucher.this.getText(R.string.Rs));
                     /** Create a TableRow dynamically **/
-                    String[] ColumnNameList = new String[] { "V. No.","Reference No","Date","Voucher Type","Account Name","Particular",rsSymbol+"Amount","Narration"};
+                    if("Journal".equals(vouchertypeflag)||"Credit note".equals(vouchertypeflag)||"Debit note".equals(vouchertypeflag)){
+                        ColumnNameList = new String[] { "V. No.","Reference No","Date","Voucher Type","Account Name","Particular",rsSymbol+"Amount","Narration"};
 
+                   }else {
+                        ColumnNameList = new String[] { "V. No.","Reference No","Date","Voucher Type","Account Name","Particular",rsSymbol+"Amount","Narration","Cheque No."};
+
+            		}
 
                     tr = new TableRow(SearchVoucher.this);
 
@@ -572,8 +577,13 @@ public class SearchVoucher extends Activity {
 
 		/** Create a TableRow dynamically **/
 		final SpannableString rsSymbol = new SpannableString(SearchVoucher.this.getText(R.string.Rs)); 
-		ColumnNameList = new String[] { "V. No.","Reference No","Date","Voucher Type","Account Name","Particular",rsSymbol+"Amount","Narration"};
+		if("Journal".equals(vouchertypeflag)||"Credit note".equals(vouchertypeflag)||"Debit note".equals(vouchertypeflag)){
+            ColumnNameList = new String[] { "V. No.","Reference No","Date","Voucher Type","Account Name","Particular",rsSymbol+"Amount","Narration"};
 
+       }else {
+            ColumnNameList = new String[] { "V. No.","Reference No","Date","Voucher Type","Account Name","Particular",rsSymbol+"Amount","Narration","Cheque No."};
+
+		}
 		tr = new TableRow(SearchVoucher.this);
 
 		for(int k=0;k<ColumnNameList.length;k++){

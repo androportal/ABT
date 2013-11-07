@@ -305,7 +305,7 @@ public class bankReconciliation extends Activity{
              with_narration = new ArrayList<String>();
              for(int i=0;i<(t.length);i++)
              {
-             	if(i == 6){//narration
+             	if(i == 7){//narration
              		if(narration_flag){
                  		//bankReconResultList.add((String) t[i].toString());
              			with_narration.add((String) t[i].toString());
@@ -523,7 +523,7 @@ public class bankReconciliation extends Activity{
 		                    	Ll.setVisibility(LinearLayout.GONE);//voucher code
 		                    }
 		                         
-		                    if(k == 4 || k == 5){// dr and cr amount
+		                    if(k == 5 || k == 6){// dr and cr amount
 		                    	label.setGravity(Gravity.CENTER|Gravity.RIGHT);
 				            	}
 		                    else 
@@ -560,7 +560,7 @@ public class bankReconciliation extends Activity{
 								label.setBackgroundColor(Color.parseColor("#085e6b"));
 							else
 								label.setBackgroundColor(Color.parseColor("#2f2f2f"));
-			                if(j == 4 || j == 5){// dr and cr amount
+			                if(j == 5 || j == 6){// dr and cr amount
 			                    if(columnValue.get(j).trim().length() > 0){
 			                        label.setText(columnValue.get(j)); 
 			                    } 
@@ -692,11 +692,11 @@ public class bankReconciliation extends Activity{
         /** Create a TableRow dynamically **/
         tr = new TableRow(this);
         if(narration_flag){
-        	ColumnNameList = new String[] {"voucher code","Date","Particulars","Reference no.",
+        	ColumnNameList = new String[] {"voucher code","Date","Particulars","Cheque no.","Reference no.",
         			rsSymbol+" Debit",rsSymbol+" Credit","Clearance date","Memo","Narration"};
         }
         else{
-        	ColumnNameList = new String[] {"voucher code","Date","Particulars","Reference no.",
+        	ColumnNameList = new String[] {"voucher code","Date","Particulars","Cheque no.","Reference no.",
         			rsSymbol+" Debit",rsSymbol+" Credit","Clearance date","Memo"};
         }
         for(int k=0;k<ColumnNameList.length;k++){
@@ -1188,12 +1188,15 @@ public class bankReconciliation extends Activity{
 		m.getAccountsByRule(paramDr,vouchertypeflag, context);
 		Accountlist = module.Accountlist;
 		DrAccountlist.addAll(Accountlist);
+		System.out.println("List1:"+DrAccountlist);
 		
 		CrAccountlist = new ArrayList<String>();
 		Object[] paramCr = new Object[]{"Cr"};
 		m.getAccountsByRule(paramCr,vouchertypeflag, context);
 		Accountlist = module.Accountlist;
 		CrAccountlist.addAll(Accountlist);
+		System.out.println("List2:"+CrAccountlist);
+
 		System.out.println(vouchertypeflag); 
 		System.out.println("CList:"+CrAccountlist);
 		
