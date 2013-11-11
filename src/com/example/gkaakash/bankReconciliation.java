@@ -329,6 +329,7 @@ public class bankReconciliation extends Activity{
                       for_clearenceDate.add(Cdate);
               }
          }
+         System.out.println("List:"+bankReconGrid);
         
          bankRecontable = (TableLayout)findViewById(R.id.maintable);
          addTable(bankRecontable,"");
@@ -351,17 +352,19 @@ public class bankReconciliation extends Activity{
          statementtable = (TableLayout)findViewById(R.id.statementtable);
          statementtable.removeAllViews();
          addTable(statementtable, "statement");
-	}
- 
-    
-	/*
+	}   
+   
+           
+	/*    
 	 * this method allows to clear transactions and unclear the cleared transactions
-	 */
-	private void setbankRecon() {
+	 */ 
+	private void setbankRecon() {  
+		    
+		System.out.println("in setbankRecon");
 		Button btnSetBankRecon = (Button)findViewById(R.id.btnSaveRecon);
 		btnSetBankRecon.setOnClickListener(new OnClickListener() {
 			
-			@Override
+			@Override  
 			public void onClick(View v) {
 				int rowcount = bankRecontable.getChildCount();
 				ArrayList<ArrayList> listOfRowsTobeClear= new ArrayList<ArrayList>();
@@ -369,7 +372,7 @@ public class bankReconciliation extends Activity{
 				for(int i=0;i<rowcount-1;i++){
 					if(i!=0){
 						View row = bankRecontable.getChildAt(i);
-						LinearLayout l5 = (LinearLayout)((ViewGroup) row).getChildAt(6);
+						LinearLayout l5 = (LinearLayout)((ViewGroup) row).getChildAt(7);
 						TextView tvclearanceDate = (TextView) l5.getChildAt(0); //clearance date
 						
 						ArrayList<String> rowArray = new ArrayList<String>();
@@ -377,7 +380,7 @@ public class bankReconciliation extends Activity{
 						/*
 						 * get the clear tranction rows from table
 						 * and pass these rows to backend (set bank reconciliation)
-						 */
+						 */   
 						if(!tvclearanceDate.getText().toString().equals("")){
 							flag = true;
 							rowArray.clear();
@@ -391,35 +394,41 @@ public class bankReconciliation extends Activity{
 							LinearLayout l1 = (LinearLayout)((ViewGroup) row).getChildAt(2);
 							TextView tvparticular = (TextView) l1.getChildAt(0); //particular
 							
-							LinearLayout lr = (LinearLayout)((ViewGroup) row).getChildAt(3);
+							
+//							LinearLayout lr_c = (LinearLayout)((ViewGroup) row).getChildAt(3);
+//							TextView tvlr_c = (TextView) lr_c.getChildAt(0); //cheque no
+							
+							LinearLayout lr = (LinearLayout)((ViewGroup) row).getChildAt(4);
 							TextView tvrefno = (TextView) lr.getChildAt(0); //ref no
 							
 							
-							LinearLayout l3 = (LinearLayout)((ViewGroup) row).getChildAt(4);
+							LinearLayout l3 = (LinearLayout)((ViewGroup) row).getChildAt(5);
 							TextView tvdramount = (TextView) l3.getChildAt(0); //dr amount
 							
-							LinearLayout l4 = (LinearLayout)((ViewGroup) row).getChildAt(5);
+							LinearLayout l4 = (LinearLayout)((ViewGroup) row).getChildAt(6);
 							TextView tvcramount = (TextView) l4.getChildAt(0); //cr amount
 							
-							l4 = (LinearLayout)((ViewGroup) row).getChildAt(7);
+							l4 = (LinearLayout)((ViewGroup) row).getChildAt(8);   
 							TextView memo = (TextView) l4.getChildAt(0); //memo
 							
 							rowArray.add(tvVoucherCode.getText().toString());
 							rowArray.add(tvrefdate.getText().toString());
+//							rowArray.add(tvlr_c.getText().toString());
+
 							rowArray.add(tvparticular.getText().toString());
 							
 							//check for the dr and cr amount
 							if(tvdramount.getText().toString().length() > 0){
 								rowArray.add(tvdramount.getText().toString());
 								rowArray.add(tvcramount.getText().toString());
-							}
+							} 
 							else{
 								rowArray.add(tvcramount.getText().toString());
 								rowArray.add(tvdramount.getText().toString());
 							}
 							
 							rowArray.add(tvclearanceDate.getText().toString());
-							rowArray.add(memo.getText().toString());
+							rowArray.add(memo.getText().toString());  
 							
 							/*
 							System.out.println("i am row "+ i+ tvrefdate.getText().toString()
@@ -430,6 +439,8 @@ public class bankReconciliation extends Activity{
 									+etmemo.getText().toString()); */
 									
 						} 
+						System.out.println("rowArray:"+rowArray);
+ 
 						/*
 						 * unclear the cleared transaction(delete cleared rows)
 						 */
@@ -447,6 +458,8 @@ public class bankReconciliation extends Activity{
 							rowArray.add(tvVoucherCode.getText().toString());
 							rowArray.add(toDate);
 							
+							System.out.println("rowArray1:"+rowArray);
+							
 							if(rowArray.size() >0){
 								report.deleteClearedRecon(rowArray, client_id);
 							}
@@ -460,7 +473,8 @@ public class bankReconciliation extends Activity{
 						if(rowArray.size()!=0 && flag == true){ 
 							listOfRowsTobeClear.add(rowArray);
 						} 
-						
+						System.out.println("listOfRowsTobeClear:"+listOfRowsTobeClear);
+
 					}//end of if
 				}//end of for
 				
@@ -498,7 +512,7 @@ public class bankReconciliation extends Activity{
 			if(bankReconGrid.size() > 1){
 				addHeader();
 			}
-			
+			System.out.println("final list:"+bankReconGrid);
 	        /** Create a TableRow dynamically **/
 	        for(int i=0;i<bankReconGrid.size();i++){
 	            ArrayList<String> columnValue = new ArrayList<String>();
@@ -538,7 +552,7 @@ public class bankReconciliation extends Activity{
 		            	}
 		            	//add empty field for narration
 		            	if(narration_flag==true){
-	                    	addRow("",i,8,0);   //naration
+	                    	addRow("",i,9,0);   //naration
 	                    }
 		               
 		            	// Add the TableRow to the TableLayout
@@ -580,7 +594,7 @@ public class bankReconciliation extends Activity{
 		            
 		            if(!cleared_tran_flag){
 		                if(narration_flag==false){
-		                    addRow("",i,6,1);  //date
+		                    addRow("",i,7,1);  //date
 		                    //memo
 		                    EditText e = new EditText(this);
 		                    e.setBackgroundResource(R.drawable.edit_text_holo_light);
@@ -594,7 +608,7 @@ public class bankReconciliation extends Activity{
 		                    tr.addView((View)Ll);
 		                }
 		                else {
-		                    addRow("",i,6,1);  //date
+		                    addRow("",i,7,1);  //date
 		                    //memo
 		                    EditText e = new EditText(this);
 		                    e.setBackgroundResource(R.drawable.edit_text_holo_light);
@@ -605,18 +619,21 @@ public class bankReconciliation extends Activity{
 		                    Ll.addView(e,params);
 		                    Ll.setBackgroundColor(Color.parseColor("#2f2f2f"));
 		                    tr.addView((View)Ll);
-		                    addRow(for_naration.get(i).get(6).toString(),i,8,1);   //naration
+		                    System.out.println("naration:"+for_naration);
+		                    addRow(for_naration.get(i).get(7).toString(),i,9,1);   //naration
 		                   
 		                }
-		            }
+		            }  
 		            else{ 
-		            		/*
+		            		/* 
 		            		 * if transaction is clear set clearance date and memo into the textview
 		            		 */
-		            		addRow(bankReconGrid.get(i).get(6).toString(),i,6,1);  //date
+		            	
+		            	System.out.println("clearace date:"+bankReconGrid);
+		            		addRow(bankReconGrid.get(i).get(7).toString(),i,7,1);  //date
 		                	//memo
 		                	EditText e = new EditText(this);
-		                	e.setText(bankReconGrid.get(i).get(7).toString());
+		                	e.setText(bankReconGrid.get(i).get(8).toString());
 		                	e.setBackgroundResource(R.drawable.edit_text_holo_light);
 		                	Ll = new LinearLayout(this);
 		                    params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
@@ -627,7 +644,7 @@ public class bankReconciliation extends Activity{
 		                    tr.addView((View)Ll);
 		                    
 		                    if(narration_flag==true){
-		                    	addRow(for_naration.get(i).get(6).toString(),i,8,1);   //naration
+		                    	addRow(for_naration.get(i).get(7).toString(),i,9,1);   //naration
 		                    }
 		            }
 		            
@@ -812,7 +829,7 @@ public class bankReconciliation extends Activity{
         /*
          * 6 is clerance column and flag 1 is for making textview clickable
          */
-        if(j == 6 && flag == 1){  
+        if(j == 7 && flag == 1){  
         	label.setClickable(true); 
         	label.setOnClickListener(new OnClickListener() {
 				
@@ -829,7 +846,7 @@ public class bankReconciliation extends Activity{
                     	int rowcount = bankRecontable.getChildCount();    
                         for(int k=0;k<rowcount;k++){
                         	View row = bankRecontable.getChildAt(rowid+1);
-                        	LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
+                        	LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(7);
                         	tvdate = (TextView) l.getChildAt(0);
                         	clearence_date = (String) tvdate.getText();
                         }
@@ -845,7 +862,7 @@ public class bankReconciliation extends Activity{
                     		int rowcount = bankRecontable.getChildCount();    
                             for(int k=0;k<rowcount;k++){
                             	View row = bankRecontable.getChildAt(rowid+1);
-                            	LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
+                            	LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(7);
                             	tvdate = (TextView) l.getChildAt(0);
                             	clearence_date = (String) tvdate.getText();
                             }
@@ -885,7 +902,7 @@ public class bankReconciliation extends Activity{
                                     int rowcount = bankRecontable.getChildCount();    
                                     for(int k=0;k<rowcount;k++){
 	                                    View row = bankRecontable.getChildAt(rowid+1);
-	                                    LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
+	                                    LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(7);
 	                                    tvdate = (TextView) l.getChildAt(0);
 	                                    retrived_date = (String) tvdate.getText();
 	                                    result=retrived_date;
@@ -965,7 +982,7 @@ public class bankReconciliation extends Activity{
                                                 cal2.setTime(date2);
                                                 cal3.setTime(date3);
                                               
-                                              
+                                                
                                                 if((cal3.after(cal1) && cal3.before(cal2)) || cal3.equals(cal1) || cal3.equals(cal2)){
                                                   
                                                   
@@ -977,7 +994,7 @@ public class bankReconciliation extends Activity{
                                                     int rowcount = bankRecontable.getChildCount();
                                                     for(int k=0;k<rowcount;k++){
                                                         View row = bankRecontable.getChildAt(rowid+1);
-                                                        LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
+                                                        LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(7);
                                                         tvdate = (TextView) l.getChildAt(0);
                                                         tvdate.setText(date);
                                                     }
@@ -1005,7 +1022,7 @@ public class bankReconciliation extends Activity{
                                     int rowcount = bankRecontable.getChildCount();    
                                     for(int k=0;k<rowcount;k++){
                                         View row = bankRecontable.getChildAt(rowid+1);
-                                        LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
+                                        LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(7);
                                         tvdate = (TextView) l.getChildAt(0);
                                         tvdate.setText(" ");
                                     }
@@ -1019,7 +1036,7 @@ public class bankReconciliation extends Activity{
                                             int rowcount = bankRecontable.getChildCount();    
                                             for(int k=0;k<rowcount;k++){
                                                 View row = bankRecontable.getChildAt(rowid+1);
-                                                LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
+                                                LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(7);
                                                 tvdate = (TextView) l.getChildAt(0);
                                                 tvdate.setText(Cdate1);
                                             }
@@ -1107,7 +1124,7 @@ public class bankReconciliation extends Activity{
                         				int rowcount = bankRecontable.getChildCount();
                         				for(int k=0;k<rowcount;k++){
                         					View row = bankRecontable.getChildAt(rowid+1);
-                        					LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
+                        					LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(7);
                         					tvdate = (TextView) l.getChildAt(0);
                         					tvdate.setText(date);
                         				}
@@ -1301,7 +1318,7 @@ public class bankReconciliation extends Activity{
     				int rowcount = bankRecontable.getChildCount();
     				for(int k=0;k<rowcount;k++){
     					View row = bankRecontable.getChildAt(rowid+1);
-    					LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(6);
+    					LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(7);
     					tvdate = (TextView) l.getChildAt(0);
     					tvdate.setText(date);
     				}

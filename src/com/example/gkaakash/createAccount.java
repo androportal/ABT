@@ -218,6 +218,9 @@ public class createAccount<group> extends Activity{
             groupnamelist.add((String) g[1]); //groupname
             //groupdesc.add(g[2]); //description
         }    
+        
+        System.out.println("Group names:"+groupnamelist);
+        
         // creating array adaptor to take list of existing group name
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, groupnamelist);
