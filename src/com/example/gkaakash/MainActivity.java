@@ -411,8 +411,10 @@ public class MainActivity extends Activity{
 			//Toast.makeText(context, "not c       opying files from asset", Toast.LENGTH_SHORT).show();
 			System.out.println("NOT copying files from asset");
 		}
+		if(IPaddr.equals("127.0.0.1")){
+			startApp();
+		}
 		
-		startApp();
 	}
 	//Attach a listener to the click event for the button
 	private void addListenerOnButton() {
