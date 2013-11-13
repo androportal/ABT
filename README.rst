@@ -109,39 +109,41 @@ can be found `here
 
 How to install
 ---------------
+
 Simple and recommended install procedure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   #. This process requires a working Internet connection. 
   #. If you're behind proxy, then do appropriate settings to bypass
      your proxy server. You will find proxy setting in ``Settings`` ->
-     ``WiFi`` -> ``Advance Options``. Also bypass ``127.0.0.1`` proxy
-     settings.  This is **not** required for direct Internet
-     connections.
+     ``WiFi`` -> ``Advance Options`` and also bypass ``127.0.0.1`` proxy
+     settings.  This is **not** required for direct Internet connections.
   #. Open the browser on Aakash and visit this link:
-     **http://www.it.iitb.ac.in/AakashApps/repo/ABT.apk**. Download and install the
-     APK.
-  #. Click on **ABT icon** from android's application menu and allow
-     it to download ``~300MB`` image file.
+     **http://aakashlabs.org/downloads/**. Please find **download** link for 
+     ``Aakash Business Tool``. Download and install the apk.
+  #. Click on **ABT icon** from the list of applications installed on device and allow
+     it to download image file.
   #. The download and uncompress process will take some while, so
      please be patience. When download completes, it will prompt for
      reboot. Please say ``Yes`` to reboot.
   #. After reboot, you can again visit android's application menu and
      click on **ABT icon**.
-  
+
 Manual installation
 ~~~~~~~~~~~~~~~~~~~
+ 
+  #. Visit **http://aakashlabs.org/downloads/** from your system.
+     Please find links **download** and **chroot image** from ``Aakash Business 
+     Tool`` to download ABT.apk and compressed image respectively .
 
-  #. Download compressed image to your computer from this `link
-     <http://www.it.iitb.ac.in/AakashApps/repo/abt.tar.gz>`_. Extract it using ::
-       tar -xvzf abt.tar.gz
-  #. The untar process of above file will produce ``abt.img``. Copy
-     ``abt.img`` to sdcard(internal or external) of your Aakash
+  #. Extract image.
+       
+  #. Extraction process will produce ``abt.img``. Copy
+     ``abt.img`` and ``ABT.apk`` to sdcard(internal or external) of your Aakash
      tablet.
-  #. Then install `ABT.apk <http://www.it.iitb.ac.in/AakashApps/repo/ABT.apk>`_ on
-     Aakash, ``shutdown`` and ``start`` Aakash to finish
-     installation. Now locate **ABT icon** in your android menu to
-     start using *Aakash Business Tool*.  
+     
+  #. Then install ABT using ABT.apk, it will ask the user to reboot the device to finish
+     installation. Now user can locate **ABT icon** in the application list.  
 
 Usage 
 ------

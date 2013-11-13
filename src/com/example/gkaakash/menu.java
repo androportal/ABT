@@ -465,7 +465,7 @@ public class menu extends Activity{
 			/* false for u don't want to close the dialog on clicking cancel button
 			 * if u want to close pass true as a param
 			 */
-			reset_password_flag = false;
+			MainActivity.reset_password_flag = false;
 			m.resetPassword(context,username,userrole,false,client_id);
 		}		
 	}

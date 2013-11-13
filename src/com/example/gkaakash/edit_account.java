@@ -550,7 +550,7 @@ public class edit_account extends Activity {
 											flag, pos };
 									
 									
-									if ("account deleted".equals(accountDeleteValue)) {
+									if ("account deleted".equals(accountDeleteValue) || "' has opening balance, it can't be".equalsIgnoreCase(msg)) {
 										System.out.println(tvaccname.getText().toString());
 										account.deleteAccount(params1, client_id);
 										m.toastValidationMessage(edit_account.this, "Account '"+ tvaccname.getText().toString()
