@@ -50,8 +50,7 @@ Below table will help the user to understand, ``voucher types`` and their respec
 	
 To record transaction in ``ABT``, select ``Create voucher`` tab (see bellow fig.) and follow the below steps:
 
-.. image:: images/create_voucher.png
-   :name: ABT main page
+.. image:: images/payment_mode_in_voucher.png
    :align: center
    :height: 200pt
    :width: 350pt
@@ -67,7 +66,6 @@ To record transaction in ``ABT``, select ``Create voucher`` tab (see bellow fig.
   Sales Return, Purchase, Purchase Return.
 	
 .. image:: images/voucher_type.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -103,6 +101,10 @@ To record transaction in ``ABT``, select ``Create voucher`` tab (see bellow fig.
 * Voucher Reference number - Many transaction can have a single voucher reference number.
 
 * Voucher Narration - Narration for a particular transaction.
+
+* Payment mode - There are 2 options to make payment i.e. ``Cheque`` or ``Cash``.
+  If you select Cheque option, ``Cheque number`` need to be filled.
+  **Note**: Payment mode is not available for voucher ``Debit Note, Credit Note and Journal``.
 
 * Press ``Save`` to save transaction.
 

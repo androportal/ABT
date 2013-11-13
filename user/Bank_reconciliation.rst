@@ -24,7 +24,7 @@ Bank reconciliation
 * Press ``View``.
 
 * A Ledger for that period for the selected account will be displayed to the 
-  user with the fields: Date, Particulars, Reference Number, Debit Amount, 
+  user with the fields: Date, Particulars, Cheque number, Reference Number, Debit Amount, 
   Credit Amount, Clearance date & Memo. This shall consist all the 
   reconciled transactions with the clearance date and not-reconciled transactions 
   along with all not-reconciled transactions from the start of the 
@@ -39,12 +39,6 @@ Bank reconciliation
 * ``Total Debit`` & ``Total Credit`` are displayed in the last row of the table.
 	    	
 * Bank Reconciliation Statement is located at the bottom of the table.
-  
-.. image:: images/bank_statement.png
-   :name: ABT main page
-   :align: center
-   :height: 200pt
-   :width: 350pt
   
 * If the user wishes to reconcile now, he clicks the ``Clearance date`` column. 
   The clearance date field and memo are the ``Text input`` areas for the user to 
