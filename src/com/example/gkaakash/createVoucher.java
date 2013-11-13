@@ -382,6 +382,9 @@ public class createVoucher extends Activity {
 				etnarration.setEnabled(false);
 				etnarration.setTextColor(Color.parseColor("#AEC6CF"));
 				etRefNumber.setEnabled(false);
+				cheque_.setEnabled(false);
+				cash_.setEnabled(false);
+				etcheque.setEnabled(false);
 				etRefNumber.setTextColor(Color.parseColor("#AEC6CF"));
 
 				btnResetVoucher.setEnabled(false);
@@ -443,7 +446,8 @@ public class createVoucher extends Activity {
 		etnarration = (EditText) findViewById(R.id.etVoucherNarration);
 		etnarration.setText("");
 		etvoucherno.setText("");
-
+		etcheque.setText("");
+		cash_.setChecked(true);
 		second_table_closingbal_et.setText("");
 		searchFlag = false;
 		cloneflag = true;
@@ -1432,8 +1436,8 @@ public class createVoucher extends Activity {
 									// edited
 									// transaction
 									// account details
-
-									Object[] params_master = new Object[] {vouchercode, vDate, vproject, narration, refNumber };
+									String val= etcheque.getText().toString();
+									Object[] params_master = new Object[] {vouchercode, vDate, vproject, narration, refNumber, val };
 									transaction.editVoucher(params_master,paramsMaster, client_id);
 									edittabflag = true;
 
@@ -1504,7 +1508,7 @@ public class createVoucher extends Activity {
 									String reff_no = transaction.getLastReferenceNumber(new Object[] { vouchertypeflag },client_id);
 									etRefNumber.setText(reff_no.toString());
 									etnarration.setText("");
-									etcheque.setText("0");
+									cash_.setChecked(true);
 
 									setProject();
 
