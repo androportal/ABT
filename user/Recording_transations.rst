@@ -141,8 +141,7 @@ Search/Edit/Clone/Delete Transaction
 	   :height: 200pt
    	   :width: 350pt
 
-* You have several opportunities to view figures based on period
-  department and project accounting, key figures and more.
+* You have several opportunities to view figures based on period and key figures.
 
 * Select option, give the input and press ``View`` button to view the transaction.
   
