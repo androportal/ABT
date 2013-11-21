@@ -145,7 +145,7 @@ public class menu extends Activity{
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent); 
 			}
-		}).setNegativeButton("NO", 
+		}).setNegativeButton("No", 
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				//do nothing
@@ -483,11 +483,11 @@ public class menu extends Activity{
                 m.toastValidationMessage(context,"can not rollover , since financial year is not completed!!");
             }else
             {
-                m.toastValidationMessage(context,"rollover has been done!!");
+                m.toastValidationMessage(context,"Rollover has been done!!");
             }       
 
         }else{
-            m.toastValidationMessage(context,"rollover has done already!!");
+            m.toastValidationMessage(context,"Rollover has done already!!");
         }
 
     }

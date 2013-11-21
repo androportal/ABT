@@ -149,14 +149,10 @@ public class createVoucher extends Activity {
 		cheque_ =(RadioButton)findViewById(R.id.rbcheque);
 		cash_ =(RadioButton)findViewById(R.id.rbcash);
 		
-		if(cash_.isChecked()){
-		
+		if(cash_.isChecked() == true){
 			etcheque.setText("0");
 
 		}
-
-		
-
 		
 		rg=(RadioGroup)findViewById(R.id.radioRole);
 		rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -386,7 +382,7 @@ public class createVoucher extends Activity {
 				cash_.setEnabled(false);
 				etcheque.setEnabled(false);
 				etRefNumber.setTextColor(Color.parseColor("#AEC6CF"));
-
+				rg.setEnabled(false);
 				btnResetVoucher.setEnabled(false);
 				btnVoucherDate.setEnabled(false);
 				btnVoucherDate.setTextColor(Color.parseColor("#AEC6CF"));
@@ -446,7 +442,7 @@ public class createVoucher extends Activity {
 		etnarration = (EditText) findViewById(R.id.etVoucherNarration);
 		etnarration.setText("");
 		etvoucherno.setText("");
-		etcheque.setText("");
+		etcheque.setText("0");
 		cash_.setChecked(true);
 		second_table_closingbal_et.setText("");
 		searchFlag = false;
@@ -1299,7 +1295,7 @@ public class createVoucher extends Activity {
 					String cheque_no=etcheque.getText().toString();
 					if (totalDr == totalCr && !"".equals(refNumber)&& !"".equals(strnarration)&& !"".equals(voucherno)&&
 							!"".equals(cheque_no)) {
-
+   
 						if (totalDr == 0) {
 							if ("0.0".equals(Float.toString(totalDr))) {
 								
@@ -1588,7 +1584,7 @@ public class createVoucher extends Activity {
 								"Please enter narration");
 						etnarration
 								.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
-					}else if (cheque_no.length() == 0) {
+					}else if (etcheque.getText().length() == 0) {
 						m.toastValidationMessage(context,
 								"Please enter cheque no.");
 						  

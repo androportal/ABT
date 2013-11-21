@@ -322,7 +322,7 @@
         android:layout_width="283dp"
         android:layout_height="wrap_content"
         android:layout_weight="30"
-        android:hint="Tap to enter voucher narration" 
+        android:hint="Tap to enter cheque No." 
         android:paddingTop="2dp"
         android:inputType="textCapSentences"
         style="@style/EditTextAppTheme"/>  

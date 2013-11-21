@@ -247,7 +247,7 @@ public class addProject extends MainActivity {
 					projectnamelist.add((String) p[1]); // p[0]is project code & p[1] is projectname
 				}
 
-				if (projectname.equals("")) {
+				if (projectname.trim().length()<1) {
 					m.toastValidationMessage(context, "Please enter project name");
 					
 				}
