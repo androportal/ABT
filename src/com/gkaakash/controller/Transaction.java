@@ -27,7 +27,7 @@ public class Transaction {
 	private Object editVoucher;
 	private boolean deleteVoucher;
 	private String getLastReference;
-	private String getLastReffDate,voucherExist;
+	private String getLastReffDate,voucherExist,chequeNoExist;
 	/***
 	 * Default constructor
 	 * create instance of CoreConnection() to get connection with server
@@ -316,5 +316,15 @@ public Object searchVoucher(Object[] params,Object client_id) {
 		return voucherExist;
 	}
 
-	
+	public String chequeNoExist(Object[] params,Object client_id) {
+		
+		try {
+			chequeNoExist = (String)conn.getClient().call("transaction.chequeNoExist",params,client_id);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return chequeNoExist;
+	}
 }

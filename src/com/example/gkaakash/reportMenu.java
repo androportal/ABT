@@ -103,9 +103,9 @@ public class reportMenu extends Activity{
         }
         ArrayList<String> Options = new ArrayList<String>(Arrays.asList(reportType));
         final String userrole = menu.userrole;
-        if (userrole.equalsIgnoreCase("Operator")) {
-			Options.remove(5); //remove income & expense
-		}
+//        if (userrole.equalsIgnoreCase("Operator")) {
+//			Options.remove(5); //remove income & expense
+//		}
         
        	//get financial from and to date, split and store day, month and year in seperate variable
        	financialFromDate =Startup.getfinancialFromDate();  	   	
@@ -174,12 +174,12 @@ public class reportMenu extends Activity{
 					callReport(reportMenu.this,"B", balanceSheet.class);
 					
 				}
-				if (userrole.equalsIgnoreCase("operator")) {
-					if(position == 5)
-					{
-						callLedgerOrCashFlowOrBankRecon(reportMenu.this,"CB",cashBook.class);
-					}
-				}else{
+//				if (userrole.equalsIgnoreCase("operator")) {
+//					if(position == 5)
+//					{
+//						callLedgerOrCashFlowOrBankRecon(reportMenu.this,"CB",cashBook.class);
+//					}
+//				}else{
 					if(position == 5)
 					{
 						callReport(reportMenu.this,"I", incomeExpenditure.class);
@@ -188,7 +188,7 @@ public class reportMenu extends Activity{
 					{
 						callLedgerOrCashFlowOrBankRecon(reportMenu.this,"CB",cashBook.class);
 					}
-				}
+				//}
 				
 			} 
 		});
