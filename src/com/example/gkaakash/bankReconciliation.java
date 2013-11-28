@@ -547,6 +547,7 @@ public class bankReconciliation extends Activity{
 		                    
 		                    if (lastIndex.equals(i)) {
 		    					tr.setClickable(false);
+		    					tr.setLongClickable(false);
 		    					
 		    				}
 		            	}
@@ -723,6 +724,7 @@ public class bankReconciliation extends Activity{
 			label.setTextColor(Color.BLACK); //blue theme
         	label.setGravity(Gravity.CENTER);
         	tr.setClickable(false);
+        	tr.setLongClickable(false);
         	params.height = LayoutParams.WRAP_CONTENT;
         	//hide vouchercode column
         	if(k==0){
@@ -825,6 +827,7 @@ public class bankReconciliation extends Activity{
 			label.setBackgroundColor(Color.parseColor("#2f2f2f"));
         label.setPadding(2, 2, 2, 2);
         label.setClickable(false);
+        label.setLongClickable(false);
         
         /*
          * 6 is clerance column and flag 1 is for making textview clickable
@@ -1261,6 +1264,7 @@ public class bankReconciliation extends Activity{
         label1.setBackgroundColor(Color.parseColor("#085e6b"));
         label1.setPadding(2, 2, 2, 2);
         label1.setClickable(false);
+        label1.setLongClickable(false);
         
         Ll1 = new LinearLayout(this);
         params1 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,

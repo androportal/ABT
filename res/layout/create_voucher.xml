@@ -264,7 +264,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="100"
-        android:gravity="left">
+        android:gravity="left">   
 	
 	<TextView
 	    android:id="@+id/tvpaymentmode"
@@ -329,14 +329,7 @@
 	 
 	</LinearLayout>
 	
-  	
-	
 	</LinearLayout>
-	
-	
-	
-	
-	
 </ScrollView>
 
 

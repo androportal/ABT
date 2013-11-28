@@ -473,21 +473,35 @@ public class menu extends Activity{
 	protected void rollover() {
         Object[] rollover_exist_params = new Object[] {OrgName,financialFromDate,financialToDate};
         Boolean existRollOver = report.existRollOver(rollover_exist_params);
-
+        final Object[] rollover_params = new Object[] {OrgName, financialFromDate,financialToDate,
+                orgtype };
         if (existRollOver.equals(false)) {
-            Object[] rollover_params = new Object[] {OrgName, financialFromDate,financialToDate,
-                    orgtype };
-            rollover = report.rollOver(rollover_params,client_id);
-            if(rollover.equalsIgnoreCase("false"))
+        	rollover = report.rollOver(rollover_params,client_id);
+            if(rollover.equalsIgnoreCase("false"))  
             {
-                m.toastValidationMessage(context,"can not rollover , since financial year is not completed!!");
+                m.toastValidationMessage(context,"Cannot rollover , since financial year is not completed!!");
             }else
             {
-                m.toastValidationMessage(context,"Rollover has been done!!");
-            }       
+           
+	            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+	    		
+	    		builder.setMessage("Do you want to next financial year ?");
+	    		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+	    			public void onClick(DialogInterface dialog, int which) {
+	    				 m.toastValidationMessage(context,"Rollover has been done!!");
+	    			}
+    		});
+    		builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+    			public void onClick(DialogInterface dialog, int id) {
+    				
+    			}
 
+    		});
+    		AlertDialog rollover_dialog = builder.create();
+    		rollover_dialog.show(); 
+        }
         }else{
-            m.toastValidationMessage(context,"Rollover has done already!!");
+            m.toastValidationMessage(context,"Rollover has been already done!!");
         }
 
     }

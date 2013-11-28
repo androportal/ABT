@@ -238,6 +238,7 @@ public class projectStatement extends Activity{
 			            label.setWidth(l.getWidth());
 			        }
 			        tr.setClickable(false);
+			        tr.setLongClickable(false);
 			         // Add the TableRow to the TableLayout
 			        floating_heading_table.addView(tr, new TableLayout.LayoutParams(
 			                LayoutParams.FILL_PARENT,
@@ -397,6 +398,7 @@ public class projectStatement extends Activity{
 			label.setTextColor(Color.BLACK); //blue theme
             label.setGravity(Gravity.CENTER);
             label.setClickable(false);
+            label.setLongClickable(false);
         }
        
         //to convert string array to arary of array for csv file format
@@ -408,6 +410,7 @@ public class projectStatement extends Activity{
 	    projectStatementGrid_with_header.add(stringList);
 	    projectStatementGrid_with_header.addAll(projectStatementGrid);
 	    tr.setClickable(false);
+	    tr.setLongClickable(false);
         // Add the TableRow to the TableLayout
         projectStatementTable.addView(tr, new TableLayout.LayoutParams(LayoutParams.FILL_PARENT,
                 LayoutParams.MATCH_PARENT));
@@ -437,10 +440,10 @@ public class projectStatement extends Activity{
 						colorFade.setDuration(100);
 						colorFade.start();
 					}					
-					
+				  	
 					acc_name1 = accname;
 					Intent intent = new Intent(getApplicationContext(),ledger.class);
-					intent.putExtra("flag", "from_projStatement");
+		 			intent.putExtra("flag", "from_projStatement");
 					startActivity(intent);
 				}
 				return false;

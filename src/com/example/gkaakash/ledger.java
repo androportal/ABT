@@ -90,7 +90,7 @@ public class ledger extends Activity {
 	boolean checked;
 	DecimalFormat formatter = new DecimalFormat("#,##,##,###.00");
 	String colValue, financialFromDate, financialToDate;
-	Boolean alertdialog = false;
+	Boolean alertdialog = false;   
 	ObjectAnimator animation2;
 	boolean reportmenuflag;
 	int oneTouch = 1;
@@ -434,6 +434,7 @@ public class ledger extends Activity {
 						label.setTextColor(Color.BLACK); //blue theme
 						label.setGravity(Gravity.CENTER);
 						tr.setClickable(false);
+						tr.setLongClickable(false);
 						LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(k);
 						label.setWidth(l.getWidth());
 						// System.out.println("size is"+l.getWidth());
@@ -475,20 +476,21 @@ public class ledger extends Activity {
 			tr = new TableRow(this);
 			Integer lastIndex = ledgerGrid.size() - 1;
 			Boolean click = true;
-			if ("Opening Balance b/f".equalsIgnoreCase(columnValue.get(1).toString())) {
+			if ("Opening Balance b/f".equalsIgnoreCase(columnValue.get(1).toString())||
+					"Particulars".equalsIgnoreCase(columnValue.get(1).toString())) {
 				// System.out.println("we are in new if");
 				click = false;
 			}
 			for (int j = 0; j < columnValue.size(); j++) {
 				addRow(columnValue.get(j), i);
 
-				if (click == false) {
+				if (click.equals(false)) {
 					tr.setClickable(false);
+					tr.setLongClickable(false);
 				} else {
 					tr.setClickable(true);
+					
 				}
-
-				System.out.println("llll:" + columnValue.get(1));
 
 				if ((i + 1) % 2 == 0)
 					label.setBackgroundColor(Color.parseColor("#085e6b")); //blue theme
@@ -499,10 +501,12 @@ public class ledger extends Activity {
 
 				if (secondlastRow.equals(i) || thirdlastRow.equals(i)) {
 					tr.setClickable(false);
+					tr.setLongClickable(false);
 
 				}
 				if (lastIndex.equals(i)) {
 					tr.setClickable(false);
+					tr.setLongClickable(false);
 					label.setBackgroundColor(Color.parseColor("#218d9d"));
 				}
 
@@ -559,12 +563,14 @@ public class ledger extends Activity {
 			len = ColumnNameList.length;
 		} else {
 			len = ColumnNameList.length - 1;
+			
 		}
-
+		
 		for (int k = 0; k < len; k++) {
 			/** Creating a TextView to add to the row **/
 			addRow(ColumnNameList[k], k);
 			tr.setClickable(false);
+			tr.setLongClickable(false);
 			label.setBackgroundColor(Color.WHITE);
 			label.setTextColor(Color.BLACK); //blue theme
 			label.setGravity(Gravity.CENTER);
@@ -597,50 +603,53 @@ public class ledger extends Activity {
 				for (int j = 0; j < len; j++) {
 					LinearLayout l = (LinearLayout) ((ViewGroup) row).getChildAt(j);
 					TextView t = (TextView) l.getChildAt(0);
-					ColorDrawable drawable = (ColorDrawable)t.getBackground();
-					System.out.println("color:"+drawable.getColor());
 
-					ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"),drawable.getColor());
-					colorFade.setDuration(100);
-					colorFade.start();
+						ColorDrawable drawable = (ColorDrawable)t.getBackground();
+						System.out.println("color:"+drawable.getColor());
+	
+						ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"),drawable.getColor());
+						colorFade.setDuration(100);
+						colorFade.start();
+					
 				}
-
-				MainActivity.nameflag = true;
-
-				name = "Voucher details";
-
-				MainActivity.searchFlag = true;
-
-				Object[] params = new Object[] { "Dr" };
-				Accountlist = new ArrayList<String>();
-
-				code = ledgerGrid_with_voucherCode.get(i).get(6).toString();
-				String abc = ledgerGrid.get(i).get(1).toString();
-
-				Object[] params1 = new Object[] { code };
-
-				Object[] VoucherMaster = (Object[]) transaction.getVoucherMaster(params1, client_id);
-				// System.out.println("i am new object"+VoucherMaster);
-
-				ArrayList otherdetailsrow = new ArrayList();
-				for (Object row1 : VoucherMaster) {
-					Object a = (Object) row1;
-					otherdetailsrow.add(a.toString());// getting vouchermaster
-														// details
-				}
-
-				String vtf = otherdetailsrow.get(2).toString();
-				System.out.println("vtf"+vtf);
-				System.out.println("params "+params);
-				IntentToVoucher(vtf, params);
-
-				Intent intent = new Intent(ledger.this, transaction_tab.class);
-				intent.putExtra("flag", "from_ledger");
-				// To pass on the value to the next page
-				startActivity(intent);
-				// Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+			
+					MainActivity.nameflag = true;
+	
+					name = "Voucher details";
+	
+					MainActivity.searchFlag = true;
+					
+					Object[] params = new Object[] { "Dr" };
+					Accountlist = new ArrayList<String>();
+	
+					code = ledgerGrid_with_voucherCode.get(i).get(6).toString();
+					String abc = ledgerGrid.get(i).get(1).toString();
+	
+					Object[] params1 = new Object[] { code };
+	
+					Object[] VoucherMaster = (Object[]) transaction.getVoucherMaster(params1, client_id);
+					// System.out.println("i am new object"+VoucherMaster);
+	
+					ArrayList otherdetailsrow = new ArrayList();
+					for (Object row1 : VoucherMaster) {
+						Object a = (Object) row1;
+						otherdetailsrow.add(a.toString());// getting vouchermaster
+															// details
+					}
+	
+					String vtf = otherdetailsrow.get(2).toString();
+					System.out.println("vtf"+vtf);
+					System.out.println("params "+params);
+					IntentToVoucher(vtf, params);
+	 
+					Intent intent = new Intent(ledger.this, transaction_tab.class);
+					intent.putExtra("flag", "from_ledger");
+					// To pass on the value to the next page
+					startActivity(intent);
+					// Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
+					
+				
 				return false;
-
 			}
 		});
 
