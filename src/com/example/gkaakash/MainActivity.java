@@ -1166,7 +1166,7 @@ public class MainActivity extends Activity{
 
 		final View layout = m.builder_with_inflater(this,"",R.layout.login);
 		TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
-		tvalertHead1.setText("Set Remote Server Location");
+		tvalertHead1.setText("Set remote server location");
 		TextView tvalertHead2 =(TextView) layout.findViewById(R.id.tvalertHead2);
 		tvalertHead2.setVisibility(View.GONE);
 		TableRow checkbox_row = (TableRow)layout.findViewById(R.id.checkbox_row);
@@ -1229,7 +1229,6 @@ public class MainActivity extends Activity{
 	public void getExistingOrgNames(View layout) {
 		//call getOrganisationNames method 
 		orgNameList = startup.getOrgnisationName();
-
 		System.out.println(orgNameList);
 		List<String> list = new ArrayList<String>();
 
@@ -1516,7 +1515,7 @@ public class MainActivity extends Activity{
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
 				//Retrieving the selected org type from the Spinner and assigning it to a variable 
-				organisationName = parent.getItemAtPosition(position).toString();
+				organisationName = parent.getItemAtPosition(position).toString().trim();
 				//call getFinancialYear method from startup.java 
 				//it will give you financialYear list according to orgname
 				financialyearList = startup.getFinancialYear(organisationName);
@@ -1561,7 +1560,6 @@ public class MainActivity extends Activity{
 		getFinancialyear.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			private String[] finallist;
-
 
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View v, int position,long id) {
@@ -1794,7 +1792,6 @@ public class MainActivity extends Activity{
 					for(Object org : orgNameList){
 						if(organisationName.equals(org)){
 							orgExistFlag = false;
-
 							//call getFinancialYear method from startup.java 
 							//it will give you financialYear list according to orgname
 							financialyearList = startup.getFinancialYear(organisationName);
@@ -1805,7 +1802,6 @@ public class MainActivity extends Activity{
 								// concatination From and To date 
 								String fromDate=y[0].toString();
 								String toDate=y[1].toString();
-
 								if(fromDate.equals(fromdate) && toDate.equals(todate)){
 									orgExistFlag = true;
 									break;
@@ -1814,9 +1810,13 @@ public class MainActivity extends Activity{
 							}
 						}
 					}
-
-					if("".equals(organisationName)){
-						m.toastValidationMessage(context, "Please enter the organisation name");
+					String pattern="[a-zA-Z &][0-9a-zA-Z &]";
+					Pattern p = Pattern.compile(pattern);
+					Matcher match = p.matcher(organisationName);
+					if(!match.find())
+					{
+						m.toastValidationMessage(context, "Please enter proper organisation name");
+						
 					}
 					else if(orgExistFlag == true)
 					{
@@ -1824,14 +1824,14 @@ public class MainActivity extends Activity{
 						orgExistFlag = false;
 					}
 					else{ 
+						
 						//To pass on the activity to the next page
 						MainActivity.editDetails=false;
 						deployparams = new Object[]{organisationName,fromdate,todate,orgTypeFlag}; // parameters pass to core_engine xml_rpc functions
 						client_id = startup.deploy(deployparams);
-						orgparams = new Object[]{organisationName,orgTypeFlag,"","","","","","","","","","","","","",
-								"","","" }; 
+						orgparams = new Object[]{organisationName,orgTypeFlag,"","","","","","","","","","",
+								"","","","","","" }; 
 						//call method deploy from startup.java 
-
 						setOrgDetails = orgnisation.setOrganisation(orgparams,client_id);
 						/* Inflater for LogIn Page after Organisation Deployment*/
 						LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -1843,10 +1843,8 @@ public class MainActivity extends Activity{
 						tvalertHead1.setText(Html.fromHtml("Organisation <b>"+organisationName+"</b> have been created successfully"));
 						TextView tvalertHead2 =(TextView) layout.findViewById(R.id.tvalertHead2);
 						tvalertHead2.setText(Html.fromHtml("Financial Year: <b>"+fromdate+"</b> to <b>"+todate+"</b>"));
-
 						tvLoginWarning =(TextView) layout.findViewById(R.id.tvLoginWarning);
 						tvLoginWarning.setVisibility(TextView.GONE);
-
 						radioUserGroup = (RadioGroup)layout.findViewById(R.id.radioUser);
 						tvSignUp =(TextView) layout.findViewById(R.id.tvSignUp);
 						tvSignUp.setVisibility(TextView.GONE);

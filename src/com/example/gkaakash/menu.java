@@ -269,7 +269,7 @@ public class menu extends Activity{
 		 * access to menus as per the role
 		 * Admin: All menus
 		 * Guest: All menus except rollover, user account settings
-		 * Manager: All menus Except delete org and rollover
+		 * Manager: All menus Except delete org and rollover  
 		 * Operator: All menus except rollover, delete org, bank recon, income-exp report, adding new user
 		 */
 		ArrayList<String> menuOptions = new ArrayList<String>(Arrays.asList("Create account", "Transaction", "Reports",
@@ -485,13 +485,13 @@ public class menu extends Activity{
            
 	            AlertDialog.Builder builder = new AlertDialog.Builder(context);
 	    		
-	    		builder.setMessage("Do you want to next financial year ?");
-	    		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+	    		builder.setMessage("Do you want to rollover to next financial year ?");
+	    		builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 	    			public void onClick(DialogInterface dialog, int which) {
-	    				 m.toastValidationMessage(context,"Rollover has been done!!");
+	    				 m.toastValidationMessage(context,"Rollover has been done successfully !!!");
 	    			}
     		});
-    		builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+    		builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int id) {
     				
     			}
@@ -533,7 +533,7 @@ public class menu extends Activity{
 				context);
 		//builder.setTitle("Aakash Business Tool");
 		builder.setMessage("Do you want to export organisation?");
-		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				Object[] export = new Object[] {OrgName, financialFromDate,financialToDate};
 				//call back-end to export organisation 
@@ -546,7 +546,7 @@ public class menu extends Activity{
 			}
 
 		});
-		builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+		builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
 			}

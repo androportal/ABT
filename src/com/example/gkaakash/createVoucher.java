@@ -127,14 +127,11 @@ public class createVoucher extends Activity {
 		System.out.println("in create voucher" + IPaddr);
 		transaction = new Transaction(IPaddr);
 		organisation = new Organisation(IPaddr);
+		m = new module();
 		reports = new Report(IPaddr);
 		client_id = Startup.getClient_id();
-
-		m = new module();
+		
 		table = (TableLayout) findViewById(R.id.Vouchertable);
-
-		// row123 = table.getChildAt(0);
-
 		row1 = table.getChildAt(1);
 
 		change_voucher_type = (Spinner) findViewById(R.id.sVouchertypes);
@@ -148,200 +145,152 @@ public class createVoucher extends Activity {
 		etcheque.setVisibility(EditText.GONE);
 		cheque_ = (RadioButton) findViewById(R.id.rbcheque);
 		cash_ = (RadioButton) findViewById(R.id.rbcash);
+		etvoucherno = (EditText) findViewById(R.id.etVoucherNumber);
 
 		if (cash_.isChecked() == true) {
-			etcheque.setText("0");
-
+			etcheque.setText(""); // if cash radio is checked then set cheque number blank
 		}
 
 		rg = (RadioGroup) findViewById(R.id.radioRole);
-		rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			public void onCheckedChanged(RadioGroup arg0, int arg1) {
-				RadioButton selctedradio = (RadioButton) findViewById(arg1);
-				seletecd_val = selctedradio.getText().toString();
-				if (arg1 == R.id.rbcheque) {
-
-					cheque.setVisibility(TextView.VISIBLE);
-					etcheque.setVisibility(EditText.VISIBLE);
-					etcheque.setText("");
-
-				} else {
-					cheque.setVisibility(TextView.GONE);
-					etcheque.setVisibility(EditText.GONE);
-					etcheque.setText("0");
-
-				}
-			}
-		});
-
-		etvoucherno = (EditText) findViewById(R.id.etVoucherNumber);
+		setRadioOnCheckListener(); // set listener on cheque and cash radio
+		
+		/***
+		 * get extra values from other class
+		 */
 		Bundle extras = getIntent().getExtras();
 		if (extras == null) {
-			// Toast.makeText(context, "i am null", Toast.LENGTH_SHORT).show();
+			
 		} else {
-			// Toast.makeText(context, "i hav extra",
-			// Toast.LENGTH_SHORT).show();
 			from_report_flag = extras.getString("flag");
-			// Toast.makeText(context, "i am "+from_report_flag,
-			// Toast.LENGTH_SHORT).show();
-
 		}
 
 		if (from_report_flag == null) {
 
 			vouchertypeflag = transaction_tab.vouchertypeflag;
-			System.out.println("in null");
-			System.out.println("typeflag:" + vouchertypeflag);
-
+		
 		} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
-			System.out.println("in from_ledger");
-
+			
 			vouchertypeflag = ledger.vouchertypeflag;
 			from_trial = ledger.get_extra_flag;
-			// System.out.println("from_trial:"+from_trial);
-			// System.out.println("flag:"+vouchertypeflag);
+		
 		} else if (from_report_flag.equalsIgnoreCase("from_bankrecon")) {
-			System.out.println("in from_bankrecon");
-
+		
 			vouchertypeflag = bankReconciliation.vouchertypeflag;
 		}
 
 		try {
-			searchFlag = MainActivity.searchFlag;
+				searchFlag = MainActivity.searchFlag;
 
-			if (from_report_flag == null) {
-				cloneflag = SearchVoucher.cloneflag;
-			} else {
-				cloneflag = false;
-			}
-			// Toast.makeText(context, "abbbbccc"+searchFlag,
-			// Toast.LENGTH_SHORT).show();
-			// System.out.println("serachflag:"+searchFlag);
-			// Toast.makeText(context, "clone"+cloneflag,
-			// Toast.LENGTH_SHORT).show();
-			etRefNumber = (EditText) findViewById(R.id.etRefNumber);
-			name = SearchVoucher.name;
-			// Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
-			// after click om edit voucher Reff Edit text non-editable
-			voucherno = etvoucherno.getText().toString();
-			etnarration = (EditText) findViewById(R.id.etVoucherNarration);
-			sProjectNames = (Spinner) findViewById(R.id.sProjectNames);
-
-			table = (TableLayout) findViewById(R.id.Vouchertable);
-			if (searchFlag == false) {
-				// for setting voucher reference number
-
-				String reff_no = transaction.getLastReferenceNumber(
-				        new Object[] { vouchertypeflag }, client_id);
-				etRefNumber.setText(reff_no.toString());
-				System.out.println("reff_no at load" + reff_no);
-			}
-
-			// for edit Details
-			if (searchFlag == true) {
-
-				// voucher_code_flag=MainActivity.voucher_code_flag;
-				// System.out.println("vuc:"+voucher_code_flag);
-				// Toast.makeText(context, "V_code_flag"+voucher_code_flag,
-				// Toast.LENGTH_SHORT).show();
-				addButton();
-				System.err.println("cumning form serach voucher" + SearchVoucher.value);
-				System.out.println("vouchertypeflag in true case:" + vouchertypeflag);
-				// vouchertypeflag = SearchVoucher.vouchertypeflag;
-				// list coming from search voucher
-				ArrayList<String> abc = SearchVoucher.value;
 				if (from_report_flag == null) {
-					vouchercode = abc.get(0);
-					System.out.println("voucher_code:" + vouchercode);
-				} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
-					vouchercode = ledger.code;
-					System.out.println("voucher_code:" + vouchercode);
-
-				} else if (from_report_flag.equalsIgnoreCase("from_bankrecon")) {
-					vouchercode = bankReconciliation.code;
-					// System.out.println("voucher_code:"+vouchercode);
-
-				}
-
-				Object[] params = new Object[] { vouchercode };
-
-				Object[] VoucherMaster = (Object[]) transaction.getVoucherMaster(params, client_id);
-				Object[] VoucherDetails = (Object[]) transaction.getVoucherDetails(params,
-				        client_id);
-
-				otherdetailsrow = new ArrayList();
-				for (Object row1 : VoucherMaster) {
-					Object a = (Object) row1;
-					otherdetailsrow.add(a.toString());// getting vouchermaster
-					// details
-				}
-
-				String refno = (String) otherdetailsrow.get(0);
-				// String date=(String) row.get(1);
-				String narration = (String) otherdetailsrow.get(3);
-				proj = (String) otherdetailsrow.get(4);
-				searchdate = (String) otherdetailsrow.get(1);
-				etnarration.setText(narration);
-				etRefNumber.setText(refno);
-				etvoucherno.setText(vouchercode);
-				if (!cloneflag) {
-					etvoucherno.setEnabled(false);
-					etvoucherno.setTextColor(Color.parseColor("#AEC6CF"));
-				}
-
-				checkvoucher_number = vouchercode;
-
-				System.out.println("values are:" + narration + refno + searchdate + proj);
-				// setProject();
-
-				accdetailsList = new ArrayList<ArrayList<String>>();
-				for (Object row2 : VoucherDetails) {
-					Object[] a2 = (Object[]) row2;
-					accdetails = new ArrayList<String>();
-					for (int i = 0; i < a2.length; i++) {
-						accdetails.add((String) a2[i].toString());// getting
-						// voucherdetails
-					}
-					accdetailsList.add(accdetails);
-				}
-
-				System.out.println("acc_details:" + accdetailsList);
-
-				if ("Journal".equals(vouchertypeflag) || "Credit note".equals(vouchertypeflag)
-				        || "Debit note".equals(vouchertypeflag)) {
-					System.out.println("in ifffffff");
-					tvpaymentmode.setVisibility(TextView.GONE);
-					rg.setVisibility(EditText.GONE);
-
+					cloneflag = SearchVoucher.cloneflag;
 				} else {
+					cloneflag = false;
+				}
+		
+				etRefNumber = (EditText) findViewById(R.id.etRefNumber);
+				name = SearchVoucher.name;
+			
+				voucherno = etvoucherno.getText().toString();
+				etnarration = (EditText) findViewById(R.id.etVoucherNarration);
+				sProjectNames = (Spinner) findViewById(R.id.sProjectNames);
 
-					System.out.println("in elseeeee");
-					System.out.println(accdetailsList);// ////
-
-					if (!"".equals(accdetailsList.get(0).get(3))) {
-						cheque_.setChecked(true);
-						etcheque.setText(accdetailsList.get(0).get(3));
-						cheque_number = accdetailsList.get(0).get(3);
-
-					}
-
+				table = (TableLayout) findViewById(R.id.Vouchertable);
+				
+				/***
+				 * searchFlag is false: refers values only for create voucher page
+				 */
+				if (searchFlag == false) {
+					// get last reference number to set it to reference field
+					String reff_no = transaction.getLastReferenceNumber(new Object[] { vouchertypeflag }, client_id);
+					etRefNumber.setText(reff_no.toString());
 				}
 
-				// for filling 1st row amount
-				View row = table.getChildAt(0);
+				/***
+				 * searchFlag is True: getting values from either Edit or Clone in voucher details 
+				 * 
+				 */
+				if (searchFlag == true) {
+	
+					addButton();
+					// list coming from search voucher
+					ArrayList<String> abc = SearchVoucher.value;
+					if (from_report_flag == null) {
+						vouchercode = abc.get(0);
+						
+					} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
+						vouchercode = ledger.code;
+					
+					} else if (from_report_flag.equalsIgnoreCase("from_bankrecon")) {
+						vouchercode = bankReconciliation.code;
+					
+					}
+					Object[] params = new Object[] { vouchercode };
+					Object[] VoucherMaster = (Object[]) transaction.getVoucherMaster(params, client_id);
+					Object[] VoucherDetails = (Object[]) transaction.getVoucherDetails(params,client_id);
+	
+					otherdetailsrow = new ArrayList<Transaction>();
+					for (Object row1 : VoucherMaster) {
+						Object a = (Object) row1;
+						otherdetailsrow.add(a.toString());// getting voucher master details
+					}
+	
+					String refno = (String) otherdetailsrow.get(0);
+					String narration = (String) otherdetailsrow.get(3);
+					proj = (String) otherdetailsrow.get(4);
+					searchdate = (String) otherdetailsrow.get(1);
+					etnarration.setText(narration);
+					etRefNumber.setText(refno);
+					etvoucherno.setText(vouchercode);
+					if (!cloneflag) {
+						etvoucherno.setEnabled(false);
+						etvoucherno.setTextColor(Color.parseColor("#AEC6CF"));
+					}
+	
+					checkvoucher_number = vouchercode;
+	
+					accdetailsList = new ArrayList<ArrayList<String>>();
+					for (Object row2 : VoucherDetails) {
+						Object[] a2 = (Object[]) row2;
+						accdetails = new ArrayList<String>();
+						for (int i = 0; i < a2.length; i++) {
+							accdetails.add((String) a2[i].toString());// getting voucher details
+						}
+						accdetailsList.add(accdetails);
+					}
+					
+					if ("Journal".equals(vouchertypeflag) || 
+							"Credit note".equals(vouchertypeflag)|| 
+							"Debit note".equals(vouchertypeflag)) {
+					
+						tvpaymentmode.setVisibility(TextView.GONE);
+						rg.setVisibility(EditText.GONE);
+	
+					} else {
+	
+						if (!"".equals(accdetailsList.get(0).get(3))) {
+							cheque_.setChecked(true);
+							etcheque.setText(accdetailsList.get(0).get(3));
+							cheque_number = accdetailsList.get(0).get(3);
+						
+						}else{
+							
+							etcheque.setText("");
+							cheque_number = "";
+						}
+					
+					}
+					// for filling 1st row amount
+					View row = table.getChildAt(0);
+					amount_first = (EditText) ((ViewGroup) row).getChildAt(6);
+					amount_first.setText(accdetailsList.get(0).get(2));
+					
+				} //end of search flag true, coming from search to edit voucher
 
-				amount_first = (EditText) ((ViewGroup) row).getChildAt(6);
+				// two digit date format for dd and mm
+				mFormat = new DecimalFormat("00");
+				mFormat.setRoundingMode(RoundingMode.DOWN);
 
-				amount_first.setText(accdetailsList.get(0).get(2));
-			}
-
-			// two digit date format for dd and mm
-			mFormat = new DecimalFormat("00");
-			mFormat.setRoundingMode(RoundingMode.DOWN);
-
-			// add second row and set first & second row account names in
-			// spinner
+			// add second row and set first & second row account names in spinner
 			setFirstAndSecondRow();
 
 			// for setting voucher date
@@ -351,8 +300,7 @@ public class createVoucher extends Activity {
 			setProject();
 
 			if (from_report_flag != null && !(menu.userrole.equalsIgnoreCase("admin"))) {
-				// Toast.makeText(context,"i am from report",Toast.LENGTH_SHORT).show();
-
+			
 				btnResetVoucher.setVisibility(View.GONE);
 				btnSaveVoucher.setLayoutParams(new LinearLayout.LayoutParams(
 				        LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1f));
@@ -395,45 +343,59 @@ public class createVoucher extends Activity {
 
 			m.toastValidationMessage(context, "Please try again");
 		}
-		// add all onclick events in this method
+		// add all on click events in this method
 		OnClickListener();
 
-		// on dr/cr item selected from dropdown...
-		// OnDrCrItemSelectedListener();
-
-		// move foucs from amount to reference number edittext
+		// move focus from amount to reference number edit text
 		OnAmountFocusChangeListener();
 
 		// change voucher type
 		changeVoucherType();
 
 	}
+	public void setRadioOnCheckListener()
+	{
+		rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
+			public void onCheckedChanged(RadioGroup arg0, int arg1) {
+				RadioButton selctedradio = (RadioButton) findViewById(arg1);
+				seletecd_val = selctedradio.getText().toString();
+				if (arg1 == R.id.rbcheque) {
+
+					cheque.setVisibility(TextView.VISIBLE);
+					etcheque.setVisibility(EditText.VISIBLE);
+					etcheque.setText("");
+
+				} else {
+					cheque.setVisibility(TextView.GONE);
+					etcheque.setVisibility(EditText.GONE);
+					etcheque.setText("");
+
+				}
+			}
+		});
+
+	}
 	private void resetFields() {
-		System.out.println("we are in reset");
+		
 		name = "Create voucher";
-		// Toast.makeText(context,"namecre"+name,Toast.LENGTH_SHORT).show();
 		etRefNumber = (EditText) findViewById(R.id.etRefNumber);
-		if ("Create voucher".equals(name)) {
-			etRefNumber.setEnabled(true);
-			etvoucherno.setEnabled(true);
-		}
-
-		String reff_no = transaction.getLastReferenceNumber(new Object[] { vouchertypeflag },
-		        client_id);
+		etRefNumber.setEnabled(true);
+		etvoucherno.setEnabled(true);
+		etvoucherno.setTextColor(Color.WHITE);
+		String reff_no = transaction.getLastReferenceNumber(new Object[] { vouchertypeflag },client_id);
 		etRefNumber.setText(reff_no.toString());
 		etnarration = (EditText) findViewById(R.id.etVoucherNarration);
 		etnarration.setText("");
 		etvoucherno.setText("");
-		etcheque.setText("0");
+		etcheque.setText("");
 		cash_.setChecked(true);
 		second_table_closingbal_et.setText("");
 		searchFlag = false;
 		cloneflag = true;
 		setVoucherDate();
 		setProject();
-		// add a keylistener to keep track user
-		// input
+	
 		change_voucher_type.setEnabled(true);
 		table.removeAllViews();
 		DrAccountlist.clear();
@@ -441,8 +403,6 @@ public class createVoucher extends Activity {
 		accnames.clear();
 		setFirstAndSecondRow();
 		String tabname1 = transaction_tab.tabname;
-
-		System.out.println("tabname:" + tabname1);
 		transaction_tab.tab.setText(tabname1);
 
 	}
@@ -471,11 +431,12 @@ public class createVoucher extends Activity {
 				if (searchFlag == false && from_report_flag == null) {
 					vouchertypeflag = voucherTypes[pos];
 
-					if ("Journal".equals(vouchertypeflag) || "Credit note".equals(vouchertypeflag)
-					        || "Debit note".equals(vouchertypeflag)) {
+					if ("Journal".equals(vouchertypeflag) || 
+							"Credit note".equals(vouchertypeflag)|| 
+							"Debit note".equals(vouchertypeflag)) {
 						tvpaymentmode.setVisibility(TextView.GONE);
 						rg.setVisibility(EditText.GONE);
-						etcheque.setText("0");
+						etcheque.setText(" ");
 
 					} else {
 						tvpaymentmode.setVisibility(TextView.VISIBLE);
@@ -503,9 +464,8 @@ public class createVoucher extends Activity {
 
 		for (int i = 1; i < (tableRowCount); i++) {
 			View row = table.getChildAt(i);
-			// amount edittext
+			// amount edit text
 			e = (EditText) ((ViewGroup) row).getChildAt(6);
-
 			e.setOnFocusChangeListener(new OnFocusChangeListener() {
 
 				@Override
@@ -526,28 +486,20 @@ public class createVoucher extends Activity {
 			public void onFocusChange(View v, boolean hasfocus) {
 				amount_first.setBackgroundResource(R.drawable.textfield_activated_holo_light);
 				int tableRowCount1 = table.getChildCount();
-
-				String annnn = amount_first.getText().toString();
-
+				String fist_row_amount = amount_first.getText().toString();
 				if (tableRowCount1 == 2) {
-					// Toast.makeText(createVoucher.this,
-					// "default:"+tableRowCount1, Toast.LENGTH_SHORT).show();
 					View row = table.getChildAt(1);
-					// amount edittext
 					amount_sec = (EditText) ((ViewGroup) row).getChildAt(6);
-					// Toast.makeText(createVoucher.this,
-					// "amount:"+firstRowamount.getText(),
-					// Toast.LENGTH_SHORT).show();
-					amount_sec.setText(annnn);
+					amount_sec.setText(fist_row_amount);
 
 				} else {
-					// Toast.makeText(createVoucher.this,
-					// "else:"+tableRowCount1, Toast.LENGTH_SHORT).show();
+					
 				}
 
 			}
 		});
 
+		//get the first roe of table
 		View row1 = table.getChildAt(0);
 		closing_first = (EditText) ((ViewGroup) row).getChildAt(5);
 
@@ -559,61 +511,16 @@ public class createVoucher extends Activity {
 
 				if (closing_first.hasFocus() == true) {
 					if (tableRowCount1 == 2) {
-						System.out.println("in closing ba");
 						View row = table.getChildAt(1);
-						// amount edittext
+						
 						amount_sec = (EditText) ((ViewGroup) row).getChildAt(6);
-						// Toast.makeText(createVoucher.this,
-						// "amount:"+firstRowamount.getText(),
-						// Toast.LENGTH_SHORT).show();
 						amount_sec.setText(amount_first.getText());
-						// String selection = DrCr.getSelectedItem().toString();
-						// // Toast.makeText(createVoucher.this,
-						// "sele:"+selection,
-						// // Toast.LENGTH_SHORT).show();
-						// dr_cr.clear();
-						// dr_cr.add("Dr");
-						// dr_cr.add("Cr");
-						// ArrayAdapter<String> da12 = new ArrayAdapter<String>(
-						// createVoucher.this,
-						// android.R.layout.simple_spinner_item, dr_cr);
-						// da12.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-						// second_table_drcr_spinner.setAdapter(da12);
-						// if (selection == "Dr") {
-						//
-						// second_table_drcr_spinner.setSelection(1);
-						// } else {
-						// second_table_drcr_spinner.setSelection(0);
-						// }
+					
 					}
 				}
 
 			}
 		});
-
-		// e.setOnFocusChangeListener(new OnFocusChangeListener() {
-		//
-		// @Override
-		// public void onFocusChange(View arg0, boolean hasfocus) {
-		// int tableRowCount1 = list.getChildCount();
-		// if(e.hasFocus()){
-		// if(tableRowCount1==1){
-		// Toast.makeText(createVoucher.this, "if:"+tableRowCount1,
-		// Toast.LENGTH_SHORT).show();
-		// View row = list.getChildAt(0);
-		// e = (EditText)((ViewGroup) row).getChildAt(6);
-		// .makeText(createVoucher.this,
-		// "amount:"+firstRowamount.getText(), Toast.LENGTH_SHORT).show();
-		// e.setText(firstRowamount.getText());
-		//
-		// }else {
-		// Toast.makeText(createVoucher.this, "else:"+tableRowCount1,
-		// Toast.LENGTH_SHORT).show();
-		// }
-		// }
-		//
-		// }
-		// });
 
 	}
 
@@ -623,10 +530,7 @@ public class createVoucher extends Activity {
 		 */
 		totalDr = 0;
 		totalCr = 0;
-		// System.out.println("m in..........");
-
-		// selected dr/cr and amount of the all rows
-
+		
 		tableRowCount = table.getChildCount();
 
 		for (int i = 0; i < (tableRowCount); i++) {
@@ -634,16 +538,14 @@ public class createVoucher extends Activity {
 			// dr cr spinner
 			Spinner s = (Spinner) ((ViewGroup) row).getChildAt(0);
 			String drcr = s.getSelectedItem().toString();
-			// System.out.println("ssdsdSSS:"+drcr);
-
-			// amount edittext
+		
+			// amount edit text
 			EditText e = (EditText) ((ViewGroup) row).getChildAt(6);
 			drcramount = e.getText().toString();
 
 			if (drcramount.length() < 1) {
 				drcramount = "0.00";
-				// e.setBackgroundResource(R.drawable.btn_default_focused_holo_light);////
-
+		
 			}
 			drcrAmount = Float.parseFloat(drcramount);
 
@@ -657,29 +559,26 @@ public class createVoucher extends Activity {
 
 	private void setFirstAndSecondRow() {
 		/*
-		 * this onload function takes the account name list from
+		 * this on load function takes the account name list from
 		 * voucherMenu.java depending upon getAccountByRule sets first row
 		 * account name spinner add the second row and set the account name in
 		 * spinner
 		 */
 
-		System.out.println("flaggg:" + vouchertypeflag + "/n");
-
-		if ("Contra".equals(vouchertypeflag) || "Journal".equals(vouchertypeflag)) {
+		if ("Contra".equals(vouchertypeflag) ||"Journal".equals(vouchertypeflag)) {
 			if (from_report_flag == null) {
+				
 				Object[] params = new Object[] { "Dr" };
 				m.getAccountsByRule(params, vouchertypeflag, context);
 				accnames = module.Accountlist;
-				// System.out.println("acc_names:"+accnames);
+				
 			} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
-				accnames = ledger.Accountlist;// ////////////////////////////
-				System.out.println("acc_names:" + accnames);
+				accnames = ledger.Accountlist;
+				
 			} else if (from_report_flag.equalsIgnoreCase("from_bankrecon")) {
-				accnames = bankReconciliation.Accountlist;// ////////////////////////////
-				// System.out.println("acc_names:"+accnames);
+				accnames = bankReconciliation.Accountlist;
+				
 			}
-
-			// set first row account name spinner
 
 			// set resource layout of spinner to that adapter
 			if (searchFlag == false) {
@@ -698,7 +597,7 @@ public class createVoucher extends Activity {
 				removeSelfButton.setText("+");
 
 				addButton();
-
+  
 				dr_cr.clear();
 				dr_cr.add("Dr");
 				dr_cr.add("Cr");
@@ -763,10 +662,7 @@ public class createVoucher extends Activity {
 
 				second_dr_cr.setAdapter(da1);
 				second_dr_cr.setSelection(SacctypePosition);// setting spinner
-				// selection
-				// acc to obtained value
-
-				// acc to obtained value
+				// selection acc to obtained value
 
 				// for filling 2nd row amount
 				amount_sec = (EditText) ((ViewGroup) row1).getChildAt(6);
@@ -777,11 +673,8 @@ public class createVoucher extends Activity {
 				Ssecond_spinner = accdetailsList.get(1).get(0);
 				SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
 				second_account_name.setAdapter(dataAdapter);
-				second_account_name.setSelection(SaccnamePosition);// setting
-				// spinner
-				// selection acc to
-				// obtained value
-
+				second_account_name.setSelection(SaccnamePosition);
+			
 				tableRowCount = table.getChildCount();
 
 				// if row count of 2nd table(list) is more than 1 code bellow
@@ -826,6 +719,7 @@ public class createVoucher extends Activity {
 			} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
 				if (ledger.vouchertypeflag.equalsIgnoreCase("Contra")
 				        || ledger.vouchertypeflag.equalsIgnoreCase("Journal")) {
+					
 					accnames = ledger.Accountlist;
 					DrAccountlist.addAll(accnames);
 					CrAccountlist.addAll(accnames);
@@ -836,12 +730,10 @@ public class createVoucher extends Activity {
 				}
 
 			} else if (from_report_flag.equalsIgnoreCase("from_bankrecon")) {
-				System.out.println("in from_bankrecon ");
+				
 				DrAccountlist = bankReconciliation.DrAccountlist;
 				CrAccountlist = bankReconciliation.CrAccountlist;
 
-				System.out.println("account name :" + DrAccountlist);
-				System.out.println("account name :" + CrAccountlist);
 			}
 
 			if (searchFlag == false) {
@@ -898,12 +790,10 @@ public class createVoucher extends Activity {
 				dr_cr.add("Dr");
 				dr_cr.add("Cr");
 
-				System.out.println("accdetailsList:" + accdetailsList);
 				Facctype = accdetailsList.get(0).get(1);
 
 				Sacctype = accdetailsList.get(1).get(1);
-				System.out.println("account name :" + DrAccountlist);
-				System.out.println("account name :" + CrAccountlist);
+			
 				View row1 = table.getChildAt(1);
 				second_dr_cr = (Spinner) ((ViewGroup) row1).getChildAt(0);
 
@@ -949,9 +839,7 @@ public class createVoucher extends Activity {
 					        android.R.layout.simple_spinner_item, CrAccountlist);
 
 				}
-				// Toast.makeText(context,
-				// "data:"+accdetailsList,Toast.LENGTH_SHORT).show();
-
+			
 				Ssecond_spinner = accdetailsList.get(1).get(0);
 
 				SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
@@ -979,7 +867,7 @@ public class createVoucher extends Activity {
 						}
 
 						Ssecond_spinner = accdetailsList.get(i).get(0);
-						// System.out.println("ashagdSec:"+Ssecond_spinner+"");
+					
 						SaccnamePosition = dataAdapter.getPosition(Ssecond_spinner);
 						dataAdapter
 						        .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -1007,12 +895,9 @@ public class createVoucher extends Activity {
 		 */
 		// for first row
 
-		System.out.println("in selected change:" + table.getChildCount());
-
 		for (int i = 0; i < table.getChildCount(); i++) {
-			// final int poooos = second_table_drcr_spinner
-			// .getSelectedItemPosition();
-			// System.out.println("position1:" + poooos);
+		
+		
 			second_table_drcr_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 				@Override
@@ -1115,9 +1000,7 @@ public class createVoucher extends Activity {
 				if (searchFlag == true) {
 					touch = true;
 					add = false;
-					// Toast.makeText(createVoucher.this, "value:"+touch,
-					// Toast.LENGTH_SHORT).show();
-
+				
 				}
 
 				return false;
@@ -1142,7 +1025,7 @@ public class createVoucher extends Activity {
 
 					if (tableRowCount == 2) {
 						View row1 = table.getChildAt(0);
-						// amount edittext
+						// amount edit text
 						amount_first = (EditText) ((ViewGroup) row1).getChildAt(6);
 
 						View row12 = table.getChildAt(1);
@@ -1201,38 +1084,9 @@ public class createVoucher extends Activity {
 
 						// set totalDr and totalCr in textview
 						String tvTotalDr = Float.toString(totalDr);
-						// tvTotalDebit.setText("Total Debit: "+tvTotalDr+"0");
-
+					
 						String tvTotalCr = Float.toString(totalCr);
-						// tvTotalCredit.setText("Total Credit: "+tvTotalCr+"0");
-
-						// second_table_drcr_spinner.setOnItemSelectedListener(new
-						// OnItemSelectedListener() {
-						//
-						// @Override
-						// public void onItemSelected(AdapterView<?> parent,
-						// View v, int position, long id) {
-						// // TODO Auto-generated method stub
-						// String a = parent.getItemAtPosition(position)
-						// .toString();
-						// if (a != null) {
-						// Object[] params = new Object[] { a };
-						//
-						// m.getAccountsByRule(params,
-						// vouchertypeflag, context);
-						// dataAdapter = module.dataAdapter;
-						// second_table_accountname_spinner.setAdapter(dataAdapter);
-						// }
-						//
-						// }
-						//
-						// @Override
-						// public void onNothingSelected(AdapterView<?> arg0) {
-						// // TODO Auto-generated method stub
-						//
-						// }
-						// });
-
+						
 						// set Dr/Cr selected in dropdown according to the
 						// condition and set amount in new row
 						if (totalDr > totalCr) {
@@ -1257,11 +1111,9 @@ public class createVoucher extends Activity {
 			}
 		});
 
-		/*
-		 * ======================================================================
-		 * ======== save transaction
+		/***
+		 * validation for Save Transaction
 		 */
-
 		btnSaveVoucher.setOnClickListener(new OnClickListener() {
 
 			private String ac;
@@ -1269,37 +1121,41 @@ public class createVoucher extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				if (from_report_flag == null) {
+				if (from_report_flag == null) {   
 					testAmountTally();
 
 					String refNumber = etRefNumber.getText().toString();
-					System.out.println("reff no " + refNumber);
 					String strnarration = etnarration.getText().toString();
 					voucherno = etvoucherno.getText().toString();
 					String cheque_no = etcheque.getText().toString();
-					vouchernoExist = transaction.voucherNoExist(new Object[] { voucherno },
-					        client_id);
-					chequenoExist = transaction
-					        .chequeNoExist(new Object[] { cheque_no }, client_id);
-					System.out.println("cheque no exist :" + chequenoExist);
-					if (totalDr == totalCr && !"".equals(refNumber) && !"".equals(strnarration)
-					        && !"".equals(voucherno) && !"".equals(cheque_no)) {
+					
+					vouchernoExist = transaction.voucherNoExist(new Object[] { voucherno },client_id);// exist then 1 else 0
+					chequenoExist = transaction.chequeNoExist(new Object[] { cheque_no }, client_id); // exist then 1 else 0
+					/***
+					 * It will save voucher only if 
+					 * Dr Cr amount is equal and following field should not be blank 
+					 * reference and Narration and voucher and 
+					 * and if cheque number is equal to cheque no coming from search voucher page 
+					 * even if it is was blank OR if cash is selected then don't check for cheque number else
+					 * cheque number should not be blank 
+					 * 
+					 */
+					if ((totalDr == totalCr && !"".equals(refNumber) && !"".equals(strnarration)&&!"".equals(voucherno))&& 
+					        (searchFlag == true && cloneflag == false&&cheque_.isChecked()==true&&cheque_number.equals(cheque_no)&&
+					        	"".equals(cheque_no)||cash_.isChecked()==true||!"".equals(cheque_no))) {
 
 						if (totalDr == 0) {
 							if ("0.0".equals(Float.toString(totalDr))) {
 
 								amount_first.requestFocus();
-								amount_first
-								        .setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+								amount_first.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
 							}
 							m.toastValidationMessage(context, "Please enter amount");
 
 						} else if ((searchFlag == true && cloneflag == false
 						        && checkvoucher_number.equals(voucherno) && (cheque_number
-						        .equals(cheque_no) || chequenoExist.equals("0")))
-						        || vouchernoExist.equals("0") && chequenoExist.equals("0")) {
-
-							System.out.println("i am in both not exist voucher no" + voucherno);
+						        .equals(cheque_no)|| (cash_.isChecked()==true||cheque_.isChecked()==true&&chequenoExist.equals("0"))))
+						        || vouchernoExist.equals("0") && (cash_.isChecked()==true||cheque_.isChecked()==true&&chequenoExist.equals("0"))) {
 
 							// main list
 							paramsMaster = new ArrayList<ArrayList>();
@@ -1398,13 +1254,12 @@ public class createVoucher extends Activity {
 
 									Object[] params_master = null;
 									if ("Cash".equals(seletecd_val)) {
-										System.out.println("1");
+										
 										params_master = new Object[] { refNumber, vDate,
 										        vouchertypeflag, vproject, narration, voucherno, "" };
 									} else if ("Cheque".equals(seletecd_val)) {
-										System.out.println("2");
+										
 										String val = etcheque.getText().toString();
-
 										params_master = new Object[] { refNumber, vDate,
 										        vouchertypeflag, vproject, narration, voucherno,
 										        val };
@@ -1415,8 +1270,7 @@ public class createVoucher extends Activity {
 										        vouchertypeflag, vproject, narration, voucherno, "" };
 									}
 
-									setVoucher = (Integer) transaction.setTransaction(
-									        params_master, paramsMaster, client_id);
+									setVoucher = (Integer) transaction.setTransaction(params_master, paramsMaster, client_id);
 									// for satisfying reset condition
 									searchFlag = false;
 									edittabflag = false;
@@ -1455,11 +1309,11 @@ public class createVoucher extends Activity {
 
 									Object[] params_master = null;
 									if ("Cash".equals(seletecd_val)) {
-										System.out.println("1");
+										
 										params_master = new Object[] { refNumber, vDate,
 										        vouchertypeflag, vproject, narration, voucherno, "" };
 									} else if ("Cheque".equals(seletecd_val)) {
-										System.out.println("2");
+										
 										String val = etcheque.getText().toString();
 
 										params_master = new Object[] { refNumber, vDate,
@@ -1467,7 +1321,7 @@ public class createVoucher extends Activity {
 										        val };
 
 									} else {
-										System.out.println("3");
+										
 										params_master = new Object[] { refNumber, vDate,
 										        vouchertypeflag, vproject, narration, voucherno, "" };
 									}
@@ -1475,11 +1329,7 @@ public class createVoucher extends Activity {
 									        params_master, paramsMaster, client_id);
 									// for not getting reseted
 									searchFlag = true;
-									edittabflag = false;// this flag is seted
-									// for
-									// changing tab name on tab
-									// change
-
+									edittabflag = false;
 								}
 
 								AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -1496,24 +1346,8 @@ public class createVoucher extends Activity {
 								alert.show();
 
 								// reset all fields
-								if ((searchFlag == false || cloneflag == false)
-								        && from_report_flag == null) {
-
-									String reff_no = transaction.getLastReferenceNumber(
-									        new Object[] { vouchertypeflag }, client_id);
-									etRefNumber.setText(reff_no.toString());
-									etnarration.setText("");
-									cash_.setChecked(true);
-
-									setProject();
-
-									setVoucherDate();
-
-									View row1 = table.getChildAt(0);
-									first_dr_cr = (Spinner) ((ViewGroup) row1).getChildAt(0);
-									first_dr_cr.setSelection(0);
-									table.removeAllViews();
-									setFirstAndSecondRow();
+								if ((searchFlag == false || cloneflag == false)&& from_report_flag == null) {
+									resetFields();
 								}
 
 							} else {
@@ -1521,21 +1355,16 @@ public class createVoucher extends Activity {
 								if (empty_spinner) {
 									m.toastValidationMessage(context, "Please create account");
 									View row1 = table.getChildAt(empty_account_row);
-									second_account_name = (Spinner) ((ViewGroup) row1)
-									        .getChildAt(2);
+									second_account_name = (Spinner) ((ViewGroup) row1).getChildAt(2);
 									second_account_name.requestFocus();
-									second_account_name
-									        .setBackgroundResource(R.drawable.spinner_focused_holo_dark);
+									second_account_name.setBackgroundResource(R.drawable.spinner_focused_holo_dark);
 									getCurrentFocus().clearFocus();
 								} else {
-									m.toastValidationMessage(context,
-									        "Account name can not be repeated, please select another account name");
+									m.toastValidationMessage(context,"Account name can not be repeated, please select another account name");
 									View row1 = table.getChildAt(same_account_name_row);
-									second_account_name = (Spinner) ((ViewGroup) row1)
-									        .getChildAt(2);
+									second_account_name = (Spinner) ((ViewGroup) row1).getChildAt(2);
 									second_account_name.requestFocus();
-									second_account_name
-									        .setBackgroundResource(R.drawable.spinner_focused_holo_dark);
+									second_account_name.setBackgroundResource(R.drawable.spinner_focused_holo_dark);
 									getCurrentFocus().clearFocus();
 								}
 							}
@@ -1573,38 +1402,32 @@ public class createVoucher extends Activity {
 							View row = table.getChildAt(0);
 							amount_first = (EditText) ((ViewGroup) row).getChildAt(6);
 							amount_first.requestFocus();
-							amount_first
-							        .setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+							amount_first.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
 						} else {
 							View row = table.getChildAt(1);
 							amount_sec = (EditText) ((ViewGroup) row).getChildAt(6);
 							amount_sec.requestFocus();
-							amount_sec
-							        .setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+							amount_sec.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
 						}
 
 						m.toastValidationMessage(context, "Debit and Credit amount is not tally");
 
 					} else if ("".equals(refNumber)) {
 						etRefNumber.requestFocus();
-
 						m.toastValidationMessage(context, "Please enter voucher reference number");
-						etRefNumber
-						        .setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+						etRefNumber.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
 
 					} else if ("".equals(voucherno)) {
 						// voucherNoExist
 						etvoucherno.requestFocus();
 						m.toastValidationMessage(context, "Please enter voucher number");
-						etvoucherno
-						        .setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+						etvoucherno.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
 
 					} else if ("".equals(strnarration)) {
 						etnarration.requestFocus();
 						m.toastValidationMessage(context, "Please enter narration");
-						etnarration
-						        .setBackgroundResource(R.drawable.btn_default_focused_holo_light);
-					} else if (etcheque.getText().length() == 0) {
+						etnarration.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+					} else if (cheque_.isChecked()==true&&etcheque.getText().length()==0) {
 						m.toastValidationMessage(context, "Please enter cheque no.");
 
 					}
@@ -1681,17 +1504,15 @@ public class createVoucher extends Activity {
 
 		// call the getAllProjects method to get all projects
 		Object[] projectnames = (Object[]) organisation.getAllProjects(client_id);
-		// create new array list of type String to add gropunames
+		// create new array list of type String to add gropu names
 		List<String> projectnamelist = new ArrayList<String>();
 		projectnamelist.add("No Project");
 		for (Object pn : projectnames) {
 			Object[] p = (Object[]) pn;
-			projectnamelist.add((String) p[1]); // p[0] is project
-			// code & p[1] is
-			// projectname
+			projectnamelist.add((String) p[1]); // p[0] is project code & p[1] is project name
 		}
 
-		// creating array adaptor to take list of vouchertypes
+		// creating array adaptor to take list of voucher types
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
 		        android.R.layout.simple_spinner_item, projectnamelist);
 		// set resource layout of spinner to that adaptor
@@ -1803,14 +1624,7 @@ public class createVoucher extends Activity {
 				cal1.setTime(date1);
 				cal2.setTime(date2);
 				cal3.setTime(date3);
-				/*
-				 * System.out.println(financialFromDate+financialToDate+mFormat.
-				 * format(Double.valueOf(day))+"-"
-				 * +mFormat.format(Double.valueOf
-				 * (Integer.parseInt((mFormat.format(Double.valueOf(month))))+
-				 * 1))+"-" +mFormat.format(Double.valueOf(year)));
-				 */
-
+			
 				if ((cal3.after(cal1) && cal3.before(cal2)) || cal3.equals(cal1)
 				        || cal3.equals(cal2)) {
 
@@ -1836,100 +1650,20 @@ public class createVoucher extends Activity {
 		}
 	};
 
-	/***
-	 * Gets all the information necessary to delete itself from the constructor.
-	 * Deletes itself when the button is pressed.
-	 */
-	// private static class RowRemover extends createVoucher implements
-	// OnClickListener{
-	// private TableLayout table;
-	// private TableRow rowToBeRemoved;
-	//
-	//
-	// /***
-	// * @param table
-	// * The table that the button belongs to
-	// * @param row
-	// * The row that the button belongs to
-	// */
-	// public RowRemover(TableLayout table, TableRow row) {
-	// this.table = table;
-	// this.rowToBeRemoved = row;
-	//
-	//
-	// }
-	//
-	//
-	// public void onClick(View view) {
-	// final int tableRowCount = table.getChildCount();
-	// System.out.println("count in remove:"+tableRowCount);
-	//
-	//
-	//
-	// View row = table.getChildAt(0);
-	// System.out.println("row:"+row);
-	//
-	// System.out.println("doneeeee");
-	// addButton(context);
-	//
-	// abc();
-	//
-	// for (int i = 1; i < (tableRowCount); i++) {
-	// View row1 = table.getChildAt(i);
-	//
-	// removeSelfButton = (Button) ((ViewGroup) row1).getChildAt(7);
-	//
-	// removeSelfButton.setOnClickListener(new OnClickListener() {
-	//
-	// @Override
-	// public void onClick(View arg0) {
-	// System.out.println("Noooooo");
-	// if(tableRowCount==2){
-	//
-	// }else {
-	// table.removeView(rowToBeRemoved);
-	// e.setFocusableInTouchMode(true);
-	// e.requestFocus();
-	// }
-	//
-	// }
-	// });
-	//
-	// }
-	//
-	//
-	//
-	//
-	//
-	//
-	// }
-
-	// }
-
+	
 	public void RowRemover(TableLayout table, TableRow row) {
 		this.table = table;
 		this.rowToBeRemoved = row;
-		System.out.println("Innnn1");
-
+	
 		if (table.getChildCount() == 2) {
-			System.out.println("Innnn2");
-			// View row1 = table.getChildAt(0);
-			// // amount edittext
-			// amount_first = (EditText) ((ViewGroup) row1).getChildAt(6);
-			// System.out.println("ammm"+amount_first.getText());
-			//
-			// View row12 = table.getChildAt(1);
-			// amount_sec = (EditText) ((ViewGroup) row12).getChildAt(6);
-			// amount_sec.setText(amount_first.getText());
-
+		
 		} else {
 			table.removeView(rowToBeRemoved);
 			View row1 = table.getChildAt(0);
-			// amount edittext
+		
 			closing_first = (EditText) ((ViewGroup) row1).getChildAt(5);
 			closing_first.requestFocus();
-			System.out.println("Innnn3");
-
+		
 		}
 
 	}
@@ -1974,7 +1708,6 @@ public class createVoucher extends Activity {
 		tv2.setPadding(10, 0, 5, 0);
 		tv2.setVisibility(TextView.GONE);
 
-		// tv1.setWidth(100);
 		second_table_amount_et = new EditText(newRow.getContext());
 		second_table_amount_et.setBackgroundResource(R.drawable.edit_text_holo_light);
 		second_table_amount_et.setText("");
@@ -1997,15 +1730,7 @@ public class createVoucher extends Activity {
 		removeSelfButton = new Button(newRow.getContext(), null);
 		removeSelfButton.setText("     -      "); // for tablet ***** add space
 		removeSelfButton.setBackgroundResource(R.drawable.default_button_selector);
-		// OnClickListener();
-		// pass on all the information necessary for deletion
-		// removeSelfButton.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View arg0) {
-		// RowRemover1(table, newRow);
-		// }
-		// });
+		
 		removeSelfButton.setTextColor(Color.WHITE);
 
 		newRow.addView(second_table_drcr_spinner, 105, 40);
@@ -2051,10 +1776,9 @@ public class createVoucher extends Activity {
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
+	
 		super.onResume();
-		if (SearchVoucher.deletedflag.equals(true)
-		        && SearchVoucher.deleted_vouchercode.equals(vouchercode)) {
+		if (SearchVoucher.deletedflag.equals(true)&& SearchVoucher.deleted_vouchercode.equals(vouchercode)) {
 			resetFields();
 		}
 	}
