@@ -1780,7 +1780,7 @@ public class MainActivity extends Activity{
 			@Override
 			public void onClick(View arg0) {
 				
-				try{
+//				try{
 					System.out.println("next button "+IPaddr);
 					startup = new Startup(IPaddr);
 					organisationName = orgName.getText().toString();
@@ -1806,11 +1806,10 @@ public class MainActivity extends Activity{
 									orgExistFlag = true;
 									break;
 								}
-
-							}
-						}
+							}  
+						}    
 					}
-					String pattern="[a-zA-Z &][0-9a-zA-Z &]";
+					String pattern="^[A-Z]([a-zA-Z0-9]|[- @\\.#&!'()])*$";
 					Pattern p = Pattern.compile(pattern);
 					Matcher match = p.matcher(organisationName);
 					if(!match.find())
@@ -1893,7 +1892,7 @@ public class MainActivity extends Activity{
 												tvLoginWarning.setVisibility(TextView.VISIBLE);
 												tvLoginWarning.setText(message);
 
-											}		
+											}		   
 										}
 
 										if(user_role.equals("admin") ){
@@ -1937,26 +1936,26 @@ public class MainActivity extends Activity{
 						dialog.getWindow().setAttributes(lp);
 
 					}
-				}catch(Exception e)
-				{
-					IPaddr = IPaddr_value;
-					String message = "Can not connect to remote server!! \nPlease set IP again or check server is running!!" +
-							"\nRe-establishing connection to the local server...";
-					AlertDialog.Builder builder = new AlertDialog.Builder(context);
-					builder.setMessage(message)
-					.setCancelable(false)
-					.setPositiveButton("Ok",
-							new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-							//do nothing
-						}
-					});
-
-					AlertDialog alert = builder.create();
-					alert.show();
-					//m.toastValidationMessage(contex, msg)
-
-				}
+//				}catch(Exception e)
+//				{
+//					IPaddr = IPaddr_value;
+//					String message = "Can not connect to remote server!! \nPlease set IP again or check server is running!!" +
+//							"\nRe-establishing connection to the local server...";
+//					AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//					builder.setMessage(message)
+//					.setCancelable(false)
+//					.setPositiveButton("Ok",
+//							new DialogInterface.OnClickListener() {
+//						public void onClick(DialogInterface dialog, int id) {
+//							//do nothing
+//						}
+//					});
+//
+//					AlertDialog alert = builder.create();
+//					alert.show();
+//					//m.toastValidationMessage(contex, msg)   
+//
+//				}
 			}
 		}); //End of btnCreate.setOnClickListener
 
