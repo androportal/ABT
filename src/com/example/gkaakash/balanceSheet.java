@@ -163,7 +163,7 @@ public class balanceSheet extends Activity{
 			TextView org = (TextView)findViewById(R.id.org_name);
 			org.setText(OrgName + ", "+reportMenu.orgtype);
 			TextView tvdate = (TextView)findViewById(R.id.date);
-			tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
+			tvdate.setText("As on "+m.changeDateFormat(financialToDate));
 			
 			TextView tv = (TextView) findViewById(R.id.tvaccountName);
 			tv.setText(balancetype);
