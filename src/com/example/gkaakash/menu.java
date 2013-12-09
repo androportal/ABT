@@ -287,7 +287,7 @@ public class menu extends Activity{
 				"Edit/Delete organisation, Add/Edit/Delete project",
 				"Transfer the holdings to the next financial year",
 				"Export organisation data from one device to another",
-				"Change Username/Password, Add/Edit/Delete user role",
+				"Change username/password, Add/Edit/Delete user role",
 				"How to use ABT"));
 		
 		//modify menu list according to the user
@@ -561,9 +561,9 @@ public class menu extends Activity{
 	
 	protected void settings() {
 		if(userrole.equalsIgnoreCase("operator")){
-			items = new CharSequence[]{ "Change Username","Change Password"};
+			items = new CharSequence[]{ "Change username","Change password"};
 		}else{
-			items = new CharSequence[]{ "Change Username","Change Password", "Add user"};
+			items = new CharSequence[]{ "Change username","Change password", "Add user"};
 		}
 
 		//creating a dialog box for popup

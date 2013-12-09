@@ -462,7 +462,7 @@ public class MainActivity extends Activity{
 				}catch(Exception e)
 				{
 					IPaddr = IPaddr_value;
-					String message = "Can not connect to remote server!! \nPlease set IP again or check server is running!!" +
+					String message = "Can not connect to remote server!! \nPlease set IP again or check whether server is running!!" +
 							"\nRe-establishing connection to the local server...";
 					m.toastValidationMessage(context, message);
 				}
@@ -522,7 +522,7 @@ public class MainActivity extends Activity{
 				}catch(Exception e)
 				{
 					IPaddr = IPaddr_value;
-					String message = "Can not connect to remote server!! \nPlease set IP again or check server is running!!" +
+					String message = "Can not connect to remote server!!! \nPlease set IP again or check whether server is running!!!" +
 							"\nRe-establishing connection to the local server...";
 					m.toastValidationMessage(context, message);
 				}
@@ -1457,7 +1457,7 @@ public class MainActivity extends Activity{
 					dialog.getWindow().setAttributes(lp);
 				}else{
 					IPaddr = IPaddr_value;
-					String message = "Can not connect to remote server!! \nPlease set IP again or check server is running!!" +
+					String message = "Can not connect to remote server!! \nPlease set IP again or check whether server is running!!" +
 							"\nRe-establishing connection to the local server...";
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setMessage(message)
@@ -1939,7 +1939,7 @@ public class MainActivity extends Activity{
 				}catch(Exception e)
 				{
 					IPaddr = IPaddr_value;
-					String message = "Can not connect to remote server!! \nPlease set IP again or check server is running!!" +
+					String message = "Can not connect to remote server!! \nPlease set IP again or check whether server is running!!" +
 							"\nRe-establishing connection to the local server...";
 					AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					builder.setMessage(message)
@@ -2056,7 +2056,7 @@ public class MainActivity extends Activity{
 									eloginPassword.setText("");
 									tvLoginWarning.setVisibility(TextView.GONE);
 									tvSignUp.setVisibility(TextView.VISIBLE);
-									tvSignUp.setText("Signed up successfully as a Admin, Please Log In!!!");
+									tvSignUp.setText("Signed up successfully as an Admin, Please Log In!!!");
 
 									dialog.dismiss();
 								}
