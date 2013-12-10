@@ -138,7 +138,7 @@ Operator
 
 **Rights of Operator** :
 
-1. **Operator** has access to ``Create account, Transaction, all reports except Income & Expenditure/Profit & Loss, Add projects, User account settings, Export organisation and Help``.
+1. **Operator** has access to ``Create account, Transaction, all reports, Add projects, User account settings, Export organisation and Help``.
 
 	
 
