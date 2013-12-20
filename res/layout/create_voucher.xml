@@ -324,7 +324,7 @@
         android:layout_weight="30"
         android:hint="Tap to enter cheque No." 
         android:paddingTop="2dp"
-        android:inputType="textCapSentences"
+        android:inputType="numberSigned"
         style="@style/EditTextAppTheme"/>  
 	 
 	</LinearLayout>
