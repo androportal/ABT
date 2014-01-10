@@ -205,7 +205,7 @@ public class MainActivity extends Activity{
 				tvalertHead1.setText("Import organisation");
 
 				Button btnImport =  (Button) layout.findViewById(R.id.btnImport);
-				Button btnCancel =  (Button) layout.findViewById(R.id.btnCancel);
+				Button btnCancel =  (Button) layout.findViewById(R.id.btnExit);
 				final Spinner sOrganisation =  (Spinner) layout.findViewById(R.id.sOrganisation);
 				final Spinner sYear =  (Spinner) layout.findViewById(R.id.sYear);
 
@@ -249,9 +249,7 @@ public class MainActivity extends Activity{
 
 				btnImport.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v) {
-						System.out.println(sOrganisation.getSelectedItem());
-						System.out.println(sYear.getSelectedItem().toString().substring(0,10));
-						System.out.println(sYear.getSelectedItem().toString().substring(14,24));
+						
 						Object[] params = new Object[]{sOrganisation.getSelectedItem(),
 								sYear.getSelectedItem().toString().substring(0,10),
 								sYear.getSelectedItem().toString().substring(14,24),

@@ -367,7 +367,8 @@ import android.widget.Toast;
 					trOrgnisation.setVisibility(View.GONE);
 					getFinancialyear = (Spinner)layout.findViewById(R.id.sYear);
 					btnDelete = (Button)layout.findViewById(R.id.btnImport);
-					Button btnCancel = (Button) layout.findViewById(R.id.btnCancel);
+					Button btnCancel = (Button) layout.findViewById(R.id.btnExit);
+					btnCancel.setText("Cancel");
 			        TextView tvalertHead1 = (TextView) layout.findViewById(R.id.tvalertHead1);
 			        tvalertHead1.setText("Delete "+getOrgName+" orgnisation for given financial year?");
 					btnDelete.setText("Delete");
@@ -391,7 +392,7 @@ import android.widget.Toast;
 							        		"It will be permenantly lost !";
 								}
 								//tvalertHead1   
-								
+							   System.out.println("print orgname : "+getOrgName);
 								AlertDialog.Builder builder = new AlertDialog.Builder(context);
 							        builder.setMessage(message)
 							                .setCancelable(false)
@@ -400,7 +401,7 @@ import android.widget.Toast;
 							                            public void onClick(DialogInterface dialog, int id) {
 							                            	//parameters pass to core_engine xml_rpc functions
 							                            	//addListnerOnFinancialSpinner();
-							                            	//System.out.println("dlete params: "+getOrgName+""+fromDate+""+toDate);
+							                            	System.out.println("dlete params: "+getOrgName+""+fromDate+""+toDate);
 							                				deleteprgparams=new Object[]{getOrgName,fromDate,toDate};
 							                				
 							                				deleted = startup.deleteOrgnisationName(deleteprgparams);
