@@ -1187,6 +1187,17 @@ public class MainActivity extends Activity{
 		eLoginUser.setBackgroundResource(R.drawable.textfield_activated_holo_light);
 		Button btnLogin = (Button)layout.findViewById(R.id.btnLogin);
 		btnLogin.setText("Ok");
+		
+		Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
+		btnCancel.setVisibility(View.VISIBLE);
+		btnCancel.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				module.dialog.dismiss();
+			}
+		});
+		
 		module.dialog.setCanceledOnTouchOutside(true);
 
 		btnLogin.setOnClickListener(new OnClickListener() {   
@@ -1383,6 +1394,16 @@ public class MainActivity extends Activity{
 						}
 					});
 
+					Button btnCancel =  (Button) layout.findViewById(R.id.btnCancel);
+					btnCancel.setVisibility(View.VISIBLE);
+					btnCancel.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							dialog.dismiss();
+						}
+					});
+					
 					Button login =  (Button) layout.findViewById(R.id.btnLogin);
 					addRadioListnerOnItem(layout);
 					login.setOnClickListener(new View.OnClickListener(){

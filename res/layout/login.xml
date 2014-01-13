@@ -185,17 +185,8 @@
 		 
 		
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="128dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="10dp"
-        android:text="Log In"
-        style="@style/DefaultButton" />
     
-     <TextView
+    <TextView
          android:id="@+id/tvlink"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
@@ -206,6 +197,39 @@
          android:paddingBottom="10dp"
          android:paddingRight="10dp"
          style="@style/CodeFont"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="5"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:layout_marginBottom="6dp"
+        android:orientation="horizontal" >
 	
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentBottom="true"
+            android:text="Cancel"
+            android:visibility="gone"
+            style="@style/DefaultButton" />
+		
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+           	android:layout_gravity="center_vertical"
+           	android:layout_alignParentBottom="true"
+           	android:layout_weight="1"
+           	android:text="Log In"
+            style="@style/DefaultButton"/>
+    </LinearLayout>
+    
 </LinearLayout>
 </ScrollView>
