@@ -117,13 +117,13 @@
                     android:src="@drawable/logo" />
                 
                 <TextView
+                    android:id="@+id/about"
                     android:layout_width="700dp"
                 	android:layout_height="wrap_content"
             		android:layout_gravity="center"
             		android:textSize="15dp"
             		android:textColor="#FFFFFF"
-            		android:gravity="center"
-            		android:text="@string/about_para" />
+            		android:gravity="center" />
                 
             </LinearLayout>
             </com.example.gkaakash.SlideHolder>

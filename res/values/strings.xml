@@ -139,18 +139,15 @@
      </string>
 
     <string name="about_para">
-        \n<b>Aakash Business Tool</b> is a Free Accounting Software that provides 
+        &lt;br /&gt;<b>Aakash Business Tool</b> is a Free Accounting Software that provides 
         students and accountants to carry on their work while on the go.
         Designed and developed at IIT Bombay. 
-        \n
-        \nVersion: <b>1.0</b>
-        \n
-        \nRepository: <b>https://github.com/androportal/ABT</b> 
-        \n
-        \nLicense:
+        &lt;br /&gt;Version: <b>1.0</b>
+        &lt;br /&gt;Repository: <![CDATA[<a href=\'https://github.com/androportal/ABT\'>https://github.com/androportal/ABT</a>]]> 
+        &lt;br /&gt;License:
         GNU GPL, version-3, 29 June 2007
-        \nhttp://www.gnu.org/licenses/gpl-3.0.txt
-        \nCopyright © 2013, IIT Bombay 
+        &lt;br /&gt;<![CDATA[<a href=\'http://www.gnu.org/licenses/gpl-3.0.txt\'>http://www.gnu.org/licenses/gpl-3.0.txt</a>]]> 
+        &lt;br /&gt;Copyright © 2013, National Mission on Education through ICT, Government of India. 
    </string>
    <string name="Rs">\u20B9</string>  
    <string name="closing_balance">Closing balance(\u20B9)</string>  

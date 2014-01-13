@@ -20,6 +20,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -257,9 +259,11 @@ public class menu extends Activity{
 		
 //		final SpannableString s = new SpannableString(context.getText(R.string.about_para));
 //		Linkify.addLinks(s, Linkify.WEB_URLS);
-		TextView tvabout = (TextView)findViewById(R.id.about);
-		tvabout.setText(context.getText(R.string.about_para));
 		
+		//set about text
+		TextView tvabout = (TextView)findViewById(R.id.about);
+		tvabout.setText(Html.fromHtml(getString(R.string.about_para)));
+		tvabout.setMovementMethod(LinkMovementMethod.getInstance());
 		
 		reset_password(reset_password_flag);
 

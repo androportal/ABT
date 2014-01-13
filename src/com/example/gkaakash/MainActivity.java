@@ -41,6 +41,7 @@ import android.os.Bundle;
 import android.os.StatFs;
 import android.text.Html;
 import android.text.InputType;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -394,6 +395,12 @@ public class MainActivity extends Activity{
 				help.loadURL(engine);
 			}
 		});
+		
+		//set about text
+		TextView tv = (TextView)findViewById(R.id.about);
+		tv.setText(Html.fromHtml(getString(R.string.about_para)));
+		tv.setMovementMethod(LinkMovementMethod.getInstance());
+		
 		//Request a reference to the spinner from the activity by calling “findViewById”
 		//and assign the retrieved spinner to an instance variable
 		getOrgNames = (Spinner)findViewById(R.id.sGetOrgNames);
