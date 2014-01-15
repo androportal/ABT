@@ -167,7 +167,8 @@ public class menu extends Activity{
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.master_menu);
-
+		String project;
+		String organdetails;
 		IPaddr = MainActivity.IPaddr;
 		System.out.println("in createorg"+IPaddr);
 		account = new Account(IPaddr);
@@ -291,10 +292,12 @@ public class menu extends Activity{
 				"View reports such as Ledger, Trial Balance etc...",
 				"Reconcile and compare", 
 				"Edit/Delete organisation, Add/Edit/Delete project",
-				"Transfer the holdings to tArrayList<String> descriptionhe next financial year",
+				"Transfer the holdings to description next financial year",
 				"Export organisation data from one device to another",
 				"Change username/password, Add/Edit/Delete user role",
 				"How to use ABT"));
+		project = "Add Projects";
+		organdetails = "Add/Edit/Delete project";
 		}else{
 			menuOptions = new ArrayList<String>(Arrays.asList("Accounts", "Transaction", "Reports",
 					"Bank Reconciliation", "Preferences","Rollover","Export organisation","User account settings","Help"));
@@ -303,11 +306,13 @@ public class menu extends Activity{
 					"Make voucher entry for eg. Journal, Contra, Payment etc...", 
 					"View reports such as Ledger, Trial Balance etc...",
 					"Reconcile and compare", 
-					"Edit/Delete organisation, Add/Edit/Delete project",
+					"Organisation details, Project details",
 					"Transfer the holdings to the next financial year",
 					"Export organisation data from one device to another",
 					"Change username/password, Add/Edit/Delete user role",
 					"How to use ABT"));
+			project = "Project Details";
+			organdetails = "List of Projects";
 		}
 		ArrayList<Integer> image_ids = new ArrayList<Integer>(Arrays.asList(R.drawable.account_logo, 
 				R.drawable.money_image, R.drawable.report_logo,
@@ -329,16 +334,16 @@ public class menu extends Activity{
 		}else if(userrole.equalsIgnoreCase("manager")){
 			//change label preference
 			menuOptions.remove(4);
-			menuOptions.add(4, "Add Projects");
+			menuOptions.add(4, project);
 			description.remove(4);
-			description.add(4, "Add/Edit/Delete project");
+			description.add(4, organdetails);
 			//remove rollover
 			menuOptions.remove(5);
 			image_ids.remove(5);
 			description.remove(5);
 		}else{//operator
 			menuOptions.remove(4);
-			menuOptions.add(4, "Add Projects");
+			menuOptions.add(4, project);
 			menuOptions.remove(3); //bank recon
 			//menuOptions.remove(4); //preferences
 			menuOptions.remove(4); //rollover
@@ -348,7 +353,7 @@ public class menu extends Activity{
 			image_ids.remove(4);
 			//image_ids.remove(2);
 			description.remove(4);
-			description.add(4, "Add/Edit/Delete project");
+			description.add(4,organdetails);
 			description.remove(3);
 			//description.remove(4);
 			description.remove(4);
@@ -785,7 +790,12 @@ public class menu extends Activity{
 
 	protected void addPreferences() {
 		if(userrole.equalsIgnoreCase("Admin") || userrole.equalsIgnoreCase("Guest")){
-			items = new CharSequence[]{ "Edit/Delete organisation", "Add/Edit/Delete project" };
+			if (existRollOver==false) {
+				items = new CharSequence[]{"Edit/Delete organisation", "Add/Edit/Delete project" };
+			}else
+			{
+				items = new CharSequence[]{ "Organisation details", "Project details" };
+			}
 			//creating a dialog box for popup
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
 			//setting title

@@ -16,6 +16,7 @@
 			</ListView>
 		
 			<LinearLayout
+			     android:id="@+id/proj"	
         	    android:layout_width="fill_parent"
         	    android:layout_height="wrap_content"
         	    android:layout_gravity="center_vertical"
@@ -27,7 +28,7 @@
         	    android:orientation="horizontal">
         	    
 				<TableLayout
-				    xmlns:android="http://schemas.android.com/apk/res/android"
+				   			    
 				    android:layout_width="fill_parent"
 				    android:layout_height="wrap_content" >
 

@@ -21,6 +21,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -81,17 +82,31 @@ public class addProject extends MainActivity {
 		btn_optionsMenu.setVisibility(View.GONE);
 		Button btn_changeInputs= (Button) findViewById(R.id.btn_changeInputs);
 		btn_changeInputs.setVisibility(View.GONE);
-		
+		ltProjectNames = (ListView) findViewById(R.id.ltProjectNames);
+		if(menu.existRollOver==true)
+		{
+			LinearLayout addProject = (LinearLayout) findViewById(R.id.proj);
+			addProject.setVisibility(View.GONE);
+			
+			org.setText("List of Projects");
+			
+			tvdate.setVisibility(View.GONE);
+			ltProjectNames.setClickable(false);
+			
+		}else{
+			editProject();
+		}
 		// get all project names in list view on load
 		projectnames = (Object[]) organisation.getAllProjects(client_id);
 		getResultList(projectnames);
 
 		addProject();
-		editProject();
+		
+		
 	}
 
 	private void editProject() {
-		ltProjectNames = (ListView) findViewById(R.id.ltProjectNames);
+		
 		ltProjectNames.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

@@ -9,12 +9,13 @@
     <include layout="@layout/org_info"
     android:layout_weight="20"/>
  
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:layout_weight="90">
 
 	<TableLayout 
+	    		android:id="@+id/orgDetails"
         		android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:paddingLeft="10dp"

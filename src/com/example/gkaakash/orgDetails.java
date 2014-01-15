@@ -1,5 +1,6 @@
 package com.example.gkaakash;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -14,6 +15,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +31,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -271,6 +274,37 @@ import android.widget.Toast;
 			getStates();
 			//creating interface to listen activity on Item 
 			addListenerOnItem();
+			if(editDetailsflag==true&&menu.existRollOver==true)
+			{
+				btnorgDetailSave.setVisibility(View.GONE);
+				btnSkip.setVisibility(View.GONE);
+				btnDeleteOrg.setVisibility(View.GONE);
+				TableLayout orgDetails = (TableLayout) findViewById(R.id.orgDetails);
+				orgDetails.setEnabled(false);
+				org.setText("Organisation details");
+				tvdate.setVisibility(View.GONE);
+				
+				etRegNum.setEnabled(false);
+				btnRegDate.setEnabled(false);
+				etFcraNum.setEnabled(false);
+				btnFcraDate.setEnabled(false);
+				etMVATnum.setEnabled(false);
+				etServiceTaxnum.setEnabled(false);
+				getstate.setEnabled(false);
+				getcity.setEnabled(false);
+				sGetPostal.setEnabled(false);
+				eGetPhone.setEnabled(false);
+				eGetFax.setEnabled(false);
+				eGetEmailid.setEnabled(false);
+				etGetWebSite.setEnabled(false);
+				etMVATnum.setEnabled(false);
+				etPanNo.setEnabled(false);
+				etMVATnum.setEnabled(false);
+				scountry.setEnabled(false);
+				etGetAddr.setEnabled(false);
+				
+				
+			}
 			
 		}
 
@@ -754,4 +788,11 @@ import android.widget.Toast;
 			    startActivity(intent);
 			};
         }
+	
+	
+	
+	
+	//tvRegNum,tvRegDate,tvFcraNum,tvFcraDate,tvMVATnum,tvServiceTaxnum};
+	
+	
 	} // End of Class
