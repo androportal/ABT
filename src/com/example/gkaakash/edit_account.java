@@ -10,7 +10,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.graphics.Color;
+import android.graphics.Color;   
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -49,6 +49,8 @@ public class edit_account extends Activity {
 	private Object[] accountnames;
 	private Object[] accountcodes;
 	// List getList,array_sort;
+	CharSequence[] items;
+
 	// List accCode_list;
 	AlertDialog dialog;
 	static Object[] accountDetail;
@@ -134,53 +136,59 @@ public class edit_account extends Activity {
 	}
 
 	private void editAccount() {
+		
+		
+		final String rollover = getIntent().getStringExtra("rollover");
 		List = (ListView) findViewById(R.id.ltAccname);
 		List.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view,
 					final int position, long id) {
-
-				final CharSequence[] items = { "Edit account", "Delete account" };
+				
+				System.out.println("in edit account:"+rollover);
 				// creating a dialog box for popup
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						edit_account.this);
-				// setting title
-				builder.setTitle("Edit/Delete Account");
+				AlertDialog.Builder builder = new AlertDialog.Builder(edit_account.this);
+				if(rollover.equals("not_exist")){
+					items = new CharSequence[] { "Edit account", "Delete account" };
+					// setting title
+					builder.setTitle("Edit/Delete Account");
+				}else{
+					items = new CharSequence[] { "Account details"};
+					// setting title
+					builder.setTitle("Account details");
+				}
+				
+				
 				// adding items
 				builder.setItems(items, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface which, final int pos) {
 						if (accCodeCheckFlag.equals("automatic")) {
 							flag = 1;
 						}
+						
 						final TextView tvaccname = (TextView) view.findViewById(R.id.tvRowTitle1);
-						Object[] params1 = new Object[] {
-								tvaccname.getText().toString(),
-								flag, pos };
+						Object[] params1 = new Object[] {tvaccname.getText().toString(),flag, pos };
 						System.out.println(tvaccname.getText().toString());
-						final String accountDeleteValue = (String) account
-								.deleteAccountNameMaster(params1, client_id);
+						final String accountDeleteValue = (String) account.deleteAccountNameMaster(params1, client_id);
 						System.out.println("value returned:"+accountDeleteValue);
 						String message = "";
 						System.out.println("value" + accountDeleteValue);
-						if ("account deleted"
-								.equals(accountDeleteValue)) {
+						if(rollover.equals("not_exist")){
+						if ("account deleted".equals(accountDeleteValue)) {
 							message = "edit";
-						}else if ("account can be edited"
-								.equals(accountDeleteValue)) {
+						}else if ("account can be edited".equals(accountDeleteValue)) {
 							message = "edit";
-						} else if ("has both opening balance and trasaction"
-								.equals(accountDeleteValue)) {
+						} else if ("has both opening balance and trasaction".equals(accountDeleteValue)) {
 							message = "' has both opening balance and transaction, it can't be";
-						} else if ("has opening balance"
-								.equals(accountDeleteValue)) {
+						} else if ("has opening balance".equals(accountDeleteValue)) {
 							message = "' has opening balance, it can't be";
 						} else if ("has transaction".equals(accountDeleteValue)) {
 							message = "' has transaction, it can't be";
 						}
-
+						}
 						final String msg = message;
-
+						
 						// code for the actions to be performed on clicking
 						// popup item goes here ...
 						switch (pos) {
@@ -188,11 +196,9 @@ public class edit_account extends Activity {
 
 							// Toast.makeText(edit_account.this,"Clicked on:"+items[pos],Toast.LENGTH_SHORT).show();
 							LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-							View layout = inflater.inflate(
-									R.layout.edit_account,
+							View layout = inflater.inflate(R.layout.edit_account,
 									(ViewGroup) findViewById(R.id.layout_root));
-							AlertDialog.Builder builder = new AlertDialog.Builder(
-									edit_account.this);
+							AlertDialog.Builder builder = new AlertDialog.Builder(edit_account.this);
 							builder.setView(layout);
 							builder.setTitle("Edit account");
 
@@ -207,18 +213,13 @@ public class edit_account extends Activity {
 								// Its visible
 								if (sSearchAccountBy.getSelectedItemPosition() == 0) {
 									// search by account name
-									Object[] params = new Object[] { 2,
-											queryParam };
-									accountDetail = (Object[]) account
-											.getAccount(params, client_id);
+									Object[] params = new Object[] { 2,queryParam };
+									accountDetail = (Object[]) account.getAccount(params, client_id);
 
-								} else if (sSearchAccountBy
-										.getSelectedItemPosition() == 1) {
+								} else if (sSearchAccountBy.getSelectedItemPosition() == 1) {
 									// search by account code
-									Object[] params = new Object[] { 1,
-											queryParam };
-									accountDetail = (Object[]) account
-											.getAccount(params, client_id);
+									Object[] params = new Object[] { 1,queryParam };
+									accountDetail = (Object[]) account.getAccount(params, client_id);
 
 								}
 							}
@@ -231,29 +232,20 @@ public class edit_account extends Activity {
 							}
 
 							// account name
-							final Button bEditAccountName = (Button) layout
-									.findViewById(R.id.bEditAccountName);
-							final TextView tvEditAccountName = (TextView) layout
-									.findViewById(R.id.tvEditAccountName);
-							final String oldAccountName = accountDetailList
-									.get(3).toString();
+							final Button bEditAccountName = (Button) layout.findViewById(R.id.bEditAccountName);
+							final TextView tvEditAccountName = (TextView) layout.findViewById(R.id.tvEditAccountName);
+							final String oldAccountName = accountDetailList.get(3).toString();
 							tvEditAccountName.setText(oldAccountName);
-							final EditText etEditAccountName = (EditText) layout
-									.findViewById(R.id.etEditAccountName);
+							final EditText etEditAccountName = (EditText) layout.findViewById(R.id.etEditAccountName);
 							etEditAccountName.setVisibility(EditText.GONE);
-							tvEditAccountName
-							.setOnClickListener(new View.OnClickListener() {
+							tvEditAccountName.setOnClickListener(new View.OnClickListener() {
 
 								@Override
 								public void onClick(View v) {
-									tvEditAccountName
-									.setVisibility(TextView.GONE);
-									etEditAccountName
-									.setVisibility(EditText.VISIBLE);
-									etEditAccountName
-									.setText(oldAccountName);
-									bEditAccountName
-									.setVisibility(Button.GONE);
+									tvEditAccountName.setVisibility(TextView.GONE);
+									etEditAccountName.setVisibility(EditText.VISIBLE);
+									etEditAccountName.setText(oldAccountName);
+									bEditAccountName.setVisibility(Button.GONE);
 								}
 							});
 
@@ -320,188 +312,106 @@ public class edit_account extends Activity {
 								dialog_button = "Ok";
 								TextView tvwarning = (TextView) layout
 										.findViewById(R.id.tvwarning);
+								if(!rollover.equals("exist")){
 								tvwarning.setVisibility(TextView.VISIBLE);
+								
 								tvwarning.setText("Account '" + oldAccountName
 										+ msg + " edited.");
+								}
 							}
 
 							// set account code
-							final TextView tvEditAccountCode = (TextView) layout
-									.findViewById(R.id.tvEditAccountCode);
-							tvEditAccountCode.setText(accountDetailList.get(0)
-									.toString());
+							final TextView tvEditAccountCode = (TextView) layout.findViewById(R.id.tvEditAccountCode);
+							tvEditAccountCode.setText(accountDetailList.get(0).toString());
 
 							// set group name
-							final TextView tvEditGroupName = (TextView) layout
-									.findViewById(R.id.tvEditGroupName);
-							tvEditGroupName.setText(accountDetailList.get(1)
-									.toString());
+							final TextView tvEditGroupName = (TextView) layout.findViewById(R.id.tvEditGroupName);
+							tvEditGroupName.setText(accountDetailList.get(1).toString());
 
 							// set subgroup name
-							final TextView tvEditSubgroupName = (TextView) layout
-									.findViewById(R.id.tvEditSubgroupName);
-							tvEditSubgroupName.setText(accountDetailList.get(2)
-									.toString());
+							final TextView tvEditSubgroupName = (TextView) layout.findViewById(R.id.tvEditSubgroupName);
+							tvEditSubgroupName.setText(accountDetailList.get(2).toString());
 
-							builder.setPositiveButton(dialog_button,
-									new OnClickListener() {
+							builder.setPositiveButton(dialog_button,new OnClickListener() {
 
-								public void onClick(
-										DialogInterface dialog,
-										int which) {
+								public void onClick(DialogInterface dialog,int which) {
 
 									// get all values
 									String newAccountName;
-									if (etEditAccountName
-											.getVisibility() == View.VISIBLE) {
-										newAccountName = etEditAccountName
-												.getText().toString()
-												.trim();
+									if (etEditAccountName.getVisibility() == View.VISIBLE) {
+										newAccountName = etEditAccountName.getText().toString().trim();
 									} else {
-										newAccountName = tvEditAccountName
-												.getText().toString();
+										newAccountName = tvEditAccountName.getText().toString();
 									}
 
 									String newOpBal;
 									if (etEditOpBal.getVisibility() == View.VISIBLE) {
-										newOpBal = etEditOpBal
-												.getText().toString();
+										newOpBal = etEditOpBal.getText().toString();
 										if (newOpBal.length() < 1) {
 											newOpBal = "";
 										} else {
-											newOpBal = String
-													.format("%.2f",
-															Float.valueOf(
-																	newOpBal.trim())
-																	.floatValue());
+											newOpBal = String.format("%.2f",Float.valueOf(newOpBal.trim()).floatValue());
 										}
 									} else {
-										newOpBal = tvEditOpBal
-												.getText().toString();
+										newOpBal = tvEditOpBal.getText().toString();
 									}
-									String groupname = tvEditGroupName
-											.getText().toString();
-									String subgroupname = tvEditSubgroupName
-											.getText().toString();
-									String accountcode = tvEditAccountCode
-											.getText().toString();
+									String groupname = tvEditGroupName.getText().toString();
+									String subgroupname = tvEditSubgroupName.getText().toString();
+									String accountcode = tvEditAccountCode.getText().toString();
 
-									if ((newAccountName.length() < 1)
-											&& ("".equals(newOpBal))) {
+									if ((newAccountName.length() < 1)&& ("".equals(newOpBal))) {
 										String message = "Please fill field";
-										m.toastValidationMessage(
-												edit_account.this,
-												message);
+										m.toastValidationMessage(edit_account.this,message);
 
 									} else if ("".equals(newOpBal)) {
 										String message = "Please fill amount field";
-										m.toastValidationMessage(
-												edit_account.this,
-												message);
+										m.toastValidationMessage(edit_account.this,message);
 									} else if ((newAccountName.length() < 1)) {
 										String message = "Please fill accountname field";
-										m.toastValidationMessage(
-												edit_account.this,
-												message);
+										m.toastValidationMessage(edit_account.this,message);
 									}
-									if ((newAccountName.length() >= 1)
-											&& (!"".equals(newOpBal))) {
-										String accountcode_exist = account
-												.checkAccountName(
-														new Object[] {
-																newAccountName,
-																"", "" },
-																client_id);
-										if (!newAccountName
-												.equalsIgnoreCase(oldAccountName)
-												&& accountcode_exist
-												.equals("exist")) {
-											String message = "Account '"
-													+ newAccountName
-													+ "' already exist";
-											m.toastValidationMessage(
-													edit_account.this,
-													message);
+									if ((newAccountName.length() >= 1)&& (!"".equals(newOpBal))) {
+										String accountcode_exist = account.checkAccountName(new Object[] {newAccountName,"", "" },client_id);
+										if (!newAccountName.equalsIgnoreCase(oldAccountName)
+												&& accountcode_exist.equals("exist")) {
+											String message = "Account '"+ newAccountName+ "' already exist";
+											m.toastValidationMessage(edit_account.this,message);
 
 										} else {
 
 											Object[] params;
-											if ("Direct Income"
-													.equals(accountDetailList
-															.get(1)
-															.toString())
-															|| "Direct Expense"
-															.equals(accountDetailList
-																	.get(1)
-																	.toString())
-																	|| "Indirect Income"
-																	.equals(accountDetailList
-																			.get(1)
-																			.toString())
-																			|| "Indirect Expense"
-																			.equals(accountDetailList
-																					.get(1)
-																					.toString())) {
-												params = new Object[] {
-														newAccountName,
-														accountcode,
-														groupname };
+											if ("Direct Income".equals(accountDetailList.get(1).toString())
+															|| "Direct Expense".equals(accountDetailList.get(1).toString())
+															|| "Indirect Income".equals(accountDetailList.get(1).toString())
+															|| "Indirect Expense".equals(accountDetailList.get(1).toString())) {
+												params = new Object[] {newAccountName,accountcode,groupname };
 
 											} else {
-												params = new Object[] {
-														newAccountName,
-														accountcode,
-														groupname,
-														newOpBal };
+												params = new Object[] {newAccountName,accountcode,groupname,newOpBal };
 											}
-											account.editAccount(params,
-													client_id);
+											account.editAccount(params,client_id);
 
 											// set alert messages after
 											// account edit
-											if (!newAccountName
-													.equalsIgnoreCase(oldAccountName)
-													&& !newOpBal
-													.equals(oldOpBal)) {
+											if (!newAccountName.equalsIgnoreCase(oldAccountName)&& !newOpBal.equals(oldOpBal)) {
 
-												String message = "Account name has been changed from '"
-														+ oldAccountName
-														+ "' to '"
-														+ newAccountName
-														+ "' and opening balance has been changed from '"
-														+ oldOpBal
-														+ "' to '"
-														+ newOpBal
-														+ "'";
-												m.toastValidationMessage(
-														edit_account.this,
-														message);
-											} else if (!newAccountName
-													.equalsIgnoreCase(oldAccountName)) {
-												String message = "Account name has been changed from '"
-														+ oldAccountName
-														+ "' to '"
-														+ newAccountName
-														+ "'";
-												m.toastValidationMessage(
-														edit_account.this,
-														message);
-											} else if (!newOpBal
-													.equals(oldOpBal)) {
-												String message = "Opening balance has been changed from '"
-														+ oldOpBal
-														+ "' to '"
-														+ newOpBal
-														+ "'";
-												m.toastValidationMessage(
-														edit_account.this,
-														message);
+												String message = "Account name has been changed from '"+ oldAccountName
+														+ "' to '"+ newAccountName
+														+ "' and opening balance has been changed from '"+ oldOpBal
+														+ "' to '"+ newOpBal+ "'";
+												m.toastValidationMessage(edit_account.this,message);
+											} else if (!newAccountName.equalsIgnoreCase(oldAccountName)) {
+												String message = "Account name has been changed from '"+ oldAccountName
+														+ "' to '"+ newAccountName+ "'";
+												m.toastValidationMessage(edit_account.this,message);
+											} else if (!newOpBal.equals(oldOpBal)) {
+												String message = "Opening balance has been changed from '"+ oldOpBal+ "' to '"
+														+ newOpBal+ "'";
+												m.toastValidationMessage(edit_account.this,message);
 											} else {
 												if ("edit".equals(msg)) {
 													String message = "No changes made";
-													m.toastValidationMessage(
-															edit_account.this,
-															message);
+													m.toastValidationMessage(edit_account.this,message);
 												}
 											}
 
@@ -513,19 +423,19 @@ public class edit_account extends Activity {
 
 								}// end of onclick
 							});// end of onclickListener
-
-							builder.setNegativeButton("Cancel",
-									new OnClickListener() {
-
-								@Override
-								public void onClick(
-										DialogInterface dialog,
-										int which) {
-									// TODO Auto-generated method stub
-
-								}
-							});
-
+							if(rollover.equals("not_exist")){
+								builder.setNegativeButton("Cancel",
+										new OnClickListener() {
+	
+									@Override
+									public void onClick(
+											DialogInterface dialog,
+											int which) {
+										// TODO Auto-generated method stub
+	
+									}
+								});
+							}
 							dialog = builder.create();
 							((Dialog) dialog).show();
 							WindowManager.LayoutParams lp = new WindowManager.LayoutParams();

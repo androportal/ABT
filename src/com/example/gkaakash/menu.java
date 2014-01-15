@@ -53,6 +53,7 @@ public class menu extends Activity{
 	int Delete = Menu.FIRST +1;
 	int Finish = Menu.FIRST +2;
 	AlertDialog dialog;
+	ArrayList<String> menuOptions;
 	final Context context = this;
 	static String fromday, frommonth, fromyear, today, tomonth, toyear; 
 	private Integer client_id;
@@ -69,14 +70,15 @@ public class menu extends Activity{
 	static boolean validateDateFlag;
 	static String selectedAccount;
 	static boolean cleared_tran_flag;
-	static boolean narration_flag;
+	static boolean narration_flag,existRollOver;
 	static ArrayList<String> accdetailsList;
 	boolean reportmenuflag;
 	static String orgtype,userrole;
 	static String OrgName;
 	TextView tvWarning, tvusername;
 	module m;
-	static String[] menuOptions;
+	
+	ArrayList<String> description;
 	static String rollover;
 	private User user;
 	RadioButton rbmanager,rbRoleChecked,rboperator;
@@ -175,7 +177,8 @@ public class menu extends Activity{
 		client_id= Startup.getClient_id();
 		m= new module();
 		reportmenuflag = MainActivity.reportmenuflag;
-
+		
+	   
 		// create instance of user class to call setUser method
 		user = new User(IPaddr);
 		// get the client_id from startup
@@ -276,23 +279,42 @@ public class menu extends Activity{
 		 * Manager: All menus Except delete org and rollover  
 		 * Operator: All menus except rollover, delete org, bank recon, income-exp report, adding new user
 		 */
-		ArrayList<String> menuOptions = new ArrayList<String>(Arrays.asList("Create account", "Transaction", "Reports",
+		Object[] rollover_exist_params = new Object[] {OrgName,financialFromDate,financialToDate};
+	    existRollOver = report.existRollOver(rollover_exist_params);
+		if(existRollOver==false)
+		{
+		menuOptions = new ArrayList<String>(Arrays.asList("Create account", "Transaction", "Reports",
 				"Bank Reconciliation", "Preferences","Rollover","Export organisation","User account settings","Help"));
-		ArrayList<Integer> image_ids = new ArrayList<Integer>(Arrays.asList(R.drawable.account_logo, 
-				R.drawable.money_image, R.drawable.report_logo,
-				R.drawable.bank_recon_logo, R.drawable.settings_logo, 
-				R.drawable.rollover_logo, R.drawable.export_logo,
-				R.drawable.account_setting, R.drawable.help_logo));
-		ArrayList<String> description = new ArrayList<String>(Arrays.asList(
+		description = new ArrayList<String>(Arrays.asList(
 				"Create/Search/Edit/Delete ledger accounts", 
 				"Make voucher entry for eg. Journal, Contra, Payment etc...", 
 				"View reports such as Ledger, Trial Balance etc...",
 				"Reconcile and compare", 
 				"Edit/Delete organisation, Add/Edit/Delete project",
-				"Transfer the holdings to the next financial year",
+				"Transfer the holdings to tArrayList<String> descriptionhe next financial year",
 				"Export organisation data from one device to another",
 				"Change username/password, Add/Edit/Delete user role",
 				"How to use ABT"));
+		}else{
+			menuOptions = new ArrayList<String>(Arrays.asList("Accounts", "Transaction", "Reports",
+					"Bank Reconciliation", "Preferences","Rollover","Export organisation","User account settings","Help"));
+			description = new ArrayList<String>(Arrays.asList(
+					"View ledger accounts", 
+					"Make voucher entry for eg. Journal, Contra, Payment etc...", 
+					"View reports such as Ledger, Trial Balance etc...",
+					"Reconcile and compare", 
+					"Edit/Delete organisation, Add/Edit/Delete project",
+					"Transfer the holdings to the next financial year",
+					"Export organisation data from one device to another",
+					"Change username/password, Add/Edit/Delete user role",
+					"How to use ABT"));
+		}
+		ArrayList<Integer> image_ids = new ArrayList<Integer>(Arrays.asList(R.drawable.account_logo, 
+				R.drawable.money_image, R.drawable.report_logo,
+				R.drawable.bank_recon_logo, R.drawable.settings_logo, 
+				R.drawable.rollover_logo, R.drawable.export_logo,
+				R.drawable.account_setting, R.drawable.help_logo));
+		
 		
 		//modify menu list according to the user
 		if(userrole.equalsIgnoreCase("admin")){
@@ -475,11 +497,10 @@ public class menu extends Activity{
 	}
 
 	protected void rollover() {
-        Object[] rollover_exist_params = new Object[] {OrgName,financialFromDate,financialToDate};
-        Boolean existRollOver = report.existRollOver(rollover_exist_params);
-        final Object[] rollover_params = new Object[] {OrgName, financialFromDate,financialToDate,
-                orgtype };
-        if (existRollOver.equals(false)) {
+       
+        if (existRollOver==false) {
+        	
+        	final Object[] rollover_params = new Object[] {OrgName, financialFromDate,financialToDate,orgtype };
         	rollover = report.rollOver(rollover_params,client_id);
             if(rollover.equalsIgnoreCase("false"))  
             {
