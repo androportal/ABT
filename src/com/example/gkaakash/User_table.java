@@ -118,9 +118,12 @@ public class User_table extends Activity {
 		Button btn_changeInputs= (Button) findViewById(R.id.btn_changeInputs);
 		btn_changeInputs.setVisibility(View.GONE);
 		
-		addNewUser();
-		
-		
+		if (menu.existRollOver) {
+			Button add_user = (Button) findViewById(R.id.add_user);
+			add_user.setVisibility(View.GONE);
+		}else{
+			addNewUser();
+		}
 	}// end onCreate method
 
 
@@ -392,7 +395,9 @@ public class User_table extends Activity {
 		SimpleAdapter Adapter = new SimpleAdapter(this, fillMaps, R.layout.user_child_row,
 				abc, pqr);
 		role_list.setAdapter(Adapter);
-		
+		if (menu.existRollOver) {
+			role_list.setEnabled(false);
+		}
 		role_list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

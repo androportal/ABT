@@ -126,7 +126,7 @@ public class transaction_tab extends TabActivity {
 		} 
 		
 		if (name == "Voucher details") {
-			tabHost.getTabWidget().getChildAt(1).setVisibility(View.INVISIBLE);
+			tabHost.getTabWidget().getChildAt(1).setVisibility(View.GONE);
 		} else {
 			tabHost.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
 		}

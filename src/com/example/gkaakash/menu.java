@@ -167,8 +167,7 @@ public class menu extends Activity{
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.master_menu);
-		String project;
-		String organdetails;
+		
 		IPaddr = MainActivity.IPaddr;
 		System.out.println("in createorg"+IPaddr);
 		account = new Account(IPaddr);
@@ -179,8 +178,7 @@ public class menu extends Activity{
 		m= new module();
 		reportmenuflag = MainActivity.reportmenuflag;
 		
-	   
-		// create instance of user class to call setUser method
+		//create instance of user class to call setUser method
 		user = new User(IPaddr);
 		// get the client_id from startup
 
@@ -216,9 +214,6 @@ public class menu extends Activity{
 		}
 		System.out.println("params are:"+OrgName+userrole+username+reset_password_flag+orgtype);
 		//get the last login timing of user from the database
-		
-		
-		
 		
 		//set title
 		TextView org = (TextView)findViewById(R.id.org_name);
@@ -296,23 +291,20 @@ public class menu extends Activity{
 				"Export organisation data from one device to another",
 				"Change username/password, Add/Edit/Delete user role",
 				"How to use ABT"));
-		project = "Add Projects";
-		organdetails = "Add/Edit/Delete project";
 		}else{
 			menuOptions = new ArrayList<String>(Arrays.asList("Accounts", "Transaction", "Reports",
-					"Bank Reconciliation", "Preferences","Rollover","Export organisation","User account settings","Help"));
+					"Bank Reconciliation", "Preferences","Rollover","Export organisation","User details","Help"));
 			description = new ArrayList<String>(Arrays.asList(
 					"View ledger accounts", 
-					"Make voucher entry for eg. Journal, Contra, Payment etc...", 
+					"List of all vouchers for eg. Journal, Contra, Payment etc...", 
 					"View reports such as Ledger, Trial Balance etc...",
 					"Reconcile and compare", 
 					"Organisation details, Project details",
 					"Transfer the holdings to the next financial year",
 					"Export organisation data from one device to another",
-					"Change username/password, Add/Edit/Delete user role",
+					"List of all users",
 					"How to use ABT"));
-			project = "Project Details";
-			organdetails = "List of Projects";
+			
 		}
 		ArrayList<Integer> image_ids = new ArrayList<Integer>(Arrays.asList(R.drawable.account_logo, 
 				R.drawable.money_image, R.drawable.report_logo,
@@ -334,30 +326,33 @@ public class menu extends Activity{
 		}else if(userrole.equalsIgnoreCase("manager")){
 			//change label preference
 			menuOptions.remove(4);
-			menuOptions.add(4, project);
+			menuOptions.add(4, "Project details");
 			description.remove(4);
-			description.add(4, organdetails);
+			description.add(4, "List of all projects");
 			//remove rollover
 			menuOptions.remove(5);
 			image_ids.remove(5);
 			description.remove(5);
+			
 		}else{//operator
-			menuOptions.remove(4);
-			menuOptions.add(4, project);
 			menuOptions.remove(3); //bank recon
-			//menuOptions.remove(4); //preferences
-			menuOptions.remove(4); //rollover
-			//menuOptions.remove(2); //reports
 			image_ids.remove(3);
-			//image_ids.remove(4);
-			image_ids.remove(4);
-			//image_ids.remove(2);
-			description.remove(4);
-			description.add(4,organdetails);
 			description.remove(3);
-			//description.remove(4);
+			
+			menuOptions.remove(4); //rollover
+			image_ids.remove(4);
 			description.remove(4);
-			//description.remove(2);
+			
+			//user settings like change username password
+			if (existRollOver) {
+				menuOptions.remove(5);
+				image_ids.remove(5);
+				description.remove(5);
+			}
+			menuOptions.remove(3);
+			menuOptions.add(3, "Project details");
+			description.remove(3);
+			description.add(3, "List of all projects");
 		}
 		System.out.println("before listview");
 		listView = (ListView) findViewById(R.id.listView1);
@@ -590,202 +585,208 @@ public class menu extends Activity{
 
 	
 	protected void settings() {
-		if(userrole.equalsIgnoreCase("operator")){
-			items = new CharSequence[]{ "Change username","Change password"};
-		}else{
-			items = new CharSequence[]{ "Change username","Change password", "Add user"};
-		}
+		if (existRollOver) {
+			Intent intent = new Intent(context, User_table.class);
+			startActivity(intent);
+		} else {
+			if(userrole.equalsIgnoreCase("operator")){
+				items = new CharSequence[]{ "Change username","Change password"};
+			}else{
+				items = new CharSequence[]{ "Change username","Change password", "Add user"};
+			}
 
-		//creating a dialog box for popup
-		final AlertDialog.Builder builder = new AlertDialog.Builder(menu.this);
-		//setting title
-		builder.setTitle("User settings");
-		//adding items
-		builder.setItems(items, new DialogInterface.OnClickListener() {
+			//creating a dialog box for popup
+			final AlertDialog.Builder builder = new AlertDialog.Builder(menu.this);
+			//setting title
+			builder.setTitle("User settings");
+			//adding items
+			builder.setItems(items, new DialogInterface.OnClickListener() {
 
-			@Override
-			public void onClick(DialogInterface dialog,
-					int pos) {
-				if(pos == 0){
-					final View layout1 = m.builder_with_inflater(context, "",
-							R.layout.change_password);
-					LinearLayout l1 = (LinearLayout) layout1
-							.findViewById(R.id.changepassword);
-					l1.setVisibility(View.GONE);
+				@Override
+				public void onClick(DialogInterface dialog,
+						int pos) {
+					if(pos == 0){
+						final View layout1 = m.builder_with_inflater(context, "",
+								R.layout.change_password);
+						LinearLayout l1 = (LinearLayout) layout1
+								.findViewById(R.id.changepassword);
+						l1.setVisibility(View.GONE);
 
-					final TextView error_msg = (TextView) layout1
-							.findViewById(R.id.tverror_msg1);
-					Button save = (Button) layout1.findViewById(R.id.btnSave);
-					TextView header = (TextView) layout1
-							.findViewById(R.id.tvheader1);
-					header.setText("Change username");
-					
-					final EditText olduser_name = (EditText) layout1
-							.findViewById(R.id.etOld_User_Name);
-					olduser_name.setTextColor(Color.parseColor("#AEC6CF"));
-					olduser_name.setText(username);
-					olduser_name.setEnabled(false);
-					
-					final EditText newuser_name = (EditText) layout1
-							.findViewById(R.id.etNewUsername);
-					newuser_name.requestFocus();
-					
-					Button cancel = (Button) layout1
-							.findViewById(R.id.btnCancel);
-					cancel.setOnClickListener(new OnClickListener() {
+						final TextView error_msg = (TextView) layout1
+								.findViewById(R.id.tverror_msg1);
+						Button save = (Button) layout1.findViewById(R.id.btnSave);
+						TextView header = (TextView) layout1
+								.findViewById(R.id.tvheader1);
+						header.setText("Change username");
+						
+						final EditText olduser_name = (EditText) layout1
+								.findViewById(R.id.etOld_User_Name);
+						olduser_name.setTextColor(Color.parseColor("#AEC6CF"));
+						olduser_name.setText(username);
+						olduser_name.setEnabled(false);
+						
+						final EditText newuser_name = (EditText) layout1
+								.findViewById(R.id.etNewUsername);
+						newuser_name.requestFocus();
+						
+						Button cancel = (Button) layout1
+								.findViewById(R.id.btnCancel);
+						cancel.setOnClickListener(new OnClickListener() {
 
-						@Override
-						public void onClick(View arg0) {
-							m.dialog.cancel();
-						}
-					});
+							@Override
+							public void onClick(View arg0) {
+								m.dialog.cancel();
+							}
+						});
 
-					save.setOnClickListener(new OnClickListener() {
+						save.setOnClickListener(new OnClickListener() {
 
-						@Override
-						public void onClick(View arg0) {
-							String olduserName = olduser_name.getText()
-									.toString();
-							System.out.println("olduserName:" + olduserName);
-							
-							String newusername = newuser_name.getText()
-									.toString();
-							System.out.println("new username:" + newusername);
+							@Override
+							public void onClick(View arg0) {
+								String olduserName = olduser_name.getText()
+										.toString();
+								System.out.println("olduserName:" + olduserName);
+								
+								String newusername = newuser_name.getText()
+										.toString();
+								System.out.println("new username:" + newusername);
 
-							EditText password = (EditText) layout1
-									.findViewById(R.id.etPassword);
-							String password1 = password.getText().toString();
-							System.out.println("password:" + password1);
-							// System.out.println("username:"+username);
-							// System.out.println("userrole:"+userrole1);
+								EditText password = (EditText) layout1
+										.findViewById(R.id.etPassword);
+								String password1 = password.getText().toString();
+								System.out.println("password:" + password1);
+								// System.out.println("username:"+username);
+								// System.out.println("userrole:"+userrole1);
 
-							if (!"".equals(olduserName)
-									& !"".equals(newusername)
-									& !"".equals(password1)) {
-								Boolean username_result = user.changeUserName( 
-										new Object[] { olduserName,
-												newusername, password1,
-												userrole }, client_id);
-								System.out.println("r:" + username_result);
-								if (username_result == true) {
-									m.dialog.cancel();
-									Toast.makeText(context, "Username updated successully", Toast.LENGTH_SHORT).show();
-									if (date != null) {
-										//add last login date
-										tvusername.setText(newusername + "\nLast login: "+ date.toLocaleString());
-									}else{
-										tvusername.setText(newusername);
+								if (!"".equals(olduserName)
+										& !"".equals(newusername)
+										& !"".equals(password1)) {
+									Boolean username_result = user.changeUserName( 
+											new Object[] { olduserName,
+													newusername, password1,
+													userrole }, client_id);
+									System.out.println("r:" + username_result);
+									if (username_result == true) {
+										m.dialog.cancel();
+										Toast.makeText(context, "Username updated successully", Toast.LENGTH_SHORT).show();
+										if (date != null) {
+											//add last login date
+											tvusername.setText(newusername + "\nLast login: "+ date.toLocaleString());
+										}else{
+											tvusername.setText(newusername);
+										}
+										username = newusername;
+
+									} else {
+										error_msg.setVisibility(TextView.VISIBLE);
+										error_msg
+										.setText("Password is invalid");
+										password.setText("");
 									}
-									username = newusername;
-
 								} else {
 									error_msg.setVisibility(TextView.VISIBLE);
-									error_msg
-									.setText("Password is invalid");
-									password.setText("");
+									error_msg.setText("Fill the empty fields");
+
 								}
-							} else {
-								error_msg.setVisibility(TextView.VISIBLE);
-								error_msg.setText("Fill the empty fields");
+							}
+						});
+
+					}
+					if(pos == 1){
+						final View layout = m.builder_with_inflater(context, "",
+								R.layout.change_password);
+
+						LinearLayout l1=(LinearLayout) layout.findViewById(R.id.changeusername);
+						l1.setVisibility(View.GONE);
+						Button cancel = (Button) layout
+								.findViewById(R.id.btnCancel);
+						TextView header = (TextView) layout.findViewById(R.id.tvheader1);
+						header.setText("Change password");
+
+						final TextView error_msg = (TextView) layout.findViewById(R.id.tverror_msg1);
+						cancel.setOnClickListener(new OnClickListener() {
+
+							@Override
+							public void onClick(View arg0) {
+								m.dialog.cancel();
 
 							}
-						}
-					});
+						});
 
-				}
-				if(pos == 1){
-					final View layout = m.builder_with_inflater(context, "",
-							R.layout.change_password);
-
-					LinearLayout l1=(LinearLayout) layout.findViewById(R.id.changeusername);
-					l1.setVisibility(View.GONE);
-					Button cancel = (Button) layout
-							.findViewById(R.id.btnCancel);
-					TextView header = (TextView) layout.findViewById(R.id.tvheader1);
-					header.setText("Change password");
-
-					final TextView error_msg = (TextView) layout.findViewById(R.id.tverror_msg1);
-					cancel.setOnClickListener(new OnClickListener() {
-
-						@Override
-						public void onClick(View arg0) {
-							m.dialog.cancel();
-
-						}
-					});
-
-					Button save = (Button) layout
-							.findViewById(R.id.btnSave);
+						Button save = (Button) layout
+								.findViewById(R.id.btnSave);
 
 
-					save.setOnClickListener(new OnClickListener() {
+						save.setOnClickListener(new OnClickListener() {
 
-						@Override
-						public void onClick(View arg0) {
-							oldpass = (EditText) layout
-									.findViewById(R.id.etOldPass);
-							String old_pass=oldpass.getText().toString(); 
-							System.out.println("oldpass:"+old_pass);
-							newpass = (EditText) layout
-									.findViewById(R.id.etNewPass);
-							String new_pass=newpass.getText().toString();
-							System.out.println("newpass:"+new_pass);
+							@Override
+							public void onClick(View arg0) {
+								oldpass = (EditText) layout
+										.findViewById(R.id.etOldPass);
+								String old_pass=oldpass.getText().toString(); 
+								System.out.println("oldpass:"+old_pass);
+								newpass = (EditText) layout
+										.findViewById(R.id.etNewPass);
+								String new_pass=newpass.getText().toString();
+								System.out.println("newpass:"+new_pass);
 
-							confirmpass = (EditText) layout
-									.findViewById(R.id.etconfirmPass);
-							String confirm_pass=confirmpass.getText().toString();
-							System.out.println("confirm_pass:"+confirm_pass);
+								confirmpass = (EditText) layout
+										.findViewById(R.id.etconfirmPass);
+								String confirm_pass=confirmpass.getText().toString();
+								System.out.println("confirm_pass:"+confirm_pass);
 
-							String username;
+								String username;
 
-//							Toast.makeText(context, "lll:"+MainActivity.username_flag, Toast.LENGTH_SHORT).show();
-							
-							username=MainActivity.username;
-							System.out.println("username1:"+username);
+//								Toast.makeText(context, "lll:"+MainActivity.username_flag, Toast.LENGTH_SHORT).show();
+								
+								username=MainActivity.username;
+								System.out.println("username1:"+username);
 
 
-							if(!"".equals(old_pass)&!"".equals(new_pass)&!"".equals(confirm_pass)){
-								if(new_pass.equals(confirm_pass)){
+								if(!"".equals(old_pass)&!"".equals(new_pass)&!"".equals(confirm_pass)){
+									if(new_pass.equals(confirm_pass)){
 
-									Boolean result= user.changePassword(new Object[]{username,old_pass,new_pass,userrole}, client_id);
-									System.out.println("r:"+result);
-									if(result==false){
+										Boolean result= user.changePassword(new Object[]{username,old_pass,new_pass,userrole}, client_id);
+										System.out.println("r:"+result);
+										if(result==false){
+											error_msg.setVisibility(TextView.VISIBLE);
+
+											error_msg.setText("Invalid password");
+											oldpass.setText("");
+											newpass.setText("");
+											confirmpass.setText(""); 
+										}else {
+											m.dialog.cancel();
+											Toast.makeText(context, "Password updated successully", Toast.LENGTH_SHORT).show();
+										}
+									}else {
 										error_msg.setVisibility(TextView.VISIBLE);
 
-										error_msg.setText("Invalid password");
-										oldpass.setText("");
+										error_msg.setText( "New password and confirm password fields doesnot match!");
 										newpass.setText("");
 										confirmpass.setText(""); 
-									}else {
-										m.dialog.cancel();
-										Toast.makeText(context, "Password updated successully", Toast.LENGTH_SHORT).show();
 									}
+
 								}else {
 									error_msg.setVisibility(TextView.VISIBLE);
-
-									error_msg.setText( "New password and confirm password fields doesnot match!");
-									newpass.setText("");
-									confirmpass.setText(""); 
+									error_msg.setText("Fill the empty fields");	
 								}
-
-							}else {
-								error_msg.setVisibility(TextView.VISIBLE);
-								error_msg.setText("Fill the empty fields");	
 							}
-						}
-					});
+						});
 
 
-				}
-				if(pos==2){
-					Intent intent = new Intent(context, User_table.class);
-					startActivity(intent);
+					}
+					if(pos==2){
+						Intent intent = new Intent(context, User_table.class);
+						startActivity(intent);
 
-				}
-			}				        	
-		});
-		dialog=builder.create();
-		((Dialog) dialog).show();
+					}
+				}				        	
+			});
+			dialog=builder.create();
+			((Dialog) dialog).show();
+		}
+		
 	}
 
 	protected void addPreferences() {
