@@ -73,7 +73,6 @@ public class bankReconciliation extends Activity{
 	static String date, financialFromDate, financialToDate, accountName, fromDate, toDate;
 	DecimalFormat mFormat;
 	static int rowid;
-	boolean nara_flag=false;
 	AlertDialog dialog;
 	LinearLayout.LayoutParams params, params1;
 	String clearence_date;
@@ -309,7 +308,6 @@ public class bankReconciliation extends Activity{
              		if(narration_flag){
                  		//bankReconResultList.add((String) t[i].toString());
              			with_narration.add((String) t[i].toString());
-                        nara_flag = true;
                  	}
              	}
              	else{
@@ -317,7 +315,6 @@ public class bankReconciliation extends Activity{
              		bankReconResultList.add((String) t[i].toString());
                     with_narration.add((String) t[i].toString());
              	}
-             	
              }
               
              bankReconGrid.add(bankReconResultList);
@@ -757,16 +754,25 @@ public class bankReconciliation extends Activity{
 				
 					//change the row color(black/gray to orange) when clicked
 					View row = bankRecontable.getChildAt(i+1);
-					for (int j = 0; j < 7; j++) {
-						LinearLayout l = (LinearLayout) ((ViewGroup) row)
-								.getChildAt(j);
-						TextView t = (TextView) l.getChildAt(0);
-						ColorDrawable drawable = (ColorDrawable)t.getBackground();
-						System.out.println("color:"+drawable.getColor());
+					int no_of_columns;
+					if(narration_flag){
+						no_of_columns = 10;
+					}else{
+						no_of_columns = 9;
+					}
+					for (int j = 0; j < no_of_columns; j++) {
+						//except memo column highlight everything in the row
+						if ((j != 8 && narration_flag) || (j != 8 && !narration_flag)) {
+							LinearLayout l = (LinearLayout) ((ViewGroup) row)
+									.getChildAt(j);
+							TextView t = (TextView) l.getChildAt(0);
+							ColorDrawable drawable = (ColorDrawable)t.getBackground();
+							System.out.println("color:"+drawable.getColor());
 
-						ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"),drawable.getColor());
-						colorFade.setDuration(100);
-						colorFade.start();
+							ObjectAnimator colorFade = ObjectAnimator.ofObject(t, "backgroundColor", new ArgbEvaluator(), Color.parseColor("#FBB117"),drawable.getColor());
+							colorFade.setDuration(100);
+							colorFade.start();
+						}
 					}		
 					
 					if(ColumnNameList.length == 9){
@@ -845,7 +851,7 @@ public class bankReconciliation extends Activity{
 					 * if narration flag is false, get the column 6th text from textview(clearance date)
 					 * and store in variable 'clearence_date'
 					 */
-                    if(nara_flag==false){
+                    if(narration_flag==false){
                     	int rowcount = bankRecontable.getChildCount();    
                         for(int k=0;k<rowcount;k++){
                         	View row = bankRecontable.getChildAt(rowid+1);

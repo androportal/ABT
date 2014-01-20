@@ -79,7 +79,7 @@ public class ledger extends Activity {
 	TextView label, tvaccontName, tvfinancialFromDate, tvfinancialToDate,
 			infoTxtCredits;
 	ArrayList<ArrayList> ledgerGrid;
-	ArrayList<ArrayList> ledgerGrid_with_voucherCode, ledgerGrid_with_header;
+	ArrayList<ArrayList> ledgerGrid_with_header;
 	static Object[] ledgerResult;
 	static Integer client_id;
 	private Report report;
@@ -266,23 +266,14 @@ public class ledger extends Activity {
 			 * get the result of ledger from rpc and display it to tables accordingly
 			 */
 			ledgerGrid = new ArrayList<ArrayList>();
-			ledgerGrid_with_voucherCode = new ArrayList<ArrayList>();
 			ledgerGrid_with_header = new ArrayList<ArrayList>();
 			for (Object tb : ledgerResult) {
 
 				Object[] t = (Object[]) tb;
 				ledgerResultList = new ArrayList<String>();
 
-				ledgerResult_for_voucherCode = new ArrayList<String>();
-
 				for (int i = 0; i < (t.length); i++) {
-					ledgerResult_for_voucherCode.add((String) t[i].toString());
-
-				}
-				ledgerGrid_with_voucherCode.add(ledgerResult_for_voucherCode);
-
-				for (int i = 0; i < (t.length - 1); i++) {
-					if (i == 5) { // ****************
+					if (i == 5) { // if narration flag is true, add narration
 						if (checked == true) {
 							ledgerResultList.add((String) t[i].toString());
 						}
@@ -481,7 +472,7 @@ public class ledger extends Activity {
 				// System.out.println("we are in new if");
 				click = false;
 			}
-			for (int j = 0; j < columnValue.size(); j++) {
+			for (int j = 0; j < columnValue.size()-2; j++) {
 				addRow(columnValue.get(j), i);
 
 				if (click.equals(false)) {
@@ -584,7 +575,6 @@ public class ledger extends Activity {
 
 		ledgerGrid_with_header.add(stringList);
 		ledgerGrid_with_header.addAll(ledgerGrid);
-		System.out.println("ledgerGrid_with_header1:" + ledgerGrid_with_header);
 
 		// Add the TableRow to the TableLayout
 		ledgertable.addView(tr, new TableLayout.LayoutParams(
@@ -622,8 +612,13 @@ public class ledger extends Activity {
 					Object[] params = new Object[] { "Dr" };
 					Accountlist = new ArrayList<String>();
 	
-					code = ledgerGrid_with_voucherCode.get(i).get(6).toString();
-					String abc = ledgerGrid.get(i).get(1).toString();
+					//if narrations flag is true the position of voucher code gets changed
+					if (checked) {
+						code = ledgerGrid.get(i).get(6).toString();
+					}else{
+						code = ledgerGrid.get(i).get(5).toString();
+					}
+					
 	
 					Object[] params1 = new Object[] { code };
 	
@@ -633,8 +628,7 @@ public class ledger extends Activity {
 					ArrayList otherdetailsrow = new ArrayList();
 					for (Object row1 : VoucherMaster) {
 						Object a = (Object) row1;
-						otherdetailsrow.add(a.toString());// getting vouchermaster
-															// details
+						otherdetailsrow.add(a.toString());// getting vouchermaster details
 					}
 	
 					String vtf = otherdetailsrow.get(2).toString();
