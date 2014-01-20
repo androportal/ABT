@@ -297,17 +297,15 @@ public class MainActivity extends Activity{
 		//Calling activity_main.xml which is first page of ABT
 		setContentView(R.layout.activity_main);
 
-
 		if (Build.BRAND.equalsIgnoreCase("generic")) {
-			IPaddr = "10.0.2.2";
+			IPaddr = "10.0.2.2"; //for normal emulator
+			//IPaddr = "192.168.56.1"; //for genymotion
 			IPaddr_value = IPaddr;
 			System.out.println("YES, I am an emulator");
-
 		} else {
 			IPaddr = "127.0.0.1";
 			IPaddr_value = IPaddr;
 			System.out.println("NO, I am NOT an emulator");
-
 		}
 
 

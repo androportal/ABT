@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -1129,6 +1132,8 @@ public class createVoucher extends Activity {
 					voucherno = etvoucherno.getText().toString();
 					String cheque_no = etcheque.getText().toString();
 					
+					Pattern pattern = Pattern.compile("[a-zA-Z0-9](?=.*\\d)");
+					
 					vouchernoExist = transaction.voucherNoExist(new Object[] { voucherno },client_id);// exist then 1 else 0
 					chequenoExist = transaction.chequeNoExist(new Object[] { cheque_no }, client_id); // exist then 1 else 0
 					/***
@@ -1146,13 +1151,18 @@ public class createVoucher extends Activity {
 
 						if (totalDr == 0) {
 							if ("0.0".equals(Float.toString(totalDr))) {
-
 								amount_first.requestFocus();
 								amount_first.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
 							}
 							m.toastValidationMessage(context, "Please enter amount");
-
-						} else if ((searchFlag == true && cloneflag == false
+						
+						} else if(!pattern.matcher(voucherno).find()){
+							//voucher number must contain at least one digit or alphanumeric
+							m.toastValidationMessage(context, "Please enter valid voucher number");
+							etvoucherno.requestFocus();
+							etvoucherno.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+						}
+						else if ((searchFlag == true && cloneflag == false
 						        && checkvoucher_number.equals(voucherno) && (cheque_number
 						        .equals(cheque_no)|| (cash_.isChecked()==true||cheque_.isChecked()==true&&chequenoExist.equals("0"))))
 						        || vouchernoExist.equals("0") && (cash_.isChecked()==true||cheque_.isChecked()==true&&chequenoExist.equals("0"))) {
