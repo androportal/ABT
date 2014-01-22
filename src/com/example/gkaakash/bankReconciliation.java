@@ -63,7 +63,7 @@ public class bankReconciliation extends Activity{
     private Report report;
     
     ArrayList<String> bankReconResultList, with_narration;
-    private ArrayList accountlist, for_clearenceDate; 
+    private ArrayList accountlist, for_clearanceDate; 
     static boolean narration_flag;
     static boolean cleared_tran_flag;
     static String[] ColumnNameList;
@@ -75,7 +75,7 @@ public class bankReconciliation extends Activity{
 	static int rowid;
 	AlertDialog dialog;
 	LinearLayout.LayoutParams params, params1;
-	String clearence_date;
+	String clearance_date;
 	String retrived_date;
 	String Cdate;
 	String result;
@@ -236,7 +236,7 @@ public class bankReconciliation extends Activity{
 			@Override
 			public void onClick(View v) {
 				Date date= new Date();
-				String date_format = new SimpleDateFormat("dMMMyyyy").format(date);
+				String date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
 				OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
 				BankReconcilPeriod = fromDate+" to "+toDate;
 				String account = accountName.replace(" ","");
@@ -288,7 +288,7 @@ public class bankReconciliation extends Activity{
         
         bankReconGrid = new ArrayList<ArrayList>();
         for_naration = new ArrayList<ArrayList>();
-        for_clearenceDate = new ArrayList();
+        for_clearanceDate = new ArrayList();
         /* 
           * bankReconResult.length-6 is for getting only uncleared transactions with
           *  total debit and total credit and set in table  
@@ -323,7 +323,7 @@ public class bankReconciliation extends Activity{
          if(cleared_tran_flag==true){
               for(int i=0;i<bankReconGrid.size();i++){
                       Cdate = bankReconGrid.get(i).get(6).toString();
-                      for_clearenceDate.add(Cdate);
+                      for_clearanceDate.add(Cdate);
               }
          }
          System.out.println("List:"+bankReconGrid);
@@ -849,7 +849,7 @@ public class bankReconciliation extends Activity{
 					rowid = i; 
 					/*
 					 * if narration flag is false, get the column 6th text from textview(clearance date)
-					 * and store in variable 'clearence_date'
+					 * and store in variable 'clearance_date'
 					 */
                     if(narration_flag==false){
                     	int rowcount = bankRecontable.getChildCount();    
@@ -857,13 +857,13 @@ public class bankReconciliation extends Activity{
                         	View row = bankRecontable.getChildAt(rowid+1);
                         	LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(7);
                         	tvdate = (TextView) l.getChildAt(0);
-                        	clearence_date = (String) tvdate.getText();
+                        	clearance_date = (String) tvdate.getText();
                         }
                     }
                     /*
 					 * if narration flag is true but 'cleared_tran_flag' is true,
 					 * get the column 6th text from textview(clearance date)
-					 * and store in variable 'clearence_date'
+					 * and store in variable 'clearance_date'
 					 * and when 'cleared_tran_flag' is false, set clearance date text as ""
 					 */
                     else { 
@@ -873,11 +873,11 @@ public class bankReconciliation extends Activity{
                             	View row = bankRecontable.getChildAt(rowid+1);
                             	LinearLayout l = (LinearLayout)((ViewGroup) row).getChildAt(7);
                             	tvdate = (TextView) l.getChildAt(0);
-                            	clearence_date = (String) tvdate.getText();
+                            	clearance_date = (String) tvdate.getText();
                             }
                     	}  
                     	else{
-                    		clearence_date ="";
+                    		clearance_date ="";
                     	}
                     }
                     
@@ -886,7 +886,7 @@ public class bankReconciliation extends Activity{
                      * now, if clearance date has some date, user can edit, clear or set previous date
                      * in the clearance date textview
                      */
-                    if(!clearence_date.equals("") && !clearence_date.equals(" ")){
+                    if(!clearance_date.equals("") && !clearance_date.equals(" ")){
                         final CharSequence[] items = { "Edit date", "Clear date","Set previous date"};
                         //creating a dialog box for popup
                         AlertDialog.Builder builder = new AlertDialog.Builder(bankReconciliation.this);
@@ -1041,7 +1041,7 @@ public class bankReconciliation extends Activity{
                                  */
                                 if(pos==2){
                                 		try {
-                                			String Cdate1 = (String) for_clearenceDate.get(rowid);
+                                			String Cdate1 = (String) for_clearanceDate.get(rowid);
                                             int rowcount = bankRecontable.getChildCount();    
                                             for(int k=0;k<rowcount;k++){
                                                 View row = bankRecontable.getChildAt(rowid+1);

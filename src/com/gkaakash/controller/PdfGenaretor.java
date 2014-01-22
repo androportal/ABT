@@ -2,21 +2,12 @@ package com.gkaakash.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-
 import java.io.FileOutputStream;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import android.app.ActionBar.LayoutParams;
-import android.graphics.Color;
 import android.os.Environment;
-import android.text.SpannableString;
-import android.view.Gravity;
-
-import com.example.gkaakash.R;
-import com.example.gkaakash.bankReconciliation;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -26,8 +17,8 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.PdfPTable;
 
 public class PdfGenaretor {
 	Font smallBold,bigBold,smallNormal;
@@ -147,17 +138,24 @@ public class PdfGenaretor {
 			}
 			/* loop through the grid values coming from calling function
 			 * it is the main body of table all the values of column  */ 
-			System.out.println("grid vlaue "+Grid);
 			for(int i=0;i<Grid.size();i++)
 			{
 				ArrayList<String> column = new ArrayList<String>();
 				column.addAll(Grid.get(i));
-				System.out.println("grid vlaue each"+Grid.get(i));
 				PdfPCell column_table;
 				if(!pdf_params[0].equalsIgnoreCase("L")&&!pdf_params[0].equalsIgnoreCase("cash")) // if not ledger it removes value of 0th index of grid
 					column.remove(0);
-				if(pdf_params[0].equalsIgnoreCase("L")&&(column.size()==6))//else size of grid will be 6 if narration flag has checked
-					column.remove(5); // then remove narrartion column value
+				if(pdf_params[0].equalsIgnoreCase("L")){
+					if (column.size() == 8) {//with narrations
+						column.remove(column.size()-1); // remove cheque no
+						column.remove(column.size()-1); // voucher code
+						column.remove(column.size()-1); // narrations
+					}else{
+						column.remove(column.size()-1); // remove cheque no
+						column.remove(column.size()-1); // voucher code
+					}
+				}
+					
 
 				/*loop throught all the column values*/
 				for(int j=0;j<column.size();j++)
@@ -260,6 +258,7 @@ public class PdfGenaretor {
 
 		try {
 			/* call createTitle method*/
+			System.out.println("bank recon grid"+Grid1);
 			cerateTitle(pdf_params, password);
 			/* Create table for body content */
 			PdfPTable table;
@@ -505,7 +504,7 @@ public class PdfGenaretor {
 			{
 				float[] columnWidths,columnWidths1;
 				String[] ColumnName;
-				ColumnName = new String[] {"Date","Particulars","Ref.no","Debit(Rs)","Credit(Rs)","Clearence Date"};
+				ColumnName = new String[] {"Date","Particulars","Ref.no","Debit(Rs)","Credit(Rs)","Clearance Date"};
 				columnWidths = new float[] {40f,60f,20f,40f,40f,40f}; // for all the grid values
 				columnWidths1 = new float[] {60f,40f}; //for display statement 
 				PdfPCell column_table;
@@ -540,28 +539,31 @@ public class PdfGenaretor {
 						{
 							ArrayList<String> column = new ArrayList<String>();
 							column.addAll(BalanceGrid.get(i));
-							column.remove(0);
-							column.remove(6);
-							Integer val = BalanceGrid.size()-1;
+							System.out.println("we have "+ column);
+							column.remove(0); //voucher code
+							column.remove(2); // cheque no
+							column.remove(6); //memo
+							Integer val = BalanceGrid.size()-1; //to get the last row(total row)
+							System.out.println("column grid is "+column);
 							for(int j=0;j<column.size();j++)
 							{
 								String value = column.get(j);
 								System.out.println("value :"+value);
-								if(i==val)
+								if(i==val) //last total row and make it bold
 								{
 									column_table = new PdfPCell(new Phrase(value,smallBold));
 									if(j==2)
 										column_table.setHorizontalAlignment(Element.ALIGN_CENTER);
-									else
+									else //total amount
 										column_table.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
 									column_table.setBorder(Rectangle.NO_BORDER);
 									column_table.setBorderWidthBottom(1f);
 									table.addCell(column_table);
-								}else
+								}else //for transaction rows
 								{
 									column_table = new PdfPCell(new Phrase(value,smallNormal));
-									if(j==3||j==4)
+									if(j==3||j==4) //amount
 										column_table.setHorizontalAlignment(Element.ALIGN_RIGHT);	
 									else
 										column_table.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -667,6 +669,7 @@ public class PdfGenaretor {
 		File root = Environment.getExternalStorageDirectory();
 		/* Create new file with sFilename*/ 
 		File pdffile = new File(root,pdf_params[1]+".pdf");
+		System.out.println("file name"+pdffile+ " "+ document);
 		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdffile));
 		//set password for pdf file
 		if(password != null){

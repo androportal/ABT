@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -190,10 +191,26 @@ public class module {
 			cerateTitle(params);
 			fw.append('\n');columnSize = Grid.get(0).size();
 			columnSize = Grid.get(0).size();
-			System.out.println(Grid.size());
 			for (int i = 0; i < Grid.size(); i++) {
-				for (int j = 0; j < Grid.get(i).size(); j++) {
-					System.out.println(Grid.get(i).get(j).toString());
+				int len = 0;
+				/*	check for ledger report and delete last 2 columns ie. 
+				 * voucher code and cheque no from Grid
+				 */
+				if(params[0].equalsIgnoreCase("L")){
+					if (i == 0) {
+						if (Grid.get(i).size() == 6) { //if narration flag is true
+							len = Grid.get(i).size()-1;
+						}else{
+							len = Grid.get(i).size();
+						}
+						
+					}else{
+						len = Grid.get(i).size()-2;
+					}
+				}else{
+					len = Grid.get(i).size();
+				}
+				for (int j = 0; j < len; j++) {
 					fw.append(Grid.get(i).get(j).toString());
 					fw.append(',');
 				}
@@ -225,25 +242,31 @@ public class module {
 		try {
 			cerateTitle(params);
 			fw.append('\n');
-
+			System.out.println("we are writing csv"+Grid);
 			columnSize = Grid.get(0).size();
+			if (params[0].equalsIgnoreCase("BankRec")) {
+				//add header for reconcilisation
+				Grid.add(0, new ArrayList(Arrays.asList("voucher code","Date","Particulars","Cheque no.",
+						"Reference no.","(Rs.)Debit amount","(Rs.)Credit amount","Clearance date","Memo")));
+			}
 			for (int i = 0; i < Grid.size(); i++) {
 
 				for (int j = 0; j < Grid.get(i).size(); j++) {
+					System.out.println("second for loop");
 					if(i==0)
-					{
-						if((params[0].equals("Conv_bal")&&j==1||j==2||j==3)||
+					{ //add rupee symbol
+						if(((params[0].equalsIgnoreCase("Conv_bal")&&(j==1||j==2||j==3)))||
 								(params[0].equalsIgnoreCase("cash")&&j==1)||
 								(params[0].equalsIgnoreCase("I&E")&&j==2)||
 								(params[0].equalsIgnoreCase("Sources_bal")&&j!=0)||
 								(params[0].equalsIgnoreCase("P&L")&&j==2))// for the values if the list (first,second and third column)
 
 						{	
-							//System.out.println("in rupes");
 							fw.append(params[8]+""+Grid.get(i).get(j).toString());
+							
 						}else
 						{
-							//System.out.println("in no rupes");
+							System.out.println("in no rupes"+params[0]);
 							fw.append(Grid.get(i).get(j).toString());
 						}
 					}
@@ -264,12 +287,13 @@ public class module {
 
 					if(i==0)
 					{
-						if((params[0].equals("Conv_bal")&&j==1||j==2||j==3)||
+						if((params[0].equals("Conv_bal")&&(j==1||j==2||j==3))||
 								(params[0].equalsIgnoreCase("cash")&&j==1)||
 								(params[0].equalsIgnoreCase("I&E")&&j==2)||
 								(params[0].equalsIgnoreCase("Sources_bal")&&j!=0)||
 								(params[0].equalsIgnoreCase("P&L")&&j==2))// for the values if the list (first,second and third column)
 						{	
+							//add rupee symbol
 							fw.append(params[8]+""+Grid1.get(i).get(j).toString());
 						}else    
 						{
