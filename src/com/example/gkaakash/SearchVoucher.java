@@ -91,6 +91,10 @@ public class SearchVoucher extends Activity {
 	static final int FROM_DATE_DIALOG_ID = 0, TO_DATE_DIALOG_ID = 1;
 	String givenfromDateString, givenToDateString;
 	String setfromday, setfrommonth, setfromyear, settoday, settomonth, settoyear;
+	Boolean view_to_rollover=false;
+	CharSequence[] items;
+
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -122,9 +126,17 @@ public class SearchVoucher extends Activity {
 
 		tvVFromdate.setText("Financial from date: " +financialFromDate);
 		tvVTodate.setText("Financial to date: " +financialToDate);
-
 		
-		vouchertypeflag = createVoucher.vouchertypeflag;
+		if (menu.existRollOver==true) {
+			vouchertypeflag = "Contra";
+			view_to_rollover=true;
+			Object[] params = new Object[]{6,financialFromDate,financialToDate,vouchertypeflag};
+			getallvouchers(params);
+
+		} else {
+			vouchertypeflag = createVoucher.vouchertypeflag;
+
+		}
 
 		System.out.println("VOUCHER TYPE"+vouchertypeflag);
 		try {
@@ -630,53 +642,64 @@ public class SearchVoucher extends Activity {
 					colorFade.start();
 				}
 
-
+				String diolog_name;
 				try {
-					final CharSequence[] items = { "Edit voucher", "Copy voucher","Delete voucher"};
+					if(view_to_rollover==false){
+						items = new CharSequence[]{ "Edit voucher", "Copy voucher","Delete voucher"};
+						diolog_name="Edit/Delete Voucher";
+					}else {
+						items = new CharSequence[]{ "View details"};
+						diolog_name="View Voucher details";
+					}
+					
+					
 					//creating a dialog box for popup
 					AlertDialog.Builder builder = new AlertDialog.Builder(SearchVoucher.this);
 					//setting title
-					builder.setTitle("Edit/Delete Voucher");
+					builder.setTitle(diolog_name);
 					//adding items
 					builder.setItems(items, new DialogInterface.OnClickListener() {
 
 						@Override
 						public void onClick(DialogInterface dialog,
 								int pos) {
-							if(pos == 0){
+							String name=items[pos].toString();
+							if("Edit voucher".equals(name)){
 								MainActivity.nameflag=true;
-								name="Edit voucher";
-								//Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
 								cloneflag=false;
-
-								//System.out.println("in addrow"+i); 
 								value=searchedVoucherGrid.get(i);
 								//Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show();
 
 								MainActivity.searchFlag=true;
 								vouchertype=value.get(3);
 								Intent intent = new Intent(context, transaction_tab.class);
+								intent.putExtra("name_flag", "Edit voucher");
 								// To pass on the value to the next page
 								startActivity(intent);
-							}
-							if(pos==1){
+							}else if("Copy voucher".equals(name)){
 								MainActivity.nameflag=true;
 								cloneflag=true;
-								name="Copy voucher";
-								//Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
-								//System.out.println("in addrow"+i); 
 								value=searchedVoucherGrid.get(i);
 								vouchertypeflag=value.get(3);
-								
 								//Toast.makeText(SearchVoucher.this,"result"+value, Toast.LENGTH_SHORT).show(); 
 								MainActivity.searchFlag=true;
 								Intent intent = new Intent(context, transaction_tab.class);
+								intent.putExtra("name_flag", "Copy voucher");
 								// To pass on the value to the next page
 								startActivity(intent);
 								//Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
-							}
+							}else if ("View details".equals(name)) {
+								MainActivity.nameflag=true;
+								value=searchedVoucherGrid.get(i);
+								vouchertype=value.get(3);
+								MainActivity.searchFlag = true;
+								Intent intent = new Intent(context, transaction_tab.class);
+								intent.putExtra("flag_for_rollover", "after_rollover");
+//								intent.putExtra("flag", "after_rollover");
 
-							if(pos==2){
+								startActivity(intent);
+
+							}else if("Delete voucher".equals(name)){
 								AlertDialog.Builder builder = new AlertDialog.Builder(SearchVoucher.this);
 								builder.setMessage("Are you sure you want to detete the Voucher?")
 								.setCancelable(false)
@@ -772,8 +795,16 @@ public class SearchVoucher extends Activity {
 	protected void onResume() {
 		super.onResume();
 		System.out.println("ON search RESUME");
-		vouchertypeflag = createVoucher.vouchertypeflag;  
-		System.out.println("VOUCHER TYPE"+vouchertypeflag);
+		
+		if (menu.existRollOver==true) {
+			vouchertypeflag = "Contra";
+	    	Toast.makeText(getApplicationContext(), "hiiii2", Toast.LENGTH_SHORT).show();
+
+		} else {
+			vouchertypeflag = createVoucher.vouchertypeflag;
+
+		}
+		System.out.println("VOUCHER TYPE1"+vouchertypeflag);
 		//
         if(searchVoucherBy == 1){ // by reference number
                 Object[] params = new Object[]{1,searchByRefNumber,financialFromDate,financialToDate,""};

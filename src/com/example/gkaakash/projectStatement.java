@@ -442,7 +442,11 @@ public class projectStatement extends Activity{
 					}					
 				  	
 					acc_name1 = accname;
+					menu.existRollOver=false;
 					Intent intent = new Intent(getApplicationContext(),ledger.class);
+					if(menu.existRollOver==true){
+						intent.putExtra("flag_for_rollover", "after_rollover");
+					}
 		 			intent.putExtra("flag", "from_projStatement");
 					startActivity(intent);
 				}

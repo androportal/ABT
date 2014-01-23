@@ -532,8 +532,12 @@ public class trialBalance extends Activity{
 						colorFade.start();
 					}
 					acc_name = accname;
+					menu.existRollOver=false;
 					Intent intent = new Intent(getApplicationContext(),ledger.class);
 					intent.putExtra("flag", "from_trialBal");
+					if(menu.existRollOver==true){
+						intent.putExtra("flag_for_rollover", "after_rollover");
+					}
 					startActivity(intent); 
 				}
 				return false;

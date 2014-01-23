@@ -466,7 +466,11 @@ public class cashFlow extends Activity{
 				colorFade.start();
 			}
     		acc_name = accname;
+			menu.existRollOver=false;
 			Intent intent = new Intent(getApplicationContext(),ledger.class);
+			if(menu.existRollOver==true){
+				intent.putExtra("flag_for_rollover", "after_rollover");
+			}
 			intent.putExtra("flag", "from_cashflow");
 			startActivity(intent);
     	}

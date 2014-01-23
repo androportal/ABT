@@ -808,7 +808,11 @@ public class bankReconciliation extends Activity{
 					String vtf=otherdetailsrow.get(2).toString();
 					System.out.println("type:"+vtf);
 					IntentToVoucher(vtf,params);
+					menu.existRollOver=false;
 					Intent intent = new Intent(bankReconciliation.this, transaction_tab.class);
+					if(menu.existRollOver==true){
+						intent.putExtra("flag_for_rollover", "after_rollover");
+					}
 					intent.putExtra("flag", "from_bankrecon");
 					// To pass on the value to the next page
 					startActivity(intent);

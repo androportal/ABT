@@ -635,13 +635,14 @@ public class ledger extends Activity {
 					System.out.println("vtf"+vtf);
 					System.out.println("params "+params);
 					IntentToVoucher(vtf, params);
-	 
+					menu.existRollOver=false;
 					Intent intent = new Intent(ledger.this, transaction_tab.class);
+					if(menu.existRollOver==true){
+						intent.putExtra("flag_for_rollover", "after_rollover");
+					}
 					intent.putExtra("flag", "from_ledger");
 					// To pass on the value to the next page
 					startActivity(intent);
-					// Toast.makeText(context,"name"+name,Toast.LENGTH_SHORT).show();
-					
 				
 				return false;
 			}

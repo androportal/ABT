@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.app.Activity;
@@ -121,6 +120,7 @@ public class createVoucher extends Activity {
 	Boolean add = false;
 	RadioGroup rg;
 	RadioButton cheque_, cash_;
+	String flag_for_rollover;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -156,6 +156,8 @@ public class createVoucher extends Activity {
 
 		rg = (RadioGroup) findViewById(R.id.radioRole);
 		setRadioOnCheckListener(); // set listener on cheque and cash radio
+		searchFlag = MainActivity.searchFlag;
+
 		
 		/***
 		 * get extra values from other class
@@ -165,12 +167,12 @@ public class createVoucher extends Activity {
 			
 		} else {
 			from_report_flag = extras.getString("flag");
+			
+			flag_for_rollover= extras.getString("flag_for_rollover");
 		}
-
+	
 		if (from_report_flag == null) {
-
-			vouchertypeflag = transaction_tab.vouchertypeflag;
-		
+				vouchertypeflag = transaction_tab.vouchertypeflag;
 		} else if (from_report_flag.equalsIgnoreCase("from_ledger")) {
 			
 			vouchertypeflag = ledger.vouchertypeflag;
@@ -179,17 +181,18 @@ public class createVoucher extends Activity {
 		} else if (from_report_flag.equalsIgnoreCase("from_bankrecon")) {
 		
 			vouchertypeflag = bankReconciliation.vouchertypeflag;
+		}else if (from_report_flag.equalsIgnoreCase("after_rollover"))	 {
+			vouchertypeflag = transaction_tab.vouchertypeflag;
 		}
 
 		try {
-				searchFlag = MainActivity.searchFlag;
 
 				if (from_report_flag == null) {
 					cloneflag = SearchVoucher.cloneflag;
 				} else {
 					cloneflag = false;
 				}
-		
+		 
 				etRefNumber = (EditText) findViewById(R.id.etRefNumber);
 				name = SearchVoucher.name;
 			
@@ -226,6 +229,8 @@ public class createVoucher extends Activity {
 					} else if (from_report_flag.equalsIgnoreCase("from_bankrecon")) {
 						vouchercode = bankReconciliation.code;
 					
+					}else if (from_report_flag.equalsIgnoreCase("from_bankrecon")) {
+						
 					}
 					Object[] params = new Object[] { vouchercode };
 					Object[] VoucherMaster = (Object[]) transaction.getVoucherMaster(params, client_id);
@@ -303,43 +308,8 @@ public class createVoucher extends Activity {
 			setProject();
 
 			if (from_report_flag != null && !(menu.userrole.equalsIgnoreCase("admin"))) {
-			
-				btnResetVoucher.setVisibility(View.GONE);
-				btnSaveVoucher.setLayoutParams(new LinearLayout.LayoutParams(
-				        LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1f));
-				btnSaveVoucher.setText("Back");
-
-				etnarration.setEnabled(false);
-				etnarration.setTextColor(Color.parseColor("#AEC6CF"));
-				etRefNumber.setEnabled(false);
-				cheque_.setEnabled(false);
-				cash_.setEnabled(false);
-				etcheque.setEnabled(false);
-				etRefNumber.setTextColor(Color.parseColor("#AEC6CF"));
-				rg.setEnabled(false);
-				btnResetVoucher.setEnabled(false);
-				btnVoucherDate.setEnabled(false);
-				btnVoucherDate.setTextColor(Color.parseColor("#AEC6CF"));
-				sProjectNames.setEnabled(false);
-				etvoucherno.setEnabled(false);
-				etvoucherno.setTextColor(Color.parseColor("#AEC6CF"));
-
-				tableRowCount = table.getChildCount();
-
-				for (int i = 0; i < (tableRowCount); i++) {
-					View row1 = table.getChildAt(i);
-
-					second_table_drcr_spinner = (Spinner) ((ViewGroup) row1).getChildAt(0);
-					second_table_drcr_spinner.setClickable(false);
-					second_table_accountname_spinner = (Spinner) ((ViewGroup) row1).getChildAt(2);
-					second_table_accountname_spinner.setClickable(false);
-					second_table_amount_et = (EditText) ((ViewGroup) row1).getChildAt(6);
-					second_table_amount_et.setEnabled(false);
-					second_table_amount_et.setTextColor(Color.parseColor("#AEC6CF"));
-					removeSelfButton = (Button) ((ViewGroup) row1).getChildAt(7);
-					removeSelfButton.setVisibility(View.GONE);
-
-				}
+			disable();
+				
 			}
 
 		} catch (Exception ex) {
@@ -355,6 +325,46 @@ public class createVoucher extends Activity {
 		// change voucher type
 		changeVoucherType();
 
+	}
+	
+	public void disable(){
+		btnResetVoucher.setVisibility(View.GONE);
+		btnSaveVoucher.setLayoutParams(new LinearLayout.LayoutParams(
+		        LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1f));
+		btnSaveVoucher.setText("Back");
+
+		etnarration.setEnabled(false);
+		etnarration.setTextColor(Color.parseColor("#AEC6CF"));
+		etRefNumber.setEnabled(false);
+		cheque_.setEnabled(false);
+		cash_.setEnabled(false);
+		etcheque.setEnabled(false);
+		etcheque.setTextColor(Color.parseColor("#AEC6CF"));
+		etRefNumber.setTextColor(Color.parseColor("#AEC6CF"));
+		rg.setEnabled(false);
+		btnResetVoucher.setEnabled(false);
+		btnVoucherDate.setEnabled(false);
+		btnVoucherDate.setTextColor(Color.parseColor("#AEC6CF"));
+		sProjectNames.setEnabled(false);
+		etvoucherno.setEnabled(false);
+		etvoucherno.setTextColor(Color.parseColor("#AEC6CF"));
+
+		tableRowCount = table.getChildCount();
+
+		for (int i = 0; i < (tableRowCount); i++) {
+			View row1 = table.getChildAt(i);
+
+			second_table_drcr_spinner = (Spinner) ((ViewGroup) row1).getChildAt(0);
+			second_table_drcr_spinner.setClickable(false);
+			second_table_accountname_spinner = (Spinner) ((ViewGroup) row1).getChildAt(2);
+			second_table_accountname_spinner.setClickable(false);
+			second_table_amount_et = (EditText) ((ViewGroup) row1).getChildAt(6);
+			second_table_amount_et.setEnabled(false);
+			second_table_amount_et.setTextColor(Color.parseColor("#AEC6CF"));
+			removeSelfButton = (Button) ((ViewGroup) row1).getChildAt(7);
+			removeSelfButton.setVisibility(View.GONE);
+
+		}
 	}
 	public void setRadioOnCheckListener()
 	{
@@ -905,12 +915,13 @@ public class createVoucher extends Activity {
 
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-					// TODO Auto-generated method stub
 					String drcr_value = parent.getItemAtPosition(position).toString();
-
+					
+					// when touch is false,the values the account name drop-down does not changes.
+					//Once touch is true the account name drop-down get updated
 					if (drcr_value != null) {
 						if (searchFlag == false) {
-
+//							Toast.makeText(context,"0",Toast.LENGTH_SHORT).show();
 							Object[] params = new Object[] { drcr_value };
 							m.getAccountsByRule(params, vouchertypeflag, context);
 							dataAdapter = module.dataAdapter;
@@ -918,7 +929,7 @@ public class createVoucher extends Activity {
 							Spinner sp = (Spinner) ((ViewGroup) v1).getChildAt(2);
 							sp.setAdapter(dataAdapter);
 						} else if (searchFlag == true && touch == true && add == false) {
-
+//							Toast.makeText(context,"1",Toast.LENGTH_SHORT).show();
 							Object[] params = new Object[] { drcr_value };
 							m.getAccountsByRule(params, vouchertypeflag, context);
 							dataAdapter = module.dataAdapter;
@@ -926,14 +937,21 @@ public class createVoucher extends Activity {
 							Spinner sp = (Spinner) ((ViewGroup) v1).getChildAt(2);
 							sp.setAdapter(dataAdapter);
 						} else if (searchFlag == true && touch == false && add == true) {
-
+//							Toast.makeText(context,"2",Toast.LENGTH_SHORT).show();
 							Object[] params = new Object[] { drcr_value };
-
 							m.getAccountsByRule(params, vouchertypeflag, context);
 							dataAdapter = module.dataAdapter;
 							View v1 = (View) parent.getParent();
 							Spinner sp = (Spinner) ((ViewGroup) v1).getChildAt(2);
 							sp.setAdapter(dataAdapter);
+						}else {
+							
+							if(menu.existRollOver==true){
+								disable();
+								from_report_flag="abc";
+
+							}
+							
 						}
 					}
 				}
@@ -1151,18 +1169,20 @@ public class createVoucher extends Activity {
 
 						if (totalDr == 0) {
 							if ("0.0".equals(Float.toString(totalDr))) {
+
 								amount_first.requestFocus();
 								amount_first.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
 							}
 							m.toastValidationMessage(context, "Please enter amount");
-						
+
 						} else if(!pattern.matcher(voucherno).find()){
+
 							//voucher number must contain at least one digit or alphanumeric
 							m.toastValidationMessage(context, "Please enter valid voucher number");
 							etvoucherno.requestFocus();
 							etvoucherno.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
-						}
-						else if ((searchFlag == true && cloneflag == false
+
+						}else if ((searchFlag == true && cloneflag == false
 						        && checkvoucher_number.equals(voucherno) && (cheque_number
 						        .equals(cheque_no)|| (cash_.isChecked()==true||cheque_.isChecked()==true&&chequenoExist.equals("0"))))
 						        || vouchernoExist.equals("0") && (cash_.isChecked()==true||cheque_.isChecked()==true&&chequenoExist.equals("0"))) {
@@ -1777,6 +1797,12 @@ public class createVoucher extends Activity {
 			startActivity(intent);
 		} else if (from_report_flag.equalsIgnoreCase("from_bankrecon")) {
 			Intent intent = new Intent(getApplicationContext(), bankReconciliation.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+
+		}else {
+			transaction_tab.flag_for_rollover=null;
+			Intent intent = new Intent(getApplicationContext(), transaction_tab.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 
