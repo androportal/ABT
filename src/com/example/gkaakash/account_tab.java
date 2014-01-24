@@ -28,6 +28,9 @@ public class account_tab extends Activity{
 	private Preferences preferences;
 	static String IPaddr;
 	LocalActivityManager manager;
+	TabHost.TabSpec spec;
+    Intent intent;
+    TabHost tabHost;
 	
 	public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
@@ -43,17 +46,14 @@ public class account_tab extends Activity{
 			MainActivity.tabFlag = true;
 			
             manager = new LocalActivityManager(account_tab.this, true);
-            TabHost tabHost = (TabHost) findViewById(android.R.id.tabhost);
+            tabHost = (TabHost) findViewById(android.R.id.tabhost);
            
             manager.dispatchCreate(savedInstanceState);
             tabHost.setup(manager);
-            TabHost.TabSpec spec;
-            Intent intent;
+            
 //            String getOrgName = menu.OrgName;
 //			String financialFrom = menu.financialFromDate;
 //			String financialTo = menu.financialToDate;
-			//ArrayList<String> detailsList_foredit=menu.accdetailsList;
-			//System.out.println("cuming from menu page:"+detailsList_foredit);
 			Report report = new Report(IPaddr);
 			//String orgtype=detailsList_foredit.get(1);
 			String orgtype = menu.orgtype;
@@ -62,35 +62,14 @@ public class account_tab extends Activity{
             Boolean existRollOver = menu.existRollOver;
             
             if(existRollOver.equals(false)){
-            	   intent = new Intent(account_tab.this, createAccount.class);   
-                   spec = tabHost.newTabSpec("Create Account").setIndicator("Create Account").setContent(intent);
-                   tabHost.addTab(spec);
-                   intent = new Intent(account_tab.this, edit_account.class);   
-                   intent.putExtra("rollover", "not_exist");
-                   spec = tabHost.newTabSpec("Edit Account").setIndicator("Edit Account").setContent(intent);
-                   tabHost.addTab(spec);
+            	create();
+            	edit();
             }
             else
             {
-            	intent = new Intent(account_tab.this, edit_account.class);   
-            	intent.putExtra("rollover", "exist");
-                spec = tabHost.newTabSpec("List of Account ").setIndicator("List of Account").setContent(intent);
-                tabHost.addTab(spec);
+            	edit();
             }
-            if(existRollOver.equals(false)){
-            //change the tab text color
-            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
-            tv.setTextColor(Color.WHITE);
-            tv = (TextView) tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
-            tv.setTextColor(Color.WHITE);
-            }  
-            else{
-            	TextView tv = (TextView) tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
-                tv.setTextColor(Color.WHITE);
-            }
-            
             tabHost.setOnTabChangedListener(new OnTabChangeListener() {
-				
 				@Override
 				public void onTabChanged(String tabId) {
 					manager.dispatchPause(isFinishing());
@@ -99,4 +78,28 @@ public class account_tab extends Activity{
 				}
 			});
 	 }
+	
+	//creation of create account tab
+	private void create() {
+		intent = new Intent(account_tab.this, createAccount.class);   
+		spec = tabHost.newTabSpec("Create Account").setIndicator("Create Account").setContent(intent);
+		tabHost.addTab(spec);
+		
+	}
+
+	//creation of edit account tab
+	private void edit() {
+		intent = new Intent(account_tab.this, edit_account.class);  
+		if(menu.existRollOver==true){
+			//when roll over is true
+			intent.putExtra("rollover", "exist");
+			spec = tabHost.newTabSpec("List of Account ").setIndicator("List of Account").setContent(intent);
+		}else {
+			intent.putExtra("rollover", "not_exist");
+			spec = tabHost.newTabSpec("Edit Account").setIndicator("Edit Account").setContent(intent);
+		}
+		tabHost.addTab(spec);		
+	}
+
+	
 }
