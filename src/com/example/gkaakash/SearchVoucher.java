@@ -701,7 +701,7 @@ public class SearchVoucher extends Activity {
 
 							}else if("Delete voucher".equals(name)){
 								AlertDialog.Builder builder = new AlertDialog.Builder(SearchVoucher.this);
-								builder.setMessage("Are you sure you want to detete the Voucher?")
+								builder.setMessage("Are you sure you want to detete the voucher?")
 								.setCancelable(false)
 								.setPositiveButton("Yes",
 										new DialogInterface.OnClickListener() {

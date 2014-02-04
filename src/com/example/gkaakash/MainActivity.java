@@ -147,6 +147,7 @@ public class MainActivity extends Activity{
 	private Organisation orgnisation;
 	private module module;
 	private SlideHolder mSlideHolder;
+	String dest;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -695,8 +696,7 @@ public class MainActivity extends Activity{
 						/**
 						 * download image from aakashlabs.org
 						 **/
-						String url = "http://www.it.iitb.ac.in/AakashApps/repo/abt.tar.gz";
-						String dest;
+						final String url = "http://files.aakashlabs.org/abt.tar.gz";
 
 						/*
 						 * check free space available in /mnt/sdcard, it should be greater than 380MB(292+78)
@@ -710,9 +710,34 @@ public class MainActivity extends Activity{
 							startDownloadProgressBar(dest);
 							new DownloadFileAsync().execute(url,dest);
 
-						}else{
+						}
+						else if(getAvailableSpaceInMB("mnt/extsd") > 380L){
 							AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-							builder.setMessage("No enough space on sdcard, exiting the application!")
+							builder.setMessage("No enough space on internal sdcard, Do you want to download file on external sdcard?")
+							.setCancelable(false)
+							.setNegativeButton("No thanks, Exit from application", new DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									finish();
+									android.os.Process
+									.killProcess(android.os.Process.myPid());
+								}
+							})
+							.setPositiveButton("Yes",
+									new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int id) {
+	        						Toast.makeText(context, "Downloading abt.tar.gz in /mnt/extsd.", Toast.LENGTH_SHORT).show();
+	        						dest = "mnt/extsd";
+	        						startDownloadProgressBar(dest);
+	        			            new DownloadFileAsync().execute(url,dest);
+								}
+							});
+							AlertDialog alert = builder.create();
+							alert.show();
+        				}else{
+							AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+							builder.setMessage("Failed to download file, No space available on both internal and external sdcard! Exiting the application!!!")
 							.setCancelable(false)
 							.setPositiveButton("Ok",
 									new DialogInterface.OnClickListener() {
@@ -722,26 +747,9 @@ public class MainActivity extends Activity{
 									.killProcess(android.os.Process.myPid());
 								}
 							});
-
-
 							AlertDialog alert = builder.create();
 							alert.show();
-						}
-						/*else{
-
-        					if(getAvailableSpaceInMB("mnt/extsd") > 380L){
-
-        						Toast.makeText(context, "we are in extsd", Toast.LENGTH_SHORT).show();
-        						dest = "mnt/extsd";
-        						startDownloadProgressBar(dest);
-        			            new DownloadFileAsync().execute(url,dest);
-
-        					}else{
-
-        						Toast.makeText(context, "failed to download abt.tar.gz, No space available on sdcard", Toast.LENGTH_SHORT).show();
-        					}
-
-        				} */
+    					}
 
 					}else{
 						// NO INTERNET AVAILABLE, DO STUFF..

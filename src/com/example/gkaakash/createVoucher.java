@@ -1150,7 +1150,7 @@ public class createVoucher extends Activity {
 					voucherno = etvoucherno.getText().toString();
 					String cheque_no = etcheque.getText().toString();
 					
-					Pattern pattern = Pattern.compile("[a-zA-Z0-9](?=.*\\d)");
+					Pattern pattern = Pattern.compile("(?=.*\\d)[a-zA-Z0-9]");
 					
 					vouchernoExist = transaction.voucherNoExist(new Object[] { voucherno },client_id);// exist then 1 else 0
 					chequenoExist = transaction.chequeNoExist(new Object[] { cheque_no }, client_id); // exist then 1 else 0
