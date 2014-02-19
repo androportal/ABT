@@ -2,6 +2,9 @@ package com.example.gkaakash;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.gkaakash.controller.Account;
 import com.gkaakash.controller.Group;
 import com.gkaakash.controller.Preferences;
@@ -429,8 +432,15 @@ public class createAccount<group> extends Activity{
                 accountname = etAccName.getText().toString();
                 accountcode = etaccCode.getText().toString();
                 openingbalance= etOpBal.getText().toString();
-            
-                // check for blank fields
+               //String pattern="([0-9]+)(\\.[0-9])";
+               // Pattern pattern = Pattern.compile("([0-9]+)(\\.[0-9])");
+				///Pattern pat = Pattern.compile(pattern);   
+				//Matcher match = pat.matcher(etOpBal.getText().toString());
+	            //if(match.find())
+	           // {
+	            	//m.toastValidationMessage(context, "pattern match");
+	           // }
+                // check for blank fields     
                 if("Create New Sub-Group".equals(selSubGrpName)&&newsubgrpname.length()<1||("manually".equals(accCodeCheckFlag)&& accountcode.length()<1))
                 {
                     m.toastValidationMessage(context, "Please fill textfield");
@@ -439,19 +449,20 @@ public class createAccount<group> extends Activity{
                     
                 }else if((accountname.trim().length()<1)||(openingbalance.length()<1))
                 {
-                	System.out.println("in else");
+                	
                 	if(accountname.trim().length()<1){
                 		etAccName.requestFocus();
                 		etAccName.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
                 	}else {
                 		etOpBal.requestFocus();
                 		etOpBal.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
-
 					}
-                
-                	
                 	 m.toastValidationMessage(context, "Please fill textfield");
                     
+                }else if(openingbalance.contains("-")&&!openingbalance.startsWith("-")||openingbalance.contains("#")||openingbalance.contains("*")||openingbalance.contains("+")){
+                	etOpBal.requestFocus();
+            		etOpBal.setBackgroundResource(R.drawable.btn_default_focused_holo_light);
+            		m.toastValidationMessage(context, "Please insert proper balance");
                 }
                 else if("Create New Sub-Group".equals(selSubGrpName)&&newsubgrpname.length()>=1)
                 {
@@ -485,8 +496,7 @@ public class createAccount<group> extends Activity{
                     {    
                         SaveAccount();
                     }// close else
-                    
-                }
+                    }
                 else
                 {
                     if(accountname.length()>=1)
@@ -620,7 +630,8 @@ public class createAccount<group> extends Activity{
     }
     
     public void SaveAccount(){
-        Object[] params = new Object[]{accCodeCheckFlag,selGrpName,selSubGrpName,newsubgrpname,accountname,accountcode,openingbalance}; 
+    	String Opbal = openingbalance.replaceAll("[\\-]+","-");
+        Object[] params = new Object[]{accCodeCheckFlag,selGrpName,selSubGrpName,newsubgrpname,accountname,accountcode,Opbal}; 
         // call the setAccount method and pass the above parameters
         account.setAccount(params,client_id);
         getTotalBalances();
@@ -632,12 +643,10 @@ public class createAccount<group> extends Activity{
         addListenerOnItem();
         module m = new module();
         m.toastSuccessfulMessage(createAccount.this, "Account "+accountname+" have been saved successfully");
-        
         etSubGrp.setText("");
         etAccName.setText("");
         etaccCode.setText("");
         etOpBal.setText("0.00");
-        
        
     }
 }

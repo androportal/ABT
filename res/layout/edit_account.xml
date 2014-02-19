@@ -85,7 +85,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="60"
-        android:inputType="numberDecimal"
+        android:inputType="phone"
         style="@style/EditTextAppTheme" >
     </EditText>
     

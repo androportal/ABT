@@ -3,6 +3,8 @@ package com.example.gkaakash;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.R.color;
 import android.app.Activity;
@@ -345,19 +347,29 @@ public class edit_account extends Activity {
 									}
 
 									String newOpBal;
+									String Opbal = null;
+									
+									newOpBal = etEditOpBal.getText().toString();
 									if (etEditOpBal.getVisibility() == View.VISIBLE) {
-										newOpBal = etEditOpBal.getText().toString();
+										
+										String balance = newOpBal.substring(1, newOpBal.length());
 										if (newOpBal.length() < 1) {
 											newOpBal = "";
-										} else {
-											newOpBal = String.format("%.2f",Float.valueOf(newOpBal.trim()).floatValue());
+										} else if (newOpBal.startsWith("-")&&!balance.contains("-")){
+											String bal = newOpBal.replaceAll("[\\-]+","-");
+											newOpBal = String.format("%.2f",Float.valueOf(bal.trim()).floatValue());
+										}else if(newOpBal.startsWith("-")&&balance.contains("-")){
+											String bal = balance.replaceAll("[\\-]+","");
+											newOpBal = "-"+bal;
 										}
 									} else {
-										newOpBal = tvEditOpBal.getText().toString();
+										String bal = newOpBal.replaceAll("[\\-]+","-");
+										newOpBal = bal;
 									}
 									String groupname = tvEditGroupName.getText().toString();
 									String subgroupname = tvEditSubgroupName.getText().toString();
 									String accountcode = tvEditAccountCode.getText().toString();
+								
 
 									if ((newAccountName.length() < 1)&& ("".equals(newOpBal))) {
 										String message = "Please fill field";
@@ -370,16 +382,24 @@ public class edit_account extends Activity {
 										String message = "Please fill accountname field";
 										m.toastValidationMessage(edit_account.this,message);
 									}
-									if ((newAccountName.length() >= 1)&& (!"".equals(newOpBal))) {
+									if ((newAccountName.length() >= 1)&&(!"".equals(newOpBal))) {
 										String accountcode_exist = account.checkAccountName(new Object[] {newAccountName,"", "" },client_id);
 										if (!newAccountName.equalsIgnoreCase(oldAccountName)
 												&& accountcode_exist.equals("exist")) {
 											String message = "Account '"+ newAccountName+ "' already exist";
 											m.toastValidationMessage(edit_account.this,message);
 
-										} else {
+										}else if(newOpBal.contains("-")&&!newOpBal.startsWith("-")
+												||newOpBal.contains("#")
+												||newOpBal.contains("*")
+												||newOpBal.contains("+")){
+											m.toastValidationMessage(edit_account.this, "Please insert proper balance");
+											
+										}else {
+										
 
 											Object[] params;
+											
 											if ("Direct Income".equals(accountDetailList.get(1).toString())
 															|| "Direct Expense".equals(accountDetailList.get(1).toString())
 															|| "Indirect Income".equals(accountDetailList.get(1).toString())
@@ -387,7 +407,8 @@ public class edit_account extends Activity {
 												params = new Object[] {newAccountName,accountcode,groupname };
 
 											} else {
-												params = new Object[] {newAccountName,accountcode,groupname,newOpBal };
+												Opbal = newOpBal.replaceAll("[\\-]+","-");
+												params = new Object[] {newAccountName,accountcode,groupname,Opbal };
 											}
 											account.editAccount(params,client_id);
 
@@ -398,7 +419,7 @@ public class edit_account extends Activity {
 												String message = "Account name has been changed from '"+ oldAccountName
 														+ "' to '"+ newAccountName
 														+ "' and opening balance has been changed from '"+ oldOpBal
-														+ "' to '"+ newOpBal+ "'";
+														+ "' to '"+ Opbal+ "'";
 												m.toastValidationMessage(edit_account.this,message);
 											} else if (!newAccountName.equalsIgnoreCase(oldAccountName)) {
 												String message = "Account name has been changed from '"+ oldAccountName
@@ -406,7 +427,7 @@ public class edit_account extends Activity {
 												m.toastValidationMessage(edit_account.this,message);
 											} else if (!newOpBal.equals(oldOpBal)) {
 												String message = "Opening balance has been changed from '"+ oldOpBal+ "' to '"
-														+ newOpBal+ "'";
+														+ Opbal+ "'";
 												m.toastValidationMessage(edit_account.this,message);
 											} else {
 												if ("edit".equals(msg)) {
