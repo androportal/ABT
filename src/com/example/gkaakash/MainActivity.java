@@ -308,8 +308,6 @@ public class MainActivity extends Activity{
 			IPaddr_value = IPaddr;
 			System.out.println("NO, I am NOT an emulator");
 		}
-
-
 		/*
 		 * toggleView can actually be any view you want.
 		 * Here, for simplicity, we're using TextView, but you can

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import android.os.Environment;
+
+import com.example.gkaakash.module;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -26,6 +28,7 @@ public class PdfGenaretor {
 	Date date;
 	Document document;
 	ArrayList<ArrayList>BalanceGrid,cashflow;
+	module m;
 
 	/***
 	 * PdfGenarator() default constructor  
@@ -42,6 +45,7 @@ public class PdfGenaretor {
 		bigBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,Font.BOLD);
 		smallNormal = new Font(Font.FontFamily.TIMES_ROMAN, 10,Font.NORMAL); 
 		date= new Date();
+		m = new module();
 		date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
 		// create document object to pass pdfwriter
 		document = new Document(PageSize.A4.rotate());
@@ -276,8 +280,8 @@ public class PdfGenaretor {
 				{
 					if(pdf_params[0].equalsIgnoreCase("Conv_bal"))
 					{
-						table1 = new PdfPTable(4);// if canventional balancesheeet then it will have 4 columns
-						columnWidths = new float[] {60f,50f,50f,70f};
+						table1 = new PdfPTable(3);// if canventional balancesheeet then it will have 4 columns
+						columnWidths = new float[] {60f,50f,70f};
 					}
 					else if(pdf_params[0].equalsIgnoreCase("cash"))
 					{
@@ -293,25 +297,26 @@ public class PdfGenaretor {
 						BalanceGrid = Grid1;// left side table column value
 					}else
 					{
-						BalanceGrid = Grid2;// right side column value
+						BalanceGrid = Grid2;// right side column value    
 					}
 					// this for loop to get the values of columns 
 					for(int i=0;i<BalanceGrid.size();i++)
 					{
 						ArrayList<String> column = new ArrayList<String>();
-						column.addAll(BalanceGrid.get(i)); // add list of values of balancegrid of ith index  
+						column.addAll(BalanceGrid.get(i)); // add list of values of balance grid of ith index  
 						Integer val = BalanceGrid.size()-1;// get the last index value of the balance-grid
 						for(int j=0;j<column.size();j++)// now loop through each column value of that list
 						{
 							String value = column.get(j);
+							System.out.println("coloumn :"+value);
 							if(i==0)// for the first list of balancegrid
 							{
-								if(j==1||j==2||j==3) // for the values if the list (first,second and thir column)
+								if(j==1||j==2) // for the values if the list (first,second and thir column)
 								{	
 									column_table = new PdfPCell(new Phrase(value+"(Rs)",smallBold));// make it bold 
 									column_table.setHorizontalAlignment(Element.ALIGN_RIGHT);// its amount field right align 
 								}else
-								{
+								{  
 									column_table = new PdfPCell(new Phrase(value,smallBold));
 									column_table.setHorizontalAlignment(Element.ALIGN_CENTER);
 								}
@@ -325,7 +330,7 @@ public class PdfGenaretor {
 								column_table = new PdfPCell(new Phrase(column.get(j),smallBold)); // values bold 
 								if(pdf_params[0].equalsIgnoreCase("Conv_bal"))
 								{
-									if(j==1||j==2||j==3)// for the values if the list (first,second and third column)
+									if(j==1||j==2)// for the values if the list (first,second)
 									{	
 										column_table.setHorizontalAlignment(Element.ALIGN_RIGHT); // amount field at right
 									}else
@@ -350,9 +355,9 @@ public class PdfGenaretor {
 									{	
 										column_table = new PdfPCell(new Phrase(value,smallNormal));
 									}
-									if(j==1||j==2||j==3)
+									if(j==1||j==2)
 									{	
-										if(column.get(1)==""&&column.get(2)=="") // if 1st and 2nd value is empty then third value bold
+										if(column.get(1)=="") // if 1st is empty then third value bold
 											column_table = new PdfPCell(new Phrase(value,smallBold));
 
 										column_table.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -367,7 +372,7 @@ public class PdfGenaretor {
 											column_table.setHorizontalAlignment(Element.ALIGN_RIGHT);
 										else
 											column_table.setHorizontalAlignment(Element.ALIGN_CENTER);
-										column_table.setBorder(Rectangle.NO_BORDER);
+											column_table.setBorder(Rectangle.NO_BORDER);
 									}else // its for profir & loss or Income & Expenditure
 									{
 										if(value.equalsIgnoreCase("Direct Expense")||
@@ -424,7 +429,7 @@ public class PdfGenaretor {
 			{
 				float[] columnWidths;
 				String[] ColumnName;
-				columnWidths = new float[] {80f, 30f, 30f, 30f, 30f};
+				columnWidths = new float[] {80f, 30f, 30f, 30f};
 				PdfPCell column_table;
 				//Create table for body content 
 				for(int k=0;k<2;k++){
@@ -436,7 +441,7 @@ public class PdfGenaretor {
 						BalanceGrid = Grid2;
 					}
 
-					table = new PdfPTable(5);
+					table = new PdfPTable(4);
 					for(int i=0;i<BalanceGrid.size();i++){
 						ArrayList<String> column = new ArrayList<String>();
 						column.addAll(BalanceGrid.get(i));
@@ -686,11 +691,11 @@ public class PdfGenaretor {
 		PdfPCell h1 = new PdfPCell(new Phrase("Date of PDF generation:\n"+new SimpleDateFormat("EEE d-MMM-yyyy HH:mm:ss").format(date),smallBold));
 		h1.setBorder(Rectangle.NO_BORDER);
 		/* second cell will print organisation name and financile year*/
-		PdfPCell h2 = new PdfPCell(new Phrase(pdf_params[2]+"\n"+pdf_params[3],bigBold));
+		PdfPCell h2 = new PdfPCell(new Phrase(pdf_params[4]+"\n"+pdf_params[3],bigBold));
 		h2.setHorizontalAlignment(Element.ALIGN_CENTER); // align it to centre
 		h2.setBorder(Rectangle.NO_BORDER);
 		/* this will have name of report,period of report,and project */
-		PdfPCell h3 = new PdfPCell(new Phrase(pdf_params[4]+"\n"+pdf_params[5]+"\n"+pdf_params[6],smallBold));
+		PdfPCell h3 = new PdfPCell(new Phrase(pdf_params[2]+"\n"+pdf_params[5]+"\n"+pdf_params[6],smallBold));
 		h3.setHorizontalAlignment(Element.ALIGN_LEFT);// agin ti left
 		h3.setBorder(Rectangle.NO_BORDER);
 		/* add all three cell to table*/

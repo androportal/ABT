@@ -472,6 +472,14 @@ public class createAccount<group> extends Activity{
                        m.toastValidationMessage(context, "Subgroup "+sub_grp_name+" already exist");
                     }else if(accountname.length()>=1)
                     {
+////                 
+//                    	Pattern pattern = Pattern.compile("[A-Z][a-z]+");//for checking whether the string is in uppercase 
+//                    	Matcher matcher = pattern.matcher((accountname.replaceAll("\\s","")).replaceAll("[/:'&-+^]*", ""));
+//                    	boolean found = matcher.matches();
+//                    	if(found)   
+//                    	{
+//                    		 m.toastValidationMessage(context, "Account "+accountname+" not correct");
+//                    	}
                             accountname_exist = account.checkAccountName(new Object[]{accountname,accCodeCheckFlag,groupChar},client_id);
                             if (accountname_exist.equals("exist"))
                             {

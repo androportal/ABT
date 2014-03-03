@@ -429,7 +429,7 @@ public class cashBook extends Activity{
 				OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
 				balancePeriod = fromDateString+" to "+toDateString;
 				sFilename = "cashBook"+"_"+ OrgName.replace(" ", "")+ "_" +financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
-				pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Book",balancePeriod,"",result,rsSymbol.toString()};
+				pdf_params = new String[]{"cash",sFilename,OrgName,balancePeriod,"Cash Book",OrgPeriod,"",result,rsSymbol.toString()};
 			
 				CharSequence[] items = new CharSequence[]{"Export as PDF","Export as CSV"};
 				

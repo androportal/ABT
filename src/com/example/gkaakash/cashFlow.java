@@ -249,7 +249,7 @@ public class cashFlow extends Activity{
 				balancePeriod = fromDateString+" to "+toDateString;
 				sFilename = "CashFlow"+"_"+ OrgName.replace(" ", "")+ "_" +
 						financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
-				pdf_params = new String[]{"cash",sFilename,OrgName,OrgPeriod,"Cash Flow",balancePeriod,"",result,rsSymbol.toString()};
+				pdf_params = new String[]{"cash",sFilename,OrgName,balancePeriod,"Cash Flow",OrgPeriod,"",result,rsSymbol.toString()};
 				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
 				
 				AlertDialog dialog;

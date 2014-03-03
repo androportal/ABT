@@ -281,7 +281,7 @@ public class projectStatement extends Activity{
 	             String project = projectName.replace(" ","");
 				 sFilename = "ProjeST"+"_"+ OrgName.replace(" ", "")+"_"+project+ "_" +
 							financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
-		         pdf_params = new String[]{"ProjeST",sFilename,OrgName,OrgPeriod,"Project Statement",Period,projectName,String.format("%.2f", Math.abs(result))};
+		         pdf_params = new String[]{"ProjeST",sFilename,OrgName,Period,"Project Statement",OrgPeriod,projectName,String.format("%.2f", Math.abs(result))};
 				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
 				
 				AlertDialog dialog;

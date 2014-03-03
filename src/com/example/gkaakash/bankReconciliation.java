@@ -244,7 +244,7 @@ public class bankReconciliation extends Activity{
 		   	 	sFilename = "BankRec"+"_"+ OrgName.replace(" ", "")+"_"+account+ "_" +
 						financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
 				
-				pdf_params = new String[]{"BankRec",sFilename,OrgName,OrgPeriod,"Bank Reconciliation for "+account,BankReconcilPeriod,"",result};
+				pdf_params = new String[]{"BankRec",sFilename,OrgName,BankReconcilPeriod,"Bank Reconciliation for "+account,OrgPeriod,"",result};
 
 				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
 				

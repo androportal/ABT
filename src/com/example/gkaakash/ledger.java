@@ -344,7 +344,7 @@ public class ledger extends Activity {
 				LedgerPeriod = fromDate + " to " + toDate;
 				String account = accountName.replace(" ", "");
 				sFilename = "L" +"_"+ OrgName.replace(" ", "")+"_" + account + "_" +financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+ date_format;
-				pdf_params = new String[] { "L", sFilename, OrgName, OrgPeriod,"Ledger for: " + accountName, LedgerPeriod,"Project: " + Ledger_project, };
+				pdf_params = new String[] { "L", sFilename, OrgName,LedgerPeriod,"Ledger for: " + accountName,OrgPeriod,"Project: " + Ledger_project, };
 				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
 				
 

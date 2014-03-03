@@ -170,7 +170,7 @@ public class trialBalance extends Activity{
 	    	}
 	    	 
 	         OrgPeriod = "Financial Year: "+financialFromDate+" to "+financialToDate;
-	         TrialPeriod = financialFromDate+" to "+trialToDateString;
+	         TrialPeriod = "As at "+trialToDateString;
 	         trialBalGrid = new ArrayList<ArrayList>();
 	         trialBalGrid_with_header = new ArrayList<ArrayList>();
 	    	for(Object tb : trialBalanceResult)
@@ -192,7 +192,7 @@ public class trialBalance extends Activity{
 			TextView org = (TextView)findViewById(R.id.org_name);
 			org.setText(OrgName + ", "+reportMenu.orgtype);
 			TextView tvdate = (TextView)findViewById(R.id.date);
-			tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
+			tvdate.setText("As at"+m.changeDateFormat( trialToDateString));
 	    	
 //	    	final Button btnScrollDown = (Button)findViewById(R.id.btnScrollDown);
 //	    	btnScrollDown.setOnClickListener(new OnClickListener() {
@@ -244,8 +244,8 @@ public class trialBalance extends Activity{
 		   		date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
 		   		sFilename = trialbalType+"_"+ OrgName.replace(" ", "")+ "_" +
 						financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
-				pdf_params = new String[]{trialbalType,sFilename,OrgName,OrgPeriod,trialbalancetype,
-						TrialPeriod,"",rsSymbol+String.format("%.2f", Math.abs(result))};
+				pdf_params = new String[]{trialbalType,sFilename,OrgName,trialbalancetype,
+						OrgPeriod,"",rsSymbol+String.format("%.2f", Math.abs(result))};
 						
 				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
 				

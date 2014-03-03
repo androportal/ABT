@@ -134,7 +134,7 @@ public class incomeExpenditure extends Activity{
 			SimpleDateFormat read = new SimpleDateFormat("dd-MM-yyyy");
 			SimpleDateFormat write = new SimpleDateFormat("dd-MMM-yyyy");
 			String str_fromDate = write.format(read.parse(financialFromDate));
-			String str_toDate = write.format(read.parse(IEToDateString));
+			String str_toDate = write.format(read.parse(financialToDate));
 	    	tv.setText("Period : "+str_fromDate+" to "+str_toDate);   
 	    	
 	    	
@@ -182,7 +182,7 @@ public class incomeExpenditure extends Activity{
 		   
         	 
 	         OrgPeriod = "Financial Year:  "+financialFromDate+" to "+financialToDate;
-	         TrialPeriod = financialFromDate+" to "+IEToDateString;
+	         TrialPeriod = m.changeDateFormat(IEToDateString);
 	        // trialBalGrid = new ArrayList<ArrayList>();
         	Reporttypeflag = reportMenu.reportTypeFlag;
         	
@@ -192,7 +192,7 @@ public class incomeExpenditure extends Activity{
 			TextView org = (TextView)findViewById(R.id.org_name);
 			org.setText(OrgName + ", "+getSelectedOrgType);
 			TextView tvdate = (TextView)findViewById(R.id.date);
-			tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
+			tvdate.setText(TrialPeriod);
 			
 			tv = (TextView) findViewById(R.id.tvaccountName);
 	    	tv.setText(Reporttypeflag);
@@ -250,11 +250,11 @@ public class incomeExpenditure extends Activity{
 				{
 						sFilename = "IE"+"_"+ OrgName.replace(" ", "")+ "_" +
 								financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
-			        	pdf_params = new String[]{"I&E",sFilename,OrgName,OrgPeriod,Reporttypeflag,TrialPeriod,"","",rsSymbol.toString()};
+			        	pdf_params = new String[]{"I&E",sFilename,OrgName,"A/c for the year ended "+TrialPeriod,Reporttypeflag,OrgPeriod,"","",rsSymbol.toString()};
 				}else
 			    {
 						sFilename = "PL"+"_"+date_format;
-			        	pdf_params = new String[]{"P&L",sFilename,OrgName,OrgPeriod,Reporttypeflag,TrialPeriod,"","",rsSymbol.toString()};
+			        	pdf_params = new String[]{"P&L",sFilename,OrgName,"A/c for the year ended "+TrialPeriod,Reporttypeflag,OrgPeriod,"","",rsSymbol.toString()};
 			    }
 	         
 				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
