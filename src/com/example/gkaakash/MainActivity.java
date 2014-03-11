@@ -306,7 +306,7 @@ public class MainActivity extends Activity{
 		} else {
 			IPaddr = "127.0.0.1";
 			IPaddr_value = IPaddr;
-			System.out.println("NO, I am NOT an emulator");
+			System.out.println("NO, I am NOT an emulator");  
 		}
 		/*
 		 * toggleView can actually be any view you want.
@@ -341,7 +341,7 @@ public class MainActivity extends Activity{
 
 			get_extra_flag = extras.getString("flag");
 			System.out.println("hav xtra");
-			System.out.println("content:"+get_extra_flag);
+			System.out.println("content:"+get_extra_flag);   
 
 		}
 
@@ -402,8 +402,12 @@ public class MainActivity extends Activity{
 		//and assign the retrieved spinner to an instance variable
 		getOrgNames = (Spinner)findViewById(R.id.sGetOrgNames);
 		//creating new method do event on button
-		addListenerOnButton();
-
+		if(get_extra_flag==null)
+		{addListenerOnButton();
+				
+		}else{
+			getSelectOnClickValue();
+		}
 		// copy 'aakash.sh and 'preinstall.sh to their respective paths'
 		File path = new File("/data/data/com.example.gkaakash/files/copyFilesFlag.txt");
 		if(!path.exists()){
@@ -474,65 +478,117 @@ public class MainActivity extends Activity{
 
 			public void onClick(View arg0) {
 				System.out.println("in button listner"+IPaddr);
-				startup = new Startup(IPaddr);
-				// check existing organisation name list is null
-				try{
-					// call the getOrganisationName method from startup
-					orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
-					if(orgNameList.length<1)
-					{
-						AlertDialog.Builder builder = new AlertDialog.Builder(context);
-						builder.setMessage("Please create organisation")
-						.setCancelable(false)
-						.setPositiveButton("Ok",
-								new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								//do nothing
-							}
-						});
-
-						AlertDialog alert = builder.create();
-						alert.show();                    }
-					else
-					{
-						LinearLayout content_layout = (LinearLayout)findViewById(R.id.content_layout);
-						LayoutInflater inflater = ((Activity)MainActivity.this).getLayoutInflater();
-						View layout = inflater.inflate(R.layout.select_org, null);
-
-						if(content_layout.getChildCount() == 0){
-							content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
-						}else{
-							content_layout.removeAllViews();
-							content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
-						}
-
-						user= new User(IPaddr);
-						getOrgNames = (Spinner) layout.findViewById(R.id.sGetOrgNames);
-						getFinancialyear = (Spinner) layout.findViewById(R.id.sGetFinancialYear);
-						getOrgNames.setMinimumWidth(100);
-						getFinancialyear.setMinimumWidth(250);
-						btnSelLogIn = (Button) layout.findViewById(R.id.btnSelLogIn);
-
-						getExistingOrgNames(layout);
-						addListenerOnItem(layout);
-						addListenerOnLoginButton(layout);
-
-						//To pass on the activity to the next page
-						//						Intent intent = new Intent(context, selectOrg.class);
-						//						startActivity(intent);  
-					}
-				}catch(Exception e)
-				{
-					IPaddr = IPaddr_value;
-					String message = "Can not connect to remote server!!! \nPlease set IP again or check whether server is running!!!" +
-							"\nRe-establishing connection to the local server...";
-					m.toastValidationMessage(context, message);
-				}
+				
+				getSelectOnClickValue();
+//				startup = new Startup(IPaddr);
+//				// check existing organisation name list is null
+//				try{
+//					// call the getOrganisationName method from startup
+//					orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
+//					if(orgNameList.length<1)
+//					{
+//						AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//						builder.setMessage("Please create organisation")
+//						.setCancelable(false)
+//						.setPositiveButton("Ok",
+//								new DialogInterface.OnClickListener() {
+//							public void onClick(DialogInterface dialog, int id) {
+//								//do nothing
+//							}
+//						});
+//
+//						AlertDialog alert = builder.create();
+//						alert.show();                    }
+//					else
+//					{
+//						LinearLayout content_layout = (LinearLayout)findViewById(R.id.content_layout);
+//						LayoutInflater inflater = ((Activity)MainActivity.this).getLayoutInflater();
+//						View layout = inflater.inflate(R.layout.select_org, null);
+//
+//						if(content_layout.getChildCount() == 0){
+//							content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+//						}else{
+//							content_layout.removeAllViews();
+//							content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+//						}
+//
+//						user= new User(IPaddr);
+//						getOrgNames = (Spinner) layout.findViewById(R.id.sGetOrgNames);
+//						getFinancialyear = (Spinner) layout.findViewById(R.id.sGetFinancialYear);
+//						getOrgNames.setMinimumWidth(100);
+//						getFinancialyear.setMinimumWidth(250);
+//						btnSelLogIn = (Button) layout.findViewById(R.id.btnSelLogIn);
+//
+//						getExistingOrgNames(layout);
+//						addListenerOnItem(layout);
+//						addListenerOnLoginButton(layout);
+//
+//						//To pass on the activity to the next page
+//						//						Intent intent = new Intent(context, selectOrg.class);
+//						//						startActivity(intent);  
+//					}
+//				}catch(Exception e)
+//				{
+//					IPaddr = IPaddr_value;
+//					String message = "Can not connect to remote server!!! \nPlease set IP again or check whether server is running!!!" +
+//							"\nRe-establishing connection to the local server...";
+//					m.toastValidationMessage(context, message);
+//				}
 			}// end of onClick
 
 		});// end of select_org.setOnClickListener
 	}// end of addListenerOnButton() method
 
+	public void getSelectOnClickValue() {
+		startup = new Startup(IPaddr);
+		// check existing organisation name list is null
+		try{
+			// call the getOrganisationName method from startup
+			orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
+			if(orgNameList.length<1)
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setMessage("Please create organisation")
+				.setCancelable(false)
+				.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						//do nothing
+					}
+				});
+
+				AlertDialog alert = builder.create();
+				alert.show();                    }
+			else
+			{
+				LinearLayout content_layout = (LinearLayout)findViewById(R.id.content_layout);
+				LayoutInflater inflater = ((Activity)MainActivity.this).getLayoutInflater();
+				View layout = inflater.inflate(R.layout.select_org, null);
+
+				if(content_layout.getChildCount() == 0){
+					content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+				}else{
+					content_layout.removeAllViews();
+					content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+				}
+
+				user= new User(IPaddr);
+				getOrgNames = (Spinner) layout.findViewById(R.id.sGetOrgNames);
+				getFinancialyear = (Spinner) layout.findViewById(R.id.sGetFinancialYear);
+				getOrgNames.setMinimumWidth(100);
+				getFinancialyear.setMinimumWidth(250);
+				btnSelLogIn = (Button) layout.findViewById(R.id.btnSelLogIn);
+				
+				getExistingOrgNames(layout);
+				addListenerOnItem(layout);
+				addListenerOnLoginButton(layout);
+			}
+		}catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("exception value");
+			}
+
+	}
 
 	private void loadDataFromAsset() {
 		try {
@@ -1273,8 +1329,9 @@ public class MainActivity extends Activity{
 			int position = dataAdapter.getPosition(orgname);
 
 			getOrgNames.setAdapter(dataAdapter);
-			getOrgNames.setSelection(position);
-			//Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show();
+			getOrgNames.setSelection(position);   
+//			m.toastValidationMessage(context,"Rollover has been done successfully, Please login to continue!");
+//			//Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show();   
 		}
 
 	}
@@ -1578,6 +1635,7 @@ public class MainActivity extends Activity{
 					System.out.println("position:"+postion1);
 					getFinancialyear.setAdapter(dataAdapter);
 					getFinancialyear.setSelection(postion1);
+					m.toastValidationMessage(context,"Rollover has been done successfully, Please login to continue!");
 
 				} 
 			}

@@ -354,9 +354,9 @@ public class balanceSheet extends Activity {
 					LinearLayout l = (LinearLayout) ((ViewGroup) row)
 							.getChildAt(0);
 					final TextView tv = (TextView) l.getChildAt(0);
-					Toast.makeText(balanceSheet.this, tv.getText().toString(),
-							Toast.LENGTH_SHORT).show();
-					checkForAccountName(tv.getText().toString(), row);
+					//Toast.makeText(balanceSheet.this, tv.getText().toString(),
+							//Toast.LENGTH_SHORT).show();
+					checkForAccountName(tv.getText().toString().trim(), row);
 					return false;
 				}
 
@@ -374,9 +374,9 @@ public class balanceSheet extends Activity {
 					LinearLayout l = (LinearLayout) ((ViewGroup) row)
 							.getChildAt(0);
 					final TextView tv = (TextView) l.getChildAt(0);
-					Toast.makeText(balanceSheet.this, tv.getText().toString(),
-							Toast.LENGTH_SHORT).show();
-					checkForAccountName(tv.getText().toString(), row);
+					//Toast.makeText(balanceSheet.this, tv.getText().toString(),
+							//Toast.LENGTH_SHORT).show();
+					checkForAccountName(tv.getText().toString().trim(), row);
 					return false;
 				}
 			});
@@ -399,13 +399,15 @@ public class balanceSheet extends Activity {
 		Matcher matcher = pattern.matcher((accname.replaceAll("\\s", ""))
 				.replaceAll("[/:'&-+^]*", ""));
 		boolean found = matcher.find();
-		System.out.println("value:" + found);
+		System.out.println("value:" + accname);
 		if (found == false
 				&& !(accname.equalsIgnoreCase("")
 						|| accname.equalsIgnoreCase("Total")
 						|| accname.equalsIgnoreCase("Particulars")
-						|| accname.equalsIgnoreCase("Property & Assets") || accname
-							.equalsIgnoreCase("Corpus & Liabilities"))) {
+						|| accname.equalsIgnoreCase("Property & Assets") 
+						|| accname.equalsIgnoreCase("Corpus & Liabilities")
+						|| accname.startsWith("Opening")
+						|| accname.startsWith("Current"))) {
 			// Toast.makeText(balanceSheet.this, "account name",
 			// Toast.LENGTH_SHORT).show();
 			// change the row color(black/gray to orange) when clicked
@@ -466,11 +468,11 @@ public class balanceSheet extends Activity {
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		}
 	}
-
+  
 	/*
 	 * 1. set the green background color for heading and black for remaining
 	 * rows 2. set right aligned gravity for amount and center aligned for other
-	 * values 3. set rupee symbol for amount
+	 * values 3. set rupee symbol for amount      
 	 */
 	private void setRowColorSymbolGravity(ArrayList<String> columnValue,
 			int color, Boolean headerFlag) {
@@ -484,7 +486,7 @@ public class balanceSheet extends Activity {
 					addRow(rsSymbol + " " + columnValue.get(j));
 				} else {
 					addRow(columnValue.get(j));
-				}
+				}   
 				label.setTextColor(Color.BLACK); // blue theme
 			} else {
 				addRow(columnValue.get(j));
@@ -503,7 +505,7 @@ public class balanceSheet extends Activity {
 						|| amount.equalsIgnoreCase("NET PROFIT")
 						|| amount.equalsIgnoreCase("Amount")
 						|| amount.equalsIgnoreCase("Debit")) {
-					((TextView) label).setGravity(Gravity.CENTER);
+					((TextView) label).setGravity(Gravity.LEFT);
 
 				}
 				// else
@@ -586,7 +588,7 @@ public class balanceSheet extends Activity {
 						} else {
 
 							label.setBackgroundColor(color);
-							((TextView) label).setGravity(Gravity.LEFT);
+							((TextView) label).setGravity(Gravity.CENTER);
 						}
 
 					}
@@ -603,7 +605,8 @@ public class balanceSheet extends Activity {
 							|| name.equalsIgnoreCase("TOTAL LOANS(ASSET)")
 							|| name.equalsIgnoreCase("TOTAL CURRENT ASSETS")
 							|| name.equalsIgnoreCase("TOTAL CURRENT LIABILITIES")
-							|| name.equalsIgnoreCase("NET CURRENT ASSETS OR WORKING CAPITAL")) {
+							|| name.equalsIgnoreCase("NET CURRENT ASSETS OR WORKING CAPITAL")
+							) {
 						((TextView) label).setGravity(Gravity.RIGHT);
 					}
 					if (name.equalsIgnoreCase("Particulars")) {
@@ -611,7 +614,7 @@ public class balanceSheet extends Activity {
 					}
 				}
 			}
-			if (j == 1) {// for amount coloumn
+			if (j == 1) {// for amount coloumn  
 				if (total_amount.equalsIgnoreCase("Amount")) {
 					((TextView) label).setGravity(Gravity.CENTER);
 

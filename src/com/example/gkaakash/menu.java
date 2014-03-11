@@ -215,11 +215,7 @@ public class menu extends Activity{
 		System.out.println("params are:"+OrgName+userrole+username+reset_password_flag+orgtype);
 		//get the last login timing of user from the database
 		
-		//set title
-		TextView org = (TextView)findViewById(R.id.org_name);
-		org.setText(OrgName + ", "+orgtype);
-		TextView tvdate = (TextView)findViewById(R.id.date);
-		tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
+		
 		
 		Button btn_optionsMenu= (Button) findViewById(R.id.btn_optionsMenu);
 		btn_optionsMenu.setVisibility(View.GONE);
@@ -312,7 +308,11 @@ public class menu extends Activity{
 				R.drawable.rollover_logo, R.drawable.export_logo,
 				R.drawable.account_setting, R.drawable.help_logo));
 		
-		
+		//set title
+				TextView org = (TextView)findViewById(R.id.org_name);
+				org.setText(OrgName + ", "+orgtype);
+				TextView tvdate = (TextView)findViewById(R.id.date);
+				tvdate.setText(m.changeDateFormat(financialFromDate)+" To "+m.changeDateFormat(financialToDate));
 		//modify menu list according to the user
 		if(userrole.equalsIgnoreCase("admin")){
 			//no changes in above 3 lists, display them as it is
@@ -501,26 +501,32 @@ public class menu extends Activity{
         if (existRollOver==false) {
         	
         	final Object[] rollover_params = new Object[] {OrgName, financialFromDate,financialToDate,orgtype };
-        	rollover = report.rollOver(rollover_params,client_id);
+        	String rollover = report.completeFinancialYear(new Object[] {financialFromDate,financialToDate});
             if(rollover.equalsIgnoreCase("false"))  
             {
                 m.toastValidationMessage(context,"Cannot rollover , since financial year is not completed!!");
             }else
             {
-           
+            
 	            AlertDialog.Builder builder = new AlertDialog.Builder(context);
 	    		
 	    		builder.setMessage("Do you want to rollover to next financial year ?");
 	    		builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-	    			public void onClick(DialogInterface dialog, int which) {
-	    				 m.toastValidationMessage(context,"Rollover has been done successfully !!!");
+	    			public void onClick(DialogInterface dialog, int which) {  
+	    				 String done = report.rollOver(rollover_params,client_id);
+	    				 if(done.equals("rollover")){
+		    				 Intent intent = new Intent(context,MainActivity.class);
+		    				 intent.putExtra("flag", "from_menu");
+		 					// To pass on the value to the next page
+		 					 startActivity(intent);  
+	    				 }
 	    			}
     		});
-    		builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+    		builder.setNegativeButton("No", new DialogInterface.OnClickListener() {   
     			public void onClick(DialogInterface dialog, int id) {
     				
     			}
-
+  
     		});
     		AlertDialog rollover_dialog = builder.create();
     		rollover_dialog.show(); 
@@ -572,7 +578,7 @@ public class menu extends Activity{
 
 		});
 		builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
+			public void onClick(DialogInterface dialog, int id) {   
 
 			}
 

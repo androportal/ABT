@@ -303,4 +303,19 @@ public Object getGrossTrialBalance(Object[] params,Object client_id) {
 		}
 		return existrollover;
 	}
+	
+public String completeFinancialYear(Object[] params) {
+		
+		try { 
+			
+			rollover = (String)conn.getClient().call("completeFinancialYear",params);
+			
+		} catch (XMLRPCException e) {
+			
+			e.printStackTrace();
+		}
+		return rollover;
+	}
+	  
+	
 }
