@@ -8,7 +8,7 @@ intended for Accountants and Students. `Aakash
 students, the project is initiated and funded by MHRD, Govt. of
 India. Aakash already runs Android 4.2 with many educational apps
 developed at IIT Bombay. Please refer to `androportal
-<https://github.com/androportal/>`_ for some of the apps. Aakash
+<http://aakashlabs.org/ac/projects/>`_ for some of the apps. Aakash
 Accounting provides an easy to use interface specially for
 students/newbies who have just started accounting. We have tried to
 make the user's experience simple and elegant. This initial version 1.0
@@ -132,9 +132,9 @@ Simple and recommended install procedure
 Manual installation
 ~~~~~~~~~~~~~~~~~~~
  
-  #. Visit **http://aakashlabs.org/downloads/** from your system.
-     Please find links **download** and **chroot image** from ``Aakash Business 
-     Tool`` to download ABT.apk and compressed image respectively .
+  #. Visit **http://aakashlabs.org/ac/projects/** from your system.
+     Please find links **download** and **Additional URL** from ``Aakash Business 
+     Tool`` to download ABT.apk and compressed chroot image respectively .
 
   #. Extract image.
        

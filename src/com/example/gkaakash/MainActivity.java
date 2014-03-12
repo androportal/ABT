@@ -1897,7 +1897,7 @@ public class MainActivity extends Activity{
 							}  
 						}    
 					}
-					String pattern="^[A-Z]([a-zA-Z0-9]|[- @\\.#&!'();$])*$";
+					String pattern="([a-zA-Z0-9]|[- @\\.#&!'();$])*$";
 					Pattern p = Pattern.compile(pattern);
 					Matcher match = p.matcher(organisationName);
 					if(!match.find())

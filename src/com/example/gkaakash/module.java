@@ -794,4 +794,22 @@ public class module {
 	        
 	        return groupnamelist;
 	}
+	
+	public String capitalizeFirstLetter(String original){
+	    if(original.length() == 0)
+	        return original;
+	    return original.substring(0, 1).toUpperCase() + original.substring(1).toLowerCase();
+	}
+	
+	public boolean isUpperCase(String original){
+		boolean result = true;
+		for(int x = 0; x < original.length(); x++) {  
+		      char c = original.charAt(x);  
+		      if(Character.isLowerCase(c)) {  
+		    	result = false;
+		        break;
+		      }  
+		}
+		return result;
+	}
 }

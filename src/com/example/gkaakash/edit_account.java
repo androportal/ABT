@@ -349,9 +349,9 @@ public class edit_account extends Activity {
 									String newOpBal;
 									String Opbal = null;
 									
-									newOpBal = etEditOpBal.getText().toString();
+									
 									if (etEditOpBal.getVisibility() == View.VISIBLE) {
-										
+										newOpBal = etEditOpBal.getText().toString();
 										String balance = newOpBal.substring(1, newOpBal.length());
 										if (newOpBal.length() < 1) {
 											newOpBal = "";
@@ -363,9 +363,11 @@ public class edit_account extends Activity {
 											newOpBal = "-"+bal;
 										}
 									} else {
+										newOpBal = tvEditOpBal.getText().toString();
 										String bal = newOpBal.replaceAll("[\\-]+","-");
 										newOpBal = bal;
 									}
+									
 									String groupname = tvEditGroupName.getText().toString();
 									String subgroupname = tvEditSubgroupName.getText().toString();
 									String accountcode = tvEditAccountCode.getText().toString();
@@ -375,6 +377,10 @@ public class edit_account extends Activity {
 										String message = "Please fill field";
 										m.toastValidationMessage(edit_account.this,message);
 
+									} else if (m.isUpperCase(newAccountName) == true) {
+										String message = "All letters of an account name can't be in Uppercase";
+										m.toastValidationMessage(edit_account.this,message);
+
 									} else if ("".equals(newOpBal)) {
 										String message = "Please fill amount field";
 										m.toastValidationMessage(edit_account.this,message);
@@ -382,7 +388,7 @@ public class edit_account extends Activity {
 										String message = "Please fill accountname field";
 										m.toastValidationMessage(edit_account.this,message);
 									}
-									if ((newAccountName.length() >= 1)&&(!"".equals(newOpBal))) {
+									if ((newAccountName.length() >= 1)&&(!"".equals(newOpBal)) && m.isUpperCase(newAccountName) == false) {
 										String accountcode_exist = account.checkAccountName(new Object[] {newAccountName,"", "" },client_id);
 										if (!newAccountName.equalsIgnoreCase(oldAccountName)
 												&& accountcode_exist.equals("exist")) {

@@ -470,7 +470,7 @@ public class createAccount<group> extends Activity{
                     if (subgroup_exist.equals("1"))
                     {
                        m.toastValidationMessage(context, "Subgroup "+sub_grp_name+" already exist");
-                    }else if(accountname.length()>=1)
+                    }else if(accountname.length()>=1 && m.isUpperCase(accountname)==false)
                     {
 ////                 
 //                    	Pattern pattern = Pattern.compile("[A-Z][a-z]+");//for checking whether the string is in uppercase 
@@ -500,6 +500,8 @@ public class createAccount<group> extends Activity{
                                 SaveAccount();
                             }// close else
                             
+                    }else if(m.isUpperCase(accountname)){
+                        m.toastValidationMessage(context, "All letters of an account name can't be in Uppercase");
                     }else
                     {    
                         SaveAccount();
@@ -507,7 +509,7 @@ public class createAccount<group> extends Activity{
                     }
                 else
                 {
-                    if(accountname.length()>=1)
+                    if(accountname.length()>=1 && m.isUpperCase(accountname)==false)
                     {
                             accountname_exist = account.checkAccountName(new Object[]{accountname,accCodeCheckFlag,groupChar},client_id);
                             if (accountname_exist.equals("exist"))
@@ -527,6 +529,8 @@ public class createAccount<group> extends Activity{
                             {
                                 SaveAccount();
                             }
+                    }else{
+                    	m.toastValidationMessage(context, "All letters of an account name can't be in Uppercase");
                     }
 
                 }
