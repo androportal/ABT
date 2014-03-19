@@ -244,9 +244,14 @@ public class balanceSheet extends Activity {
 				if (count == 3) {
 
 					// System.out.println("diff"+t[0].toString());
-					result = "Difference in Opening Balances: " + rsSymbol
+					if(!t[0].equals("0.00"))
+						{result = "Difference in Opening Balances: " + rsSymbol
 							+ " " + t[0].toString();
-					balDiff.setText(result);
+					     
+						}else{
+							result ="";
+						}
+					 balDiff.setText(result);
 				}
 				if (count == 1) {
 					addTable(balanceSheetTable1);

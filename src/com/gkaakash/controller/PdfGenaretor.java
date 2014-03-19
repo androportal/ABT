@@ -166,7 +166,7 @@ public class PdfGenaretor {
 				{
 					
 					String value = column.get(j);
-					System.out.println("clone");
+					System.out.println("clone"+value);
 					if(column.get(1).equalsIgnoreCase("Total of Transactions")||
 							column.get(1).equalsIgnoreCase("Grand Total")||
 							column.get(0).equalsIgnoreCase(""))
@@ -238,9 +238,12 @@ public class PdfGenaretor {
 			{
 				// add a couple of blank line
 				document.add(new Paragraph("\n")); // put blank space after body of table 
-				Paragraph p = new Paragraph("Difference in Opening Balances: "+ pdf_params[7],smallBold); // create paragraph for attaching diffrence
-				p.setAlignment(Element.ALIGN_RIGHT);// align that difference at right 
-				document.add(p);// add paragraph to document
+				if(!pdf_params[7].equals("0.00"))
+				{
+					Paragraph p = new Paragraph("Difference in Opening Balances: "+ pdf_params[7],smallBold); // create paragraph for attaching diffrence
+					p.setAlignment(Element.ALIGN_RIGHT);// align that difference at right 
+					document.add(p);// add paragraph to document
+				}
 			}
 			document.close(); // finally close document
 		}// end of try block

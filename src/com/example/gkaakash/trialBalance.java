@@ -244,9 +244,9 @@ public class trialBalance extends Activity{
 		   		date_format = new SimpleDateFormat("dMMMyyyy_HHmmss").format(date);
 		   		sFilename = trialbalType+"_"+ OrgName.replace(" ", "")+ "_" +
 						financialFromDate.substring(8)+"-"+financialToDate.substring(8)+"_"+date_format;
-				pdf_params = new String[]{trialbalType,sFilename,OrgName,trialbalancetype,
+				pdf_params = new String[]{trialbalType,sFilename,OrgName,TrialPeriod,trialbalancetype,
 						OrgPeriod,"",rsSymbol+String.format("%.2f", Math.abs(result))};
-						
+				System.out.println("pdf params:"+pdf_params);		
 				CharSequence[] items = new CharSequence[]{ "Export as PDF","Export as CSV"};
 				
 				AlertDialog dialog;

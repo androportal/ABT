@@ -200,10 +200,14 @@ public class cashFlow extends Activity{
         		}
         		if(count == 3)
         		{
-        			
-        			result = "Net Flow: "+rsSymbol+" "+c[0].toString();
+        			if(!c[0].toString().equals("0.00"))
+        			{
+        				result = "Net Flow: "+rsSymbol+" "+c[0].toString();
+        				
+        			}else{
+        				result= "0.00";
+        			}
         			Netdifference.setText(result);
-           
         		}
         	}
         	 
