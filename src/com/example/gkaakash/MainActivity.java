@@ -707,12 +707,44 @@ public class MainActivity extends Activity{
 		else if(checkTar.exists()) {
 			// extract
 			// reboot
-			spinner("mnt/sdcard");
+			if(getAvailableSpaceInMB("mnt/sdcard") < 300L){
+				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+				builder.setMessage("Can't exract abt.tar.gz, no enough space on internal sdcard, Exiting the application!")
+				.setCancelable(false)
+				.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						finish();
+						android.os.Process
+						.killProcess(android.os.Process.myPid());
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}else{
+				spinner("mnt/sdcard");
+			}
 		} 
 		else if(checkTarExtsd.exists()) {
 			// extract
 			// reboot
-			spinner("mnt/extsd");
+			if(getAvailableSpaceInMB("mnt/extsd") < 300L){
+				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+				builder.setMessage("Can't exract abt.tar.gz, no enough space on external sdcard, exiting the application!")
+				.setCancelable(false)
+				.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						finish();
+						android.os.Process
+						.killProcess(android.os.Process.myPid());
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}else{
+				spinner("mnt/extsd");
+			}
 		} 
 		else {
 			// download
@@ -901,7 +933,7 @@ public class MainActivity extends Activity{
 		 */
 		progressBar = new ProgressDialog(context);
 		progressBar.setCancelable(false);
-		progressBar.setMessage("Extracting files, please wait...");
+		progressBar.setMessage("Extracting abt.tar.gz, please wait...");
 		progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		progressBar.show();
 
