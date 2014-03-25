@@ -480,60 +480,7 @@ public class MainActivity extends Activity{
 				System.out.println("in button listner"+IPaddr);
 				
 				getSelectOnClickValue();
-//				startup = new Startup(IPaddr);
-//				// check existing organisation name list is null
-//				try{
-//					// call the getOrganisationName method from startup
-//					orgNameList = startup.getOrgnisationName(); // return lists of existing organisations
-//					if(orgNameList.length<1)
-//					{
-//						AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//						builder.setMessage("Please create organisation")
-//						.setCancelable(false)
-//						.setPositiveButton("Ok",
-//								new DialogInterface.OnClickListener() {
-//							public void onClick(DialogInterface dialog, int id) {
-//								//do nothing
-//							}
-//						});
-//
-//						AlertDialog alert = builder.create();
-//						alert.show();                    }
-//					else
-//					{
-//						LinearLayout content_layout = (LinearLayout)findViewById(R.id.content_layout);
-//						LayoutInflater inflater = ((Activity)MainActivity.this).getLayoutInflater();
-//						View layout = inflater.inflate(R.layout.select_org, null);
-//
-//						if(content_layout.getChildCount() == 0){
-//							content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
-//						}else{
-//							content_layout.removeAllViews();
-//							content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
-//						}
-//
-//						user= new User(IPaddr);
-//						getOrgNames = (Spinner) layout.findViewById(R.id.sGetOrgNames);
-//						getFinancialyear = (Spinner) layout.findViewById(R.id.sGetFinancialYear);
-//						getOrgNames.setMinimumWidth(100);
-//						getFinancialyear.setMinimumWidth(250);
-//						btnSelLogIn = (Button) layout.findViewById(R.id.btnSelLogIn);
-//
-//						getExistingOrgNames(layout);
-//						addListenerOnItem(layout);
-//						addListenerOnLoginButton(layout);
-//
-//						//To pass on the activity to the next page
-//						//						Intent intent = new Intent(context, selectOrg.class);
-//						//						startActivity(intent);  
-//					}
-//				}catch(Exception e)
-//				{
-//					IPaddr = IPaddr_value;
-//					String message = "Can not connect to remote server!!! \nPlease set IP again or check whether server is running!!!" +
-//							"\nRe-establishing connection to the local server...";
-//					m.toastValidationMessage(context, message);
-//				}
+
 			}// end of onClick
 
 		});// end of select_org.setOnClickListener
@@ -571,7 +518,7 @@ public class MainActivity extends Activity{
 					content_layout.removeAllViews();
 					content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
 				}
-
+				reportmenuflag = false;
 				user= new User(IPaddr);
 				getOrgNames = (Spinner) layout.findViewById(R.id.sGetOrgNames);
 				getFinancialyear = (Spinner) layout.findViewById(R.id.sGetFinancialYear);
@@ -1362,8 +1309,7 @@ public class MainActivity extends Activity{
 
 			getOrgNames.setAdapter(dataAdapter);
 			getOrgNames.setSelection(position);   
-//			m.toastValidationMessage(context,"Rollover has been done successfully, Please login to continue!");
-//			//Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show();   
+
 		}
 
 	}
@@ -1646,8 +1592,7 @@ public class MainActivity extends Activity{
 					Object[] y = (Object[]) fy;
 					// concatination From and To date 
 					financialyearlist.add(y[0]+" to "+y[1]);
-					//fromDate=y[0].toString();
-					//toDate=y[1].toString();
+					
 				}
 
 				if(get_extra_flag==null){
@@ -1886,8 +1831,7 @@ public class MainActivity extends Activity{
 		//Request a reference to the button from the activity by calling “findViewById” 
 		//and assign the retrieved button to an instance variable
 		btnCreate = (Button) content_layout.findViewById(R.id.btnCreate);
-		//btnLogin = (Button) findViewById(R.id.btnLogin);
-		//btnNext = (Button) findViewById(R.id.btnNext);
+		
 		orgType = (Spinner) content_layout.findViewById(R.id.sOrgType);
 		tvDisplayFromDate = (TextView) content_layout.findViewById(R.id.tvFromDate);
 		tvDisplayToDate = (TextView) content_layout.findViewById(R.id.tvToDate);

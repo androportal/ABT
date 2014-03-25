@@ -208,11 +208,14 @@ public class menu extends Activity{
 		//reportmenuflag will tell you from which page u are came createOrg or selectOtg
 		if (reportmenuflag == true) {
 			orgtype=MainActivity.orgTypeFlag;
+			//Toast.makeText(context, orgtype, Toast.LENGTH_SHORT).show();
+			
 		} else {
 			Object[] params = new Object[]{OrgName};
 			orgtype = (String) organisation.getorgTypeByname(params, client_id);
+			//Toast.makeText(context, orgtype, Toast.LENGTH_SHORT).show();
 		}
-		System.out.println("params are:"+OrgName+userrole+username+reset_password_flag+orgtype);
+		//System.out.println("params are:"+OrgName+orgtype+userrole+username+reset_password_flag+orgtype);
 		//get the last login timing of user from the database
 		
 		
