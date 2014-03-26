@@ -106,7 +106,7 @@ How to create an account?
 	+------------------------------+-------------------------------------+
 	
 
-* Create accounts under respective ``group`` and ``subgroup`` (specified in the above table) with opening balance(it can be ``0.00``).
+* Create accounts under respective ``group`` and ``subgroup`` (specified in the above table) with opening balance(it can be ``0.00``), or it can be negative values to change the debit and credit settings(like ``-100.00``).
   This will automatically update the ``total debit opening balance, total credit opening balance`` and ``difference`` between them.
   
 .. image:: images/create_account.png
@@ -170,5 +170,6 @@ Search/Edit account
    :width: 350pt	
 	  
 * **Note**: Opening balance field is not editable, if account comes under the following groups: ``Direct Income``, ``Direct Expense``, ``Indirect Income`` and ``Indirect Expense``.
+            Opening balance can be (``0.00``) or negative values to change the debit and credit settings(like ``-100.00``).
 	
 * Press **Delete account** to delete the account. Accounts under transaction cannot be deleted.
