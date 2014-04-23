@@ -322,8 +322,9 @@ public class bankReconciliation extends Activity{
          } 
          if(cleared_tran_flag==true){
               for(int i=0;i<bankReconGrid.size();i++){
-                      Cdate = bankReconGrid.get(i).get(6).toString();
-                      for_clearanceDate.add(Cdate);
+            	  //store all clearance dates in an array
+                  Cdate = bankReconGrid.get(i).get(7).toString();
+                  for_clearanceDate.add(Cdate);
               }
          }
          System.out.println("List:"+bankReconGrid);
@@ -891,7 +892,13 @@ public class bankReconciliation extends Activity{
                      * in the clearance date textview
                      */
                     if(!clearance_date.equals("") && !clearance_date.equals(" ")){
-                        final CharSequence[] items = { "Edit date", "Clear date","Set previous date"};
+                    	CharSequence[] items;
+                    	if(cleared_tran_flag==true){
+                    		items = new CharSequence[] { "Edit date", "Clear date","Set previous date"};
+                    	} else{
+                    		items = new CharSequence[] { "Edit date", "Clear date"};
+                    	}
+                        
                         //creating a dialog box for popup
                         AlertDialog.Builder builder = new AlertDialog.Builder(bankReconciliation.this);
                         //setting title
@@ -1045,6 +1052,7 @@ public class bankReconciliation extends Activity{
                                  */
                                 if(pos==2){
                                 		try {
+                                			System.out.println("clearance array is"+for_clearanceDate);
                                 			String Cdate1 = (String) for_clearanceDate.get(rowid);
                                             int rowcount = bankRecontable.getChildCount();    
                                             for(int k=0;k<rowcount;k++){
@@ -1054,7 +1062,7 @@ public class bankReconciliation extends Activity{
                                                 tvdate.setText(Cdate1);
                                             }
 										} catch (Exception e) {
-											m.toastValidationMessage(bankReconciliation.this,"Please try again");
+											//m.toastValidationMessage(bankReconciliation.this,"Please try again");
 										}
                                 }
                             }                           

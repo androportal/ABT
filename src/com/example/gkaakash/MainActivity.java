@@ -74,7 +74,6 @@ import com.gkaakash.controller.Organisation;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.User;
 
-
 public class MainActivity extends Activity{
 	//Add a class property to hold a reference to the button
 	Button create_org;
