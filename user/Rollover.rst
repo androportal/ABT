@@ -48,7 +48,7 @@ Rollover
    :height: 200pt
    :width: 350pt
 
-4. Please note that after the rollover, your previous year's accounts will get friezed and you are not allowed to make any changes, however you are allowed to view, take reports and update the Bank reconciliation statement.
+4. Please note that after the rollover, your previous year's accounts will get freezed and you are not allowed to make any changes, however you are allowed to view, take reports and update the Bank reconciliation statement.
 
 .. image:: images/freezed.png
    :align: center	

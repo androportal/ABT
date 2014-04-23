@@ -7,37 +7,63 @@ About Aakash Business Tool(ABT)
 Introduction
 ------------
 
-**Aakash Business Tool** is a portable accounting platform on Android
-intended for Accountants and Students. `Aakash
-<http://aakashlabs.org>`_ is a low cost computing device/tablet for
-students, the project is initiated and funded by MHRD, Govt. of
-India. Aakash already runs Android 4.0 with many educational `apps
-<https://github.com/androportal/>`_
-developed at IIT Bombay. Aakash
-Accounting provides an easy to use interface specially for
-students/newbies who have just started accounting. We have tried to
-make the user's experience simple and elegant. This initial version
-covers basic account management, creating vouchers and reports.
+* Aakash Business Tool is an accounting tool which runs on Android.
 
+* It is intended for accountants and accounts ­students.
 
-It was initially derived from `GNUkhata <http://www.gnukhata.org>`_, a free
-accounting software which is mostly based on Python framework.
+* It is Free and Open Source Software, licensed under GNU GPL version 3.
+  Everybody is free to use and modify it as per convenience.
 
-Features
---------
+How it is useful for students & Small Retailers?
+------------------------------------------------
+* ABT helps to build a strong basic foundation in Accounting both for
+  students and future auditors. If a journal item is registered in a
+  journal entry, the default setting will guide to the correct
+  field. The default focus helps the students to understand its
+  features in better way.
 
-Some features included in Aakash Business Tool:
-  #. Managing Organizations and User authentication
-  #. Maintaining books of accounts
-  #. Recording, cloning and editing transactions
-  #. Recording of transactions under particular project
-  #. Generating reports such as Ledger Accounts, Trial Balance(Net,
-     Gross, Extended), Profit and Loss Account, Project Statement,
-     Cash Flow and Balance Sheet(Conventional or Sources of application 
-     and funds)
-  #. Bank Reconciliation
-  #. Rollover
-  #. Export reports in PDF/CSV format
-  #. Import/Export of organization data to other device
-  #. ABT as a remote server
+* It gives a way to manage small and large Business free of cost. It
+  can be used by a NGO's as well as by a Profit making
+  organization. It is perfect for small businesses who makes reports
+  on incoming or outgoing cash flow including sales, receipts,
+  payments, and purchases. Similar transactions are common in
+  Accounting in order to ease the workflow. Transactions with a
+  different voucher number can be cloned. This saves time and stores
+  Business Accounting & reports accurately.
+
+Features of ABT
+----------------
+* Manage Organizations & User authentication.
+* Maintain books of accounts
+* User is allowed to change the default credit and debit settings by
+  prefixing a negative sign during account creation.
+* Record, clone, and edit transactions
+* One can record transactions under a project
+* Generate reports such as Ledger, Trial Balance(Net, Gross,
+  Extended), Cash Flow, Cash Book, Project Statement, Balance
+  Sheet(Conventional or Sources of application and funds), and Profit
+  & Loss Account
+* Bank Reconciliation
+* Rollover
+* Export reports in PDF/CSV format
+* Import/Export organization data to other tablet
+* Remote access to ABT server.
+
+Why are we recommending to use ABT?
+-----------------------------------
+* Although there are many accounting software available for Android,
+  but very few covers all features.
+
+* User data is secured using validation.
+
+* A simple and elegant interface for user to perform transactions and
+  view reports.
+
+* Easy to track payment & deposit transactions, sales & accounts
+  receivables, outgoing payment, purchasing transactions, and accounts
+  payable.
+
+* You have several options to view transactions based on time period,
+  voucher type, account name, key figures and more.
+
 
