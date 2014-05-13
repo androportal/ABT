@@ -10,21 +10,21 @@ Welcome page
 ------------
 
 .. image:: images/welcome_page.png
-   :name: welcome
    :align: center
    :height: 200pt
    :width: 350pt
 
-* As the application is launched, it automatically checks whether the application is running on ``emulator`` or ``tablet`` and do the needful.
+* As the application is launched, it automatically checks whether the
+  application is running on ``emulator`` or ``tablet`` and do the
+  needful.
 
 
 * Various options are present in the slide menu.
 
-	.. image:: images/drawer_options.png
-	   :name: ABT main page
-	   :align: center
-	   :height: 200pt
-	   :width: 350pt
+.. image:: images/drawer_options.png
+   :align: center
+   :height: 200pt
+   :width: 350pt
 	
   - Change server location
 
@@ -34,11 +34,10 @@ Welcome page
   	  the institute. The advantage is, each user will have his/her own 
   	  account on the server. The central server runs Postgres as a database engine.
 
-	.. image:: images/remote_location.png
-	   :name: ABT main page
-	   :align: center
-	   :height: 200pt
-	   :width: 350pt
+.. image:: images/remote_location.png
+   :align: center
+   :height: 200pt
+   :width: 350pt
 
 	+ Click on ``Ok`` button. 
 
@@ -57,7 +56,6 @@ Setting up a new organisation
 * Press ``Create new organisation``.
 
 .. image:: images/create_org.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -79,7 +77,6 @@ Setting up a new organisation
   Save details and press ``Log In`` to continue.
 
 .. image:: images/sign_up.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
@@ -88,21 +85,22 @@ Setting up a new organisation
 * Fill the organisation details if required and save them, else skip.
   
 .. image:: images/org_details.png
-   :name: ABT main page
    :align: center
    :height: 200pt
    :width: 350pt
   
 *  It will take the user to ABT’s master menu.
 
-* **Note**: In both the cases, whether the user ``skips`` or ``saves``, organisation will be created .
+* **Note**: In both the cases, whether the user ``skips`` or
+  ``saves``, organisation will be created .
 
 Select existing organisation
 ----------------------------
 
 * Press ``Select new organisation``.
   
-* Select any ``organisation`` and respective ``financial year`` from the dropdown and login as per role.
+* Select any ``organisation`` and respective ``financial year`` from
+  the dropdown and login as per role.
   
 .. image:: images/select_org.png
    :align: center
@@ -119,7 +117,9 @@ Select existing organisation
    :height: 200pt
    :width: 350pt
 
-* If in case, Admin ``forgets`` password, he can use ``Forgot password`` link and answer security question to reset the password(No other role can use this option).
+* If in case, Admin ``forgets`` password, he can use ``Forgot
+  password`` link and answer security question to reset the
+  password(No other role can use this option).
 
 .. image:: images/forget_password.png
    :align: center

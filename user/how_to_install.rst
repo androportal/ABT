@@ -1,35 +1,132 @@
-%%%%%%%%%%
-How to install
-%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%
+How to install ABT
+%%%%%%%%%%%%%%%%%%
+
+Prerequisite 
+============ 
+
+ABT can be used on any ``rooted tablet`` of your choice. 
+To install ABT on a rooted tablet, you will require
+
+* a working Internet connection and
+
+* 400MB of free space on internal/external SD card.
+
+
+Start installation
+==================
+* You will need an internet connection to download files onto the
+  tablet.
+
+Set proxy settings
+------------------
+* If you work behind a proxy server, ensure that you bypass
+  ``localhost`` under proxy settings. You can skip this step if you
+  have a direct Internet connection.
+
+* You can find this option under ``Settings and WiFi``. Ensure that
+  ``WIFI`` is turned ON. Long press on the WIFI network that you want
+  to connect to. Then, ``choose Modify network``.
+
+* Check ``Show Advanced Options`` checkbox. 
+
+* Add an entry for ``127.0.0.1`` to bypass the localhost.
+
+Download ABT APK
+----------------
+* Now, open the web browser on your tablet. Type this URL in the
+  address bar http://aakashlabs.org/ac/iitb/
+
+* Search for Aakash Business Tool & tap on ``Download``.
+
+* It will download ``ABT.apk`` file to Download folder of internal
+  card.
+
+* Go to that location. To install, tap on the ABT apk file which you
+  downloaded.
+
 Simple and recommended install procedure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Now open the ABT application from the application menu.
 
-  #. This process requires a working Internet connection. 
-  #. If you're behind proxy, then do appropriate settings to bypass
-     your proxy server. You will find proxy setting in ``Settings`` ->
-     ``WiFi`` -> ``Advance Options`` and also bypass ``127.0.0.1`` proxy
-     settings.  This is **not** required for direct Internet connections.
-  #. Open the browser on Aakash and visit this link:
-     **http://aakashlabs.org/downloads/**. Please find **download** link for 
-     ``Aakash Business Tool``. Download and install the apk.
-  #. Click on **ABT icon** from the list of applications installed on device and allow
-     it to download image file.
-  #. Downloading and extraction process will take some time. Once done with this
-     process, it will ask to reboot the device.
-  #. After reboot, application is ready to use.
+* When we open ABT for the first time it will prompt, ``File system
+  does not exist! Do you want to download and install?``. Select
+  ``Yes``.
+
+.. image:: images/download-abt-prompt.png
+   :align: center	
+   :height: 200pt
+   :width: 350pt
+
+* This will download ``abt.tar.gz`` file in your internal
+  memory. 
+
+.. image:: images/download.png
+   :align: center	
+   :height: 200pt
+   :width: 350pt
+
+* After downloading the file, it will automatically ``extract``
+  abt.tar.gz file.
+
+.. image:: images/extract-zip.png
+   :align: center	
+   :height: 200pt
+   :width: 350pt
+
+* After extraction, it will again prompt ``To apply changes, please
+  reboot``.
+
+.. image:: images/reboot.png
+   :align: center	
+   :height: 200pt
+   :width: 350pt
+
+* Now click on ``Reboot``, to Reboot the tablet.
+
+* If in case the application asks for superuser permission, say
+  ``GRANT``.
 
 Manual installation
 ~~~~~~~~~~~~~~~~~~~
- 
-  #. Visit **http://aakashlabs.org/downloads/** from your system.
-     Please find links **download** and **chroot image** from ``Aakash Business 
-     Tool`` to download ABT.apk and compressed image respectively .
+* Once you have installed ABT apk, go to the browser. Now type
+  http://www.it.iitb.ac.in/AakashApps/repo/abt.tar.gz in the address
+  bar.
 
-  #. Extract image.
-       
-  #. Extraction process will produce ``abt.img``. Copy
-     ``abt.img`` and ``ABT.apk`` to sdcard(internal or external) of your Aakash
-     tablet.
-     
-  #. Then install ABT using ABT.apk, it will ask the user to reboot the device to finish
-     installation. Now user can locate **ABT icon** in the application list.
+* ``abt.tar.gz`` will get downloaded to Download folder of internal
+  sdcard.
+
+* Go to the location and copy or move this file to the internal sd
+  card.
+
+.. image:: images/folder.png
+   :align: center	
+   :height: 200pt
+   :width: 350pt
+
+* Now, open ABT application. It will directly start the ``extraction``
+  of abt.tar.gz file.
+
+.. image:: images/extract-zip.png
+   :align: center	
+   :height: 200pt
+   :width: 350pt
+
+* After extraction it will prompt the message, ``To apply changes,
+  please reboot``, click on ``Reboot`` to Reboot the tablet.
+
+.. image:: images/reboot.png
+   :align: center	
+   :height: 200pt
+   :width: 350pt
+
+* Aakash Business Tool is ready to use.
+
+Note
+----
+In case there is not enough space in internal memory,
+
+* Download and extract ``abt.tar.gz`` file on your computer & 
+
+* Copy ``abt.img`` file to tablet's ``external SD card`` and reboot
+  the tablet.
