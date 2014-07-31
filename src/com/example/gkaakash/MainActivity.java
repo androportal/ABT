@@ -23,6 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
+import org.apache.tools.ant.taskdefs.condition.Os;
 import org.apache.tools.tar.TarEntry;
 import org.apache.tools.tar.TarInputStream;
 
@@ -71,6 +72,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gkaakash.controller.Organisation;
+import com.gkaakash.controller.Report;
 import com.gkaakash.controller.Startup;
 import com.gkaakash.controller.User;
 
@@ -156,7 +158,10 @@ public class MainActivity extends Activity{
 		menu.add(1,3,3,"Set IP");
 		return super.onCreateOptionsMenu(menu);	
 	}
-
+	public void onDestroy() {
+	    super.onDestroy();
+	    Runtime.getRuntime().gc();      
+	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId() == 2){
@@ -174,8 +179,9 @@ public class MainActivity extends Activity{
 
 	private void importorganisation() {
 		try {
+			
 			File export = new File("/mnt/sdcard/export");
-			if(export.exists()){
+			if(export.exists()){ 
 				//copy export dir from /opt/abt/ to sdcard
 				String[] command = {"rm -r /data/local/abt/opt/abt/export/","busybox cp /mnt/sdcard/export/ /data/local/abt/opt/abt/ -R"};
 				module.RunAsRoot(command);
@@ -232,7 +238,7 @@ public class MainActivity extends Activity{
 									.equalsIgnoreCase((String) Grid.get(0).get(i))){
 								year.add((String) Grid.get(1).get(i));
 
-							}
+							} 
 						}
 						//add financial year
 						ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
@@ -245,23 +251,32 @@ public class MainActivity extends Activity{
 					public void onNothingSelected(AdapterView<?> arg0) {
 						// TODO Auto-generated method stub
 
-					}
-				});
-
+					}  
+				}); 
+ 
 				btnImport.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v) {
 						
 						Object[] params = new Object[]{sOrganisation.getSelectedItem(),
 								sYear.getSelectedItem().toString().substring(0,10),
 								sYear.getSelectedItem().toString().substring(14,24),
-								Grid.get(2).get(sOrganisation.getSelectedItemPosition()),
-								Grid.get(3).get(sOrganisation.getSelectedItemPosition())};
+								Grid.get(2).get(Grid.get(0).indexOf(sOrganisation.getSelectedItem())),
+								Grid.get(3).get(Grid.get(0).indexOf(sOrganisation.getSelectedItem()))};
+						System.out.println("POSITION:"+sOrganisation.getSelectedItemPosition());
+						System.out.println("import in mainactivity"+params[0]+""+params[1]+""+""+params[2]+""+params[3]+""+params[4]);
 						organisation.Import(params);
 						TextView warning =  (TextView) layout.findViewById(R.id.tvWarning);
 						warning.setVisibility(TextView.VISIBLE);
 						warning.setText(Html.fromHtml("Organisation <b>"+sOrganisation.getSelectedItem()+
-								"</b> for the financial year <b>"+sYear.getSelectedItem().toString()+
+								"</b> for the financial year <b>"+sYear.getSelectedItem().toString()+ 
 								"</b> imported successfully!"));
+						//View layout=View_layout();
+						//reportmenuflag = false;
+
+						//getExistingOrgNames(layout);
+						//addListenerOnItem(layout);
+						//addListenerOnLoginButton(layout);
+						getSelectOnClickValue();
 
 					}
 				});
@@ -289,7 +304,7 @@ public class MainActivity extends Activity{
 		}
 
 	}
-
+  
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -299,14 +314,15 @@ public class MainActivity extends Activity{
 
 		if (Build.BRAND.equalsIgnoreCase("generic")) {
 			IPaddr = "10.0.2.2"; //for normal emulator
-			//IPaddr = "192.168.56.1"; //for genymotion
+			//command to find the virtual box IP address: 'VBoxManage list bridgedifs'
+//			IPaddr = "192.168.56.1"; //for genymotion
 			IPaddr_value = IPaddr;
 			System.out.println("YES, I am an emulator");
-		} else {
-			IPaddr = "127.0.0.1";
+		} else { 
+			IPaddr = "127.0.0.1"; 
 			IPaddr_value = IPaddr;
 			System.out.println("NO, I am NOT an emulator");  
-		}
+		}    
 		/*
 		 * toggleView can actually be any view you want.
 		 * Here, for simplicity, we're using TextView, but you can
@@ -321,7 +337,7 @@ public class MainActivity extends Activity{
 		View toggleView = findViewById(R.id.content_layout);
 		toggleView.setOnClickListener(new View.OnClickListener() {
 
-			@Override
+			@Override 
 			public void onClick(View v) {
 				mSlideHolder.toggle();
 			}
@@ -383,7 +399,14 @@ public class MainActivity extends Activity{
 					content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
 				}else{
 					content_layout.removeAllViews();
-					content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+					View layout1=View_layout();
+				reportmenuflag = false;
+				//				Toast.makeText(getApplicationContext(), "In sel:"+reportmenuflag, Toast.LENGTH_SHORT).show();
+
+				getExistingOrgNames(layout1);
+				addListenerOnItem(layout1);
+				addListenerOnLoginButton(layout1);
+					content_layout.addView(layout1, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
 				}
 				
 				Help help = new Help();
@@ -507,24 +530,10 @@ public class MainActivity extends Activity{
 				alert.show();                    }
 			else
 			{
-				LinearLayout content_layout = (LinearLayout)findViewById(R.id.content_layout);
-				LayoutInflater inflater = ((Activity)MainActivity.this).getLayoutInflater();
-				View layout = inflater.inflate(R.layout.select_org, null);
-
-				if(content_layout.getChildCount() == 0){
-					content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
-				}else{
-					content_layout.removeAllViews();
-					content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
-				}
+				View layout=View_layout();
 				reportmenuflag = false;
-				user= new User(IPaddr);
-				getOrgNames = (Spinner) layout.findViewById(R.id.sGetOrgNames);
-				getFinancialyear = (Spinner) layout.findViewById(R.id.sGetFinancialYear);
-				getOrgNames.setMinimumWidth(100);
-				getFinancialyear.setMinimumWidth(250);
-				btnSelLogIn = (Button) layout.findViewById(R.id.btnSelLogIn);
-				
+//				Toast.makeText(getApplicationContext(), "In sel:"+reportmenuflag, Toast.LENGTH_SHORT).show();
+
 				getExistingOrgNames(layout);
 				addListenerOnItem(layout);
 				addListenerOnLoginButton(layout);
@@ -536,6 +545,33 @@ public class MainActivity extends Activity{
 
 	}
 
+	
+	public View View_layout(){
+		LinearLayout content_layout = (LinearLayout)findViewById(R.id.content_layout);
+		LayoutInflater inflater = ((Activity)MainActivity.this).getLayoutInflater();
+		View layout = inflater.inflate(R.layout.select_org, null);
+
+		if(content_layout.getChildCount() == 0){
+			content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+		}else{
+			content_layout.removeAllViews();
+			content_layout.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+		}
+		user= new User(IPaddr);
+		
+		
+		btnSelLogIn = (Button) layout.findViewById(R.id.btnSelLogIn);
+		getOrgNames = (Spinner) layout.findViewById(R.id.sGetOrgNames);	
+		getFinancialyear = (Spinner) layout.findViewById(R.id.sGetFinancialYear);
+		getOrgNames.setMinimumWidth(100);
+		getFinancialyear.setMinimumWidth(250);
+		
+		
+		return layout;
+	}
+	
+	
+	
 	private void loadDataFromAsset() {
 		try {
 
@@ -802,7 +838,7 @@ public class MainActivity extends Activity{
 						alert.show();
 
 					} 
-				}
+				}   
 			});
 
 			help_dialog = builder.create();
@@ -1154,9 +1190,9 @@ public class MainActivity extends Activity{
 					finish();
 					android.os.Process
 					.killProcess(android.os.Process.myPid());
-				}
+				} 
 			});
-
+  
 		}
 
 
@@ -1164,8 +1200,8 @@ public class MainActivity extends Activity{
 		alert1.show();
 	}
 
-	// REBOOT END
-
+////	// REBOOT END
+////
 	public void onBackPressed() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Are you sure you want to exit?")
@@ -1173,13 +1209,12 @@ public class MainActivity extends Activity{
 		.setPositiveButton("Yes",
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				finish();
-				android.os.Process.killProcess(android.os.Process.myPid());
-//				Intent intent = new Intent(Intent.ACTION_MAIN);
-//				intent.addCategory(Intent.CATEGORY_HOME);
-//				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//				intent.putExtra("stopid", id);
-//				startActivity(intent);
+				
+				Intent i = new Intent(Intent.ACTION_MAIN); 
+				i.addCategory(Intent.CATEGORY_HOME);
+				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+				startActivity(i);
+
 			}
 		})
 		.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -1189,6 +1224,9 @@ public class MainActivity extends Activity{
 		});
 		AlertDialog alert = builder.create();
 		alert.show();
+		
+//		moveTaskToBack(true);
+//		finish();
 	}
 
 
@@ -1206,6 +1244,7 @@ public class MainActivity extends Activity{
 
 	public void setRemoteLocation()
 	{
+		System.out.println("set ip");
 
 		final View layout = m.builder_with_inflater(this,"",R.layout.login);
 		TextView tvalertHead1 =(TextView) layout.findViewById(R.id.tvalertHead1);
@@ -1232,7 +1271,7 @@ public class MainActivity extends Activity{
 		eLoginUser.setBackgroundResource(R.drawable.textfield_activated_holo_light);
 		Button btnLogin = (Button)layout.findViewById(R.id.btnLogin);
 		btnLogin.setText("Ok");
-		
+//		
 		Button btnCancel = (Button)layout.findViewById(R.id.btnCancel);
 		btnCancel.setVisibility(View.VISIBLE);
 		btnCancel.setOnClickListener(new OnClickListener() {
@@ -1244,7 +1283,7 @@ public class MainActivity extends Activity{
 		});
 		
 		module.dialog.setCanceledOnTouchOutside(true);
-
+//
 		btnLogin.setOnClickListener(new OnClickListener() {   
 
 			@Override
@@ -1293,6 +1332,7 @@ public class MainActivity extends Activity{
 			// creating array adaptor to take list of existing organisation name
 			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
 					android.R.layout.simple_spinner_item, list);
+			System.out.println("List__ "+list);
 			//set resource layout of spinner to that adaptor
 			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			//set adaptor with orglist in spinner
@@ -1868,14 +1908,14 @@ public class MainActivity extends Activity{
 								if(fromDate.equals(fromdate) && toDate.equals(todate)){
 									orgExistFlag = true;
 									break;
-								}
+								} 
 							}  
 						}    
 					}
 					String pattern="([a-zA-Z0-9]|[- @\\.#&!'();$])*$";
 					Pattern p = Pattern.compile(pattern);
 					Matcher match = p.matcher(organisationName);
-					if(!match.find())
+					if(organisationName.isEmpty()||!match.find())
 					{
 						m.toastValidationMessage(context, "Please enter proper organisation name");
 						
