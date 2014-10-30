@@ -315,7 +315,7 @@ public class MainActivity extends Activity{
 		if (Build.BRAND.equalsIgnoreCase("generic")) {
 			IPaddr = "10.0.2.2"; //for normal emulator
 			//command to find the virtual box IP address: 'VBoxManage list bridgedifs'
-//			IPaddr = "192.168.56.1"; //for genymotion
+			//IPaddr = "192.168.56.1"; //for genymotion
 			IPaddr_value = IPaddr;
 			System.out.println("YES, I am an emulator");
 		} else { 
