@@ -306,8 +306,9 @@ public class createVoucher extends Activity {
 
 			// for setting project
 			setProject();
+			//if (from_report_flag != null && !(menu.userrole.equalsIgnoreCase("admin"))) {
 
-			if (from_report_flag != null && !(menu.userrole.equalsIgnoreCase("admin"))) {
+			if (from_report_flag != null ) {
 			disable();
 				
 			}
